@@ -9,16 +9,14 @@ v-app(dark)
           v-list-tile-title(v-text='item.title')
   v-toolbar(:clipped-left='clipped', fixed, app)
     v-toolbar-side-icon(@click='drawer = !drawer')
-      v-btn(icon, @click.stop='miniVariant = !miniVariant')
-        v-icon {{ `chevron_${miniVariant ? 'right' : 'left'}` }}
-      v-btn(icon, @click.stop='clipped = !clipped')
-        v-icon web
-      v-btn(icon, @click.stop='fixed = !fixed')
-        v-icon remove
-      v-toolbar-title(v-text='title')
-        v-spacer
-          v-btn(icon, @click.stop='rightDrawer = !rightDrawer')
-            v-icon menu
+    v-btn(icon, @click.stop='miniVariant = !miniVariant')
+      v-icon {{ `mdi-chevron-${miniVariant ? 'right' : 'left'}` }}
+    v-btn(icon, @click.stop='clipped = !clipped')
+      v-icon mdi-book-open-outline
+    v-toolbar-title(v-text='title')
+      v-spacer
+        v-btn(icon, @click.stop='rightDrawer = !rightDrawer')
+          v-icon mdi-menu
   v-content
     v-container
       nuxt
@@ -26,11 +24,8 @@ v-app(dark)
     v-list
       v-list-tile(@click.native='right = !right')
         v-list-tile-action
-          v-icon(light)
-            | compare_arrows
+          v-icon(light) mdi-compare-arrows
         v-list-tile-title Switch drawer (click me)
-  v-footer(:fixed='fixed', app)
-    span © 2019
 </template>
 
 <script>

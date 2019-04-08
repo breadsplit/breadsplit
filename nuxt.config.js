@@ -19,7 +19,7 @@ module.exports = {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons',
+          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
       },
     ],
   },
@@ -33,6 +33,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    '@mdi/font/css/materialdesignicons.min.css',
     '~/assets/style/app.styl',
   ],
 
