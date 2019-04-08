@@ -2,8 +2,6 @@
 v-layout(column, justify-center, align-center)
   v-flex(xs12, sm8, md6)
     .text-xs-center
-      logo
-      vuetify-logo
     v-card
       v-card-title.headline
         | Welcome to the Vuetify + Nuxt.js template
@@ -34,15 +32,3 @@ v-layout(column, justify-center, align-center)
           v-btn(color='primary', flat, nuxt, to='/inspire')
             | Continue
 </template>
-
-<script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
-export default {
-  components: {
-    Logo,
-    VuetifyLogo,
-  },
-}
-</script>
