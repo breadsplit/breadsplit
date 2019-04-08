@@ -3,5 +3,6 @@
   "editor.fontFamily": "Fira Code Light, Microsoft YaHei UI Light, Consolas, 'Courier New', monospace",
   "editor.renderWhitespace": "boundary",
   "editor.formatOnPaste": true,
-  "editor.formatOnSave": true
+  "editor.formatOnSave": false,
+  "eslint.autoFixOnSave": true,
 }

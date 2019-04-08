@@ -17,7 +17,8 @@ async function start() {
   if (config.dev) {
     const builder = new Builder(nuxt)
     await builder.build()
-  } else {
+  }
+  else {
     await nuxt.ready()
   }
 
@@ -28,7 +29,7 @@ async function start() {
   app.listen(port, host)
   consola.ready({
     message: `Server listening on http://${host}:${port}`,
-    badge: true
+    badge: true,
   })
 }
 start()
