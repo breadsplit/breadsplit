@@ -1,5 +1,7 @@
 # MoneyFlow?
 
+[📋**Stage Progress**](https://github.com/antfu/moneyflow/projects/1)
+
 keywords: `split bills`, `group expenses management`, `sharing expenses`, `travel`
 
 ## Development
@@ -34,7 +36,6 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
-
 
 ## Tech-stacks / Docs
 
