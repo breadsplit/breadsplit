@@ -1,11 +1,13 @@
-# MoneyFlow
+# MoneyFlow?
+
+keywords: `split bills`, `group expenses management`, `sharing expenses`, `travel`
 
 ## Development
 
 ### Installation
 1. Make sure you have [Node.js](https://nodejs.org/en/) > `v11.0` installed
 2. Install [git](https://git-scm.com/) or GUI Clients (eg. [Github Desktop](https://desktop.github.com/))
-3. [VSCode](https://code.visualstudio.com/) is recommaned as text editor(Please install `eslint` plugin)
+3. [VSCode](https://code.visualstudio.com/) is recommaned as text editor (with plugin [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) installed)
 4. Chrome with extension [Vue.js Devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) installed.
 5. Clone this repo.
 6. Install the depenencies using flowing command
@@ -56,3 +58,12 @@ For detailed explanation on how things work, checkout [Nuxt.js docs](https://nux
 
 ### Others
 - [Material Design Icons](https://materialdesignicons.com/) (Icon set)
+
+
+## Simliar Apps
+- [Tricount](https://www.tricount.com/)
+- [Splitwise](https://www.splitwise.com/)
+- [SplittyPie](https://splittypie.com/) *Open Source*
+- [KittySplit](https://www.kittysplit.com/en/)
+- [iHateMoney](https://ihatemoney.org/)
+- [Splid](https://splid.app/)
