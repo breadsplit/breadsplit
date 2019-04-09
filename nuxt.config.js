@@ -1,5 +1,6 @@
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 const pkg = require('./package')
+const locales = require('./locales').default
 
 module.exports = {
   mode: 'spa',
@@ -42,6 +43,7 @@ module.exports = {
   */
   plugins: [
     '@/plugins/vuetify',
+    '@/plugins/i18n',
   ],
 
   /*

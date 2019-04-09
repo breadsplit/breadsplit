@@ -27,6 +27,7 @@
     "nuxt": "^2.6.1",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
+    "vue-i18n": "^8.10.0",
     "vuetify": "^1.5.9",
     "vuetify-loader": "^1.2.1"
   },

@@ -12,7 +12,7 @@ v-app(:dark='dark')
         v-list-tile-action
           v-icon mdi-plus
         v-list-tile-content
-          v-list-tile-title New Book
+          v-list-tile-title {{$t('ui.new_book')}}
 
   v-toolbar(:clipped-left='clipped', fixed, app)
     v-toolbar-side-icon(@click='drawer = !drawer')
@@ -30,7 +30,7 @@ v-app(:dark='dark')
         v-btn(flat, slot='activator')
           v-avatar(size='40').mx-2
             img(src='https://picsum.photos/200?image=134')
-          span {{ $store.state.user.displayname || 'Guest' }}
+          span {{ $store.state.user.displayname || $t('ui.guest') }}
           v-icon mdi-menu-down
         v-list
           v-list-tile(v-for='(item, index) in items', :key='index', @click='')
