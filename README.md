@@ -44,6 +44,7 @@ For detailed explanation on how things work, checkout [Nuxt.js docs](https://nux
 - [Vue.js](https://vuejs.org/) (Front-end framework)
   - [Vuetify](https://vuetifyjs.com/) (Vue UI Components)
   - [Vuex](https://vuex.vuejs.org/) (Vue state management)
+  - [Vue i18n](http://kazupon.github.io/vue-i18n/) (i18n multilanguages support)
 - [Nuxt.js](https://nuxtjs.org/) (Tool set for Vue.js)
 - [Express.js](https://expressjs.com/) (API routing)
   - [RESTful API](https://www.restapitutorial.com/) (Format standard for HTTP requests)

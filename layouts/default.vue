@@ -2,17 +2,23 @@
 v-app(:dark='dark')
   v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
     v-list.py-2
-      v-list-tile(v-for='(item, i) in books', :key='i', :to='`/book/${item.id}`', router, exact)
+      v-list-tile.px-2(v-for='(item, i) in books', :key='i', :to='`/book/${item.id}`', router, exact)
         v-list-tile-action
           v-icon {{ item.icon || 'book' }}
         v-list-tile-content
           v-list-tile-title(v-text='item.display')
       v-divider.my-1
-      v-list-tile(@click='newBook')
+      v-list-tile.px-2(@click='newBook')
         v-list-tile-action
           v-icon mdi-plus
         v-list-tile-content
           v-list-tile-title {{$t('ui.new_book')}}
+
+      v-list-tile.drawer-list-bottom.px-2.my-1(@click='$router.push("/settings")')
+        v-list-tile-action
+          v-icon mdi-settings
+        v-list-tile-content
+          v-list-tile-title {{$t('ui.settings')}}
 
   v-toolbar(:clipped-left='clipped', fixed, app)
     v-toolbar-side-icon(@click='drawer = !drawer')
@@ -78,3 +84,11 @@ export default {
   },
 }
 </script>
+
+<style lang="stylus">
+.drawer-list-bottom
+  position absolute
+  bottom 0
+  left 0
+  right 0
+</style>

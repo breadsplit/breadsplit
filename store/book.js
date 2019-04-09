@@ -14,7 +14,7 @@ export const MakeBook = () => ({
   },
   serverid: null,
   lastsync: null,
-  offline: true,
+  online: false,
 })
 
 export const state = () => ({

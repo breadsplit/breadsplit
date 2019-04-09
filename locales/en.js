@@ -5,5 +5,6 @@ export default {
     new_book: 'New Book',
     guest: 'Guest',
     language: 'Language',
+    settings: 'Settings',
   },
 }
