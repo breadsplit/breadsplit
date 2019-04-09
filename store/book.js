@@ -23,7 +23,7 @@ export const state = () => ({
 })
 
 export const getters = {
-  current(state) {
+  current({ state }) {
     if (state.currentIndex == null)
       return null
     return state.books[state.currentIndex] || null
@@ -31,7 +31,7 @@ export const getters = {
 }
 
 export const actions = {
-  newBook({ commit, rootState, dispatch }, inputed) {
+  new({ commit, rootState, state, dispatch }, inputed) {
     const book = Object.assign({}, MakeBook(), inputed)
     commit('addBook', book)
     dispatch('newMember', { bookindex: state.books.length - 1, user: rootState.user, owner: true })

@@ -2,13 +2,13 @@
 v-app(:dark='dark')
   v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
     v-list.py-2
-      v-list-tile(v-for='(item, i) in items', :key='i', :to='item.to', router, exact)
+      v-list-tile(v-for='(item, i) in books', :key='i', :to='`/book/${item.id}`', router, exact)
         v-list-tile-action
-          v-icon {{ item.icon }}
+          v-icon {{ item.icon || 'book' }}
         v-list-tile-content
-          v-list-tile-title(v-text='item.title')
+          v-list-tile-title(v-text='item.display')
       v-divider.my-1
-      v-list-tile(@click='')
+      v-list-tile(@click='newBook')
         v-list-tile-action
           v-icon mdi-plus
         v-list-tile-content
@@ -54,23 +54,22 @@ export default {
       clipped: true,
       drawer: true,
       fixed: false,
-      items: [
-        {
-          icon: 'book',
-          title: 'Book A',
-          to: '/book/a',
-        },
-        {
-          icon: 'book',
-          title: 'Book B',
-          to: '/book/b',
-        },
-      ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'MoneyFlow',
     }
+  },
+  computed: {
+    books() {
+      return this.$store.state.book.books
+    },
+  },
+  methods: {
+    newBook() {
+      // TODO: make a dialog to input the data
+      this.$store.dispatch('book/new', { display: 'Untitled Book' })
+    },
   },
 }
 </script>
