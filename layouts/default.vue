@@ -57,12 +57,17 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'MoneyFlow',
+      items: [
+        { title: 'Logout' },
+      ],
     }
   },
   computed: {
     books() {
       return this.$store.state.book.books
+    },
+    title() {
+      return (this.$store.getters['book/current'] || {}).display || 'MoneyFlow'
     },
   },
   methods: {

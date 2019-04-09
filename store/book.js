@@ -19,12 +19,12 @@ export const MakeBook = () => ({
 
 export const state = () => ({
   books: [],
-  currentIndex: 0,
+  currentIndex: -1,
 })
 
 export const getters = {
-  current({ state }) {
-    if (state.currentIndex == null)
+  current(state) {
+    if (state.currentIndex < 0)
       return null
     return state.books[state.currentIndex] || null
   },
@@ -49,7 +49,7 @@ export const mutations = {
   },
   switchToId(state, id) {
     const book = state.books.find(b => b.id === id)
-    state.currentIndex = state.books.indexOf(book) || null
+    state.currentIndex = state.books.indexOf(book)
   },
   addMember(state, { index, member }) {
     // TODO:Vaildate the uniquity of memebers' email

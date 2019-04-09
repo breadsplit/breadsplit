@@ -6,8 +6,21 @@ v-layout
 
 <script>
 export default {
-  async asyncData({ params }) {
+  computed: {
+    book() {
+      return this.$store.getters['book/current']
+    },
+  },
+  async asyncData({ params, store, error }) {
+    store.commit('book/switchToId', params.id)
+    if (!store.getters['book/current'])
+      return error('Book not found')
     return { params }
+  },
+  head() {
+    return {
+      title: this.book.display,
+    }
   },
 }
 </script>
