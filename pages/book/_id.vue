@@ -1,6 +1,6 @@
 <template lang="pug">
 v-layout
-  v-flex(text-xs-center='')
+  v-flex.text-xs-center
     blockquote.blockquote Hello, {{params.id}}
 </template>
 
