@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-app
+v-app(:dark='dark')
   v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
     v-list.py-2
       v-list-tile(v-for='(item, i) in items', :key='i', :to='item.to', router, exact)
@@ -24,6 +24,17 @@ v-app
       v-spacer
         v-btn(icon, @click.stop='rightDrawer = !rightDrawer')
           v-icon mdi-menu
+    v-spacer
+    v-toolbar-items
+      v-menu(offset-y='')
+        v-btn(flat, slot='activator')
+          v-avatar(size='40').mx-2
+            img(src='https://picsum.photos/200?image=134')
+          span {{ $store.state.user.displayname || 'Guest' }}
+          v-icon mdi-menu-down
+        v-list
+          v-list-tile(v-for='(item, index) in items', :key='index', @click='')
+            v-list-tile-title {{ item.title }}
   v-content
     v-container
       nuxt
@@ -39,6 +50,7 @@ v-app
 export default {
   data() {
     return {
+      dark: false,
       clipped: true,
       drawer: true,
       fixed: false,
