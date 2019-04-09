@@ -80,5 +80,6 @@ module.exports = {
     'no-void': 'error',
     'no-useless-escape': 'error',
     'vars-on-top': 'error',
+    'require-await': 'off',
   }
 }

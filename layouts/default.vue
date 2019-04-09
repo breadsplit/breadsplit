@@ -56,14 +56,14 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'apps',
-          title: 'Welcome',
-          to: '/',
+          icon: 'book',
+          title: 'Book A',
+          to: '/book/a',
         },
         {
-          icon: 'bubble_chart',
-          title: 'Inspire',
-          to: '/inspire',
+          icon: 'book',
+          title: 'Book B',
+          to: '/book/b',
         },
       ],
       miniVariant: false,
