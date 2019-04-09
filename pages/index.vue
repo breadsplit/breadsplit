@@ -1,7 +1,6 @@
 <template lang='pug'>
 v-layout(column, justify-center, align-center)
-  v-flex(xs12, sm8, md6)
-    .text-xs-center
+  v-flex.text-xs-center(xs12, sm8, md6)
     v-card
       v-card-title.headline
         | Welcome to the Vuetify + Nuxt.js template
