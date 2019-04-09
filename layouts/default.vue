@@ -79,7 +79,9 @@ export default {
   methods: {
     newBook() {
       // TODO: make a dialog to input the data
-      this.$store.dispatch('book/new', { display: 'Untitled Book' })
+      const display = prompt(this.$t('ui.enter_book_name'), this.$t('ui.untitled_book'))
+      if (display)
+        this.$store.dispatch('book/new', { display })
     },
   },
 }

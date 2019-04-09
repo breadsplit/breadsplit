@@ -6,5 +6,7 @@ export default {
     guest: 'Guest',
     language: 'Language',
     settings: 'Settings',
+    enter_book_name: 'Enter book\'s name',
+    untitled_book: 'Untitled Book',
   },
 }
