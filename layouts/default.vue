@@ -1,17 +1,24 @@
 <template lang='pug'>
-v-app(dark)
+v-app
   v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
-    v-list
+    v-list.py-2
       v-list-tile(v-for='(item, i) in items', :key='i', :to='item.to', router, exact)
         v-list-tile-action
           v-icon {{ item.icon }}
         v-list-tile-content
           v-list-tile-title(v-text='item.title')
+      v-divider.my-1
+      v-list-tile(@click='')
+        v-list-tile-action
+          v-icon mdi-plus
+        v-list-tile-content
+          v-list-tile-title New Book
+
   v-toolbar(:clipped-left='clipped', fixed, app)
     v-toolbar-side-icon(@click='drawer = !drawer')
-    v-btn(icon, @click.stop='miniVariant = !miniVariant')
+    //v-btn(icon, @click.stop='miniVariant = !miniVariant')
       v-icon {{ `mdi-chevron-${miniVariant ? 'right' : 'left'}` }}
-    v-btn(icon, @click.stop='clipped = !clipped')
+    //v-btn(icon, @click.stop='clipped = !clipped')
       v-icon mdi-book-open-outline
     v-toolbar-title(v-text='title')
       v-spacer
@@ -32,8 +39,8 @@ v-app(dark)
 export default {
   data() {
     return {
-      clipped: false,
-      drawer: false,
+      clipped: true,
+      drawer: true,
       fixed: false,
       items: [
         {
@@ -50,7 +57,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'MoneyFlow',
     }
   },
 }
