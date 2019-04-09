@@ -70,6 +70,9 @@ module.exports = {
         import: ['~assets/style/variables.styl'],
       },
     },
+    splitChunks: {
+      layouts: true,
+    },
     /*
     ** You can extend webpack config here
     */
