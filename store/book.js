@@ -6,7 +6,7 @@ export const MakeBook = () => ({
   icon: '',
   color: '',
   members: [],
-  bills: [],
+  records: [],
   currenies: [],
   currenyrecords: [],
   options: {

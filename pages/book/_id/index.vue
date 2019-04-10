@@ -2,6 +2,8 @@
 v-layout
   v-flex.text-xs-center
     blockquote.blockquote Hello, {{params.id}}
+
+  v-btn(nuxt, :to='`/book/${params.id}/new`') New
 </template>
 
 <script>
