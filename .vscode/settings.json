@@ -5,4 +5,16 @@
   "editor.formatOnPaste": true,
   "editor.formatOnSave": false,
   "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": true
+    },
+    {
+      "language": "html",
+      "autoFix": true
+    }
+  ],
 }

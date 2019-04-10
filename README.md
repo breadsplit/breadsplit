@@ -15,7 +15,7 @@ keywords: `split bills`, `group expenses management`, `sharing expenses`, `trave
 6. Install the depenencies using flowing command
 ``` bash
 # install dependencies
-$ npm install
+$ npm ci
 ```
 
 ### Run the app
@@ -36,6 +36,15 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+
+### Pull new code
+```bash
+$ git pull
+```
+After every pull, please run following command to ensure the packages dependencies
+``` bash
+$ npm i
+```
 
 ## Tech-stacks / Docs
 
