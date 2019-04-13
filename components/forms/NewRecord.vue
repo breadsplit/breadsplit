@@ -2,7 +2,7 @@
 v-container
   v-layout
     v-flex(xs12)
-      category-icon(:category='autoCategory')
+      category-icon(:category='form.category || categorySense')
       v-text-field(v-model='form.desc' label='Description', required='')
 </template>
 
@@ -34,7 +34,7 @@ export default {
       })
       return keys
     },
-    autoCategory() {
+    categorySense() {
       const category = this.categoriesKeywords
         .find(({ key, value }) => {
           return (this.form.desc || '').toLowerCase().includes(key)
