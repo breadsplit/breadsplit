@@ -2,12 +2,13 @@
 v-app(:dark='dark')
   v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
     v-list.py-2
-      v-list-tile.px-2(v-for='(item, i) in books', :key='i', :to='`/book/${item.id}`', router, exact)
-        v-list-tile-action
-          v-icon {{ item.icon || 'book' }}
-        v-list-tile-content
-          v-list-tile-title(v-text='item.display')
-      v-divider.my-1
+      template(v-if='books.length')
+        v-list-tile.px-2(v-for='(item, i) in books', :key='i', :to='`/book/${item.id}`', router, exact)
+          v-list-tile-action
+            v-icon {{ item.icon || 'book' }}
+          v-list-tile-content
+            v-list-tile-title(v-text='item.display')
+        v-divider.my-1
       v-list-tile.px-2(@click='newBook')
         v-list-tile-action
           v-icon mdi-plus
@@ -20,7 +21,7 @@ v-app(:dark='dark')
         v-list-tile-content
           v-list-tile-title {{$t('ui.settings')}}
 
-  v-toolbar(:clipped-left='clipped', fixed, app)
+  v-toolbar(:clipped-left='clipped', fixed, app, dark, color='primary')
     v-toolbar-side-icon(@click='drawer = !drawer')
     //v-btn(icon, @click.stop='miniVariant = !miniVariant')
       v-icon {{ `mdi-chevron-${miniVariant ? 'right' : 'left'}` }}
@@ -31,7 +32,7 @@ v-app(:dark='dark')
         v-btn(icon, @click.stop='rightDrawer = !rightDrawer')
           v-icon mdi-menu
     v-spacer
-    v-toolbar-items
+    //v-toolbar-items
       v-menu(offset-y='')
         v-btn(flat, slot='activator')
           v-avatar(size='40').mx-2
@@ -58,7 +59,7 @@ export default {
     return {
       dark: false,
       clipped: true,
-      drawer: true,
+      drawer: false,
       fixed: false,
       miniVariant: false,
       right: true,
