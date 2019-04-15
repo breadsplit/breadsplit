@@ -61,6 +61,9 @@ module.exports = {
     // See https://github.com/nuxt-community/axios-module#options
   },
 
+  router: {
+    mode: 'hash',
+  },
   /*
   ** Build configuration
   */
