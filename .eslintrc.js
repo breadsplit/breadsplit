@@ -81,5 +81,6 @@ module.exports = {
     'no-useless-escape': 'error',
     'vars-on-top': 'error',
     'require-await': 'off',
+    'no-return-assign': 'off',
   }
 }
