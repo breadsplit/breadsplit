@@ -1,6 +1,6 @@
 import randomstr from '~/utils/randomstr'
 
-export const MakeBook = () => ({
+const CreateBook = () => ({
   id: randomstr(5),
   display: '',
   icon: '',
@@ -15,6 +15,17 @@ export const MakeBook = () => ({
   serverid: null,
   lastsync: null,
   online: false,
+  operation_history: [],
+})
+
+const CreateMember = ({ display, email, phone, owner = false, type = 'user' }) => ({
+  id: randomstr(5),
+  display,
+  email,
+  owner,
+  phone,
+  type,
+  uid: null,
 })
 
 export const state = () => ({
@@ -32,14 +43,14 @@ export const getters = {
 
 export const actions = {
   new({ commit, rootState, state, dispatch }, inputed) {
-    const book = Object.assign({}, MakeBook(), inputed)
+    const book = Object.assign({}, CreateBook(), inputed)
     commit('addBook', book)
-    dispatch('newMember', { bookindex: state.books.length - 1, user: rootState.user, owner: true })
+    dispatch('newMember', { bookidx: state.books.length - 1, user: rootState.user, owner: true })
   },
-  newMember({ commit }, { bookindex, user, type = 'user', owner = false }) {
+  newMember({ commit }, { bookidx, user, phone, type, owner = false }) {
     const { displayname, email } = user
-    const member = { displayname, email, owner, type }
-    commit('addMember', { index: bookindex, member })
+    const member = CreateMember({ displayname, email, phone, owner, type })
+    commit('addMember', { bookidx, member })
   },
 }
 
@@ -51,17 +62,17 @@ export const mutations = {
     const book = state.books.find(b => b.id === id)
     state.currentIndex = state.books.indexOf(book)
   },
-  addMember(state, { index, member }) {
+  addMember(state, { bookidx, member }) {
     // TODO:Vaildate the uniquity of memebers' email
-    state.books[index].members.push(member)
+    state.books[bookidx].members.push(member)
   },
-  removeMember(state, { index, memberIndex }) {
+  removeMember(state, { bookidx, memberIndex }) {
     // TODO:
   },
   addBook(state, book) {
     state.books.push(book)
   },
-  removeBook(state, bookIndex) {
-    state.books.splice(bookIndex, 1)
+  removeBook(state, bookidx) {
+    state.books.splice(bookidx, 1)
   },
 }
