@@ -1,5 +1,11 @@
 <template lang='pug'>
 v-app(:dark='dark')
+
+  style.
+    :root {
+      --app-font: {{i18nStyle}};
+    }
+
   v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
     v-list.py-2
       template(v-if='books.length')
@@ -54,6 +60,8 @@ v-app(:dark='dark')
 </template>
 
 <script>
+import FontFamilyBuilder from '~/meta/font_family'
+
 export default {
   data() {
     return {
@@ -74,7 +82,15 @@ export default {
       return this.$store.state.book.books
     },
     title() {
-      return (this.$store.getters['book/current'] || {}).display || 'MoneyFlow'
+      return (this.$store.getters['book/current'] || {}).display || this.$t('appname')
+    },
+    i18nStyle() {
+      let font_family = this.$t('css.font_family', '')
+      const font_of_locale = this.$t('css.font_of_locale', '')
+      if (!font_family)
+        font_family = FontFamilyBuilder(font_of_locale)
+      console.log('font', font_family)
+      return font_family
     },
   },
   methods: {

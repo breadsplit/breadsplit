@@ -1,4 +1,8 @@
 export default {
+  css: {
+    font_of_locale: '"微軟正黑體", "Microsoft JhengHei"',
+  },
+
   ui: {
     language: '顯示語言',
     settings: '設定',
@@ -17,6 +21,7 @@ export default {
       settle_up: '付清',
     },
   },
+
   cats: {
     transport: {
       display: '交通',
