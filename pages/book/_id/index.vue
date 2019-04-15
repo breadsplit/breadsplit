@@ -23,22 +23,21 @@ export default {
   data() {
     return {
       fab: false,
-
     }
   },
   computed: {
     speedDialItems() {
       return [
         {
-          text: 'New Expense',
+          text: this.$t('ui.speed_dials.new_expense'),
           icon: 'mdi-cash-usd',
           key: 'new-expense',
         }, {
-          text: 'Settle Up',
+          text: this.$t('ui.speed_dials.settle_up'),
           icon: 'mdi-account-multiple-check',
           key: 'new-transfer',
         }, {
-          text: 'New Member',
+          text: this.$t('ui.speed_dials.new_member'),
           icon: 'mdi-account-plus',
           key: 'new-member',
         }]

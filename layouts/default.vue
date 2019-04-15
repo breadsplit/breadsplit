@@ -12,7 +12,7 @@ v-app(:dark='dark')
         v-list-tile-action
           v-icon mdi-plus
         v-list-tile-content
-          v-list-tile-title {{$t('ui.new_book')}}
+          v-list-tile-title {{$t('ui.book_editing.new_book')}}
 
       v-list-tile.drawer-list-bottom.px-2.my-1(@click='$router.push("/settings")')
         v-list-tile-action
@@ -36,7 +36,7 @@ v-app(:dark='dark')
         v-btn(flat, slot='activator')
           v-avatar(size='40').mx-2
             img(src='https://picsum.photos/200?image=134')
-          span {{ $store.state.user.displayname || $t('ui.guest') }}
+          span {{ $store.state.user.displayname || $t('ui.user.guest') }}
           v-icon mdi-menu-down
         v-list
           v-list-tile(v-for='(item, index) in items', :key='index', @click='')
@@ -79,7 +79,10 @@ export default {
   methods: {
     newBook() {
       // TODO: make a dialog to input the data
-      const display = prompt(this.$t('ui.enter_book_name'), this.$t('ui.untitled_book'))
+      const display = prompt(
+        this.$t('ui.book_editing.enter_book_name'),
+        this.$t('ui.book_editing.default_book_name')
+      )
       if (display)
         this.$store.dispatch('book/new', { display })
     },

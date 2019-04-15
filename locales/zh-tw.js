@@ -1,13 +1,21 @@
 export default {
-  appname: 'MoneyFlow',
   ui: {
-    book: '賬本',
-    new_book: '新增賬本',
-    guest: '訪客',
     language: '顯示語言',
     settings: '設定',
-    enter_book_name: '請輸入賬本名稱',
-    untitled_book: '未命名賬本',
+
+    user: {
+      guest: '訪客',
+    },
+    book_editing: {
+      new_book: '新增賬本',
+      enter_book_name: '請輸入賬本名稱',
+      default_book_name: '未命名賬本',
+    },
+    speed_dials: {
+      new_expense: '支出',
+      new_member: '添加成員',
+      settle_up: '付清',
+    },
   },
   cats: {
     transport: {
