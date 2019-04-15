@@ -21,7 +21,7 @@ v-app(:dark='dark')
         v-list-tile-content
           v-list-tile-title {{$t('ui.book_editing.new_book')}}
 
-      v-list-tile.drawer-list-bottom.px-2.my-1(@click='$router.push("/settings")')
+      v-list-tile.drawer-list-bottom.px-2.my-1(@click='dialog_settings=true')
         v-list-tile-action
           v-icon mdi-settings
         v-list-tile-content
@@ -48,21 +48,24 @@ v-app(:dark='dark')
         v-list
           v-list-tile(v-for='(item, index) in items', :key='index', @click='')
             v-list-tile-title {{ item.title }}
+
   v-content
     v-container
       nuxt
-  v-navigation-drawer(v-model='rightDrawer', :right='right', temporary, fixed)
-    v-list
-      v-list-tile(@click.native='right = !right')
-        v-list-tile-action
-          v-icon(light) mdi-compare-arrows
-        v-list-tile-title Switch drawer (click me)
+
+  v-dialog(v-model='dialog_settings', fullscreen, hide-overlay, transition='dialog-bottom-transition')
+    settings(@close='dialog_settings=false')
+
 </template>
 
 <script>
 import FontFamilyBuilder from '~/meta/font_family'
+import Settings from '~/components/Settings.vue'
 
 export default {
+  components: {
+    Settings,
+  },
   data() {
     return {
       dark: false,
@@ -70,11 +73,10 @@ export default {
       drawer: false,
       fixed: false,
       miniVariant: false,
-      right: true,
-      rightDrawer: false,
       items: [
         { title: 'Logout' },
       ],
+      dialog_settings: false,
     }
   },
   computed: {
