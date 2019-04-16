@@ -83,15 +83,17 @@ export default {
     books() {
       return this.$store.state.book.books
     },
+    current() {
+      return this.$store.getters['book/current']
+    },
     title() {
-      return (this.$store.getters['book/current'] || {}).display || this.$t('appname')
+      return (this.current || {}).display || this.$t('appname')
     },
     i18nStyle() {
       let font_family = this.$t('css.font_family', '')
       const font_of_locale = this.$t('css.font_of_locale', '')
       if (!font_family)
         font_family = FontFamilyBuilder(font_of_locale)
-      console.log('font', font_family)
       return font_family
     },
   },

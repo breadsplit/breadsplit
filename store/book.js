@@ -1,4 +1,5 @@
 import randomstr from '~/utils/randomstr'
+import Vue from 'vue'
 
 const CreateBook = () => ({
   id: randomstr(5),
@@ -9,9 +10,7 @@ const CreateBook = () => ({
   records: [],
   currenies: [],
   currenyrecords: [],
-  options: {
-
-  },
+  options: {},
   serverid: null,
   lastsync: null,
   online: false,
@@ -55,6 +54,10 @@ export const actions = {
 }
 
 export const mutations = {
+  purge(state) {
+    state.currentIndex = -1
+    Vue.set(state, 'books', [])
+  },
   switchTo(state, index) {
     state.currentIndex = index
   },

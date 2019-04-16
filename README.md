@@ -53,6 +53,7 @@ $ npm i
 - [Vue.js](https://vuejs.org/) (Front-end framework)
   - [Vuetify](https://vuetifyjs.com/) (Vue UI Components)
   - [Vuex](https://vuex.vuejs.org/) (Vue state management)
+    - [vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate) (Store Vuex into LocalStorage)
   - [Vue i18n](http://kazupon.github.io/vue-i18n/) (i18n multilanguages support)
 - [Nuxt.js](https://nuxtjs.org/) (Tool set for Vue.js)
 - [Express.js](https://expressjs.com/) (API routing)

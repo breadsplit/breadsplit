@@ -41,6 +41,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '@/plugins/localstorage', ssr: false },
     '@/plugins/vuetify',
     '@/plugins/i18n',
   ],
@@ -62,6 +63,9 @@ module.exports = {
 
   router: {
     mode: 'hash',
+    middleware: [
+      'book',
+    ],
   },
   /*
   ** Build configuration

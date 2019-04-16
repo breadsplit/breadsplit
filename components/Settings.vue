@@ -5,7 +5,7 @@ v-card
       v-icon close
     v-toolbar-title {{$t('ui.settings')}}
   v-container
-    v-subheader Language
+    v-subheader {{$t("ui.language")}}
     v-layout.px-3
       v-flex(xs12)
         v-select(
@@ -20,6 +20,9 @@ v-card
 
     v-divider
 
+    v-layout.px-3
+      v-flex(xs12).text-xs-center
+        v-btn.my-3(color='red', dark, @click='purgeData') Clear All Data
 </template>
 
 <script>
@@ -43,6 +46,12 @@ export default {
     changeLocale(locale) {
       this.$store.dispatch('switchLocale', locale)
       this.$i18n.locale = locale
+    },
+    purgeData() {
+      if (confirm('Sure?'))
+        this.$store.commit('book/purge')
+      this.close()
+      this.$router.push('/')
     },
   },
 }

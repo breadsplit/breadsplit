@@ -44,7 +44,8 @@ export default {
     },
   },
   async asyncData({ params, store, error }) {
-    store.commit('book/switchToId', params.id)
+    if (!store.state.loaded)
+      return { params }
     if (!store.getters['book/current'])
       return error({ icon: 'mdi-book-outline', statusCode: 'Book not found', message: 'This seems to be a local book, are you sure it\'s stored on this device?' })
     return { params }
@@ -56,7 +57,6 @@ export default {
   },
   methods: {
     speedDialClicked(buttonid) {
-      console.log(buttonid)
       switch (buttonid) {
         case 'new-expense':
           this.$router.push(`/book/${this.params.id}/new-record?type=expense`)

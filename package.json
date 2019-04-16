@@ -29,7 +29,8 @@
     "pug-plain-loader": "^1.0.0",
     "vue-i18n": "^8.10.0",
     "vuetify": "^1.5.9",
-    "vuetify-loader": "^1.2.1"
+    "vuetify-loader": "^1.2.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "nodemon": "^1.18.11",
