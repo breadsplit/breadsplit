@@ -1,7 +1,6 @@
 <template lang="pug">
 v-layout
-  v-flex.text-xs-center
-    blockquote.blockquote Hello, {{params.id}}
+  members(:members='book.members')
 
   speed-dial(
     bottom, fixed, right, direction='top',
@@ -14,10 +13,12 @@ v-layout
 <script>
 import BookMixin from '~/mixins/book'
 import SpeedDial from '~/components/SpeedDial.vue'
+import Members from '~/components/Members.vue'
 
 export default {
   components: {
     SpeedDial,
+    Members,
   },
   mixins: [BookMixin],
   data() {

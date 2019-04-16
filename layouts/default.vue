@@ -21,11 +21,18 @@ v-app(:dark='dark')
         v-list-tile-content
           v-list-tile-title {{$t('ui.book_editing.new_book')}}
 
-      v-list-tile.drawer-list-bottom.px-2.my-1(@click='dialog_settings=true')
-        v-list-tile-action
-          v-icon mdi-settings
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.settings')}}
+      .drawer-list-bottom
+        v-list-tile.px-2.my-1
+          v-list-tile-action
+            v-avatar(size='36', color='#00000020', style='margin: -6px;')
+              v-icon mdi-account
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.sign_in')}}
+        v-list-tile.px-2.my-1(@click='dialog_settings=true')
+          v-list-tile-action
+            v-icon mdi-settings
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.settings')}}
 
   v-toolbar(:clipped-left='clipped', fixed, app, dark, color='primary')
     v-toolbar-side-icon(@click='drawer = !drawer')
@@ -114,7 +121,7 @@ export default {
 <style lang="stylus">
 .drawer-list-bottom
   position absolute
-  bottom 0
+  bottom 5px
   left 0
   right 0
 </style>

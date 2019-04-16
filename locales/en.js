@@ -20,6 +20,7 @@ export default {
   ui: {
     language: 'Language',
     settings: 'Settings',
+    sign_in: 'Sign in',
     user: {
       guest: 'Guest',
     },
