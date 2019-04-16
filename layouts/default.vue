@@ -34,7 +34,7 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.settings')}}
 
-  v-toolbar(:clipped-left='clipped', fixed, app, dark, color='primary')
+  v-toolbar.app-toolbar(:clipped-left='clipped', fixed, app, dark, color='primary')
     v-toolbar-side-icon(@click='drawer = !drawer')
     //v-btn(icon, @click.stop='miniVariant = !miniVariant')
       v-icon {{ `mdi-chevron-${miniVariant ? 'right' : 'left'}` }}
@@ -45,15 +45,12 @@ v-app(:dark='dark')
         v-btn(icon, @click.stop='rightDrawer = !rightDrawer')
           v-icon mdi-menu
     v-spacer
-    //v-toolbar-items
+    v-toolbar-items(v-show='current')
       v-menu(offset-y='')
-        v-btn(flat, slot='activator')
-          v-avatar(size='40').mx-2
-            img(src='https://picsum.photos/200?image=134')
-          span {{ $store.state.user.displayname || $t('ui.user.guest') }}
-          v-icon mdi-menu-down
+        v-btn(icon, flat, slot='activator')
+          v-icon mdi-dots-vertical
         v-list
-          v-list-tile(v-for='(item, index) in items', :key='index', @click='')
+          v-list-tile(v-for='(item, index) in book_menu', :key='index', @click='')
             v-list-tile-title {{ item.title }}
 
   v-content
@@ -80,9 +77,6 @@ export default {
       drawer: false,
       fixed: false,
       miniVariant: false,
-      items: [
-        { title: 'Logout' },
-      ],
       dialog_settings: false,
     }
   },
@@ -102,6 +96,12 @@ export default {
       if (!font_family)
         font_family = FontFamilyBuilder(font_of_locale)
       return font_family
+    },
+    book_menu() {
+      return [
+        { title: 'Edit book' },
+        { title: 'Delete book' },
+      ]
     },
   },
   methods: {
@@ -124,4 +124,7 @@ export default {
   bottom 5px
   left 0
   right 0
+.app-toolbar
+  .v-toolbar__content
+    padding-right 2px
 </style>
