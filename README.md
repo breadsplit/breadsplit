@@ -73,9 +73,10 @@ $ npm i
 
 
 ## Simliar Apps
-- [Tricount](https://www.tricount.com/)
+- [⭐Settle Up](https://www.tricount.com/)
+- [⭐Splid](https://splid.app/)
 - [Splitwise](https://www.splitwise.com/)
+- [Tricount](https://www.tricount.com/)
 - [SplittyPie](https://splittypie.com/) *Open Source*
 - [KittySplit](https://www.kittysplit.com/en/)
 - [iHateMoney](https://ihatemoney.org/)
-- [Splid](https://splid.app/)

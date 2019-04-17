@@ -8,6 +8,7 @@ v-card
     v-flex
       // TODO:wayne UI, checkout Vuetify docs (Form section)
       p TODO:wayne
+      v-swatches(v-model='book.color', colors='material-basic')
     v-flex
       v-btn(@click='create()', color='primary') Create
 </template>
@@ -17,6 +18,9 @@ v-card
 export default {
   data() {
     return {
+      book: {
+        color: '',
+      },
     }
   },
   methods: {

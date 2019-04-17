@@ -28,6 +28,7 @@
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "vue-i18n": "^8.10.0",
+    "vue-swatches": "^1.0.3",
     "vuetify": "^1.5.9",
     "vuetify-loader": "^1.2.1",
     "vuex-persistedstate": "^2.5.4"
