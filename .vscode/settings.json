@@ -17,4 +17,31 @@
       "autoFix": true
     }
   ],
+  "cSpell.words": [
+    "axois",
+    "fullname",
+    "localstorage",
+    "nuxt",
+    "nuxtjs",
+    "persistedstate",
+    "preprocessors",
+    "repo",
+    "res",
+    "styl",
+    "tful",
+    "vuetify",
+    "vuex"
+  ],
+  "cSpell.allowCompoundWords": true,
+  "cSpell.enabledLanguageIds": [
+    "javascript",
+    "javascriptreact",
+    "markdown",
+    "plaintext",
+    "text",
+    "typescript",
+    "typescriptreact",
+    "yml",
+    "vue",
+  ],
 }

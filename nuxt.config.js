@@ -41,8 +41,12 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    // LocalStorage is not available in server side
+    // the SSR is disabled for this plugin
     { src: '@/plugins/localstorage', ssr: false },
+    // Other plugins
     '@/plugins/vuetify',
+    '@/plugins/components',
     '@/plugins/i18n',
   ],
 
@@ -51,7 +55,7 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    // '@nuxtjs/axios',
     '@nuxtjs/pwa',
   ],
   /*

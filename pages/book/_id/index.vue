@@ -1,8 +1,8 @@
 <template lang="pug">
 v-layout
-  members(:members='book.members')
+  app-members(:members='book.members')
 
-  speed-dial(
+  app-speed-dial(
     bottom, fixed, right, direction='top',
     transition='slide-y-reverse-transition',
     icon='mdi-plus', iconclose='mdi-close',
@@ -12,14 +12,8 @@ v-layout
 
 <script>
 import BookMixin from '~/mixins/book'
-import SpeedDial from '~/components/SpeedDial.vue'
-import Members from '~/components/Members.vue'
 
 export default {
-  components: {
-    SpeedDial,
-    Members,
-  },
   mixins: [BookMixin],
   data() {
     return {

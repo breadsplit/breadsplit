@@ -9,10 +9,10 @@ keywords: `split bills`, `group expenses management`, `sharing expenses`, `trave
 ### Installation
 1. Make sure you have [Node.js](https://nodejs.org/en/) > `v11.0` installed
 2. Install [git](https://git-scm.com/) or GUI Clients (eg. [Github Desktop](https://desktop.github.com/))
-3. [VSCode](https://code.visualstudio.com/) is recommaned as text editor (with plugin [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) installed)
-4. Chrome with extension [Vue.js Devtools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) installed.
+3. [VSCode](https://code.visualstudio.com/) is recommend as text editor (with plugin [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) installed)
+4. Chrome with extension [Vue.js DevTools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) installed.
 5. Clone this repo.
-6. Install the depenencies using flowing command
+6. Install the dependencies using flowing command
 ``` bash
 # install dependencies
 $ npm ci
@@ -54,7 +54,7 @@ $ npm i
   - [Vuetify](https://vuetifyjs.com/) (Vue UI Components)
   - [Vuex](https://vuex.vuejs.org/) (Vue state management)
     - [vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate) (Store Vuex into LocalStorage)
-  - [Vue i18n](http://kazupon.github.io/vue-i18n/) (i18n multilanguages support)
+  - [Vue i18n](http://kazupon.github.io/vue-i18n/) (i18n multi languages support)
 - [Nuxt.js](https://nuxtjs.org/) (Tool set for Vue.js)
 - [Express.js](https://expressjs.com/) (API routing)
   - [RESTful API](https://www.restapitutorial.com/) (Format standard for HTTP requests)
@@ -62,7 +62,7 @@ $ npm i
 - [MongoDB](https://www.mongodb.com/) (Database)
   - [Mongoose](https://mongoosejs.com/) (JS driver for MongoDB)
 
-### Preprocessers
+### Preprocessors
 
 - [Pug.js](https://pugjs.org/api/getting-started.html) *formly Jade* (HTML)
   - [HTML to Pug](https://html2jade.org/) (Tools)

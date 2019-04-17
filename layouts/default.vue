@@ -58,18 +58,14 @@ v-app(:dark='dark')
       nuxt
 
   v-dialog(v-model='dialog_settings', fullscreen, hide-overlay, transition='dialog-bottom-transition')
-    settings(@close='dialog_settings=false')
+    app-settings(@close='dialog_settings=false')
 
 </template>
 
 <script>
 import FontFamilyBuilder from '~/meta/font_family'
-import Settings from '~/components/Settings.vue'
 
 export default {
-  components: {
-    Settings,
-  },
   data() {
     return {
       dark: false,

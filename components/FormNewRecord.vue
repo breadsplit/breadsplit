@@ -2,18 +2,14 @@
 v-container
   v-layout
     v-flex(xs12)
-      category-icon(:category='form.category || categorySense')
+      app-category-icon(:category='form.category || categorySense')
       v-text-field(v-model='form.desc' label='Description', required='')
 </template>
 
 <script>
-import CategoryIcon from '../CategoryIcon.vue'
 import Categories, { CategoryKeys } from '@/meta/categories'
 
 export default {
-  components: {
-    CategoryIcon,
-  },
   data() {
     return {
       form: {
