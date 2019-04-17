@@ -4,30 +4,41 @@ v-card
     v-btn(icon, dark, @click='close()')
       v-icon close
     v-toolbar-title {{$t('ui.settings')}}
-  v-container
-    v-subheader {{$t("ui.language")}}
-    v-layout.px-3
-      v-flex(xs12)
-        v-select(
-          solo
-          prepend-inner-icon='mdi-web'
-          :value='currentLocale'
-          @input='changeLocale'
-          :items='locales'
-          :label='$t("ui.language")'
-          required
-        )
+  v-container.px-0
+    v-list(two-line, subheader)
+      v-subheader General
+      v-list-tile(avatar, @click='language_select=true')
+        v-list-tile-avatar
+          v-icon mdi-web
+        v-list-tile-content
+          v-list-tile-title {{$t("ui.language")}}
+          v-list-tile-sub-title {{currentLocaleDisplay}}
+      v-list-tile(avatar, @click='')
+        v-list-tile-avatar
+          v-icon mdi-bell
+        v-list-tile-content
+          v-list-tile-title Enable Notifications
+          v-list-tile-sub-title Notifications are disabled.
 
     v-divider
 
-    v-subheader {{$t("ui.advance")}}
-
-    v-layout.px-3
-      v-flex(xs12)
-        v-btn(color='red', dark, @click='purgeData') Clear All Data
+    v-list(two-line, subheader)
+      v-subheader {{$t("ui.advance")}}
+      v-list-tile(avatar, @click='purgeData')
+        v-list-tile-avatar
+          v-icon mdi-alert-box
+        v-list-tile-content
+          v-list-tile-title Reset
+          v-list-tile-sub-title Clear all Data
 
     app-credit
 
+  v-bottom-sheet(v-model='language_select')
+    v-list.pl-3.pt-3.pb-3
+      v-list-tile.pa-1(v-for='locale in locales', :key='locale.value', avatar, @click='switchLocale(locale.value)')
+        v-list-tile-title {{ locale.text }}
+        v-list-tile-action(v-if='locale.value === currentLocale')
+          v-icon mdi-check
 </template>
 
 <script>
@@ -39,20 +50,25 @@ export default {
     return {
       version,
       locales: locales.locales.map(l => ({ value: l.code, text: l.display })),
+      language_select: false,
     }
   },
   computed: {
     currentLocale() {
       return this.$i18n.locale || 'en'
     },
+    currentLocaleDisplay() {
+      return (this.locales.find(l => l.value === this.currentLocale) || {}).text || this.currentLocale
+    },
   },
   methods: {
     close() {
       this.$emit('close')
     },
-    changeLocale(locale) {
+    switchLocale(locale) {
       this.$store.commit('switchLocale', locale)
       this.$i18n.locale = locale
+      this.language_select = false
     },
     async purgeData() {
       if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
