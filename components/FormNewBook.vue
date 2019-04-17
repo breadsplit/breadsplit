@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       book: {
-        color: '',
+        color: swatches[Math.floor(Math.random() * swatches.length)],
       },
     }
   },
@@ -28,9 +28,6 @@ export default {
     isDark() {
       return this.$utils.isDark(this.book.color)
     },
-  },
-  mounted() {
-    this.book.color = swatches[Math.floor(Math.random() * swatches.length)]
   },
   methods: {
     close(result) {

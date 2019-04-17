@@ -44,7 +44,7 @@ export default {
       this.$emit('close')
     },
     changeLocale(locale) {
-      this.$store.dispatch('switchLocale', locale)
+      this.$store.commit('switchLocale', locale)
       this.$i18n.locale = locale
     },
     async purgeData() {

@@ -41,12 +41,11 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '@/plugins/i18n',
     // LocalStorage is not available in server side
     // the SSR is disabled for this plugin
     { src: '@/plugins/localstorage', ssr: false },
-    // Other plugins
     '@/plugins/utils',
-    '@/plugins/i18n',
     '@/plugins/vuetify',
     '@/plugins/swatches',
     '@/plugins/components',
