@@ -1,12 +1,13 @@
 {
   "name": "moneyflow",
   "fullname": "MoneyFlow",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "MoneyFlow App",
   "author": "Anthony Fu",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/esm.js --watch server",
+    "dev": "nuxt",
+    "dev-server": "cross-env NODE_ENV=development nodemon server/esm.js --watch server",
     "build": "nuxt build",
     "start": "cross-env NODE_ENV=production node server/esm.js",
     "generate": "nuxt generate",

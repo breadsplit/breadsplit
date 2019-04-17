@@ -21,6 +21,8 @@ export default {
     language: 'Language',
     settings: 'Settings',
     sign_in: 'Sign in',
+    about: 'About',
+    advance: 'Advance',
     user: {
       guest: 'Guest',
     },

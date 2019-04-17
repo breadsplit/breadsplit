@@ -20,17 +20,24 @@ v-card
 
     v-divider
 
+    v-subheader {{$t("ui.advance")}}
+
     v-layout.px-3
-      v-flex(xs12).text-xs-center
-        v-btn.my-3(color='red', dark, @click='purgeData') Clear All Data
+      v-flex(xs12)
+        v-btn(color='red', dark, @click='purgeData') Clear All Data
+
+    app-credit
+
 </template>
 
 <script>
 import locales from '~/locales'
+import version from '~/version'
 
 export default {
   data() {
     return {
+      version,
       locales: locales.locales.map(l => ({ value: l.code, text: l.display })),
     }
   },
