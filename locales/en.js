@@ -36,6 +36,10 @@ export default {
     },
   },
 
+  prompt: {
+    are_you_sure: 'Are you sure?',
+  },
+
   /* Categories */
   cats: {
     transport: {

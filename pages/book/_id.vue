@@ -1,6 +1,6 @@
 <template lang="pug">
 v-layout
-  app-members(:members='book.members')
+  p {{book}}
 
   app-speed-dial(
     bottom, fixed, right, direction='top',
@@ -8,6 +8,9 @@ v-layout
     icon='mdi-plus', iconclose='mdi-close',
     :items='speedDialItems', @item-click='speedDialClicked'
   )
+
+  app-dialog(ref='newRecord', :fullscreen='$vuetify.breakpoint.smAndDown', max-width='800')
+    app-form-new-record(v-bind='record_options')
 </template>
 
 <script>
@@ -18,6 +21,7 @@ export default {
   data() {
     return {
       fab: false,
+      record_options: {},
     }
   },
   computed: {
@@ -51,15 +55,19 @@ export default {
     }
   },
   methods: {
-    speedDialClicked(buttonid) {
-      switch (buttonid) {
+    speedDialClicked(buttonId) {
+      switch (buttonId) {
         case 'new-expense':
-          this.$router.push(`/book/${this.params.id}/new-record?type=expense`)
+          this.openNewRecordDialog({ type: 'expense' })
           break
         case 'new-transfer':
-          this.$router.push(`/book/${this.params.id}/new-record?type=transfer`)
+          this.openNewRecordDialog({ type: 'transfer' })
           break
       }
+    },
+    openNewRecordDialog(options = {}) {
+      this.record_options = options
+      this.$refs.newRecord.open()
     },
   },
 }

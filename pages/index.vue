@@ -9,7 +9,7 @@ v-layout(column, justify-center, align-center)
   v-divider.my-3
 
   v-flex.text-xs-center(xs12, sm8, md6)
-    v-btn Create A New Book
+    v-btn(@click='$root.$newbook.open()', color='primary') Create A New Book
 </template>
 
 <script>

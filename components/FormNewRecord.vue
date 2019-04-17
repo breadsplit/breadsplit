@@ -1,9 +1,10 @@
 <template lang='pug'>
-v-container
-  v-layout
-    v-flex(xs12)
-      app-category-icon(:category='form.category || categorySense')
-      v-text-field(v-model='form.desc' label='Description', required='')
+v-card
+  v-container
+    v-layout
+      v-flex(xs12)
+        app-category-icon(:category='form.category || categorySense')
+        v-text-field(v-model='form.desc' label='Description', required='')
 </template>
 
 <script>

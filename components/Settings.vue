@@ -47,11 +47,12 @@ export default {
       this.$store.dispatch('switchLocale', locale)
       this.$i18n.locale = locale
     },
-    purgeData() {
-      if (confirm('Sure?'))
+    async purgeData() {
+      if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
         this.$store.commit('book/purge')
-      this.close()
-      this.$router.push('/')
+        this.close()
+        this.$router.push('/')
+      }
     },
   },
 }

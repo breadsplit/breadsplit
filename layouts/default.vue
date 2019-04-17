@@ -28,7 +28,7 @@ v-app(:dark='dark')
               v-icon mdi-account
           v-list-tile-content
             v-list-tile-title {{$t('ui.sign_in')}}
-        v-list-tile.px-2.my-1(@click='dialog_settings=true')
+        v-list-tile.px-2.my-1(@click='$root.$settings.open()')
           v-list-tile-action
             v-icon mdi-settings
           v-list-tile-content
@@ -57,9 +57,13 @@ v-app(:dark='dark')
     v-container
       nuxt
 
-  v-dialog(v-model='dialog_settings', fullscreen, hide-overlay, transition='dialog-bottom-transition')
-    app-settings(@close='dialog_settings=false')
+  app-dialog(ref='settings', fullscreen, hide-overlay, transition='dialog-bottom-transition')
+    app-settings(@close='$root.$settings.close()')
 
+  app-dialog(ref='newbook', fullscreen, hide-overlay, transition='dialog-bottom-transition')
+    app-form-new-book(@close='$root.$newbook.close()')
+
+  app-confirm(ref='confirm')
 </template>
 
 <script>
@@ -73,7 +77,6 @@ export default {
       drawer: false,
       fixed: false,
       miniVariant: false,
-      dialog_settings: false,
     }
   },
   computed: {
@@ -100,15 +103,14 @@ export default {
       ]
     },
   },
+  mounted() {
+    this.$root.$confirm = this.$refs.confirm.open
+    this.$root.$settings = this.$refs.settings
+    this.$root.$newbook = this.$refs.newbook
+  },
   methods: {
-    newBook() {
-      // TODO: make a dialog to input the data
-      const display = prompt(
-        this.$t('ui.book_editing.enter_book_name'),
-        this.$t('ui.book_editing.default_book_name')
-      )
-      if (display)
-        this.$store.dispatch('book/new', { display })
+    async newBook() {
+      await this.$root.$newbook.open()
     },
   },
 }
