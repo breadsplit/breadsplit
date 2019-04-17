@@ -45,6 +45,7 @@ module.exports = {
     // the SSR is disabled for this plugin
     { src: '@/plugins/localstorage', ssr: false },
     // Other plugins
+    '@/plugins/utils',
     '@/plugins/i18n',
     '@/plugins/vuetify',
     '@/plugins/swatches',
