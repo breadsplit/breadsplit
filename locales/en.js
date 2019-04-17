@@ -29,6 +29,11 @@ export default {
       enter_book_name: 'Enter book\'s name',
       default_book_name: 'Untitled Book',
     },
+    tabs: {
+      expenses: 'Expenses',
+      members: 'Members',
+      summary: 'Summary',
+    },
     speed_dials: {
       new_expense: 'New Expense',
       new_member: 'New Member',

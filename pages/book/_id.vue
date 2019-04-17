@@ -1,13 +1,32 @@
 <template lang="pug">
-v-layout
-  p {{book}}
+div
+  //v-tabs(v-model='tab_index', slider-color='primary')
+    v-tab(v-for='item in tabItems', :key='item.key', ripple)
+      span {{item.text}}
+
+  v-tabs-items(v-model='tab_index')
+    v-tab-item(key='0')
+      p expense
+
+    v-tab-item(key='1')
+      app-members(:members='book.members')
+
+    v-tab-item(key='2')
+      p summary
 
   app-speed-dial(
     bottom, fixed, right, direction='top',
     transition='slide-y-reverse-transition',
     icon='mdi-plus', iconclose='mdi-close',
+    style='bottom:80px',:show='speedDialShow'
     :items='speedDialItems', @item-click='speedDialClicked'
   )
+
+  v-bottom-nav(:active.sync='tab_id', :value='true', absolute, color='transparent')
+    template(v-for='item in tabItems')
+      v-btn(color='primary', flat, :value='item.key')
+        span {{item.text}}
+        v-icon {{item.icon}}
 
   app-dialog(ref='newRecord', :fullscreen='$vuetify.breakpoint.smAndDown', max-width='800')
     app-form-new-record(v-bind='record_options')
@@ -22,6 +41,8 @@ export default {
     return {
       fab: false,
       record_options: {},
+      tab_index: 0,
+      tab_id: 'expenses',
     }
   },
   computed: {
@@ -40,6 +61,34 @@ export default {
           icon: 'mdi-account-plus',
           key: 'new-member',
         }]
+    },
+    tabItems() {
+      return [
+        {
+          text: this.$t('ui.tabs.expenses'),
+          icon: 'mdi-wallet',
+          key: 'expenses',
+        }, {
+          text: this.$t('ui.tabs.members'),
+          icon: 'mdi-account-group',
+          key: 'members',
+        }, {
+          text: this.$t('ui.tabs.summary'),
+          icon: 'mdi-chart-pie',
+          key: 'summary',
+        }]
+    },
+    speedDialShow() {
+      return this.tab_index === 0
+    },
+  },
+  watch: {
+    tab_index() {
+      this.tab_id = (this.tabItems[this.tab_index] || {}).key || null
+    },
+    tab_id() {
+      const tab = this.tabItems.find(t => t.key === this.tab_id)
+      this.tab_index = this.tabItems.indexOf(tab)
     },
   },
   async asyncData({ params, store, error }) {

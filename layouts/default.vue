@@ -107,6 +107,9 @@ export default {
     this.$root.$confirm = this.$refs.confirm.open
     this.$root.$settings = this.$refs.settings
     this.$root.$newbook = this.$refs.newbook
+
+    if (this.$vuetify.breakpoint.mdAndUp)
+      this.drawer = true
   },
   methods: {
     async newBook() {
