@@ -3,7 +3,7 @@ import Vue from 'vue'
 
 const CreateBook = () => ({
   id: randomstr(5),
-  display: '',
+  name: '',
   icon: '',
   color: '',
   members: [],
@@ -17,13 +17,13 @@ const CreateBook = () => ({
   operation_history: [],
 })
 
-const CreateMember = ({ display, email, phone, owner = false, type = 'user' }) => ({
+const CreateMember = ({ name, email, phone, role, avatar }) => ({
   id: randomstr(5),
-  display,
+  name,
   email,
-  owner,
   phone,
-  type,
+  avatar,
+  role,
   uid: null,
 })
 
@@ -44,11 +44,11 @@ export const actions = {
   new({ commit, rootState, state, dispatch }, payload) {
     const book = Object.assign({}, CreateBook(), payload)
     commit('addBook', book)
-    dispatch('newMember', { bookidx: state.books.length - 1, user: rootState.user, owner: true })
+    dispatch('newMember', { bookidx: state.books.length - 1, user: rootState.user, role: 'owner' })
   },
-  newMember({ commit }, { bookidx, user, phone, type, owner = false }) {
-    const { displayname, email } = user
-    const member = CreateMember({ displayname, email, phone, owner, type })
+  newMember({ commit }, { bookidx, user, phone, role }) {
+    const { name, email } = user
+    const member = CreateMember({ name, email, phone, role })
     commit('addMember', { bookidx, member })
   },
 }

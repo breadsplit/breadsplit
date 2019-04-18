@@ -38,7 +38,7 @@ export default {
     create() {
       // TODO:wayne gather the data from user input
       const payload = {
-        display: this.book.text,
+        name: this.book.text,
         icon: 'mdi-book',
       }
       // "dispatch" refers to Vuex 'actions', please check out Vuex docs
