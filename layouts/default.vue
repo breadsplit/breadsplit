@@ -70,7 +70,7 @@ v-app(:dark='dark')
         v-btn(icon, flat, slot='activator')
           v-icon mdi-dots-vertical
         v-list
-          v-list-tile(v-for='(item, index) in book_menu', :key='index', @click='')
+          v-list-tile(v-for='(item, index) in book_menu', :key='index', @click='onBookMenu(item.key)')
             v-list-tile-title {{ item.title }}
 
   v-content
@@ -87,7 +87,7 @@ v-app(:dark='dark')
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
+import { Getter, Mutation } from 'vuex-class'
 import { Book } from '~/types'
 import FontFamilyBuilder from '~/meta/font_family'
 
@@ -103,6 +103,8 @@ export default class DefaultLayout extends Vue {
 
   @Getter('book/books') books!: Book[]
   @Getter('book/current') current: Book | undefined
+
+  @Mutation('book/remove') removeBook
 
   // Computed
   get title() {
@@ -120,8 +122,8 @@ export default class DefaultLayout extends Vue {
   }
   get book_menu() {
     return [
-      { title: 'Edit book' },
-      { title: 'Delete book' },
+      { title: 'Edit book', key: 'edit' },
+      { title: 'Delete book', key: 'delete' },
     ]
   }
   get primaryColor() {
@@ -145,6 +147,20 @@ export default class DefaultLayout extends Vue {
   async newBook() {
     // @ts-ignore
     await this.$root.$newBook.open()
+  }
+  async onBookMenu(key) {
+    switch (key) {
+      case 'delete':
+        // @ts-ignore
+        if (await this.$root.$confirm('Are you sure?')) {
+          this.removeBook()
+          this.$router.push('/')
+        }
+        break
+      case 'edit':
+        // TODO:
+        break
+    }
   }
 }
 </script>

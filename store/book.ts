@@ -80,6 +80,8 @@ export const mutations: MutationTree<BookState> = {
   },
 
   remove(state, id) {
+    id = id || state.currentId
+    state.currentId = null
     Vue.delete(state.books, id)
   },
 

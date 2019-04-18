@@ -5,7 +5,7 @@ v-card
       v-icon mdi-close
     v-toolbar-title New Book
 
-  v-container
+  v-container.pa-4
     v-flex
       v-text-field(
         v-model='name' label='Book name'
@@ -20,14 +20,14 @@ v-card
     v-flex
       v-autocomplete(
         v-model='currency' :items='currencies'
-        prepend-icon='mdi-currency-usd' label='Choose Currency'
+        prepend-icon='mdi-currency-usd' label='Currency'
       )
 
     v-flex
       v-combobox(
         v-model='members', :items='members_suggestions'
         :search-input.sync='search', hide-selected
-        label='Add New Member', multiple, persistent-hint
+        label='Members', multiple, persistent-hint
         small-chips, prepend-icon='mdi-account-multiple'
       )
         template(v-slot:no-data='')
@@ -40,7 +40,8 @@ v-card
                 kbd enter
                 | to create a new one
 
-    v-btn(@click='create()', :color='color', dark) Create
+    v-flex
+      v-btn(@click='create()', :color='color', dark) Create
 
 </template>
 

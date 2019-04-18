@@ -3,7 +3,7 @@
 
   v-tabs-items.full-height(v-model='tab_index')
     v-tab-item(key='0')
-      p {{book}}
+      p.ma-4 {{book}}
 
     v-tab-item(key='1')
       app-members(:members='members')
@@ -25,8 +25,11 @@
         span {{item.text}}
         v-icon mdi-{{item.icon}}
 
-  app-dialog(ref='newRecord', :fullscreen='$vuetify.breakpoint.smAndDown', max-width='800')
-    app-form-new-record(v-bind='record_options')
+  app-dialog(
+    ref='newRecord' :fullscreen='$vuetify.breakpoint.smAndDown'
+    max-width='800' transition='dialog-bottom-transition'
+  )
+    app-form-new-record(v-bind='record_options', @close='$refs.newRecord.close()')
 </template>
 
 <script lang='ts'>
