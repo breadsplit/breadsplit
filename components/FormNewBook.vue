@@ -12,10 +12,14 @@ v-card
       app-swatches(v-model='book.color')
     v-flex
       v-btn(@click='create()', :color='book.color', :dark='isDark') Create
+    v-autocomplete(
+      v-model='book.currency', :items='currency_code_name', :label="`Currency`",
+      persistent-hint='', prepend-icon='mdi-currency-usd')
 </template>
 
 <script>
 import swatches from '~/meta/swatches'
+import currency from '~/meta/currency'
 
 export default {
   data() {
@@ -29,6 +33,9 @@ export default {
   computed: {
     isDark() {
       return this.$utils.isDark(this.book.color)
+    },
+    currency_code_name() {
+      return currency.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
     },
   },
   methods: {
