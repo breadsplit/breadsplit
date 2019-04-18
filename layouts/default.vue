@@ -6,12 +6,12 @@ v-app(:dark='dark')
       --app-font: {{i18nStyle}};
     }
     .primary {
-      background-color: {{primary}} !important;
-      border-color: {{primary}} !important;
+      background-color: {{primaryColor}} !important;
+      border-color: {{primaryColor}} !important;
     }
     .primary--text {
-      color: {{primary}} !important;
-      caret-color: {{primary}} !important;
+      color: {{primaryColor}} !important;
+      caret-color: {{primaryColor}} !important;
     }
 
   v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
@@ -75,11 +75,10 @@ v-app(:dark='dark')
 
 <script lang='ts'>
 import FontFamilyBuilder from '~/meta/font_family'
-import BasicMixin from '~/mixins/basic'
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class DefaultLayout extends Mixins(BasicMixin) {
+export default class DefaultLayout extends Vue {
   // Data
   dark = false
   clipped = true
@@ -110,7 +109,11 @@ export default class DefaultLayout extends Mixins(BasicMixin) {
       { title: 'Delete book' },
     ]
   }
+  get primaryColor() {
+    return this.$store.getters.primary
+  }
 
+  // Methods
   mounted() {
     // @ts-ignore
     this.$root.$confirm = this.$refs.confirm.open
