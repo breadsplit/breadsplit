@@ -74,8 +74,7 @@ v-app(:dark='dark')
             v-list-tile-title {{ item.title }}
 
   v-content
-    v-container
-      nuxt
+    nuxt
 
   app-dialog(ref='settings', fullscreen, hide-overlay, transition='dialog-bottom-transition')
     app-settings(@close='$root.$settings.close()')

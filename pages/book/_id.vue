@@ -1,10 +1,10 @@
 <template lang="pug">
-div
+.book-page
   //v-tabs(v-model='tab_index', slider-color='primary')
     v-tab(v-for='item in tabItems', :key='item.key', ripple)
       span {{item.text}}
 
-  v-tabs-items(v-model='tab_index')
+  v-tabs-items.full-height(v-model='tab_index')
     v-tab-item(key='0')
       p {{book}}
 
@@ -22,7 +22,7 @@ div
     :items='speedDialItems', @item-click='speedDialClicked'
   )
 
-  v-bottom-nav(:active.sync='tab_id', :value='true', absolute, color='transparent')
+  v-bottom-nav(:active.sync='tab_id', :value='true', absolute, color='white')
     template(v-for='item in tabItems')
       v-btn(color='primary', flat, :value='item.key')
         span {{item.text}}
@@ -121,3 +121,19 @@ export default {
   },
 }
 </script>
+
+<style lang="stylus">
+.book-page
+  height 100%
+
+.v-window.full-height
+  height 100%
+  padding-bottom 56px
+
+  .v-window__container
+    height 100%
+
+    .v-window-item
+      height 100%
+      overflow auto
+</style>

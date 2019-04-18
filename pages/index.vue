@@ -1,15 +1,16 @@
 <template lang='pug'>
-v-layout(column, justify-center, align-center)
-  v-flex.text-xs-center(xs12, sm8, md6)
-    template(v-for='(book, i) in books')
-      nuxt-link.book-entry(v-ripple, :to='`/book/${book.id}`', :style='bookCssVars(book)')
-        v-icon {{ book.icon || 'mdi-book' }}
-        .bookname(v-text='book.name')
+v-container
+  v-layout(column, justify-center, align-center)
+    v-flex.text-xs-center(xs12, sm8, md6)
+      template(v-for='(book, i) in books')
+        nuxt-link.book-entry(v-ripple, :to='`/book/${book.id}`', :style='bookCssVars(book)')
+          v-icon {{ book.icon || 'mdi-book' }}
+          .bookname(v-text='book.name')
 
-  v-divider.my-3
+    v-divider.my-3
 
-  v-flex.text-xs-center(xs12, sm8, md6)
-    v-btn(@click='$root.$newBook.open()', color='primary') Create A New Book
+    v-flex.text-xs-center(xs12, sm8, md6)
+      v-btn(@click='$root.$newBook.open()', color='primary') Create A New Book
 </template>
 
 <script lang='ts'>
