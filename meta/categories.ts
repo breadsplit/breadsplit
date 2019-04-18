@@ -1,4 +1,9 @@
-const DefaultCategories = [
+export interface Category {
+  name: string,
+  icon: string,
+}
+
+const DefaultCategories: Category[] = [
   {
     name: 'transport',
     icon: 'subway-variant',

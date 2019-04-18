@@ -56,6 +56,7 @@ $ npm i
 
 ### Main
 
+- [Typescript](https://www.typescriptlang.org/) (Main language)
 - [Vue.js](https://vuejs.org/) (Front-end framework)
   - [Vuetify](https://vuetifyjs.com/) (Vue UI Components)
   - [Vuex](https://vuex.vuejs.org/) (Vue state management)
