@@ -7,7 +7,7 @@ import { BookState, RootState } from '~/types/store'
 // Helpers
 
 const CreateBook = (payload = {}): Book => {
-  return Object.assign({
+  const book:Book = Object.assign({
     id: randomstr(5),
     name: '',
     options: {},
@@ -20,13 +20,17 @@ const CreateBook = (payload = {}): Book => {
 
     online: false,
   }, payload)
+
+  book.members = book.members.map(m => CreateMember(m))
+
+  return book
 }
 
-const CreateMember = (payload = {}): Member => {
+const CreateMember = (payload:{ name:string }): Member => {
   return Object.assign({
     id: randomstr(10),
     name: '',
-    role: MemberRoles.owner,
+    role: MemberRoles.collaborator,
   }, payload)
 }
 
@@ -45,16 +49,19 @@ export const getters: GetterTree<BookState, RootState> = {
     return state.books[state.currentIndex] || null
   },
 
+  last(state:BookState) {
+    if (!state.books.length)
+      return null
+    return state.books[state.books.length - 1] || null
+  },
+
 }
 
 export const actions: ActionTree<BookState, RootState> = {
 
-  new({ commit, rootState, state, dispatch }, payload) {
+  new({ commit }, payload) {
     const book = CreateBook(payload)
     commit('addBook', book)
-    /* dispatch('newMember', {
-      bookidx: state.books.length - 1,
-    }) */
   },
 
   newMember({ commit, state }, { bookidx, member }) {
