@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import locales, { acceptLanguages } from '~/locales'
+import { AcceptLanguage, Config } from '~/locales'
 
 Vue.use(VueI18n)
 
@@ -10,8 +10,8 @@ export default ({ app, store }) => {
   // construction a new VueI18n
   app.i18n = new VueI18n({
     locale: store.state.locale,
-    messages: locales.messages,
-    fallbackLocale: locales.fallbackLocale,
+    messages: Config.messages,
+    fallbackLocale: Config.fallbackLocale,
     silentFallbackWarn: true,
   })
 
@@ -20,7 +20,7 @@ export default ({ app, store }) => {
     window.onNuxtReady(() => {
       // @ts-ignore
       const language = window.navigator.language || window.navigator.userLanguage || ''
-      const browser_locale = acceptLanguages(language)
+      const browser_locale = AcceptLanguage(language)
 
       // console.log(language, browser_locale)
       app.i18n.locale = store.state.locale || browser_locale
