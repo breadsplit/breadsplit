@@ -12,6 +12,7 @@ export default ({ app, store }) => {
     locale: store.state.locale,
     messages: locales.messages,
     fallbackLocale: locales.fallbackLocale,
+    silentFallbackWarn: true,
   })
 
   if (process.client) {
