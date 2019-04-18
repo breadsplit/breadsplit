@@ -6,7 +6,7 @@ div
 
   v-tabs-items(v-model='tab_index')
     v-tab-item(key='0')
-      p expense
+      p {{book}}
 
     v-tab-item(key='1')
       app-members(:members='book.members')

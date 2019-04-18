@@ -12,7 +12,7 @@ v-card
       v-autocomplete(
         v-model='book.currency', :items='currency_code_name', prepend-icon='mdi-currency-usd',label='Choose Currency')
     v-flex
-      v-combobox(v-model='member', :items='member_suggestions', :search-input.sync='search', hide-selected='', label='Add New Member',
+      v-combobox(v-model='members', :items='member_suggestions', :search-input.sync='search', hide-selected='', label='Add New Member',
       multiple='', persistent-hint='', small-chips='',prepend-icon='mdi-account-multiple')
         template(v-slot:no-data='')
           v-list-tile
@@ -34,11 +34,13 @@ import currency from '~/meta/currency'
 export default {
   data() {
     return {
+      search: '',
       book: {
+        currency: '',
         name: '',
         color: swatches[Math.floor(Math.random() * swatches.length)],
       },
-      member: [],
+      members: [],
       member_suggestions: ['anthony', 'alex'],
     }
   },
@@ -58,8 +60,9 @@ export default {
       // TODO:wayne gather the data from user input
       const payload = {
         name: this.book.name,
+        color: this.book.color,
         icon: 'mdi-book',
-        member: [this.member],
+        members: this.members.map((m) => { return { name: m } }),
         currencies: [this.book.currency],
       }
       // "dispatch" refers to Vuex 'actions', please check out Vuex docs
