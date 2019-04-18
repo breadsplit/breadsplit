@@ -8,7 +8,7 @@ v-card
   v-container.px-0
     v-list(two-line, subheader)
       v-subheader General
-      v-list-tile(avatar, @click='language_select=true')
+      v-list-tile(avatar, @click='languageSelecting=true')
         v-list-tile-avatar
           v-icon mdi-web
         v-list-tile-content
@@ -34,50 +34,52 @@ v-card
 
     app-credit
 
-  v-bottom-sheet(v-model='language_select')
+  v-bottom-sheet(v-model='languageSelecting')
     v-list.pl-3.pt-3.pb-3
-      v-list-tile.pa-1(v-for='locale in locales', :key='locale.value', avatar, @click='switchLocale(locale.value)')
+      v-list-tile.pa-1(v-for='locale in localeItems', :key='locale.value', avatar, @click='switchLocale(locale.value)')
         v-list-tile-title {{ locale.text }}
         v-list-tile-action(v-if='locale.value === currentLocale')
           v-icon mdi-check
 </template>
 
-<script>
-import locales from '~/locales'
+<script lang='ts'>
 import version from '~/version'
+import { AvaliableLocales } from '~/locales'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default {
-  data() {
-    return {
-      version,
-      locales: locales.locales.map(l => ({ value: l.code, text: l.display })),
-      language_select: false,
+const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display }))
+
+@Component
+export default class Settings extends Vue {
+  version = version
+  localeItems = localeItems
+  languageSelecting = false
+
+  get currentLocale() {
+    return this.$i18n.locale || 'en'
+  }
+  get currentLocaleDisplay() {
+    const locale = localeItems.find(l => l.value === this.currentLocale)
+    if (locale && locale.text)
+      return locale.text
+    return this.currentLocale
+  }
+
+  close() {
+    this.$emit('close')
+  }
+  switchLocale(locale) {
+    this.$store.commit('switchLocale', locale)
+    this.$i18n.locale = locale
+    this.languageSelecting = false
+  }
+  async purgeData() {
+    // @ts-ignore
+    if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
+      this.$store.commit('book/purge')
+      this.close()
+      this.$router.push('/')
     }
-  },
-  computed: {
-    currentLocale() {
-      return this.$i18n.locale || 'en'
-    },
-    currentLocaleDisplay() {
-      return (this.locales.find(l => l.value === this.currentLocale) || {}).text || this.currentLocale
-    },
-  },
-  methods: {
-    close() {
-      this.$emit('close')
-    },
-    switchLocale(locale) {
-      this.$store.commit('switchLocale', locale)
-      this.$i18n.locale = locale
-      this.language_select = false
-    },
-    async purgeData() {
-      if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
-        this.$store.commit('book/purge')
-        this.close()
-        this.$router.push('/')
-      }
-    },
-  },
+  }
 }
 </script>

@@ -45,5 +45,10 @@ export default {
       return (category || {}).value
     },
   },
+  methods: {
+    close(result) {
+      this.$emit('close', result)
+    },
+  },
 }
 </script>
