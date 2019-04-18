@@ -20,7 +20,7 @@ const Locales = {
 
 export default Locales
 
-export function acceptLanguages(raw) {
+export function acceptLanguages(raw:string):string {
   const fullcode = raw.trim().toLowerCase()
   const avaliable = Locales.locales.map(l => l.code)
   if (avaliable.indexOf(fullcode) > -1)

@@ -3,10 +3,13 @@ module.exports = {
   env: {
     es6: true,
     browser: true,
-    node: true
+    node: true,
   },
+  plugins: [
+    '@typescript-eslint',
+  ],
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: '@typescript-eslint/parser',
   },
   extends: [
     '@nuxtjs',
@@ -82,5 +85,7 @@ module.exports = {
     'vars-on-top': 'error',
     'require-await': 'off',
     'no-return-assign': 'off',
+
+    '@typescript-eslint/no-unused-vars': [2, { args: 'none' }]
   }
 }

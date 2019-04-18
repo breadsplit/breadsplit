@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import locales from '@/locales'
+import locales from '~/locales'
 
 Vue.use(VueI18n)
 
@@ -13,4 +13,18 @@ export default ({ app, store }) => {
     messages: locales.messages,
     fallbackLocale: locales.fallbackLocale,
   })
+
+  if (process.client) {
+    // @ts-ignore
+    window.onNuxtReady(() => {
+      // @ts-ignore
+      const language = window.navigator.language || window.navigator.userLanguage || ''
+      const browser_locale = locales.acceptLanguages(language)
+
+      // console.log(language, browser_locale)
+      app.i18n.locale = store.state.locale || browser_locale
+
+      store.commit('switchLocale', app.i18n.locale)
+    })
+  }
 }
