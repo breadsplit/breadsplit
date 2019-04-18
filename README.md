@@ -7,26 +7,29 @@ keywords: `split bills`, `group expenses management`, `sharing expenses`, `trave
 ## Development
 
 ### Installation
+
 1. Make sure you have [Node.js](https://nodejs.org/en/) > `v11.0` installed
 2. Install [git](https://git-scm.com/) or GUI Clients (eg. [Github Desktop](https://desktop.github.com/))
-3. [VSCode](https://code.visualstudio.com/) is recommend as text editor (with plugin [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) installed)
+3. [VSCode](https://code.visualstudio.com/) is recommend as text editor ([**Recommend Plugins**](/docs/VSCodePlugins.md))
 4. Chrome with extension [Vue.js DevTools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) installed.
 5. Clone this repo.
 6. Install the dependencies using flowing command
-``` bash
+
+```sh
 # install dependencies
 $ npm ci
 ```
 
 ### Run the app
 
-``` bash
+```sh
 # serve with hot reload at localhost:3000
 $ npm run dev
 ```
 
 ### Build the app
-```bash
+
+```sh
 # build for production and launch server
 $ npm run build
 $ npm start
@@ -38,11 +41,14 @@ $ npm run generate
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
 
 ### Pull new code
-```bash
+
+```sh
 $ git pull
 ```
+
 After every pull, please run following command to ensure the packages dependencies
-``` bash
+
+```sh
 $ npm i
 ```
 
@@ -69,10 +75,11 @@ $ npm i
 - [Stylus](http://stylus-lang.com/) (CSS)
 
 ### Others
+
 - [Material Design Icons](https://materialdesignicons.com/) (Icon set)
 
-
 ## Simliar Apps
+
 - [⭐Settle Up](https://www.tricount.com/)
 - [⭐Splid](https://splid.app/)
 - [Splitwise](https://www.splitwise.com/)
