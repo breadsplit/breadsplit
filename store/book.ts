@@ -10,7 +10,10 @@ const CreateBook = (payload = {}): Book => {
   const book:Book = Object.assign({
     id: randomstr(5),
     name: '',
-    options: {},
+    options: {
+      multiple_currencies: true,
+    },
+    time_created: +new Date(),
 
     members: [],
     transactions: [],

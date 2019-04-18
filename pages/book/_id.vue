@@ -1,8 +1,5 @@
 <template lang="pug">
 .book-page
-  //v-tabs(v-model='tab_index', slider-color='primary')
-    v-tab(v-for='item in tabItems', :key='item.key', ripple)
-      span {{item.text}}
 
   v-tabs-items.full-height(v-model='tab_index')
     v-tab-item(key='0')
