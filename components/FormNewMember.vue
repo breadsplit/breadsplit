@@ -3,9 +3,9 @@ p {{members}}
 </template>
 
 <script>
+import MemberMixin from '~/mixins/member'
+
 export default {
-  props: {
-    members: { type: Array, default: () => ([]) },
-  },
+  mixins: [MemberMixin],
 }
 </script>

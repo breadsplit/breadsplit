@@ -44,12 +44,28 @@ export const actions = {
   new({ commit, rootState, state, dispatch }, payload) {
     const book = Object.assign({}, CreateBook(), payload)
     commit('addBook', book)
-    dispatch('newMember', { bookidx: state.books.length - 1, user: rootState.user, role: 'owner' })
+    dispatch('newMember', {
+      bookidx: state.books.length - 1,
+      member: { ...rootState.user, role: 'owner' },
+    })
   },
-  newMember({ commit }, { bookidx, user, phone, role }) {
-    const { name, email } = user
-    const member = CreateMember({ name, email, phone, role })
-    commit('addMember', { bookidx, member })
+  newMember({ commit, state }, { bookidx, member }) {
+    if (bookidx == null || bookidx < 0)
+      bookidx = state.currentIndex
+    if (bookidx >= 0)
+      commit('addMember', { bookidx, member: CreateMember(member) })
+  },
+  editMember({ commit, state }, { bookidx, memberid, changes }) {
+    if (bookidx == null || bookidx < 0)
+      bookidx = state.currentIndex
+    if (bookidx >= 0)
+      commit('editMember', { bookidx, memberid, changes })
+  },
+  removeMember({ commit, state }, { bookidx, memberid }) {
+    if (bookidx == null || bookidx < 0)
+      bookidx = state.currentIndex
+    if (bookidx >= 0)
+      commit('removeMember', { bookidx, memberid })
   },
 }
 
@@ -69,8 +85,15 @@ export const mutations = {
     // TODO:Vaildate the uniquity of members' email
     state.books[bookidx].members.push(member)
   },
-  removeMember(state, { bookidx, memberIndex }) {
-    // TODO:
+  removeMember(state, { bookidx, memberid }) {
+    const member = state.books[bookidx].members.find(m => m.id === memberid)
+    const index = state.books[bookidx].members.indexOf(member)
+    if (index > -1)
+      state.books[bookidx].members.splice(index, 1)
+  },
+  editMember(state, { bookidx, memberid, changes }) {
+    const member = state.books[bookidx].members.find(m => m.id === memberid)
+    Object.assign(member, changes)
   },
   addBook(state, book) {
     state.books.push(book)

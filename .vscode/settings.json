@@ -35,6 +35,7 @@
     "bookidx",
     "fullname",
     "localstorage",
+    "memberid",
     "nuxt",
     "nuxtjs",
     "persistedstate",
