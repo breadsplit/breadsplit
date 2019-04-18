@@ -14,10 +14,13 @@ v-app(:dark='dark')
       caret-color: {{primaryColor}} !important;
     }
 
-  v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
-    v-list.py-2
+  v-navigation-drawer(
+    v-model='drawer', :mini-variant='miniVariant'
+    :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
+  )
+    v-list
       template(v-if='books.length')
-        v-list-tile.px-2(
+        v-list-tile(
           v-for='(book, i) in books'
           :key='i', :to='`/book/${book.id}`'
           router, exact)
@@ -26,20 +29,30 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title(v-text='book.name')
         v-divider.my-1
-      v-list-tile.px-2(@click='newBook')
+      v-list-tile(@click='newBook')
         v-list-tile-action
           v-icon mdi-plus
         v-list-tile-content
           v-list-tile-title {{$t('ui.book_editing.new_book')}}
 
       .drawer-list-bottom
-        v-list-tile.px-2.my-1
+        // Sign in
+        v-list-tile
           v-list-tile-action
             v-avatar(size='36', color='#00000020', style='margin: -6px;')
               v-icon mdi-account
           v-list-tile-content
             v-list-tile-title {{$t('ui.sign_in')}}
-        v-list-tile.px-2.my-1(@click='$root.$settings.open()')
+
+        // Homepage
+        v-list-tile(@click='$router.push("/")', v-show='$route.path !== "/"')
+          v-list-tile-action
+            v-icon mdi-home
+          v-list-tile-content
+            v-list-tile-title Homepage
+
+        // Settings
+        v-list-tile(@click='$root.$settings.open()')
           v-list-tile-action
             v-icon mdi-settings
           v-list-tile-content
@@ -85,6 +98,7 @@ export default class DefaultLayout extends Vue {
   drawer = false
   fixed = false
   miniVariant = false
+  mobileBreakPoint = 700
 
   // Computed
   get books() {
@@ -137,10 +151,21 @@ export default class DefaultLayout extends Vue {
 <style lang="stylus">
 .drawer-list-bottom
   position absolute
-  bottom 5px
+  bottom 10px
   left 0
   right 0
 .app-toolbar
   .v-toolbar__content
     padding-right 2px
+
+.v-navigation-drawer
+  .v-list__tile
+    height 52px
+
+  &:not(.v-navigation-drawer--mini-variant)
+    .v-list
+      padding 10px 0
+
+    .v-list__tile
+      padding 6px 24px
 </style>
