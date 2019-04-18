@@ -9,7 +9,7 @@ div
       p {{book}}
 
     v-tab-item(key='1')
-      app-members(:members='book.members')
+      app-members(:members='members')
 
     v-tab-item(key='2')
       p summary
@@ -100,7 +100,7 @@ export default {
   },
   head() {
     return {
-      title: this.book.title,
+      title: (this.book || {}).name,
     }
   },
   methods: {

@@ -45,8 +45,8 @@ export const getters: GetterTree<BookState, RootState> = {
 
   current(state) {
     if (!state.currentId)
-      return null
-    return state.books[state.currentId] || null
+      return undefined
+    return state.books[state.currentId] || undefined
   },
 
   books(state) {
@@ -76,20 +76,23 @@ export const mutations: MutationTree<BookState> = {
     Vue.set(state.books, book.id, book)
   },
 
-  remove(state, bookid) {
-    Vue.delete(state.books, bookid)
+  remove(state, id) {
+    Vue.delete(state.books, id)
   },
 
   edit(state, { id, changes }) {
+    id = id || state.currentId
     Object.assign(state.books[id], changes)
   },
 
   // Members
   addMember(state, { id, member }) {
+    id = id || state.currentId
     state.books[id].members.push(CreateMember(member))
   },
 
   removeMember(state, { id, memberid }) {
+    id = id || state.currentId
     const member = state.books[id].members.find(m => m.id === memberid)
     const index = member ? state.books[id].members.indexOf(member) : -1
     if (index > -1)
@@ -97,6 +100,7 @@ export const mutations: MutationTree<BookState> = {
   },
 
   editMember(state, { id, memberid, changes }) {
+    id = id || state.currentId
     const member = state.books[id].members.find(m => m.id === memberid)
     if (member)
       Object.assign(member, changes)

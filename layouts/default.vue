@@ -87,8 +87,10 @@ v-app(:dark='dark')
 </template>
 
 <script lang='ts'>
-import FontFamilyBuilder from '~/meta/font_family'
 import { Component, Vue } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
+import { Book } from '~/types'
+import FontFamilyBuilder from '~/meta/font_family'
 
 @Component
 export default class DefaultLayout extends Vue {
@@ -100,15 +102,15 @@ export default class DefaultLayout extends Vue {
   miniVariant = false
   mobileBreakPoint = 700
 
+  @Getter('book/books') books!: Book[]
+  @Getter('book/current') current: Book | undefined
+
   // Computed
-  get books() {
-    return this.$store.getters['book/books']
-  }
-  get current() {
-    return this.$store.getters['book/current']
-  }
   get title() {
-    return (this.current || {}).name || this.$t('appname')
+    if (this.current)
+      return this.current.name
+    else
+      return this.$t('appname')
   }
   get i18nStyle() {
     let font_family = this.$t('css.font_family', '')

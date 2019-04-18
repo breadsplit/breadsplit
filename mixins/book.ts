@@ -1,11 +1,14 @@
 import { Vue, Component } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
+import { Book } from '~/types'
 
 @Component
 export default class BookMixin extends Vue {
-  get book() {
-    return this.$store.getters['book/current'] || {}
-  }
+  @Getter('book/current') book!: Book
+
   get members() {
-    return this.book.members || []
+    if (this.book)
+      return this.book.members || []
+    return []
   }
 }

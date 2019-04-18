@@ -35,6 +35,7 @@
     "vue-swatches": "^1.0.3",
     "vuetify": "^1.5.9",
     "vuetify-loader": "^1.2.1",
+    "vuex-class": "^0.3.2",
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {

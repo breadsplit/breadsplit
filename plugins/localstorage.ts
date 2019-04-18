@@ -9,7 +9,6 @@ export default ({ store, route, app }) => {
       key: 'moneyflow-store',
       paths: [
         'locale',
-        'user',
         'book',
       ],
     })(store)

@@ -47,7 +47,7 @@ export default {
     },
     promptRenameMember(member) {
       const name = prompt('Name?')
-      this.renameMember({ memberid: member.id, name })
+      this.renameMember({ memberid: member.id, changes: { name } })
     },
     promptRemoveMember(member) {
       if (confirm('Sure?'))
