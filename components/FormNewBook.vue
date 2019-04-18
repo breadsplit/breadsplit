@@ -59,8 +59,8 @@ export default {
       const payload = {
         name: this.book.name,
         icon: 'mdi-book',
-        member: [],
-        currencies: ['usd'],
+        member: [this.member],
+        currencies: [this.book.currency],
       }
       // "dispatch" refers to Vuex 'actions', please check out Vuex docs
       this.$store.dispatch('book/new', payload)
