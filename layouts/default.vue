@@ -5,11 +5,22 @@ v-app(:dark='dark')
     :root {
       --app-font: {{i18nStyle}};
     }
+    .primary {
+      background-color: {{primary}} !important;
+      border-color: {{primary}} !important;
+    }
+    .primary--text {
+      color: {{primary}} !important;
+      caret-color: {{primary}} !important;
+    }
 
   v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
     v-list.py-2
       template(v-if='books.length')
-        v-list-tile.px-2(v-for='(book, i) in books', :key='i', :to='`/book/${book.id}`', router, exact)
+        v-list-tile.px-2(
+          v-for='(book, i) in books'
+          :key='i', :to='`/book/${book.id}`'
+          router, exact)
           v-list-tile-action
             v-icon {{ book.icon || 'book' }}
           v-list-tile-content
@@ -36,10 +47,6 @@ v-app(:dark='dark')
 
   v-toolbar.app-toolbar(:clipped-left='clipped', fixed, app, dark, color='primary')
     v-toolbar-side-icon(@click='drawer = !drawer')
-    //v-btn(icon, @click.stop='miniVariant = !miniVariant')
-      v-icon {{ `mdi-chevron-${miniVariant ? 'right' : 'left'}` }}
-    //v-btn(icon, @click.stop='clipped = !clipped')
-      v-icon mdi-book-open-outline
     v-toolbar-title(v-text='title')
       v-spacer
         v-btn(icon, @click.stop='rightDrawer = !rightDrawer')
@@ -61,61 +68,66 @@ v-app(:dark='dark')
     app-settings(@close='$root.$settings.close()')
 
   app-dialog(ref='newbook', fullscreen, hide-overlay, transition='dialog-bottom-transition')
-    app-form-new-book(@close='$root.$newbook.close()')
+    app-form-new-book(@close='$root.$newBook.close()')
 
   app-confirm(ref='confirm')
 </template>
 
-<script>
+<script lang='ts'>
 import FontFamilyBuilder from '~/meta/font_family'
+import BasicMixin from '~/mixins/basic'
+import { Component, Mixins } from 'vue-property-decorator'
 
-export default {
-  data() {
-    return {
-      dark: false,
-      clipped: true,
-      drawer: false,
-      fixed: false,
-      miniVariant: false,
-    }
-  },
-  computed: {
-    books() {
-      return this.$store.state.book.books
-    },
-    current() {
-      return this.$store.getters['book/current']
-    },
-    title() {
-      return (this.current || {}).display || this.$t('appname')
-    },
-    i18nStyle() {
-      let font_family = this.$t('css.font_family', '')
-      const font_of_locale = this.$t('css.font_of_locale', '')
-      if (!font_family)
-        font_family = FontFamilyBuilder(font_of_locale)
-      return font_family
-    },
-    book_menu() {
-      return [
-        { title: 'Edit book' },
-        { title: 'Delete book' },
-      ]
-    },
-  },
+@Component
+export default class DefaultLayout extends Mixins(BasicMixin) {
+  // Data
+  dark = false
+  clipped = true
+  drawer = false
+  fixed = false
+  miniVariant = false
+
+  // Computed
+  get books() {
+    return this.$store.state.book.books
+  }
+  get current() {
+    return this.$store.getters['book/current']
+  }
+  get title() {
+    return (this.current || {}).name || this.$t('appname')
+  }
+  get i18nStyle() {
+    let font_family = this.$t('css.font_family', '')
+    const font_of_locale = this.$t('css.font_of_locale', '').toString()
+    if (!font_family)
+      font_family = FontFamilyBuilder(font_of_locale)
+    return font_family
+  }
+  get book_menu() {
+    return [
+      { title: 'Edit book' },
+      { title: 'Delete book' },
+    ]
+  }
+
   mounted() {
+    // @ts-ignore
     this.$root.$confirm = this.$refs.confirm.open
+    // @ts-ignore
     this.$root.$settings = this.$refs.settings
-    this.$root.$newbook = this.$refs.newbook
+    // @ts-ignore
+    this.$root.$newBook = this.$refs.newbook
 
+    // @ts-ignore
     if (this.$vuetify.breakpoint.mdAndUp)
       this.drawer = true
-  },
-  methods: {
-    async newBook() {
-      await this.$root.$newbook.open()
-    },
-  },
+  }
+
+  async newBook() {
+    // @ts-ignore
+    await this.$root.$newBook.open()
+  }
 }
 </script>
 

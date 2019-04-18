@@ -8,4 +8,5 @@ export interface BookState {
 export interface RootState {
   locale: string,
   loaded: boolean,
+  book: BookState,
 }
