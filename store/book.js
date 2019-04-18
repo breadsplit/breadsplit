@@ -42,6 +42,7 @@ export const getters = {
 
 export const actions = {
   new({ commit, rootState, state, dispatch }, payload) {
+    console.log('PAYLOAD', payload)
     const book = Object.assign({}, CreateBook(), payload)
     commit('addBook', book)
     dispatch('newMember', {
