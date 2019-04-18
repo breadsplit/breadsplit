@@ -73,12 +73,7 @@ export default {
         members: this.members.map((m) => { return { name: m } }),
         currencies: [this.currency],
       }
-      // "dispatch" refers to Vuex 'actions', please check out Vuex docs
-      this.$store.dispatch('book/new', payload)
-
-      // Switch to the book automacitly
-      if (this.$store.getters['book/last'])
-        this.$router.push(`/book/${this.$store.getters['book/last'].id}`)
+      this.$store.commit('book/add', payload)
 
       this.close()
     },

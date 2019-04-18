@@ -18,7 +18,7 @@ import { Vue, Component } from 'vue-property-decorator'
 @Component
 export default class Index extends Vue {
   get books() {
-    return this.$store.state.book.books
+    return this.$store.getters['book/books']
   }
 
   bookCssVars(book) {

@@ -102,7 +102,7 @@ export default class DefaultLayout extends Vue {
 
   // Computed
   get books() {
-    return this.$store.state.book.books
+    return this.$store.getters['book/books']
   }
   get current() {
     return this.$store.getters['book/current']

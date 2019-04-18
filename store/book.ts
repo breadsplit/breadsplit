@@ -26,7 +26,7 @@ const CreateBook = (payload = {}): Book => {
   return book
 }
 
-const CreateMember = (payload:{ name:string }): Member => {
+const CreateMember = (payload = {}): Member => {
   return Object.assign({
     id: randomstr(10),
     name: '',
@@ -37,94 +37,69 @@ const CreateMember = (payload:{ name:string }): Member => {
 // Store
 
 export const state = (): BookState => ({
-  books: [],
-  currentIndex: -1,
+  books: {},
+  currentId: null,
 })
 
 export const getters: GetterTree<BookState, RootState> = {
 
-  current(state:BookState) {
-    if (state.currentIndex < 0)
+  current(state) {
+    if (!state.currentId)
       return null
-    return state.books[state.currentIndex] || null
+    return state.books[state.currentId] || null
   },
 
-  last(state:BookState) {
-    if (!state.books.length)
-      return null
-    return state.books[state.books.length - 1] || null
+  books(state) {
+    return Object.values(state.books)
   },
 
 }
 
 export const actions: ActionTree<BookState, RootState> = {
 
-  new({ commit }, payload) {
-    const book = CreateBook(payload)
-    commit('addBook', book)
-  },
-
-  newMember({ commit, state }, { bookidx, member }) {
-    if (bookidx == null || bookidx < 0)
-      bookidx = state.currentIndex
-    if (bookidx >= 0)
-      commit('addMember', { bookidx, member: CreateMember(member) })
-  },
-
-  editMember({ commit, state }, { bookidx, memberid, changes }) {
-    if (bookidx == null || bookidx < 0)
-      bookidx = state.currentIndex
-    if (bookidx >= 0)
-      commit('editMember', { bookidx, memberid, changes })
-  },
-
-  removeMember({ commit, state }, { bookidx, memberid }) {
-    if (bookidx == null || bookidx < 0)
-      bookidx = state.currentIndex
-    if (bookidx >= 0)
-      commit('removeMember', { bookidx, memberid })
-  },
-
 }
 
 export const mutations: MutationTree<BookState> = {
 
   purge(state) {
-    state.currentIndex = -1
-    Vue.set(state, 'books', [])
+    state.currentId = null
+    Vue.set(state, 'books', {})
   },
 
-  switchTo(state, index: number) {
-    state.currentIndex = index
+  switch(state, id: string | null) {
+    state.currentId = id
   },
 
-  switchToId(state, id: string) {
-    const book = state.books.find(b => b.id === id)
-    state.currentIndex = book ? state.books.indexOf(book) : -1
+  // Books
+  add(state, payload) {
+    const book = CreateBook(payload)
+    Vue.set(state.books, book.id, book)
   },
 
-  addMember(state, { bookidx, member }) {
-    // TODO:Vaildate the uniquity of members' email
-    state.books[bookidx].members.push(member)
+  remove(state, bookid) {
+    Vue.delete(state.books, bookid)
   },
 
-  removeMember(state, { bookidx, memberid }) {
-    const member = state.books[bookidx].members.find(m => m.id === memberid)
-    const index = member ? state.books[bookidx].members.indexOf(member) : -1
+  edit(state, { id, changes }) {
+    Object.assign(state.books[id], changes)
+  },
+
+  // Members
+  addMember(state, { id, member }) {
+    state.books[id].members.push(CreateMember(member))
+  },
+
+  removeMember(state, { id, memberid }) {
+    const member = state.books[id].members.find(m => m.id === memberid)
+    const index = member ? state.books[id].members.indexOf(member) : -1
     if (index > -1)
-      state.books[bookidx].members.splice(index, 1)
+      state.books[id].members.splice(index, 1)
   },
 
-  editMember(state, { bookidx, memberid, changes }) {
-    const member = state.books[bookidx].members.find(m => m.id === memberid)
-    Object.assign(member, changes)
+  editMember(state, { id, memberid, changes }) {
+    const member = state.books[id].members.find(m => m.id === memberid)
+    if (member)
+      Object.assign(member, changes)
   },
 
-  addBook(state, book: Book) {
-    state.books.push(book)
-  },
-
-  removeBook(state, bookidx) {
-    state.books.splice(bookidx, 1)
-  },
 }

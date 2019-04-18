@@ -9,7 +9,7 @@ export default function ({ store, route }) {
   const result = /\/book\/(\w*)?/.exec(path)
   if (result && result[1]) {
     const id = result[1]
-    return store.commit('book/switchToId', id)
+    return store.commit('book/switch', id)
   }
-  store.commit('book/switchTo', -1)
+  store.commit('book/switch', null)
 }

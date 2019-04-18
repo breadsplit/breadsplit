@@ -1,8 +1,8 @@
 import { Book } from '.'
 
 export interface BookState {
-  books: Book[],
-  currentIndex: number,
+  books: { [s: string]: Book },
+  currentId: string | null,
 }
 
 export interface RootState {

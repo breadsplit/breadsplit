@@ -11,13 +11,13 @@ export default class MemberMixin extends Vue {
     const hash = md5(email).toString()
     return `https://www.gravatar.com/avatar/${hash}?d=identicon`
   }
-  newMember({ bookidx, member }) {
-    this.$store.dispatch('book/newMember', { bookidx, member })
+  newMember({ id, member }) {
+    this.$store.commit('book/newMember', { id, member })
   }
-  renameMember({ bookidx, memberid, name }) {
-    this.$store.dispatch('book/editMember', { bookidx, memberid, changes: { name } })
+  renameMember({ id, memberid, name }) {
+    this.$store.commit('book/editMember', { id, memberid, changes: { name } })
   }
-  removeMember({ bookidx, memberid }) {
-    this.$store.dispatch('book/removeMember', { bookidx, memberid })
+  removeMember({ id, memberid }) {
+    this.$store.commit('book/removeMember', { id, memberid })
   }
 }
