@@ -1,10 +1,16 @@
 <template lang='pug'>
 v-card
+  v-toolbar(dark, color='primary')
+    v-btn(icon, dark, @click='close(false)')
+      v-icon mdi-close
+    v-toolbar-title New Expense
+
   v-container
     v-layout
       v-flex(xs12)
-        app-category-icon(:category='form.category || categorySense')
         v-text-field(v-model='form.desc' label='Description', required='')
+          template(slot='prepend')
+            app-category-icon(:category='form.category || categorySense')
 </template>
 
 <script>

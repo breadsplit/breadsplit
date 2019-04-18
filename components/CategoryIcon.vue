@@ -1,7 +1,7 @@
 <template lang='pug'>
 .category-icon
-  v-icon(size='32') mdi-{{icon}}
-  .desc {{display}}
+  v-icon(size='32', :color='color') mdi-{{icon}}
+  .desc(:style='colorStyle') {{display}}
 </template>
 
 <script>
@@ -24,6 +24,11 @@ export default {
       const cat = this.category || 'other'
       return (Categories.find(c => c.name === cat) || {}).color
     },
+    colorStyle() {
+      return {
+        color: this.color,
+      }
+    },
   },
 }
 </script>
@@ -31,9 +36,11 @@ export default {
 <style lang="stylus" scoped>
 .category-icon
   display inline-block
-  padding 5px
+  padding 0 5px
   min-width 60px
   text-align center
   .desc
     display block
+    font-size 0.8em
+
 </style>
