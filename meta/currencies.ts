@@ -1,8 +1,11 @@
 export interface Currency {
   cc: string,
   symbol: string,
-  name: string
+  name: string,
+  locale?: String,
+  localname?: String,
 }
+
 const Currencies: Currency[] = [
   { 'cc': 'AED', 'symbol': '\u062f.\u0625;', 'name': 'UAE dirham' },
   { 'cc': 'AFN', 'symbol': 'Afs', 'name': 'Afghan afghani' },
@@ -33,7 +36,7 @@ const Currencies: Currency[] = [
   { 'cc': 'CDF', 'symbol': 'F', 'name': 'Congolese franc' },
   { 'cc': 'CHF', 'symbol': 'Fr.', 'name': 'Swiss franc' },
   { 'cc': 'CLP', 'symbol': '$', 'name': 'Chilean peso' },
-  { 'cc': 'CNY', 'symbol': '\u00a5', 'name': 'Chinese/Yuan renminbi' },
+  { 'cc': 'CNY', 'symbol': '\u00a5', 'name': 'Chinese Yuan', locale: 'zh-CN', localname: '人民币' },
   { 'cc': 'COP', 'symbol': 'Col$', 'name': 'Colombian peso' },
   { 'cc': 'CRC', 'symbol': '\u20a1', 'name': 'Costa Rican colon' },
   { 'cc': 'CUC', 'symbol': '$', 'name': 'Cuban peso' },
@@ -140,11 +143,11 @@ const Currencies: Currency[] = [
   { 'cc': 'TND', 'symbol': 'DT', 'name': 'Tunisian dinar' },
   { 'cc': 'TRY', 'symbol': 'TRY', 'name': 'Turkish new lira' },
   { 'cc': 'TTD', 'symbol': 'TT$', 'name': 'Trinidad and Tobago dollar' },
-  { 'cc': 'TWD', 'symbol': 'NT$', 'name': 'New Taiwan dollar' },
+  { 'cc': 'TWD', 'symbol': 'NT$', 'name': 'New Taiwan dollar', locale: 'zh-TW', localname: '新台幣' },
   { 'cc': 'TZS', 'symbol': 'TZS', 'name': 'Tanzanian shilling' },
   { 'cc': 'UAH', 'symbol': 'UAH', 'name': 'Ukrainian hryvnia' },
   { 'cc': 'UGX', 'symbol': 'USh', 'name': 'Ugandan shilling' },
-  { 'cc': 'USD', 'symbol': 'US$', 'name': 'United States dollar' },
+  { 'cc': 'USD', 'symbol': 'US$', 'name': 'United States dollar', locale: 'en-US' },
   { 'cc': 'UYU', 'symbol': '$U', 'name': 'Uruguayan peso' },
   { 'cc': 'UZS', 'symbol': 'UZS', 'name': 'Uzbekistani som' },
   { 'cc': 'VEB', 'symbol': 'Bs', 'name': 'Venezuelan bolivar' },

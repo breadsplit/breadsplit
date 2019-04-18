@@ -12,7 +12,7 @@ v-card
 
     v-flex
       v-autocomplete(
-        v-model='currency', :items='currency_code_name', prepend-icon='mdi-currency-usd',label='Choose Currency')
+        v-model='currency', :items='currencies', prepend-icon='mdi-currency-usd',label='Choose Currency')
 
     v-flex
       v-combobox(
@@ -37,7 +37,7 @@ v-card
 
 <script>
 import swatches from '~/meta/swatches'
-import currency from '~/meta/currency'
+import currencies from '~/meta/currencies'
 
 export default {
   data() {
@@ -53,8 +53,8 @@ export default {
     isDark() {
       return this.$utils.isDark(this.color)
     },
-    currency_code_name() {
-      return currency.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
+    currencies() {
+      return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
     },
     members_suggestions() {
       // TODO: load suggestions from another book
