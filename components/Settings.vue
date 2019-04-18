@@ -2,7 +2,7 @@
 v-card
   v-toolbar(dark, color='primary')
     v-btn(icon, dark, @click='close()')
-      v-icon close
+      v-icon mdi-close
     v-toolbar-title {{$t('ui.settings')}}
   v-container.px-0
     v-list(two-line, subheader)

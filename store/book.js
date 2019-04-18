@@ -41,8 +41,8 @@ export const getters = {
 }
 
 export const actions = {
-  new({ commit, rootState, state, dispatch }, inputed) {
-    const book = Object.assign({}, CreateBook(), inputed)
+  new({ commit, rootState, state, dispatch }, payload) {
+    const book = Object.assign({}, CreateBook(), payload)
     commit('addBook', book)
     dispatch('newMember', { bookidx: state.books.length - 1, user: rootState.user, owner: true })
   },
@@ -66,7 +66,7 @@ export const mutations = {
     state.currentIndex = state.books.indexOf(book)
   },
   addMember(state, { bookidx, member }) {
-    // TODO:Vaildate the uniquity of memebers' email
+    // TODO:Vaildate the uniquity of members' email
     state.books[bookidx].members.push(member)
   },
   removeMember(state, { bookidx, memberIndex }) {
