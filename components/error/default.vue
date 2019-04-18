@@ -1,6 +1,6 @@
 <template lang='pug'>
 div
-  v-icon.error-icon(size='64') {{error.icon || 'mdi-alert-circle-outline'}}
+  v-icon.error-icon(size='64') mdi-{{error.icon || 'alert-circle-outline'}}
   .error-code.text-xs-center {{error.statusCode}}
   .error-desc.text-xs-center {{error.message}}
   v-btn.error-return(flat, color='primary', to='/', nuxt) Return

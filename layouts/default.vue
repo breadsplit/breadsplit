@@ -25,7 +25,7 @@ v-app(:dark='dark')
           :key='i', :to='`/book/${book.id}`'
           router, exact)
           v-list-tile-action
-            v-icon {{ book.icon || 'book' }}
+            v-icon mdi-{{ book.icon || 'book' }}
           v-list-tile-content
             v-list-tile-title(v-text='book.name')
         v-divider.my-1

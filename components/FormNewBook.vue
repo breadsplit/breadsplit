@@ -1,18 +1,27 @@
 <template lang='pug'>
 v-card
-  v-toolbar(:dark='isDark', :color='color')
+  v-toolbar(dark, :color='color')
     v-btn(icon, dark, @click='close(false)')
       v-icon mdi-close
     v-toolbar-title New Book
 
   v-container
     v-flex
-      v-text-field(v-model='name', label='New Book Name',prepend-icon='mdi-book-open-variant')
+      v-text-field(
+        v-model='name' label='Book name'
+        prepend-icon='mdi-book-open-variant'
+      )
+        template(slot='prepend')
+          app-icon-select(v-model='icon' :color='color', style='margin-top:-20px')
+
+    v-flex
       app-swatches(v-model='color')
 
     v-flex
       v-autocomplete(
-        v-model='currency', :items='currencies', prepend-icon='mdi-currency-usd',label='Choose Currency')
+        v-model='currency' :items='currencies'
+        prepend-icon='mdi-currency-usd' label='Choose Currency'
+      )
 
     v-flex
       v-combobox(
@@ -29,9 +38,9 @@ v-card
                 strong {{ search }}
                 | . Press
                 kbd enter
-                |  to create a new one
+                | to create a new one
 
-      v-btn(@click='create()', :color='color', :dark='isDark') Create
+    v-btn(@click='create()', :color='color', dark) Create
 
 </template>
 
@@ -44,6 +53,7 @@ export default {
     return {
       search: '',
       currency: '',
+      icon: 'book',
       name: '',
       color: swatches[Math.floor(Math.random() * swatches.length)],
       members: [],
@@ -69,7 +79,7 @@ export default {
       const payload = {
         name: this.name,
         color: this.color,
-        icon: 'mdi-book',
+        icon: this.icon,
         members: this.members.map((m) => { return { name: m } }),
         currencies: [this.currency],
       }

@@ -4,7 +4,7 @@ v-container
     v-flex.text-xs-center(xs12, sm8, md6)
       template(v-for='(book, i) in books')
         nuxt-link.book-entry(v-ripple, :to='`/book/${book.id}`', :style='bookCssVars(book)')
-          v-icon {{ book.icon || 'mdi-book' }}
+          v-icon mdi-{{ book.icon || 'book' }}
           .bookname(v-text='book.name')
 
     v-divider.my-3
