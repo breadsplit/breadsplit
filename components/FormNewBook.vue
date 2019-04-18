@@ -1,19 +1,26 @@
 <template lang='pug'>
 v-card
-  v-toolbar(:dark='isDark', :color='book.color')
+  v-toolbar(:dark='isDark', :color='color')
     v-btn(icon, dark, @click='close(false)')
       v-icon mdi-close
     v-toolbar-title New Book
+
   v-container
     v-flex
-      v-text-field(v-model='book.name', label='New Book Name',prepend-icon='mdi-book-open-variant')
-      app-swatches(v-model='book.color')
+      v-text-field(v-model='name', label='New Book Name',prepend-icon='mdi-book-open-variant')
+      app-swatches(v-model='color')
+
     v-flex
       v-autocomplete(
-        v-model='book.currency', :items='currency_code_name', prepend-icon='mdi-currency-usd',label='Choose Currency')
+        v-model='currency', :items='currency_code_name', prepend-icon='mdi-currency-usd',label='Choose Currency')
+
     v-flex
-      v-combobox(v-model='members', :items='member_suggestions', :search-input.sync='search', hide-selected='', label='Add New Member',
-      multiple='', persistent-hint='', small-chips='',prepend-icon='mdi-account-multiple')
+      v-combobox(
+        v-model='members', :items='members_suggestions'
+        :search-input.sync='search', hide-selected
+        label='Add New Member', multiple, persistent-hint
+        small-chips, prepend-icon='mdi-account-multiple'
+      )
         template(v-slot:no-data='')
           v-list-tile
             v-list-tile-content
@@ -23,7 +30,8 @@ v-card
                 | . Press
                 kbd enter
                 |  to create a new one
-      v-btn(@click='create()', :color='book.color', :dark='isDark') Create
+
+      v-btn(@click='create()', :color='color', :dark='isDark') Create
 
 </template>
 
@@ -35,21 +43,22 @@ export default {
   data() {
     return {
       search: '',
-      book: {
-        currency: '',
-        name: '',
-        color: swatches[Math.floor(Math.random() * swatches.length)],
-      },
+      currency: '',
+      name: '',
+      color: swatches[Math.floor(Math.random() * swatches.length)],
       members: [],
-      member_suggestions: ['anthony', 'alex'],
     }
   },
   computed: {
     isDark() {
-      return this.$utils.isDark(this.book.color)
+      return this.$utils.isDark(this.color)
     },
     currency_code_name() {
       return currency.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
+    },
+    members_suggestions() {
+      // TODO: load suggestions from another book
+      return []
     },
   },
   methods: {
@@ -57,13 +66,12 @@ export default {
       this.$emit('close', result)
     },
     create() {
-      // TODO:wayne gather the data from user input
       const payload = {
-        name: this.book.name,
-        color: this.book.color,
+        name: this.name,
+        color: this.color,
         icon: 'mdi-book',
         members: this.members.map((m) => { return { name: m } }),
-        currencies: [this.book.currency],
+        currencies: [this.currency],
       }
       // "dispatch" refers to Vuex 'actions', please check out Vuex docs
       this.$store.dispatch('book/new', payload)
