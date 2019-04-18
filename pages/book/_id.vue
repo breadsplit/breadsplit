@@ -29,93 +29,96 @@
     app-form-new-record(v-bind='record_options')
 </template>
 
-<script>
+<script lang='ts'>
 import BookMixin from '~/mixins/book'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 
-export default {
-  mixins: [BookMixin],
-  data() {
-    return {
-      fab: false,
-      record_options: {},
-      tab_index: 0,
-      tab_id: 'expenses',
-    }
-  },
-  computed: {
-    speedDialItems() {
-      return [
-        {
-          text: this.$t('ui.speed_dials.new_expense'),
-          icon: 'mdi-cash-usd',
-          key: 'new-expense',
-        }, {
-          text: this.$t('ui.speed_dials.settle_up'),
-          icon: 'mdi-account-multiple-check',
-          key: 'new-transfer',
-        }, {
-          text: this.$t('ui.speed_dials.new_member'),
-          icon: 'mdi-account-plus',
-          key: 'new-member',
-        }]
-    },
-    tabItems() {
-      return [
-        {
-          text: this.$t('ui.tabs.expenses'),
-          icon: 'mdi-wallet',
-          key: 'expenses',
-        }, {
-          text: this.$t('ui.tabs.members'),
-          icon: 'mdi-account-group',
-          key: 'members',
-        }, {
-          text: this.$t('ui.tabs.summary'),
-          icon: 'mdi-chart-pie',
-          key: 'summary',
-        }]
-    },
-    speedDialShow() {
-      return this.tab_index === 0
-    },
-  },
-  watch: {
-    tab_index() {
-      this.tab_id = (this.tabItems[this.tab_index] || {}).key || null
-    },
-    tab_id() {
-      const tab = this.tabItems.find(t => t.key === this.tab_id)
-      this.tab_index = this.tabItems.indexOf(tab)
-    },
-  },
+@Component
+export default class Index extends Mixins(BookMixin) {
+  fab=false
+  record_options= {}
+  tab_index = 0
+  tab_id:string|null = 'expenses'
+
+  // Computed
+
+  get speedDialItems() {
+    return [
+      {
+        text: this.$t('ui.speed_dials.new_expense'),
+        icon: 'mdi-cash-usd',
+        key: 'new-expense',
+      }, {
+        text: this.$t('ui.speed_dials.settle_up'),
+        icon: 'mdi-account-multiple-check',
+        key: 'new-transfer',
+      }, {
+        text: this.$t('ui.speed_dials.new_member'),
+        icon: 'mdi-account-plus',
+        key: 'new-member',
+      }]
+  }
+  get tabItems() {
+    return [
+      {
+        text: this.$t('ui.tabs.expenses'),
+        icon: 'mdi-wallet',
+        key: 'expenses',
+      }, {
+        text: this.$t('ui.tabs.members'),
+        icon: 'mdi-account-group',
+        key: 'members',
+      }, {
+        text: this.$t('ui.tabs.summary'),
+        icon: 'mdi-chart-pie',
+        key: 'summary',
+      }]
+  }
+  get speedDialShow() {
+    return this.tab_index === 0
+  }
+
+  // Watches
+
+  @Watch('tab_index')
+  onTabIndexChanged() {
+    this.tab_id = (this.tabItems[this.tab_index] || {}).key || null
+  }
+
+  @Watch('tab_id')
+  onTabIdChanged() {
+    const tab = this.tabItems.find(t => t.key === this.tab_id)
+    this.tab_index = tab ? this.tabItems.indexOf(tab) : -1
+  }
+
+  // Methods
   async asyncData({ params, store, error }) {
     if (!store.state.loaded)
       return { params }
     if (!store.getters['book/current'])
       return error({ icon: 'mdi-book-outline', statusCode: 'Book not found', message: 'This seems to be a local book, are you sure it\'s stored on this device?' })
     return { params }
-  },
+  }
   head() {
     return {
       title: (this.book || {}).name,
     }
-  },
-  methods: {
-    speedDialClicked(buttonId) {
-      switch (buttonId) {
-        case 'new-expense':
-          this.openNewRecordDialog({ type: 'expense' })
-          break
-        case 'new-transfer':
-          this.openNewRecordDialog({ type: 'transfer' })
-          break
-      }
-    },
-    openNewRecordDialog(options = {}) {
-      this.record_options = options
-      this.$refs.newRecord.open()
-    },
-  },
+  }
+  speedDialClicked(buttonId) {
+    switch (buttonId) {
+      case 'new-expense':
+        this.openNewRecordDialog({ type: 'expense' })
+        break
+      case 'new-transfer':
+        this.openNewRecordDialog({ type: 'transfer' })
+        break
+    }
+  }
+  openNewRecordDialog(options = {}) {
+    this.record_options = options
+    // @ts-ignore
+    this.$refs.newRecord.open()
+  }
 }
 </script>
 
