@@ -1,10 +1,10 @@
 <template lang='pug'>
 v-layout(column, justify-center, align-center)
   v-flex.text-xs-center(xs12, sm8, md6)
-    template(v-for='(item, i) in books')
-      v-btn.book(:to='`/book/${item.id}`')
-        v-icon(size='48') {{ item.icon || 'book' }}
-        .bookname(v-text='item.display')
+    template(v-for='(book, i) in books')
+      v-btn.book(:to='`/book/${book.id}`')
+        v-icon(size='48') {{ book.icon || 'book' }}
+        .bookname(v-text='book.name')
 
   v-divider.my-3
 

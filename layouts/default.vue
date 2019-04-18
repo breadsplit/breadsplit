@@ -9,11 +9,11 @@ v-app(:dark='dark')
   v-navigation-drawer(v-model='drawer', :mini-variant='miniVariant', :clipped='clipped', fixed, app)
     v-list.py-2
       template(v-if='books.length')
-        v-list-tile.px-2(v-for='(item, i) in books', :key='i', :to='`/book/${item.id}`', router, exact)
+        v-list-tile.px-2(v-for='(book, i) in books', :key='i', :to='`/book/${book.id}`', router, exact)
           v-list-tile-action
-            v-icon {{ item.icon || 'book' }}
+            v-icon {{ book.icon || 'book' }}
           v-list-tile-content
-            v-list-tile-title(v-text='item.display')
+            v-list-tile-title(v-text='book.name')
         v-divider.my-1
       v-list-tile.px-2(@click='newBook')
         v-list-tile-action
