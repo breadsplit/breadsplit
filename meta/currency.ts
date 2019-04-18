@@ -1,4 +1,9 @@
-export default [
+export interface Currency {
+  cc: string,
+  symbol: string,
+  name: string
+}
+const Currencies: Currency[] = [
   { 'cc': 'AED', 'symbol': '\u062f.\u0625;', 'name': 'UAE dirham' },
   { 'cc': 'AFN', 'symbol': 'Afs', 'name': 'Afghan afghani' },
   { 'cc': 'ALL', 'symbol': 'L', 'name': 'Albanian lek' },
@@ -156,3 +161,5 @@ export default [
   { 'cc': 'ZMK', 'symbol': 'ZK', 'name': 'Zambian kwacha' },
   { 'cc': 'ZWR', 'symbol': 'Z$', 'name': 'Zimbabwean dollar' },
 ]
+
+export default Currencies

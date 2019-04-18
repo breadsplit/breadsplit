@@ -1,7 +1,8 @@
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
-const pkg = require('./package')
+import NuxtConfiguration from '@nuxt/config'
+import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
+import pkg from './package.json'
 
-module.exports = {
+const config: NuxtConfiguration = {
   mode: 'spa',
 
   /*
@@ -92,6 +93,7 @@ module.exports = {
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
+        // @ts-ignore
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -102,3 +104,5 @@ module.exports = {
     },
   },
 }
+
+export default config
