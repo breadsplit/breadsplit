@@ -1,12 +1,24 @@
-# MoneyFlow?
+# Splittable 💵✂🤼‍♀️
 
-[📋**Stage Progress**](https://github.com/antfu/moneyflow/projects/1)
+[📋 **Stage Progress**](https://github.com/antfu/moneyflow/projects/1)
 
-keywords: `split bills`, `group expenses management`, `sharing expenses`, `travel`
+🔑 Keywords: `split bills`, `group expenses management`, `sharing expenses`, `accounting`
 
-## Development
+## 🚗🚓🚕🚙 Simliar Apps
 
-### Installation
+- [⭐Settle Up](https://www.tricount.com/)
+- [⭐Splitwise](https://www.splitwise.com/)
+- [Splid](https://splid.app/)
+- [Tricount](https://www.tricount.com/)
+- [SplittyPie](https://splittypie.com/) *Open Source*
+- [KittySplit](https://www.kittysplit.com/en/)
+- [iHateMoney](https://ihatemoney.org/)
+- [Acasa](https://www.helloacasa.com/)
+- [Spend Together](https://itunes.apple.com/us/app/spend-together/id1446549608?mt=8)
+
+## 👨‍💻 Development
+
+### 💽 Installation
 
 1. Make sure you have [Node.js](https://nodejs.org/en/) > `v11.0` installed
 2. Install [git](https://git-scm.com/) or GUI Clients (eg. [Github Desktop](https://desktop.github.com/))
@@ -20,14 +32,14 @@ keywords: `split bills`, `group expenses management`, `sharing expenses`, `trave
 $ npm ci
 ```
 
-### Run the app
+### 🚀 Run the app
 
 ```sh
 # serve with hot reload at localhost:3000
 $ npm run dev
 ```
 
-### Build the app
+### 📦 Build the app (Production)
 
 ```sh
 # build for production and launch server
@@ -40,7 +52,7 @@ $ npm run generate
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
 
-### Pull new code
+### ☄ Pull new code
 
 ```sh
 $ git pull
@@ -52,7 +64,7 @@ After every pull, please run following command to ensure the packages dependenci
 $ npm i
 ```
 
-## Tech-stacks / Docs
+## 🛸 Tech-stacks / Docs
 
 ### Main
 
@@ -79,13 +91,3 @@ $ npm i
 ### Others
 
 - [Material Design Icons](https://materialdesignicons.com/) (Icon set)
-
-## Simliar Apps
-
-- [⭐Settle Up](https://www.tricount.com/)
-- [⭐Splid](https://splid.app/)
-- [Splitwise](https://www.splitwise.com/)
-- [Tricount](https://www.tricount.com/)
-- [SplittyPie](https://splittypie.com/) *Open Source*
-- [KittySplit](https://www.kittysplit.com/en/)
-- [iHateMoney](https://ihatemoney.org/)
