@@ -1,7 +1,3 @@
-type MemberId = string
-type BookId = string
-type TransactionId = string
-
 export const enum MemberRoles {
   owner = 'owner',
   collaborator = 'collaborator',
@@ -9,38 +5,46 @@ export const enum MemberRoles {
   visitor = 'visitor',
 }
 
-export const enum ActivityEvent {
-  book_creation,
-  // TODO:
+export const enum ActivityAction {
+  insert = 'insert',
+  remove = 'remove',
+  update = 'update',
+}
+
+export const enum Entity {
+  member = 'member',
+  book ='book',
+  transaction ='transaction',
+  currency_record = 'currency_record',
 }
 
 export interface Weight {
-  member: MemberId
+  memberId: string
   weight?: number
   fee?: number
   percent?: number
 }
 
 export interface Member {
-  id: MemberId
+  id: string
   name: string
   role: MemberRoles
 
   email?: string
   avatar?: string
-  uid?: MemberId
+  uid?: string
 }
 
 export interface Transaction {
-  id: TransactionId
-  time: number
+  id: string
+  timestamp: number
   desc?: string
   category?: string
   currency: string
   total_fee: number
   creditors: Weight[]
   debtors: Weight[]
-  creator: MemberId
+  creator: string
 }
 
 export interface CurrencyRecord {
@@ -50,7 +54,7 @@ export interface CurrencyRecord {
   to_currency: string
   to_fee: number
   handling_fee: number
-  time: number
+  timestamp: number
   desc: string
 }
 
@@ -62,24 +66,25 @@ export interface CurrencyChangeRate {
 
 export interface Activity {
   id: string
-  time: number
-  operator: MemberId
-  event: ActivityEvent
+  timestamp: number
+  by: string
+  action: ActivityAction
+  entity: Entity
   // TODO:
 }
 
 export interface BookOptions {
-  multiple_currencies: Boolean,
+  multiple_currencies: boolean
 }
 
 export interface Book {
   // Basic
-  id: BookId
+  id: string
   name: string
   color?: string
   icon?: string
   options: BookOptions
-  time_created: number
+  timestamp: number
 
   // Records
   members: Member[]

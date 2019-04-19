@@ -5,15 +5,22 @@ import { Book, Member, MemberRoles } from '~/types'
 import { BookState, RootState } from '~/types/store'
 
 // Helpers
+const CreateMember = (payload = {}): Member => {
+  return Object.assign({
+    id: randomstr(10),
+    name: '',
+    role: MemberRoles.collaborator,
+  }, payload)
+}
 
 const CreateBook = (payload = {}): Book => {
-  const book:Book = Object.assign({
+  const book: Book = Object.assign({
     id: randomstr(5),
     name: '',
     options: {
       multiple_currencies: true,
     },
-    time_created: +new Date(),
+    timestamp: +new Date(),
 
     members: [],
     transactions: [],
@@ -27,14 +34,6 @@ const CreateBook = (payload = {}): Book => {
   book.members = book.members.map(m => CreateMember(m))
 
   return book
-}
-
-const CreateMember = (payload = {}): Member => {
-  return Object.assign({
-    id: randomstr(10),
-    name: '',
-    role: MemberRoles.collaborator,
-  }, payload)
 }
 
 // Store

@@ -8,12 +8,14 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
   ],
+  parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
   },
   extends: [
     '@nuxtjs',
-    'plugin:nuxt/recommended'
+    'plugin:nuxt/recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
   // add your custom rules here
   rules: {
@@ -86,6 +88,12 @@ module.exports = {
     'require-await': 'off',
     'no-return-assign': 'off',
 
-    '@typescript-eslint/no-unused-vars': [2, { args: 'none' }]
+    // TS
+    '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
+    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'none' } }],
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/type-annotation-spacing': ['error', {}],
   }
 }
