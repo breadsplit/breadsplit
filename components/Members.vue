@@ -41,13 +41,15 @@ export default {
   },
   methods: {
     promptNewMember() {
-      const email = prompt('Email?')
       const name = prompt('Name?')
-      this.newMember({ member: { email, name } })
+      const email = prompt('Email?')
+      if (name)
+        this.newMember({ member: { email, name } })
     },
     promptRenameMember(member) {
       const name = prompt('Name?')
-      this.renameMember({ memberid: member.id, changes: { name } })
+      if (name)
+        this.renameMember({ memberid: member.id, changes: { name } })
     },
     promptRemoveMember(member) {
       if (confirm('Sure?'))

@@ -6,42 +6,43 @@ v-card
     v-toolbar-title New Group
 
   v-container.pa-4
-    v-flex
-      v-text-field(
-        v-model='name' label='Group name'
-        prepend-icon='mdi-group-open-variant'
-      )
-        template(slot='prepend')
-          app-icon-select(v-model='icon' :color='color', style='margin-top:-20px')
+    v-layout(column)
+      v-flex
+        v-text-field(
+          v-model='name' label='Group name'
+          prepend-icon='mdi-group-open-variant'
+        )
+          template(slot='prepend')
+            app-icon-select(v-model='icon' :color='color', style='margin-top:-20px')
 
-    v-flex
-      app-swatches(v-model='color')
+      v-flex
+        app-swatches(v-model='color')
 
-    v-flex
-      v-autocomplete(
-        v-model='currency' :items='currencies'
-        prepend-icon='mdi-currency-usd' label='Currency'
-      )
+      v-flex
+        v-autocomplete(
+          v-model='currency' :items='currencies'
+          prepend-icon='mdi-currency-usd' label='Currency'
+        )
 
-    v-flex
-      v-combobox(
-        v-model='members', :items='members_suggestions'
-        :search-input.sync='search', hide-selected
-        label='Members', multiple, persistent-hint
-        small-chips, prepend-icon='mdi-account-multiple'
-      )
-        template(v-slot:no-data='')
-          v-list-tile
-            v-list-tile-content
-              v-list-tile-title
-                | No results matching&nbsp;
-                strong {{ search }}
-                | . Press
-                kbd enter
-                | to create a new one
+      v-flex
+        v-combobox(
+          v-model='members', :items='members_suggestions'
+          :search-input.sync='search', hide-selected
+          label='Members', multiple, persistent-hint
+          small-chips, prepend-icon='mdi-account-multiple'
+        )
+          template(v-slot:no-data='')
+            v-list-tile
+              v-list-tile-content
+                v-list-tile-title
+                  | No results matching&nbsp;
+                  strong {{ search }}
+                  | . Press
+                  kbd enter
+                  | to create a new one
 
-    v-flex
-      v-btn(@click='create()', :color='color', dark) Create
+      v-flex
+        v-btn(@click='create()', :color='color', dark) Create
 
 </template>
 

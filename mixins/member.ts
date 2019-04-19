@@ -2,6 +2,7 @@ import md5 from 'crypto-js/md5'
 import { Vue, Component } from 'vue-property-decorator'
 import { Member } from '~/types'
 import { Mutation } from 'vuex-class'
+import avatarPlaceholder from '~/utils/avatarPlaceholders'
 
 @Component
 export default class MemberMixin extends Vue {
@@ -10,7 +11,7 @@ export default class MemberMixin extends Vue {
       return member.avatar
     const email = (member.email || member.id || '').trim().toLowerCase()
     const hash = md5(email).toString()
-    return `https://www.gravatar.com/avatar/${hash}?d=identicon`
+    return avatarPlaceholder(hash)
   }
 
   @Mutation('group/addMember') newMember

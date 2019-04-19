@@ -1,7 +1,7 @@
 <template lang='pug'>
-.category-icon
-  v-icon(size='32', :color='color') mdi-{{icon}}
-  .desc(:style='colorStyle') {{display}}
+app-action-with-text.category-icon
+  v-icon(slot='action', size='32', :color='color') mdi-{{icon}}
+  span(slot='text' :style='colorStyle') {{display}}
 </template>
 
 <script>
@@ -32,15 +32,3 @@ export default {
   },
 }
 </script>
-
-<style lang="stylus" scoped>
-.category-icon
-  display inline-block
-  padding 0 5px
-  min-width 60px
-  text-align center
-  .desc
-    display block
-    font-size 0.8em
-
-</style>
