@@ -2,15 +2,15 @@
 v-container
   v-layout(column, justify-center, align-center)
     v-flex.text-xs-center(xs12, sm8, md6)
-      template(v-for='(book, i) in books')
-        nuxt-link.book-entry(v-ripple, :to='`/book/${book.id}`', :style='bookCssVars(book)')
-          v-icon mdi-{{ book.icon || 'book' }}
-          .bookname(v-text='book.name')
+      template(v-for='(group, i) in groups')
+        nuxt-link.group-entry(v-ripple, :to='`/group/${group.id}`', :style='groupCssVars(group)')
+          v-icon mdi-{{ group.icon }}
+          .groupname(v-text='group.name')
 
     v-divider.my-3
 
     v-flex.text-xs-center(xs12, sm8, md6)
-      v-btn(@click='$root.$newBook.open()', color='primary') Create A New Book
+      v-btn(@click='$root.$newGroup.open()', color='primary') Create A New Group
 </template>
 
 <script lang='ts'>
@@ -18,22 +18,22 @@ import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class Index extends Vue {
-  get books() {
-    return this.$store.getters['book/books']
+  get groups() {
+    return this.$store.getters['group/groups']
   }
 
-  bookCssVars(book) {
+  groupCssVars(group) {
     return {
-      '--book-color': book.color,
+      '--group-color': group.color,
     }
   }
 }
 </script>
 
 <style lang='stylus'>
-.book-entry
-  --book-color #000
-  --book-padding 15px
+.group-entry
+  --group-color #000
+  --group-padding 15px
 
   width 100px
   height 100px
@@ -50,18 +50,18 @@ export default class Index extends Vue {
     opacity 0.6
     text-align center
 
-  .bookname
+  .groupname
     position absolute
-    left var(--book-padding)
-    bottom var(--book-padding)
-    color var(--book-color)
+    left var(--group-padding)
+    bottom var(--group-padding)
+    color var(--group-color)
     line-height 1em
 
   .v-icon
     position absolute
-    left var(--book-padding)
-    top var(--book-padding)
-    color var(--book-color)
+    left var(--group-padding)
+    top var(--group-padding)
+    color var(--group-color)
     font-size 25px
 
 </style>

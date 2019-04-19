@@ -1,6 +1,6 @@
 import { MutationTree, GetterTree } from 'vuex'
 import { RootState } from '~/types/store'
-import { Book } from '~/types'
+import { Group } from '~/types'
 
 export const state = () => ({
   locale: '',
@@ -22,7 +22,7 @@ export const mutations: MutationTree<RootState> = {
 export const getters: GetterTree<RootState, RootState> = {
 
   primary(state, getters) {
-    const current: Book | null = getters['book/current']
+    const current: Group | null = getters['group/current']
     let color = 'primary'
     if (current && current.color)
       color = current.color

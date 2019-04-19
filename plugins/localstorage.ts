@@ -1,6 +1,6 @@
 
 import CreatePersistedState from 'vuex-persistedstate'
-import BookRouter from '~/middleware/book'
+import GroupRouter from '~/middleware/group'
 
 export default ({ store, route, app }) => {
   // @ts-ignore
@@ -9,10 +9,10 @@ export default ({ store, route, app }) => {
       key: 'moneyflow-store',
       paths: [
         'locale',
-        'book',
+        'group',
       ],
     })(store)
     store.commit('loaded')
-    BookRouter({ store, route })
+    GroupRouter({ store, route })
   })
 }

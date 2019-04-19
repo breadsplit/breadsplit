@@ -1,4 +1,4 @@
-export const BookIcons = [
+export const GroupIcons = [
   'book',
   'book-open-variant',
   'airplane',
@@ -16,5 +16,5 @@ export const BookIcons = [
 ]
 
 export default {
-  book: BookIcons,
+  group: GroupIcons,
 }

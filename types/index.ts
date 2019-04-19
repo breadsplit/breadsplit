@@ -13,7 +13,7 @@ export const enum ActivityAction {
 
 export const enum Entity {
   member = 'member',
-  book ='book',
+  group ='group',
   transaction ='transaction',
   currency_record = 'currency_record',
 }
@@ -73,17 +73,17 @@ export interface Activity {
   // TODO:
 }
 
-export interface BookOptions {
+export interface GroupOptions {
   multiple_currencies: boolean
 }
 
-export interface Book {
+export interface Group {
   // Basic
   id: string
   name: string
   color?: string
   icon?: string
-  options: BookOptions
+  options: GroupOptions
   timestamp: number
 
   // Records

@@ -25,7 +25,7 @@ export default class extends Vue {
   get iconset() {
     if (typeof this.icons === 'string')
       return Iconsets[this.icons] || []
-    return this.icons || Iconsets.book
+    return this.icons || Iconsets.group
   }
 
   setValue(value) {

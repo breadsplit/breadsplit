@@ -16,7 +16,7 @@ div
               v-list-tile(@click='promptRenameMember(member)')
                 v-list-tile-title Rename
               v-list-tile(@click='promptRemoveMember(member)')
-                v-list-tile-title Remove from this book
+                v-list-tile-title Remove from this group
 
   v-btn(@click='promptNewMember()', color='primary') Add member
 </template>

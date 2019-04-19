@@ -76,7 +76,7 @@ export default class Settings extends Vue {
   async purgeData() {
     // @ts-ignore
     if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
-      this.$store.commit('book/purge')
+      this.$store.commit('group/purge')
       this.close()
       this.$router.push('/')
     }

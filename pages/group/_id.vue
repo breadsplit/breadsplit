@@ -1,9 +1,9 @@
 <template lang="pug">
-.book-page
+.group-page
 
   v-tabs-items.full-height(v-model='tab_index')
     v-tab-item(key='0')
-      p.ma-4 {{book}}
+      p.ma-4 {{group}}
 
     v-tab-item(key='1')
       app-members(:members='members')
@@ -33,11 +33,11 @@
 </template>
 
 <script lang='ts'>
-import BookMixin from '~/mixins/book'
+import GroupMixin from '~/mixins/group'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 
 @Component
-export default class Index extends Mixins(BookMixin) {
+export default class Index extends Mixins(GroupMixin) {
   fab=false
   record_options= {}
   tab_index = 0
@@ -98,13 +98,13 @@ export default class Index extends Mixins(BookMixin) {
   async asyncData({ params, store, error }) {
     if (!store.state.loaded)
       return { params }
-    if (!store.getters['book/current'])
-      return error({ icon: 'book-outline', statusCode: 'Book not found', message: 'This seems to be a local book, are you sure it\'s stored on this device?' })
+    if (!store.getters['group/current'])
+      return error({ icon: 'group-outline', statusCode: 'Group not found', message: 'This seems to be a local group, are you sure it\'s stored on this device?' })
     return { params }
   }
   head() {
     return {
-      title: (this.book || {}).name,
+      title: (this.group || {}).name,
     }
   }
   speedDialClicked(buttonId) {
@@ -126,7 +126,7 @@ export default class Index extends Mixins(BookMixin) {
 </script>
 
 <style lang="stylus">
-.book-page
+.group-page
   height 100%
 
 .v-window.full-height

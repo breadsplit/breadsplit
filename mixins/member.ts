@@ -13,7 +13,7 @@ export default class MemberMixin extends Vue {
     return `https://www.gravatar.com/avatar/${hash}?d=identicon`
   }
 
-  @Mutation('book/addMember') newMember
-  @Mutation('book/editMember') editMember
-  @Mutation('book/removeMember') removeMember
+  @Mutation('group/addMember') newMember
+  @Mutation('group/editMember') editMember
+  @Mutation('group/removeMember') removeMember
 }

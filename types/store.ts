@@ -1,12 +1,12 @@
-import { Book } from '.'
+import { Group } from '.'
 
-export interface BookState {
-  books: { [s: string]: Book }
+export interface GroupState {
+  groups: { [s: string]: Group }
   currentId: string | null
 }
 
 export interface RootState {
   locale: string
   loaded: boolean
-  book: BookState
+  group: GroupState
 }

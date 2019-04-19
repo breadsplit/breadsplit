@@ -70,7 +70,7 @@ const config: NuxtConfiguration = {
   router: {
     mode: 'hash',
     middleware: [
-      'book',
+      'group',
     ],
   },
   /*

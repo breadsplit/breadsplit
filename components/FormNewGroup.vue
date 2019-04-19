@@ -3,13 +3,13 @@ v-card
   v-toolbar(dark, :color='color')
     v-btn(icon, dark, @click='close(false)')
       v-icon mdi-close
-    v-toolbar-title New Book
+    v-toolbar-title New Group
 
   v-container.pa-4
     v-flex
       v-text-field(
-        v-model='name' label='Book name'
-        prepend-icon='mdi-book-open-variant'
+        v-model='name' label='Group name'
+        prepend-icon='mdi-group-open-variant'
       )
         template(slot='prepend')
           app-icon-select(v-model='icon' :color='color', style='margin-top:-20px')
@@ -54,7 +54,7 @@ export default {
     return {
       search: '',
       currency: '',
-      icon: 'book',
+      icon: 'account-group',
       name: '',
       color: swatches[Math.floor(Math.random() * swatches.length)],
       members: [],
@@ -68,7 +68,7 @@ export default {
       return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
     },
     members_suggestions() {
-      // TODO: load suggestions from another book
+      // TODO: load suggestions from another group
       return []
     },
   },
@@ -84,7 +84,7 @@ export default {
         members: this.members.map((m) => { return { name: m } }),
         currencies: [this.currency],
       }
-      this.$store.commit('book/add', payload)
+      this.$store.commit('group/add', payload)
 
       this.close()
     },

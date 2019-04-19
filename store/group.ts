@@ -1,8 +1,8 @@
 import randomstr from '~/utils/randomstr'
 import Vue from 'vue'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { Book, Member, MemberRoles } from '~/types'
-import { BookState, RootState } from '~/types/store'
+import { Group, Member, MemberRoles } from '~/types'
+import { GroupState, RootState } from '~/types/store'
 
 // Helpers
 const CreateMember = (payload = {}): Member => {
@@ -13,8 +13,8 @@ const CreateMember = (payload = {}): Member => {
   }, payload)
 }
 
-const CreateBook = (payload = {}): Book => {
-  const book: Book = Object.assign({
+const CreateGroup = (payload = {}): Group => {
+  const group: Group = Object.assign({
     id: randomstr(5),
     name: '',
     options: {
@@ -31,81 +31,81 @@ const CreateBook = (payload = {}): Book => {
     online: false,
   }, payload)
 
-  book.members = book.members.map(m => CreateMember(m))
+  group.members = group.members.map(m => CreateMember(m))
 
-  return book
+  return group
 }
 
 // Store
 
-export const state = (): BookState => ({
-  books: {},
+export const state = (): GroupState => ({
+  groups: {},
   currentId: null,
 })
 
-export const getters: GetterTree<BookState, RootState> = {
+export const getters: GetterTree<GroupState, RootState> = {
 
   current(state) {
     if (!state.currentId)
       return undefined
-    return state.books[state.currentId] || undefined
+    return state.groups[state.currentId] || undefined
   },
 
-  books(state) {
-    return Object.values(state.books)
+  groups(state) {
+    return Object.values(state.groups)
   },
 
 }
 
-export const actions: ActionTree<BookState, RootState> = {
+export const actions: ActionTree<GroupState, RootState> = {
 
 }
 
-export const mutations: MutationTree<BookState> = {
+export const mutations: MutationTree<GroupState> = {
 
   purge(state) {
     state.currentId = null
-    Vue.set(state, 'books', {})
+    Vue.set(state, 'groups', {})
   },
 
   switch(state, id: string | null) {
     state.currentId = id
   },
 
-  // Books
+  // Groups
   add(state, payload) {
-    const book = CreateBook(payload)
-    Vue.set(state.books, book.id, book)
+    const group = CreateGroup(payload)
+    Vue.set(state.groups, group.id, group)
   },
 
   remove(state, id) {
     id = id || state.currentId
     state.currentId = null
-    Vue.delete(state.books, id)
+    Vue.delete(state.groups, id)
   },
 
   edit(state, { id, changes }) {
     id = id || state.currentId
-    Object.assign(state.books[id], changes)
+    Object.assign(state.groups[id], changes)
   },
 
   // Members
   addMember(state, { id, member }) {
     id = id || state.currentId
-    state.books[id].members.push(CreateMember(member))
+    state.groups[id].members.push(CreateMember(member))
   },
 
   removeMember(state, { id, memberid }) {
     id = id || state.currentId
-    const member = state.books[id].members.find(m => m.id === memberid)
-    const index = member ? state.books[id].members.indexOf(member) : -1
+    const member = state.groups[id].members.find(m => m.id === memberid)
+    const index = member ? state.groups[id].members.indexOf(member) : -1
     if (index > -1)
-      state.books[id].members.splice(index, 1)
+      state.groups[id].members.splice(index, 1)
   },
 
   editMember(state, { id, memberid, changes }) {
     id = id || state.currentId
-    const member = state.books[id].members.find(m => m.id === memberid)
+    const member = state.groups[id].members.find(m => m.id === memberid)
     if (member)
       Object.assign(member, changes)
   },

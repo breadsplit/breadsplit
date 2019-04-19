@@ -19,21 +19,21 @@ v-app(:dark='dark')
     :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
   )
     v-list
-      template(v-if='books.length')
+      template(v-if='groups.length')
         v-list-tile(
-          v-for='(book, i) in books'
-          :key='i', :to='`/book/${book.id}`'
+          v-for='(group, i) in groups'
+          :key='i', :to='`/group/${group.id}`'
           router, exact)
           v-list-tile-action
-            v-icon mdi-{{ book.icon || 'book' }}
+            v-icon mdi-{{ group.icon }}
           v-list-tile-content
-            v-list-tile-title(v-text='book.name')
+            v-list-tile-title(v-text='group.name')
         v-divider.my-1
-      v-list-tile(@click='newBook')
+      v-list-tile(@click='newGroup')
         v-list-tile-action
           v-icon mdi-plus
         v-list-tile-content
-          v-list-tile-title {{$t('ui.book_editing.new_book')}}
+          v-list-tile-title {{$t('ui.group_editing.new_group')}}
 
       .drawer-list-bottom
         // Sign in
@@ -70,7 +70,7 @@ v-app(:dark='dark')
         v-btn(icon, flat, slot='activator')
           v-icon mdi-dots-vertical
         v-list
-          v-list-tile(v-for='(item, index) in book_menu', :key='index', @click='onBookMenu(item.key)')
+          v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
             v-list-tile-title {{ item.title }}
 
   v-content
@@ -79,8 +79,8 @@ v-app(:dark='dark')
   app-dialog(ref='settings', fullscreen, hide-overlay, transition='dialog-bottom-transition')
     app-settings(@close='$root.$settings.close()')
 
-  app-dialog(ref='newbook', fullscreen, hide-overlay, transition='dialog-bottom-transition')
-    app-form-new-book(@close='$root.$newBook.close()')
+  app-dialog(ref='newgroup', fullscreen, hide-overlay, transition='dialog-bottom-transition')
+    app-form-new-group(@close='$root.$newGroup.close()')
 
   app-confirm(ref='confirm')
 </template>
@@ -88,7 +88,7 @@ v-app(:dark='dark')
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
-import { Book } from '~/types'
+import { Group } from '~/types'
 import FontFamilyBuilder from '~/meta/font_family'
 
 @Component
@@ -101,10 +101,10 @@ export default class DefaultLayout extends Vue {
   miniVariant = false
   mobileBreakPoint = 700
 
-  @Getter('book/books') books!: Book[]
-  @Getter('book/current') current: Book | undefined
+  @Getter('group/groups') groups!: Group[]
+  @Getter('group/current') current: Group | undefined
 
-  @Mutation('book/remove') removeBook
+  @Mutation('group/remove') removeGroup
 
   // Computed
   get title() {
@@ -120,10 +120,10 @@ export default class DefaultLayout extends Vue {
       font_family = FontFamilyBuilder(font_of_locale)
     return font_family
   }
-  get book_menu() {
+  get group_menu() {
     return [
-      { title: 'Edit book', key: 'edit' },
-      { title: 'Delete book', key: 'delete' },
+      { title: 'Edit group', key: 'edit' },
+      { title: 'Delete group', key: 'delete' },
     ]
   }
   get primaryColor() {
@@ -137,23 +137,23 @@ export default class DefaultLayout extends Vue {
     // @ts-ignore
     this.$root.$settings = this.$refs.settings
     // @ts-ignore
-    this.$root.$newBook = this.$refs.newbook
+    this.$root.$newGroup = this.$refs.newgroup
 
     // @ts-ignore
     if (this.$vuetify.breakpoint.mdAndUp)
       this.drawer = true
   }
 
-  async newBook() {
+  async newGroup() {
     // @ts-ignore
-    await this.$root.$newBook.open()
+    await this.$root.$newGroup.open()
   }
-  async onBookMenu(key) {
+  async onGroupMenu(key) {
     switch (key) {
       case 'delete':
         // @ts-ignore
         if (await this.$root.$confirm('Are you sure?')) {
-          this.removeBook()
+          this.removeGroup()
           this.$router.push('/')
         }
         break
