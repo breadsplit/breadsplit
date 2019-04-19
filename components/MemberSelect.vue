@@ -10,7 +10,7 @@
 
     v-card.pa-2
       template(v-for='member in members')
-        app-action-with-text.pa-3(v-ripple)
+        app-action-with-text.pa-3.member-option(v-ripple)
           v-avatar(slot='action', @click='setValue(member.id)')
             img(:src='getMemberAvatar(member)')
           span(slot='text') {{member.name}}
@@ -42,4 +42,6 @@ export default class extends Mixins(MemberMixin) {
 <style lang="stylus">
 .member-select
   display inline-block
+.member-option
+  cursor pointer
 </style>
