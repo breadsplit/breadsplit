@@ -37,7 +37,7 @@
     "vue-property-decorator": "^8.1.0",
     "vue-swatches": "^1.0.3",
     "vuetify": "^1.5.12",
-    "vuetify-loader": "^1.2.1",
+    "vuetify-loader": "^1.2.2",
     "vuex-class": "^0.3.2",
     "vuex-persistedstate": "^2.5.4"
   },
