@@ -1,14 +1,14 @@
-# Splittable 💵✂🤼‍♀️
+# Splittable ✂
 
 [📋 **Stage Progress**](https://github.com/antfu/moneyflow/projects/1)
 
-🔑 Keywords: `split bills`, `group expenses management`, `sharing expenses`, `accounting`
+🔑 **Keywords**: `split bills`, `group expenses management`, `sharing expenses`, `accounting`
 
-## 🚗🚓🚕🚙 Simliar Apps
+## Simliar Apps 🚗🚓🚕🚙
 
-- [⭐Settle Up](https://www.tricount.com/)
-- [⭐Splitwise](https://www.splitwise.com/)
-- [Splid](https://splid.app/)
+- [Settle Up⭐](https://www.tricount.com/)
+- [Splitwise⭐](https://www.splitwise.com/)
+- [Splid⭐](https://splid.app/)
 - [Tricount](https://www.tricount.com/)
 - [SplittyPie](https://splittypie.com/) *Open Source*
 - [KittySplit](https://www.kittysplit.com/en/)
@@ -16,13 +16,13 @@
 - [Acasa](https://www.helloacasa.com/)
 - [Spend Together](https://itunes.apple.com/us/app/spend-together/id1446549608?mt=8)
 
-## 👨‍💻 Development
+## Development
 
 ### 💽 Installation
 
 1. Make sure you have [Node.js](https://nodejs.org/en/) > `v11.0` installed
 2. Install [git](https://git-scm.com/) or GUI Clients (eg. [Github Desktop](https://desktop.github.com/))
-3. [VSCode](https://code.visualstudio.com/) is recommend as text editor ([**Recommend Plugins**](/docs/VSCodePlugins.md))
+3. [VSCode](https://code.visualstudio.com/) is recommend as text editor ([**Recommend Plugins**](/docs/vscode-plugins.md))
 4. Chrome with extension [Vue.js DevTools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) installed.
 5. Clone this repo.
 6. Install the dependencies using flowing command
