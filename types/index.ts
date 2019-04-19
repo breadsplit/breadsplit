@@ -31,7 +31,9 @@ export interface Member {
   role: MemberRoles
 
   email?: string
-  avatar?: string
+  avatarUrl?: string
+  avatarHash?: string
+  disableAvatarUrl?: boolean
   uid?: string
 }
 

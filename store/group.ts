@@ -106,8 +106,10 @@ export const mutations: MutationTree<GroupState> = {
   editMember(state, { id, memberid, changes }) {
     id = id || state.currentId
     const member = state.groups[id].members.find(m => m.id === memberid)
-    if (member)
-      Object.assign(member, changes)
+    if (member) {
+      for (const key of Object.keys(changes))
+        Vue.set(member, key, changes[key])
+    }
   },
 
 }

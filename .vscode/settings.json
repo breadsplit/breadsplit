@@ -34,6 +34,7 @@
 
   // Spell check
   "cSpell.words": [
+    "Vetur",
     "axois",
     "fullname",
     "localstorage",
@@ -42,6 +43,7 @@
     "nuxtjs",
     "persistedstate",
     "preprocessors",
+    "randomstr",
     "repo",
     "res",
     "rgba",
@@ -49,9 +51,8 @@
     "tful",
     "typeof",
     "uniquity",
-    "Vetur",
     "vuetify",
-    "vuex",
+    "vuex"
   ],
   "cSpell.allowCompoundWords": true,
   "cSpell.enabledLanguageIds": [

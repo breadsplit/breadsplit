@@ -42,6 +42,7 @@ export default class extends Mixins(MemberMixin) {
 <style lang="stylus">
 .member-select
   display inline-block
+
 .member-option
   cursor pointer
 </style>

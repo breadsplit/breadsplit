@@ -15,6 +15,8 @@ div
             v-list
               v-list-tile(@click='promptRenameMember(member)')
                 v-list-tile-title Rename
+              v-list-tile(@click='randomAvatar(member)')
+                v-list-tile-title Random avatar
               v-list-tile(@click='promptRemoveMember(member)')
                 v-list-tile-title Remove from this group
 
@@ -25,6 +27,7 @@ div
 // TODO: replace prompt with better form
 /* eslint-disable no-alert */
 import MemberMixin from '~/mixins/member'
+import randomstr from '~/utils/randomstr'
 
 export default {
   mixins: [MemberMixin],
@@ -49,11 +52,14 @@ export default {
     promptRenameMember(member) {
       const name = prompt('Name?')
       if (name)
-        this.renameMember({ memberid: member.id, changes: { name } })
+        this.editMember({ memberid: member.id, changes: { name } })
     },
     promptRemoveMember(member) {
       if (confirm('Sure?'))
         this.removeMember({ memberid: member.id })
+    },
+    randomAvatar(member) {
+      this.editMember({ memberid: member.id, changes: { avatarHash: randomstr(10) } })
     },
   },
 }

@@ -7,7 +7,7 @@ export const gravatar = (hash: string, size = 200) => `https://www.gravatar.com/
 export const dicebear = (hash: string, size = 200) => `https://avatars.dicebear.com/v2/gridy/${hash}.svg`
 
 export const dicebearOffline = (hash: string) => {
-  const avatars = new Avatars(GridyAvatars())
+  const avatars = new Avatars(GridyAvatars({ colorful: true }))
   return Svg2DataUrl(avatars.create(hash))
 }
 

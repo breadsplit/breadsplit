@@ -7,10 +7,17 @@ import avatarPlaceholder from '~/utils/avatarPlaceholders'
 @Component
 export default class MemberMixin extends Vue {
   getMemberAvatar(member: Member) {
-    if (member.avatar)
-      return member.avatar
-    const email = (member.email || member.id || '').trim().toLowerCase()
-    const hash = md5(email).toString()
+    if (!member.disableAvatarUrl && member.avatarUrl)
+      return member.avatarUrl
+
+    let hash = ''
+    if (member.avatarHash) {
+      hash = member.avatarHash
+    }
+    else {
+      const email = (member.email || member.id || '').trim().toLowerCase()
+      hash = md5(email).toString()
+    }
     return avatarPlaceholder(hash)
   }
 
