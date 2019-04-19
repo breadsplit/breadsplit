@@ -19,6 +19,7 @@ div
                 v-list-tile-title Random avatar
               v-list-tile(@click='promptRemoveMember(member)')
                 v-list-tile-title Remove from this group
+      v-divider
 
   v-btn(@click='promptNewMember()', color='primary') Add member
 </template>
