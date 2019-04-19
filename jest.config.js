@@ -6,7 +6,7 @@ module.exports = {
   },
   moduleFileExtensions: ['js', 'vue', 'json'],
   transform: {
-    '^.+\\.js$': 'babel-jest',
+    '^.+\\.ts$': 'ts-jest',
     '.*\\.(vue)$': 'vue-jest',
   },
   'collectCoverage': true,

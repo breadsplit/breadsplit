@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils'
-import Logo from '@/components/Logo.vue'
+import Confirm from '@/components/Confirm.vue'
 
-describe('Logo', () => {
+describe('Confirm', () => {
   test('is a Vue instance', () => {
-    const wrapper = mount(Logo)
+    const wrapper = mount(Confirm)
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
 })

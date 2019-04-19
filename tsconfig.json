@@ -27,7 +27,8 @@
     },
     "types": [
       "@types/node",
-      "@nuxt/vue-app"
+      "@nuxt/vue-app",
+      "@types/jest",
     ],
     "strictFunctionTypes": false
   }

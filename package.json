@@ -44,6 +44,7 @@
   "devDependencies": {
     "@nuxt/typescript": "^2.6.2",
     "@nuxtjs/eslint-config": "^0.0.1",
+    "@types/jest": "^24.0.11",
     "@types/webpack-env": "^1.13.9",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@vue/test-utils": "^1.0.0-beta.29",
@@ -64,6 +65,7 @@
     "nodemon": "^1.18.11",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "ts-jest": "^24.0.2",
     "vue-jest": "^3.0.4"
   }
 }
