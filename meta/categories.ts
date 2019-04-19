@@ -1,7 +1,7 @@
 export interface Category {
-  name: string,
-  icon: string,
-  color: string,
+  name: string
+  icon: string
+  color: string
 }
 
 const DefaultCategories: Category[] = [

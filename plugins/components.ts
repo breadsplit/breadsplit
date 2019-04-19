@@ -26,7 +26,7 @@ Vue.use(() => {
     })
   }
 
-  function show(message, options:{ message?:string } = {}) {
+  function show(message, options: { message?: string } = {}) {
     options.message = message
     return createDialogCmp(options)
   }

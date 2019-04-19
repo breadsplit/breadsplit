@@ -41,7 +41,7 @@ export default class Index extends Mixins(BookMixin) {
   fab=false
   record_options= {}
   tab_index = 0
-  tab_id:string|null = 'expenses'
+  tab_id: string|null = 'expenses'
 
   // Computed
 

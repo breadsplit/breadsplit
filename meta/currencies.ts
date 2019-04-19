@@ -1,9 +1,9 @@
 export interface Currency {
-  cc: string,
-  symbol: string,
-  name: string,
-  locale?: String,
-  localname?: String,
+  cc: string
+  symbol: string
+  name: string
+  locale?: string
+  localname?: string
 }
 
 const Currencies: Currency[] = [

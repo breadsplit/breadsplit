@@ -9,7 +9,7 @@ export const state = () => ({
 
 export const mutations: MutationTree<RootState> = {
 
-  switchLocale(state, locale:string) {
+  switchLocale(state, locale: string) {
     state.locale = locale
   },
 

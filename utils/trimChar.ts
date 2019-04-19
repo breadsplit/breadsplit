@@ -1,4 +1,4 @@
-export default function trimChar(string:string, charToRemove:string) {
+export default function trimChar(string: string, charToRemove: string) {
   while (string.charAt(0) === charToRemove)
     string = string.substring(1)
 

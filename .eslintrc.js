@@ -92,8 +92,9 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'none' } }],
+    '@typescript-eslint/type-annotation-spacing': ['error', {}],
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/type-annotation-spacing': ['error', {}],
+    '@typescript-eslint/explicit-member-accessibility': 'off',
   }
 }
