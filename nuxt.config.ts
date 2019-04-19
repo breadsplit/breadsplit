@@ -1,7 +1,8 @@
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
-const pkg = require('./package')
+import NuxtConfiguration from '@nuxt/config'
+import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
+import pkg from './package.json'
 
-module.exports = {
+const config: NuxtConfiguration = {
   mode: 'spa',
 
   /*
@@ -41,13 +42,14 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '@/plugins/i18n',
     // LocalStorage is not available in server side
     // the SSR is disabled for this plugin
     { src: '@/plugins/localstorage', ssr: false },
-    // Other plugins
+    '@/plugins/utils',
     '@/plugins/vuetify',
+    '@/plugins/swatches',
     '@/plugins/components',
-    '@/plugins/i18n',
   ],
 
   /*
@@ -68,7 +70,7 @@ module.exports = {
   router: {
     mode: 'hash',
     middleware: [
-      'book',
+      'group',
     ],
   },
   /*
@@ -91,6 +93,7 @@ module.exports = {
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
+        // @ts-ignore
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -101,3 +104,5 @@ module.exports = {
     },
   },
 }
+
+export default config

@@ -21,13 +21,20 @@ export default {
     language: 'Language',
     settings: 'Settings',
     sign_in: 'Sign in',
+    about: 'About',
+    advance: 'Advance',
     user: {
       guest: 'Guest',
     },
-    book_editing: {
-      new_book: 'New Book',
-      enter_book_name: 'Enter book\'s name',
-      default_book_name: 'Untitled Book',
+    group_editing: {
+      new_group: 'New Group',
+      enter_group_name: 'Enter group\'s name',
+      default_group_name: 'Untitled Group',
+    },
+    tabs: {
+      expenses: 'Expenses',
+      members: 'Members',
+      summary: 'Summary',
     },
     speed_dials: {
       new_expense: 'New Expense',

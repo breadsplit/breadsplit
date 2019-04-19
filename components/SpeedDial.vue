@@ -1,14 +1,15 @@
 <template lang="pug">
-v-speed-dial(v-model='fab', v-bind='$attrs')
-  template(v-slot:activator='')
-    v-btn(v-model='fab', :color='color', dark, fab='')
-      v-icon {{icon}}
-      v-icon {{iconclose}}
-  v-tooltip(v-for='item in items', :key='item.key', :disabled='tooltipsDisabled', left, :value='tooltips')
-    template(slot='activator')
-      v-btn(fab, dark, small, :color='item.color || "accent"', @click='itemClick(item)')
-        v-icon {{item.icon}}
-    span {{item.text}}
+v-fab-transition
+  v-speed-dial(v-model='fab', v-bind='$attrs', v-show='show')
+    template(v-slot:activator='')
+      v-btn(v-model='fab', :color='color', dark, fab='')
+        v-icon mdi-{{icon}}
+        v-icon mdi-{{iconclose}}
+    v-tooltip(v-for='item in items', :key='item.key', :disabled='tooltipsDisabled', left, :value='tooltips')
+      template(slot='activator')
+        v-btn(fab, dark, small, :color='item.color || "accent"', @click='itemClick(item)')
+          v-icon mdi-{{item.icon}}
+      span {{item.text}}
 </template>
 
 <script>
@@ -16,9 +17,10 @@ export default {
   inheritAttrs: false,
   props: {
     value: { type: Boolean, default: false },
+    show: { type: Boolean, default: true },
     color: { type: String, default: 'primary' },
-    icon: { type: String, default: 'mdi-plus' },
-    iconclose: { type: String, default: 'mdi-close' },
+    icon: { type: String, default: 'plus' },
+    iconclose: { type: String, default: 'close' },
     items: { type: Array, default: () => ([]) },
   },
   data() {

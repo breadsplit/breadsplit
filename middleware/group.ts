@@ -6,10 +6,10 @@ export default function ({ store, route }) {
   if (path.startsWith('/#'))
     path = path.slice(2)
 
-  const result = /\/book\/(\w*)?/.exec(path)
+  const result = /\/group\/(\w*)?/.exec(path)
   if (result && result[1]) {
     const id = result[1]
-    return store.commit('book/switchToId', id)
+    return store.commit('group/switch', id)
   }
-  store.commit('book/switchTo', -1)
+  store.commit('group/switch', null)
 }

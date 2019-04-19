@@ -1,39 +1,68 @@
 <template lang='pug'>
-v-layout(column, justify-center, align-center)
-  v-flex.text-xs-center(xs12, sm8, md6)
-    template(v-for='(item, i) in books')
-      v-btn.book(:to='`/book/${item.id}`')
-        v-icon(size='48') {{ item.icon || 'book' }}
-        .bookname(v-text='item.display')
+v-container
+  v-layout(column, justify-center, align-center)
+    v-flex.text-xs-center(xs12, sm8, md6)
+      template(v-for='(group, i) in groups')
+        nuxt-link.group-entry(v-ripple, :to='`/group/${group.id}`', :style='groupCssVars(group)')
+          v-icon mdi-{{ group.icon }}
+          .groupname(v-text='group.name')
 
-  v-divider.my-3
+    v-divider.my-3
 
-  v-flex.text-xs-center(xs12, sm8, md6)
-    v-btn(@click='$root.$newbook.open()', color='primary') Create A New Book
+    v-flex.text-xs-center(xs12, sm8, md6)
+      v-btn(@click='$root.$newGroup.open()', color='primary') Create A New Group
 </template>
 
-<script>
-export default {
-  computed: {
-    books() {
-      return this.$store.state.book.books
-    },
-  },
+<script lang='ts'>
+import { Vue, Component } from 'vue-property-decorator'
+
+@Component
+export default class Index extends Vue {
+  get groups() {
+    return this.$store.getters['group/groups']
+  }
+
+  groupCssVars(group) {
+    return {
+      '--group-color': group.color,
+    }
+  }
 }
 </script>
 
-<style lang="stylus">
-.v-btn.book
-  height inherit
-  padding 10px
+<style lang='stylus'>
+.group-entry
+  --group-color #000
+  --group-padding 15px
+
+  width 100px
+  height 100px
+  margin 5px
   display inline-block
+  border-radius 5px
+  position relative
+  border 1px solid rgba(0,0,0,0.1)
+  box-shadow 1px 1px 5px 0px rgba(50, 50, 50, 0.1)
+  cursor pointer
+  background white
+
   .v-btn__content
     display block
     opacity 0.6
     text-align center
-  .bookname
-    display block
+
+  .groupname
+    position absolute
+    left var(--group-padding)
+    bottom var(--group-padding)
+    color var(--group-color)
+    line-height 1em
+
   .v-icon
-    font-size 48px
+    position absolute
+    left var(--group-padding)
+    top var(--group-padding)
+    color var(--group-color)
+    font-size 25px
 
 </style>
