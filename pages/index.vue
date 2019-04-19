@@ -39,11 +39,12 @@ export default class Index extends Vue {
   height 100px
   margin 5px
   display inline-block
-  border-radius 10px
+  border-radius 5px
   position relative
   border 1px solid rgba(0,0,0,0.1)
   box-shadow 1px 1px 5px 0px rgba(50, 50, 50, 0.1)
   cursor pointer
+  background white
 
   .v-btn__content
     display block

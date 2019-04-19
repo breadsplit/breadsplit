@@ -10,8 +10,8 @@
 
     v-card.pa-2
       template(v-for='member in members')
-        app-action-with-text.pa-3.member-option(v-ripple)
-          v-avatar(slot='action', @click='setValue(member.id)')
+        app-action-with-text.pa-3.member-option(v-ripple, @click.native='setValue(member.id)')
+          v-avatar(slot='action')
             img(:src='getMemberAvatar(member)')
           span(slot='text') {{member.name}}
 </template>
@@ -22,7 +22,7 @@ import { Member } from '~/types'
 import MemberMixin from '~/mixins/member'
 
 @Component
-export default class extends Mixins(MemberMixin) {
+export default class MemberSelect extends Mixins(MemberMixin) {
   menu = false
 
   @Prop(String) readonly value!: string
