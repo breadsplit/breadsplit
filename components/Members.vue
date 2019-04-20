@@ -20,8 +20,10 @@ div
               v-list-tile(@click='promptRemoveMember(member)')
                 v-list-tile-title Remove from this group
       v-divider
-
-  v-btn(@click='promptNewMember()', color='primary') Add member
+    v-list-tile
+      v-btn(@click='promptNewMember()', color='primary')
+        v-icon.mr-2 mdi-account-plus
+        span New member
 </template>
 
 <script>

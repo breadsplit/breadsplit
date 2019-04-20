@@ -3,13 +3,17 @@
 
   v-tabs-items.full-height(v-model='tab_index')
     v-tab-item(key='0')
-      //p.ma-4 {{group}}
+      v-container
+        v-subheader Expenses
+        v-alert(:value='true', type='warning') Work in progress...
 
     v-tab-item(key='1')
       app-members(:members='members')
 
     v-tab-item(key='2')
-      p summary
+      v-container
+        v-subheader Summary
+        v-alert(:value='true', type='warning') Work in progress...
 
   app-speed-dial(
     bottom, fixed, right, direction='top',
