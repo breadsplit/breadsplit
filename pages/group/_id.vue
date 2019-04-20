@@ -3,7 +3,7 @@
 
   v-tabs-items.full-height(v-model='tab_index')
     v-tab-item(key='0')
-      p.ma-4 {{group}}
+      //p.ma-4 {{group}}
 
     v-tab-item(key='1')
       app-members(:members='members')

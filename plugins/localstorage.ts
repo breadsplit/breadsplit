@@ -6,7 +6,7 @@ export default ({ store, route, app }) => {
   // @ts-ignore
   window.onNuxtReady(() => {
     CreatePersistedState({
-      key: 'moneyflow-store',
+      key: 'splittable-store',
       paths: [
         'locale',
         'group',

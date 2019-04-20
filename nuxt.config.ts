@@ -2,8 +2,11 @@ import NuxtConfiguration from '@nuxt/config'
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 import pkg from './package.json'
 
+const debug = process.env.NODE_ENV !== 'production'
+
 const config: NuxtConfiguration = {
   mode: 'spa',
+  debug,
 
   /*
   ** Headers of the page
@@ -52,21 +55,6 @@ const config: NuxtConfiguration = {
     '@/plugins/components',
   ],
 
-  /*
-  ** Nuxt.js modules
-  */
-  modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    // '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-  ],
-  /*
-  ** Axios module configuration
-  */
-  axios: {
-    // See https://github.com/nuxt-community/axios-module#options
-  },
-
   router: {
     mode: 'hash',
     middleware: [
@@ -102,6 +90,16 @@ const config: NuxtConfiguration = {
         })
       }
     },
+  },
+
+  modules: [
+    '@nuxtjs/pwa',
+    '@nuxtjs/google-gtag',
+  ],
+
+  'google-gtag': {
+    id: process.env.GOOGLE_GTAG_ID,
+    debug,
   },
 }
 
