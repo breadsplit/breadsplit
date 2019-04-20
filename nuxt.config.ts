@@ -45,10 +45,10 @@ const config: NuxtConfiguration = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/i18n',
     // LocalStorage is not available in server side
     // the SSR is disabled for this plugin
     { src: '@/plugins/localstorage', ssr: false },
+    { src: '@/plugins/i18n', ssr: false },
     '@/plugins/utils',
     '@/plugins/vuetify',
     '@/plugins/swatches',
