@@ -1,35 +1,17 @@
-import randomstr from '~/utils/randomstr'
 import Vue from 'vue'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { Group, Member, MemberRoles } from '~/types'
+import { Group, Member } from '~/types'
+import { GroupDefault, MemberDefault, GroupStateDefault } from '~/types/defaults'
 import { GroupState, RootState } from '~/types/store'
+import { merge } from 'lodash-es'
 
 // Helpers
 const CreateMember = (payload = {}): Member => {
-  return Object.assign({
-    id: randomstr(10),
-    name: '',
-    role: MemberRoles.collaborator,
-  }, payload)
+  return merge(MemberDefault(), payload)
 }
 
 const CreateGroup = (payload = {}): Group => {
-  const group: Group = Object.assign({
-    id: randomstr(5),
-    name: '',
-    options: {
-      multiple_currencies: true,
-    },
-    timestamp: +new Date(),
-
-    members: [],
-    transactions: [],
-    currencies: [],
-    currency_records: [],
-    activities: [],
-
-    online: false,
-  }, payload)
+  const group = merge(GroupDefault(), payload)
 
   group.members = group.members.map(m => CreateMember(m))
 
@@ -37,11 +19,7 @@ const CreateGroup = (payload = {}): Group => {
 }
 
 // Store
-
-export const state = (): GroupState => ({
-  groups: {},
-  currentId: null,
-})
+export const state = GroupStateDefault
 
 export const getters: GetterTree<GroupState, RootState> = {
 
@@ -86,7 +64,7 @@ export const mutations: MutationTree<GroupState> = {
 
   edit(state, { id, changes }) {
     id = id || state.currentId
-    Object.assign(state.groups[id], changes)
+    merge(state.groups[id], changes)
   },
 
   // Members
