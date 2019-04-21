@@ -18,6 +18,13 @@ export const getters: GetterTree<GroupState, RootState> = {
     return Object.values(state.groups)
   },
 
+  memberById: state => ({ groupId, memberId }) => {
+    groupId = groupId || state.currentId
+    const group = state.groups[groupId]
+    if (!group)
+      return null
+    return group.members.find(m => m.id === memberId)
+  },
 }
 
 export const actions: ActionTree<GroupState, RootState> = {
