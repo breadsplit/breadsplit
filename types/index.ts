@@ -18,6 +18,11 @@ export const enum Entity {
   currency_record = 'currency_record',
 }
 
+export const enum TransactionType{
+  expenses = 'expenses',
+  transfer = 'transfer',
+}
+
 export interface Weight {
   memberId: string
   weight?: number
@@ -44,9 +49,11 @@ export interface Transaction {
   category?: string
   currency: string
   total_fee: number
+  service_fee_rate?: number
   creditors: Weight[]
   debtors: Weight[]
   creator: string
+  type: TransactionType
 }
 
 export interface CurrencyRecord {

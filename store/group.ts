@@ -90,4 +90,9 @@ export const mutations: MutationTree<GroupState> = {
     }
   },
 
+  // Transcations
+  newTranscation(state, { id, trans }) {
+    id = id || state.currentId
+    state.groups[id].transactions.push(trans)
+  },
 }

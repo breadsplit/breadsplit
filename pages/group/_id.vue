@@ -6,13 +6,14 @@
       v-container
         v-subheader Expenses
         v-alert(:value='true', type='warning') Work in progress...
+        p {{group}}
 
     v-tab-item(key='1')
       app-members(:members='members')
 
     v-tab-item(key='2')
       v-container
-        v-subheader Summary
+        v-subheader summary
         v-alert(:value='true', type='warning') Work in progress...
 
   app-speed-dial(

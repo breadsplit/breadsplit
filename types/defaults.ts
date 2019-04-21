@@ -1,5 +1,5 @@
 import randomstr from '~/utils/randomstr'
-import { Member, MemberRoles, Group } from './index'
+import { Member, MemberRoles, Group, Transaction, TransactionType } from './index'
 import { RootState, GroupState } from './store'
 
 export const MemberDefault = (): Member => ({
@@ -23,6 +23,19 @@ export const GroupDefault = (): Group => ({
   activities: [],
 
   online: false,
+})
+
+export const TransactionDefault = (): Transaction => ({
+  id: `t:${randomstr(16)}`,
+  timestamp: +new Date(),
+  creditors: [],
+  debtors: [],
+  currency: '',
+  creator: '',
+  category: '',
+  total_fee: 0,
+  service_fee_rate: 0,
+  type: TransactionType.expenses,
 })
 
 export const GroupStateDefault = (): GroupState => ({
