@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { GroupDefault, MemberDefault, GroupStateDefault } from '~/types/defaults'
+import { GroupDefault, MemberDefault, GroupStateDefault } from '~/utils/defaults'
 import { GroupState, RootState } from '~/types/store'
 import { merge } from 'lodash'
 

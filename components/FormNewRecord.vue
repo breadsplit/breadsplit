@@ -40,7 +40,7 @@ import Categories, { CategoryKeys } from '@/meta/categories'
 import GroupMixin from '../mixins/group'
 import { Component, Mixins } from 'vue-property-decorator'
 import { Transaction, Weight } from '~/types'
-import { TransactionDefault } from '~/types/defaults'
+import { TransactionDefault } from '~/utils/defaults'
 import { TransactionBalanceChanges } from '~/utils/core'
 
 @Component

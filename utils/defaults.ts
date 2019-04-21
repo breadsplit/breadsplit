@@ -1,6 +1,6 @@
 import randomstr from '~/utils/randomstr'
-import { Member, MemberRoles, Group, Transaction, TransactionType } from './index'
-import { RootState, GroupState } from './store'
+import { Member, MemberRoles, Group, Transaction, TransactionType } from '../types/index'
+import { RootState, GroupState } from '../types/store'
 import { merge } from 'lodash'
 
 export const MemberDefault = (overrides?: object): Member => merge({

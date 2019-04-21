@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { MutationTree, GetterTree } from 'vuex'
 import { RootState } from '~/types/store'
 import { Group } from '~/types'
-import { RootStateDefault } from '~/types/defaults'
+import { RootStateDefault } from '~/utils/defaults'
 
 export const state = RootStateDefault
 
