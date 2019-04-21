@@ -7,6 +7,7 @@
         v-subheader Expenses
         v-alert(:value='true', type='warning') Work in progress...
         p {{group}}
+        p {{balances}}
 
     v-tab-item(key='1')
       app-members(:members='members')
@@ -40,6 +41,7 @@
 <script lang='ts'>
 import GroupMixin from '~/mixins/group'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
+import { GroupBalances } from '~/utils/core'
 
 @Component
 export default class Index extends Mixins(GroupMixin) {
@@ -85,7 +87,9 @@ export default class Index extends Mixins(GroupMixin) {
   get speedDialShow() {
     return this.tab_index === 0
   }
-
+  get balances() {
+    return GroupBalances(this.group)
+  }
   // Watches
 
   @Watch('tab_index')

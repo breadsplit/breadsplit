@@ -40,6 +40,8 @@ export interface Member {
   avatarHash?: string
   disableAvatarUrl?: boolean
   uid?: string
+
+  quit?: boolean
 }
 
 export interface Transaction {
