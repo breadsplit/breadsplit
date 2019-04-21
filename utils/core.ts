@@ -1,5 +1,5 @@
 import { Transaction, Group } from '~/types'
-import { sumBy, merge, find, map, uniq, concat } from 'lodash-es'
+import { sumBy, merge, find, map, uniq, concat } from 'lodash'
 import { AssertionError } from 'assert'
 
 export function TransactionBalanceChanges(trans: Transaction) {

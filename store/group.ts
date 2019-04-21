@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
 import { GroupDefault, MemberDefault, GroupStateDefault } from '~/types/defaults'
 import { GroupState, RootState } from '~/types/store'
-import { merge } from 'lodash-es'
+import { merge } from 'lodash'
 
 export const state = GroupStateDefault
 

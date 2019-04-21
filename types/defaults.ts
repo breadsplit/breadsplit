@@ -1,7 +1,7 @@
 import randomstr from '~/utils/randomstr'
 import { Member, MemberRoles, Group, Transaction, TransactionType } from './index'
 import { RootState, GroupState } from './store'
-import { merge } from 'lodash-es'
+import { merge } from 'lodash'
 
 export const MemberDefault = (overrides?: object): Member => merge({
   id: `m:${randomstr(5)}`,
