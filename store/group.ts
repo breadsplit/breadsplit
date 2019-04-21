@@ -1,24 +1,9 @@
 import Vue from 'vue'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { Group, Member } from '~/types'
 import { GroupDefault, MemberDefault, GroupStateDefault } from '~/types/defaults'
 import { GroupState, RootState } from '~/types/store'
 import { merge } from 'lodash-es'
 
-// Helpers
-const CreateMember = (payload = {}): Member => {
-  return merge(MemberDefault(), payload)
-}
-
-const CreateGroup = (payload = {}): Group => {
-  const group = merge(GroupDefault(), payload)
-
-  group.members = group.members.map(m => CreateMember(m))
-
-  return group
-}
-
-// Store
 export const state = GroupStateDefault
 
 export const getters: GetterTree<GroupState, RootState> = {
@@ -52,7 +37,7 @@ export const mutations: MutationTree<GroupState> = {
 
   // Groups
   add(state, payload) {
-    const group = CreateGroup(payload)
+    const group = GroupDefault(payload)
     Vue.set(state.groups, group.id, group)
   },
 
@@ -70,7 +55,7 @@ export const mutations: MutationTree<GroupState> = {
   // Members
   addMember(state, { id, member }) {
     id = id || state.currentId
-    state.groups[id].members.push(CreateMember(member))
+    state.groups[id].members.push(MemberDefault(member))
   },
 
   removeMember(state, { id, memberid }) {
