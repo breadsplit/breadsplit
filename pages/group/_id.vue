@@ -1,13 +1,15 @@
 <template lang="pug">
 .group-page
-
   v-tabs-items.full-height(v-model='tab_index')
     v-tab-item(key='0')
-      v-container
-        v-subheader Expenses
-        v-alert(:value='true', type='warning') Work in progress...
-        p {{group}}
-        p {{balances}}
+      v-container(:class='{"pa-0": isMobile}')
+        app-balances
+
+        p.my-4
+
+        app-transactions
+
+        p(style='height:150px')
 
     v-tab-item(key='1')
       app-members(:members='members')
@@ -25,14 +27,15 @@
     :items='speedDialItems', @item-click='speedDialClicked'
   )
 
-  v-bottom-nav(:active.sync='tab_id', :value='true', absolute, color='white')
+  v-bottom-nav(
+    :active.sync='tab_id', :value='true', fixed, color='white', shift)
     template(v-for='item in tabItems')
       v-btn(color='primary', flat, :value='item.key')
         span {{item.text}}
         v-icon mdi-{{item.icon}}
 
   app-dialog(
-    ref='newRecord' :fullscreen='$vuetify.breakpoint.smAndDown'
+    ref='newRecord' :fullscreen='isMobile'
     max-width='800' transition='dialog-bottom-transition'
   )
     app-form-new-record(v-bind='record_options', @close='$refs.newRecord.close()')
@@ -40,13 +43,14 @@
 
 <script lang='ts'>
 import GroupMixin from '~/mixins/group'
+import CommonMixin from '~/mixins/common'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import { GroupBalances } from '~/utils/core'
 
 @Component
-export default class Index extends Mixins(GroupMixin) {
-  fab=false
-  record_options= {}
+export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
+  fab = false
+  record_options = {}
   tab_index = 0
   tab_id: string|null = 'expenses'
 

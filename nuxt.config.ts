@@ -49,6 +49,7 @@ const config: NuxtConfiguration = {
     // the SSR is disabled for this plugin
     { src: '@/plugins/localstorage', ssr: false },
     { src: '@/plugins/i18n', ssr: false },
+    '@/plugins/dayjs',
     '@/plugins/utils',
     '@/plugins/vuetify',
     '@/plugins/swatches',

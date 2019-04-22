@@ -1,7 +1,7 @@
 <template lang="pug">
 app-action-with-text.app-avatar(:class='{inline}')
   template(slot='action')
-    v-avatar( :tile='usePlaceholder')
+    v-avatar(:tile='usePlaceholder', :size='size')
       img(:src='avatarUrl')
   span(slot='text', v-if='name') {{memberObj.name}}
 </template>
@@ -20,6 +20,7 @@ export default class extends Vue {
   @Prop(Object) readonly member?: Member
   @Prop(Boolean) readonly inline?: boolean
   @Prop(Boolean) readonly name?: boolean
+  @Prop([Number, String]) readonly size?: number|string
 
   get memberObj(): Member {
     if (this.member)
