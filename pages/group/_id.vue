@@ -47,7 +47,16 @@ import CommonMixin from '~/mixins/common'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import { GroupBalances } from '~/utils/core'
 
-@Component
+@Component({
+  head() {
+    return {
+      meta: [
+        { name: 'theme-color', content: this.$store.getters.primary },
+      ],
+      title: (this.$store.getters['group/current'] || {}).name,
+    }
+  },
+})
 export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
   fab = false
   record_options = {}
@@ -115,14 +124,7 @@ export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
       return error({ icon: 'group-outline', statusCode: 'Group not found', message: 'This seems to be a local group, are you sure it\'s stored on this device?' })
     return { params }
   }
-  head() {
-    return {
-      meta: [
-        { name: 'theme-color', content: this.$store.getters.primary },
-      ],
-      title: (this.group || {}).name,
-    }
-  }
+
   speedDialClicked(buttonId) {
     switch (buttonId) {
       case 'new-expense':
