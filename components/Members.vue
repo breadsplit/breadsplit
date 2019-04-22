@@ -1,5 +1,6 @@
 <template lang='pug'>
-div
+v-card
+  v-subheader Members
   v-list(two-line)
     template(v-for='(member, index) in members')
       v-list-tile(:key='member.id', avatar, @click='')

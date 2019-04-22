@@ -30,7 +30,6 @@ const config: NuxtConfiguration = {
     name: pkg.fullname,
     short_name: pkg.fullname,
     display: 'fullscreen',
-    theme_color: theme.primary,
     orientation: 'portrait-primary',
   },
 

@@ -12,12 +12,14 @@
         p(style='height:150px')
 
     v-tab-item(key='1')
-      app-members(:members='members')
+      v-container(:class='{"pa-0": isMobile}')
+        app-members(:members='members')
 
     v-tab-item(key='2')
       v-container
         v-subheader summary
         v-alert(:value='true', type='warning') Work in progress...
+        p {{group}}
 
   app-speed-dial(
     bottom, fixed, right, direction='top',
