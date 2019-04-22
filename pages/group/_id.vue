@@ -1,6 +1,6 @@
 <template lang="pug">
 .group-page
-  v-tabs-items.full-height(v-model='tab_index')
+  v-tabs-items.full-height(v-model='tab_index', v-if='group')
     v-tab-item(key='0')
       v-container(:class='{"pa-0": isMobile}')
         app-balances
@@ -117,6 +117,9 @@ export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
   }
   head() {
     return {
+      meta: [
+        { name: 'theme-color', content: this.$store.getters.primary },
+      ],
       title: (this.group || {}).name,
     }
   }
