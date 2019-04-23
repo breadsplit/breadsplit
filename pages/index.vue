@@ -10,7 +10,7 @@ v-container
     v-divider.my-3
 
     v-flex.text-xs-center(xs12, sm8, md6)
-      v-btn(@click='$root.$newGroup.open()', color='primary') Create A New Group
+      v-btn(@click='$root.$newGroup.open()', color='primary') {{$t('ui.button_new_group')}}
 </template>
 
 <script lang='ts'>

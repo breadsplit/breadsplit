@@ -29,7 +29,7 @@ const config: NuxtConfiguration = {
   manifest: {
     name: pkg.fullname,
     short_name: pkg.fullname,
-    display: 'fullscreen',
+    display: 'standalone',
     orientation: 'portrait-primary',
   },
 

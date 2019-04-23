@@ -23,6 +23,9 @@ export default {
     sign_in: 'Sign in',
     about: 'About',
     advance: 'Advance',
+
+    button_new_group: 'Create A New Group',
+
     user: {
       guest: 'Guest',
     },
