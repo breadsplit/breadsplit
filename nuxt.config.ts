@@ -1,6 +1,5 @@
 import NuxtConfiguration from '@nuxt/config'
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
-import theme from './meta/theme'
 import pkg from './package.json'
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -69,7 +68,7 @@ const config: NuxtConfiguration = {
     plugins: [new VuetifyLoaderPlugin()],
     loaders: {
       stylus: {
-        import: ['~assets/style/variables.styl'],
+        import: ['~vuetify/src/stylus/settings/_variables.styl'],
       },
     },
     splitChunks: {
