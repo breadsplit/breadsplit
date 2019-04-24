@@ -1,6 +1,4 @@
-# Semantic Commit Messages
-
-See how a minor change to your commit message style can make you a better programmer.
+# Commit Message Guideline
 
 Format: `<type>(<scope>): <subject>`
 

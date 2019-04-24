@@ -16,8 +16,7 @@ module.exports = {
     editLinkText: 'Help us improve this page!',
     nav: [
       { text: 'Getting Started', link: '/' },
-      { text: 'Contribute', link: '/contribute' },
-      { text: 'Reveal', link: '/reveal' }
+      { text: 'Contribute', link: '/contribute/env-setup' },
     ],
     sidebar: [
       '/',
@@ -25,9 +24,22 @@ module.exports = {
         title: 'Contribute',
         collapsable: false,
         children: [
-          'contribute/dev-environment',
-          'contribute/vscode-plugins',
+          'contribute/env-setup',
+          'contribute/launch',
+          'contribute/commit-message-guideline',
         ]
+      },
+      {
+        title: 'Client API',
+        collapsable: false,
+        children: [
+          'client_api/store',
+        ]
+      },
+      {
+        title: 'Server API',
+        collapsable: false,
+        children: []
       },
     ]
   }
