@@ -2,7 +2,7 @@
 import CreatePersistedState from 'vuex-persistedstate'
 import GroupRouter from '~/middleware/group'
 
-const StoreKey = 'splittable-store'
+const StoreKey = 'splitoast-store'
 const PathsEnabled = [
   'user_locale',
   'group',

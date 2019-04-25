@@ -1,9 +1,9 @@
 {
-  "name": "splittable",
-  "fullname": "Splittable",
+  "name": "splitoast",
+  "fullname": "Splitoast",
   "version": "0.1.0",
   "private": true,
-  "description": "The Splittable web application",
+  "description": "The Splitoast web application",
   "author": "Anthony Fu",
   "scripts": {
     "dev": "nuxt",

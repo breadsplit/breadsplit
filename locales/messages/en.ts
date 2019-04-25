@@ -5,7 +5,7 @@ Translated by: Original
 */
 
 export default {
-  appname: 'Splittable',
+  appname: 'Splitoast',
 
   css: {
     /* The font names of this locale, separated by comma. */

@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Splittable',
+  title: 'Splitoast',
   description: '',
   serviceWorker: true,
   head: [
@@ -8,8 +8,8 @@ module.exports = {
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
   ],
   themeConfig: {
-    repo: 'antfu/moneyflow',
-    docsRepo: 'antfu/moneyflow',
+    repo: 'antfu/splitoast',
+    docsRepo: 'antfu/splitoast',
     docsDir: 'docs',
     docsBranch: 'master',
     editLinks: true,
