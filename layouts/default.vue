@@ -86,13 +86,14 @@ v-app(:dark='dark')
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
 import { Group } from '~/types'
+import CommonMixin from '~/mixins/common'
 import FontFamilyBuilder from '~/meta/font_family'
 
 @Component
-export default class DefaultLayout extends Vue {
+export default class DefaultLayout extends Mixins(CommonMixin) {
   // Data
   dark = false
   clipped = true
@@ -140,7 +141,7 @@ export default class DefaultLayout extends Vue {
     this.$root.$newGroup = this.$refs.newgroup
 
     // @ts-ignore
-    if (this.$vuetify.breakpoint.mdAndUp)
+    if (!this.isMobile)
       this.drawer = true
   }
 

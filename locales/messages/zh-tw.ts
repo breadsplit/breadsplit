@@ -6,6 +6,9 @@ export default {
   ui: {
     language: '顯示語言',
     settings: '設定',
+    sign_in: '登錄',
+
+    button_new_group: '新建小組',
 
     user: {
       guest: '訪客',

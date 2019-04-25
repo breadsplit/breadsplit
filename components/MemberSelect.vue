@@ -3,17 +3,12 @@
   v-menu(v-model='menu' :nudge-width='100')
     template(v-slot:activator='{ on }')
       .vertical-aligned(v-on='on', v-ripple)
-        v-avatar.ma-1
-          img(:src='getMemberAvatar(current)')
-        strong.pa-1 {{current.name}}
+        app-avatar.ma-1(:member='current', inline, name)
         v-icon mdi-menu-down
 
     v-card.pa-2
       template(v-for='member in members')
-        app-action-with-text.pa-3.member-option(v-ripple, @click.native='setValue(member.id)')
-          v-avatar(slot='action')
-            img(:src='getMemberAvatar(member)')
-          span(slot='text') {{member.name}}
+        app-avatar.member-option.pa-3(:member='member', name, v-ripple, @click.native='setValue(member.id)')
 </template>
 
 <script lang="ts">

@@ -1,47 +1,10 @@
-import randomstr from '~/utils/randomstr'
 import Vue from 'vue'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { Group, Member, MemberRoles } from '~/types'
+import { GroupDefault, MemberDefault, GroupStateDefault } from '~/utils/defaults'
 import { GroupState, RootState } from '~/types/store'
+import { merge } from 'lodash'
 
-// Helpers
-const CreateMember = (payload = {}): Member => {
-  return Object.assign({
-    id: randomstr(10),
-    name: '',
-    role: MemberRoles.collaborator,
-  }, payload)
-}
-
-const CreateGroup = (payload = {}): Group => {
-  const group: Group = Object.assign({
-    id: randomstr(5),
-    name: '',
-    options: {
-      multiple_currencies: true,
-    },
-    timestamp: +new Date(),
-
-    members: [],
-    transactions: [],
-    currencies: [],
-    currency_records: [],
-    activities: [],
-
-    online: false,
-  }, payload)
-
-  group.members = group.members.map(m => CreateMember(m))
-
-  return group
-}
-
-// Store
-
-export const state = (): GroupState => ({
-  groups: {},
-  currentId: null,
-})
+export const state = GroupStateDefault
 
 export const getters: GetterTree<GroupState, RootState> = {
 
@@ -55,6 +18,13 @@ export const getters: GetterTree<GroupState, RootState> = {
     return Object.values(state.groups)
   },
 
+  memberById: state => ({ groupId, memberId }) => {
+    groupId = groupId || state.currentId
+    const group = state.groups[groupId]
+    if (!group)
+      return null
+    return group.members.find(m => m.id === memberId)
+  },
 }
 
 export const actions: ActionTree<GroupState, RootState> = {
@@ -74,7 +44,7 @@ export const mutations: MutationTree<GroupState> = {
 
   // Groups
   add(state, payload) {
-    const group = CreateGroup(payload)
+    const group = GroupDefault(payload)
     Vue.set(state.groups, group.id, group)
   },
 
@@ -86,13 +56,13 @@ export const mutations: MutationTree<GroupState> = {
 
   edit(state, { id, changes }) {
     id = id || state.currentId
-    Object.assign(state.groups[id], changes)
+    merge(state.groups[id], changes)
   },
 
   // Members
   addMember(state, { id, member }) {
     id = id || state.currentId
-    state.groups[id].members.push(CreateMember(member))
+    state.groups[id].members.push(MemberDefault(member))
   },
 
   removeMember(state, { id, memberid }) {
@@ -112,4 +82,9 @@ export const mutations: MutationTree<GroupState> = {
     }
   },
 
+  // Transcations
+  newTranscation(state, { id, trans }) {
+    id = id || state.currentId
+    state.groups[id].transactions.push(trans)
+  },
 }

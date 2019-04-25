@@ -10,28 +10,42 @@ v-card
 
       v-flex
         .vertical-aligned
-          app-member-select(:members='members', v-model='form.creditor')
+          template(v-if='form.creditors.length === 1')
+            app-member-select(:members='members', v-model='form.creditors[0].memberId')
           span paid
           v-spacer
 
-      //v-flex(xs12)
+      v-flex
         v-text-field(v-model='form.desc' label='Description', required='')
           template(slot='prepend')
             app-category-icon(:category='form.category || categorySense')
+
+      v-flex
+        v-text-field(v-model.number='form.total_fee' type='number' label='Total' required prepend-icon='mdi-currency-usd')
+
+      v-flex
+        v-text-field(v-model.number='form.currency' label='Currency' disabled)
+
+      v-flex
+        template(v-for='changes in balanceChanges')
+          p {{changes}}
+
+      v-flex
+        v-btn(color='primary', @click='submit') Add Expense
+
 </template>
 
 <script lang='ts'>
 import Categories, { CategoryKeys } from '@/meta/categories'
 import GroupMixin from '../mixins/group'
 import { Component, Mixins } from 'vue-property-decorator'
+import { Transaction, Weight } from '~/types'
+import { TransactionDefault } from '~/utils/defaults'
+import { TransactionBalanceChanges } from '~/utils/core'
 
 @Component
 export default class extends Mixins(GroupMixin) {
-  form = {
-    desc: '',
-    category: '',
-    creditor: '',
-  }
+  form: Transaction = TransactionDefault()
   cats = Categories
 
   get categoriesKeywords() {
@@ -44,6 +58,7 @@ export default class extends Mixins(GroupMixin) {
     })
     return keys
   }
+
   get categorySense() {
     const category = this.categoriesKeywords
       .find(({ key, value }) => {
@@ -52,11 +67,25 @@ export default class extends Mixins(GroupMixin) {
     return (category && category.value) || null
   }
 
-  mounted() {
-    this.form.creditor = (this.members[0] || {}).id
+  get balanceChanges() {
+    return TransactionBalanceChanges(this.form)
   }
 
-  close(result) {
+  mounted() {
+    this.$set(this, 'form', TransactionDefault())
+    const me = (this.members[0] || {}).id // TODO: get my id
+    this.form.creator = me
+    this.form.currency = this.group.currencies[0]
+    this.form.creditors.push({ weight: 1, memberId: me })
+    this.form.debtors = this.members.map((m): Weight => ({ weight: 1, memberId: m.id }))
+  }
+
+  submit() {
+    this.$store.commit('group/newTranscation', { id: this.group.id, trans: this.form })
+    this.close()
+  }
+
+  close(result?) {
     this.$emit('close', result)
   }
 }

@@ -8,9 +8,6 @@ const config: NuxtConfiguration = {
   mode: 'spa',
   debug,
 
-  /*
-  ** Headers of the page
-  */
   head: {
     title: pkg.fullname,
     meta: [
@@ -28,27 +25,31 @@ const config: NuxtConfiguration = {
     ],
   },
 
-  /*
-  ** Customize the progress-bar color
-  */
+  manifest: {
+    name: pkg.fullname,
+    short_name: pkg.fullname,
+    display: 'standalone',
+    orientation: 'portrait-primary',
+  },
+
   loading: { color: '#fff' },
 
-  /*
-  ** Global CSS
-  */
   css: [
     '@mdi/font/css/materialdesignicons.min.css',
     '~/assets/style/app.styl',
   ],
 
-  /*
-  ** Plugins to load before mounting the App
-  */
+  workbox: {
+    offlineAnalytics: true,
+    offline: true,
+  },
+
   plugins: [
-    '@/plugins/i18n',
     // LocalStorage is not available in server side
     // the SSR is disabled for this plugin
     { src: '@/plugins/localstorage', ssr: false },
+    { src: '@/plugins/i18n', ssr: false },
+    '@/plugins/dayjs',
     '@/plugins/utils',
     '@/plugins/vuetify',
     '@/plugins/swatches',
@@ -61,15 +62,13 @@ const config: NuxtConfiguration = {
       'group',
     ],
   },
-  /*
-  ** Build configuration
-  */
+
   build: {
     transpile: ['vuetify/lib'],
     plugins: [new VuetifyLoaderPlugin()],
     loaders: {
       stylus: {
-        import: ['~assets/style/variables.styl'],
+        import: ['~vuetify/src/stylus/settings/_variables.styl'],
       },
     },
     splitChunks: {

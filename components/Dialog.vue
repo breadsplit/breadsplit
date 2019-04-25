@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-dialog(v-model='dialog', @keydown.esc='cancel', v-bind='$attrs', style='z-index:200')
-  slot
+  slot(v-if='dialog')
 </template>
 
 <script>

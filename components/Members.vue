@@ -1,10 +1,11 @@
 <template lang='pug'>
-div
+v-card
+  v-subheader Members
   v-list(two-line)
     template(v-for='(member, index) in members')
       v-list-tile(:key='member.id', avatar, @click='')
         v-list-tile-avatar
-          img(:src='getMemberAvatar(member)')
+          app-avatar(:member='member')
         v-list-tile-content
           v-list-tile-title(v-text='member.name')
           v-list-tile-sub-title(v-text='member.email')

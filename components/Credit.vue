@@ -7,7 +7,7 @@
   .line-divider
   br
 
-  .badge
+  //.badge
     v-icon mdi-code-tags
   template(v-for='(i, idx) in code')
     .divider
@@ -29,13 +29,7 @@ export default {
   data() {
     return {
       version,
-      code: [{
-        name: 'Anthony F',
-        href: 'https://github.com/antfu',
-      }, {
-        name: 'Wayne J',
-        href: 'https://instagram.com/wayne_lens',
-      }],
+      code: [],
       design: [],
     }
   },

@@ -1,6 +1,6 @@
-# Splittable ✂
+# Splitoast ✂
 
-[📋 **Stage Progress**](https://github.com/antfu/moneyflow/projects/1)
+[📋 **Stage Progress**](https://github.com/antfu/splitoast/projects/1)
 
 🔑 **Keywords**: `split bills`, `group expenses management`, `sharing expenses`, `accounting`
 

@@ -5,7 +5,7 @@ Translated by: Original
 */
 
 export default {
-  appname: 'Splittable',
+  appname: 'Splitoast',
 
   css: {
     /* The font names of this locale, separated by comma. */
@@ -23,6 +23,9 @@ export default {
     sign_in: 'Sign in',
     about: 'About',
     advance: 'Advance',
+
+    button_new_group: 'Create A New Group',
+
     user: {
       guest: 'Guest',
     },

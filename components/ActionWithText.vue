@@ -8,12 +8,26 @@
 
 <style lang='stylus'>
 .action-with-text
-  padding 5px
+  padding 3px
   text-align center
   display inline-block
 
-  & > .text
-    display block
-    font-size 0.8em
+  &:not(.inline)
+    & > *
+      display block
+
+    & > .text
+      font-size 0.9em
+      margin-top 2px
+
+  &.inline
+    & > *
+      display inline-block
+      vertical-align middle
+
+    & > .text
+      font-size 1.1em
+      margin-left 10px
+      font-weight bold
 
 </style>

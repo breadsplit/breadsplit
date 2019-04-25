@@ -1,20 +1,20 @@
 {
-  "name": "splittable",
-  "fullname": "Splittable",
+  "name": "splitoast",
+  "fullname": "Splitoast",
   "version": "0.1.0",
   "private": true,
-  "description": "The Splittable web application",
+  "description": "The Splitoast web application",
   "author": "Anthony Fu",
   "scripts": {
-    "build": "nuxt build",
     "dev": "nuxt",
-    "dev-server": "cross-env NODE_ENV=development nodemon server/esm.js --watch server",
+    "build": "nuxt build",
     "generate": "cross-env NODE_ENV=production nuxt generate",
+    "start": "cross-env NODE_ENV=production nuxt start",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
-    "lint-fix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint",
-    "prod": "npm run build && npm run start",
-    "start": "cross-env NODE_ENV=production ts-node server/index.ts",
+    "lint:fix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "bash scripts/docs-deploy.sh",
     "test": "jest"
   },
   "dependencies": {
@@ -27,7 +27,9 @@
     "chroma-js": "^2.0.3",
     "cross-env": "^5.2.0",
     "crypto-js": "^3.1.9-1",
+    "dayjs": "^1.8.12",
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "nuxt": "^2.6.2",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
@@ -45,6 +47,8 @@
   "devDependencies": {
     "@nuxt/typescript": "^2.6.2",
     "@nuxtjs/eslint-config": "^0.0.1",
+    "@types/jest": "^24.0.11",
+    "@types/lodash": "^4.14.123",
     "@types/webpack-env": "^1.13.9",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@vue/test-utils": "^1.0.0-beta.29",
@@ -65,6 +69,7 @@
     "nodemon": "^1.18.11",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "ts-jest": "^24.0.2",
     "vue-jest": "^3.0.4"
   }
 }
