@@ -1,4 +1,4 @@
-# Splitoast ✂
+# ✂ Splitoast 🍞
 
 [![CircleCI](https://circleci.com/gh/antfu/splitoast.svg?style=svg&circle-token=b26ce4526201e0c7fbeb42287d360930a69b3988)](https://circleci.com/gh/antfu/splitoast)
 [![codecov](https://codecov.io/gh/antfu/splitoast/branch/master/graph/badge.svg?token=JRYbmADObn)](https://codecov.io/gh/antfu/splitoast)
@@ -79,39 +79,42 @@ $ npm i
 
 [**Stage Progress**](https://github.com/antfu/splitoast/projects/1)
 
-### ✈ Stage 1 Prototyping
+### ✈ Stage 1 Prototyping & Basic Implementation
 
 - Name and Logo
 - Overall UI style
+- Cross compare other apps
 - Functions & Features directions
-
-### Stage 2 Release a Demo
-
-- Implement basic features
+- Implement offline features
 - PWA Support
+- UI implement
+
+### Stage 2 Preparation for Public
+
+- i18n support (English and Chinese)
 - Basic privacy policy and terms of services
 - Source code license
+- Contribution guildline
 - Create a Github team and make the repo **public**
+- Donate channel (Patreon or Open Collective)
+- Web home page for introduction
 - Make promptions on PTT, Dcard, etc
 
 ### Stage 3 Online Support
 
 - Implement online features
 - [Web push notification](https://developers.google.com/web/fundamentals/push-notifications/)
-- Server and database
-  - Proposal: [Firebase](https://firebase.google.com/)
-- Web home page
+- Server and database (Try [Firebase](https://firebase.google.com/))
 - API docs for community support
-- Online payments integration (Paypal, LINE Pay, Wechat Pay, Alipay, etc.)
+- Online payments integration for settling up (Paypal, LINE Pay, Wechat Pay, Alipay, etc.)
 
 ### Stage 4 Multi Platform
 
-- Android
-- iOS
-- Electron
-  - Winodows
-  - MacOS
-  - Linux
+- Android/iOS
+  1. Simple wrapper
+  2. Connect with native functions ([Google NearBy](https://developers.google.com/nearby/messages/overview), Native notifications, etc.)
+- [Electron](https://electronjs.org/) (Windows/MacOS/Linux)
+- Automatic build
 
 ## 🛸 Tech-stacks / Docs
 
@@ -129,7 +132,7 @@ $ npm i
 
 ### Preprocessors
 
-- [Pug.js](https://pugjs.org/api/getting-started.html) *formly Jade* (HTML)
+- [Pug.js](https://pugjs.org/api/getting-started.html) *formerly Jade* (HTML)
   - [HTML to Pug](https://html2jade.org/) (Tools)
 - [Stylus](http://stylus-lang.com/) (CSS)
 
