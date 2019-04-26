@@ -14,5 +14,7 @@ module.exports = {
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue',
     '<rootDir>/utils/**/*.ts',
+    '<rootDir>/store/**/*.ts',
   ],
+  'coverageDirectory': './coverage/',
 }
