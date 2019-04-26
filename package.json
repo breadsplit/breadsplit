@@ -1,21 +1,24 @@
 {
   "name": "splitoast",
   "fullname": "Splitoast",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "The Splitoast web application",
   "author": "Anthony Fu",
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "generate": "cross-env NODE_ENV=production nuxt generate",
-    "start": "cross-env NODE_ENV=production nuxt start",
+    "dev": "nuxt ./client",
+    "build": "nuxt build ./client",
+    "generate": "cross-env NODE_ENV=production nuxt generate ./client",
+    "start": "cross-env NODE_ENV=production nuxt start ./client",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
+    "electron:dev": "npm run dev --prefix=./electron",
+    "electron:pack": "npm run build --prefix=./electron",
+    "electron:build": "npm run generate && npm run electron:build",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "bash scripts/docs-deploy.sh",
-    "test": "jest"
+    "test": "jest --config=./client/jest.config.js"
   },
   "dependencies": {
     "@dicebear/avatars": "^3.0.6",

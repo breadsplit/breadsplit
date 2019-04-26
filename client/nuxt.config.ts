@@ -1,6 +1,6 @@
 import NuxtConfiguration from '@nuxt/config'
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
-import pkg from './package.json'
+import pkg from '../package.json'
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -47,13 +47,13 @@ const config: NuxtConfiguration = {
   plugins: [
     // LocalStorage is not available in server side
     // the SSR is disabled for this plugin
-    { src: '@/plugins/localstorage', ssr: false },
-    { src: '@/plugins/i18n', ssr: false },
-    '@/plugins/dayjs',
-    '@/plugins/utils',
-    '@/plugins/vuetify',
-    '@/plugins/swatches',
-    '@/plugins/components',
+    { src: '~/plugins/localstorage', ssr: false },
+    { src: '~/plugins/i18n', ssr: false },
+    '~/plugins/dayjs',
+    '~/plugins/utils',
+    '~/plugins/vuetify',
+    '~/plugins/swatches',
+    '~/plugins/components',
   ],
 
   router: {
