@@ -39,5 +39,5 @@ jobs:
       - run: npm test
 
       - codecov/upload:
-          file: coverage/*.json
+          file: ./src/coverage/*.json
           token: 5cc49569-d518-4ff6-9579-f0487c51b3a5

@@ -6,16 +6,16 @@
   "description": "The Splitoast web application",
   "author": "Anthony Fu",
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "generate": "cross-env NODE_ENV=production nuxt generate",
-    "start": "cross-env NODE_ENV=production nuxt start",
+    "dev": "nuxt ./src",
+    "build": "nuxt build ./src",
+    "generate": "cross-env NODE_ENV=production nuxt generate ./src",
+    "start": "cross-env NODE_ENV=production nuxt start ./src",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "bash scripts/docs-deploy.sh",
-    "test": "jest"
+    "test": "jest --config=./web/jest.config.js"
   },
   "dependencies": {
     "@dicebear/avatars": "^3.0.6",
