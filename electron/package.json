@@ -1,0 +1,22 @@
+{
+  "name": "splitoast",
+  "version": "0.1.0",
+  "description": "",
+  "main": "main.js",
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development electron ./dev.js",
+    "pack": "cross-env NODE_ENV=production electron-builder --dir",
+    "build": "cross-env NODE_ENV=production electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^4.1.5",
+    "electron-builder": "^20.39.0",
+    "electron-devtools-installer": "^2.2.4"
+  },
+  "dependencies": {
+    "electron-serve": "^0.2.0"
+  }
+}
