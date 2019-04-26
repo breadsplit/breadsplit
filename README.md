@@ -8,6 +8,10 @@
 
 🔑 **Keywords**: `split bills`, `group expenses management`, `sharing expenses`, `accounting`
 
+## Key Features
+
+`Further discussion required`
+
 ## Simliar Apps 🚗🚓🚕🚙
 
 - [Settle Up⭐](https://www.tricount.com/)
@@ -24,17 +28,20 @@
 
 ### 💽 Installation
 
-1. Make sure you have [Node.js](https://nodejs.org/en/) > `v11.0` installed
-2. Install [git](https://git-scm.com/) or GUI Clients (eg. [Github Desktop](https://desktop.github.com/))
-3. [VSCode](https://code.visualstudio.com/) is recommend as text editor ([**Recommend Plugins**](/docs/vscode-plugins.md))
-4. Chrome with extension [Vue.js DevTools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) installed.
-5. Clone this repo.
-6. Install the dependencies using flowing command
+1. Install [Node.js](https://nodejs.org/en/) > `v11.0`
+1. Install [git](https://git-scm.com/) or GUI Clients (eg. [Github Desktop](https://desktop.github.com/))
+1. Clone this repo.
+1. Install dependencies using flowing command
 
 ```sh
-# install dependencies
+$ git checkout dev
 $ npm ci
 ```
+
+#### Optional Tools
+
+- [VSCode](https://code.visualstudio.com/) is recommend as text editor ([**Recommend Plugins**](/contribute/vscode-plugins.md))
+- Chrome extension [Vue.js DevTools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
 
 ### 🚀 Run the app
 
@@ -68,23 +75,57 @@ After every pull, please run following command to ensure the packages dependenci
 $ npm i
 ```
 
+## 🗻 Roadmap
+
+[**Stage Progress**](https://github.com/antfu/splitoast/projects/1)
+
+### ✈ Stage 1 Prototyping
+
+- Name and Logo
+- Overall UI style
+- Functions & Features directions
+
+### Stage 2 Release a Demo
+
+- Implement basic features
+- PWA Support
+- Basic privacy policy and terms of services
+- Source code license
+- Create a Github team and make the repo **public**
+- Make promptions on PTT, Dcard, etc
+
+### Stage 3 Online Support
+
+- Implement online features
+- [Web push notification](https://developers.google.com/web/fundamentals/push-notifications/)
+- Server and database
+  - Proposal: [Firebase](https://firebase.google.com/)
+- Web home page
+- API docs for community support
+- Online payments integration (Paypal, LINE Pay, Wechat Pay, Alipay, etc.)
+
+### Stage 4 Multi Platform
+
+- Android
+- iOS
+- Electron
+  - Winodows
+  - MacOS
+  - Linux
+
 ## 🛸 Tech-stacks / Docs
 
 ### Main
 
 - [Typescript](https://www.typescriptlang.org/) (Main language)
   - [vue-property-decorator](https://github.com/kaorun343/vue-property-decorator)
+  - [vuex-class](https://github.com/ktsn/vuex-class)
 - [Vue.js](https://vuejs.org/) (Front-end framework)
   - [Vuetify](https://vuetifyjs.com/) (Vue UI Components)
   - [Vuex](https://vuex.vuejs.org/) (Vue state management)
     - [vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate) (Store Vuex into LocalStorage)
   - [Vue i18n](http://kazupon.github.io/vue-i18n/) (i18n multi languages support)
 - [Nuxt.js](https://nuxtjs.org/) (Tool set for Vue.js)
-- [Express.js](https://expressjs.com/) (API routing)
-  - [RESTful API](https://www.restapitutorial.com/) (Format standard for HTTP requests)
-  - [axois](https://github.com/axios/axios) (HTTP client)
-- [MongoDB](https://www.mongodb.com/) (Database)
-  - [Mongoose](https://mongoosejs.com/) (JS driver for MongoDB)
 
 ### Preprocessors
 
