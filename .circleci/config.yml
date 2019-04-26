@@ -37,6 +37,7 @@ jobs:
 
       # run tests!
       - run: npm test
+
       - codecov/upload:
-        file: {{ coverage_report_filepath }}
-        token: 5cc49569-d518-4ff6-9579-f0487c51b3a5
+          file: {{ coverage_report_filepath }}
+          token: 5cc49569-d518-4ff6-9579-f0487c51b3a5
