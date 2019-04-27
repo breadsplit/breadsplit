@@ -44,13 +44,22 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.homepage')}}
 
-        // Sign in
-        v-list-tile(@click='')
-          v-list-tile-action
-            v-avatar(size='36', color='#00000020', style='margin: -6px;')
-              v-icon mdi-account
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.sign_in')}}
+        template(v-if='user.anonymous')
+          // Sign in
+          v-list-tile(@click='loginWithGoogle()')
+            v-list-tile-action
+              v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                v-icon mdi-account
+            v-list-tile-content
+              v-list-tile-title {{$t('ui.sign_in')}}
+
+        template(v-else)
+          v-list-tile(@click='promptLogout()')
+            v-list-tile-action
+              v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                img(:src='user.avatar_url')
+            v-list-tile-content
+              v-list-tile-title {{ user.display_name || user.email }}
 
         // Settings
         v-list-tile(@click='$router.push("/settings")')
@@ -92,6 +101,7 @@ import { Getter, Mutation } from 'vuex-class'
 import { Group } from '~/types'
 import CommonMixin from '~/mixins/common'
 import FontFamilyBuilder from '~/meta/font_family'
+import { UserState } from '~/types/store'
 
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin) {
@@ -104,6 +114,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
   @Getter('group/groups') groups!: Group[]
   @Getter('group/current') current: Group | undefined
+  @Getter('user/info') user!: UserState
 
   @Mutation('group/remove') removeGroup
 
@@ -164,6 +175,16 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
         // TODO:
         break
     }
+  }
+
+  async loginWithGoogle() {
+    await this.$fire.loginWithGoogle()
+  }
+
+  async promptLogout() {
+    // @ts-ignore
+    if (await this.$root.$confirm('Are you sure to logout?'))
+      await this.$fire.logout()
   }
 }
 </script>

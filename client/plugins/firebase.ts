@@ -1,3 +1,5 @@
+import Vue from 'vue'
+import FirePlugin from '~/types/fireplugin'
 import * as firebase from 'firebase/app'
 
 import 'firebase/auth'
@@ -16,3 +18,34 @@ firebase.initializeApp(config)
 
 export const auth = firebase.auth()
 export const db = firebase.firestore()
+
+export default ({ store, route, app }) => {
+  const fire: FirePlugin = {
+
+    async loginWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider()
+
+      try {
+        const result = await auth.signInWithPopup(provider)
+        return result
+      }
+      catch (e) {
+        throw e
+      }
+    },
+
+    async logout() {
+      await auth.signOut()
+    },
+
+  }
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user)
+      store.commit('user/login', user)
+    else
+      store.commit('user/logout')
+  })
+
+  Vue.prototype.$fire = fire
+}

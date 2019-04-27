@@ -10,7 +10,7 @@ import DefaultErrorPages from '@/components/error/default'
 
 export default {
   name: 'NuxtError',
-  layout: 'default', // optional
+  layout: 'default',
   props: {
     error: {
       type: Object,

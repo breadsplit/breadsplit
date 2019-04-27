@@ -1,6 +1,6 @@
 import { GenerateId } from '~/utils/randomstr'
 import { Member, MemberRoles, Group, Transaction, TransactionType } from '../types/index'
-import { RootState, GroupState } from '../types/store'
+import { RootState, GroupState, UserState } from '../types/store'
 import { merge, mapValues } from 'lodash'
 
 export const MemberDefault = (overrides?: object): Member => merge({
@@ -61,10 +61,17 @@ export const GroupStateDefault = (overrides?: object): GroupState => merge({
   currentId: null,
 }, overrides)
 
+export const UserStateDefault = (overrides?: object): UserState => merge({
+  uid: null,
+  anonymous: true,
+  display_name: '',
+}, overrides)
+
 export const RootStateDefault = (overrides?: object): RootState => merge({
   browser_locale: 'en',
   user_locale: null,
   loaded: false,
   dark: false,
   group: GroupStateDefault(),
+  user: UserStateDefault(),
 }, overrides)
