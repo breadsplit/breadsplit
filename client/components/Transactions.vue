@@ -13,7 +13,7 @@ v-card.transactions
           v-list-tile-sub-title.time-label {{$dt(trans.timestamp).fromNow()}}
         v-list-tile-action.pr-1
           v-list-tile-title
-            app-money-label(:amount='trans.total_fee' :currency='trans.currency')
+            app-money-label(:amount='-trans.total_fee' :currency='trans.currency')
 
     template(v-if='needShowMore')
       v-divider

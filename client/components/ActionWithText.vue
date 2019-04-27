@@ -21,7 +21,7 @@
 
   &.inline
     & > *
-      display inline
+      display inline-block
       vertical-align middle
 
     & > .text

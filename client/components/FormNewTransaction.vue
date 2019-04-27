@@ -8,30 +8,44 @@ v-card
   v-container
     v-layout(column)
 
-      v-flex
+      v-flex.ma-2
+        v-text-field(
+          v-model='form.desc' label='Description' placeholder='Some expense...'
+          hide-details required box)
+          template(slot='append')
+            app-category-icon(:category='form.category || categorySense')
+
+      v-flex.ma-2
+        v-text-field(
+          v-model.number='form.total_fee' type='number' reverse box
+          label='Total' required hide-details :prefix='form.currency')
+
+      v-flex.ma-2
         .vertical-aligned
           template(v-if='form.creditors.length === 1')
             app-member-select(:members='members', v-model='form.creditors[0].memberId')
-          span paid
-          v-spacer
+          span.mr-2 paid
+          app-money-label(:amount='form.total_fee', :currency='form.currency')
+          span.ml-1 for:
+
+      .px-2.mb-3
+        v-list(subheader).pb-1
+          template(v-for='(i,idx) in balanceChanges')
+            v-divider(v-if='idx!==0')
+            v-list-tile(avatar)
+              v-list-tile-avatar.mt-1
+                app-avatar(:id='i.memberId', size='40')
+              v-list-tile-content
+                v-list-tile-title.text-xs-right.pr-3
+                  app-money-label(:amount='i.balance', :currency='form.currency')
+              v-list-tile-action
+                v-text-field(
+                  type='number' style='width:50px'
+                  solo hide-details reverse
+                  v-model.number='form.debtors.find(d=>d.memberId===i.memberId).weight')
 
       v-flex
-        v-text-field(v-model='form.desc' label='Description', required='')
-          template(slot='prepend')
-            app-category-icon(:category='form.category || categorySense')
-
-      v-flex
-        v-text-field(v-model.number='form.total_fee' type='number' label='Total' required prepend-icon='mdi-currency-usd')
-
-      v-flex
-        v-text-field(v-model.number='form.currency' label='Currency' disabled)
-
-      v-flex
-        template(v-for='changes in balanceChanges')
-          p {{changes}}
-
-      v-flex
-        v-btn(color='primary', @click='submit') Add Expense
+        v-btn(color='primary', @click='submit' :disabled='!form.total_fee') Add Expense
 
 </template>
 
