@@ -21,13 +21,29 @@
         v-alert(:value='true', type='warning') Work in progress...
         p {{group}}
 
-  app-speed-dial(
+  //app-speed-dial(
     bottom fixed right direction='top'
     transition='slide-y-reverse-transition'
     icon='plus' iconclose='close' open-on-hover
     style='bottom:80px' :show='speedDialShow'
     :items='speedDialItems' @item-click='speedDialClicked'
-  )
+    )
+
+  v-fab-transition
+    v-btn(
+      fab fixed bottom right color='primary'
+      v-show='tab_index === 0' style='bottom:80px'
+      @click='openNewRecordDialog'
+    )
+      v-icon mdi-plus
+
+  v-fab-transition
+    v-btn(
+      fab fixed bottom right color='primary'
+      v-show='tab_index === 1' style='bottom:80px'
+      @click='promptNewMember'
+    )
+      v-icon mdi-account-plus
 
   v-bottom-nav(
     :active.sync='tab_id', :value='true', :absolute='!isMobile', :fixed='isMobile', color='white')
@@ -46,6 +62,7 @@
 <script lang='ts'>
 import GroupMixin from '~/mixins/group'
 import CommonMixin from '~/mixins/common'
+import MemberMixin from '~/mixins/member'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import { GroupBalances } from '~/utils/core'
 
@@ -59,7 +76,7 @@ import { GroupBalances } from '~/utils/core'
     }
   },
 })
-export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
+export default class GroupIndex extends Mixins(CommonMixin, MemberMixin, GroupMixin) {
   fab = false
   record_options = {}
   tab_index = 0
@@ -67,22 +84,6 @@ export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
 
   // Computed
 
-  get speedDialItems() {
-    return [
-      {
-        text: this.$t('ui.speed_dials.new_expense'),
-        icon: 'cash-usd',
-        key: 'new-expense',
-      }, {
-        text: this.$t('ui.speed_dials.settle_up'),
-        icon: 'account-multiple-check',
-        key: 'new-transfer',
-      }, {
-        text: this.$t('ui.speed_dials.new_member'),
-        icon: 'account-plus',
-        key: 'new-member',
-      }]
-  }
   get tabItems() {
     return [
       {
@@ -127,17 +128,13 @@ export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
     return { params }
   }
 
-  speedDialClicked(buttonId) {
-    switch (buttonId) {
-      case 'new-expense':
-        this.openNewRecordDialog({ type: 'expense' })
-        break
-      case 'new-transfer':
-        this.openNewRecordDialog({ type: 'transfer' })
-        break
-    }
+  promptNewMember() {
+    const name = prompt('Name?')
+    if (name)
+      this.newMember({ member: { name } })
   }
-  openNewRecordDialog(options = {}) {
+
+  openNewRecordDialog(options = { type: 'expense' }) {
     this.record_options = options
     // @ts-ignore
     this.$refs.newRecord.open()
