@@ -11,7 +11,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 export default class MoneyLabel extends Vue {
   menu = false
 
-  @Prop(Number) readonly amount!: number
+  @Prop({ default: 0 }) readonly amount!: number
   @Prop(String) readonly currency?: string
 
   get balanceColorClass() {

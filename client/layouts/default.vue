@@ -52,7 +52,7 @@ v-app(:dark='dark')
             v-list-tile-title Homepage
 
         // Settings
-        v-list-tile(@click='$root.$settings.open()')
+        v-list-tile(@click='$router.push("/settings")')
           v-list-tile-action
             v-icon mdi-settings
           v-list-tile-content
@@ -75,9 +75,6 @@ v-app(:dark='dark')
 
   v-content
     nuxt
-
-  app-dialog(ref='settings', fullscreen, hide-overlay, transition='dialog-bottom-transition')
-    app-settings(@close='$root.$settings.close()')
 
   app-dialog(ref='newgroup', fullscreen, hide-overlay, transition='dialog-bottom-transition')
     app-form-new-group(@close='$root.$newGroup.close()')
@@ -135,8 +132,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   mounted() {
     // @ts-ignore
     this.$root.$confirm = this.$refs.confirm.open
-    // @ts-ignore
-    this.$root.$settings = this.$refs.settings
     // @ts-ignore
     this.$root.$newGroup = this.$refs.newgroup
 

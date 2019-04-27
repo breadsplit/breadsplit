@@ -30,7 +30,7 @@
   )
 
   v-bottom-nav(
-    :active.sync='tab_id', :value='true', fixed, color='white', shift)
+    :active.sync='tab_id', :value='true', :absolute='!isMobile', :fixed='isMobile', color='white')
     template(v-for='item in tabItems')
       v-btn(color='primary', flat, :value='item.key')
         span {{item.text}}
