@@ -22,11 +22,11 @@
         p {{group}}
 
   app-speed-dial(
-    bottom, fixed, right, direction='top',
-    transition='slide-y-reverse-transition',
-    icon='plus', iconclose='close',
-    style='bottom:80px',:show='speedDialShow'
-    :items='speedDialItems', @item-click='speedDialClicked'
+    bottom fixed right direction='top'
+    transition='slide-y-reverse-transition'
+    icon='plus' iconclose='close' open-on-hover
+    style='bottom:80px' :show='speedDialShow'
+    :items='speedDialItems' @item-click='speedDialClicked'
   )
 
   v-bottom-nav(

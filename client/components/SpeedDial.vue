@@ -5,7 +5,7 @@ v-fab-transition
       v-btn(v-model='fab', :color='color', dark, fab='')
         v-icon mdi-{{icon}}
         v-icon mdi-{{iconclose}}
-    v-tooltip(v-for='item in items', :key='item.key', :disabled='tooltipsDisabled', left, :value='tooltips')
+    v-tooltip(v-for='item in items', :key='item.key', :disabled='tooltipsDisabled', left, :value='show && tooltips')
       template(slot='activator')
         v-btn(fab, dark, small, :color='item.color || "accent"', @click='itemClick(item)')
           v-icon mdi-{{item.icon}}
