@@ -59,7 +59,10 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.settings')}}
 
-  v-toolbar.app-toolbar(:clipped-left='clipped', fixed, app, dark, color='primary')
+  v-toolbar.app-toolbar(
+    :clipped-left='clipped'
+    fixed, app, dark, color='primary'
+    )
     v-toolbar-side-icon(@click='drawer = !drawer')
     v-toolbar-title(v-text='title')
       v-spacer

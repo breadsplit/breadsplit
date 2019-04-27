@@ -17,7 +17,7 @@ v-container
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component
-export default class Index extends Vue {
+export default class Homepage extends Vue {
   get groups() {
     return this.$store.getters['group/groups']
   }

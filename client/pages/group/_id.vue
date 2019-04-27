@@ -1,38 +1,39 @@
 <template lang="pug">
 .group-page
-  v-tabs-items.full-height(v-model='tab_index', v-if='group')
-    v-tab-item(key='0')
-      v-container(:class='{"pa-0": isMobile}')
-        app-balances
+  .scroll-page
+    v-tabs-items(v-model='tab_index', v-if='group')
+      v-tab-item(key='0')
+        v-container(:class='{"pa-0": isMobile}')
+          app-balances
 
-        p.my-4
+          p.my-4
 
-        app-transactions
+          app-transactions
 
-        p(style='height:150px')
+          p(style='height:150px')
 
-    v-tab-item(key='1')
-      v-container
-        v-subheader {{$t('ui.tabs.expenses')}}
-        v-alert(:value='true', type='warning') Work in progress...
-        p {{group}}
+      v-tab-item(key='1')
+        v-container
+          v-subheader {{$t('ui.tabs.expenses')}}
+          v-alert(:value='true', type='warning') Work in progress...
+          p {{group}}
 
-    v-tab-item(key='2')
-      v-container
-        v-subheader {{$t('ui.tabs.activities')}}
-        v-alert(:value='true', type='warning') Work in progress...
+      v-tab-item(key='2')
+        v-container
+          v-subheader {{$t('ui.tabs.activities')}}
+          v-alert(:value='true', type='warning') Work in progress...
 
-    v-tab-item(key='3')
-      v-container(:class='{"pa-0": isMobile}')
-        app-members(:members='members')
+      v-tab-item(key='3')
+        v-container(:class='{"pa-0": isMobile}')
+          app-members(:members='members')
 
-  //app-speed-dial(
-    bottom fixed right direction='top'
-    transition='slide-y-reverse-transition'
-    icon='plus' iconclose='close' open-on-hover
-    style='bottom:80px' :show='speedDialShow'
-    :items='speedDialItems' @item-click='speedDialClicked'
-    )
+    //app-speed-dial(
+      bottom fixed right direction='top'
+      transition='slide-y-reverse-transition'
+      icon='plus' iconclose='close' open-on-hover
+      style='bottom:80px' :show='speedDialShow'
+      :items='speedDialItems' @item-click='speedDialClicked'
+      )
 
   v-fab-transition
     v-btn(
@@ -78,7 +79,7 @@ import { GroupBalances } from '~/utils/core'
     }
   },
 })
-export default class GroupIndex extends Mixins(CommonMixin, MemberMixin, GroupMixin) {
+export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMixin) {
   fab = false
   tab_index = 0
   tab_id: string|null = 'summary'
@@ -144,19 +145,3 @@ export default class GroupIndex extends Mixins(CommonMixin, MemberMixin, GroupMi
   }
 }
 </script>
-
-<style lang="stylus">
-.group-page
-  height 100%
-
-.v-window.full-height
-  height 100%
-  padding-bottom 56px
-
-  .v-window__container
-    height 100%
-
-    .v-window-item
-      height 100%
-      overflow auto
-</style>

@@ -15,7 +15,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import Iconsets from '~/meta/iconsets'
 
 @Component
-export default class extends Vue {
+export default class IconSelect extends Vue {
   menu = false
 
   @Prop(String) readonly value!: string

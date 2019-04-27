@@ -12,7 +12,7 @@ import { Member } from '../types'
 import { GetMemberAvatarUrl } from '~/utils/avatarProvider'
 
 @Component
-export default class extends Vue {
+export default class Avatar extends Vue {
   menu = false
 
   @Prop(String) readonly id?: string

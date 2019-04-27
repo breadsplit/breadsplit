@@ -2,7 +2,7 @@
 v-card.transactions
   v-subheader Transactions
   v-list.pa-0(three-line)
-    template(v-for='(trans, index) in transactions')
+    template(v-for='(trans, index) in displayedTransactions')
       v-divider(v-if='index!=0')
       v-list-tile(:key='trans.id', avatar, @click='')
         v-list-tile-avatar.ma-2
@@ -15,7 +15,17 @@ v-card.transactions
           v-list-tile-title
             app-money-label(:amount='trans.total_fee' :currency='trans.currency')
 
-  //p {{transactions}}
+    template(v-if='needShowMore')
+      v-divider
+      .text-xs-center
+        v-btn(flat small fluid color='primary' @click='collapsed=false') Show all
+
+    // TODO: remove false to enable if need
+    template(v-if='needCollapsed && false')
+      v-divider
+      .text-xs-center
+        v-btn(flat small fluid color='primary' @click='collapsed=true') Collapse
+
 </template>
 
 <script lang="ts">
@@ -24,9 +34,32 @@ import GroupMixin from '~/mixins/group'
 import MemberMixin from '../mixins/member'
 
 @Component
-export default class Index extends Mixins(GroupMixin, MemberMixin) {
+export default class Transactions extends Mixins(GroupMixin, MemberMixin) {
+  collapsed = true
+  collapsed_amount = 3
+
   get transactions() {
-    return this.group.transactions.map(t => this.parseTrans(t))
+    return this.group.transactions
+      .map(t => this.parseTrans(t))
+      .sort((a, b) => b.timestamp - a.timestamp)
+  }
+
+  get amount() {
+    return this.transactions.length
+  }
+
+  get displayedTransactions() {
+    if (this.collapsed)
+      return this.transactions.slice(0, this.collapsed_amount)
+    return this.transactions
+  }
+
+  get needShowMore() {
+    return this.collapsed && this.amount > this.collapsed_amount
+  }
+
+  get needCollapsed() {
+    return !this.collapsed && this.amount > this.collapsed_amount
   }
 
   parseTrans(trans) {

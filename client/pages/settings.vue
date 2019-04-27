@@ -7,7 +7,7 @@ app-dialog(ref='settings', fullscreen, hide-overlay, transition='dialog-bottom-t
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class extends Vue {
+export default class SettingsPage extends Vue {
   mounted() {
     // @ts-ignore
     this.$refs.settings.open()

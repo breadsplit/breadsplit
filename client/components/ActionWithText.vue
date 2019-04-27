@@ -29,5 +29,4 @@
       font-size 1.1em
       margin-left 10px
       font-weight bold
-
 </style>
