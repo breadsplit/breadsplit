@@ -36,7 +36,7 @@ export default class Avatar extends Vue {
   }
 
   get usePlaceholder() {
-    return this.memberObj.disableAvatarUrl || !this.avatarUrl
+    return this.memberObj.disableAvatarUrl || !this.memberObj.avatarUrl
   }
 }
 </script>
