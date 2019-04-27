@@ -66,6 +66,8 @@ v-app(:dark='dark')
                 img(:src='user.avatar_url')
             v-list-tile-content
               v-list-tile-title {{ user.display_name || user.email }}
+            v-list-tile-action(v-if='!userIsOnline')
+              v-icon(color='red', size='20') mdi-cloud-off-outline
 
         // Settings
         v-list-tile(@click='$router.push("/settings")')
@@ -107,7 +109,7 @@ import { Getter, Mutation } from 'vuex-class'
 import { Group } from '~/types'
 import CommonMixin from '~/mixins/common'
 import FontFamilyBuilder from '~/meta/font_family'
-import { UserState } from '~/types/store'
+import { UserInfo } from '~/types/store'
 
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin) {
@@ -120,7 +122,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
   @Getter('group/groups') groups!: Group[]
   @Getter('group/current') current: Group | undefined
-  @Getter('user/info') user!: UserState
+  @Getter('user/info') user!: UserInfo
+  @Getter('user/online') userIsOnline!: boolean
 
   @Mutation('group/remove') removeGroup
 

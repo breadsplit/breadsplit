@@ -26,4 +26,7 @@ export const getters: GetterTree<UserState, RootState> = {
     return state.info
   },
 
+  online(state) {
+    return state.online
+  },
 }
