@@ -44,6 +44,12 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.homepage')}}
 
+        v-list-tile(v-if='debug', nuxt, to='test')
+          v-list-tile-action
+            v-icon mdi-bug
+          v-list-tile-content
+            v-list-tile-title Test playground
+
         template(v-if='user.anonymous')
           // Sign in
           v-list-tile(@click='loginWithGoogle()')
@@ -119,6 +125,10 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   @Mutation('group/remove') removeGroup
 
   // Computed
+  get debug() {
+    return process.env.NODE_ENV !== 'production'
+  }
+
   get dark() {
     return this.$store.getters.dark
   }
