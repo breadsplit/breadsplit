@@ -174,3 +174,7 @@ Frameworks
 
 - [Electron](https://electronjs.org/) (Windows & MacOS & Linux)
 - [Cordova](https://cordova.apache.org/) (Android & iOS)
+
+## 📄 License
+
+[MIT License](./LICENSE)
