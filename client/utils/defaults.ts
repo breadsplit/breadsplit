@@ -1,38 +1,50 @@
-import randomstr from '~/utils/randomstr'
+import { GenerateId } from '~/utils/randomstr'
 import { Member, MemberRoles, Group, Transaction, TransactionType } from '../types/index'
 import { RootState, GroupState } from '../types/store'
-import { merge } from 'lodash'
+import { merge, mapValues } from 'lodash'
 
 export const MemberDefault = (overrides?: object): Member => merge({
-  id: `m:${randomstr(5)}`,
+  id: GenerateId.LocalMember(),
   name: '',
   role: MemberRoles.collaborator,
 }, overrides)
 
-export const GroupDefault = (overrides?: object): Group => {
+export const GroupDefault = (overrides?: object, { online = false } = {}): Group => {
   const group: Group = merge({
-    id: randomstr(5),
+    id: online ? GenerateId.OnlineGroup() : GenerateId.LocalGroup(),
     name: '',
     options: {
       multiple_currencies: true,
     },
     timestamp: +new Date(),
 
-    members: [],
+    memberIds: [],
+    members: {},
     currencies: [],
     currency_records: [],
     transactions: [],
     activities: [],
 
-    online: false,
+    online,
   }, overrides)
 
-  group.members = group.members.map(m => MemberDefault(m))
+  if (Array.isArray(group.members)) {
+    const members = {}
+    group.members.forEach((m) => {
+      const member = MemberDefault(m)
+      members[member.id] = member
+    })
+    group.members = members
+  }
+  else {
+    group.members = mapValues(group.members, m => MemberDefault(m))
+  }
+
   return group
 }
 
 export const TransactionDefault = (overrides?: object): Transaction => merge({
-  id: `t:${randomstr(16)}`,
+  id: GenerateId.Transaction(),
   timestamp: +new Date(),
   creditors: [],
   debtors: [],

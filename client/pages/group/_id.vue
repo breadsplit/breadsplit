@@ -47,7 +47,6 @@
 import GroupMixin from '~/mixins/group'
 import CommonMixin from '~/mixins/common'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import { GroupBalances } from '~/utils/core'
 
 @Component({
   head() {
@@ -101,9 +100,6 @@ export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
   }
   get speedDialShow() {
     return this.tab_index === 0
-  }
-  get balances() {
-    return GroupBalances(this.group)
   }
   // Watches
 

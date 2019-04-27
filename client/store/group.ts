@@ -23,7 +23,7 @@ export const getters: GetterTree<GroupState, RootState> = {
     const group = state.groups[groupId]
     if (!group)
       return null
-    return group.members.find(m => m.id === memberId)
+    return group.members[memberId]
   },
 }
 
@@ -57,20 +57,18 @@ export const mutations: MutationTree<GroupState> = {
   // Members
   addMember(state, { id, member }) {
     id = id || state.currentId
-    state.groups[id].members.push(MemberDefault(member))
+    const m = MemberDefault(member)
+    state.groups[id].members[m.id] = m
   },
 
   removeMember(state, { id, memberid }) {
     id = id || state.currentId
-    const member = state.groups[id].members.find(m => m.id === memberid)
-    const index = member ? state.groups[id].members.indexOf(member) : -1
-    if (index > -1)
-      state.groups[id].members.splice(index, 1)
+    Vue.delete(state.groups[id].members, memberid)
   },
 
   editMember(state, { id, memberid, changes }) {
     id = id || state.currentId
-    const member = state.groups[id].members.find(m => m.id === memberid)
+    const member = state.groups[id].members[memberid]
     if (member) {
       for (const key of Object.keys(changes))
         Vue.set(member, key, changes[key])

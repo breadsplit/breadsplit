@@ -27,13 +27,14 @@ import randomstr from '../utils/randomstr'
 @Component
 export default class extends Vue {
   email = 'a@gmail.com'
-  user = { uid: null }
+  user = { uid: '' }
   groups: any[] = []
 
   async submitSignup() {
     const email = this.email
     const password = `${email}:${email}`
     const cred = await auth.createUserWithEmailAndPassword(email, password)
+    // @ts-ignore
     this.user = cred.user
     this.fetchGroups()
   }
@@ -42,13 +43,14 @@ export default class extends Vue {
     const email = this.email
     const password = `${email}:${email}`
     const cred = await auth.signInWithEmailAndPassword(email, password)
+    // @ts-ignore
     this.user = cred.user
     this.fetchGroups()
   }
 
   async submitLogout() {
     await auth.signOut()
-    this.user = { uid: null }
+    this.user = { uid: '' }
     this.groups = []
   }
 

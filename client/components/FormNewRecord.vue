@@ -73,7 +73,7 @@ export default class extends Mixins(GroupMixin) {
 
   mounted() {
     this.$set(this, 'form', TransactionDefault())
-    const me = (this.members[0] || {}).id // TODO: get my id
+    const me = (this.members[0] || { id: '' }).id // TODO: get my id
     this.form.creator = me
     this.form.currency = this.group.currencies[0]
     this.form.creditors.push({ weight: 1, memberId: me })
