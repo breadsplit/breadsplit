@@ -36,15 +36,15 @@ v-card
 </template>
 
 <script lang='ts'>
-import Categories, { CategoryKeys } from '@/meta/categories'
-import GroupMixin from '../mixins/group'
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
+import Categories, { CategoryKeys } from '~/meta/categories'
+import GroupMixin from '~/mixins/group'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault } from '~/utils/defaults'
 import { TransactionBalanceChanges } from '~/utils/core'
 
 @Component
-export default class extends Mixins(GroupMixin) {
+export default class FormNewTransaction extends Mixins(GroupMixin) {
   form: Transaction = TransactionDefault()
   cats = Categories
 
@@ -71,13 +71,16 @@ export default class extends Mixins(GroupMixin) {
     return TransactionBalanceChanges(this.form)
   }
 
-  mounted() {
-    this.$set(this, 'form', TransactionDefault())
-    const me = (this.members[0] || {}).id // TODO: get my id
-    this.form.creator = me
-    this.form.currency = this.group.currencies[0]
-    this.form.creditors.push({ weight: 1, memberId: me })
-    this.form.debtors = this.members.map((m): Weight => ({ weight: 1, memberId: m.id }))
+  @Watch('group', { immediate: true })
+  onGroupChanged() {
+    if (this.group) {
+      this.$set(this, 'form', TransactionDefault())
+      const me = (this.members[0] || {}).id // TODO: get my id
+      this.form.creator = me
+      this.form.currency = this.group.currencies[0]
+      this.form.creditors.push({ weight: 1, memberId: me })
+      this.form.debtors = this.members.map((m): Weight => ({ weight: 1, memberId: m.id }))
+    }
   }
 
   submit() {

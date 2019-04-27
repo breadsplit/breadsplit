@@ -38,7 +38,7 @@
     v-btn(
       fab fixed bottom right color='primary'
       v-show='tab_index === 0' style='bottom:80px'
-      @click='openNewRecordDialog'
+      @click='openNewTransDialog()'
     )
       v-icon mdi-plus
 
@@ -58,11 +58,7 @@
         span {{item.text}}
         v-icon mdi-{{item.icon}}
 
-  app-dialog(
-    ref='newRecord' :fullscreen='isMobile'
-    max-width='800' transition='dialog-bottom-transition'
-  )
-    app-form-new-record(v-bind='record_options', @close='$refs.newRecord.close()')
+  nuxt-child(:key="$route.params.id")
 </template>
 
 <script lang='ts'>
@@ -84,7 +80,6 @@ import { GroupBalances } from '~/utils/core'
 })
 export default class GroupIndex extends Mixins(CommonMixin, MemberMixin, GroupMixin) {
   fab = false
-  record_options = {}
   tab_index = 0
   tab_id: string|null = 'summary'
 
@@ -144,10 +139,8 @@ export default class GroupIndex extends Mixins(CommonMixin, MemberMixin, GroupMi
       this.newMember({ member: { name } })
   }
 
-  openNewRecordDialog(options = { type: 'expense' }) {
-    this.record_options = options
-    // @ts-ignore
-    this.$refs.newRecord.open()
+  openNewTransDialog(options = { type: 'expense' }) {
+    this.$router.push(`/group/${this.group.id}/new_trans?type=${options.type}`)
   }
 }
 </script>
