@@ -1,28 +1,25 @@
-# Splitoast Electron
+# [Electron](https://electronjs.org/) (Windows & MacOS & Linux)
 
-The electron building scripts for [Splitoast](https://github.com/antfu/splitoast)
+Desktop Native Application
 
-## Install & build
+## Setup
 
-Install the dependencies
+### Install dependencies
 
 ```sh
-cd ./splitoast-electron
-npm ci
+npm run electron:install
 ```
 
-Build the electron app
+### Development
 
 ```sh
-npm run build
+npm run electron:dev
 ```
 
-## Development
-
-Inside `./splitoast-electron`:
+### Production build
 
 ```sh
-npm run dev
+npm run electron:build
 ```
 
 ## TODO
