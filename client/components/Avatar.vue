@@ -40,3 +40,10 @@ export default class Avatar extends Vue {
   }
 }
 </script>
+
+<style lang='stylus'>
+.app-avatar
+  &.inline
+    display inline
+    height 1em
+</style>

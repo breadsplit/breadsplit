@@ -47,6 +47,7 @@ export default {
     },
     food: {
       display: '飲食',
+      keywords: '早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品',
     },
     transfer: {
       display: '債務轉移',

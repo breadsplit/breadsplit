@@ -8,7 +8,6 @@
 
 <style lang='stylus'>
 .action-with-text
-  padding 3px
   text-align center
   display inline-block
 
@@ -22,7 +21,7 @@
 
   &.inline
     & > *
-      display inline-block
+      display inline
       vertical-align middle
 
     & > .text

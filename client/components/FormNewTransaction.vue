@@ -84,7 +84,11 @@ export default class FormNewTransaction extends Mixins(GroupMixin) {
   }
 
   submit() {
-    this.$store.commit('group/newTranscation', { id: this.group.id, trans: this.form })
+    const trans = Object.assign({},
+      this.form, {
+        category: this.form.category || this.categorySense,
+      })
+    this.$store.commit('group/newTranscation', { id: this.group.id, trans })
     this.close()
   }
 
