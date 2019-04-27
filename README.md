@@ -8,7 +8,7 @@
 
 🔑 **Keywords**: `split bills`, `group expenses management`, `sharing expenses`, `accounting`
 
-## Key Features
+## Features
 
 `Further discussion required`
 
@@ -86,14 +86,14 @@ $ npm i
 - Cross compare other apps
 - Functions & Features directions
 - Implement offline features
-- PWA Support
+- ✅ PWA Support
 - UI implement
 
 ### Stage 2 Preparation for Public
 
-- i18n support (English and Chinese)
+- Full i18n support (English and Chinese)
 - Basic privacy policy and terms of services
-- Source code license
+- ✅ Source code license `MIT`
 - Contribution guildline
 - Create a Github team and make the repo **public**
 - Donate channel (Patreon or Open Collective)
@@ -108,13 +108,15 @@ $ npm i
 - API docs for community support
 - Online payments integration for settling up (Paypal, LINE Pay, Wechat Pay, Alipay, etc.)
 
-### Stage 4 Multi Platform
+### Stage 4 Multi-platform
 
-- Android/iOS
-  1. Simple wrapper
-  2. Connect with native functions ([Google NearBy](https://developers.google.com/nearby/messages/overview), Native notifications, etc.)
-- [Electron](https://electronjs.org/) (Windows/MacOS/Linux)
+- ✅ Integrate [Cordova](https://cordova.apache.org/) for Android and iOS
+- ✅ Integrate [Electron](https://electronjs.org/) for Windows, MacOS and Linux
 - Automatic build
+- Platform optimized
+  - Better touch support
+  - Connect with native notifications
+  - [Google NearBy](https://developers.google.com/nearby/messages/overview)
 
 ## 📂 Directory Structure
 
