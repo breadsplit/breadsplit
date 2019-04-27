@@ -1,19 +1,23 @@
 <template lang='pug'>
 .credit
 
-  .section v{{version}}
-
+  .section v{{version}} {{target}}
   br
-  .line-divider
-  br
+  .buildinfo
+    span Build {{buildtime}}
+    span(v-if='machine') /{{machine}}
+  .my-2
+  //.line-divider
 
   //.badge
     v-icon mdi-code-tags
-  template(v-for='(i, idx) in code')
+  //template(v-for='(i, idx) in code')
     .divider
     .section
       a(:href='i.href', target='_blank') {{i.name}}
   .newline
+
+  p {{env}}
 
   .section
     span Made with
@@ -23,14 +27,15 @@
 </template>
 
 <script>
-import version from '~/version'
-
 export default {
   data() {
     return {
-      version,
       code: [],
       design: [],
+      version: process.env.APP_VERSION,
+      target: process.env.BUILD_TARGET,
+      buildtime: process.env.BUILD_TIME,
+      machine: process.env.BUILD_MACHINE,
     }
   },
 }
@@ -38,9 +43,13 @@ export default {
 
 <style lang='stylus'>
 .credit
-  color rgba(0,0,0,0.6)
   text-align center
   padding 100px 0
+  opacity 0.7
+
+  .buildinfo
+    font-size 0.85em
+    opacity 0.4
 
   .v-icon
     vertical-align bottom
@@ -64,19 +73,20 @@ export default {
     width 30px
     height 1px
     display inline-block
-    background black
-    opacity 0.1
+    background rgb(125,125,125)
+    opacity 0.8
     margin 16px
 
   a
     text-decoration none
     color inherit
     transition 0.5s opacity ease-in-out
+    opacity 0.5
 
     &:not(:last-child)
       margin-right 7px
 
     &:hover
-      color rgba(0,0,0,1)
+      opacity 1
 
 </style>

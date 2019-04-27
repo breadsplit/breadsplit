@@ -12,7 +12,7 @@ import { Member } from '../types'
 import { GetMemberAvatarUrl } from '~/utils/avatarProvider'
 
 @Component
-export default class extends Vue {
+export default class Avatar extends Vue {
   menu = false
 
   @Prop(String) readonly id?: string
@@ -36,7 +36,7 @@ export default class extends Vue {
   }
 
   get usePlaceholder() {
-    return this.memberObj.disableAvatarUrl || !this.avatarUrl
+    return this.memberObj.disableAvatarUrl || !this.memberObj.avatarUrl
   }
 }
 </script>

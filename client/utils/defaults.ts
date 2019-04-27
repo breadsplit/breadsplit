@@ -65,5 +65,6 @@ export const RootStateDefault = (overrides?: object): RootState => merge({
   browser_locale: 'en',
   user_locale: null,
   loaded: false,
+  dark: false,
   group: GroupStateDefault(),
 }, overrides)

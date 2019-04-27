@@ -36,29 +36,33 @@ v-app(:dark='dark')
           v-list-tile-title {{$t('ui.group_editing.new_group')}}
 
       .drawer-list-bottom
-        // Sign in
-        v-list-tile
-          v-list-tile-action
-            v-avatar(size='36', color='#00000020', style='margin: -6px;')
-              v-icon mdi-account
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.sign_in')}}
 
         // Homepage
         v-list-tile(@click='$router.push("/")', v-show='$route.path !== "/"')
           v-list-tile-action
             v-icon mdi-home
           v-list-tile-content
-            v-list-tile-title Homepage
+            v-list-tile-title {{$t('ui.homepage')}}
+
+        // Sign in
+        v-list-tile(@click='')
+          v-list-tile-action
+            v-avatar(size='36', color='#00000020', style='margin: -6px;')
+              v-icon mdi-account
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.sign_in')}}
 
         // Settings
-        v-list-tile(@click='$root.$settings.open()')
+        v-list-tile(@click='$router.push("/settings")')
           v-list-tile-action
             v-icon mdi-settings
           v-list-tile-content
             v-list-tile-title {{$t('ui.settings')}}
 
-  v-toolbar.app-toolbar(:clipped-left='clipped', fixed, app, dark, color='primary')
+  v-toolbar.app-toolbar(
+    :clipped-left='clipped'
+    fixed, app, dark, color='primary'
+    )
     v-toolbar-side-icon(@click='drawer = !drawer')
     v-toolbar-title(v-text='title')
       v-spacer
@@ -76,9 +80,6 @@ v-app(:dark='dark')
   v-content
     nuxt
 
-  app-dialog(ref='settings', fullscreen, hide-overlay, transition='dialog-bottom-transition')
-    app-settings(@close='$root.$settings.close()')
-
   app-dialog(ref='newgroup', fullscreen, hide-overlay, transition='dialog-bottom-transition')
     app-form-new-group(@close='$root.$newGroup.close()')
 
@@ -95,7 +96,6 @@ import FontFamilyBuilder from '~/meta/font_family'
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin) {
   // Data
-  dark = false
   clipped = true
   drawer = false
   fixed = false
@@ -108,6 +108,10 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   @Mutation('group/remove') removeGroup
 
   // Computed
+  get dark() {
+    return this.$store.getters.dark
+  }
+
   get title() {
     if (this.current)
       return this.current.name
@@ -135,8 +139,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   mounted() {
     // @ts-ignore
     this.$root.$confirm = this.$refs.confirm.open
-    // @ts-ignore
-    this.$root.$settings = this.$refs.settings
     // @ts-ignore
     this.$root.$newGroup = this.$refs.newgroup
 

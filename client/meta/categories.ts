@@ -23,7 +23,7 @@ const DefaultCategories: Category[] = [
   {
     name: 'food',
     icon: 'food',
-    color: '#d68822',
+    color: '#d39523',
   },
   {
     name: 'transfer',
@@ -32,7 +32,7 @@ const DefaultCategories: Category[] = [
   },
   {
     name: 'other',
-    icon: 'help-rhombus-outline',
+    icon: 'cash-usd',
     color: '#9e9589',
   },
 ]

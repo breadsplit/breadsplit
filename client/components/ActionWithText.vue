@@ -8,7 +8,6 @@
 
 <style lang='stylus'>
 .action-with-text
-  padding 3px
   text-align center
   display inline-block
 
@@ -29,5 +28,4 @@
       font-size 1.1em
       margin-left 10px
       font-weight bold
-
 </style>

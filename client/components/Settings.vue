@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card
+v-card.settings
   v-toolbar(dark, color='primary')
     v-btn(icon, dark, @click='close()')
       v-icon mdi-close
@@ -8,6 +8,12 @@ v-card
   v-container.px-0
     v-list(two-line, subheader)
       v-subheader General
+      v-list-tile(avatar, @click='darkMode = !darkMode')
+        v-list-tile-avatar
+          v-icon {{ darkMode ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
+        v-list-tile-content
+          v-list-tile-title Dark Mode
+          v-list-tile-sub-title {{ darkMode ? 'Enabled' : 'Disabled' }}
       v-list-tile(avatar, @click='languageSelecting=true')
         v-list-tile-avatar
           v-icon mdi-web
@@ -43,7 +49,6 @@ v-card
 </template>
 
 <script lang='ts'>
-import version from '~/version'
 import { AvaliableLocales } from '~/locales'
 import { Component, Vue } from 'vue-property-decorator'
 
@@ -51,7 +56,6 @@ const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display 
 
 @Component
 export default class Settings extends Vue {
-  version = version
   localeItems = localeItems
   languageSelecting = false
 
@@ -63,6 +67,12 @@ export default class Settings extends Vue {
     if (locale && locale.text)
       return locale.text
     return this.currentLocale
+  }
+  get darkMode() {
+    return this.$store.getters.dark
+  }
+  set darkMode(value) {
+    this.$store.commit('dark', value)
   }
 
   close() {
@@ -83,3 +93,9 @@ export default class Settings extends Vue {
   }
 }
 </script>
+
+<style lang="stylus">
+.settings
+  .v-list, .v-list *
+    transition 0.3s background cubic-bezier(0.25, 0.8, 0.5, 1)
+</style>

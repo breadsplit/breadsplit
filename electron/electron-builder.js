@@ -24,6 +24,7 @@ module.exports = {
       to: 'dist',
       filter: [
         'LICENSE',
+        'AUTHORS',
       ],
     },
   ],

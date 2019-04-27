@@ -23,8 +23,10 @@ export default {
     sign_in: 'Sign in',
     about: 'About',
     advance: 'Advance',
+    homepage: 'Homepage',
 
     button_new_group: 'Create A New Group',
+    button_new_member: 'Add member',
 
     user: {
       guest: 'Guest',
@@ -35,9 +37,11 @@ export default {
       default_group_name: 'Untitled Group',
     },
     tabs: {
+      settle_up: 'Settle Up',
       expenses: 'Expenses',
       members: 'Members',
       summary: 'Summary',
+      activities: 'Activities',
     },
     speed_dials: {
       new_expense: 'New Expense',

@@ -1,51 +1,71 @@
 <template lang="pug">
 .group-page
-  v-tabs-items.full-height(v-model='tab_index', v-if='group')
-    v-tab-item(key='0')
-      v-container(:class='{"pa-0": isMobile}')
-        app-balances
+  .scroll-page
+    v-tabs-items(v-model='tab_index', v-if='group')
+      v-tab-item(key='0')
+        v-container(:class='{"pa-0": isMobile}')
+          app-balances
 
-        p.my-4
+          p.my-4
 
-        app-transactions
+          app-transactions
 
-        p(style='height:150px')
+          p(style='height:80px')
 
-    v-tab-item(key='1')
-      v-container(:class='{"pa-0": isMobile}')
-        app-members(:members='members')
+      v-tab-item(key='1')
+        v-container
+          v-subheader {{$t('ui.tabs.expenses')}}
+          v-alert(:value='true', type='warning') Work in progress...
+          p {{group}}
 
-    v-tab-item(key='2')
-      v-container
-        v-subheader summary
-        v-alert(:value='true', type='warning') Work in progress...
-        p {{group}}
+      v-tab-item(key='2')
+        v-container
+          v-subheader {{$t('ui.tabs.activities')}}
+          v-alert(:value='true', type='warning') Work in progress...
 
-  app-speed-dial(
-    bottom, fixed, right, direction='top',
-    transition='slide-y-reverse-transition',
-    icon='plus', iconclose='close',
-    style='bottom:80px',:show='speedDialShow'
-    :items='speedDialItems', @item-click='speedDialClicked'
-  )
+      v-tab-item(key='3')
+        v-container(:class='{"pa-0": isMobile}')
+          app-members(:members='members')
+
+    //app-speed-dial(
+      bottom fixed right direction='top'
+      transition='slide-y-reverse-transition'
+      icon='plus' iconclose='close' open-on-hover
+      style='bottom:80px' :show='speedDialShow'
+      :items='speedDialItems' @item-click='speedDialClicked'
+      )
+
+  v-fab-transition
+    v-btn(
+      fab fixed bottom right color='primary'
+      v-show='tab_index === 0' style='bottom:70px'
+      @click='openNewTransDialog()'
+    )
+      v-icon mdi-plus
+
+  v-fab-transition
+    v-btn(
+      fab fixed bottom right color='primary'
+      v-show='tab_index === 3' style='bottom:70px'
+      @click='promptNewMember'
+    )
+      v-icon mdi-account-plus
 
   v-bottom-nav(
-    :active.sync='tab_id', :value='true', fixed, color='white', shift)
+    :active.sync='tab_id', :value='true',
+    :absolute='!isMobile', :fixed='isMobile', shift)
     template(v-for='item in tabItems')
       v-btn(color='primary', flat, :value='item.key')
         span {{item.text}}
         v-icon mdi-{{item.icon}}
 
-  app-dialog(
-    ref='newRecord' :fullscreen='isMobile'
-    max-width='800' transition='dialog-bottom-transition'
-  )
-    app-form-new-record(v-bind='record_options', @close='$refs.newRecord.close()')
+  nuxt-child(:key="$route.params.id")
 </template>
 
 <script lang='ts'>
 import GroupMixin from '~/mixins/group'
 import CommonMixin from '~/mixins/common'
+import MemberMixin from '~/mixins/member'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 
 @Component({
@@ -58,44 +78,31 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
     }
   },
 })
-export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
+export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMixin) {
   fab = false
-  record_options = {}
   tab_index = 0
-  tab_id: string|null = 'expenses'
+  tab_id: string|null = 'summary'
 
   // Computed
 
-  get speedDialItems() {
-    return [
-      {
-        text: this.$t('ui.speed_dials.new_expense'),
-        icon: 'cash-usd',
-        key: 'new-expense',
-      }, {
-        text: this.$t('ui.speed_dials.settle_up'),
-        icon: 'account-multiple-check',
-        key: 'new-transfer',
-      }, {
-        text: this.$t('ui.speed_dials.new_member'),
-        icon: 'account-plus',
-        key: 'new-member',
-      }]
-  }
   get tabItems() {
     return [
       {
+        text: this.$t('ui.tabs.summary'),
+        icon: 'chart-pie',
+        key: 'summary',
+      }, {
         text: this.$t('ui.tabs.expenses'),
         icon: 'wallet',
         key: 'expenses',
       }, {
+        text: this.$t('ui.tabs.activities'),
+        icon: 'calendar-text',
+        key: 'activities',
+      }, {
         text: this.$t('ui.tabs.members'),
         icon: 'account-group',
         key: 'members',
-      }, {
-        text: this.$t('ui.tabs.summary'),
-        icon: 'chart-pie',
-        key: 'summary',
       }]
   }
   get speedDialShow() {
@@ -123,36 +130,19 @@ export default class GroupIndex extends Mixins(CommonMixin, GroupMixin) {
     return { params }
   }
 
-  speedDialClicked(buttonId) {
-    switch (buttonId) {
-      case 'new-expense':
-        this.openNewRecordDialog({ type: 'expense' })
-        break
-      case 'new-transfer':
-        this.openNewRecordDialog({ type: 'transfer' })
-        break
-    }
+  promptNewMember() {
+    const name = prompt('Name?')
+    if (name)
+      this.newMember({ member: { name } })
   }
-  openNewRecordDialog(options = {}) {
-    this.record_options = options
-    // @ts-ignore
-    this.$refs.newRecord.open()
+
+  openNewTransDialog(options = { type: 'expense' }) {
+    this.$router.push(`/group/${this.group.id}/new_trans?type=${options.type}`)
   }
 }
 </script>
 
 <style lang="stylus">
-.group-page
-  height 100%
-
-.v-window.full-height
-  height 100%
-  padding-bottom 56px
-
-  .v-window__container
-    height 100%
-
-    .v-window-item
-      height 100%
-      overflow auto
+.v-bottom-nav
+  border-top 1px solid rgba(125,125,125,0.3)
 </style>

@@ -1,5 +1,8 @@
 <template lang='pug'>
-v-dialog(v-model='dialog', @keydown.esc='cancel', v-bind='$attrs', style='z-index:200')
+v-dialog(
+  v-model='dialog', @keydown.esc='cancel'
+  v-bind='$attrs', style='z-index:200'
+)
   slot(v-if='dialog')
 </template>
 
@@ -14,8 +17,22 @@ export default {
       options: {},
     }
   },
+
+  computed: {
+    isOpened() {
+      return !!this.dialog
+    },
+  },
+
+  watch: {
+    dialog() {
+      if (!this.dialog)
+        this.$emit('exit')
+    },
+  },
+
   methods: {
-    open(options) {
+    open(options = {}) {
       this.dialog = true
       this.options = options
       return new Promise((resolve, reject) => {
@@ -25,7 +42,8 @@ export default {
     },
     close(flag = true) {
       this.resolve(flag)
-      this.dialog = false
+      if (this.dialog)
+        this.dialog = false
     },
   },
 }
