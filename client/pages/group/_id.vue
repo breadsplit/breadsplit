@@ -12,14 +12,19 @@
         p(style='height:150px')
 
     v-tab-item(key='1')
-      v-container(:class='{"pa-0": isMobile}')
-        app-members(:members='members')
+      v-container
+        v-subheader {{$t('ui.tabs.expenses')}}
+        v-alert(:value='true', type='warning') Work in progress...
+        p {{group}}
 
     v-tab-item(key='2')
       v-container
-        v-subheader summary
+        v-subheader {{$t('ui.tabs.activities')}}
         v-alert(:value='true', type='warning') Work in progress...
-        p {{group}}
+
+    v-tab-item(key='3')
+      v-container(:class='{"pa-0": isMobile}')
+        app-members(:members='members')
 
   //app-speed-dial(
     bottom fixed right direction='top'
@@ -40,13 +45,14 @@
   v-fab-transition
     v-btn(
       fab fixed bottom right color='primary'
-      v-show='tab_index === 1' style='bottom:80px'
+      v-show='tab_index === 3' style='bottom:80px'
       @click='promptNewMember'
     )
       v-icon mdi-account-plus
 
   v-bottom-nav(
-    :active.sync='tab_id', :value='true', :absolute='!isMobile', :fixed='isMobile', color='white')
+    :active.sync='tab_id', :value='true', :absolute='!isMobile',
+    :fixed='isMobile', color='white', shift)
     template(v-for='item in tabItems')
       v-btn(color='primary', flat, :value='item.key')
         span {{item.text}}
@@ -80,24 +86,28 @@ export default class GroupIndex extends Mixins(CommonMixin, MemberMixin, GroupMi
   fab = false
   record_options = {}
   tab_index = 0
-  tab_id: string|null = 'expenses'
+  tab_id: string|null = 'summary'
 
   // Computed
 
   get tabItems() {
     return [
       {
+        text: this.$t('ui.tabs.summary'),
+        icon: 'chart-pie',
+        key: 'summary',
+      }, {
         text: this.$t('ui.tabs.expenses'),
         icon: 'wallet',
         key: 'expenses',
       }, {
+        text: this.$t('ui.tabs.activities'),
+        icon: 'calendar-text',
+        key: 'activities',
+      }, {
         text: this.$t('ui.tabs.members'),
         icon: 'account-group',
         key: 'members',
-      }, {
-        text: this.$t('ui.tabs.summary'),
-        icon: 'chart-pie',
-        key: 'summary',
       }]
   }
   get speedDialShow() {

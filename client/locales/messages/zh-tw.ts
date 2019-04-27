@@ -7,8 +7,10 @@ export default {
     language: '顯示語言',
     settings: '設定',
     sign_in: '登錄',
+    homepage: '首頁',
 
     button_new_group: '新建小組',
+    button_new_member: '添加成員',
 
     user: {
       guest: '訪客',
@@ -17,6 +19,13 @@ export default {
       new_group: '新增小組',
       enter_group_name: '請輸入小組名稱',
       default_group_name: '未命名小組',
+    },
+    tabs: {
+      expenses: '支出',
+      members: '小組成員',
+      summary: '總覽',
+      settle_up: '算清債務',
+      activities: '近期活動',
     },
     speed_dials: {
       new_expense: '支出',

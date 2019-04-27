@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-card
-  v-subheader Members
+  v-subheader {{$t('ui.tabs.members')}}
   v-list(two-line)
     template(v-for='(member, index) in members')
       v-list-tile(:key='member.id', avatar, @click='')
@@ -24,7 +24,7 @@ v-card
     v-list-tile
       v-btn(@click='promptNewMember()', color='primary')
         v-icon.mr-2 mdi-account-plus
-        span New member
+        span {{$t('ui.button_new_member')}}
 </template>
 
 <script>

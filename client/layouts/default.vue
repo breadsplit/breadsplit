@@ -36,20 +36,21 @@ v-app(:dark='dark')
           v-list-tile-title {{$t('ui.group_editing.new_group')}}
 
       .drawer-list-bottom
-        // Sign in
-        v-list-tile
-          v-list-tile-action
-            v-avatar(size='36', color='#00000020', style='margin: -6px;')
-              v-icon mdi-account
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.sign_in')}}
 
         // Homepage
         v-list-tile(@click='$router.push("/")', v-show='$route.path !== "/"')
           v-list-tile-action
             v-icon mdi-home
           v-list-tile-content
-            v-list-tile-title Homepage
+            v-list-tile-title {{$t('ui.homepage')}}
+
+        // Sign in
+        v-list-tile(@click='')
+          v-list-tile-action
+            v-avatar(size='36', color='#00000020', style='margin: -6px;')
+              v-icon mdi-account
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.sign_in')}}
 
         // Settings
         v-list-tile(@click='$router.push("/settings")')
