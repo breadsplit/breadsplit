@@ -74,6 +74,7 @@ const config: NuxtConfiguration = {
     splitChunks: {
       layouts: true,
     },
+    publicPath: '/nuxt/',
     /*
     ** You can extend webpack config here
     */
