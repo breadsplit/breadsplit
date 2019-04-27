@@ -26,7 +26,8 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "bash scripts/docs-deploy.sh",
-    "test": "jest --config=./client/jest.config.js"
+    "test": "jest --config=./client/jest.config.js",
+    "test:watch": "jest --config=./client/jest.config.js --watch"
   },
   "dependencies": {
     "@dicebear/avatars": "^3.0.6",

@@ -33,11 +33,6 @@ export const actions: ActionTree<GroupState, RootState> = {
 
 export const mutations: MutationTree<GroupState> = {
 
-  purge(state) {
-    state.currentId = null
-    Vue.set(state, 'groups', {})
-  },
-
   switch(state, id: string | null) {
     state.currentId = id
   },
