@@ -116,26 +116,61 @@ $ npm i
 - [Electron](https://electronjs.org/) (Windows/MacOS/Linux)
 - Automatic build
 
+## 📂 Directory Structure
+
+    .
+    ├── ...
+    ├── client              # The main code, web pages based on Nuxt.js
+    |   ├── assets              # Images, fonts, styles and other assets
+    |   ├── components          #⭐Vue components
+    |   ├── layouts             # Nuxt.js layouts
+    |   ├── locales             # i18n texts
+    |   ├── meta                # Built-in data
+    |   ├── middleware          # Nuxt.js routing middlewares
+    |   ├── mixins              # Vue mixins for code reuse
+    |   ├── pages               #⭐Nuxt.js pages, will be served with same directory structure
+    |   ├── plugins             # Nuxt.js plugins
+    |   ├── static              # Will be copied to root of the website
+    |   ├── store               #⭐Vuex store
+    |   ├── ...
+    |   └── nuxt.config.ts      # Nuxt.js config file
+    ├── docs                # For generating documentation website in the future
+    ├── cordova             # Cordova build scripts and platform specify code
+    ├── electron            # Electron build scripts and platform specify code
+    ├── scripts             # Scripts helps to manage this project
+    ├── LICENSE
+    ├── ...
+    └── README.md
+
+`⭐: Important`
+
 ## 🛸 Tech-stacks / Docs
 
-### Main
+### Front-end
 
-- [Typescript](https://www.typescriptlang.org/) (Main language)
-  - [vue-property-decorator](https://github.com/kaorun343/vue-property-decorator)
-  - [vuex-class](https://github.com/ktsn/vuex-class)
+Languages
+
+- [Typescript](https://www.typescriptlang.org/) (Main language, JS with type support)
+  - [vue-property-decorator](https://github.com/kaorun343/vue-property-decorator) (for Vue components)
+  - [vuex-class](https://github.com/ktsn/vuex-class) (for Vuex)
+- [Pug.js](https://pugjs.org/api/getting-started.html) *formerly Jade* (HTML)
+  - [HTML to Pug](https://html2jade.org/) (Tools)
+- [Stylus](http://stylus-lang.com/) (CSS)
+
+Frameworks
+
 - [Vue.js](https://vuejs.org/) (Front-end framework)
   - [Vuetify](https://vuetifyjs.com/) (Vue UI Components)
   - [Vuex](https://vuex.vuejs.org/) (Vue state management)
     - [vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate) (Store Vuex into LocalStorage)
   - [Vue i18n](http://kazupon.github.io/vue-i18n/) (i18n multi languages support)
-- [Nuxt.js](https://nuxtjs.org/) (Tool set for Vue.js)
+- [Nuxt.js](https://nuxtjs.org/) (Vue.js building tool chain)
 
-### Preprocessors
-
-- [Pug.js](https://pugjs.org/api/getting-started.html) *formerly Jade* (HTML)
-  - [HTML to Pug](https://html2jade.org/) (Tools)
-- [Stylus](http://stylus-lang.com/) (CSS)
-
-### Others
+### Assets
 
 - [Material Design Icons](https://materialdesignicons.com/) (Icon set)
+
+### Multi-platform Support
+
+- [Electron](https://electronjs.org/) (Windows & MacOS & Linux)
+- [Cordova](https://cordova.apache.org/) (Android & iOS)
