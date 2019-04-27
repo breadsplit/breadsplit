@@ -52,8 +52,8 @@
       v-icon mdi-account-plus
 
   v-bottom-nav(
-    :active.sync='tab_id', :value='true', :absolute='!isMobile',
-    :fixed='isMobile', color='white', shift)
+    :active.sync='tab_id', :value='true',
+    :absolute='!isMobile', :fixed='isMobile', shift)
     template(v-for='item in tabItems')
       v-btn(color='primary', flat, :value='item.key')
         span {{item.text}}
@@ -145,3 +145,8 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
   }
 }
 </script>
+
+<style lang="stylus">
+.v-bottom-nav
+  border-top 1px solid rgba(125,125,125,0.3)
+</style>

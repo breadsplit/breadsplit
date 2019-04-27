@@ -96,7 +96,6 @@ import FontFamilyBuilder from '~/meta/font_family'
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin) {
   // Data
-  dark = false
   clipped = true
   drawer = false
   fixed = false
@@ -109,6 +108,10 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   @Mutation('group/remove') removeGroup
 
   // Computed
+  get dark() {
+    return this.$store.getters.dark
+  }
+
   get title() {
     if (this.current)
       return this.current.name

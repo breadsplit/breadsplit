@@ -26,12 +26,19 @@ export const mutations: MutationTree<RootState> = {
     state.loaded = true
   },
 
+  dark(state, value) {
+    state.dark = !!value
+  },
 }
 
 export const getters: GetterTree<RootState, RootState> = {
 
   locale(state) {
     return state.user_locale || state.browser_locale || 'en'
+  },
+
+  dark(state) {
+    return state.dark
   },
 
   primary(state, getters) {
