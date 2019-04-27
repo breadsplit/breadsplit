@@ -23,6 +23,7 @@
     "cordova:prepare": "npm run prepare --prefix=./cordova",
     "cordova:build": "npm run build --prefix=./cordova",
     "cordova:run:android": "npm run android:run --prefix=./cordova",
+    "cordova": "npm run cordova:generate && npm run cordova:build && npm run cordova:run:android",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "bash scripts/docs-deploy.sh",
