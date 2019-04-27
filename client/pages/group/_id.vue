@@ -10,7 +10,7 @@
 
           app-transactions
 
-          p(style='height:150px')
+          p(style='height:80px')
 
       v-tab-item(key='1')
         v-container
@@ -38,7 +38,7 @@
   v-fab-transition
     v-btn(
       fab fixed bottom right color='primary'
-      v-show='tab_index === 0' style='bottom:80px'
+      v-show='tab_index === 0' style='bottom:70px'
       @click='openNewTransDialog()'
     )
       v-icon mdi-plus
@@ -46,7 +46,7 @@
   v-fab-transition
     v-btn(
       fab fixed bottom right color='primary'
-      v-show='tab_index === 3' style='bottom:80px'
+      v-show='tab_index === 3' style='bottom:70px'
       @click='promptNewMember'
     )
       v-icon mdi-account-plus

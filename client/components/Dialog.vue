@@ -42,8 +42,8 @@ export default {
     },
     close(flag = true) {
       this.resolve(flag)
-      this.dialog = false
-      this.$emit('exit')
+      if (this.dialog)
+        this.dialog = false
     },
   },
 }
