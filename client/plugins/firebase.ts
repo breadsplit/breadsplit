@@ -19,8 +19,20 @@ firebase.initializeApp(config)
 export const auth = firebase.auth()
 export const db = firebase.firestore()
 
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+
 export default ({ store, route, app }) => {
   const fire: FirePlugin = {
+    auth,
+    db,
+
+    async signup(email, password) {
+      return await auth.createUserWithEmailAndPassword(email, password)
+    },
+
+    async loginWithEmail(email, password) {
+      return await auth.signInWithEmailAndPassword(email, password)
+    },
 
     async loginWithGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider()
@@ -40,7 +52,7 @@ export default ({ store, route, app }) => {
 
   }
 
-  firebase.auth().onAuthStateChanged((user) => {
+  auth.onAuthStateChanged((user) => {
     if (user)
       store.commit('user/login', user)
     else

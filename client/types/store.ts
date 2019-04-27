@@ -5,12 +5,17 @@ export interface GroupState {
   currentId: string|null
 }
 
-export interface UserState {
+export interface UserInfo {
   uid: string | null
   anonymous: boolean
   email?: string
   display_name: string
   avatar_url?: string
+}
+
+export interface UserState {
+  info: UserInfo
+  online: boolean
 }
 
 export interface RootState {

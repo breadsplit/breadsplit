@@ -62,9 +62,12 @@ export const GroupStateDefault = (overrides?: object): GroupState => merge({
 }, overrides)
 
 export const UserStateDefault = (overrides?: object): UserState => merge({
-  uid: null,
-  anonymous: true,
-  display_name: '',
+  info: {
+    uid: null,
+    anonymous: true,
+    display_name: '',
+  },
+  online: false,
 }, overrides)
 
 export const RootStateDefault = (overrides?: object): RootState => merge({

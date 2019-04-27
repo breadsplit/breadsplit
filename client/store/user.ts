@@ -7,11 +7,12 @@ export const state = UserStateDefault
 export const mutations: MutationTree<UserState> = {
 
   login(state, user) {
-    state.uid = user.uid
-    state.email = user.email
-    state.display_name = user.displayName
-    state.avatar_url = user.photoURL
-    state.anonymous = user.isAnonymous
+    state.info.uid = user.uid
+    state.info.email = user.email
+    state.info.display_name = user.displayName
+    state.info.avatar_url = user.photoURL
+    state.info.anonymous = user.isAnonymous
+    state.online = true
   },
 
   logout(state, user) {
@@ -22,7 +23,7 @@ export const mutations: MutationTree<UserState> = {
 export const getters: GetterTree<UserState, RootState> = {
 
   info(state) {
-    return state
+    return state.info
   },
 
 }
