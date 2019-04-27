@@ -32,6 +32,14 @@ const config: NuxtConfiguration = {
     orientation: 'portrait-primary',
   },
 
+  env: {
+    NODE_ENV: process.env.NODE_ENV || 'development',
+    BUILD_TARGET: process.env.BUILD_TARGET || '',
+    BUILD_TIME: new Date().toISOString(),
+    BUILD_MACHINE: process.env.BUILD_MACHINE || process.env.OSTYPE || '',
+    APP_VERSION: pkg.version,
+  },
+
   loading: { color: '#fff' },
 
   css: [

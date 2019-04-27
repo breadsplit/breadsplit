@@ -1,8 +1,11 @@
 <template lang='pug'>
 .credit
 
-  .section v{{version}}
-
+  .section v{{version}} {{target}}
+  br
+  .buildinfo
+    span Build {{buildtime}}
+    span(v-if='machine') /{{machine}}
   .my-2
   //.line-divider
 
@@ -14,6 +17,8 @@
       a(:href='i.href', target='_blank') {{i.name}}
   .newline
 
+  p {{env}}
+
   .section
     span Made with
     v-icon.heart(color='#ff4057') mdi-heart
@@ -22,14 +27,15 @@
 </template>
 
 <script>
-import version from '~/version'
-
 export default {
   data() {
     return {
-      version,
       code: [],
       design: [],
+      version: process.env.APP_VERSION,
+      target: process.env.BUILD_TARGET,
+      buildtime: process.env.BUILD_TIME,
+      machine: process.env.BUILD_MACHINE,
     }
   },
 }
@@ -40,6 +46,10 @@ export default {
   text-align center
   padding 100px 0
   opacity 0.7
+
+  .buildinfo
+    font-size 0.85em
+    opacity 0.4
 
   .v-icon
     vertical-align bottom

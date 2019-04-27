@@ -49,7 +49,6 @@ v-card.settings
 </template>
 
 <script lang='ts'>
-import version from '~/version'
 import { AvaliableLocales } from '~/locales'
 import { Component, Vue } from 'vue-property-decorator'
 
@@ -57,7 +56,6 @@ const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display 
 
 @Component
 export default class Settings extends Vue {
-  version = version
   localeItems = localeItems
   languageSelecting = false
 
