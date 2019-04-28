@@ -100,7 +100,7 @@ export const mutations: MutationTree<GroupState> = {
     state.groups[id].transactions.push(trans)
   },
 
-  // Online
+  // Converters
   switchToOnline(state, { localId, onlineId, switchTo }) {
     const group = state.groups[localId]
     group.id = onlineId
@@ -142,5 +142,12 @@ export const mutations: MutationTree<GroupState> = {
     member.avatarUrl = memberInfo.avatar_url || member.avatarUrl
     member.name = memberInfo.display_name || member.name
     member.email = memberInfo.email || member.email
+  },
+
+  // Firebase
+  onServerUpdate(state, { id, data }) {
+    // TODO: diff
+    console.log('UPDATE', data)
+    Vue.set(state.groups, id, data)
   },
 }

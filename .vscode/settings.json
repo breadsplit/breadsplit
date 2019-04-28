@@ -38,6 +38,7 @@
     "axois",
     "dayjs",
     "fullname",
+    "groupid",
     "localstorage",
     "memberid",
     "nuxt",

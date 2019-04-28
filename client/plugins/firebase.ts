@@ -50,6 +50,36 @@ export default ({ store, route, app }) => {
       await auth.signOut()
     },
 
+    syncGroup(groupid) {
+      fire.pushGroup(groupid)
+      fire.subscribeGroup(groupid)
+    },
+
+    subscribeGroup(groupid) {
+      db.collection('groups')
+        .doc(groupid)
+        .onSnapshot((snap) => {
+          store.commit('group/onServerUpdate', { id: groupid, data: snap.data() })
+        })
+    },
+
+    pushGroup(groupid) {
+      store.watch(
+        (state) => {
+          return state.group.groups[groupid]
+        },
+        (val) => {
+          db.collection('groups')
+            .doc(groupid)
+            .set(val)
+        },
+        {
+          deep: true,
+          immediate: true,
+        }
+      )
+    },
+
   }
 
   auth.onAuthStateChanged((user) => {

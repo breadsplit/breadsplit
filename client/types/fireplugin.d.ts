@@ -6,6 +6,10 @@ declare class FirePlugin {
   loginWithEmail(email: string, password: string): Promise<firebase.auth.UserCredential>
   loginWithGoogle(): Promise<firebase.auth.UserCredential>
   logout(): Promise<void>
+
+  syncGroup(groupid: string): void
+  subscribeGroup(groupid: string): void
+  pushGroup(groupid: string): void
 }
 
 declare module 'vue/types/vue' {

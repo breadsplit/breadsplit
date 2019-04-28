@@ -23,8 +23,11 @@
           v-subheader {{$t('ui.tabs.activities')}}
           v-alert(:value='true', type='warning') Work in progress...
 
+          // Test buttons
           template(v-if='!group.online')
             v-btn(color='primary', @click='switchToOnline') Switch to Online
+          template(v-else)
+            v-btn(color='primary', @click='sync') Sync
 
       v-tab-item(key='3')
         v-container(:class='{"pa-0": isMobile}')
@@ -149,6 +152,10 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
       switchTo: true,
       memberLocalId: Object.keys(this.group.members)[0],
     })
+  }
+
+  sync() {
+    this.$fire.syncGroup(this.group.id)
   }
 }
 </script>
