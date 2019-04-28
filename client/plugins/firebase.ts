@@ -84,13 +84,26 @@ export default ({ store, route, app }) => {
         }
       )
     },
+
+    async fetchAllGroups() {
+      const snap = await db
+        .collection('groups')
+        .where('memberIds', 'array-contains', store.getters['user/info'].uid)
+        .get()
+      for (const doc of snap.docs)
+        store.commit('group/onServerUpdate', { id: doc.id, data: doc.data() })
+    },
   }
 
   auth.onAuthStateChanged((user) => {
-    if (user)
+    if (user) {
       store.commit('user/login', user)
-    else
+      fire.fetchAllGroups()
+    }
+    else {
       store.commit('user/logout')
+      store.commit('group/removeOnlineGroups')
+    }
   })
 
   Vue.prototype.$fire = fire

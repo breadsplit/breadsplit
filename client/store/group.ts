@@ -73,6 +73,13 @@ export const mutations: MutationTree<GroupState> = {
     merge(state.groups[id], changes)
   },
 
+  removeOnlineGroups(state) {
+    for (const id of Object.keys(state.groups)) {
+      if (state.groups[id].online)
+        Vue.delete(state.groups, id)
+    }
+  },
+
   // Members
   addMember(state, { id, member }) {
     id = id || state.currentId
@@ -147,7 +154,6 @@ export const mutations: MutationTree<GroupState> = {
   // Firebase
   onServerUpdate(state, { id, data }) {
     // TODO: diff
-    console.log('UPDATE', data)
     Vue.set(state.groups, id, data)
   },
 }

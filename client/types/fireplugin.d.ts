@@ -10,6 +10,7 @@ declare class FirePlugin {
   syncGroup(groupid: string): Promise<void>
   subscribeGroup(groupid: string): void
   pushGroup(groupid: string): void
+  fetchAllGroups(): Promise<void>
 }
 
 declare module 'vue/types/vue' {
