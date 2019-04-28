@@ -11,12 +11,14 @@ describe('models initialization', () => {
     const group = GroupDefault({
       name: 'Group A',
       members: [
-        { name: 'Hello' },
+        { id: 'member1', name: 'Hello' },
       ],
     })
     expect(group.name).toEqual('Group A')
     expect(group.id).toBeTruthy()
-    expect(Object.values(group.members)[0].name).toEqual('Hello')
+    expect(typeof group.members).toEqual('object')
+    expect(group.memberIds).toEqual([])
+    expect(group.members.member1.name).toEqual('Hello')
   })
 
   test('tranaction', () => {

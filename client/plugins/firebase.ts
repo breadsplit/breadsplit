@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import FirePlugin from '~/types/fireplugin'
 import * as firebase from 'firebase/app'
-
 import 'firebase/auth'
 import 'firebase/firestore'
-import { GenerateId } from '~/utils/randomstr'
+
+import FirePlugin from '../types/fireplugin'
+import { GenerateId } from '../utils/randomstr'
 
 const config = {
   apiKey: 'AIzaSyCGr9QtZjJSsomlM5pTkqiPzeCYr_kQqk4',
