@@ -39,8 +39,14 @@ export default async ({ store }) => {
       const provider = new firebase.auth.GoogleAuthProvider()
 
       try {
-        const result = await auth.signInWithPopup(provider)
-        return result
+        // For some reasons, popups are not functional in Electron
+        // refer to: https://github.com/firebase/firebase-js-sdk/issues/1334
+        if (process.env.BUILD_TARGET === 'electron') {
+          await auth.signInWithRedirect(provider)
+          throw new Error('should never reach')
+        }
+
+        return await auth.signInWithPopup(provider)
       }
       catch (e) {
         throw e

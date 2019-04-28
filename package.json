@@ -13,7 +13,7 @@
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
     "electron:install": "npm run i --prefix=./electron",
-    "electron:dev": "npm run dev --prefix=./electron",
+    "electron:dev": "cross-env BUILD_TARGET=electron npm run dev --prefix=./electron",
     "electron:pack": "npm run build --prefix=./electron",
     "electron:build": "cross-env BUILD_TARGET=electron npm run generate && npm run electron:pack",
     "cordova:install": "npm run i --prefix=./cordova",
