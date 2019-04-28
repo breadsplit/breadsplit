@@ -105,7 +105,7 @@ export interface Group {
   activities: Activity[]
 
   // Online
+  online: boolean
   serverid?: string
   lastsync?: number
-  online: boolean
 }

@@ -16,12 +16,15 @@
         v-container
           v-subheader {{$t('ui.tabs.expenses')}}
           v-alert(:value='true', type='warning') Work in progress...
-          p {{group}}
+          pre {{JSON.stringify(group, null, 2)}}
 
       v-tab-item(key='2')
         v-container
           v-subheader {{$t('ui.tabs.activities')}}
           v-alert(:value='true', type='warning') Work in progress...
+
+          template(v-if='!group.online')
+            v-btn(color='primary', @click='switchToOnline') Switch to Online
 
       v-tab-item(key='3')
         v-container(:class='{"pa-0": isMobile}')
@@ -138,6 +141,14 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
 
   openNewTransDialog(options = { type: 'expense' }) {
     this.$router.push(`/group/${this.group.id}/new_trans?type=${options.type}`)
+  }
+
+  switchToOnline() {
+    this.$store.dispatch('group/switchToOnline', {
+      localId: this.group.id,
+      switchTo: true,
+      memberLocalId: Object.keys(this.group.members)[0],
+    })
   }
 }
 </script>

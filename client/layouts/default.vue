@@ -44,7 +44,7 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.homepage')}}
 
-        v-list-tile(v-if='debug', nuxt, to='test')
+        v-list-tile(v-if='debug', nuxt, to='/test')
           v-list-tile-action
             v-icon mdi-bug
           v-list-tile-content
@@ -175,6 +175,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     await this.$root.$newGroup.open()
   }
+
   async onGroupMenu(key) {
     switch (key) {
       case 'delete':
