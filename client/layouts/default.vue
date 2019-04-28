@@ -38,6 +38,12 @@ v-app(:dark='dark')
         v-list-tile-content
           v-list-tile-title {{$t('ui.group_editing.new_group')}}
 
+      v-list-tile(@click='joinGroup')
+        v-list-tile-action
+          v-icon mdi-shape-circle-plus
+        v-list-tile-content
+          v-list-tile-title Join a group
+
       .drawer-list-bottom
 
         // Homepage
@@ -134,11 +140,9 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   get debug() {
     return process.env.NODE_ENV !== 'production'
   }
-
   get dark() {
     return this.$store.getters.dark
   }
-
   get title() {
     if (this.current)
       return this.current.name
@@ -202,6 +206,12 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     if (await this.$root.$confirm('Are you sure to logout?'))
       await this.$fire.logout()
+  }
+
+  async joinGroup() {
+    const id = prompt('Group ID')
+    if (id)
+      await this.$fire.syncGroup(id)
   }
 }
 </script>

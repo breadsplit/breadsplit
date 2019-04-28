@@ -7,7 +7,7 @@ declare class FirePlugin {
   loginWithGoogle(): Promise<firebase.auth.UserCredential>
   logout(): Promise<void>
 
-  syncGroup(groupid: string): void
+  syncGroup(groupid: string): Promise<void>
   subscribeGroup(groupid: string): void
   pushGroup(groupid: string): void
 }
