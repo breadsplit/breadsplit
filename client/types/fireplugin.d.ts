@@ -1,3 +1,5 @@
+import { firestore } from 'firebase'
+
 declare class FirePlugin {
   auth: firebase.auth.Auth
   db: firebase.firestore.Firestore
@@ -10,7 +12,7 @@ declare class FirePlugin {
   syncGroup(groupid: string): Promise<void>
   subscribeGroup(groupid: string): void
   pushGroup(groupid: string): void
-  fetchAllGroups(): Promise<void>
+  fetchAllGroups(subscribe?: boolean): Promise<firestore.DocumentData>
 }
 
 declare module 'vue/types/vue' {

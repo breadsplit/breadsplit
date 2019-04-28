@@ -85,20 +85,27 @@ export default ({ store, route, app }) => {
       )
     },
 
-    async fetchAllGroups() {
+    async fetchAllGroups(subscribe) {
       const snap = await db
         .collection('groups')
         .where('memberIds', 'array-contains', store.getters['user/info'].uid)
         .get()
-      for (const doc of snap.docs)
-        store.commit('group/onServerUpdate', { id: doc.id, data: doc.data() })
+
+      if (subscribe) {
+        snap.docs.map(d => fire.syncGroup(d.id))
+      }
+      else {
+        for (const doc of snap.docs)
+          store.commit('group/onServerUpdate', { id: doc.id, data: doc.data() })
+      }
+      return snap.docs.map(d => d.data())
     },
   }
 
-  auth.onAuthStateChanged((user) => {
+  auth.onAuthStateChanged(async (user) => {
     if (user) {
       store.commit('user/login', user)
-      fire.fetchAllGroups()
+      await fire.fetchAllGroups(true)
     }
     else {
       store.commit('user/logout')
