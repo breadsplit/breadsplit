@@ -11,10 +11,9 @@ module.exports = {
   },
   'collectCoverage': true,
   'collectCoverageFrom': [
-    '<rootDir>/components/**/*.vue',
-    '<rootDir>/pages/**/*.vue',
     '<rootDir>/utils/**/*.ts',
     '<rootDir>/store/**/*.ts',
+    '!<rootDir>/utils/**/avatarProvider.ts',
   ],
   'coverageDirectory': './coverage/',
 }
