@@ -30,23 +30,31 @@ export const getters: GetterTree<GroupState, RootState> = {
 }
 
 export const actions: ActionTree<GroupState, RootState> = {
-  switchToOnline({ rootState, commit }, { localId, onlineId, switchTo, memberLocalId }) {
+
+  switchToOnline({ commit, dispatch }, { localId, onlineId, switchTo, memberLocalId }) {
     if (!onlineId)
       onlineId = GenerateId.OnlineGroup()
     commit('switchToOnline', { localId, onlineId, switchTo })
+    dispatch('joinAsMember', { id: onlineId, memberLocalId })
+  },
+
+  joinAsMember({ commit, rootState, state }, { id, memberLocalId }) {
+    if (!id)
+      id = state.currentId
     const user = rootState.user.info
     commit('switchMemberToOnline', {
-      id: onlineId,
+      id,
       memberLocalId,
       memberUID: user.uid,
       role: MemberRoles.owner,
     })
     commit('updateMemberInfo', {
-      id: onlineId,
+      id,
       memberId: user.uid,
       memberInfo: user,
     })
   },
+
 }
 
 export const mutations: MutationTree<GroupState> = {

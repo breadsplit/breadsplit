@@ -140,10 +140,12 @@ export default async ({ store }) => {
 
   auth.onAuthStateChanged(async (user) => {
     if (user) {
+      log('Login with uid:', user.uid)
       store.commit('user/login', user)
       await fire.fetchAllGroups(true)
     }
     else {
+      log('Logout')
       store.commit('user/logout')
       store.commit('group/removeOnlineGroups')
     }

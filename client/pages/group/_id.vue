@@ -23,12 +23,6 @@
           v-subheader {{$t('ui.tabs.activities')}}
           v-alert(:value='true', type='warning') Work in progress...
 
-          // Test buttons
-          template(v-if='!group.online')
-            v-btn(color='primary', @click='switchToOnline') Switch to Online
-          template(v-else)
-            v-btn(color='primary', @click='sync') Sync
-
       v-tab-item(key='3')
         v-container(:class='{"pa-0": isMobile}')
           app-members(:members='members')
@@ -144,15 +138,6 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
 
   openNewTransDialog(options = { type: 'expense' }) {
     this.$router.push(`/group/${this.group.id}/new_trans?type=${options.type}`)
-  }
-
-  async switchToOnline() {
-    this.$router.push('/')
-    await this.$fire.switchToOnline({ groupid: this.group.id })
-  }
-
-  sync() {
-    this.$fire.syncGroup(this.group.id)
   }
 }
 </script>

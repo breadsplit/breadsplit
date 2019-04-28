@@ -162,6 +162,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     menu.push({ title: 'Edit group', key: 'edit' })
     if (this.current && !this.current.online)
       menu.push({ title: 'Make this group online', key: 'transfer_online' })
+    if (this.current && this.current.online)
+      menu.push({ title: 'Sync now', key: 'sync' })
     menu.push({ title: 'Delete group', key: 'delete' })
 
     return menu
@@ -207,6 +209,10 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
         }
         break
 
+      case 'sync':
+        await this.syncCurrentGroup()
+        break
+
       case 'edit':
         // TODO:
         break
@@ -227,6 +233,11 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     const id = prompt('Group ID')
     if (id)
       await this.$fire.syncGroup(id)
+  }
+
+  async syncCurrentGroup() {
+    if (this.current)
+      await this.$fire.syncGroup(this.current.id)
   }
 }
 </script>

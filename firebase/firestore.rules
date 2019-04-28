@@ -1,9 +1,9 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-   	match /groups/{groupId} {
+    match /groups/{groupId} {
       allow create: if request.auth.uid != null;
-    	allow get, list: if resource == null || request.auth.uid in resource.data.memberIds;
+      allow get, list: if resource == null || request.auth.uid in resource.data.memberIds;
       allow delete, update: if resource.data.members[request.auth.uid].role == 'owner';
-  	}
+    }
   }
 }
