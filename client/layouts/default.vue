@@ -188,6 +188,9 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
       case 'delete':
         // @ts-ignore
         if (await this.$root.$confirm('Are you sure?')) {
+          const groupid = this.$store.state.group.currentId
+          if (this.$store.getters['group/current'].online)
+            await this.$fire.deleteGroup(groupid)
           this.removeGroup()
           this.$router.push('/')
         }

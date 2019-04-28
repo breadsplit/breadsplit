@@ -61,6 +61,10 @@ export default ({ store, route, app }) => {
       fire.subscribeGroup(groupid)
     },
 
+    async deleteGroup(groupid) {
+      await db.collection('groups').doc(groupid).delete()
+    },
+
     subscribeGroup(groupid) {
       db.collection('groups')
         .doc(groupid)
