@@ -10,13 +10,15 @@
 
           app-transactions
 
-          p(style='height:80px')
+          div(style='height:15px')
 
       v-tab-item(key='1')
         v-container
           v-subheader {{$t('ui.tabs.expenses')}}
           v-alert(:value='true', type='warning') Work in progress...
           p {{group}}
+
+      v-tab-item(key='4')
 
       v-tab-item(key='2')
         v-container
@@ -27,37 +29,19 @@
         v-container(:class='{"pa-0": isMobile}')
           app-members(:members='members')
 
-    //app-speed-dial(
-      bottom fixed right direction='top'
-      transition='slide-y-reverse-transition'
-      icon='plus' iconclose='close' open-on-hover
-      style='bottom:80px' :show='speedDialShow'
-      :items='speedDialItems' @item-click='speedDialClicked'
-      )
+  v-bottom-nav(:active.sync='tab_id', :value='true', absolute)
+    template(v-for='item in tabItems')
+      v-btn(color='primary', flat, :value='item.key', :disabled='item.disabled')
+        span {{item.text}}
+        v-icon mdi-{{item.icon}}
 
   v-fab-transition
     v-btn(
-      fab fixed bottom right color='primary'
-      v-show='tab_index === 0' style='bottom:70px'
+      fab fixed color='primary'
+      :style='fabStyle'
       @click='openNewTransDialog()'
     )
       v-icon mdi-plus
-
-  v-fab-transition
-    v-btn(
-      fab fixed bottom right color='primary'
-      v-show='tab_index === 3' style='bottom:70px'
-      @click='promptNewMember'
-    )
-      v-icon mdi-account-plus
-
-  v-bottom-nav(
-    :active.sync='tab_id', :value='true',
-    :absolute='!isMobile', :fixed='isMobile', shift)
-    template(v-for='item in tabItems')
-      v-btn(color='primary', flat, :value='item.key')
-        span {{item.text}}
-        v-icon mdi-{{item.icon}}
 
   nuxt-child(:key="$route.params.id")
 </template>
@@ -85,7 +69,6 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
   tab_id: string|null = 'summary'
 
   // Computed
-
   get tabItems() {
     return [
       {
@@ -96,6 +79,9 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
         text: this.$t('ui.tabs.expenses'),
         icon: 'wallet',
         key: 'expenses',
+      }, {
+        key: 'placeholder',
+        disabled: true,
       }, {
         text: this.$t('ui.tabs.activities'),
         icon: 'calendar-text',
@@ -112,8 +98,18 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
   get balances() {
     return GroupBalances(this.group)
   }
-  // Watches
+  get fabStyle() {
+    const style = {
+      right: '50%',
+      bottom: '16px',
+      transform: 'translateX(50%)',
+      position: 'absolute',
+    }
 
+    return style
+  }
+
+  // Watches
   @Watch('tab_index')
   onTabIndexChanged() {
     this.tab_id = (this.tabItems[this.tab_index] || {}).key || null
