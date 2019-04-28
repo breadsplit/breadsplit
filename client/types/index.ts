@@ -39,7 +39,6 @@ export interface Member {
   avatarUrl?: string
   avatarHash?: string
   disableAvatarUrl?: boolean
-  uid?: string
 
   quit?: boolean
 }
@@ -98,7 +97,8 @@ export interface Group {
   timestamp: number
 
   // Records
-  members: Member[]
+  memberIds: string[]
+  members: {[s: string]: Member}
   currencies: string[]
   currency_records: CurrencyRecord[]
   transactions: Transaction[]

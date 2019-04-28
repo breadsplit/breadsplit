@@ -28,21 +28,28 @@ export function TransactionBalanceChanges(trans: Transaction) {
 }
 
 export function GroupBalances(group: Group) {
-  const balances = group.members.map(m => ({
-    memberId: m.id,
-    balance: {},
-  }))
+  const balances = Object.values(group.members)
+    .map((m) => {
+      const balance = {}
+      group.currencies.forEach((currency) => {
+        balance[currency] = 0
+      })
+      return {
+        memberId: m.id,
+        balance,
+      }
+    })
   group.transactions.forEach((t) => {
     const currency = t.currency
     const changes = TransactionBalanceChanges(t)
     changes.forEach((c) => {
-      const member = find(balances, { memberId: c.memberId })
-      if (!member)
+      const info = find(balances, { memberId: c.memberId })
+      if (!info)
         throw new AssertionError({ message: `Member with id:"${c.memberId}" is not found.` })
-      if (!member.balance.hasOwnProperty(currency))
-        member.balance[currency] = 0
+      if (!info.balance.hasOwnProperty(currency))
+        info.balance[currency] = 0
 
-      member.balance[currency] += c.balance
+      info.balance[currency] += c.balance
     })
   })
   return balances
