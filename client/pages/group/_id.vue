@@ -146,12 +146,9 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
     this.$router.push(`/group/${this.group.id}/new_trans?type=${options.type}`)
   }
 
-  switchToOnline() {
-    this.$store.dispatch('group/switchToOnline', {
-      localId: this.group.id,
-      switchTo: true,
-      memberLocalId: Object.keys(this.group.members)[0],
-    })
+  async switchToOnline() {
+    this.$router.push('/')
+    await this.$fire.switchToOnline({ groupid: this.group.id })
   }
 
   sync() {

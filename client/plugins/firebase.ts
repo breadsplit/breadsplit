@@ -4,6 +4,7 @@ import * as firebase from 'firebase/app'
 
 import 'firebase/auth'
 import 'firebase/firestore'
+import { GenerateId } from '~/utils/randomstr'
 
 const config = {
   apiKey: 'AIzaSyCGr9QtZjJSsomlM5pTkqiPzeCYr_kQqk4',
@@ -19,9 +20,9 @@ firebase.initializeApp(config)
 export const auth = firebase.auth()
 export const db = firebase.firestore()
 
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+export default async ({ store }) => {
+  const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
 
-export default ({ store, route, app }) => {
   const fire: FirePlugin = {
     auth,
     db,
@@ -50,15 +51,39 @@ export default ({ store, route, app }) => {
       await auth.signOut()
     },
 
+    async switchToOnline({ groupid, memberid }) {
+      if (!memberid) {
+        const group = store.state.group.groups[groupid]
+        memberid = Object.keys(group.members)[0]
+      }
+      const onlineId = GenerateId.OnlineGroup()
+      store.dispatch('group/switchToOnline', {
+        localId: groupid,
+        onlineId,
+        switchTo: true,
+        memberLocalId: memberid,
+      })
+      await fire.syncGroup(onlineId)
+    },
+
     async syncGroup(groupid) {
+      log(groupid, 'Start syncing ')
       const snap = await db.collection('groups').doc(groupid).get()
-      if (!store.state.group.groups[groupid] && snap.exists)
-        store.commit('group/onServerUpdate', { id: groupid, data: snap.data() })
-      if (!snap.exists)
+
+      const onlineExists = snap.exists
+      const localExists = !!store.state.group.groups[groupid]
+      log(groupid, `Online:${onlineExists ? '✔️' : '❌'}, Local:${localExists ? '✔️' : '❌'}`)
+
+      if (!onlineExists && localExists)
         await db.collection('groups').doc(groupid).set(store.state.group.groups[groupid])
+      else if (!localExists)
+        store.commit('group/onServerUpdate', { id: groupid, data: snap.data() })
+      else
+        return
 
       fire.pushGroup(groupid)
       fire.subscribeGroup(groupid)
+      log(groupid, 'Subscribed')
     },
 
     async deleteGroup(groupid) {
@@ -96,7 +121,12 @@ export default ({ store, route, app }) => {
         .get()
 
       if (subscribe) {
-        snap.docs.map(d => fire.syncGroup(d.id))
+        const ids = snap.docs.map(d => d.id)
+        const localIds = Object.keys(store.state.group.groups).filter(id => ids.indexOf(id) < 0 && store.state.group.groups[id].online)
+        ids.concat(localIds)
+          .forEach((id) => {
+            fire.syncGroup(id)
+          })
       }
       else {
         for (const doc of snap.docs)
@@ -105,6 +135,8 @@ export default ({ store, route, app }) => {
       return snap.docs.map(d => d.data())
     },
   }
+
+  Vue.prototype.$fire = fire
 
   auth.onAuthStateChanged(async (user) => {
     if (user) {
@@ -117,5 +149,5 @@ export default ({ store, route, app }) => {
     }
   })
 
-  Vue.prototype.$fire = fire
+  await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 }

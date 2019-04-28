@@ -157,10 +157,14 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     return font_family
   }
   get group_menu() {
-    return [
-      { title: 'Edit group', key: 'edit' },
-      { title: 'Delete group', key: 'delete' },
-    ]
+    const menu: ({title: string; key: string})[] = []
+
+    menu.push({ title: 'Edit group', key: 'edit' })
+    if (this.current && !this.current.online)
+      menu.push({ title: 'Make this group online', key: 'transfer_online' })
+    menu.push({ title: 'Delete group', key: 'delete' })
+
+    return menu
   }
   get primaryColor() {
     return this.$store.getters.primary
@@ -173,7 +177,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     this.$root.$newGroup = this.$refs.newgroup
 
-    // @ts-ignore
     if (!this.isMobile)
       this.drawer = true
   }
@@ -189,12 +192,21 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
         // @ts-ignore
         if (await this.$root.$confirm('Are you sure?')) {
           const groupid = this.$store.state.group.currentId
-          if (this.$store.getters['group/current'].online)
+          if (this.current && this.current.online)
             await this.$fire.deleteGroup(groupid)
           this.removeGroup()
           this.$router.push('/')
         }
         break
+
+      case 'transfer_online':
+        // @ts-ignore
+        if (await this.$root.$confirm('Are you sure?')) {
+          this.$router.push('/')
+          await this.$fire.switchToOnline({ groupid: this.$store.state.group.currentId })
+        }
+        break
+
       case 'edit':
         // TODO:
         break

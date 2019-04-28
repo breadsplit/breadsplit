@@ -9,6 +9,7 @@ declare class FirePlugin {
   loginWithGoogle(): Promise<firebase.auth.UserCredential>
   logout(): Promise<void>
 
+  switchToOnline(options: {groupid: string; memberid?: string}): Promise<void>
   deleteGroup(groupid: string): Promise<void>
   syncGroup(groupid: string): Promise<void>
   subscribeGroup(groupid: string): void
