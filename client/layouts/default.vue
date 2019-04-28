@@ -28,6 +28,9 @@ v-app(:dark='dark')
             v-icon mdi-{{ group.icon }}
           v-list-tile-content
             v-list-tile-title(v-text='group.name')
+          v-list-tile-action(v-if='group.online')
+            v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
+
         v-divider.my-1
       v-list-tile(@click='newGroup')
         v-list-tile-action
