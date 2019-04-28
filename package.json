@@ -15,7 +15,7 @@
     "electron:install": "npm run i --prefix=./electron",
     "electron:dev": "npm run dev --prefix=./electron",
     "electron:pack": "npm run build --prefix=./electron",
-    "electron:build": "cross-env BUILD_TARGET=electron npm run generate && npm run electron:build",
+    "electron:build": "cross-env BUILD_TARGET=electron npm run generate && npm run electron:pack",
     "cordova:install": "npm run i --prefix=./cordova",
     "cordova:check": "npm run check --prefix=./cordova",
     "cordova:generate": "npm run generate && npm run cordova:copy",
