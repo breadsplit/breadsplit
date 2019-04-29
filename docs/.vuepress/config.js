@@ -1,7 +1,6 @@
 module.exports = {
   title: '🍞 Splitoast Develop',
   description: 'Group bills split made easy, fast and customizable.',
-  serviceWorker: true,
   base: '/splitoast/',
   head: [
     ['meta', { charset: 'utf-8' }],

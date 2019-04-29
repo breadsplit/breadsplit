@@ -2,7 +2,24 @@
 
 [**Stage Progress**](https://github.com/antfu/splitoast/projects/1)
 
-## ✈ Stage 1 Prototyping & Basic Implementation
+## 🚨 DEADLINE
+
+*< Designing >*
+
+Stage 1 Complete: **`2019/05/10`**
+
+*< Developmenting >*
+
+First Release: **`2019/06/01`**
+
+*< Production Workload Test >*
+
+Official Publish: **`2019/06/15`**
+
+*< Maintains >*
+
+
+## 👉 Stage 1 Prototyping & Basic Implementation
 
 - Name and Logo
 - Overall UI style
