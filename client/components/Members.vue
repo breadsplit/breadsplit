@@ -14,10 +14,13 @@ v-card
             v-btn(icon, flat, slot='activator')
               v-icon mdi-dots-vertical
             v-list
-              v-list-tile(@click='promptRenameMember(member)')
-                v-list-tile-title Rename
-              v-list-tile(@click='randomAvatar(member)')
-                v-list-tile-title Random avatar
+              template(v-if='member.id.startsWith("lm-")')
+                v-list-tile(@click='promptRenameMember(member)')
+                  v-list-tile-title Rename
+                v-list-tile(@click='randomAvatar(member)')
+                  v-list-tile-title Random avatar
+                v-list-tile(@click='thisIsMe(member)')
+                  v-list-tile-title This is me
               v-list-tile(@click='promptRemoveMember(member)')
                 v-list-tile-title Remove from this group
       v-divider
@@ -38,14 +41,6 @@ export default {
   props: {
     members: { type: Array, default: () => ([]) },
   },
-  computed: {
-    edit_menu() {
-      return [
-        { title: 'Rename' },
-        { title: 'Remove user' },
-      ]
-    },
-  },
   methods: {
     promptNewMember() {
       const name = prompt('Name?')
@@ -64,6 +59,9 @@ export default {
     },
     randomAvatar(member) {
       this.editMember({ memberid: member.id, changes: { avatarHash: randomstr(10) } })
+    },
+    thisIsMe(member) {
+      this.$store.dispatch('group/joinAsMember', { memberLocalId: member.id })
     },
   },
 }
