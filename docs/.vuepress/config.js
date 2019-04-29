@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Splitoast Develop',
+  title: '🍞 Splitoast Develop',
   description: '',
   serviceWorker: true,
   base: '/splitoast/',
@@ -13,40 +13,47 @@ module.exports = {
     docsRepo: 'antfu/splitoast',
     docsDir: 'docs',
     docsBranch: 'master',
-    editLinks: true,
-    editLinkText: 'Help us improve this page!',
     nav: [
       { text: 'Getting Started', link: '/' },
-      { text: 'Setup', link: '/setup/env-setup' },
     ],
-    sidebar: [
-      '/',
+    sidebar: {
+      '/': [
+        {
+          title: 'Development',
+          collapsable: false,
+          children: [
+            'dev/env-setup',
+            'dev/launch',
+            'dev/dirs',
+            'dev/tech',
+            'dev/build',
+          ]
+        },
+        {
+          title: 'Contribute',
+          collapsable: false,
+          children: [
+            'contribute/guideline',
+          ]
+        },
+        {
+          title: 'About',
+          collapsable: false,
+          children: [
+            'about/roadmap',
+            'about/team',
+            'about/license',
+          ]
+        },
+      ]
+    },
+    '/api': [
       {
-        title: 'Setup',
+        title: 'API',
         collapsable: false,
         children: [
-          'setup/env-setup',
-          'setup/launch',
+          'api/store',
         ]
-      },
-      {
-        title: 'Contribute',
-        collapsable: false,
-        children: [
-          'contribute/commit-message-guideline',
-        ]
-      },
-      {
-        title: 'Client API',
-        collapsable: false,
-        children: [
-          'client_api/store',
-        ]
-      },
-      {
-        title: 'Server API',
-        collapsable: false,
-        children: []
       },
     ]
   }

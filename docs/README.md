@@ -1,3 +1,1 @@
-# Getting Started
-
-TODO: add some docs for intro
+# Splitoast 分賬吐司

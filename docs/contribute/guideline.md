@@ -1,10 +1,23 @@
-# Commit Message Guideline
+# 📐 Guideline
+
+To make contribution, please follow the guideline below.
+
+## Code Style
+
+We use a modified version of Vue code style.
+
+**Please do use [VSCode] and have [ESLint plugin] install**.
+It will check and fix code style mismatch automatically.
+
+*This rule configs can be found in [.eslintrc.js][eslintrc] file.*
+
+## Commit Message Format
 
 Format: `<type>(<scope>): <subject>`
 
 `<scope>` is optional
 
-## Example
+### Example
 
 ```
 feat: add hat wobble
@@ -27,5 +40,9 @@ More Examples:
 
 Reference(s):
 
-- https://seesparkbox.com/foundry/semantic_commit_messages
-- http://karma-runner.github.io/1.0/dev/git-commit-msg.html
+- [https://seesparkbox.com/foundry/semantic_commit_messages]
+- [http://karma-runner.github.io/1.0/dev/git-commit-msg.html]
+
+[VSCode]: https://code.visualstudio.com/
+[ESLint plugin]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+[eslintrc]: https://github.com/antfu/splitoast/blob/master/.eslintrc.js
