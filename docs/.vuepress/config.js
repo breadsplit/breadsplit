@@ -2,6 +2,7 @@ module.exports = {
   title: 'Splitoast',
   description: '',
   serviceWorker: true,
+  base: '/splitoast/',
   head: [
     ['meta', { charset: 'utf-8' }],
     ['meta', { name: 'theme-color', content: '#41b883' }],

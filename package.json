@@ -26,7 +26,7 @@
     "cordova": "cross-env BUILD_TARGET=android npm run cordova:generate && npm run cordova:build && npm run cordova:run:android",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:deploy": "bash scripts/docs-deploy.sh",
+    "docs:deploy": "node scripts/docs-deploy.js",
     "test": "jest --config=./client/jest.config.js",
     "test:watch": "jest --config=./client/jest.config.js --watch --coverage"
   },
@@ -78,6 +78,7 @@
     "eslint-plugin-promise": ">=4.1.1",
     "eslint-plugin-standard": ">=4.0.0",
     "eslint-plugin-vue": "^5.2.2",
+    "exec-sh": "^0.3.2",
     "jest": "^24.7.1",
     "nodemon": "^1.18.11",
     "replace-in-file": "^4.0.0",
