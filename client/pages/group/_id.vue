@@ -62,6 +62,14 @@ import { GroupBalances } from '~/utils/core'
       title: (this.$store.getters['group/current'] || {}).name,
     }
   },
+  async asyncData({ params, store, error }) {
+    if (!store.state.loaded)
+      return { params }
+    if (!store.getters['group/current'])
+      // @ts-ignore
+      return error({ icon: 'account-alert-outline', statusCode: 'Group not found', message: 'It seems to be a local group' })
+    return { params }
+  },
 })
 export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMixin) {
   fab = false
@@ -122,14 +130,6 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
   }
 
   // Methods
-  async asyncData({ params, store, error }) {
-    if (!store.state.loaded)
-      return { params }
-    if (!store.getters['group/current'])
-      return error({ icon: 'group-outline', statusCode: 'Group not found', message: 'This seems to be a local group, are you sure it\'s stored on this device?' })
-    return { params }
-  }
-
   promptNewMember() {
     const name = prompt('Name?')
     if (name)
