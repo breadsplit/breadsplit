@@ -232,7 +232,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   async joinGroup() {
     const id = prompt('Group ID')
     if (id)
-      await this.$fire.syncGroup(id)
+      await this.$fire.joinGroup(id)
   }
 
   async syncCurrentGroup() {

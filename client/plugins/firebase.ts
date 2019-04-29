@@ -2,6 +2,7 @@ import Vue from 'vue'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/functions'
 
 import FirePlugin from '../types/fireplugin'
 import { GenerateId } from '../utils/randomstr'
@@ -19,6 +20,7 @@ firebase.initializeApp(config)
 
 export const auth = firebase.auth()
 export const db = firebase.firestore()
+export const functions = firebase.functions()
 
 export default async ({ store }) => {
   const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
@@ -26,6 +28,7 @@ export default async ({ store }) => {
   const fire: FirePlugin = {
     auth,
     db,
+    functions,
 
     async signup(email, password) {
       return await auth.createUserWithEmailAndPassword(email, password)
@@ -139,6 +142,11 @@ export default async ({ store }) => {
           store.commit('group/onServerUpdate', { id: doc.id, data: doc.data() })
       }
       return snap.docs.map(d => d.data())
+    },
+
+    async joinGroup(groupid) {
+      await functions.httpsCallable('joinGroup')({ groupid })
+      await fire.syncGroup(groupid)
     },
   }
 

@@ -3,6 +3,7 @@ import { firestore } from 'firebase'
 declare class FirePlugin {
   auth: firebase.auth.Auth
   db: firebase.firestore.Firestore
+  functions: firebase.functions.Functions
 
   signup(email: string, password: string): Promise<firebase.auth.UserCredential>
   loginWithEmail(email: string, password: string): Promise<firebase.auth.UserCredential>
@@ -15,6 +16,7 @@ declare class FirePlugin {
   subscribeGroup(groupid: string): void
   pushGroup(groupid: string): void
   fetchAllGroups(subscribe?: boolean): Promise<firestore.DocumentData>
+  joinGroup(groupid: string): Promise<void>
 }
 
 declare module 'vue/types/vue' {
