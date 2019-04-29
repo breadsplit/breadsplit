@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Splitoast',
+  title: 'Splitoast Develop',
   description: '',
   serviceWorker: true,
   base: '/splitoast/',
@@ -17,16 +17,22 @@ module.exports = {
     editLinkText: 'Help us improve this page!',
     nav: [
       { text: 'Getting Started', link: '/' },
-      { text: 'Contribute', link: '/contribute/env-setup' },
+      { text: 'Setup', link: '/setup/env-setup' },
     ],
     sidebar: [
       '/',
       {
+        title: 'Setup',
+        collapsable: false,
+        children: [
+          'setup/env-setup',
+          'setup/launch',
+        ]
+      },
+      {
         title: 'Contribute',
         collapsable: false,
         children: [
-          'contribute/env-setup',
-          'contribute/launch',
           'contribute/commit-message-guideline',
         ]
       },
