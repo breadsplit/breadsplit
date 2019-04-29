@@ -83,5 +83,6 @@ dist
 # Service worker
 sw.*
 
-# Test page
+# Testing vue components
 test.vue
+*.test.vue
