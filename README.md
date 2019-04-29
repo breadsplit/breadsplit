@@ -85,13 +85,13 @@ $ npm i
 - Overall UI style
 - Cross compare other apps
 - Functions & Features directions
-- Implement offline features
+- 🚧 Implement offline features
 - ✅ PWA Support
 - UI implement
 
 ### Stage 2 Preparation for Public
 
-- Full i18n support (English and Chinese)
+- 🚧 Full i18n support (English and Chinese)
 - Basic privacy policy and terms of services
 - ✅ Source code license `MIT`
 - Contribution guildline
@@ -102,9 +102,9 @@ $ npm i
 
 ### Stage 3 Online Support
 
-- Implement online features
+- 🚧 Implement online features
 - [Web push notification](https://developers.google.com/web/fundamentals/push-notifications/)
-- Server and database (Try [Firebase](https://firebase.google.com/))
+- 🚧 Server and database ([Firebase](https://firebase.google.com/))
 - API docs for community support
 - Online payments integration for settling up (Paypal, LINE Pay, Wechat Pay, Alipay, etc.)
 
@@ -139,6 +139,7 @@ $ npm i
     ├── docs                # For generating documentation website in the future
     ├── cordova             # Cordova build scripts and platform specify code
     ├── electron            # Electron build scripts and platform specify code
+    ├── firebase            # Configures for Firebase
     ├── scripts             # Scripts helps to manage this project
     ├── LICENSE
     ├── ...
