@@ -84,8 +84,6 @@ export default async ({ store }) => {
         await db.collection('groups').doc(groupid).set(store.state.group.groups[groupid])
       else if (!localExists)
         store.commit('group/onServerUpdate', { id: groupid, data: snap.data() })
-      else
-        return
 
       fire.pushGroup(groupid)
       fire.subscribeGroup(groupid)
@@ -100,6 +98,7 @@ export default async ({ store }) => {
       db.collection('groups')
         .doc(groupid)
         .onSnapshot((snap) => {
+          log(groupid, '🌠 Incoming update', snap)
           store.commit('group/onServerUpdate', { id: groupid, data: snap.data() })
         })
     },
@@ -110,6 +109,7 @@ export default async ({ store }) => {
           return state.group.groups[groupid]
         },
         (val) => {
+          log(groupid, '🚀 Outgoing update', val)
           db.collection('groups')
             .doc(groupid)
             .set(val)
