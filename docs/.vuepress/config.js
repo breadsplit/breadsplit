@@ -1,6 +1,6 @@
 module.exports = {
   title: '🍞 Splitoast Develop',
-  description: '',
+  description: 'Group bills split made easy, fast and customizable.',
   serviceWorker: true,
   base: '/splitoast/',
   head: [
@@ -15,6 +15,7 @@ module.exports = {
     docsBranch: 'master',
     nav: [
       { text: 'Getting Started', link: '/' },
+      { text: 'Live', link: 'https://splitoast.netlify.com/' },
     ],
     sidebar: {
       '/': [
