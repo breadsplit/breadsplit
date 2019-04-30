@@ -45,6 +45,7 @@
     "nuxtjs",
     "persistedstate",
     "preprocessors",
+    "promisify",
     "randomstr",
     "repo",
     "res",

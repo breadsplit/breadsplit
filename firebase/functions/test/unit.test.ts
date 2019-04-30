@@ -1,6 +1,7 @@
 import * as path from 'path'
 import * as admin from 'firebase-admin'
 import * as functions from '../src'
+import { deleteCollection } from './_utils'
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const initTest = require('firebase-functions-test')
@@ -11,11 +12,18 @@ const projectId = process.env.FIREBASE_PROJECT_ID || 'splitoast-test'
 const test = initTest({ projectId }, path.resolve(keypath))
 
 describe('Cloud Functions', () => {
-  afterAll(() => {
+  const collection = admin.firestore().collection('groups')
+
+  beforeAll(async () => {
+    await deleteCollection(admin.firestore(), 'groups')
+    expect(await test.wrap(functions.groupsCount)()).toEqual(0)
+  })
+
+  afterAll(async () => {
     // Do cleanup tasks.
     test.cleanup()
-    // TODO: Reset the data
-    admin.firestore()
+    // Reset the data
+    await deleteCollection(admin.firestore(), 'groups')
   })
 
   describe('Test the tests', () => {
@@ -30,14 +38,20 @@ describe('Cloud Functions', () => {
 
   describe('Get group count', () => {
     it('zero when empty', async () => {
-      // Create a DataSnapshot
-      const snap = test.firestore.makeDocumentSnapshot({ groups: [] }, '')
-
       // Wrap the function
       const wrapped = test.wrap(functions.groupsCount)
 
       // Call the wrapped function with the snapshot you constructed.
-      expect(await wrapped(snap)).toEqual(0)
+      expect(await wrapped()).toEqual(0)
+    })
+
+    it('add one', async () => {
+      const wrapped = test.wrap(functions.groupsCount)
+
+      await collection.doc('addone').set({})
+      expect(await wrapped()).toEqual(1)
+      await collection.doc('addone').delete()
+      expect(await wrapped()).toEqual(0)
     })
   })
 })
