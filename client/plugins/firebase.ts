@@ -75,17 +75,26 @@ export class FirebasePlugin {
   async publishGroup({ groupid }) {
     const group = this.store.getters['group/id'](groupid) as Group
 
-    await functions.httpsCallable('publishGroup')({ group })
-    this.subscribe()
+    const result = await functions.httpsCallable('publishGroup')({ group })
+    if (typeof result.data === 'string' && result.data.startsWith('og-')) {
+      this.store.commit('group/remove', groupid)
+      await this.manualSync(result.data)
+      this.store.commit('group/switch', result.data)
+      this.subscribe()
+    }
   }
 
   async deleteGroup(groupid: string) {
-    // TODO:
+    if (this.store.getters['group/id'](groupid).online)
+      await this.functions.httpsCallable('removeGroup')(groupid)
+    this.store.commit('group/remove', groupid)
   }
 
   unsubscribe() {
-    if (this._unsubscribeCallback)
+    if (this._unsubscribeCallback) {
+      log('🔕 Unsubscribed')
       this._unsubscribeCallback()
+    }
   }
 
   _unsubscribeCallback: (() => void) | null = null
@@ -97,18 +106,20 @@ export class FirebasePlugin {
       .where('viewers', 'array-contains', this.store.getters['user/info'].uid)
       .onSnapshot((snap) => {
         snap.docChanges().forEach((change) => {
-          const id = change.newIndex.toString()
           const data = change.doc.data()
-          log(id, '🌠 Incoming change', change.type, data)
+          log(`🌠 Incoming change <${change.type}>`, data.id, data)
           if (change.type === 'modified' || change.type === 'added') {
             this.store.commit('group/onServerUpdate', {
-              id,
               data,
-              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+              timestamp: +new Date(),
             })
+          }
+          else if (change.type === 'removed') {
+            this.store.commit('group/remove', data.id)
           }
         })
       })
+    log('📻 Subscribed')
   }
 
   async joinGroup(groupid: string) {
@@ -117,7 +128,15 @@ export class FirebasePlugin {
   }
 
   async manualSync(groupid: string) {
-    // TODO:
+    const doc = await db
+      .collection('groups')
+      .doc(groupid)
+      .get()
+
+    this.store.commit('group/onServerUpdate', {
+      data: doc.data(),
+      timestamp: +new Date(),
+    })
   }
 }
 

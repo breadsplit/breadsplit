@@ -26,15 +26,25 @@ export const joinGroup = f(async (data, context) => {
   await doc.ref.update('viewers', ids)
 })
 
-export const alwaysTrue = f(() => {
-  return true
-})
+export const removeGroup = f(async (id, context) => {
+  if (!context.auth || !context.auth.uid)
+    throw new Error('auth_required')
 
-export const groupsCount = f(async (data, context) => {
-  const groups = await admin.firestore().collection('groups').get()
-  if (groups.empty)
-    return 0
-  return groups.size
+  const doc = await admin.firestore()
+    .collection('groups')
+    .doc(id)
+    .get()
+
+  const group = doc.data() as ServerGroup
+  if (!group)
+    throw new Error('group_not_exists')
+
+  await admin.firestore()
+    .collection('groups')
+    .doc(id)
+    .delete()
+
+  return true
 })
 
 export const publishGroup = f(async ({ group }, context) => {
@@ -45,6 +55,7 @@ export const publishGroup = f(async ({ group }, context) => {
   const groupid = GenerateId.OnlineGroup()
 
   group.id = groupid
+  group.online = true
 
   const serverGroup: ServerGroup = {
     id: groupid,

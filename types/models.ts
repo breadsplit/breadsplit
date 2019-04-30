@@ -108,6 +108,7 @@ interface Operation extends TransOperation {
 }
 
 export interface ClientGroup {
+  id: string
   base: Group
   operations: Operation[]
   online?: boolean

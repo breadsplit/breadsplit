@@ -180,8 +180,19 @@ export const mutations: MutationTree<GroupState> = {
   },
 
   // Firebase
-  onServerUpdate(state, { id, data }) {
-    // TODO: diff
-    // Vue.set(state.groups, id, data)
+  onServerUpdate(state, { data, timestamp }) {
+    if (!data || !data.id)
+      return
+    if (!state.groups[data.id]) {
+      Vue.set(state.groups, data.id, {
+        id: data.id,
+        base: data.base,
+        operations: data.operations,
+        online: true,
+      })
+    }
+    state.groups[data.id].base = data.base
+    state.groups[data.id].operations = data.operations
+    state.groups[data.id].lastsync = timestamp
   },
 }
