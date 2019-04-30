@@ -30,7 +30,7 @@ export function TransactionBalanceChanges(trans: Transaction) {
 export function GroupBalances(group: Group) {
   const balances = Object.values(group.members)
     .map((m) => {
-      const balance = {}
+      const balance: { [s: string]: number } = { }
       group.currencies.forEach((currency) => {
         balance[currency] = 0
       })

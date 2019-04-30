@@ -36,13 +36,6 @@ export interface Member {
   id: string
   name: string
   role: MemberRoles
-
-  email?: string
-  avatarUrl?: string
-  avatarHash?: string
-  disableAvatarUrl?: boolean
-
-  quit?: boolean
 }
 
 export interface Transaction {
@@ -105,21 +98,28 @@ export interface Group {
   currency_records: CurrencyRecord[]
   transactions: Transaction[]
   activities: Activity[]
+
+  online?: boolean
+}
+
+interface Operation extends TransOperation {
+  uid?: string
+  serverTs?: number
 }
 
 export interface ClientGroup {
   base: Group
-  operations: TransOperation[]
+  operations: Operation[]
   online?: boolean
   lastsync?: number
 }
 
 export interface ServerGroup {
-  base: Group
-  present: Group
-
+  id: string
   // user ids
   viewers: string[]
+  owner: string
 
-  operations: TransOperation[]
+  base: Group
+  operations: Operation[]
 }

@@ -205,7 +205,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
         // @ts-ignore
         if (await this.$root.$confirm('Are you sure?')) {
           this.$router.push('/')
-          await this.$fire.switchToOnline({ groupid: this.$store.state.group.currentId })
+          await this.$fire.publishGroup({ groupid: this.$store.state.group.currentId })
         }
         break
 
@@ -237,7 +237,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
   async syncCurrentGroup() {
     if (this.current)
-      await this.$fire.syncGroup(this.current.id)
+      await this.$fire.manualSync(this.current.id)
   }
 }
 </script>

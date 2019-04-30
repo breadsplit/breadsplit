@@ -1,5 +1,5 @@
 import trimChar from '~/utils/trimChar'
-import randomstr from '~/utils/randomstr'
+import randomstr from '~/../core/randomstr'
 
 describe('trimChar', () => {
   it('trim spaces by defaults', () => {
