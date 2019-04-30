@@ -1,4 +1,4 @@
-import { Transaction, Group } from '~/types'
+import { Transaction, Group } from '~/types/models'
 import { sumBy, merge, find, map, uniq, concat } from 'lodash'
 import { AssertionError } from 'assert'
 

@@ -1,5 +1,5 @@
 import { GenerateId } from '~/utils/randomstr'
-import { Member, MemberRoles, Group, Transaction, TransactionType } from '../types/index'
+import { Member, MemberRoles, Group, Transaction, TransactionType } from '../types/models'
 import { RootState, GroupState, UserState } from '../types/store'
 import { merge, mapValues } from 'lodash'
 

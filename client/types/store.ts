@@ -1,4 +1,4 @@
-import { Group } from '.'
+import { Group } from './models'
 
 export interface GroupState {
   groups: { [s: string]: Group }

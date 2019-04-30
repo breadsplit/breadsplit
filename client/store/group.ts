@@ -4,7 +4,7 @@ import { GroupDefault, MemberDefault, GroupStateDefault } from '~/utils/defaults
 import { GroupState, RootState, UserInfo } from '~/types/store'
 import { merge } from 'lodash'
 import { GenerateId } from '~/utils/randomstr'
-import { MemberRoles } from '~/types'
+import { MemberRoles } from '~/types/models'
 
 export const state = GroupStateDefault
 

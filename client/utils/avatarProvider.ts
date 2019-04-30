@@ -1,4 +1,4 @@
-import { Member } from '~/types'
+import { Member } from '~/types/models'
 import md5 from 'crypto-js/md5'
 import Avatars from '@dicebear/avatars'
 import GridyAvatars from '@dicebear/avatars-gridy-sprites'

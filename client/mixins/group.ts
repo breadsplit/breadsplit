@@ -1,6 +1,6 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { Group, Member } from '~/types'
+import { Group, Member } from '~/types/models'
 
 @Component
 export default class GroupMixin extends Vue {
