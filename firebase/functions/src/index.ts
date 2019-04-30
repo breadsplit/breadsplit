@@ -24,3 +24,10 @@ export const joinGroup = functions.https.onCall(async (data, context) => {
 export const alwaysTrue = functions.https.onCall(() => {
   return true
 })
+
+export const groupsCount = functions.https.onCall(async (data, context) => {
+  const groups = await admin.firestore().collection('groups').get()
+  if (groups.empty)
+    return 0
+  return groups.size
+})
