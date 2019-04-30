@@ -1,10 +1,25 @@
 import Vue from 'vue'
+import merge from 'lodash/merge'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
-import { GroupDefault, MemberDefault, GroupStateDefault } from '~/utils/defaults'
+import { MemberDefault, GroupStateDefault, ClientGroupDefault, TransactionDefault } from '~/utils/defaults'
 import { GroupState, RootState, UserInfo } from '~/types/store'
-import { merge } from 'lodash'
 import { GenerateId } from '~/utils/randomstr'
-import { MemberRoles } from '~/types/models'
+import { MemberRoles, ClientGroup, Group } from '~/types/models'
+import { EvalTransforms, ProcessOperation } from 'operation-sync'
+import { Transforms } from '../../core'
+
+const OperationCache = {}
+
+function Eval(group?: ClientGroup): Group | undefined {
+  if (!group)
+    return undefined
+  const { base, operations } = group
+  return EvalTransforms<Group>(base, Transforms, operations, undefined, OperationCache)
+}
+
+function NewOperation(group: ClientGroup, name: string, data) {
+  group.operations.push(ProcessOperation({ name, data }))
+}
 
 export const state = GroupStateDefault
 
@@ -13,16 +28,20 @@ export const getters: GetterTree<GroupState, RootState> = {
   current(state) {
     if (!state.currentId)
       return undefined
-    return state.groups[state.currentId] || undefined
+    return Eval(state.groups[state.currentId])
   },
 
-  groups(state) {
-    return Object.values(state.groups)
+  all(state) {
+    return Object.values(state.groups).map(g => Eval(g))
+  },
+
+  id: state => (id) => {
+    return Eval(state.groups[id])
   },
 
   memberById: state => ({ groupId, memberId }) => {
     groupId = groupId || state.currentId
-    const group = state.groups[groupId]
+    const group = Eval(state.groups[groupId])
     if (!group)
       return null
     return group.members[memberId]
@@ -64,9 +83,9 @@ export const mutations: MutationTree<GroupState> = {
 
   // Groups
   add(state, payload) {
-    const group = GroupDefault(payload)
-    Vue.set(state.groups, group.id, group)
-    state.currentId = group.id
+    const group = ClientGroupDefault(payload)
+    Vue.set(state.groups, group.base.id, group)
+    state.currentId = group.base.id
   },
 
   remove(state, id) {
@@ -90,43 +109,45 @@ export const mutations: MutationTree<GroupState> = {
   // Members
   addMember(state, { id, member }) {
     id = id || state.currentId
-    const m = MemberDefault(member)
-    state.groups[id].members[m.id] = m
+    member = MemberDefault(member)
+    NewOperation(state.groups[id], 'insert_member', member)
   },
 
   removeMember(state, { id, memberid }) {
     id = id || state.currentId
-    Vue.delete(state.groups[id].members, memberid)
+    NewOperation(state.groups[id], 'remove_member', memberid)
   },
 
   editMember(state, { id, memberid, changes }) {
     id = id || state.currentId
-    const member = state.groups[id].members[memberid]
-    if (member) {
-      for (const key of Object.keys(changes))
-        Vue.set(member, key, changes[key])
-    }
+    NewOperation(state.groups[id], 'modify_member', { id: memberid, changes })
   },
 
   // Transcations
   newTranscation(state, { id, trans }) {
     id = id || state.currentId
-    state.groups[id].transactions.push(trans)
+    trans = TransactionDefault(trans)
+    NewOperation(state.groups[id], 'insert_transaction', trans)
+  },
+
+  editTranscation(state, { id, transid, changes }) {
+    id = id || state.currentId
+    NewOperation(state.groups[id], 'modify_transaction', { id: transid, changes })
   },
 
   // Converters
   switchToOnline(state, { localId, onlineId, switchTo }) {
-    const group = state.groups[localId]
+    /* const group = state.groups[localId]
     group.id = onlineId
     group.online = true
     state.groups[onlineId] = group
     Vue.delete(state.groups, localId)
     if (switchTo)
-      state.currentId = onlineId
+      state.currentId = onlineId */
   },
 
   switchMemberToOnline(state, { id, memberLocalId, memberUID, role }) {
-    const group = state.groups[id]
+    /* const group = state.groups[id]
     const member = group.members[memberLocalId]
     member.id = memberUID
     if (role)
@@ -147,15 +168,15 @@ export const mutations: MutationTree<GroupState> = {
     }
     Vue.delete(group.members, memberLocalId)
     if (!group.memberIds.includes(memberUID))
-      group.memberIds.push(memberUID)
+      group.memberIds.push(memberUID) */
   },
 
   updateMemberInfo(state, { id, memberId, memberInfo }: { id: string; memberId: string; memberInfo: UserInfo}) {
-    const group = state.groups[id]
+    /* const group = state.groups[id]
     const member = group.members[memberId]
     member.avatarUrl = memberInfo.avatar_url || member.avatarUrl
     member.name = memberInfo.display_name || member.name
-    member.email = memberInfo.email || member.email
+    member.email = memberInfo.email || member.email */
   },
 
   // Firebase

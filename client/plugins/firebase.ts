@@ -7,6 +7,7 @@ import 'firebase/functions'
 
 import { GenerateId } from '../utils/randomstr'
 import { RootState } from '~/types/store'
+import { Group } from '~/types/models'
 
 const config = {
   apiKey: 'AIzaSyCGr9QtZjJSsomlM5pTkqiPzeCYr_kQqk4',
@@ -74,7 +75,7 @@ export class FirebasePlugin {
 
   async switchToOnline({ groupid, memberid }: {groupid: string; memberid?: string}) {
     if (!memberid) {
-      const group = this.store.state.group.groups[groupid]
+      const group = this.store.getters['group/id'](groupid) as Group
       memberid = Object.keys(group.members)[0]
     }
     const onlineId = GenerateId.OnlineGroup()
@@ -88,6 +89,7 @@ export class FirebasePlugin {
   }
 
   async syncGroup(groupid: string) {
+    /*
     log(groupid, 'Start syncing ')
     const snap = await db.collection('groups').doc(groupid).get()
 
@@ -103,6 +105,7 @@ export class FirebasePlugin {
     this.pushGroup(groupid)
     this.subscribeGroup(groupid)
     log(groupid, 'Subscribed')
+    */
   }
 
   async deleteGroup(groupid: string) {
@@ -119,6 +122,7 @@ export class FirebasePlugin {
   }
 
   pushGroup(groupid: string) {
+    /*
     this.store.watch(
       (state) => {
         return state.group.groups[groupid]
@@ -133,6 +137,7 @@ export class FirebasePlugin {
         deep: true,
       }
     )
+    */
   }
 
   async fetchAllGroups(subscribe?: boolean) {

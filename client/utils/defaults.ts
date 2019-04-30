@@ -1,5 +1,5 @@
 import { GenerateId } from '~/utils/randomstr'
-import { Member, MemberRoles, Group, Transaction, TransactionType } from '../types/models'
+import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '../types/models'
 import { RootState, GroupState, UserState } from '../types/store'
 import { merge, mapValues } from 'lodash'
 
@@ -9,9 +9,9 @@ export const MemberDefault = (overrides?: object): Member => merge({
   role: MemberRoles.collaborator,
 }, overrides)
 
-export const GroupDefault = (overrides?: object, { online = false } = {}): Group => {
+export const GroupDefault = (overrides?: object): Group => {
   const group: Group = merge({
-    id: online ? GenerateId.OnlineGroup() : GenerateId.LocalGroup(),
+    id: GenerateId.LocalGroup(),
     name: '',
     options: {
       multiple_currencies: true,
@@ -25,7 +25,7 @@ export const GroupDefault = (overrides?: object, { online = false } = {}): Group
     transactions: [],
     activities: [],
 
-    online,
+    online: false,
   }, overrides)
 
   if (Array.isArray(group.members)) {
@@ -41,6 +41,13 @@ export const GroupDefault = (overrides?: object, { online = false } = {}): Group
   }
 
   return group
+}
+
+export const ClientGroupDefault = (overrides?: object): ClientGroup => {
+  return {
+    base: GroupDefault(overrides),
+    operations: [],
+  }
 }
 
 export const TransactionDefault = (overrides?: object): Transaction => merge({

@@ -129,7 +129,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   miniVariant = false
   mobileBreakPoint = 700
 
-  @Getter('group/groups') groups!: Group[]
+  @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
   @Getter('user/info') user!: UserInfo
   @Getter('user/online') userIsOnline!: boolean

@@ -105,15 +105,12 @@ export interface Group {
   currency_records: CurrencyRecord[]
   transactions: Transaction[]
   activities: Activity[]
-
-  // Online
-  online: boolean
-  lastsync?: number
 }
 
 export interface ClientGroup {
   base: Group
   operations: TransOperation[]
+  online?: boolean
   lastsync?: number
 }
 

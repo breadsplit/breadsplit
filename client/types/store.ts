@@ -1,7 +1,7 @@
-import { Group } from './models'
+import { ClientGroup } from './models'
 
 export interface GroupState {
-  groups: { [s: string]: Group }
+  groups: { [s: string]: ClientGroup }
   currentId: string|null
 }
 
