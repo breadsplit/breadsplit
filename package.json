@@ -28,6 +28,7 @@
     "docs:build": "vuepress build docs",
     "docs:deploy": "bash scripts/docs-deploy.sh",
     "test": "jest --config=./client/jest.config.js",
+    "test:firebase": "jest --config=./firebase/functions/jest.config.js",
     "test:watch": "jest --config=./client/jest.config.js --watch --coverage"
   },
   "dependencies": {
@@ -79,6 +80,10 @@
     "eslint-plugin-promise": ">=4.1.1",
     "eslint-plugin-standard": ">=4.0.0",
     "eslint-plugin-vue": "^5.2.2",
+    "firebase-admin": "^7.3.0",
+    "firebase-functions": "^2.3.0",
+    "firebase-functions-test": "^0.1.6",
+    "firebase-tools": "^6.7.2",
     "jest": "^24.7.1",
     "nodemon": "^1.18.11",
     "replace-in-file": "^4.0.0",

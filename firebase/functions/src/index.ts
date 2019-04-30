@@ -20,3 +20,7 @@ export const joinGroup = functions.https.onCall(async (data, context) => {
 
   await doc.ref.update('memberIds', ids)
 })
+
+export const alwaysTrue = functions.https.onCall(() => {
+  return true
+})

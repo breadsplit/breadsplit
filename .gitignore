@@ -94,7 +94,8 @@ cordova/www
 
 # Firebase Compiled JavaScript files
 .firebase
-firebase/**/*.js
-firebase/**/*.js.map
 firebase/functions/lib
 firebase/www
+
+# Firebase admin keys
+service-account-key.json
