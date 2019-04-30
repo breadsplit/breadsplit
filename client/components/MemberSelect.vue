@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Component, Prop, Mixins } from 'vue-property-decorator'
-import { Member } from '~/types'
+import { Member } from '~/types/models'
 import MemberMixin from '~/mixins/member'
 
 @Component

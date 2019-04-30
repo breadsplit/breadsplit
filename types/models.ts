@@ -1,3 +1,5 @@
+import { TransOperation } from 'operation-sync'
+
 export const enum MemberRoles {
   owner = 'owner',
   collaborator = 'collaborator',
@@ -106,6 +108,21 @@ export interface Group {
 
   // Online
   online: boolean
-  serverid?: string
   lastsync?: number
+}
+
+export interface ClientGroup {
+  base: Group
+  operations: TransOperation[]
+  lastsync?: number
+}
+
+export interface ServerGroup {
+  base: Group
+  present: Group
+
+  // user ids
+  viewers: string[]
+
+  operations: TransOperation[]
 }

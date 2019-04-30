@@ -53,7 +53,7 @@ v-card
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
 import GroupMixin from '~/mixins/group'
-import { Transaction, Weight } from '~/types'
+import { Transaction, Weight } from '~/types/models'
 import { TransactionDefault } from '~/utils/defaults'
 import { TransactionBalanceChanges } from '~/utils/core'
 

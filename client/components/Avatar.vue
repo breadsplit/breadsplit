@@ -8,7 +8,7 @@ app-action-with-text.app-avatar(:class='{inline}')
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Member } from '../types'
+import { Member } from '../types/models'
 import { GetMemberAvatarUrl } from '~/utils/avatarProvider'
 
 @Component

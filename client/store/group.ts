@@ -54,7 +54,6 @@ export const actions: ActionTree<GroupState, RootState> = {
       memberInfo: user,
     })
   },
-
 }
 
 export const mutations: MutationTree<GroupState> = {
@@ -162,6 +161,6 @@ export const mutations: MutationTree<GroupState> = {
   // Firebase
   onServerUpdate(state, { id, data }) {
     // TODO: diff
-    Vue.set(state.groups, id, data)
+    // Vue.set(state.groups, id, data)
   },
 }
