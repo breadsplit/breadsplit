@@ -44,7 +44,7 @@ export interface UserInfo {
   email?: string
   display_name: string
   avatar_url?: string
-  lastsync?: number
+  lastupdate?: number
 }
 
 export interface Transaction {

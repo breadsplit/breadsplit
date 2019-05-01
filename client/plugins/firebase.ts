@@ -130,7 +130,7 @@ export class FirebasePlugin {
           }
         })
       })
-    log('📻 Subscribed')
+    log('📻 Firebase subscribed')
   }
 
   unsubscribe() {
@@ -157,17 +157,57 @@ export class FirebasePlugin {
     })
   }
 
-  async uploadProfile() {
-    if (this.me) {
-      await db
-        .collection('users')
-        .doc(this.uid)
-        .set(this.me)
-      log('Profile uploaded')
+  /**
+   * Upload user profile to the server
+   *
+   * @param {UserInfo} [profile] user profile, if not set, the profile form store will bse used
+   * @param {boolean} [force] if set, the data will be write to server regardless the timestamp
+   * @returns
+   * @memberof FirebasePlugin
+   */
+  async uploadProfileAndLogin(profile?: UserInfo, force?: boolean) {
+    const me = profile || this.me
+    const uid = me && me.uid
+    const lastupdate = (this.me && this.me.lastupdate) || 0
+
+    if (!me || !uid)
+      return
+
+    const doc = db
+      .collection('users')
+      .doc(uid)
+    const upload = async () => {
+      me.lastupdate = +new Date()
+      await doc.set(me)
+      this.store.commit('user/login', me)
+      log('😶 Profile uploaded')
+    }
+    if (force)
+      return await upload()
+
+    // Not profile store in server, upload
+    const serverProfile = await doc.get()
+    if (!serverProfile.exists)
+      return await upload()
+    const serverProfileData = serverProfile.data()
+    if (!serverProfileData)
+      return await upload()
+
+    // Server profile is newer, update local
+    if (serverProfileData.lastupdate === lastupdate) {
+      this.store.commit('user/login', me)
+      log('😶 No changes on profile, skipped')
+    }
+    else if (serverProfileData.lastupdate > lastupdate) {
+      this.store.commit('user/login', serverProfileData)
+      log('😶 Profile updated from server', lastupdate, serverProfileData)
+    }
+    else {
+      return await upload()
     }
   }
 
-  async downloadProfile(uid) {
+  async downloadProfile(uid: string) {
     try {
       const doc = await db
         .collection('users')
@@ -229,10 +269,9 @@ export default async ({ store, router }: { store: Store<RootState>; router: VueR
         avatar_url: user.photoURL || undefined,
         anonymous: user.isAnonymous,
       }
-      store.commit('user/login', info)
+      await fire.uploadProfileAndLogin(info)
       await fire.subscribe()
       fire.watchStoreChanges()
-      fire.uploadProfile()
     }
     else {
       log('🙁 Logout')
