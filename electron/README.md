@@ -6,19 +6,19 @@ Desktop Native Application
 
 ### Install dependencies
 
-```sh
+```bash
 npm run electron:install
 ```
 
 ### Development
 
-```sh
+```bash
 npm run electron:dev
 ```
 
 ### Production build
 
-```sh
+```bash
 npm run electron:build
 ```
 
