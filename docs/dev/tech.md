@@ -1,6 +1,6 @@
 # 🛸 Tech-stacks / Docs
 
-## Front-end
+## Frontend
 
 Languages
 
@@ -20,9 +20,19 @@ Frameworks
   - [Vue i18n](http://kazupon.github.io/vue-i18n/) (i18n multi languages support)
 - [Nuxt.js](https://nuxtjs.org/) (Vue.js building tool chain)
 
-## Assets
+Assets
 
 - [Material Design Icons](https://materialdesignicons.com/) (Icon set)
+
+Server Request
+
+- [Firebase](https://firebase.google.com/docs)
+
+## Backend (Serverless)
+
+- [Firebase Admin](https://firebase.google.com/docs/admin)
+  - [Firestore](https://firebase.google.com/docs/firestore)
+  - [Firebase Functions](https://firebase.google.com/docs/firestor)
 
 ## Multi-platform Support
 

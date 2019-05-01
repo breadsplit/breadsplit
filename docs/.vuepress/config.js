@@ -19,6 +19,13 @@ module.exports = {
     sidebar: {
       '/': [
         {
+          title: 'Guides',
+          collapsable: false,
+          children: [
+            'guide/extra_guide_zh',
+          ],
+        },
+        {
           title: 'Development',
           collapsable: false,
           children: [
