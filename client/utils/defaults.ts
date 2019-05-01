@@ -1,4 +1,4 @@
-import { GenerateId } from '~/../core/randomstr'
+import { GenerateId } from '~/utils/id_helper'
 import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '../types/models'
 import { RootState, GroupState, UserState } from '../types/store'
 import { merge, mapValues } from 'lodash'
@@ -70,11 +70,12 @@ export const GroupStateDefault = (overrides?: object): GroupState => merge({
 }, overrides)
 
 export const UserStateDefault = (overrides?: object): UserState => merge({
-  info: {
+  me: {
     uid: null,
     anonymous: true,
     display_name: '',
   },
+  users: {},
   online: false,
 }, overrides)
 

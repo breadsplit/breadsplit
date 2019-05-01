@@ -6,27 +6,43 @@ export const state = UserStateDefault
 
 export const mutations: MutationTree<UserState> = {
 
-  login(state, user) {
-    state.info.uid = user.uid
-    state.info.email = user.email
-    state.info.display_name = user.displayName
-    state.info.avatar_url = user.photoURL
-    state.info.anonymous = user.isAnonymous
+  login(state, info) {
+    state.me = info
     state.online = true
   },
 
-  logout(state, user) {
-    Object.assign(state, UserStateDefault())
+  logout(state) {
+    state.online = false
+    state.me = {
+      uid: null,
+      anonymous: true,
+      display_name: '',
+    }
+  },
+
+  profileUpdate(state, { uid, user }) {
+    state.users[uid] = user
   },
 }
 
 export const getters: GetterTree<UserState, RootState> = {
 
   me(state) {
-    return state.info
+    return state.me
+  },
+
+  uid(state) {
+    return state.me.uid
   },
 
   online(state) {
     return state.online
+  },
+
+  user: state => (uid) => {
+    if (uid === state.me.uid)
+      return state.me
+    else
+      return state.users[uid]
   },
 }

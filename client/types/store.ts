@@ -6,8 +6,11 @@ export interface GroupState {
 }
 
 export interface UserState {
-  info: UserInfo
+  me: UserInfo
   online: boolean
+  users: {
+    [uid: string]: UserInfo
+  }
 }
 
 export interface RootState {

@@ -202,10 +202,9 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
       case 'transfer_online':
         // @ts-ignore
-        if (await this.$root.$confirm('Are you sure?')) {
-          this.$router.push('/')
+        if (await this.$root.$confirm('Are you sure?'))
           await this.$fire.publishGroup({ groupid: this.$store.state.group.currentId })
-        }
+
         break
 
       case 'sync':

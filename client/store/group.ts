@@ -115,9 +115,9 @@ export const mutations: MutationTree<GroupState> = {
     NewOperation(state.groups[id], 'modify_transaction', { id: transid, changes })
   },
 
-  changeMemberId(state, { id, memberId, uid }) {
+  changeMemberId(state, { id, from, to }) {
     id = id || state.currentId
-    NewOperation(state.groups[id], 'change_member_id', { from: memberId, to: uid })
+    NewOperation(state.groups[id], 'change_member_id', { from, to })
   },
 
   // Firebase

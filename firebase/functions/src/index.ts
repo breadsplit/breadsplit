@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import _ from 'lodash'
 import { ProcessOperations, EvalTransforms, TransOperationOption } from 'operation-sync'
 import { ServerGroup, Group, Operation, ServerOperations } from '../../../types/models'
-import { GenerateId } from '../../../core/randomstr'
+import { GenerateId } from '../../../core/id_helper'
 import { Transforms } from '../../../core/transforms'
 
 admin.initializeApp()

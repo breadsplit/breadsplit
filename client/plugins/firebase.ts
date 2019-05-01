@@ -1,12 +1,14 @@
 import Vue from 'vue'
 import { Store } from 'vuex'
+import VueRouter from 'vue-router'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/functions'
 
 import { RootState } from '~/types/store'
-import { Group } from '~/types/models'
+import { Group, UserInfo } from '~/types/models'
+import { IsThisId } from '../../core/id_helper'
 
 const config = {
   apiKey: 'AIzaSyCGr9QtZjJSsomlM5pTkqiPzeCYr_kQqk4',
@@ -31,11 +33,13 @@ const UploadOperations = functions.httpsCallable('uploadOperations')
 
 export class FirebasePlugin {
   store: Store<RootState>
+  router: VueRouter
   _unwatchCallback: (() => void) | null = null
   _unsubscribeCallback: (() => void) | null = null
 
-  constructor(store: Store<RootState>) {
+  constructor(store: Store<RootState>, router: VueRouter) {
     this.store = store
+    this.router = router
   }
 
   get auth() {
@@ -46,6 +50,12 @@ export class FirebasePlugin {
   }
   get functions() {
     return functions
+  }
+  get me(): UserInfo | undefined {
+    return this.store.getters['user/me']
+  }
+  get uid(): string | undefined {
+    return this.store.getters['user/uid']
   }
 
   async signup(email: string, password: string) {
@@ -81,11 +91,11 @@ export class FirebasePlugin {
 
     const result = await functions.httpsCallable('publishGroup')({ group })
     const serverid = (result.data || {}).id
-    if (typeof serverid === 'string' && serverid.startsWith('og-')) {
+    if (typeof serverid === 'string' && IsThisId.OnlineGroup(serverid)) {
       this.store.commit('group/remove', groupid)
       await this.manualSync(serverid)
       this.store.commit('group/switch', serverid)
-      // this.subscribe()
+      this.router.push(`/group/${serverid}`)
     }
   }
 
@@ -97,10 +107,9 @@ export class FirebasePlugin {
 
   subscribe() {
     this.unsubscribe()
-    const uid = this.store.getters['user/me'].uid
     this._unsubscribeCallback = db
       .collection('groups')
-      .where('viewers', 'array-contains', uid)
+      .where('viewers', 'array-contains', this.uid)
       .onSnapshot((snap) => {
         snap.docChanges().forEach((change) => {
           // ignore local change
@@ -147,6 +156,31 @@ export class FirebasePlugin {
     })
   }
 
+  async uploadProfile() {
+    if (this.me) {
+      await db
+        .collection('users')
+        .doc(this.uid)
+        .set(this.me)
+      log('Profile uploaded')
+    }
+  }
+
+  async downloadProfile(uid) {
+    try {
+      const doc = await db
+        .collection('users')
+        .doc(uid)
+        .get()
+      const user = doc.data()
+      this.store.commit('user/profileUpdate', { uid, user })
+      log('Profile of ', uid, ' updated ', user)
+    }
+    catch (e) {
+
+    }
+  }
+
   watchStoreChanges() {
     this._unwatchCallback = this.store.watch(
       (state) => {
@@ -179,16 +213,25 @@ export class FirebasePlugin {
   }
 }
 
-export default async ({ store }: { store: Store<RootState> }) => {
-  const fire = new FirebasePlugin(store)
+export default async ({ store, router }: { store: Store<RootState>; router: VueRouter }) => {
+  const fire = new FirebasePlugin(store, router)
   Vue.prototype.$fire = fire
 
   auth.onAuthStateChanged(async (user) => {
     if (user) {
       log('🙋 Login with uid:', user.uid)
-      store.commit('user/login', user)
+
+      const info: UserInfo = {
+        uid: user.uid,
+        email: user.email || undefined,
+        display_name: user.displayName || '',
+        avatar_url: user.photoURL || undefined,
+        anonymous: user.isAnonymous,
+      }
+      store.commit('user/login', info)
       await fire.subscribe()
       fire.watchStoreChanges()
+      fire.uploadProfile()
     }
     else {
       log('🙁 Logout')
