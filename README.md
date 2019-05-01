@@ -1,4 +1,6 @@
-# ✂ Splitoast 🍞
+# 🍞 Splitoast
+
+Group bills split made easy, fast and customizable.
 
 [![CircleCI](https://circleci.com/gh/antfu/splitoast.svg?style=svg&circle-token=b26ce4526201e0c7fbeb42287d360930a69b3988)](https://circleci.com/gh/antfu/splitoast)
 [![codecov](https://codecov.io/gh/antfu/splitoast/branch/master/graph/badge.svg?token=JRYbmADObn)](https://codecov.io/gh/antfu/splitoast)
@@ -6,11 +8,13 @@
 
 [📋 **Stage Progress**](https://github.com/antfu/splitoast/projects/1)
 
-🔑 **Keywords**: `split bills`, `group expenses management`, `sharing expenses`, `accounting`
-
-## Features
+## 🌟 Key Features
 
 `Further discussion required`
+
+## 📚 Development
+
+[Online Document](https://antfu.github.io/splitoast/)
 
 ## Simliar Apps 🚗🚓🚕🚙
 
@@ -24,159 +28,6 @@
 - [Acasa](https://www.helloacasa.com/)
 - [Spend Together](https://itunes.apple.com/us/app/spend-together/id1446549608?mt=8)
 
-## Development
+## License
 
-### 💽 Installation
-
-1. Install [Node.js](https://nodejs.org/en/) > `v11.0`
-1. Install [git](https://git-scm.com/) or GUI Clients (eg. [Github Desktop](https://desktop.github.com/))
-1. Clone this repo.
-1. Install dependencies using flowing command
-
-```sh
-$ git checkout dev
-$ npm ci
-```
-
-#### Optional Tools
-
-- [VSCode](https://code.visualstudio.com/) is recommend as text editor ([**Recommend Plugins**](/contribute/vscode-plugins.md))
-- Chrome extension [Vue.js DevTools](https://chrome.google.com/webstore/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-
-### 🚀 Run the app
-
-```sh
-# serve with hot reload at localhost:3000
-$ npm run dev
-```
-
-### 📦 Build the app (Production)
-
-```sh
-# build for production and launch server
-$ npm run build
-$ npm start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
-
-### ☄ Pull new code
-
-```sh
-$ git pull
-```
-
-After every pull, please run following command to ensure the packages dependencies
-
-```sh
-$ npm i
-```
-
-## 🗻 Roadmap
-
-[**Stage Progress**](https://github.com/antfu/splitoast/projects/1)
-
-### ✈ Stage 1 Prototyping & Basic Implementation
-
-- Name and Logo
-- Overall UI style
-- Cross compare other apps
-- Functions & Features directions
-- 🚧 Implement offline features
-- ✅ PWA Support
-- UI implement
-
-### Stage 2 Preparation for Public
-
-- 🚧 Full i18n support (English and Chinese)
-- Basic privacy policy and terms of services
-- ✅ Source code license `MIT`
-- Contribution guildline
-- Create a Github team and make the repo **public**
-- Donate channel (Patreon or Open Collective)
-- Web home page for introduction
-- Make promptions on PTT, Dcard, etc
-
-### Stage 3 Online Support
-
-- 🚧 Implement online features
-- [Web push notification](https://developers.google.com/web/fundamentals/push-notifications/)
-- 🚧 Server and database ([Firebase](https://firebase.google.com/))
-- API docs for community support
-- Online payments integration for settling up (Paypal, LINE Pay, Wechat Pay, Alipay, etc.)
-
-### Stage 4 Multi-platform
-
-- ✅ Integrate [Cordova](https://cordova.apache.org/) for Android and iOS
-- ✅ Integrate [Electron](https://electronjs.org/) for Windows, MacOS and Linux
-- Automatic build
-- Platform optimized
-  - Better touch support
-  - Connect with native notifications
-  - [Google NearBy](https://developers.google.com/nearby/messages/overview)
-
-## 📂 Directory Structure
-
-    .
-    ├── ...
-    ├── client              # The main code, web pages based on Nuxt.js
-    |   ├── assets              # Images, fonts, styles and other assets
-    |   ├── components          #⭐Vue components
-    |   ├── layouts             # Nuxt.js layouts
-    |   ├── locales             # i18n texts
-    |   ├── meta                # Built-in data
-    |   ├── middleware          # Nuxt.js routing middlewares
-    |   ├── mixins              # Vue mixins for code reuse
-    |   ├── pages               #⭐Nuxt.js pages, will be served with same directory structure
-    |   ├── plugins             # Nuxt.js plugins
-    |   ├── static              # Will be copied to root of the website
-    |   ├── store               #⭐Vuex store
-    |   ├── ...
-    |   └── nuxt.config.ts      # Nuxt.js config file
-    ├── docs                # For generating documentation website in the future
-    ├── cordova             # Cordova build scripts and platform specify code
-    ├── electron            # Electron build scripts and platform specify code
-    ├── scripts             # Scripts helps to manage this project
-    ├── LICENSE
-    ├── ...
-    └── README.md
-
-`⭐: Important`
-
-## 🛸 Tech-stacks / Docs
-
-### Front-end
-
-Languages
-
-- [Typescript](https://www.typescriptlang.org/) (Main language, JS with type support)
-  - [vue-property-decorator](https://github.com/kaorun343/vue-property-decorator) (for Vue components)
-  - [vuex-class](https://github.com/ktsn/vuex-class) (for Vuex)
-- [Pug.js](https://pugjs.org/api/getting-started.html) *formerly Jade* (HTML)
-  - [HTML to Pug](https://html2jade.org/) (Tools)
-- [Stylus](http://stylus-lang.com/) (CSS)
-
-Frameworks
-
-- [Vue.js](https://vuejs.org/) (Front-end framework)
-  - [Vuetify](https://vuetifyjs.com/) (Vue UI Components)
-  - [Vuex](https://vuex.vuejs.org/) (Vue state management)
-    - [vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate) (Store Vuex into LocalStorage)
-  - [Vue i18n](http://kazupon.github.io/vue-i18n/) (i18n multi languages support)
-- [Nuxt.js](https://nuxtjs.org/) (Vue.js building tool chain)
-
-### Assets
-
-- [Material Design Icons](https://materialdesignicons.com/) (Icon set)
-
-### Multi-platform Support
-
-- [Electron](https://electronjs.org/) (Windows & MacOS & Linux)
-- [Cordova](https://cordova.apache.org/) (Android & iOS)
-
-## 📄 License
-
-[MIT License](./LICENSE)
+[GPLv3 License](./LICENSE)

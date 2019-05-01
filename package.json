@@ -26,7 +26,7 @@
     "cordova": "cross-env BUILD_TARGET=android npm run cordova:generate && npm run cordova:build && npm run cordova:run:android",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:deploy": "bash scripts/docs-deploy.sh",
+    "docs:deploy": "node scripts/docs-deploy.js",
     "test": "jest --config=./client/jest.config.js",
     "test:watch": "jest --config=./client/jest.config.js --watch --coverage"
   },
