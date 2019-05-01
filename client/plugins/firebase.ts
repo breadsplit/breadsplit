@@ -141,7 +141,8 @@ export class FirebasePlugin {
   }
 
   async joinGroup(groupid: string) {
-    await functions.httpsCallable('joinGroup')({ groupid })
+    await functions.httpsCallable('joinGroup')({ id: groupid })
+    // await this.subscribe()
   }
 
   async manualSync(groupid: string) {

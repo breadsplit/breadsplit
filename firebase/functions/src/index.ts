@@ -82,9 +82,11 @@ export const joinGroup = f(async ({ id }, context) => {
   if (!group)
     throw new Error('group_not_exists')
 
-  const ids = _.union(group.viewers || [], context.auth.uid)
+  const viewers = _.union(group.viewers || [], [context.auth.uid])
 
-  await doc.ref.update('viewers', ids)
+  await GroupsRef
+    .doc(id)
+    .update('viewers', viewers)
 })
 
 export const removeGroup = f(async (id, context) => {
