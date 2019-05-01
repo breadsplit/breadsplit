@@ -20,7 +20,7 @@ export const enum Entity {
   currency_record = 'currency_record',
 }
 
-export const enum TransactionType{
+export const enum TransactionType {
   expenses = 'expenses',
   transfer = 'transfer',
 }
@@ -129,7 +129,14 @@ export interface ServerGroup {
   viewers: string[]
   owner: string
 
-  base: Group
   present: Group
+  operations: string[]
+}
+
+export interface ServerOperations {
   operations: Operation[]
+}
+
+export interface ServerBase {
+  base: Group
 }

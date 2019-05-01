@@ -22,7 +22,7 @@ export const mutations: MutationTree<UserState> = {
 
 export const getters: GetterTree<UserState, RootState> = {
 
-  info(state) {
+  me(state) {
     return state.info
   },
 

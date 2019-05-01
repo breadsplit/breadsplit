@@ -2,11 +2,16 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
 import { ProcessOperations, EvalTransforms } from 'operation-sync'
-import { ServerGroup, Group, Operation } from '../../../types/models'
+import { ServerGroup, Group, Operation, ServerOperations, ServerBase } from '../../../types/models'
 import { GenerateId } from '../../../core/randomstr'
 import { Transforms } from '../../../core/transforms'
 
 admin.initializeApp()
+
+const db = admin.firestore()
+const GroupsRef = db.collection('groups')
+const BasesRef = db.collection('_bases')
+const OperationsRef = db.collection('_operations')
 
 const f = functions.https.onCall
 
@@ -22,17 +27,27 @@ export const publishGroup = f(async ({ group }, context) => {
 
   const serverGroup: ServerGroup = {
     id,
-    base: group as Group,
     present: group as Group,
     owner: user_uid,
     viewers: [user_uid],
     operations: [],
   }
 
-  await admin.firestore()
-    .collection('groups')
+  await GroupsRef
     .doc(id)
     .set(serverGroup)
+
+  await BasesRef
+    .doc(id)
+    .set({
+      base: group,
+    })
+
+  await OperationsRef
+    .doc(id)
+    .set({
+      operations: [],
+    })
 
   return { id }
 })
@@ -41,8 +56,7 @@ export const joinGroup = f(async ({ id }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
-  const doc = await admin.firestore()
-    .collection('groups')
+  const doc = await GroupsRef
     .doc(id)
     .get()
 
@@ -50,8 +64,7 @@ export const joinGroup = f(async ({ id }, context) => {
   if (!group)
     throw new Error('group_not_exists')
 
-  const ids = group.viewers || []
-  ids.push(context.auth.uid)
+  const ids = _.union(group.viewers || [], context.auth.uid)
 
   await doc.ref.update('viewers', ids)
 })
@@ -60,8 +73,7 @@ export const removeGroup = f(async (id, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
-  const doc = await admin.firestore()
-    .collection('groups')
+  const doc = await GroupsRef
     .doc(id)
     .get()
 
@@ -73,8 +85,7 @@ export const removeGroup = f(async (id, context) => {
 
   // TODO: flag to remove, not actually deleted
 
-  await admin.firestore()
-    .collection('groups')
+  await GroupsRef
     .doc(id)
     .delete()
 
@@ -87,13 +98,6 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
-  const doc = await admin.firestore()
-    .collection('groups')
-    .doc(id)
-    .get()
-
-  const group = doc.data() as ServerGroup
-
   const uid = context.auth.uid
   const server_timestamp = +new Date()
   const processed = ProcessOperations(operations).map((o): Operation => {
@@ -103,16 +107,23 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
       server_timestamp,
     }
   })
-  const ServerOperations = _.sortBy(_.unionBy(group.operations, processed, 'hash'), 'timestamp')
 
-  const present = EvalTransforms(group.base, Transforms, ServerOperations, undefined, transformCache)
+  // TODO: use db tranaction
+  const base = ((await BasesRef.doc(id).get()).data() as ServerBase).base as Group
+  const serverOps = (await OperationsRef.doc(id).get()).data() as ServerOperations
+  const ops = _.sortBy(_.unionBy(serverOps.operations, processed, 'hash'), 'timestamp')
 
-  await admin.firestore()
-    .collection('groups')
+  const present = EvalTransforms(base, Transforms, ops, undefined, transformCache)
+
+  await OperationsRef
+    .doc(id)
+    .update('operations', ops)
+
+  await GroupsRef
     .doc(id)
     .set({
       present,
-      operations: ServerOperations,
+      operations: ops.map(o => o.hash),
     }, {
       merge: true,
     })
