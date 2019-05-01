@@ -27,8 +27,12 @@ export const functions = firebase.functions()
 const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
 /* eslint-enable no-console */
 
+const UploadOperations = functions.httpsCallable('uploadOperations')
+
 export class FirebasePlugin {
   store: Store<RootState>
+  _unwatchCallback: (() => void) | null = null
+  _unsubscribeCallback: (() => void) | null = null
 
   constructor(store: Store<RootState>) {
     this.store = store
@@ -76,11 +80,12 @@ export class FirebasePlugin {
     const group = this.store.getters['group/id'](groupid) as Group
 
     const result = await functions.httpsCallable('publishGroup')({ group })
-    if (typeof result.data === 'string' && result.data.startsWith('og-')) {
+    const serverid = (result.data || {}).id
+    if (typeof serverid === 'string' && serverid.startsWith('og-')) {
       this.store.commit('group/remove', groupid)
-      await this.manualSync(result.data)
-      this.store.commit('group/switch', result.data)
-      this.subscribe()
+      await this.manualSync(serverid)
+      this.store.commit('group/switch', serverid)
+      // this.subscribe()
     }
   }
 
@@ -90,22 +95,19 @@ export class FirebasePlugin {
     this.store.commit('group/remove', groupid)
   }
 
-  unsubscribe() {
-    if (this._unsubscribeCallback) {
-      log('🔕 Unsubscribed')
-      this._unsubscribeCallback()
-    }
-  }
-
-  _unsubscribeCallback: (() => void) | null = null
-
   subscribe() {
     this.unsubscribe()
+    const uid = this.store.getters['user/info'].uid
     this._unsubscribeCallback = db
       .collection('groups')
-      .where('viewers', 'array-contains', this.store.getters['user/info'].uid)
+      .where('viewers', 'array-contains', uid)
       .onSnapshot((snap) => {
         snap.docChanges().forEach((change) => {
+          // ignore local change
+          if (change.doc.metadata.hasPendingWrites)
+            return
+
+          // updates from server
           const data = change.doc.data()
           log(`🌠 Incoming change <${change.type}>`, data.id, data)
           if (change.type === 'modified' || change.type === 'added') {
@@ -122,9 +124,15 @@ export class FirebasePlugin {
     log('📻 Subscribed')
   }
 
+  unsubscribe() {
+    if (this._unsubscribeCallback) {
+      log('🔕 Unsubscribed')
+      this._unsubscribeCallback()
+    }
+  }
+
   async joinGroup(groupid: string) {
     await functions.httpsCallable('joinGroup')({ groupid })
-    await this.subscribe()
   }
 
   async manualSync(groupid: string) {
@@ -138,6 +146,37 @@ export class FirebasePlugin {
       timestamp: +new Date(),
     })
   }
+
+  watchStoreChanges() {
+    this._unwatchCallback = this.store.watch(
+      (state) => {
+        return state.group.groups
+      }, (value) => {
+        Object.values(value).forEach(async (group) => {
+          if (group.online && group.operations.length) {
+            const payload = {
+              id: group.id,
+              operations: group.operations,
+              lastsync: group.lastsync,
+            }
+            log('🚀 Outcoming operations', payload)
+            await UploadOperations(payload)
+          }
+        })
+      }, {
+        deep: true,
+        immediate: true,
+      }
+    )
+    log('📻 Store watched')
+  }
+
+  unwatchStore() {
+    if (this._unwatchCallback) {
+      log('🔕 Store unwatched')
+      this._unwatchCallback()
+    }
+  }
 }
 
 export default async ({ store }: { store: Store<RootState> }) => {
@@ -146,12 +185,15 @@ export default async ({ store }: { store: Store<RootState> }) => {
 
   auth.onAuthStateChanged(async (user) => {
     if (user) {
-      log('Login with uid:', user.uid)
+      log('🙋 Login with uid:', user.uid)
       store.commit('user/login', user)
       await fire.subscribe()
+      fire.watchStoreChanges()
     }
     else {
-      log('Logout')
+      log('🙁 Logout')
+      fire.unsubscribe()
+      fire.unwatchStore()
       store.commit('user/logout')
       store.commit('group/removeOnlineGroups')
     }

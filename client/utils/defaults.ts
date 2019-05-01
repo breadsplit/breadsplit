@@ -44,8 +44,10 @@ export const GroupDefault = (overrides?: object): Group => {
 }
 
 export const ClientGroupDefault = (overrides?: object): ClientGroup => {
+  const group = GroupDefault(overrides)
   return {
-    base: GroupDefault(overrides),
+    id: group.id,
+    base: group,
     operations: [],
   }
 }

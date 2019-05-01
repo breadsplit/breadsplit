@@ -102,9 +102,9 @@ export interface Group {
   online?: boolean
 }
 
-interface Operation extends TransOperation {
+export interface Operation extends TransOperation {
   uid?: string
-  serverTs?: number
+  server_timestamp?: number
 }
 
 export interface ClientGroup {
@@ -122,5 +122,6 @@ export interface ServerGroup {
   owner: string
 
   base: Group
+  present: Group
   operations: Operation[]
 }

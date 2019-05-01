@@ -7,6 +7,7 @@ import { GenerateId } from '~/../core/randomstr'
 import { MemberRoles, ClientGroup, Group } from '~/types/models'
 import { EvalTransforms, ProcessOperation } from 'operation-sync'
 import { Transforms } from '../../core'
+import { ServerGroup } from '../../types/models'
 
 const OperationCache = {}
 
@@ -14,6 +15,8 @@ function Eval(group?: ClientGroup): Group | undefined {
   if (!group)
     return undefined
   const { base, operations } = group
+  if (!base)
+    return undefined
   return EvalTransforms<Group>(base, Transforms, operations, undefined, OperationCache)
 }
 
@@ -183,16 +186,17 @@ export const mutations: MutationTree<GroupState> = {
   onServerUpdate(state, { data, timestamp }) {
     if (!data || !data.id)
       return
-    if (!state.groups[data.id]) {
-      Vue.set(state.groups, data.id, {
-        id: data.id,
-        base: data.base,
-        operations: data.operations,
+    const group: ServerGroup = data
+    if (!state.groups[group.id]) {
+      Vue.set(state.groups, group.id, {
+        id: group.id,
+        base: group.present,
+        operations: [],
         online: true,
       })
     }
-    state.groups[data.id].base = data.base
-    state.groups[data.id].operations = data.operations
-    state.groups[data.id].lastsync = timestamp
+    state.groups[group.id].base = group.present
+    state.groups[group.id].operations = []
+    state.groups[group.id].lastsync = timestamp
   },
 }
