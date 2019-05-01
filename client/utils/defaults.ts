@@ -18,7 +18,6 @@ export const GroupDefault = (overrides?: object): Group => {
     },
     timestamp: +new Date(),
 
-    memberIds: [],
     members: {},
     currencies: [],
     currency_records: [],

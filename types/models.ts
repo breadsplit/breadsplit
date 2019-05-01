@@ -100,7 +100,6 @@ export interface Group {
   timestamp: number
 
   // Records
-  memberIds: string[]
   members: {[s: string]: Member}
   currencies: string[]
   currency_records: CurrencyRecord[]

@@ -17,7 +17,6 @@ describe('models initialization', () => {
     expect(group.name).toEqual('Group A')
     expect(group.id).toBeTruthy()
     expect(typeof group.members).toEqual('object')
-    expect(group.memberIds).toEqual([])
     expect(group.members.member1.name).toEqual('Hello')
   })
 

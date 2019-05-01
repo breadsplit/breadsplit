@@ -53,29 +53,6 @@ export const getters: GetterTree<GroupState, RootState> = {
 
 export const actions: ActionTree<GroupState, RootState> = {
 
-  switchToOnline({ commit, dispatch }, { localId, onlineId, switchTo, memberLocalId }) {
-    if (!onlineId)
-      onlineId = GenerateId.OnlineGroup()
-    commit('switchToOnline', { localId, onlineId, switchTo })
-    dispatch('joinAsMember', { id: onlineId, memberLocalId })
-  },
-
-  joinAsMember({ commit, rootState, state }, { id, memberLocalId }) {
-    if (!id)
-      id = state.currentId
-    const user = rootState.user.info
-    commit('switchMemberToOnline', {
-      id,
-      memberLocalId,
-      memberUID: user.uid,
-      role: MemberRoles.owner,
-    })
-    commit('updateMemberInfo', {
-      id,
-      memberId: user.uid,
-      memberInfo: user,
-    })
-  },
 }
 
 export const mutations: MutationTree<GroupState> = {
@@ -136,42 +113,6 @@ export const mutations: MutationTree<GroupState> = {
   editTranscation(state, { id, transid, changes }) {
     id = id || state.currentId
     NewOperation(state.groups[id], 'modify_transaction', { id: transid, changes })
-  },
-
-  // Converters
-  switchToOnline(state, { localId, onlineId, switchTo }) {
-    /* const group = state.groups[localId]
-    group.id = onlineId
-    group.online = true
-    state.groups[onlineId] = group
-    Vue.delete(state.groups, localId)
-    if (switchTo)
-      state.currentId = onlineId */
-  },
-
-  switchMemberToOnline(state, { id, memberLocalId, memberUID, role }) {
-    /* const group = state.groups[id]
-    const member = group.members[memberLocalId]
-    member.id = memberUID
-    if (role)
-      member.role = role
-    group.members[memberUID] = member
-
-    function replacer(object, key) {
-      if (object[key] === memberLocalId)
-        object[key] = memberUID
-    }
-
-    for (const trans of group.transactions) {
-      replacer(trans, 'creator')
-      for (const c of trans.creditors)
-        replacer(c, 'memberId')
-      for (const d of trans.debtors)
-        replacer(d, 'memberId')
-    }
-    Vue.delete(group.members, memberLocalId)
-    if (!group.memberIds.includes(memberUID))
-      group.memberIds.push(memberUID) */
   },
 
   updateMemberInfo(state, { id, memberId, memberInfo }: { id: string; memberId: string; memberInfo: UserInfo}) {
