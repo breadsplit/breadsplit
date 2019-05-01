@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import merge from 'lodash/merge'
+import includes from 'lodash/includes'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
 import { MemberDefault, GroupStateDefault, ClientGroupDefault, TransactionDefault } from '~/utils/defaults'
 import { GroupState, RootState } from '~/types/store'
-import { GenerateId } from '~/../core/randomstr'
-import { MemberRoles, ClientGroup, Group } from '~/types/models'
+import { ClientGroup, Group } from '~/types/models'
 import { EvalTransforms, ProcessOperation } from 'operation-sync'
 import { Transforms } from '../../core'
-import { ServerGroup, UserInfo } from '../../types/models'
+import { ServerGroup } from '../../types/models'
 
 const OperationCache = {}
 
@@ -115,12 +115,9 @@ export const mutations: MutationTree<GroupState> = {
     NewOperation(state.groups[id], 'modify_transaction', { id: transid, changes })
   },
 
-  updateMemberInfo(state, { id, memberId, memberInfo }: { id: string; memberId: string; memberInfo: UserInfo}) {
-    /* const group = state.groups[id]
-    const member = group.members[memberId]
-    member.avatarUrl = memberInfo.avatar_url || member.avatarUrl
-    member.name = memberInfo.display_name || member.name
-    member.email = memberInfo.email || member.email */
+  changeMemberId(state, { id, memberId, uid }) {
+    id = id || state.currentId
+    NewOperation(state.groups[id], 'change_member_id', { from: memberId, to: uid })
   },
 
   // Firebase
@@ -131,13 +128,19 @@ export const mutations: MutationTree<GroupState> = {
     if (!state.groups[group.id]) {
       Vue.set(state.groups, group.id, {
         id: group.id,
-        base: group.present,
-        operations: [],
         online: true,
+        operations: [],
       })
     }
+
+    const serverOperations = group.operations
+    const localOperations = state.groups[group.id].operations || []
+    const unsyncedOperations = localOperations.filter(
+      o => !includes(serverOperations, o.hash)
+    )
+
     state.groups[group.id].base = group.present
-    state.groups[group.id].operations = []
+    state.groups[group.id].operations = unsyncedOperations
     state.groups[group.id].lastsync = timestamp
   },
 }

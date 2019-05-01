@@ -1,8 +1,8 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
-import { ProcessOperations, EvalTransforms } from 'operation-sync'
-import { ServerGroup, Group, Operation, ServerOperations, ServerBase } from '../../../types/models'
+import { ProcessOperations, EvalTransforms, TransOperationOption } from 'operation-sync'
+import { ServerGroup, Group, Operation, ServerOperations } from '../../../types/models'
 import { GenerateId } from '../../../core/randomstr'
 import { Transforms } from '../../../core/transforms'
 
@@ -10,10 +10,29 @@ admin.initializeApp()
 
 const db = admin.firestore()
 const GroupsRef = db.collection('groups')
-const BasesRef = db.collection('_bases')
 const OperationsRef = db.collection('_operations')
 
 const f = functions.https.onCall
+const transformCache = {}
+
+// warpper functions
+function ProcessServerOperations(operations: TransOperationOption[], uid: string, server_timestamp?: number): Operation[] {
+  return ProcessOperations(operations).map((o): Operation => {
+    return {
+      ...o,
+      uid,
+      server_timestamp: server_timestamp || +new Date(),
+    }
+  })
+}
+
+/* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
+function Eval(operations: Operation[]): Group {
+  return EvalTransforms<Group>({} as Group, Transforms, operations, undefined, transformCache)
+}
+/* eslint-enable @typescript-eslint/no-object-literal-type-assertion */
+
+// firebase functions
 
 export const publishGroup = f(async ({ group }, context) => {
   if (!context.auth || !context.auth.uid)
@@ -25,28 +44,27 @@ export const publishGroup = f(async ({ group }, context) => {
   group.id = id
   group.online = true
 
+  const initOperations = ProcessServerOperations([{
+    name: 'init',
+    data: group,
+  }], context.auth.uid)
+
   const serverGroup: ServerGroup = {
     id,
-    present: group as Group,
+    present: Eval(initOperations),
     owner: user_uid,
     viewers: [user_uid],
-    operations: [],
+    operations: initOperations.map(i => i.hash),
   }
 
   await GroupsRef
     .doc(id)
     .set(serverGroup)
 
-  await BasesRef
-    .doc(id)
-    .set({
-      base: group,
-    })
-
   await OperationsRef
     .doc(id)
     .set({
-      operations: [],
+      operations: initOperations,
     })
 
   return { id }
@@ -92,28 +110,19 @@ export const removeGroup = f(async (id, context) => {
   return true
 })
 
-const transformCache = {}
-
 export const uploadOperations = f(async ({ id, operations, lastsync }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
   const uid = context.auth.uid
-  const server_timestamp = +new Date()
-  const processed = ProcessOperations(operations).map((o): Operation => {
-    return {
-      ...o,
-      uid,
-      server_timestamp,
-    }
-  })
+  const timestamp = +new Date()
+  const processed = ProcessServerOperations(operations, uid, timestamp)
 
   // TODO: use db tranaction
-  const base = ((await BasesRef.doc(id).get()).data() as ServerBase).base as Group
   const serverOps = (await OperationsRef.doc(id).get()).data() as ServerOperations
   const ops = _.sortBy(_.unionBy(serverOps.operations, processed, 'hash'), 'timestamp')
 
-  const present = EvalTransforms(base, Transforms, ops, undefined, transformCache)
+  const present = Eval(ops)
 
   await OperationsRef
     .doc(id)
