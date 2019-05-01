@@ -115,10 +115,9 @@ v-app(:dark='dark')
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
-import { Group } from '~/types/models'
+import { Group, UserInfo } from '~/types/models'
 import CommonMixin from '~/mixins/common'
 import FontFamilyBuilder from '~/meta/font_family'
-import { UserInfo } from '~/types/store'
 
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin) {
@@ -131,7 +130,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
   @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
-  @Getter('user/info') user!: UserInfo
+  @Getter('user/me') user!: UserInfo
   @Getter('user/online') userIsOnline!: boolean
 
   @Mutation('group/remove') removeGroup

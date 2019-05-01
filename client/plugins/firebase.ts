@@ -97,7 +97,7 @@ export class FirebasePlugin {
 
   subscribe() {
     this.unsubscribe()
-    const uid = this.store.getters['user/info'].uid
+    const uid = this.store.getters['user/me'].uid
     this._unsubscribeCallback = db
       .collection('groups')
       .where('viewers', 'array-contains', uid)

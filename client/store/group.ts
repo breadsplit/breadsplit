@@ -2,16 +2,16 @@ import Vue from 'vue'
 import merge from 'lodash/merge'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
 import { MemberDefault, GroupStateDefault, ClientGroupDefault, TransactionDefault } from '~/utils/defaults'
-import { GroupState, RootState, UserInfo } from '~/types/store'
+import { GroupState, RootState } from '~/types/store'
 import { GenerateId } from '~/../core/randomstr'
 import { MemberRoles, ClientGroup, Group } from '~/types/models'
 import { EvalTransforms, ProcessOperation } from 'operation-sync'
 import { Transforms } from '../../core'
-import { ServerGroup } from '../../types/models'
+import { ServerGroup, UserInfo } from '../../types/models'
 
 const OperationCache = {}
 
-function Eval(group?: ClientGroup): Group | undefined {
+export function Eval(group?: ClientGroup): Group | undefined {
   if (!group)
     return undefined
   const { base, operations } = group

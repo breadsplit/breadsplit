@@ -38,6 +38,14 @@ export interface Member {
   role: MemberRoles
 }
 
+export interface UserInfo {
+  uid: string | null
+  anonymous: boolean
+  email?: string
+  display_name: string
+  avatar_url?: string
+}
+
 export interface Transaction {
   id: string
   timestamp: number

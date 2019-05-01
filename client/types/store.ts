@@ -1,16 +1,8 @@
-import { ClientGroup } from './models'
+import { ClientGroup, UserInfo } from './models'
 
 export interface GroupState {
   groups: { [s: string]: ClientGroup }
   currentId: string|null
-}
-
-export interface UserInfo {
-  uid: string | null
-  anonymous: boolean
-  email?: string
-  display_name: string
-  avatar_url?: string
 }
 
 export interface UserState {
