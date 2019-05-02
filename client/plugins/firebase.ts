@@ -284,7 +284,7 @@ export default async ({ store, router }: { store: Store<RootState>; router: VueR
       const info: UserInfo = {
         uid: user.uid,
         email: user.email || undefined,
-        display_name: user.displayName || '',
+        name: user.displayName || '',
         avatar_url: user.photoURL || undefined,
         anonymous: user.isAnonymous,
       }

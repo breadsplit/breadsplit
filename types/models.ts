@@ -42,7 +42,7 @@ export interface UserInfo {
   uid: string | null
   anonymous: boolean
   email?: string
-  display_name: string
+  name: string
   avatar_url?: string
   lastupdate?: number
 

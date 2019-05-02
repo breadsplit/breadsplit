@@ -32,7 +32,7 @@ export default class UserInfoMixin extends Vue {
 
   get name() {
     if (this.user)
-      return this.user.display_name
+      return this.user.name
     return this.member.name
   }
 }

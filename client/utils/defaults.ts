@@ -73,7 +73,7 @@ export const UserStateDefault = (overrides?: object): UserState => merge({
   me: {
     uid: null,
     anonymous: true,
-    display_name: '',
+    name: '',
   },
   users: {},
   online: false,

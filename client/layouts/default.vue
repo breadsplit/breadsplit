@@ -74,7 +74,7 @@ v-app(:dark='dark')
               v-avatar(size='36', color='#00000020', style='margin: -6px;')
                 img(:src='user.avatar_url')
             v-list-tile-content
-              v-list-tile-title {{ user.display_name || user.email }}
+              v-list-tile-title {{ user.name || user.email }}
             v-list-tile-action(v-if='!userIsOnline')
               v-icon(color='red', size='20') mdi-cloud-off-outline
 

@@ -16,7 +16,7 @@ export const mutations: MutationTree<UserState> = {
     state.me = {
       uid: null,
       anonymous: true,
-      display_name: '',
+      name: '',
     }
   },
 
