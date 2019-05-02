@@ -6,6 +6,8 @@ const StoreKey = 'splitoast-store'
 const PathsEnabled = [
   'user_locale',
   'group',
+  'user.me',
+  'user.users',
   'dark',
 ]
 

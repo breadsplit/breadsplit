@@ -17,8 +17,6 @@
       a(:href='i.href', target='_blank') {{i.name}}
   .newline
 
-  p {{env}}
-
   .section
     span Made with
     v-icon.heart(color='#ff4057') mdi-heart

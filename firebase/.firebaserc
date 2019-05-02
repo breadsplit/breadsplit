@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "splitoast-development",
+    "test": "splitoast-test",
+    "production": "splitoast-production"
+  }
+}

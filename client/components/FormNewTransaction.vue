@@ -33,8 +33,8 @@ v-card
           template(v-for='(i,idx) in balanceChanges')
             v-divider(v-if='idx!==0')
             v-list-tile(avatar)
-              v-list-tile-avatar.mt-1
-                app-avatar(:id='i.memberId', size='40')
+              v-list-tile-action.mt-1
+                app-user-avatar(:id='i.memberId', inline, size='40')
               v-list-tile-content
                 v-list-tile-title.text-xs-right.pr-3
                   app-money-label(:amount='i.balance', :currency='form.currency')
@@ -53,7 +53,7 @@ v-card
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
 import GroupMixin from '~/mixins/group'
-import { Transaction, Weight } from '~/types'
+import { Transaction, Weight } from '~/types/models'
 import { TransactionDefault } from '~/utils/defaults'
 import { TransactionBalanceChanges } from '~/utils/core'
 

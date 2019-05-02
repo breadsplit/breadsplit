@@ -1,5 +1,5 @@
 import { mutations, getters } from '~/store/index'
-import { RootStateDefault, GroupStateDefault, GroupDefault } from '~/utils/defaults'
+import { RootStateDefault } from '~/utils/defaults'
 
 describe('root state mutations', () => {
   it('switchLocale', () => {

@@ -16,7 +16,7 @@
         v-container
           v-subheader {{$t('ui.tabs.expenses')}}
           v-alert(:value='true', type='warning') Work in progress...
-          p {{group}}
+          pre {{JSON.stringify(group, null, 2)}}
 
       v-tab-item(key='4')
 
@@ -51,7 +51,6 @@ import GroupMixin from '~/mixins/group'
 import CommonMixin from '~/mixins/common'
 import MemberMixin from '~/mixins/member'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import { GroupBalances } from '~/utils/core'
 
 @Component({
   head() {
@@ -102,9 +101,6 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
   }
   get speedDialShow() {
     return this.tab_index === 0
-  }
-  get balances() {
-    return GroupBalances(this.group)
   }
   get fabStyle() {
     const style = {

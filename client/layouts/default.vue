@@ -28,12 +28,21 @@ v-app(:dark='dark')
             v-icon mdi-{{ group.icon }}
           v-list-tile-content
             v-list-tile-title(v-text='group.name')
+          v-list-tile-action(v-if='group.online')
+            v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
+
         v-divider.my-1
       v-list-tile(@click='newGroup')
         v-list-tile-action
           v-icon mdi-plus
         v-list-tile-content
           v-list-tile-title {{$t('ui.group_editing.new_group')}}
+
+      v-list-tile(@click='joinGroup')
+        v-list-tile-action
+          v-icon mdi-shape-circle-plus
+        v-list-tile-content
+          v-list-tile-title Join a group
 
       .drawer-list-bottom
 
@@ -44,13 +53,30 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.homepage')}}
 
-        // Sign in
-        v-list-tile(@click='')
+        v-list-tile(v-if='debug', nuxt, to='/test')
           v-list-tile-action
-            v-avatar(size='36', color='#00000020', style='margin: -6px;')
-              v-icon mdi-account
+            v-icon mdi-bug
           v-list-tile-content
-            v-list-tile-title {{$t('ui.sign_in')}}
+            v-list-tile-title Test playground
+
+        template(v-if='user.anonymous')
+          // Sign in
+          v-list-tile(@click='loginWithGoogle()')
+            v-list-tile-action
+              v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                v-icon mdi-account
+            v-list-tile-content
+              v-list-tile-title {{$t('ui.sign_in')}}
+
+        template(v-else)
+          v-list-tile(@click='promptLogout()')
+            v-list-tile-action
+              v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                img(:src='user.avatar_url')
+            v-list-tile-content
+              v-list-tile-title {{ user.name || user.email }}
+            v-list-tile-action(v-if='!userIsOnline')
+              v-icon(color='red', size='20') mdi-cloud-off-outline
 
         // Settings
         v-list-tile(@click='$router.push("/settings")')
@@ -89,7 +115,7 @@ v-app(:dark='dark')
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
-import { Group } from '~/types'
+import { Group, UserInfo } from '~/types/models'
 import CommonMixin from '~/mixins/common'
 import FontFamilyBuilder from '~/meta/font_family'
 
@@ -102,16 +128,20 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   miniVariant = false
   mobileBreakPoint = 700
 
-  @Getter('group/groups') groups!: Group[]
+  @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
+  @Getter('user/me') user!: UserInfo
+  @Getter('user/online') userIsOnline!: boolean
 
   @Mutation('group/remove') removeGroup
 
   // Computed
+  get debug() {
+    return process.env.NODE_ENV !== 'production'
+  }
   get dark() {
     return this.$store.getters.dark
   }
-
   get title() {
     if (this.current)
       return this.current.name
@@ -126,10 +156,16 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     return font_family
   }
   get group_menu() {
-    return [
-      { title: 'Edit group', key: 'edit' },
-      { title: 'Delete group', key: 'delete' },
-    ]
+    const menu: ({title: string; key: string})[] = []
+
+    menu.push({ title: 'Edit group', key: 'edit' })
+    if (this.current && !this.current.online)
+      menu.push({ title: 'Make this group online', key: 'transfer_online' })
+    if (this.current && this.current.online)
+      menu.push({ title: 'Sync now', key: 'sync' })
+    menu.push({ title: 'Delete group', key: 'delete' })
+
+    return menu
   }
   get primaryColor() {
     return this.$store.getters.primary
@@ -142,7 +178,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     this.$root.$newGroup = this.$refs.newgroup
 
-    // @ts-ignore
     if (!this.isMobile)
       this.drawer = true
   }
@@ -151,19 +186,56 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     await this.$root.$newGroup.open()
   }
+
   async onGroupMenu(key) {
     switch (key) {
       case 'delete':
         // @ts-ignore
         if (await this.$root.$confirm('Are you sure?')) {
+          const groupid = this.$store.state.group.currentId
+          if (this.current && this.current.online)
+            await this.$fire.deleteGroup(groupid)
           this.removeGroup()
           this.$router.push('/')
         }
         break
+
+      case 'transfer_online':
+        // @ts-ignore
+        if (await this.$root.$confirm('Are you sure?'))
+          await this.$fire.publishGroup({ groupid: this.$store.state.group.currentId })
+
+        break
+
+      case 'sync':
+        await this.syncCurrentGroup()
+        break
+
       case 'edit':
         // TODO:
         break
     }
+  }
+
+  async loginWithGoogle() {
+    await this.$fire.loginWithGoogle()
+  }
+
+  async promptLogout() {
+    // @ts-ignore
+    if (await this.$root.$confirm('Are you sure to logout?'))
+      await this.$fire.logout()
+  }
+
+  async joinGroup() {
+    const id = prompt('Group ID')
+    if (id)
+      await this.$fire.joinGroup(id)
+  }
+
+  async syncCurrentGroup() {
+    if (this.current)
+      await this.$fire.manualSync(this.current.id)
   }
 }
 </script>

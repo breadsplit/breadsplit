@@ -1,3 +1,5 @@
+import { TransOperation } from 'opschain'
+
 export const enum MemberRoles {
   owner = 'owner',
   collaborator = 'collaborator',
@@ -18,7 +20,7 @@ export const enum Entity {
   currency_record = 'currency_record',
 }
 
-export const enum TransactionType{
+export const enum TransactionType {
   expenses = 'expenses',
   transfer = 'transfer',
 }
@@ -34,13 +36,19 @@ export interface Member {
   id: string
   name: string
   role: MemberRoles
+  removed?: boolean
+}
 
+export interface UserInfo {
+  uid: string | null
+  anonymous: boolean
   email?: string
-  avatarUrl?: string
-  avatarHash?: string
-  disableAvatarUrl?: boolean
+  name: string
+  avatar_url?: string
+  lastupdate?: number
 
-  quit?: boolean
+  // client side only
+  lastsync?: number
 }
 
 export interface Transaction {
@@ -97,15 +105,42 @@ export interface Group {
   timestamp: number
 
   // Records
-  memberIds: string[]
   members: {[s: string]: Member}
   currencies: string[]
   currency_records: CurrencyRecord[]
   transactions: Transaction[]
   activities: Activity[]
 
-  // Online
-  serverid?: string
+  online?: boolean
+}
+
+export interface Operation extends TransOperation {
+  uid?: string
+  server_timestamp?: number
+}
+
+export interface ClientGroup {
+  id: string
+  base: Group
+  operations: Operation[]
+  online?: boolean
   lastsync?: number
-  online: boolean
+}
+
+export interface ServerGroup {
+  id: string
+  // user ids
+  viewers: string[]
+  owner: string
+
+  present: Group
+  operations: string[]
+}
+
+export interface ServerOperations {
+  operations: Operation[]
+}
+
+export interface ServerBase {
+  base: Group
 }
