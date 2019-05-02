@@ -8,14 +8,14 @@
     v-card.pa-2
 
       template(v-if='stage === 0')
-        template(v-for='icon in iconset')
-          v-btn(flat icon @click='setIcon(icon)' small)
-            v-icon(:color='color') mdi-{{icon}}
+        template(v-for='i in iconset')
+          v-btn(icon @click='setIcon(i)' :style='i===icon?selectedStyle:null').ma-1
+            v-icon(:color='color') mdi-{{i}}
 
       template(v-else)
-        template(v-for='color in swatches')
-          v-btn(flat icon @click='setColor(color)' small)
-            v-icon(:color='color') mdi-checkbox-blank-circle
+        template(v-for='c in swatches')
+          v-btn(flat icon @click='setColor(c)' :style='c===color?selectedStyle:null').ma-1
+            v-icon(:color='c') mdi-checkbox-blank-circle
 </template>
 
 <script lang="ts">
@@ -43,6 +43,12 @@ export default class IconSelect extends Vue {
     if (typeof this.icons === 'string')
       return Iconsets[this.icons] || []
     return this.icons || Iconsets.group
+  }
+
+  get selectedStyle() {
+    return {
+      background: 'rgba(128, 128, 128, 0.2)',
+    }
   }
 
   setIcon(value) {
