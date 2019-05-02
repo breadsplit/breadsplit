@@ -27,44 +27,41 @@ v-card
         span {{$t('ui.button_new_member')}}
 </template>
 
-<script>
+<script lang='ts'>
 // TODO: replace prompt with better form
 /* eslint-disable no-alert */
 import MemberMixin from '~/mixins/member'
 import randomstr from '~/utils/randomstr'
+import { Component, Mixins, Prop } from 'vue-property-decorator'
+import { Member } from '~/types/index'
 
-export default {
-  mixins: [MemberMixin],
-  props: {
-    members: { type: Array, default: () => ([]) },
-  },
-  computed: {
-    edit_menu() {
-      return [
-        { title: 'Rename' },
-        { title: 'Remove user' },
-      ]
-    },
-  },
-  methods: {
-    promptNewMember() {
-      const name = prompt('Name?')
-      const email = prompt('Email?')
-      if (name)
-        this.newMember({ member: { email, name } })
-    },
-    promptRenameMember(member) {
-      const name = prompt('Name?')
-      if (name)
-        this.editMember({ memberid: member.id, changes: { name } })
-    },
-    promptRemoveMember(member) {
-      if (confirm('Sure?'))
-        this.removeMember({ memberid: member.id })
-    },
-    randomAvatar(member) {
-      this.editMember({ memberid: member.id, changes: { avatarHash: randomstr(10) } })
-    },
-  },
+@Component
+export default class Members extends Mixins(MemberMixin) {
+  @Prop({ default: () => ([]) }) readonly members!: Member[]
+
+  get edit_menu() {
+    return [
+      { title: 'Rename' },
+      { title: 'Remove user' },
+    ]
+  }
+  promptNewMember() {
+    const name = prompt('Name?')
+    const email = prompt('Email?')
+    if (name)
+      this.newMember({ member: { email, name } })
+  }
+  promptRenameMember(member) {
+    const name = prompt('Name?')
+    if (name)
+      this.editMember({ memberid: member.id, changes: { name } })
+  }
+  promptRemoveMember(member) {
+    if (confirm('Sure?'))
+      this.removeMember({ memberid: member.id })
+  }
+  randomAvatar(member) {
+    this.editMember({ memberid: member.id, changes: { avatarHash: randomstr(10) } })
+  }
 }
 </script>

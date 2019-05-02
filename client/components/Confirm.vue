@@ -10,39 +10,43 @@ v-dialog(v-model='dialog', :max-width='options.width', @keydown.esc='cancel', v-
       v-btn(color='grey', flat='flat', @click.native='cancel') Cancel
 </template>
 
-<script>
-export default {
-  data: () => ({
-    dialog: false,
-    resolve: null,
-    reject: null,
-    message: null,
-    title: null,
-    options: {
-      color: 'primary',
-      width: 290,
-      zIndex: 200,
-    },
-  }),
-  methods: {
-    open(message, title, options) {
-      this.dialog = true
-      this.title = title
-      this.message = message
-      this.options = Object.assign(this.options, options)
-      return new Promise((resolve, reject) => {
-        this.resolve = resolve
-        this.reject = reject
-      })
-    },
-    agree() {
+<script lang='ts'>
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class Confirm extends Vue {
+  dialog = false
+  resolve: ((result) => void) | null = null
+  reject: ((error) => void) | null = null
+  message = null
+  title = null
+  options = {
+    color: 'primary',
+    width: 290,
+    zIndex: 200,
+  }
+
+  open(message, title, options) {
+    this.dialog = true
+    this.title = title
+    this.message = message
+    this.options = Object.assign(this.options, options)
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve
+      this.reject = reject
+    })
+  }
+
+  agree() {
+    if (this.resolve)
       this.resolve(true)
-      this.dialog = false
-    },
-    cancel() {
+    this.dialog = false
+  }
+
+  cancel() {
+    if (this.resolve)
       this.resolve(false)
-      this.dialog = false
-    },
-  },
+    this.dialog = false
+  }
 }
 </script>

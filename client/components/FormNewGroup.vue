@@ -43,49 +43,42 @@ v-card
 
 </template>
 
-<script>
+<script lang='ts'>
 import swatches from '~/meta/swatches'
 import currencies from '~/meta/currencies'
+import { Vue, Component } from 'vue-property-decorator'
 
-export default {
-  data() {
-    return {
-      search: '',
-      currency: '',
-      icon: 'account-group',
-      name: '',
-      color: swatches[Math.floor(Math.random() * swatches.length)],
-      members: [],
+@Component
+export default class FromNewGroup extends Vue {
+  search = ''
+  currency = ''
+  icon = 'account-group'
+  name = ''
+  color = swatches[Math.floor(Math.random() * swatches.length)]
+  members = []
+
+  get currencies() {
+    return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
+  }
+  get members_suggestions() {
+    // TODO: load suggestions from another group
+    return []
+  }
+
+  close(result?) {
+    this.$emit('close', result)
+  }
+  create() {
+    const payload = {
+      name: this.name,
+      color: this.color,
+      icon: this.icon,
+      members: this.members.map((m) => { return { name: m } }),
+      currencies: [this.currency],
     }
-  },
-  computed: {
-    isDark() {
-      return this.$utils.isDark(this.color)
-    },
-    currencies() {
-      return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
-    },
-    members_suggestions() {
-      // TODO: load suggestions from another group
-      return []
-    },
-  },
-  methods: {
-    close(result) {
-      this.$emit('close', result)
-    },
-    create() {
-      const payload = {
-        name: this.name,
-        color: this.color,
-        icon: this.icon,
-        members: this.members.map((m) => { return { name: m } }),
-        currencies: [this.currency],
-      }
-      this.$store.commit('group/add', payload)
+    this.$store.commit('group/add', payload)
 
-      this.close()
-    },
-  },
+    this.close()
+  }
 }
 </script>

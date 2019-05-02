@@ -12,45 +12,42 @@ v-fab-transition
       span {{item.text}}
 </template>
 
-<script>
-export default {
+<script lang='ts'>
+import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
+
+@Component({
   inheritAttrs: false,
-  props: {
-    value: { type: Boolean, default: false },
-    show: { type: Boolean, default: true },
-    color: { type: String, default: 'primary' },
-    icon: { type: String, default: 'plus' },
-    iconclose: { type: String, default: 'close' },
-    items: { type: Array, default: () => ([]) },
-  },
-  data() {
-    return {
-      fab: false,
-      tooltips: false,
-      tooltipsDisabled: false,
-    }
-  },
-  watch: {
-    fab() {
-      this.tooltips = false
-      this.tooltipsDisabled = false
-      this.fab && setTimeout(() => {
-        this.tooltips = true
-        this.$nextTick(() => this.tooltipsDisabled = true)
-      }, 200)
-      this.$emit('input', this.fab)
-    },
-    value: {
-      immediate: true,
-      handler() {
-        this.fab = this.value
-      },
-    },
-  },
-  methods: {
-    itemClick(item) {
-      this.$emit('item-click', item.key)
-    },
-  },
+})
+export default class SpeedDial extends Vue {
+  fab= false
+  tooltips=false
+  tooltipsDisabled= false
+
+  @Prop({ default: false }) readonly value!: boolean
+  @Prop({ default: true }) readonly show!: boolean
+  @Prop({ default: 'primary' }) readonly color!: string
+  @Prop({ default: 'plus' }) readonly icon!: string
+  @Prop({ default: 'close' }) readonly iconclose!: string
+  @Prop({ default: () => ([]) }) readonly items!: {key: string; color?: string; text: string}[]
+
+  @Watch('fab')
+  onFabChanged() {
+    this.tooltips = false
+    this.tooltipsDisabled = false
+    this.fab && setTimeout(() => {
+      this.tooltips = true
+      this.$nextTick(() => this.tooltipsDisabled = true)
+    }, 200)
+    this.$emit('input', this.fab)
+  }
+
+  @Watch('value', { immediate: true })
+  onValueChanged() {
+    this.fab = this.value
+  }
+
+  itemClick(item) {
+    this.$emit('item-click', item.key)
+  }
 }
 </script>

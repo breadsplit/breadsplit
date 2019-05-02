@@ -26,18 +26,17 @@
 
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      code: [],
-      design: [],
-      version: process.env.APP_VERSION,
-      target: process.env.BUILD_TARGET,
-      buildtime: process.env.BUILD_TIME,
-      machine: process.env.BUILD_MACHINE,
-    }
-  },
+<script lang='ts'>
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+export default class Credit extends Vue {
+  code = []
+  design = []
+  version = process.env.APP_VERSION
+  target = process.env.BUILD_TARGET
+  buildtime = process.env.BUILD_TIME
+  machine = process.env.BUILD_MACHINE
 }
 </script>
 

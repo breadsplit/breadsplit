@@ -7,44 +7,39 @@ v-dialog(
 </template>
 
 <script>
-export default {
+import { Component, Vue, Watch } from 'vue-property-decorator'
+
+@Component({
   inheritAttrs: false,
-  data() {
-    return {
-      dialog: false,
-      resolve: null,
-      reject: null,
-      options: {},
-    }
-  },
+})
+export default class Dialog extends Vue {
+  dialog= false
+  resolve= null
+  reject= null
+  options= {}
 
-  computed: {
-    isOpened() {
-      return !!this.dialog
-    },
-  },
+  get isOpened() {
+    return !!this.dialog
+  }
 
-  watch: {
-    dialog() {
-      if (!this.dialog)
-        this.$emit('exit')
-    },
-  },
+  @Watch('dialog')
+  onDialogChanged() {
+    if (!this.dialog)
+      this.$emit('exit')
+  }
 
-  methods: {
-    open(options = {}) {
-      this.dialog = true
-      this.options = options
-      return new Promise((resolve, reject) => {
-        this.resolve = resolve
-        this.reject = reject
-      })
-    },
-    close(flag = true) {
-      this.resolve(flag)
-      if (this.dialog)
-        this.dialog = false
-    },
-  },
+  open(options = {}) {
+    this.dialog = true
+    this.options = options
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve
+      this.reject = reject
+    })
+  }
+  close(flag = true) {
+    this.resolve(flag)
+    if (this.dialog)
+      this.dialog = false
+  }
 }
 </script>
