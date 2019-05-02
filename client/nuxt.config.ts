@@ -60,7 +60,6 @@ const config: NuxtConfiguration = {
     '~/plugins/dayjs',
     '~/plugins/utils',
     '~/plugins/vuetify',
-    '~/plugins/swatches',
     '~/plugins/components',
   ],
 
