@@ -273,8 +273,8 @@ export class FirebasePlugin {
   }
 }
 
-export default async ({ store, router }: { store: Store<RootState>; router: VueRouter }) => {
-  const fire = new FirebasePlugin(store, router)
+export default async (context: any) => {
+  const fire = new FirebasePlugin(context.store, context.app.router)
   Vue.prototype.$fire = fire
 
   auth.onAuthStateChanged(async (user) => {

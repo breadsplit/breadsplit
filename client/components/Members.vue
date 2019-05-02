@@ -34,8 +34,8 @@ v-card
 /* eslint-disable no-alert */
 import MemberMixin from '~/mixins/member'
 import { Component, Mixins, Prop } from 'vue-property-decorator'
-import { Member } from '~/types/index'
-import { IsThisId } from '~/tuils/id_helper'
+import { IsThisId } from '~/utils/id_helper'
+import { Member } from '~/types/models'
 
 @Component
 export default class Members extends Mixins(MemberMixin) {
@@ -56,7 +56,7 @@ export default class Members extends Mixins(MemberMixin) {
   }
 
   memberMenu(member) {
-    const items = []
+    const items: {title: string; handler: () => void}[] = []
     if (IsThisId.LocalMember(member.id)) {
       items.push({
         title: 'Rename',
@@ -90,9 +90,8 @@ export default class Members extends Mixins(MemberMixin) {
 
   promptNewMember() {
     const name = prompt('Name?')
-    const email = prompt('Email?')
     if (name)
-      this.newMember({ member: { email, name } })
+      this.newMember({ member: { name } })
   }
 
   promptRenameMember(member) {
