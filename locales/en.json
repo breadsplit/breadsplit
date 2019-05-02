@@ -2,9 +2,7 @@
   "code": "en",
   "iso": "en-US",
   "language_name": "English",
-  "translators": [
-    "antfu<anthonyfu117@hotmail.com>"
-  ],
+  "translators": "antfu<anthonyfu117@hotmail.com>",
 
   "appname": "Splitoast",
   "css": {

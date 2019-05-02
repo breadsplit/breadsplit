@@ -2,9 +2,7 @@
   "code": "zh-tw",
   "iso": "zh-TW",
   "language_name": "繁體中文",
-  "translators": [
-    "antfu<anthonyfu117@hotmail.com>"
-  ],
+  "translators": "antfu<anthonyfu117@hotmail.com>",
 
   "appname": "分賬吐司",
   "css": {
