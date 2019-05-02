@@ -29,10 +29,11 @@ module.exports = {
           title: 'Development',
           collapsable: false,
           children: [
-            'dev/env-setup',
+            'dev/setup',
             'dev/launch',
             'dev/dirs',
             'dev/tech',
+            'dev/env',
             'dev/build',
           ]
         },
@@ -41,6 +42,7 @@ module.exports = {
           collapsable: false,
           children: [
             'contribute/guideline',
+            'contribute/translate',
           ]
         },
         {
