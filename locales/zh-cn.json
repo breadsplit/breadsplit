@@ -1,0 +1,12 @@
+{ 
+  "code": "zh-cn",
+  "iso": "zh-CN",
+  "language_name": "简体中文",
+  "translators": [
+    "antfu<anthonyfu117@hotmail.com>"
+  ],
+
+  "css": {
+    "font_of_locale": "\"微軟雅黑\", \"Microsoft YaHei\""
+  }
+}

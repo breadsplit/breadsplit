@@ -1,19 +1,16 @@
-import en from './messages/en'
-import zhcn from './messages/zh-cn'
-import zhtw from './messages/zh-tw'
+import locales from '../locales'
 
-export const AvaliableLocales = [
-  { code: 'en', iso: 'en-US', display: 'English' },
-  { code: 'zh-tw', iso: 'zh-TW', display: '繁體中文' },
-  // Temporary disable zh-cn during developing
-  // { code: 'zh-cn', iso: 'zh-CN', display: '简体中文' },
-]
+export const AvaliableLocales = Object
+  .values(locales)
+  .map((locale) => {
+    return {
+      code: locale.code,
+      iso: locale.iso,
+      display: locale.language_name,
+    }
+  })
 
-export const Messages = {
-  en,
-  'zh-cn': zhcn,
-  'zh-tw': zhtw,
-}
+export const Messages = locales
 
 export const Config = {
   defaultLocale: 'en',
