@@ -1,7 +1,7 @@
 ---
 home: true
 actionText: Get Started
-actionLink: dev/env-setup.md
+actionLink: dev/setup.md
 features:
 - title: Absolutely Free
   details: This app and the services are open source and totally free with no Ad.
