@@ -42,6 +42,7 @@ module.exports = {
           collapsable: false,
           children: [
             'contribute/guideline',
+            'contribute/translate',
           ]
         },
         {
