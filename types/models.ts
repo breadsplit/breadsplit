@@ -36,6 +36,7 @@ export interface Member {
   id: string
   name: string
   role: MemberRoles
+  removed?: boolean
 }
 
 export interface UserInfo {

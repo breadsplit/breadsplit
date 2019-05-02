@@ -28,7 +28,8 @@ export function TransactionBalanceChanges(trans: Transaction) {
 }
 
 export function GroupBalances(group: Group) {
-  const balances = Object.values(group.members)
+  const mainCurrency = group.currencies[0]
+  let balances = Object.values(group.members)
     .map((m) => {
       const balance: { [s: string]: number } = { }
       group.currencies.forEach((currency) => {
@@ -37,6 +38,8 @@ export function GroupBalances(group: Group) {
       return {
         memberId: m.id,
         balance,
+        mainBalance: 0,
+        removed: m.removed,
       }
     })
   group.transactions.forEach((t) => {
@@ -51,6 +54,20 @@ export function GroupBalances(group: Group) {
 
       info.balance[currency] += c.balance
     })
+  })
+  balances.forEach((b) => {
+    // TODO: curency change
+    b.mainBalance = b.balance[mainCurrency]
+  })
+  // remove the "Removed members" when theire balance equal to 0
+  balances = balances.filter(b => !b.removed || b.mainBalance !== 0)
+  // sort by the balance
+  balances.sort((a, b) => {
+    if (a.removed === b.removed)
+      return a.mainBalance - b.mainBalance
+    if (a.removed)
+      return 1
+    return -1
   })
   return balances
 }

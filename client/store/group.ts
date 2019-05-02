@@ -7,7 +7,7 @@ import { GroupState, RootState } from '~/types/store'
 import { ClientGroup, Group } from '~/types/models'
 import { EvalTransforms, ProcessOperation } from 'operation-sync'
 import { Transforms } from '../../core'
-import { ServerGroup } from '../../types/models'
+import { ServerGroup, Member } from '../../types/models'
 
 const OperationCache = {}
 
@@ -48,6 +48,18 @@ export const getters: GetterTree<GroupState, RootState> = {
     if (!group)
       return null
     return group.members[memberId]
+  },
+
+  activeMembersOf: state => (id?: string) => {
+    id = id || state.currentId || ''
+    const group = Eval(state.groups[id])
+    if (!group)
+      return []
+    return Object.values(group.members).filter(m => !m.removed)
+  },
+
+  activeMembers(state, getters) {
+    return getters.activeMembersOf()
   },
 }
 

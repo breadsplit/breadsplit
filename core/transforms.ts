@@ -23,7 +23,7 @@ export const Transforms: TransformFunctions<Group> = {
     if (!data)
       return snap
     const id = data as string
-    delete snap.members[id]
+    snap.members[id].removed = true
     return snap
   },
 
