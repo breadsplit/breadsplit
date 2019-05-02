@@ -47,7 +47,7 @@
     "firebase": "^5.10.1",
     "lodash": "^4.17.11",
     "nuxt": "^2.6.2",
-    "operation-sync": "^0.2.4",
+    "opschain": "^0.3.1",
     "pug": "^2.0.3",
     "pug-plain-loader": "^1.0.0",
     "svg-to-dataurl": "^1.0.0",

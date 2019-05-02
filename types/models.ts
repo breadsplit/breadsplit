@@ -1,4 +1,4 @@
-import { TransOperation } from 'operation-sync'
+import { TransOperation } from 'opschain'
 
 export const enum MemberRoles {
   owner = 'owner',

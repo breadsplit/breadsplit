@@ -1,4 +1,10 @@
-import { TransformFunctions } from 'operation-sync'
+/*
+This file is shared both in client and server.
+
+If you made any modification,
+Please DO DEPLOY firebase functions before merge into master.
+*/
+import { TransformFunctions } from 'opschain'
 import { Group, Member, Transaction } from '../types/models'
 
 export const Transforms: TransformFunctions<Group> = {
@@ -23,6 +29,8 @@ export const Transforms: TransformFunctions<Group> = {
     if (!data)
       return snap
     const id = data as string
+    if (!snap.members[id])
+      return snap
     snap.members[id].removed = true
     return snap
   },

@@ -5,11 +5,11 @@ import { MutationTree, ActionTree, GetterTree } from 'vuex'
 import { MemberDefault, GroupStateDefault, ClientGroupDefault, TransactionDefault } from '~/utils/defaults'
 import { GroupState, RootState } from '~/types/store'
 import { ClientGroup, Group } from '~/types/models'
-import { EvalTransforms, ProcessOperation } from 'operation-sync'
+import { EvalTransforms, ProcessOperation, BasicCache } from 'opschain'
 import { Transforms } from '../../core'
-import { ServerGroup, Member } from '../../types/models'
+import { ServerGroup } from '../../types/models'
 
-const OperationCache = {}
+const OperationCache = new BasicCache<Group>()
 
 export function Eval(group?: ClientGroup): Group | undefined {
   if (!group)
@@ -17,7 +17,7 @@ export function Eval(group?: ClientGroup): Group | undefined {
   const { base, operations } = group
   if (!base)
     return undefined
-  return EvalTransforms<Group>(base, Transforms, operations, undefined, OperationCache)
+  return EvalTransforms<Group>(Transforms, { cacheObject: OperationCache })(base, operations)
 }
 
 function NewOperation(group: ClientGroup, name: string, data) {

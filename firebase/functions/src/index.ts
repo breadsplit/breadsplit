@@ -1,7 +1,9 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
-import { ProcessOperations, EvalTransforms, TransOperationOption } from 'operation-sync'
+// @ts-ignore
+import JsCache from 'js-cache'
+import { ProcessOperations, EvalTransforms, TransOperationOption } from 'opschain'
 import { ServerGroup, Group, Operation, ServerOperations } from '../../../types/models'
 import { GenerateId } from '../../../core/id_helper'
 import { Transforms } from '../../../core/transforms'
@@ -13,7 +15,8 @@ const GroupsRef = db.collection('groups')
 const OperationsRef = db.collection('_operations')
 
 const f = functions.https.onCall
-const transformCache = {}
+const transformCache = new JsCache()
+const transformCacheTTL = 10 * 24 * 60 * 60 * 1000 // 10 days
 
 // warpper functions
 function ProcessServerOperations(operations: TransOperationOption[], uid: string, server_timestamp?: number): Operation[] {
@@ -26,11 +29,19 @@ function ProcessServerOperations(operations: TransOperationOption[], uid: string
   })
 }
 
-/* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
+const _eval = EvalTransforms<Group>(Transforms, {
+  cacheObject: transformCache,
+  cacheTTL: transformCacheTTL,
+  shouldCache: (operation) => {
+    // skip caches that is too old
+    return operation.timestamp + transformCacheTTL > +new Date()
+  },
+})
 function Eval(operations: Operation[]): Group {
-  return EvalTransforms<Group>({} as Group, Transforms, operations, undefined, transformCache)
+  /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
+  return _eval({} as Group, operations)
+  /* eslint-enable @typescript-eslint/no-object-literal-type-assertion */
 }
-/* eslint-enable @typescript-eslint/no-object-literal-type-assertion */
 
 // firebase functions
 
