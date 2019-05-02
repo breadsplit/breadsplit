@@ -1,10 +1,9 @@
-{ 
-  "code": "ko",
-  "iso": "ko",
-  "language_name": "한국어",
-  "translators": "",
-
-  "css": {
-    "font_of_locale": ""
-  }
+{
+    "code": "ko",
+    "iso": "ko",
+    "language_name": "한국어",
+    "translators": "",
+    "css": {
+        "font_of_locale": ""
+    }
 }
