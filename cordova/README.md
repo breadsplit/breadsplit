@@ -4,13 +4,13 @@ Mobile app wrapper
 
 ## Install dependencies
 
-```sh
+```bash
 npm run cordova:install
 ```
 
 Check the requirements
 
-```sh
+```bash
 npm run cordova:check
 ```
 
@@ -20,31 +20,31 @@ npm run cordova:check
 
 Build Nuxt
 
-```sh
+```bash
 npm run generate
 ```
 
 Copy dist to cordova
 
-```sh
+```bash
 npm run cordova:copy
 ```
 
 Cordova preparaion
 
-```sh
+```bash
 npm run cordova:prepare
 ```
 
 Build package
 
-```sh
+```bash
 npm run cordova:build
 ```
 
 Run the packages
 
-```sh
+```bash
 npm run cordova:run:android
 ```
 

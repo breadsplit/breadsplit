@@ -1,7 +1,7 @@
 module.exports = {
-  title: 'Splitoast',
-  description: '',
-  serviceWorker: true,
+  title: '🍞 Splitoast Develop',
+  description: 'Group bills split made easy, fast and customizable.',
+  base: '/splitoast/',
   head: [
     ['meta', { charset: 'utf-8' }],
     ['meta', { name: 'theme-color', content: '#41b883' }],
@@ -12,34 +12,55 @@ module.exports = {
     docsRepo: 'antfu/splitoast',
     docsDir: 'docs',
     docsBranch: 'master',
-    editLinks: true,
-    editLinkText: 'Help us improve this page!',
     nav: [
       { text: 'Getting Started', link: '/' },
-      { text: 'Contribute', link: '/contribute/env-setup' },
+      { text: 'Live', link: 'https://splitoast.netlify.com/' },
     ],
-    sidebar: [
-      '/',
+    sidebar: {
+      '/': [
+        {
+          title: 'Guides',
+          collapsable: false,
+          children: [
+            'guide/extra_guide_zh',
+          ],
+        },
+        {
+          title: 'Development',
+          collapsable: false,
+          children: [
+            'dev/env-setup',
+            'dev/launch',
+            'dev/dirs',
+            'dev/tech',
+            'dev/build',
+          ]
+        },
+        {
+          title: 'Contribute',
+          collapsable: false,
+          children: [
+            'contribute/guideline',
+          ]
+        },
+        {
+          title: 'About',
+          collapsable: false,
+          children: [
+            'about/roadmap',
+            'about/team',
+            'about/license',
+          ]
+        },
+      ]
+    },
+    '/api': [
       {
-        title: 'Contribute',
+        title: 'API',
         collapsable: false,
         children: [
-          'contribute/env-setup',
-          'contribute/launch',
-          'contribute/commit-message-guideline',
+          'api/store',
         ]
-      },
-      {
-        title: 'Client API',
-        collapsable: false,
-        children: [
-          'client_api/store',
-        ]
-      },
-      {
-        title: 'Server API',
-        collapsable: false,
-        children: []
       },
     ]
   }
