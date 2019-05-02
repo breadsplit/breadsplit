@@ -5,6 +5,16 @@
   "private": true,
   "description": "The Splitoast web application",
   "author": "Anthony Fu",
+  "license": "GPLv3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/antfu/splitoast"
+  },
+  "bugs": "https://github.com/antfu/splitoas/issues",
+  "engines": {
+    "node": ">= 10.0.0",
+    "npm": ">= 5.0.0"
+  },
   "scripts": {
     "dev": "nuxt ./client",
     "build": "nuxt build ./client",
@@ -66,6 +76,7 @@
     "@nuxtjs/eslint-config": "^0.0.1",
     "@types/jest": "^24.0.11",
     "@types/lodash": "^4.14.123",
+    "@types/nanoid": "^1.2.1",
     "@types/webpack-env": "^1.13.9",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@vue/test-utils": "^1.0.0-beta.29",

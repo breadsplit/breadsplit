@@ -15,6 +15,7 @@
     "firebase-functions": "^2.3.0",
     "js-cache": "^1.0.3",
     "lodash": "^4.17.11",
+    "nanoid": "^2.0.1",
     "opschain": "^0.3.1"
   },
   "devDependencies": {
