@@ -9,6 +9,7 @@ import 'firebase/functions'
 import { RootState } from '~/types/store'
 import { Group, UserInfo } from '~/types/models'
 import { IsThisId } from '../../core/id_helper'
+import { ServerGroup } from '../../types/models'
 
 const config = {
   apiKey: 'AIzaSyCGr9QtZjJSsomlM5pTkqiPzeCYr_kQqk4',
@@ -117,13 +118,15 @@ export class FirebasePlugin {
             return
 
           // updates from server
-          const data = change.doc.data()
+          const data = change.doc.data() as ServerGroup
           log(`🌠 Incoming change <${change.type}>`, data.id, data)
           if (change.type === 'modified' || change.type === 'added') {
             this.store.commit('group/onServerUpdate', {
               data,
               timestamp: +new Date(),
             })
+            // update viewers profile async
+            this.updateUserProfiles(data.viewers)
           }
           else if (change.type === 'removed') {
             this.store.commit('group/remove', data.id)
@@ -135,7 +138,7 @@ export class FirebasePlugin {
 
   unsubscribe() {
     if (this._unsubscribeCallback) {
-      log('🔕 Unsubscribed')
+      log('🔕 Firebase unsubscribed')
       this._unsubscribeCallback()
     }
   }
@@ -213,12 +216,28 @@ export class FirebasePlugin {
         .collection('users')
         .doc(uid)
         .get()
-      const user = doc.data()
+      const user = doc.data() as UserInfo
+      user.lastsync = +new Date()
       this.store.commit('user/profileUpdate', { uid, user })
-      log('Profile of ', uid, ' updated ', user)
+      log('🎃 Profile of ', uid, ' updated ', user)
     }
     catch (e) {
+      log(`🐛 Error on download profile of ${uid}`)
+      console.error(e)
+    }
+  }
 
+  async updateUserProfiles(uids: string[], threshold = 1000 * 60 * 60 * 24) {
+    const now = +new Date()
+    for (const uid of uids) {
+      // skip profile updates for user self
+      if (uid === this.uid)
+        continue
+
+      // if local user lastupdate expire the threshold, update from server
+      const user = this.store.getters['user/user'](uid) as UserInfo
+      if (!user || !user.lastupdate || (now - user.lastupdate) > threshold)
+        this.downloadProfile(uid)
     }
   }
 

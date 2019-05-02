@@ -45,6 +45,9 @@ export interface UserInfo {
   display_name: string
   avatar_url?: string
   lastupdate?: number
+
+  // client side only
+  lastsync?: number
 }
 
 export interface Transaction {
