@@ -83,5 +83,19 @@ dist
 # Service worker
 sw.*
 
-# Test page
+# Testing vue components
 test.vue
+*.test.vue
+
+# Cordova
+cordova/platforms
+cordova/plugins
+cordova/www
+
+# Firebase Compiled JavaScript files
+.firebase
+firebase/functions/lib
+firebase/www
+
+# Firebase admin keys
+service-account-key.json

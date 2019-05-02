@@ -1,4 +1,4 @@
-import { Member } from '~/types'
+import { Member } from '~/types/models'
 import md5 from 'crypto-js/md5'
 import Avatars from '@dicebear/avatars'
 import GridyAvatars from '@dicebear/avatars-gridy-sprites'
@@ -16,16 +16,7 @@ export const dicebearOffline = (hash: string) => {
 export const avatarProvider = dicebearOffline
 
 export function GetMemberAvatarUrl(member: Member) {
-  if (!member.disableAvatarUrl && member.avatarUrl)
-    return member.avatarUrl
-
-  let hash = ''
-  if (member.avatarHash) {
-    hash = member.avatarHash
-  }
-  else {
-    const email = (member.email || member.id || '').trim().toLowerCase()
-    hash = md5(email).toString()
-  }
+  const key = (member.id || '').trim().toLowerCase()
+  const hash = md5(key).toString()
   return avatarProvider(hash)
 }

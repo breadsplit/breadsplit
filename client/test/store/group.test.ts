@@ -1,6 +1,7 @@
-import { mutations, getters } from '~/store/group'
+import { mutations, getters, Eval } from '~/store/group'
 import { RootStateDefault, GroupStateDefault } from '~/utils/defaults'
 import { GroupState } from '~/types/store'
+import { Group } from 'types/models'
 
 describe('group state getters', () => {
   it('current', () => {
@@ -28,7 +29,7 @@ describe('group state mutations', () => {
   it('setup test', () => {
     expect(Object.keys(state.groups).length).toEqual(groupsAmount)
     expect(state.groups).toHaveProperty('group1')
-    expect(state.groups.group1.name).toEqual('group1')
+    expect(state.groups.group1.id).toEqual('group1')
   })
 
   it('add edit remove', () => {
@@ -39,19 +40,9 @@ describe('group state mutations', () => {
     })
     expect(Object.keys(state.groups).length).toEqual(groupsAmount + 1)
     expect(state.groups).toHaveProperty('test')
-    expect(state.groups.test.name).toEqual('test')
-    expect(state.groups.test.icon).toBeFalsy()
-
-    // Edit
-    mutations.edit(state, {
-      id: 'test',
-      changes: {
-        name: 'hello',
-        icon: 'bar',
-      },
-    })
-    expect(state.groups.test.name).toEqual('hello')
-    expect(state.groups.test.icon).toEqual('bar')
+    expect(state.groups.test.id).toEqual('test')
+    expect(state.groups.test.base.id).toEqual('test')
+    expect(state.groups.test.base.icon).toBeFalsy()
 
     // Remove
     mutations.remove(state, 'test')
@@ -60,11 +51,16 @@ describe('group state mutations', () => {
   })
 
   it('members', () => {
-    const group = state.groups.group1
+    const client = state.groups.group1
+    let group = Eval(client) as Group
+    expect(group).toBeTruthy()
+    expect(client.operations).toHaveLength(0)
     expect(Object.keys(group.members)).toHaveLength(0)
 
     // Add
     mutations.addMember(state, { id: 'group1', member: { id: 'member1', name: 'member1' } })
+    expect(client.operations).toHaveLength(1)
+    group = Eval(client) as Group
     expect(Object.keys(group.members)).toHaveLength(1)
     expect(group.members).toHaveProperty('member1')
     expect(group.members.member1).toHaveProperty('name', 'member1')

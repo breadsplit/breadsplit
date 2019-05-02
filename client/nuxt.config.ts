@@ -59,6 +59,7 @@ const config: NuxtConfiguration = {
     { src: '~/plugins/i18n', ssr: false },
     '~/plugins/dayjs',
     '~/plugins/utils',
+    '~/plugins/firebase',
     '~/plugins/vuetify',
     '~/plugins/swatches',
     '~/plugins/components',

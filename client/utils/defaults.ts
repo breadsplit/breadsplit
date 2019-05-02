@@ -1,6 +1,6 @@
-import { GenerateId } from '~/utils/randomstr'
-import { Member, MemberRoles, Group, Transaction, TransactionType } from '../types/index'
-import { RootState, GroupState } from '../types/store'
+import { GenerateId } from '~/utils/id_helper'
+import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '../types/models'
+import { RootState, GroupState, UserState } from '../types/store'
 import { merge, mapValues } from 'lodash'
 
 export const MemberDefault = (overrides?: object): Member => merge({
@@ -9,23 +9,22 @@ export const MemberDefault = (overrides?: object): Member => merge({
   role: MemberRoles.collaborator,
 }, overrides)
 
-export const GroupDefault = (overrides?: object, { online = false } = {}): Group => {
+export const GroupDefault = (overrides?: object): Group => {
   const group: Group = merge({
-    id: online ? GenerateId.OnlineGroup() : GenerateId.LocalGroup(),
+    id: GenerateId.LocalGroup(),
     name: '',
     options: {
       multiple_currencies: true,
     },
     timestamp: +new Date(),
 
-    memberIds: [],
     members: {},
     currencies: [],
     currency_records: [],
     transactions: [],
     activities: [],
 
-    online,
+    online: false,
   }, overrides)
 
   if (Array.isArray(group.members)) {
@@ -41,6 +40,15 @@ export const GroupDefault = (overrides?: object, { online = false } = {}): Group
   }
 
   return group
+}
+
+export const ClientGroupDefault = (overrides?: object): ClientGroup => {
+  const group = GroupDefault(overrides)
+  return {
+    id: group.id,
+    base: group,
+    operations: [],
+  }
 }
 
 export const TransactionDefault = (overrides?: object): Transaction => merge({
@@ -61,10 +69,21 @@ export const GroupStateDefault = (overrides?: object): GroupState => merge({
   currentId: null,
 }, overrides)
 
+export const UserStateDefault = (overrides?: object): UserState => merge({
+  me: {
+    uid: null,
+    anonymous: true,
+    name: '',
+  },
+  users: {},
+  online: false,
+}, overrides)
+
 export const RootStateDefault = (overrides?: object): RootState => merge({
   browser_locale: 'en',
   user_locale: null,
   loaded: false,
   dark: false,
   group: GroupStateDefault(),
+  user: UserStateDefault(),
 }, overrides)

@@ -1,8 +1,16 @@
-import { Group } from '.'
+import { ClientGroup, UserInfo } from './models'
 
 export interface GroupState {
-  groups: { [s: string]: Group }
+  groups: { [s: string]: ClientGroup }
   currentId: string|null
+}
+
+export interface UserState {
+  me: UserInfo
+  online: boolean
+  users: {
+    [uid: string]: UserInfo
+  }
 }
 
 export interface RootState {
@@ -11,4 +19,5 @@ export interface RootState {
   loaded: boolean
   dark: boolean
   group: GroupState
+  user: UserState
 }

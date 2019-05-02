@@ -3,17 +3,17 @@
   v-menu(v-model='menu' :nudge-width='100')
     template(v-slot:activator='{ on }')
       .vertical-aligned(v-on='on', v-ripple)
-        app-avatar.ma-1(:member='current', inline, name)
+        app-user-avatar.ma-1(:id='current.id', inline, show-name)
         v-icon mdi-menu-down
 
     v-card.pa-2
       template(v-for='member in members')
-        app-avatar.member-option.pa-3(:member='member', name, v-ripple, @click.native='setValue(member.id)')
+        app-user-avatar.member-option.pa-3(:id='member.id', show-name, v-ripple, @click.native='setValue(member.id)')
 </template>
 
 <script lang="ts">
 import { Component, Prop, Mixins } from 'vue-property-decorator'
-import { Member } from '~/types'
+import { Member } from '~/types/models'
 import MemberMixin from '~/mixins/member'
 
 @Component

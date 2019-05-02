@@ -6,7 +6,7 @@ v-card.transactions
       v-divider(v-if='index!=0')
       v-list-tile(:key='trans.id', avatar, @click='')
         v-list-tile-avatar.ma-2
-          app-category-icon.mx-2.my-1(:category='trans.category', :text='false', size='48')
+          app-category-icon.mx-2.my-1(:category='trans.category', :text='false', :size='48')
         v-list-tile-content
           v-list-tile-title {{trans.desc || 'Expense'}}
           v-list-tile-sub-title Paid by {{trans.creditor_names.join(', ')}}

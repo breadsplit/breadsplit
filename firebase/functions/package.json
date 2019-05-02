@@ -1,0 +1,23 @@
+{
+  "name": "functions",
+  "scripts": {
+    "build": "rimraf ./lib && tsc",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "main": "lib/firebase/functions/src/index.js",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "firebase-admin": "~7.3.0",
+    "firebase-functions": "^2.3.0",
+    "js-cache": "^1.0.3",
+    "lodash": "^4.17.11",
+    "opschain": "^0.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.5"
+  }
+}
