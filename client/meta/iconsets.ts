@@ -1,18 +1,16 @@
 export const GroupIcons = [
-  'book',
-  'book-open-variant',
-  'airplane',
-  'home',
-  'bookmark',
   'account-group',
-  'bank',
-  'wallet',
-  'account-heart',
-  'folder-account',
-  'food-fork-drink',
-  'food',
   'briefcase',
   'home-city',
+  'home',
+  'book',
+  'book-open-variant',
+  'food',
+  'airplane',
+  'bookmark',
+  'bank',
+  'wallet',
+  'folder-account',
 ]
 
 export default {
