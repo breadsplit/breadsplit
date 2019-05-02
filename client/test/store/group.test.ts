@@ -43,21 +43,6 @@ describe('group state mutations', () => {
     expect(state.groups.test.id).toEqual('test')
     expect(state.groups.test.base.id).toEqual('test')
     expect(state.groups.test.base.icon).toBeFalsy()
-    expect(state.groups.test.operations).toEqual([])
-
-    // Edit
-    mutations.edit(state, {
-      id: 'test',
-      changes: {
-        name: 'hello',
-        icon: 'bar',
-      },
-    })
-    expect(state.groups.test.operations).toHaveLength(1)
-    expect(state.groups.test.operations[0].data).toEqual({
-      name: 'hello',
-      icon: 'bar',
-    })
 
     // Remove
     mutations.remove(state, 'test')
@@ -69,10 +54,12 @@ describe('group state mutations', () => {
     const client = state.groups.group1
     let group = Eval(client) as Group
     expect(group).toBeTruthy()
+    expect(client.operations).toHaveLength(0)
     expect(Object.keys(group.members)).toHaveLength(0)
 
     // Add
     mutations.addMember(state, { id: 'group1', member: { id: 'member1', name: 'member1' } })
+    expect(client.operations).toHaveLength(1)
     group = Eval(client) as Group
     expect(Object.keys(group.members)).toHaveLength(1)
     expect(group.members).toHaveProperty('member1')
