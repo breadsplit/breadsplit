@@ -44,6 +44,12 @@ function Eval(operations: Operation[]): Group {
 }
 
 // firebase functions
+export const groupsCount = f(async (data, context) => {
+  const groups = await admin.firestore().collection('groups').get()
+  if (groups.empty)
+    return 0
+  return groups.size
+})
 
 export const publishGroup = f(async ({ group }, context) => {
   if (!context.auth || !context.auth.uid)

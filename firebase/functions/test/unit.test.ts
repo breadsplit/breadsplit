@@ -26,16 +26,6 @@ describe('Cloud Functions', () => {
     await deleteCollection(admin.firestore(), 'groups')
   })
 
-  describe('Test the tests', () => {
-    it('always true', async () => {
-      // Wrap the function
-      const wrapped = test.wrap(functions.alwaysTrue)
-
-      // Call the wrapped function with the snapshot you constructed.
-      expect(await wrapped()).toBeTruthy()
-    })
-  })
-
   describe('Get group count', () => {
     it('zero when empty', async () => {
       // Wrap the function
