@@ -13,10 +13,7 @@ v-card
           prepend-icon='mdi-group-open-variant'
         )
           template(slot='prepend')
-            app-icon-select(v-model='icon' :color='color', style='margin-top:-20px')
-
-      v-flex
-        app-swatches(v-model='color')
+            app-icon-select(:icon.sync='icon' :color.sync='color', style='margin-top:-20px')
 
       v-flex
         v-autocomplete(
