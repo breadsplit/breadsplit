@@ -1,22 +1,16 @@
-import sha256 from 'crypto-js/sha256'
-
-export function randomstr(length = 16, key = Math.random()) {
-  let str = ''
-  while (str.length <= length)
-    str += sha256(key.toString()).toString()
-  return str.slice(0, length)
-}
+import nanoid from 'nanoid'
 
 export const GenerateId = {
-  LocalGroup: () => `lg-${randomstr(5)}`,
-  OnlineGroup: () => `og-${randomstr(16)}`,
-  Transaction: () => `t-${randomstr(16)}`,
-  LocalMember: () => `lm-${randomstr(10)}`,
+  LocalGroup: () => `L:${nanoid(10)}`,
+  OnlineGroup: () => `O:${nanoid(16)}`,
+  Transaction: () => `T:${nanoid(16)}`,
+  LocalMember: () => `M:${nanoid(10)}`,
 }
 
 export const IsThisId = {
-  LocalMember: (id: string) => id.startsWith('lm-'),
-  LocalGroup: (id: string) => id.startsWith('lg-'),
-  OnlineGroup: (id: string) => id.startsWith('og-'),
-  UID: (id: string) => !id.startsWith('lm-'),
+  LocalMember: (id: string) => id.startsWith('M:'),
+  LocalGroup: (id: string) => id.startsWith('L:'),
+  OnlineGroup: (id: string) => id.startsWith('O:'),
+  Transaction: (id: string) => id.startsWith('T:'),
+  UID: (id: string) => !id.startsWith('M:'),
 }
