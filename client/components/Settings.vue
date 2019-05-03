@@ -86,6 +86,7 @@ export default class Settings extends Vue {
   async purgeData() {
     // @ts-ignore
     if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
+      await this.$fire.logout()
       this.$store.commit('purge')
       this.close()
       this.$router.push('/')

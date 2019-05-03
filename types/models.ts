@@ -125,6 +125,10 @@ export interface ClientGroup {
   operations: Operation[]
   online?: boolean
   lastsync?: number
+
+  // Options
+  lastchanged: number
+  favorite?: boolean
 }
 
 export interface ServerGroup {

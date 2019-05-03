@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import merge from 'lodash/merge'
 import includes from 'lodash/includes'
+import orderBy from 'lodash/orderBy'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
 import { MemberDefault, GroupStateDefault, ClientGroupDefault, TransactionDefault } from '~/utils/defaults'
 import { GroupState, RootState } from '~/types/store'
@@ -35,7 +36,8 @@ export const getters: GetterTree<GroupState, RootState> = {
   },
 
   all(state) {
-    return Object.values(state.groups).map(g => Eval(g))
+    return orderBy(Object.values(state.groups), ['lastchanged'], ['desc'])
+      .map(g => Eval(g))
   },
 
   id: state => (id) => {
@@ -118,8 +120,11 @@ export const mutations: MutationTree<GroupState> = {
   // Transcations
   newTranscation(state, { id, trans }) {
     id = id || state.currentId
-    trans = TransactionDefault(trans)
-    NewOperation(state.groups[id], 'insert_transaction', trans)
+    if (state.groups[id]) {
+      trans = TransactionDefault(trans)
+      NewOperation(state.groups[id], 'insert_transaction', trans)
+      state.groups[id].lastchanged = +new Date()
+    }
   },
 
   editTranscation(state, { id, transid, changes }) {
@@ -142,6 +147,7 @@ export const mutations: MutationTree<GroupState> = {
         id: group.id,
         online: true,
         operations: [],
+        lastchanged: timestamp,
       })
     }
 
