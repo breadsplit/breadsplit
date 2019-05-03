@@ -32,7 +32,7 @@ v-app(:dark='dark')
             v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
 
         v-divider.my-1
-      v-list-tile(@click='newGroup')
+      v-list-tile(@click='$refs.newgroup.open()')
         v-list-tile-action
           v-icon mdi-plus
         v-list-tile-content
@@ -79,7 +79,7 @@ v-app(:dark='dark')
               v-icon(color='red', size='20') mdi-cloud-off-outline
 
         // Settings
-        v-list-tile(@click='$router.push("/settings")')
+        v-list-tile(@click='$refs.settings.open()')
           v-list-tile-action
             v-icon mdi-settings
           v-list-tile-content
@@ -106,8 +106,11 @@ v-app(:dark='dark')
   v-content
     nuxt
 
-  app-dialog(ref='newgroup', fullscreen, hide-overlay, transition='dialog-bottom-transition')
-    app-form-new-group(@close='$root.$newGroup.close()')
+  app-dialog(ref='newgroup', :route='true')
+    app-form-new-group(@close='$refs.newgroup.close()')
+
+  app-dialog(ref='settings', :route='true', :fullscreen='true')
+    app-settings(@close='$refs.settings.close()')
 
   app-confirm(ref='confirm')
 </template>
@@ -176,15 +179,12 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     this.$root.$confirm = this.$refs.confirm.open
     // @ts-ignore
-    this.$root.$newGroup = this.$refs.newgroup
+    this.$root.$newgroup = this.$refs.newgroup
+    // @ts-ignore
+    this.$root.$settings = this.$refs.settings
 
     if (!this.isMobile)
       this.drawer = true
-  }
-
-  async newGroup() {
-    // @ts-ignore
-    await this.$root.$newGroup.open()
   }
 
   async onGroupMenu(key) {

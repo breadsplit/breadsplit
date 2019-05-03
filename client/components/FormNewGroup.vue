@@ -77,8 +77,10 @@ export default class FromNewGroup extends Vue {
       currencies: [this.currency],
     }
     this.$store.commit('group/add', payload)
-
     this.close()
+    // Switch to new created group
+    const id = this.$store.state.group.currentId
+    this.$router.push(`/group/${id}`)
   }
 }
 </script>
