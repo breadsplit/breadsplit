@@ -27,7 +27,7 @@ export const mutations: MutationTree<RootState> = {
   },
 
   dark(state, value) {
-    state.dark = !!value
+    state.options.dark = !!value
   },
 }
 
@@ -38,7 +38,7 @@ export const getters: GetterTree<RootState, RootState> = {
   },
 
   dark(state) {
-    return state.dark
+    return state.options.dark
   },
 
   primary(state, getters) {

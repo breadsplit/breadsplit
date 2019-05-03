@@ -1,6 +1,6 @@
 import { GenerateId } from '~/utils/id_helper'
 import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '../types/models'
-import { RootState, GroupState, UserState } from '../types/store'
+import { RootState, GroupState, UserState, AppOptions } from '../types/store'
 import { merge, mapValues } from 'lodash'
 
 export const MemberDefault = (overrides?: object): Member => merge({
@@ -79,11 +79,15 @@ export const UserStateDefault = (overrides?: object): UserState => merge({
   online: false,
 }, overrides)
 
+export const AppOptionsDefault = (overrides?: object): AppOptions => merge({
+  dark: false,
+}, overrides)
+
 export const RootStateDefault = (overrides?: object): RootState => merge({
   browser_locale: 'en',
   user_locale: null,
   loaded: false,
-  dark: false,
   group: GroupStateDefault(),
   user: UserStateDefault(),
+  options: AppOptionsDefault(),
 }, overrides)
