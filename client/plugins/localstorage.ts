@@ -12,14 +12,10 @@ const PathsEnabled = [
 ]
 
 export default ({ store, route, app }) => {
-  // @ts-ignore
-  window.onNuxtReady(() => {
-    CreatePersistedState({
-      key: StoreKey,
-      paths: PathsEnabled,
-    })(store)
-    store.commit('loaded')
-    app.i18n.locale = store.getters.locale
-    GroupRouter({ store, route })
-  })
+  CreatePersistedState({
+    key: StoreKey,
+    paths: PathsEnabled,
+  })(store)
+  store.commit('loaded')
+  GroupRouter({ store, route })
 }
