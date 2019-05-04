@@ -7,13 +7,15 @@ v-card.settings
 
   v-container.px-0
     v-list(two-line, subheader)
-      v-subheader General
-      v-list-tile(avatar, @click='darkMode = !darkMode')
+      v-subheader {{$t("ui.general")}}
+      v-divider
+      v-list-tile(avatar)
         v-list-tile-avatar
           v-icon {{ darkMode ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
         v-list-tile-content
-          v-list-tile-title Dark Mode
+          v-list-tile-title {{$t("ui.dark_mode")}}
           v-list-tile-sub-title {{ darkMode ? 'Enabled' : 'Disabled' }}
+        v-switch(color='green', v-model='darkMode')
       v-list-tile(avatar, @click='languageSelecting=true')
         v-list-tile-avatar
           v-icon mdi-web
@@ -24,18 +26,17 @@ v-card.settings
         v-list-tile-avatar
           v-icon mdi-bell
         v-list-tile-content
-          v-list-tile-title Enable Notifications
+          v-list-tile-title {{$t("ui.notification")}}
           v-list-tile-sub-title Notifications are disabled.
-
-    v-divider
 
     v-list(two-line, subheader)
       v-subheader {{$t("ui.advance")}}
+      v-divider
       v-list-tile(avatar, @click='purgeData')
         v-list-tile-avatar
           v-icon mdi-alert-box
         v-list-tile-content
-          v-list-tile-title Reset
+          v-list-tile-title {{$t("ui.reset")}}
           v-list-tile-sub-title Clear all Data
 
     app-credit
@@ -49,8 +50,8 @@ v-card.settings
 </template>
 
 <script lang='ts'>
-import { AvaliableLocales } from '~/locales'
 import { Component, Vue } from 'vue-property-decorator'
+import { AvaliableLocales } from '../locales'
 
 const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display }))
 
