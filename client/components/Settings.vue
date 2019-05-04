@@ -95,7 +95,7 @@ export default class Settings extends Vue {
 }
 </script>
 
-<style lang="stylus">
+<style lang='stylus'>
 .settings
   .v-list, .v-list *
     transition 0.3s background cubic-bezier(0.25, 0.8, 0.5, 1)

@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
 .member-select
   v-menu(v-model='menu' :nudge-width='100')
     template(v-slot:activator='{ on }')
@@ -11,7 +11,7 @@
         app-user-avatar.member-option.pa-3(:id='member.id', show-name, v-ripple, @click.native='setValue(member.id)')
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Component, Prop, Mixins } from 'vue-property-decorator'
 import { Member } from '~/types/models'
 import MemberMixin from '~/mixins/member'
@@ -34,7 +34,7 @@ export default class MemberSelect extends Mixins(MemberMixin) {
 }
 </script>
 
-<style lang="stylus">
+<style lang='stylus'>
 .member-select
   display inline-block
 

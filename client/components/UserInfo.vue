@@ -1,8 +1,8 @@
-<template lang="pug">
+<template lang='pug'>
 span(v-if='value') {{value}}
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Mixins, Component, Prop } from 'vue-property-decorator'
 import UserInfoMixin from './mixins/userinfo'
 

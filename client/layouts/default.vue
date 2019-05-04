@@ -241,7 +241,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 }
 </script>
 
-<style lang="stylus">
+<style lang='stylus'>
 .drawer-list-bottom
   position absolute
   bottom 10px

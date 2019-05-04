@@ -1,11 +1,11 @@
-<template lang="pug">
+<template lang='pug'>
 .money-label(:class='balanceColorClass')
   span.neg.mx-1(v-if='neg') -
   span.currency {{currencyDisplay}}
   span.fee.mr-1 {{abs.toFixed(2)}}
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import Currencies from '~/meta/currencies'
 
@@ -50,7 +50,7 @@ export default class MoneyLabel extends Vue {
 }
 </script>
 
-<style lang="stylus">
+<style lang='stylus'>
 .money-label
   font-size 0.95em
 

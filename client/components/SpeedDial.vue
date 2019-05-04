@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
 v-fab-transition
   v-speed-dial(v-model='fab', v-bind='$attrs', v-show='show')
     template(v-slot:activator='')

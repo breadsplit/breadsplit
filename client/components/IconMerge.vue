@@ -1,11 +1,11 @@
-<template lang="pug">
+<template lang='pug'>
 .icon-merge
   slot
   .append
     slot(name='append')
 </template>
 
-<style lang="stylus">
+<style lang='stylus'>
 .icon-merge
   position relative
 

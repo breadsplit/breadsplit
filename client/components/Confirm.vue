@@ -16,7 +16,7 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class Confirm extends Vue {
   dialog = false
-  resolve: ((result) => void) | null = null
+  resolve: ((result?) => void) | null = null
   reject: ((error) => void) | null = null
   message = null
   title = null

@@ -4,30 +4,26 @@ v-layout.nuxt-error.my-5.py-3(column, justify-center, align-center)
     component(:is='errorPage' :error='parsedError.error', :payload='parsedError.payload')
 </template>
 
-<script>
-import * as ErrorPages from '@/components/error'
-import DefaultErrorPages from '@/components/error/default'
+<script lang='ts'>
+import * as ErrorPages from '~/components/error'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-export default {
-  name: 'NuxtError',
+@Component({
   layout: 'default',
-  props: {
-    error: {
-      type: Object,
-      default: () => {},
-    },
-  },
-  computed: {
-    parsedError() {
-      if (this.error.type)
-        return this.error
-      else
-        return { error: this.error, type: 'common' }
-    },
-    errorPage() {
-      return ErrorPages[this.parsedError.type] || DefaultErrorPages
-    },
-  },
+})
+export default class ErrorLayout extends Vue {
+  @Prop({ default: () => ({}) }) readonly error: any
+  @Prop({ default: () => ({}) }) readonly payload: any
+
+  get parsedError() {
+    if (this.error.type)
+      return this.error
+    else
+      return { error: this.error, type: 'common' }
+  }
+  get errorPage() {
+    return ErrorPages[this.parsedError.type] || ErrorPages.DefaultErrorPages
+  }
 }
 </script>
 

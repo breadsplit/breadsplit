@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
 .group-page
   .scroll-page
     v-tabs-items(v-model='tab_index', v-if='group')
@@ -138,7 +138,7 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
 }
 </script>
 
-<style lang="stylus">
+<style lang='stylus'>
 .v-bottom-nav
   border-top 1px solid rgba(125,125,125,0.3)
 </style>

@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
 v-card.transactions
   v-subheader Transactions
   v-list.pa-0(three-line)
@@ -28,7 +28,7 @@ v-card.transactions
 
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import GroupMixin from '~/mixins/group'
 import MemberMixin from '../mixins/member'
@@ -75,7 +75,7 @@ export default class Transactions extends Mixins(GroupMixin, MemberMixin) {
 }
 </script>
 
-<style lang="stylus">
+<style lang='stylus'>
 .transactions
   .time-label
     font-size 0.8em

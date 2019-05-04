@@ -7,22 +7,16 @@ div
   v-btn.error-return(flat, color='primary', @click='reload()') Reload
 </template>
 
-<script>
-export default {
-  props: {
-    error: {
-      type: Object,
-      default: () => ({}),
-    },
-    payload: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
-  methods: {
-    reload() {
-      window.location.reload()
-    },
-  },
+<script lang='ts'>
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+export default class DefaultErrorPage extends Vue {
+  @Prop({ default: () => ({}) }) readonly error: any
+  @Prop({ default: () => ({}) }) readonly payload: any
+
+  reload() {
+    window.location.reload()
+  }
 }
 </script>

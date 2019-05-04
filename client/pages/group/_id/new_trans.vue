@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
 app-dialog(
   ref='dialog' :fullscreen='isMobile' max-width='800'
   transition='dialog-bottom-transition' persistent no-click-animation
@@ -6,7 +6,7 @@ app-dialog(
   app-form-new-transaction(v-bind='options', @close='close()')
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import CommonMixin from '~/mixins/common'
 

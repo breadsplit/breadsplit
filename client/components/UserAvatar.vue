@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
 app-action-with-text.app-avatar(:class='{inline}')
   template(slot='action')
     v-avatar(:size='size')
@@ -6,7 +6,7 @@ app-action-with-text.app-avatar(:class='{inline}')
   span(slot='text', v-if='showName') {{name}}
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Mixins, Component, Prop } from 'vue-property-decorator'
 import UserInfoMixin from './mixins/userinfo'
 

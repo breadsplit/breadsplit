@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
 v-card.balances
   v-subheader Balances
   v-list.pa-0(two-line)
@@ -15,7 +15,7 @@ v-card.balances
             app-money-label(:amount='balance.balance[group.currencies[0]]', :currency='group.currencies[0]')
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import GroupMixin from '~/mixins/group'
 import { Component, Mixins } from 'vue-property-decorator'
 import { GroupBalances } from '~/utils/core'

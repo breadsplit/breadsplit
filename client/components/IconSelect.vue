@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
 .icon-select
   v-menu(v-model='menu' :max-width='280' :close-on-content-click='false')
     template(v-slot:activator='{ on }')
@@ -18,7 +18,7 @@
             v-icon(:color='c') mdi-checkbox-blank-circle
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Iconsets from '~/meta/iconsets'
 import swatches from '~/meta/swatches'

@@ -1,4 +1,4 @@
-<template lang="pug">
+<template lang='pug'>
 v-container
   .text-xs-center.mt-4.pt-4
     template(v-if='loading')
@@ -10,7 +10,7 @@ v-container
       v-btn(:color='joining ? "grey" : "primary"' :disabled='!id' :loading='joining' @click='join') {{$t('ui.button_join')}}
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
 import { Group } from '~/types/models'
 
