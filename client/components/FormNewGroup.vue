@@ -3,13 +3,13 @@ v-card
   v-toolbar(dark, :color='color')
     v-btn(icon, dark, @click='close(false)')
       v-icon mdi-close
-    v-toolbar-title New Group
+    v-toolbar-title {{$t('ui.group_editing.new_group')}}
 
   v-container.pa-4
     v-layout(column)
       v-flex
         v-text-field(
-          v-model='name' label='Group name'
+          v-model='name' :label='$t("ui.group_editing.group_name")'
           prepend-icon='mdi-group-open-variant'
         )
           template(slot='prepend')
@@ -39,7 +39,7 @@ v-card
                   | to create a new one
 
       v-flex
-        v-btn(@click='create()', :color='color', dark) Create
+        v-btn(@click='create()', :color='color', dark) {{$t('ui.button_create')}}
 
 </template>
 

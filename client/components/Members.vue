@@ -18,12 +18,12 @@ v-card
             v-list
               template(v-for='item in memberMenu(member)')
                 v-list-tile(@click='item.handler')
-                  v-list-tile-title {{item.title}}
+                  v-list-tile-title {{$t(item.title, member)}}
       v-divider
     v-list-tile
       v-btn(v-if='!iamJoined', @click='joinTheGroup()', color='primary', large, round).pl-0
         app-user-avatar(:id='uid', :size='44').mr-3
-        span Join as {{me.name}}
+        span {{$t('ui.join_as_me', [me.name])}}
       v-btn(@click='promptNewMember()', dark, color='grey darken-2')
         v-icon.mr-2 mdi-account-plus
         span {{$t('ui.button_new_member')}}
@@ -57,19 +57,20 @@ export default class Members extends Mixins(MemberMixin) {
 
   memberMenu(member) {
     const items: {title: string; handler: () => void}[] = []
+
     if (IsThisId.LocalMember(member.id)) {
       items.push({
-        title: 'Rename',
+        title: 'ui.menu.rename_member',
         handler: () => this.promptRenameMember(member),
       })
       if (!this.iamJoined) {
         items.push({
-          title: 'This is me',
+          title: 'ui.menu.member_is_me',
           handler: () => this.thisIsMe(member),
         })
       }
       items.push({
-        title: 'Remove from group',
+        title: 'ui.menu.remove_member',
         handler: () => this.promptRemoveMember(member),
       })
     }

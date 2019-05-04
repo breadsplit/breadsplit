@@ -42,7 +42,7 @@ v-app(:dark='dark')
         v-list-tile-action
           v-icon mdi-shape-circle-plus
         v-list-tile-content
-          v-list-tile-title Join a group
+          v-list-tile-title {{$t('ui.button_join_group')}}
 
       .drawer-list-bottom
 
@@ -52,12 +52,6 @@ v-app(:dark='dark')
             v-icon mdi-home
           v-list-tile-content
             v-list-tile-title {{$t('ui.homepage')}}
-
-        v-list-tile(v-if='debug', nuxt, to='/test')
-          v-list-tile-action
-            v-icon mdi-bug
-          v-list-tile-content
-            v-list-tile-title Test playground
 
         template(v-if='user.anonymous')
           // Sign in
@@ -101,7 +95,7 @@ v-app(:dark='dark')
           v-icon mdi-dots-vertical
         v-list
           v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
-            v-list-tile-title {{ item.title }}
+            v-list-tile-title {{ $t(item.title) }}
 
   v-content
     nuxt
@@ -161,12 +155,10 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   get group_menu() {
     const menu: ({title: string; key: string})[] = []
 
-    menu.push({ title: 'Edit group', key: 'edit' })
+    menu.push({ title: 'ui.menu.edit_group', key: 'edit' })
     if (this.current && !this.current.online)
-      menu.push({ title: 'Make this group online', key: 'transfer_online' })
-    if (this.current && this.current.online)
-      menu.push({ title: 'Sync now', key: 'sync' })
-    menu.push({ title: 'Delete group', key: 'delete' })
+      menu.push({ title: 'ui.menu.make_group_online', key: 'transfer_online' })
+    menu.push({ title: 'ui.menu.remove_group', key: 'delete' })
 
     return menu
   }

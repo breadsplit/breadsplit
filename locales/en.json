@@ -15,10 +15,16 @@
         "about": "About",
         "advance": "Advance",
         "homepage": "Homepage",
-        "button_new_group": "Create A New Group",
+        "button_new_group": "Create a new group",
         "button_new_member": "Add member",
+        "button_join_group": "Join a group",
+        "button_create": "Create",
+        "button_ok": "OK",
+        "button_cancel": "Cancel",
+        "join_as_me": "Join as {0}",
         "group_editing": {
             "new_group": "New Group",
+            "group_name": "Group's name",
             "enter_group_name": "Enter group's name",
             "default_group_name": "Untitled Group"
         },
@@ -33,6 +39,14 @@
             "new_expense": "New Expense",
             "new_member": "New Member",
             "settle_up": "Settle up"
+        },
+        "menu": {
+            "edit_group": "Edit group",
+            "make_group_online": "Make this group online",
+            "remove_group": "Remove group",
+            "rename_member": "Rename",
+            "member_is_me": "This is me",
+            "remove_member": "Remove {name} from group"
         }
     },
     "prompt": {
