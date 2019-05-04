@@ -25,6 +25,10 @@ function NewOperation(group: ClientGroup, name: string, data) {
   group.operations.push(ProcessOperation({ name, data }))
 }
 
+function origin() {
+  return window.location.origin
+}
+
 export const state = GroupStateDefault
 
 export const getters: GetterTree<GroupState, RootState> = {
@@ -33,6 +37,13 @@ export const getters: GetterTree<GroupState, RootState> = {
     if (!state.currentId)
       return undefined
     return Eval(state.groups[state.currentId])
+  },
+
+  currentShareLink(state, getters) {
+    const current = getters.current
+    if (!current || !current.online)
+      return undefined
+    return `${origin()}/#/join?id=${current.id}`
   },
 
   all(state) {

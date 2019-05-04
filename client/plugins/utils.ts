@@ -1,10 +1,5 @@
 import Vue from 'vue'
-import chroma from 'chroma-js'
+import VueClipboard from 'vue-clipboard2'
 
-Vue.use(() => {
-  Vue.prototype.$utils = {
-    isDark(color) {
-      return chroma(color).luminance() < 0.5
-    },
-  }
-})
+VueClipboard.config.autoSetContainer = true
+Vue.use(VueClipboard)

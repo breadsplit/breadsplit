@@ -23,7 +23,7 @@ export default class Dialog extends Mixins(CommonMixin) {
 
   @Prop({ default: false }) readonly route!: boolean
   @Prop({ default: 'dialog-bottom-transition' }) readonly transition!: boolean
-  @Prop(Boolean) readonly fullscreen: boolean | undefined
+  @Prop() readonly fullscreen: boolean | undefined
 
   get isOpened() {
     return !!this.dialog
@@ -44,9 +44,9 @@ export default class Dialog extends Mixins(CommonMixin) {
   }
 
   get getfullscreen() {
-    if (this.fullscreen !== null)
+    if (this.fullscreen != null)
       return this.fullscreen
-    return this.isMobile()
+    return this.isMobile
   }
 
   open(options = {}) {

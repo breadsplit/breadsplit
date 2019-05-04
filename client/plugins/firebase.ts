@@ -8,6 +8,7 @@ import 'firebase/functions'
 
 import { RootState } from '~/types/store'
 import { Group, UserInfo } from '~/types/models'
+import includes from 'lodash/includes';
 import { IsThisId } from '../../core/id_helper'
 import { ServerGroup } from '../../types/models'
 
@@ -143,15 +144,18 @@ export class FirebasePlugin {
     }
   }
 
-  async joinGroup(groupid: string) {
-    await functions.httpsCallable('joinGroup')({ id: groupid })
-    // await this.subscribe()
+  async joinGroup(id: string) {
+    if (this.store.getters['group/all'].map(g => g.id).indexOf(id) === -1) {
+      await functions.httpsCallable('joinGroup')({ id })
+      await this.manualSync(id)
+    }
+    this.router.push(`/group/${id}`)
   }
 
-  async manualSync(groupid: string) {
+  async manualSync(id: string) {
     const doc = await db
       .collection('groups')
-      .doc(groupid)
+      .doc(id)
       .get()
 
     this.store.commit('group/onServerUpdate', {

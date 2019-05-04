@@ -90,6 +90,8 @@ v-app(:dark='dark')
           v-icon mdi-menu
     v-spacer
     v-toolbar-items(v-show='current')
+      v-btn(v-if='currentShareLink', icon, flat, @click='copyShareLink()')
+        v-icon mdi-share-variant
       v-menu(offset-y='')
         v-btn(icon, flat, slot='activator')
           v-icon mdi-dots-vertical
@@ -127,6 +129,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
   @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
+  @Getter('group/currentShareLink') currentShareLink: string | undefined
   @Getter('user/me') user!: UserInfo
   @Getter('user/online') userIsOnline!: boolean
 
@@ -228,6 +231,12 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   async syncCurrentGroup() {
     if (this.current)
       await this.$fire.manualSync(this.current.id)
+  }
+
+  async copyShareLink() {
+    if (this.currentShareLink)
+      await this.$copyText(this.currentShareLink)
+    alert(this.$t('ui.share_link_copied'))
   }
 }
 </script>
