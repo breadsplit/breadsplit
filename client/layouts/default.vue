@@ -79,6 +79,13 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.settings')}}
 
+        // About
+        v-list-tile(@click='$router.push("/about")')
+          v-list-tile-action
+            v-icon mdi-alert-circle
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.about')}}
+
   v-toolbar.app-toolbar(
     :clipped-left='clipped'
     fixed, app, dark, color='primary'
@@ -114,9 +121,9 @@ v-app(:dark='dark')
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
-import { Group, UserInfo } from '~/types/models'
-import CommonMixin from '~/mixins/common'
-import FontFamilyBuilder from '~/meta/font_family'
+import { Group, UserInfo } from '../types/models'
+import CommonMixin from '../mixins/common'
+import FontFamilyBuilder from '../meta/font_family'
 
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin) {
