@@ -39,8 +39,7 @@ v-card
                   | to create a new one
 
       v-flex
-        v-btn(@click='create()', :color='color', dark ,v-if='submitFlag') {{$t('ui.button_create')}}
-        v-btn(@click='rejectcreate()', :color='color', dark ,v-if='!submitFlag',depressed,class='reject') {{$t('ui.button_create')}}
+        v-btn(@click='create()', :color='color', :dark='submitFlag', :disabled='!submitFlag') {{$t('ui.button_create')}}
 
 </template>
 
