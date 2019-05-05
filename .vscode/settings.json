@@ -76,5 +76,8 @@
   // Markdown lint
   "markdownlint.config": {
     "MD014": false,
-  }
+  },
+
+  // i18n
+  "vue-i18n.i18nPaths": "./locales"
 }

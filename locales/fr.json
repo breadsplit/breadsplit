@@ -1,9 +1,16 @@
 {
-    "code": "fr",
-    "iso": "fr",
-    "language_name": "Français",
-    "translators": "",
-    "css": {
-        "font_of_locale": ""
-    }
+  "code": "fr",
+  "iso": "fr",
+  "language_name": "Français",
+  "translators": "",
+  "css": {
+    "font_of_locale": ""
+  },
+  "ui": {
+    "button_join_group": "Rejoindre le groupe",
+    "group_editing": {
+      "new_group": "Nouvelle équipe"
+    },
+    "homepage": "Accueil"
+  }
 }
