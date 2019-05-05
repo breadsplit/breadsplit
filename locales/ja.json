@@ -1,0 +1,16 @@
+{
+  "code": "ja",
+  "iso": "ja",
+  "language_name": "日本語",
+  "translators": "",
+  "css": {
+    "font_of_locale": ""
+  },
+  "ui": {
+    "group_editing": {
+      "new_group": "新チーム"
+    },
+    "button_join_group": "グループに参加する",
+    "homepage": "ホーム"
+  }
+}

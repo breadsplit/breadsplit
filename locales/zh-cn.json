@@ -1,67 +1,68 @@
 {
-    "code": "zh-cn",
-    "iso": "zh-CN",
-    "language_name": "简体中文",
-    "translators": "antfu<anthonyfu117@hotmail.com>",
-    "appname": "分账土司",
-    "css": {
-        "font_of_locale": "\"微軟雅黑\", \"Microsoft YaHei\"",
-        "font_family": ""
+  "code": "zh-cn",
+  "iso": "zh-CN",
+  "language_name": "简体中文",
+  "translators": "antfu<anthonyfu117@hotmail.com>",
+  "appname": "分账土司",
+  "css": {
+    "font_of_locale": "\"微軟雅黑\", \"Microsoft YaHei\"",
+    "font_family": ""
+  },
+  "ui": {
+    "language": "显示语言",
+    "settings": "设置",
+    "sign_in": "登陆",
+    "about": "关于",
+    "advance": "",
+    "homepage": "首页",
+    "button_new_group": "新建小组",
+    "button_new_member": "添加成员",
+    "user": {
+      "guest": "访客"
     },
-    "ui": {
-        "language": "显示语言",
-        "settings": "设置",
-        "sign_in": "登陆",
-        "about": "关于",
-        "advance": "",
-        "homepage": "首页",
-        "button_new_group": "新建小组",
-        "button_new_member": "添加成员",
-        "user": {
-            "guest": "访客"
-        },
-        "group_editing": {
-            "new_group": "新建小组",
-            "enter_group_name": "请输入小组名称",
-            "default_group_name": ""
-        },
-        "tabs": {
-            "settle_up": "",
-            "expenses": "支出",
-            "members": "小组成员",
-            "summary": "总览",
-            "activities": ""
-        },
-        "speed_dials": {
-            "new_expense": "",
-            "new_member": "",
-            "settle_up": ""
-        }
+    "group_editing": {
+      "new_group": "新建小组",
+      "enter_group_name": "请输入小组名称",
+      "default_group_name": ""
     },
-    "prompt": {
-        "are_you_sure": "你确定吗"
+    "tabs": {
+      "settle_up": "",
+      "expenses": "支出",
+      "members": "小组成员",
+      "summary": "总览",
+      "activities": ""
     },
-    "cats": {
-        "transport": {
-            "display": "",
-            "keywords": ""
-        },
-        "lodging": {
-            "display": "",
-            "keywords": ""
-        },
-        "travel": {
-            "display": ""
-        },
-        "food": {
-            "display": "",
-            "keywords": ""
-        },
-        "transfer": {
-            "display": ""
-        },
-        "other": {
-            "display": ""
-        }
+    "speed_dials": {
+      "new_expense": "",
+      "new_member": "",
+      "settle_up": ""
+    },
+    "button_join_group": "加入小组"
+  },
+  "prompt": {
+    "are_you_sure": "你确定吗"
+  },
+  "cats": {
+    "transport": {
+      "display": "",
+      "keywords": ""
+    },
+    "lodging": {
+      "display": "",
+      "keywords": ""
+    },
+    "travel": {
+      "display": ""
+    },
+    "food": {
+      "display": "",
+      "keywords": ""
+    },
+    "transfer": {
+      "display": ""
+    },
+    "other": {
+      "display": ""
     }
+  }
 }

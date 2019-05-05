@@ -1,91 +1,91 @@
 {
-    "code": "en",
-    "iso": "en-US",
-    "language_name": "English",
-    "translators": "antfu<anthonyfu117@hotmail.com>",
-    "appname": "Splitoast",
-    "css": {
-        "font_of_locale": "",
-        "font_family": ""
+  "code": "en",
+  "iso": "en-US",
+  "language_name": "English",
+  "translators": "antfu<anthonyfu117@hotmail.com>",
+  "appname": "Splitoast",
+  "css": {
+    "font_of_locale": "",
+    "font_family": ""
+  },
+  "ui": {
+    "language": "Language",
+    "settings": "Settings",
+    "sign_in": "Sign in",
+    "about": "About",
+    "general": "General",
+    "advance": "Advance",
+    "reset": "Reset",
+    "notification": "Notification",
+    "_dark_mode": "Dark Mode",
+    "homepage": "Home",
+    "loading": "Loading...",
+    "loading_group_info": "Loading group info...",
+    "button_new_group": "Create a new group",
+    "button_new_member": "Add member",
+    "button_join_group": "Join the group",
+    "button_create": "Create",
+    "button_ok": "OK",
+    "button_cancel": "Cancel",
+    "button_join": "Join",
+    "join_as_me": "Join as {0}",
+    "share_link_to_invite": "Share this link to invite friends",
+    "share_link_copied": "Share link copied!",
+    "join_group": "Joining <b>{0}</b>",
+    "group_editing": {
+      "new_group": "New team",
+      "group_name": "Group's name",
+      "enter_group_name": "Enter group's name",
+      "default_group_name": "Untitled Group"
     },
-    "ui": {
-        "language": "Language",
-        "settings": "Settings",
-        "sign_in": "Sign in",
-        "about": "About",
-        "general": "General",
-        "advance": "Advance",
-        "reset": "Reset",
-        "notification": "Notification",
-        "_dark_mode": "Dark Mode",
-        "homepage": "Homepage",
-        "loading": "Loading...",
-        "loading_group_info": "Loading group info...",
-        "button_new_group": "Create a new group",
-        "button_new_member": "Add member",
-        "button_join_group": "Join a group",
-        "button_create": "Create",
-        "button_ok": "OK",
-        "button_cancel": "Cancel",
-        "button_join": "Join",
-        "join_as_me": "Join as {0}",
-        "share_link_to_invite": "Share this link to invite friends",
-        "share_link_copied": "Share link copied!",
-        "join_group": "Joining <b>{0}</b>",
-        "group_editing": {
-            "new_group": "New Group",
-            "group_name": "Group's name",
-            "enter_group_name": "Enter group's name",
-            "default_group_name": "Untitled Group"
-        },
-        "tabs": {
-            "settle_up": "Settle Up",
-            "expenses": "Expenses",
-            "members": "Members",
-            "summary": "Summary",
-            "activities": "Activities"
-        },
-        "speed_dials": {
-            "new_expense": "New Expense",
-            "new_member": "New Member",
-            "settle_up": "Settle up"
-        },
-        "menu": {
-            "edit_group": "Edit group",
-            "make_group_online": "Make this group online",
-            "remove_group": "Remove group",
-            "rename_member": "Rename",
-            "member_is_me": "This is me",
-            "remove_member": "Remove {name} from group"
-        }
+    "tabs": {
+      "settle_up": "Settle Up",
+      "expenses": "Expenses",
+      "members": "Members",
+      "summary": "Summary",
+      "activities": "Activities"
     },
-    "prompt": {
-        "are_you_sure": "Are you sure?"
+    "speed_dials": {
+      "new_expense": "New Expense",
+      "new_member": "New Member",
+      "settle_up": "Settle up"
     },
-    "cats": {
-        "transport": {
-            "display": "Transport",
-            "keywords": "uber,grab,transport,mrt,lrt,bus,taxi,ship,airplane,flight,car"
-        },
-        "lodging": {
-            "display": "Lodging",
-            "keywords": "hotel"
-        },
-        "travel": {
-            "display": "Travel",
-            "keywords": ""
-        },
-        "food": {
-            "display": "Food",
-            "keywords": "food,drink,meal,breakfast,lunch,dinner"
-        },
-        "transfer": {
-            "display": "Transfer",
-            "keywords": "hotel"
-        },
-        "other": {
-            "display": "Other",
-            "keywords": ""
-        }
+    "menu": {
+      "edit_group": "Edit group",
+      "make_group_online": "Make this group online",
+      "remove_group": "Remove group",
+      "rename_member": "Rename",
+      "member_is_me": "This is me",
+      "remove_member": "Remove {name} from group"
     }
+  },
+  "prompt": {
+    "are_you_sure": "Are you sure?"
+  },
+  "cats": {
+    "transport": {
+      "display": "Transport",
+      "keywords": "uber,grab,transport,mrt,lrt,bus,taxi,ship,airplane,flight,car"
+    },
+    "lodging": {
+      "display": "Lodging",
+      "keywords": "hotel"
+    },
+    "travel": {
+      "display": "Travel",
+      "keywords": ""
+    },
+    "food": {
+      "display": "Food",
+      "keywords": "food,drink,meal,breakfast,lunch,dinner"
+    },
+    "transfer": {
+      "display": "Transfer",
+      "keywords": "hotel"
+    },
+    "other": {
+      "display": "Other",
+      "keywords": ""
+    }
+  }
 }

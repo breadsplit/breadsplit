@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "octref.vetur",
+    "dbaeumer.vscode-eslint",
+    "davidanson.vscode-markdownlint",
+    "sysoev.language-stylus",
+    "think2011.vue-i18n",
+    "wayou.vscode-todo-highlight",
+    "streetsidesoftware.code-spell-checker"
+  ]
+}
