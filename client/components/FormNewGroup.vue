@@ -39,14 +39,15 @@ v-card
                   | to create a new one
 
       v-flex
-        v-btn(@click='create()', :color='color', dark) {{$t('ui.button_create')}}
+        v-btn(@click='create()', :color='color', dark ,v-if='submitFlag') {{$t('ui.button_create')}}
+        v-btn(@click='rejectcreate()', :color='color', dark ,v-if='!submitFlag',depressed,class='reject') {{$t('ui.button_create')}}
 
 </template>
 
 <script lang='ts'>
 import swatches from '~/meta/swatches'
 import currencies from '~/meta/currencies'
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 
 @Component
 export default class FromNewGroup extends Vue {
@@ -56,6 +57,7 @@ export default class FromNewGroup extends Vue {
   name = ''
   color = swatches[Math.floor(Math.random() * swatches.length)]
   members = []
+  submitFlag = false
 
   get currencies() {
     return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
@@ -63,6 +65,11 @@ export default class FromNewGroup extends Vue {
   get members_suggestions() {
     // TODO: load suggestions from another group
     return []
+  }
+
+  get input_set() {
+    const { name, currency, members } = this
+    return { name, currency, members }
   }
 
   close(result?) {
@@ -82,5 +89,21 @@ export default class FromNewGroup extends Vue {
     const id = this.$store.state.group.currentId
     this.$router.push(`/group/${id}`)
   }
+  rejectcreate() {
+    alert('You should complete the form')
+  }
+
+  @Watch('input_set')
+  InputChange(val) {
+    if (val.name.length && val.currency.length && val.members.length)
+      this.submitFlag = true
+    else
+      this.submitFlag = false
+  }
 }
 </script>
+
+<style lang="stylus">
+.reject
+  opacity 0.5
+</style>
