@@ -1,6 +1,7 @@
 import NuxtConfiguration from '@nuxt/config'
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 import pkg from '../package.json'
+import ServicesIntegrations from './meta/services_integrations'
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -46,11 +47,6 @@ const config: NuxtConfiguration = {
     '@mdi/font/css/materialdesignicons.min.css',
     '~/assets/style/app.styl',
   ],
-
-  workbox: {
-    offlineAnalytics: true,
-    offline: true,
-  },
 
   plugins: [
     // LocalStorage is not available in server side
@@ -106,8 +102,13 @@ const config: NuxtConfiguration = {
   ],
 
   'google-gtag': {
-    id: process.env.GOOGLE_GTAG_ID,
+    id: process.env.GOOGLE_GTAG_ID || ServicesIntegrations.google_gtag,
     debug,
+  },
+
+  workbox: {
+    offlineAnalytics: true,
+    offline: true,
   },
 }
 

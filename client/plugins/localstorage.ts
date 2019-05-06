@@ -8,7 +8,7 @@ const PathsEnabled = [
   'group',
   'user.me',
   'user.users',
-  'dark',
+  'options',
 ]
 
 export default ({ store, route, app }) => {

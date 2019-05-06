@@ -8,28 +8,12 @@ import 'firebase/functions'
 
 import { RootState } from '~/types/store'
 import { Group, UserInfo, ServerGroup } from '~/types/models'
-import { IsThisId } from '../../core/id_helper'
-
-const config = {
-  apiKey: 'AIzaSyCGr9QtZjJSsomlM5pTkqiPzeCYr_kQqk4',
-  authDomain: 'splitoast-development.firebaseapp.com',
-  databaseURL: 'https://splitoast-development.firebaseio.com',
-  projectId: 'splitoast-development',
-  storageBucket: 'splitoast-development.appspot.com',
-  messagingSenderId: '918223121466',
-}
-
-firebase.initializeApp(config)
-
-export const auth = firebase.auth()
-export const db = firebase.firestore()
-export const functions = firebase.functions()
+import { IsThisId } from '~/utils/id_helper'
+import FirebaseServers from '~/meta/firebase_servers'
 
 /* eslint-disable no-console */
 const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
 /* eslint-enable no-console */
-
-const UploadOperations = functions.httpsCallable('uploadOperations')
 
 export class FirebasePlugin {
   store: Store<RootState>
@@ -40,16 +24,20 @@ export class FirebasePlugin {
   constructor(store: Store<RootState>, router: VueRouter) {
     this.store = store
     this.router = router
+
+    const config_name = this.store.state.options.firebase_server
+    log(`🔥 Connecting to firebase server <${config_name}>`)
+    firebase.initializeApp(FirebaseServers[config_name])
   }
 
   get auth() {
-    return auth
+    return firebase.auth()
   }
   get db() {
-    return db
+    return firebase.firestore()
   }
   get functions() {
-    return functions
+    return firebase.functions()
   }
   get me(): UserInfo | undefined {
     return this.store.getters['user/me']
@@ -58,12 +46,45 @@ export class FirebasePlugin {
     return this.store.getters['user/uid']
   }
 
+  /**
+   * Initialize firebase plugins, register auth listeners
+   *
+   * @memberof FirebasePlugin
+   */
+  async init() {
+    this.auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        log('🙋 Login with uid:', user.uid)
+
+        const info: UserInfo = {
+          uid: user.uid,
+          email: user.email || undefined,
+          name: user.displayName || '',
+          avatar_url: user.photoURL || undefined,
+          anonymous: user.isAnonymous,
+        }
+        await this.uploadProfileAndLogin(info)
+        await this.subscribe()
+        this.watchStoreChanges()
+      }
+      else {
+        log('🙁 Logout')
+        this.unsubscribe()
+        this.unwatchStore()
+        this.store.commit('user/logout')
+        this.store.commit('group/removeOnlineGroups')
+      }
+    })
+
+    await this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  }
+
   async signup(email: string, password: string) {
-    return await auth.createUserWithEmailAndPassword(email, password)
+    return await this.auth.createUserWithEmailAndPassword(email, password)
   }
 
   async loginWithEmail(email: string, password: string) {
-    return await auth.signInWithEmailAndPassword(email, password)
+    return await this.auth.signInWithEmailAndPassword(email, password)
   }
 
   async loginWithGoogle() {
@@ -73,9 +94,9 @@ export class FirebasePlugin {
       // For some reasons, popups are not functional in Electron
       // refer to: https://github.com/firebase/firebase-js-sdk/issues/1334
       if (process.env.BUILD_TARGET === 'electron')
-        await auth.signInWithRedirect(provider)
+        await this.auth.signInWithRedirect(provider)
 
-      return await auth.signInWithPopup(provider)
+      return await this.auth.signInWithPopup(provider)
     }
     catch (e) {
       throw e
@@ -83,13 +104,13 @@ export class FirebasePlugin {
   }
 
   async logout() {
-    await auth.signOut()
+    await this.auth.signOut()
   }
 
   async publishGroup({ groupid }) {
     const group = this.store.getters['group/id'](groupid) as Group
 
-    const result = await functions.httpsCallable('publishGroup')({ group })
+    const result = await this.functions.httpsCallable('publishGroup')({ group })
     const serverid = (result.data || {}).id
     if (typeof serverid === 'string' && IsThisId.OnlineGroup(serverid)) {
       this.store.commit('group/remove', groupid)
@@ -100,14 +121,16 @@ export class FirebasePlugin {
   }
 
   async deleteGroup(groupid: string) {
+    // if it's online group, invoke server function
     if (this.store.getters['group/id'](groupid).online)
       await this.functions.httpsCallable('removeGroup')(groupid)
-    this.store.commit('group/remove', groupid)
+    else
+      this.store.commit('group/remove', groupid)
   }
 
   subscribe() {
     this.unsubscribe()
-    this._unsubscribeCallback = db
+    this._unsubscribeCallback = this.db
       .collection('groups')
       .where('viewers', 'array-contains', this.uid)
       .onSnapshot((snap) => {
@@ -144,14 +167,14 @@ export class FirebasePlugin {
 
   async joinGroup(id: string) {
     if (this.store.getters['group/all'].map(g => g.id).indexOf(id) === -1) {
-      await functions.httpsCallable('joinGroup')({ id })
+      await this.functions.httpsCallable('joinGroup')({ id })
       await this.manualSync(id)
     }
     this.router.push(`/group/${id}`)
   }
 
   async manualSync(id: string) {
-    const doc = await db
+    const doc = await this.db
       .collection('groups')
       .doc(id)
       .get()
@@ -178,7 +201,7 @@ export class FirebasePlugin {
     if (!me || !uid)
       return
 
-    const doc = db
+    const doc = this.db
       .collection('users')
       .doc(uid)
     const upload = async () => {
@@ -214,7 +237,7 @@ export class FirebasePlugin {
 
   async downloadProfile(uid: string) {
     try {
-      const doc = await db
+      const doc = await this.db
         .collection('users')
         .doc(uid)
         .get()
@@ -264,7 +287,7 @@ export class FirebasePlugin {
           }
           this.store.commit('group/syncOperations', { id: group.id, operations: unsynced })
           log('🚀 Outcoming operations', payload)
-          await UploadOperations(payload)
+          await this.functions.httpsCallable('uploadOperations')(payload)
         })
       }, {
         deep: true,
@@ -285,31 +308,6 @@ export class FirebasePlugin {
 export default async (context: any) => {
   const store = context.store
   const fire = new FirebasePlugin(store, context.app.router)
+  fire.init()
   Vue.prototype.$fire = fire
-
-  auth.onAuthStateChanged(async (user) => {
-    if (user) {
-      log('🙋 Login with uid:', user.uid)
-
-      const info: UserInfo = {
-        uid: user.uid,
-        email: user.email || undefined,
-        name: user.displayName || '',
-        avatar_url: user.photoURL || undefined,
-        anonymous: user.isAnonymous,
-      }
-      await fire.uploadProfileAndLogin(info)
-      await fire.subscribe()
-      fire.watchStoreChanges()
-    }
-    else {
-      log('🙁 Logout')
-      fire.unsubscribe()
-      fire.unwatchStore()
-      store.commit('user/logout')
-      store.commit('group/removeOnlineGroups')
-    }
-  })
-
-  await auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 }

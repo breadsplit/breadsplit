@@ -83,6 +83,7 @@ export const UserStateDefault = (overrides?: object): UserState => merge({
 
 export const AppOptionsDefault = (overrides?: object): AppOptions => merge({
   dark: false,
+  firebase_server: 'development',
 }, overrides)
 
 export const RootStateDefault = (overrides?: object): RootState => merge({
