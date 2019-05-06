@@ -116,6 +116,8 @@ v-app(:dark='dark')
     app-about-page(@close='$refs.about.close()')
 
   app-confirm(ref='confirm')
+
+  app-snackbar(ref='snack')
 </template>
 
 <script lang='ts'>
@@ -176,6 +178,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   // Methods
   mounted() {
     // @ts-ignore
+    this.$root.$snack = this.$refs.snack.open
+    // @ts-ignore
     this.$root.$confirm = this.$refs.confirm.open
     // @ts-ignore
     this.$root.$newgroup = this.$refs.newgroup
@@ -231,7 +235,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   async joinGroup() {
     const id = prompt('Group ID')
     if (id)
-      await this.$fire.joinGroup(id)
+      this.$router.push(`/join?id=${id}`)
   }
 
   async syncCurrentGroup() {

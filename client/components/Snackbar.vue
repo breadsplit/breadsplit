@@ -1,0 +1,54 @@
+<template lang='pug'>
+v-snackbar(
+  v-model='show',
+  v-bind='$attrs',
+  :timeout='options.timeout',
+  :right='!isMobile'
+  :top='!isMobile'
+  :bottom='isMobile'
+)
+  span {{message}}
+  template(v-for='button in options.buttons')
+    v-btn(:color='options.buttonColor', flat, @click='button.handler') {{button.text}}
+</template>
+
+<script lang='ts'>
+import { Component, Mixins } from 'vue-property-decorator'
+import CommonMixin from '../mixins/common'
+
+interface SnackOptions {
+  color?: string
+  buttonColor?: string
+  timeout?: number
+  buttons?: {
+    handler: () => void
+    text: string
+  }[]
+}
+
+@Component({
+  inheritAttrs: false,
+})
+export default class Snackbar extends Mixins(CommonMixin) {
+  show = false
+  resolve: ((result?) => void) | null = null
+  reject: ((error) => void) | null = null
+  message = ''
+  options = this.defaultOption
+
+  get defaultOption(): SnackOptions {
+    return {
+      color: '',
+      buttonColor: 'primary',
+      timeout: 3000,
+      buttons: [],
+    }
+  }
+
+  open(message: string, options: SnackOptions) {
+    this.message = message
+    this.options = Object.assign(this.options, this.defaultOption, options)
+    this.show = true
+  }
+}
+</script>
