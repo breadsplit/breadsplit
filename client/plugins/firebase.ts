@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/functions'
+import 'firebase/messaging'
 
 import { RootState } from '~/types/store'
 import { Group, UserInfo, ServerGroup } from '~/types/models'
@@ -38,6 +39,9 @@ export class FirebasePlugin {
   }
   get functions() {
     return firebase.functions()
+  }
+  get messaging() {
+    return firebase.messaging()
   }
   get me(): UserInfo | undefined {
     return this.store.getters['user/me']
@@ -77,6 +81,12 @@ export class FirebasePlugin {
     })
 
     await this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+
+    await this.updateMessagingToken()
+
+    this.messaging.onMessage((data) => {
+      log('📢 Incoming Message:', data)
+    })
   }
 
   async signup(email: string, password: string) {
@@ -126,6 +136,24 @@ export class FirebasePlugin {
       await this.functions.httpsCallable('removeGroup')(groupid)
     else
       this.store.commit('group/remove', groupid)
+  }
+
+  async requestNotificationPermission() {
+    try {
+      await this.messaging.requestPermission()
+      return await this.updateMessagingToken()
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
+
+  async updateMessagingToken() {
+    const messaging_token = await this.messaging.getToken()
+    this.store.commit('setMessagingToken', messaging_token)
+    if (messaging_token)
+      log(`📢 Messaging enabled with token: ${messaging_token}`)
+    return messaging_token
   }
 
   subscribe() {

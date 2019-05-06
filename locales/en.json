@@ -60,7 +60,10 @@
       "dark_mode": "Dark mode",
       "disabled": "Disabled",
       "notification": "Notification",
-      "reset": "Reset"
+      "reset": "Reset",
+      "notification_enabled": "Notifications are enabled",
+      "notification_disabled": "Notifications are disabled",
+      "clear_all_data": "Clear all Data"
     },
     "misc": "Misc."
   },

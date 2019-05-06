@@ -109,6 +109,7 @@ const config: NuxtConfiguration = {
   workbox: {
     offlineAnalytics: true,
     offline: true,
+    swURL: './firebase-messaging-sw.js',
   },
 }
 

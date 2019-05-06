@@ -5,49 +5,57 @@ v-card.settings
       v-icon mdi-close
     v-toolbar-title {{$t('ui.settings')}}
 
-  v-container.px-0
+  v-container.px-0(ref='container')
     v-list(two-line, subheader)
-      v-subheader {{$t("ui.general")}}
+      v-subheader {{$t('ui.general')}}
       v-divider
       v-list-tile(avatar, @click='darkMode=!darkMode')
         v-list-tile-avatar
           v-icon {{ darkMode ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
         v-list-tile-content
-          v-list-tile-title {{$t("ui.setting_options.dark_mode")}}
+          v-list-tile-title {{$t('ui.setting_options.dark_mode')}}
           v-list-tile-sub-title {{ darkMode ? $t('ui.setting_options.enabled') : $t('ui.setting_options.disabled') }}
         v-list-tile-action
-          v-switch(color='primary', v-model='darkMode')
+          v-switch(color='primary', :value='darkMode')
       v-list-tile(avatar, @click='languageSelecting=true')
         v-list-tile-avatar
           v-icon mdi-web
         v-list-tile-content
-          v-list-tile-title {{$t("ui.language")}}
+          v-list-tile-title {{$t('ui.language')}}
           v-list-tile-sub-title {{currentLocaleDisplay}}
-      v-list-tile(avatar, @click='')
-        v-list-tile-avatar
-          v-icon mdi-bell
-        v-list-tile-content
-          v-list-tile-title {{$t("ui.setting_options.notification")}}
-          v-list-tile-sub-title Notifications are disabled.
+
+      v-list-tile(avatar, @click='notificationButton()')
+        template(v-if='!notificationEnabled')
+          v-list-tile-avatar
+            v-icon mdi-bell-off-outline
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.setting_options.notification')}}
+            v-list-tile-sub-title {{$t('ui.setting_options.notification_disabled')}}
+        template(v-else)
+          v-list-tile-avatar
+            v-icon mdi-bell-ring
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.setting_options.notification')}}
+            v-list-tile-sub-title {{$t('ui.setting_options.notification_enabled')}}
 
     v-list(two-line, subheader)
-      v-subheader {{$t("ui.advance")}}
+      v-subheader {{$t('ui.advance')}}
       v-divider
       v-list-tile(avatar, @click='purgeData')
         v-list-tile-avatar
           v-icon mdi-alert-box
         v-list-tile-content
-          v-list-tile-title {{$t("ui.setting_options.reset")}}
-          v-list-tile-sub-title Clear all Data
+          v-list-tile-title {{$t('ui.setting_options.reset')}}
+          v-list-tile-sub-title {{$t('ui.setting_options.clear_all_data')}}
 
     v-list(two-line, subheader)
-      v-subheader {{$t("ui.misc")}}
+      v-subheader {{$t('ui.misc')}}
       v-divider
       v-list-tile(avatar, @click='$root.$about.open')
         v-list-tile-avatar
           v-icon mdi-information-outline
         v-list-tile-content
-          v-list-tile-title {{$t("ui.about")}}
+          v-list-tile-title {{$t('ui.about')}}
 
   v-bottom-sheet(v-model='languageSelecting')
     v-list.pl-3.pt-3.pb-3
@@ -83,6 +91,9 @@ export default class Settings extends Vue {
   set darkMode(value) {
     this.$store.commit('dark', value)
   }
+  get notificationEnabled() {
+    return this.$store.state.messaging_token
+  }
 
   close() {
     this.$emit('close')
@@ -99,6 +110,18 @@ export default class Settings extends Vue {
       this.$store.commit('purge')
       this.close()
       this.$router.push('/')
+    }
+  }
+  async notificationButton() {
+    if (!this.notificationEnabled) {
+      await this.$fire.requestNotificationPermission()
+    }
+    else {
+      const token = this.$store.state.messaging_token
+      // @ts-ignore
+      await this.$copyText(token, this.$refs.container)
+      // @ts-ignore
+      this.$root.$snack('Messaging token copied')
     }
   }
 }

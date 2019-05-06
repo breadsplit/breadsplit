@@ -6,31 +6,6 @@ import { RootStateDefault } from '~/utils/defaults'
 
 export const state = RootStateDefault
 
-export const mutations: MutationTree<RootState> = {
-
-  purge(state) {
-    const defaults = RootStateDefault()
-    for (const key of Object.keys(defaults))
-      Vue.set(state, key, defaults[key])
-  },
-
-  switchLocale(state, locale: string|null) {
-    state.user_locale = locale
-  },
-
-  browserLocale(state, locale) {
-    state.browser_locale = locale
-  },
-
-  loaded(state) {
-    state.loaded = true
-  },
-
-  dark(state, value) {
-    state.options.dark = !!value
-  },
-}
-
 export const getters: GetterTree<RootState, RootState> = {
 
   locale(state) {
@@ -47,6 +22,36 @@ export const getters: GetterTree<RootState, RootState> = {
     if (current && current.color)
       color = current.color
     return color
+  },
+
+}
+
+export const mutations: MutationTree<RootState> = {
+
+  purge(state) {
+    const defaults = RootStateDefault()
+    for (const key of Object.keys(defaults))
+      Vue.set(state, key, defaults[key])
+  },
+
+  switchLocale(state, locale: string | null) {
+    state.user_locale = locale
+  },
+
+  browserLocale(state, locale) {
+    state.browser_locale = locale
+  },
+
+  loaded(state) {
+    state.loaded = true
+  },
+
+  dark(state, value) {
+    state.options.dark = !!value
+  },
+
+  setMessagingToken(state, value) {
+    state.messaging_token = value
   },
 
 }

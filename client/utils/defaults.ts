@@ -93,4 +93,5 @@ export const RootStateDefault = (overrides?: object): RootState => merge({
   group: GroupStateDefault(),
   user: UserStateDefault(),
   options: AppOptionsDefault(),
+  messaging_token: null,
 }, overrides)

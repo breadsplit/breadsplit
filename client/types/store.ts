@@ -24,4 +24,5 @@ export interface RootState {
   group: GroupState
   user: UserState
   options: AppOptions
+  messaging_token: string | null
 }

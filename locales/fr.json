@@ -13,6 +13,11 @@
       "group_name": "Nom du groupe"
     },
     "homepage": "Accueil",
-    "button_create": "Créer"
+    "button_create": "Créer",
+    "setting_options": {
+      "notification_enabled": "Les notifications sont activées",
+      "notification_disabled": "Les notifications sont désactivées",
+      "clear_all_data": "Effacer toutes les données"
+    }
   }
 }

@@ -40,7 +40,10 @@
     "button_join_group": "加入小组",
     "button_create": "创建",
     "setting_options": {
-      "enabled": ""
+      "enabled": "",
+      "notification_enabled": "通知已启用",
+      "notification_disabled": "通知已禁用",
+      "clear_all_data": "清除所有数据"
     }
   },
   "prompt": {

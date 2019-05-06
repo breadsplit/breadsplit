@@ -52,7 +52,10 @@
       "disabled": "關閉",
       "notification": "通知",
       "reset": "重置",
-      "dark_mode": "深色模式"
+      "dark_mode": "深色模式",
+      "notification_enabled": "通知已啟用",
+      "notification_disabled": "通知已禁用",
+      "clear_all_data": "清除所有數據"
     },
     "misc": "其他",
     "button_join": "加入"
