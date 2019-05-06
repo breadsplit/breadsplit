@@ -11,8 +11,8 @@ import { Transforms } from '../../../core/transforms'
 admin.initializeApp()
 
 const db = admin.firestore()
-const GroupsRef = db.collection('groups')
-const OperationsRef = db.collection('_operations')
+const GroupsRef = (id: string) => db.collection('groups').doc(id)
+const OperationsRef = (id: string) => db.collection('_operations').doc(id)
 
 const f = functions.https.onCall
 const transformCache = new JsCache()
@@ -37,6 +37,7 @@ const _eval = EvalTransforms<Group>(Transforms, {
     return operation.timestamp + transformCacheTTL > +new Date()
   },
 })
+
 function Eval(operations: Operation[]): Group {
   /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
   return _eval({} as Group, operations)
@@ -74,15 +75,12 @@ export const publishGroup = f(async ({ group }, context) => {
     operations: initOperations.map(i => i.hash),
   }
 
-  await GroupsRef
-    .doc(id)
-    .set(serverGroup)
+  const batch = db.batch()
 
-  await OperationsRef
-    .doc(id)
-    .set({
-      operations: initOperations,
-    })
+  batch.set(GroupsRef(id), serverGroup)
+  batch.set(OperationsRef(id), { operations: initOperations })
+
+  await batch.commit()
 
   return { id }
 })
@@ -91,28 +89,26 @@ export const joinGroup = f(async ({ id }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
-  const doc = await GroupsRef
-    .doc(id)
-    .get()
+  const uid = context.auth.uid
 
-  const group = doc.data()
-  if (!group)
-    throw new Error('group_not_exists')
+  await db.runTransaction(async (t) => {
+    const doc = await t.get(GroupsRef(id))
 
-  const viewers = _.union(group.viewers || [], [context.auth.uid])
+    const group = doc.data()
+    if (!group)
+      throw new Error('group_not_exists')
 
-  await GroupsRef
-    .doc(id)
-    .update('viewers', viewers)
+    const viewers = _.union(group.viewers || [], [uid])
+
+    t.update(GroupsRef(id), 'viewers', viewers)
+  })
 })
 
 export const removeGroup = f(async (id, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
-  const doc = await GroupsRef
-    .doc(id)
-    .get()
+  const doc = await GroupsRef(id).get()
 
   const group = doc.data() as ServerGroup
   if (!group)
@@ -122,9 +118,9 @@ export const removeGroup = f(async (id, context) => {
 
   // TODO: flag to remove, not actually deleted
 
-  await GroupsRef
-    .doc(id)
-    .delete()
+  await GroupsRef(id).delete()
+
+  await OperationsRef(id).delete()
 
   return true
 })
@@ -137,22 +133,21 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
   const timestamp = +new Date()
   const processed = ProcessServerOperations(operations, uid, timestamp)
 
-  // TODO: use db tranaction
-  const serverOps = (await OperationsRef.doc(id).get()).data() as ServerOperations
-  const ops = _.sortBy(_.unionBy(serverOps.operations, processed, 'hash'), 'timestamp')
+  await db.runTransaction(async (t) => {
+    const doc = await t.get(OperationsRef(id))
+    const serverOps = doc.data() as ServerOperations
+    const ops = _
+      .chain(serverOps.operations)
+      .unionBy(processed, 'hash')
+      .sortBy('timestamp')
+      .value()
 
-  const present = Eval(ops)
+    const present = Eval(ops)
 
-  await OperationsRef
-    .doc(id)
-    .update('operations', ops)
-
-  await GroupsRef
-    .doc(id)
-    .set({
+    t.update(OperationsRef(id), 'operations', ops)
+    t.update(GroupsRef(id), {
       present,
-      operations: ops.map(o => o.hash),
-    }, {
-      merge: true,
+      'operations': ops.map(o => o.hash),
     })
+  })
 })
