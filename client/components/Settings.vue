@@ -9,13 +9,14 @@ v-card.settings
     v-list(two-line, subheader)
       v-subheader {{$t("ui.general")}}
       v-divider
-      v-list-tile(avatar)
+      v-list-tile(avatar, @click='darkMode=!darkMode')
         v-list-tile-avatar
           v-icon {{ darkMode ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
         v-list-tile-content
           v-list-tile-title {{$t("ui.setting_options.dark_mode")}}
           v-list-tile-sub-title {{ darkMode ? $t('ui.setting_options.enabled') : $t('ui.setting_options.disabled') }}
-        v-switch(color='green', v-model='darkMode')
+        v-list-tile-action
+          v-switch(color='primary', v-model='darkMode')
       v-list-tile(avatar, @click='languageSelecting=true')
         v-list-tile-avatar
           v-icon mdi-web
@@ -39,7 +40,14 @@ v-card.settings
           v-list-tile-title {{$t("ui.setting_options.reset")}}
           v-list-tile-sub-title Clear all Data
 
-    app-credit
+    v-list(two-line, subheader)
+      v-subheader {{$t("ui.misc")}}
+      v-divider
+      v-list-tile(avatar, @click='$root.$about.open')
+        v-list-tile-avatar
+          v-icon mdi-information-outline
+        v-list-tile-content
+          v-list-tile-title {{$t("ui.about")}}
 
   v-bottom-sheet(v-model='languageSelecting')
     v-list.pl-3.pt-3.pb-3

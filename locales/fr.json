@@ -13,9 +13,6 @@
       "group_name": "Nom du groupe"
     },
     "homepage": "Accueil",
-    "button_create": "Créer",
-    "setting_options": {
-      "enabled": ""
-    }
+    "button_create": "Créer"
   }
 }

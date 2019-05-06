@@ -13,9 +13,6 @@
     },
     "button_join_group": "グループに参加する",
     "homepage": "ホーム",
-    "button_create": "作成する",
-    "setting_options": {
-      "enabled": ""
-    }
+    "button_create": "作成する"
   }
 }

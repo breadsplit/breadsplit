@@ -83,13 +83,6 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.settings')}}
 
-        // About
-        v-list-tile(@click='$refs.about.open()')
-          v-list-tile-action
-            v-icon mdi-alert-circle
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.about')}}
-
   v-toolbar.app-toolbar(
     :clipped-left='clipped'
     fixed, app, dark, color='primary'
@@ -188,6 +181,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     this.$root.$newgroup = this.$refs.newgroup
     // @ts-ignore
     this.$root.$settings = this.$refs.settings
+    // @ts-ignore
+    this.$root.$about = this.$refs.about
 
     if (!this.isMobile)
       this.drawer = true

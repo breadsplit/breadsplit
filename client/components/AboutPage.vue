@@ -11,6 +11,8 @@ v-card
 
     app-brand-button(brand='patreon' href='https://www.patreon.com/breadsplit' target='__blank')
       span Become a patreon
+
+    app-credit
 </template>
 
 <script lang='ts'>

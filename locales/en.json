@@ -11,7 +11,7 @@
     "language": "Language",
     "settings": "Settings",
     "sign_in": "Sign in",
-    "about": "About",
+    "about": "About us",
     "general": "General",
     "advance": "Advance",
     "reset": "Reset",
@@ -59,8 +59,10 @@
       "enabled": "Enabled",
       "dark_mode": "Dark mode",
       "disabled": "Disabled",
-      "notification": "Notification"
-    }
+      "notification": "Notification",
+      "reset": "Reset"
+    },
+    "misc": "Misc."
   },
   "prompt": {
     "are_you_sure": "Are you sure?"

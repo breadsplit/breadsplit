@@ -11,7 +11,7 @@
     "language": "顯示語言",
     "settings": "設定",
     "sign_in": "登錄",
-    "about": "關於",
+    "about": "關於我們",
     "general": "一般",
     "advance": "進階",
     "homepage": "首頁",
@@ -21,12 +21,12 @@
     "button_create": "創建",
     "button_ok": "好的",
     "button_cancel": "取消",
-    "join_as_me": "以 {0} 加入",
+    "join_as_me": "以\"{0}\"加入",
     "group_editing": {
       "new_group": "新建小組",
       "enter_group_name": "請輸入小組名稱",
       "default_group_name": "未命名小組",
-      "group_name": "小組名稱"
+      "group_name": "集團的名字"
     },
     "tabs": {
       "expenses": "支出",
@@ -49,11 +49,12 @@
     },
     "setting_options": {
       "enabled": "開啓",
-      "reset": "重設",
       "disabled": "關閉",
       "notification": "通知",
+      "reset": "重置",
       "dark_mode": "深色模式"
-    }
+    },
+    "misc": "其他"
   },
   "cats": {
     "transport": {
@@ -76,5 +77,8 @@
     "other": {
       "display": "其他"
     }
+  },
+  "prompt": {
+    "are_you_sure": "你確定嗎？"
   }
 }
