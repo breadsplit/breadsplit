@@ -84,7 +84,7 @@ v-app(:dark='dark')
             v-list-tile-title {{$t('ui.settings')}}
 
         // About
-        v-list-tile(@click='$router.push("/about")')
+        v-list-tile(@click='$refs.about.open()')
           v-list-tile-action
             v-icon mdi-alert-circle
           v-list-tile-content
@@ -118,6 +118,9 @@ v-app(:dark='dark')
 
   app-dialog(ref='settings', :route='true', :fullscreen='true')
     app-settings(@close='$refs.settings.close()')
+
+  app-dialog(ref='about', :route='true', :fullscreen='true')
+    app-about-page(@close='$refs.about.close()')
 
   app-confirm(ref='confirm')
 </template>

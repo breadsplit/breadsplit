@@ -65,7 +65,6 @@ export default class FromNewGroup extends Vue {
     // TODO: load suggestions from another group
     return []
   }
-
   get submitFlag(): boolean {
     return !!(this.name.length && this.currency.length && this.members.length)
   }
@@ -87,13 +86,5 @@ export default class FromNewGroup extends Vue {
     const id = this.$store.state.group.currentId
     this.$router.push(`/group/${id}`)
   }
-  rejectcreate() {
-    alert('You should complete the form')
-  }
 }
 </script>
-
-<style lang="stylus">
-.reject
-  opacity 0.5
-</style>
