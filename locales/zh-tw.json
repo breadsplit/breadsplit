@@ -54,7 +54,8 @@
       "reset": "重置",
       "dark_mode": "深色模式"
     },
-    "misc": "其他"
+    "misc": "其他",
+    "button_join": "加入"
   },
   "cats": {
     "transport": {
@@ -80,5 +81,8 @@
   },
   "prompt": {
     "are_you_sure": "你確定嗎？"
+  },
+  "tips": {
+    "already_joined_group": "你已經加入了此小組。"
   }
 }

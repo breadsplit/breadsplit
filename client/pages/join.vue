@@ -39,6 +39,12 @@ export default class JoinPage extends Vue {
   }
 
   mounted() {
+    if (this.$store.getters['group/all'].map(g => g.id).includes(this.id)) {
+      this.$router.replace(`/group/${this.id}`)
+      // @ts-ignore
+      this.$root.$snack(this.$t('tips.already_joined_group'))
+      return
+    }
     this.loading = false
   }
 }

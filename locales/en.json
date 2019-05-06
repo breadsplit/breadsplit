@@ -92,5 +92,8 @@
       "display": "Other",
       "keywords": ""
     }
+  },
+  "tips": {
+    "already_joined_group": "You have already joined this group."
   }
 }
