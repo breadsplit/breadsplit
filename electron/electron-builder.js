@@ -1,5 +1,5 @@
 module.exports = {
-  appId: 'splitoast.electron',
+  appId: 'breadsplit.electron',
   directories: {
     buildResources: 'static',
   },

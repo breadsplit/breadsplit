@@ -46,7 +46,7 @@ v-card
 <script lang='ts'>
 import swatches from '~/meta/swatches'
 import currencies from '~/meta/currencies'
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class FromNewGroup extends Vue {
@@ -56,7 +56,6 @@ export default class FromNewGroup extends Vue {
   name = ''
   color = swatches[Math.floor(Math.random() * swatches.length)]
   members = []
-  submitFlag = false
 
   get currencies() {
     return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
@@ -66,9 +65,8 @@ export default class FromNewGroup extends Vue {
     return []
   }
 
-  get input_set() {
-    const { name, currency, members } = this
-    return { name, currency, members }
+  get submitFlag(): boolean {
+    return !!(this.name.length && this.currency.length && this.members.length)
   }
 
   close(result?) {
@@ -90,14 +88,6 @@ export default class FromNewGroup extends Vue {
   }
   rejectcreate() {
     alert('You should complete the form')
-  }
-
-  @Watch('input_set')
-  InputChange(val) {
-    if (val.name.length && val.currency.length && val.members.length)
-      this.submitFlag = true
-    else
-      this.submitFlag = false
   }
 }
 </script>

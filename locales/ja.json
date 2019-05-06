@@ -8,9 +8,11 @@
   },
   "ui": {
     "group_editing": {
-      "new_group": "新チーム"
+      "new_group": "新チーム",
+      "group_name": "グループ名"
     },
     "button_join_group": "グループに参加する",
-    "homepage": "ホーム"
+    "homepage": "ホーム",
+    "button_create": "作成する"
   }
 }

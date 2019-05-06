@@ -1,6 +1,6 @@
 {
-  "name": "com.github.splitoast",
-  "displayName": "Splitoast",
+  "name": "com.github.breadsplit",
+  "displayName": "BreadSplit",
   "version": "1.0.0",
   "scripts": {
     "check": "cordova requirements",

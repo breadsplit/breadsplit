@@ -1,12 +1,12 @@
-# 🍞 Splitoast
+# 🍞 BreadSplit
 
 Group bills split made easy, fast and customizable.
 
-[![CircleCI](https://circleci.com/gh/antfu/splitoast.svg?style=svg&circle-token=b26ce4526201e0c7fbeb42287d360930a69b3988)](https://circleci.com/gh/antfu/splitoast)
-[![codecov](https://codecov.io/gh/antfu/splitoast/branch/master/graph/badge.svg?token=JRYbmADObn)](https://codecov.io/gh/antfu/splitoast)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/7595b445-ccf4-4925-a7e8-ec6bd6033af3/deploy-status)](https://app.netlify.com/sites/splitoast/deploys)
+[![CircleCI](https://circleci.com/gh/antfu/breadsplit.svg?style=svg&circle-token=b26ce4526201e0c7fbeb42287d360930a69b3988)](https://circleci.com/gh/antfu/breadsplit)
+[![codecov](https://codecov.io/gh/antfu/breadsplit/branch/master/graph/badge.svg?token=JRYbmADObn)](https://codecov.io/gh/antfu/breadsplit)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7595b445-ccf4-4925-a7e8-ec6bd6033af3/deploy-status)](https://app.netlify.com/sites/breadsplit/deploys)
 
-[📋 **Stage Progress**](https://github.com/antfu/splitoast/projects/1)
+[📋 **Stage Progress**](https://github.com/antfu/breadsplit/projects/1)
 
 ## 🌟 Key Features
 
@@ -14,7 +14,7 @@ Group bills split made easy, fast and customizable.
 
 ## 📚 Development
 
-[Online Document](https://antfu.github.io/splitoast/)
+[Online Document](https://antfu.github.io/breadsplit/)
 
 ## Simliar Apps 🚗🚓🚕🚙
 
