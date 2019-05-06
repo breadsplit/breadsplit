@@ -29,8 +29,8 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title(v-text='group.name')
           v-list-tile-action(v-if='group.online')
-            template(v-if='isSync(group)')
-              v-icon(color='grey lighten-1', size='20') mdi-cloud-sync
+            template(v-if='isSync(group.id)')
+              v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
             template(v-else)
               v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
 
@@ -96,9 +96,13 @@ v-app(:dark='dark')
         v-btn(icon, @click.stop='rightDrawer = !rightDrawer')
           v-icon mdi-menu
     v-spacer
-    v-toolbar-items(v-show='current')
-      v-btn(v-if='currentShareLink', icon, flat, @click='copyShareLink()')
-        v-icon mdi-share-variant
+    v-toolbar-items(v-if='current')
+      template(v-if='isSync()')
+        v-btn(icon, flat).syncing-icon
+          v-icon mdi-cloud-sync
+      template(v-if='currentShareLink')
+        v-btn(icon, flat, @click='copyShareLink()')
+          v-icon mdi-share-variant
       v-menu(offset-y='')
         v-btn(icon, flat, slot='activator')
           v-icon mdi-dots-vertical
@@ -252,8 +256,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     alert(this.$t('ui.share_link_copied'))
   }
 
-  isSync(group) {
-    return this.$store.getters['group/isSyncing'](group.id)
+  isSync(id) {
+    return this.$store.getters['group/isSyncing'](id)
   }
 }
 </script>
