@@ -26,7 +26,7 @@
       "new_group": "新建小組",
       "enter_group_name": "請輸入小組名稱",
       "default_group_name": "未命名小組",
-      "group_name": "集團的名字"
+      "group_name": "小組名稱"
     },
     "tabs": {
       "expenses": "支出",
