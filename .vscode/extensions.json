@@ -5,7 +5,7 @@
     "davidanson.vscode-markdownlint",
     "sysoev.language-stylus",
     "antfu.vue-i18n-ally",
-    "wayou.vscode-todo-highlight",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "esbenp.prettier-vscode",
   ]
 }

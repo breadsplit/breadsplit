@@ -3,7 +3,7 @@ v-app(:dark='dark')
 
   style.
     :root {
-      --app-font: {{i18nStyle}};
+      --app-font: {{localeFont}};
     }
     .primary {
       background-color: {{primaryColor}} !important;
@@ -32,13 +32,16 @@ v-app(:dark='dark')
             v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
 
         v-divider.my-1
+
+      // New group item
       v-list-tile(@click='$refs.newgroup.open()')
         v-list-tile-action
           v-icon mdi-plus
         v-list-tile-content
           v-list-tile-title {{$t('ui.group_editing.new_group')}}
 
-      v-list-tile(@click='joinGroup')
+      // Join group button
+      v-list-tile(v-if='!user.anonymous' @click='joinGroup')
         v-list-tile-action
           v-icon mdi-shape-circle-plus
         v-list-tile-content
@@ -53,8 +56,8 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.homepage')}}
 
+        // Sign in
         template(v-if='user.anonymous')
-          // Sign in
           v-list-tile(@click='loginWithGoogle()')
             v-list-tile-action
               v-avatar(size='36', color='#00000020', style='margin: -6px;')
@@ -62,6 +65,7 @@ v-app(:dark='dark')
             v-list-tile-content
               v-list-tile-title {{$t('ui.sign_in')}}
 
+        // User profile
         template(v-else)
           v-list-tile(@click='promptLogout()')
             v-list-tile-action
@@ -109,7 +113,7 @@ v-app(:dark='dark')
   v-content
     nuxt
 
-  app-dialog(ref='newgroup', :route='true')
+  app-dialog(ref='newgroup', :route='true', persistent, no-click-animation)
     app-form-new-group(@close='$refs.newgroup.close()')
 
   app-dialog(ref='settings', :route='true', :fullscreen='true')
@@ -155,12 +159,9 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     else
       return this.$t('appname')
   }
-  get i18nStyle() {
-    let font_family = this.$t('css.font_family', '')
+  get localeFont() {
     const font_of_locale = this.$t('css.font_of_locale', '').toString()
-    if (!font_family)
-      font_family = FontFamilyBuilder(font_of_locale)
-    return font_family
+    return FontFamilyBuilder(font_of_locale)
   }
   get group_menu() {
     const menu: ({title: string; key: string})[] = []

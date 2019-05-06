@@ -13,8 +13,8 @@ v-card.settings
         v-list-tile-avatar
           v-icon {{ darkMode ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
         v-list-tile-content
-          v-list-tile-title {{$t("ui.dark_mode")}}
-          v-list-tile-sub-title {{ darkMode ? 'Enabled' : 'Disabled' }}
+          v-list-tile-title {{$t("ui.setting_options.dark_mode")}}
+          v-list-tile-sub-title {{ darkMode ? $t('ui.setting_options.enabled') : $t('ui.setting_options.disabled') }}
         v-switch(color='green', v-model='darkMode')
       v-list-tile(avatar, @click='languageSelecting=true')
         v-list-tile-avatar
@@ -26,7 +26,7 @@ v-card.settings
         v-list-tile-avatar
           v-icon mdi-bell
         v-list-tile-content
-          v-list-tile-title {{$t("ui.notification")}}
+          v-list-tile-title {{$t("ui.setting_options.notification")}}
           v-list-tile-sub-title Notifications are disabled.
 
     v-list(two-line, subheader)
@@ -36,7 +36,7 @@ v-card.settings
         v-list-tile-avatar
           v-icon mdi-alert-box
         v-list-tile-content
-          v-list-tile-title {{$t("ui.reset")}}
+          v-list-tile-title {{$t("ui.setting_options.reset")}}
           v-list-tile-sub-title Clear all Data
 
     app-credit

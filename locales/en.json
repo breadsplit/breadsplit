@@ -5,8 +5,7 @@
   "translators": "antfu<anthonyfu117@hotmail.com>",
   "appname": "BreadSplit",
   "css": {
-    "font_of_locale": "",
-    "font_family": ""
+    "font_of_locale": ""
   },
   "ui": {
     "language": "Language",
@@ -16,8 +15,6 @@
     "general": "General",
     "advance": "Advance",
     "reset": "Reset",
-    "notification": "Notification",
-    "_dark_mode": "Dark Mode",
     "homepage": "Home",
     "loading": "Loading...",
     "loading_group_info": "Loading group info...",
@@ -57,6 +54,12 @@
       "rename_member": "Rename",
       "member_is_me": "This is me",
       "remove_member": "Remove {name} from group"
+    },
+    "setting_options": {
+      "enabled": "Enabled",
+      "dark_mode": "Dark mode",
+      "disabled": "Disabled",
+      "notification": "Notification"
     }
   },
   "prompt": {

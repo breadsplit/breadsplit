@@ -40,6 +40,7 @@ v-card
 
       v-flex
         v-btn(@click='create()', :color='color', :dark='submitFlag', :disabled='!submitFlag') {{$t('ui.button_create')}}
+        v-btn(@click='exit()', flat, color='grey') {{$t('ui.button_cancel')}}
 
 </template>
 

@@ -14,9 +14,6 @@
     "about": "關於",
     "general": "一般",
     "advance": "進階",
-    "reset": "重設",
-    "notification": "通知",
-    "dark_mode": "深色模式",
     "homepage": "首頁",
     "button_new_group": "新增小組",
     "button_new_member": "添加成員",
@@ -24,12 +21,12 @@
     "button_create": "創建",
     "button_ok": "好的",
     "button_cancel": "取消",
-    "join_as_me": "以\"{0}\"加入",
+    "join_as_me": "以 {0} 加入",
     "group_editing": {
       "new_group": "新建小組",
       "enter_group_name": "請輸入小組名稱",
       "default_group_name": "未命名小組",
-      "group_name": "集團的名字"
+      "group_name": "小組名稱"
     },
     "tabs": {
       "expenses": "支出",
@@ -49,6 +46,13 @@
       "rename_member": "重命名",
       "member_is_me": "這是我",
       "remove_member": "將 {name} 從小組中移除"
+    },
+    "setting_options": {
+      "enabled": "開啓",
+      "reset": "重設",
+      "disabled": "關閉",
+      "notification": "通知",
+      "dark_mode": "深色模式"
     }
   },
   "cats": {
