@@ -65,9 +65,8 @@ export default class FromNewGroup extends Vue {
     return []
   }
 
-  get input_set() {
-    const { name, currency, members } = this
-    return { name, currency, members }
+  get submitFlag(): boolean {
+    return !!(this.name.length && this.currency.length && this.members.length)
   }
 
   get submitFlag(): boolean {

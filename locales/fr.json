@@ -9,8 +9,10 @@
   "ui": {
     "button_join_group": "Rejoindre le groupe",
     "group_editing": {
-      "new_group": "Nouvelle équipe"
+      "new_group": "Nouvelle équipe",
+      "group_name": "Nom du groupe"
     },
-    "homepage": "Accueil"
+    "homepage": "Accueil",
+    "button_create": "Créer"
   }
 }

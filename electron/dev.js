@@ -6,7 +6,7 @@ const { exec } = require('child_process')
 const electron = require('electron')
 const { default: installExtension, VUEJS_DEVTOOLS } = require('electron-devtools-installer')
 
-const root = '../splitoast'
+const root = '../breadsplit'
 const port = 3000 || process.env.NUXT_PORT || process.env.PORT
 
 const child = exec(`npm run dev --prefix=${root}`)

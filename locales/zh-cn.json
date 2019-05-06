@@ -23,7 +23,8 @@
     "group_editing": {
       "new_group": "新建小组",
       "enter_group_name": "请输入小组名称",
-      "default_group_name": ""
+      "default_group_name": "",
+      "group_name": "集团的名字"
     },
     "tabs": {
       "settle_up": "",
@@ -37,7 +38,8 @@
       "new_member": "",
       "settle_up": ""
     },
-    "button_join_group": "加入小组"
+    "button_join_group": "加入小组",
+    "button_create": "创建"
   },
   "prompt": {
     "are_you_sure": "你确定吗"

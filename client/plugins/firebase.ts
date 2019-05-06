@@ -8,7 +8,6 @@ import 'firebase/functions'
 
 import { RootState } from '~/types/store'
 import { Group, UserInfo } from '~/types/models'
-import includes from 'lodash/includes';
 import { IsThisId } from '../../core/id_helper'
 import { ServerGroup } from '../../types/models'
 

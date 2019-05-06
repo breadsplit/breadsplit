@@ -9,8 +9,10 @@
   "ui": {
     "button_join_group": "그룹 가입",
     "group_editing": {
-      "new_group": "새 팀"
+      "new_group": "새 팀",
+      "group_name": "그룹 이름"
     },
-    "homepage": "홈"
+    "homepage": "홈",
+    "button_create": "몹시 떠들어 대다"
   }
 }

@@ -1,14 +1,14 @@
 {
-  "name": "splitoast",
-  "fullname": "Splitoast",
+  "name": "breadsplit",
+  "fullname": "BreadSplit",
   "version": "0.1.1",
   "private": true,
-  "description": "The Splitoast web application",
+  "description": "The BreadSplit web application",
   "author": "Anthony Fu",
   "license": "GPLv3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antfu/splitoast"
+    "url": "https://github.com/antfu/breadsplit"
   },
   "bugs": "https://github.com/antfu/splitoas/issues",
   "engines": {
