@@ -149,11 +149,18 @@ export class FirebasePlugin {
   }
 
   async updateMessagingToken() {
-    const messaging_token = await this.messaging.getToken()
-    this.store.commit('setMessagingToken', messaging_token)
-    if (messaging_token)
-      log(`📢 Messaging enabled with token: ${messaging_token}`)
-    return messaging_token
+    const token = await this.messaging.getToken()
+    this.store.commit('setMessagingToken', token)
+    if (token)
+      log(`📢 Messaging enabled with token: ${token}`)
+
+    // async update tokens to firestore
+    this.db
+      .collection('messaging_tokens')
+      .doc(this.uid)
+      // TODO: merge with other tokens
+      .set({ tokens: [token] })
+    return token
   }
 
   subscribe() {

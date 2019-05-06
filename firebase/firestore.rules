@@ -7,5 +7,8 @@ service cloud.firestore {
       allow write: if request.auth.uid == uid;
       allow read: if request.auth.uid != null;
     }
+    match /messaging_tokens/{uid} {
+      allow write, read: if request.auth.uid == uid;
+    }
   }
 }
