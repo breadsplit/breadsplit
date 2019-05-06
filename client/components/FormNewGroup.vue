@@ -69,10 +69,6 @@ export default class FromNewGroup extends Vue {
     return !!(this.name.length && this.currency.length && this.members.length)
   }
 
-  get submitFlag(): boolean {
-    return !!(this.name.length && this.currency.length && this.members.length)
-  }
-
   close(result?) {
     this.$emit('close', result)
   }
