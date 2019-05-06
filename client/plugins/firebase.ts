@@ -7,9 +7,8 @@ import 'firebase/firestore'
 import 'firebase/functions'
 
 import { RootState } from '~/types/store'
-import { Group, UserInfo } from '~/types/models'
+import { Group, UserInfo, ServerGroup } from '~/types/models'
 import { IsThisId } from '../../core/id_helper'
-import { ServerGroup } from '../../types/models'
 
 const config = {
   apiKey: 'AIzaSyCGr9QtZjJSsomlM5pTkqiPzeCYr_kQqk4',
@@ -250,15 +249,22 @@ export class FirebasePlugin {
         return state.group.groups
       }, (value) => {
         Object.values(value).forEach(async (group) => {
-          if (group.online && group.operations.length) {
-            const payload = {
-              id: group.id,
-              operations: group.operations,
-              lastsync: group.lastsync,
-            }
-            log('🚀 Outcoming operations', payload)
-            await UploadOperations(payload)
+          if (!group.online)
+            return
+
+          const unsynced = this.store.getters['group/unsyncedOperationsOf'](group.id)
+
+          if (!unsynced.length)
+            return
+
+          const payload = {
+            id: group.id,
+            operations: unsynced,
+            lastsync: group.lastsync,
           }
+          this.store.commit('group/syncOperations', { id: group.id, operations: unsynced })
+          log('🚀 Outcoming operations', payload)
+          await UploadOperations(payload)
         })
       }, {
         deep: true,

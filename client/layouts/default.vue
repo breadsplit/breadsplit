@@ -29,7 +29,10 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title(v-text='group.name')
           v-list-tile-action(v-if='group.online')
-            v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
+            template(v-if='isSync(group)')
+              v-icon(color='grey lighten-1', size='20') mdi-cloud-sync
+            template(v-else)
+              v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
 
         v-divider.my-1
 
@@ -247,6 +250,10 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     if (this.currentShareLink)
       await this.$copyText(this.currentShareLink)
     alert(this.$t('ui.share_link_copied'))
+  }
+
+  isSync(group) {
+    return this.$store.getters['group/isSyncing'](group.id)
   }
 }
 </script>

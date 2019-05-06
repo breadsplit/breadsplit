@@ -125,6 +125,7 @@ export interface ClientGroup {
   operations: Operation[]
   online?: boolean
   lastsync?: number
+  syncingOperations: string[]
 
   // Options
   lastchanged: number

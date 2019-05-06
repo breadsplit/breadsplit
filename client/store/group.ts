@@ -2,13 +2,13 @@ import Vue from 'vue'
 import merge from 'lodash/merge'
 import includes from 'lodash/includes'
 import orderBy from 'lodash/orderBy'
+import union from 'lodash/union'
 import { MutationTree, ActionTree, GetterTree } from 'vuex'
 import { MemberDefault, GroupStateDefault, ClientGroupDefault, TransactionDefault } from '~/utils/defaults'
 import { GroupState, RootState } from '~/types/store'
-import { ClientGroup, Group } from '~/types/models'
+import { ClientGroup, Group, ServerGroup, Operation } from '~/types/models'
 import { EvalTransforms, ProcessOperation, BasicCache } from 'opschain'
 import { Transforms } from '../../core'
-import { ServerGroup } from '../../types/models'
 
 const OperationCache = new BasicCache<Group>()
 
@@ -72,7 +72,20 @@ export const getters: GetterTree<GroupState, RootState> = {
   },
 
   activeMembers(state, getters) {
-    return getters.activeMembersOf()
+    return getters.activeMembersOf(state.currentId)
+  },
+
+  isSyncing: state => (id?: string) => {
+    id = id || state.currentId || ''
+    const group = state.groups[id]
+    return !!(group.syncingOperations.length)
+  },
+
+  unsyncedOperationsOf: state => (id?: string) => {
+    id = id || state.currentId || ''
+    const group = state.groups[id]
+    const isUnsynced = (o: Operation) => !(group.syncingOperations || []).includes(o.hash)
+    return group.operations.filter(isUnsynced)
   },
 }
 
@@ -168,8 +181,17 @@ export const mutations: MutationTree<GroupState> = {
       o => !includes(serverOperations, o.hash)
     )
 
-    state.groups[group.id].base = group.present
-    state.groups[group.id].operations = unsyncedOperations
-    state.groups[group.id].lastsync = timestamp
+    const clientGroup = state.groups[group.id]
+
+    clientGroup.syncingOperations = (clientGroup.syncingOperations || [])
+      .filter(i => !serverOperations.includes(i))
+    clientGroup.base = group.present
+    clientGroup.operations = unsyncedOperations
+    clientGroup.lastsync = timestamp
+  },
+
+  syncOperations(state, { id, operations }) {
+    const group = state.groups[id]
+    group.syncingOperations = union(group.syncingOperations || [], operations.map(o => o.hash))
   },
 }

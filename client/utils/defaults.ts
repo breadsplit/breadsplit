@@ -48,6 +48,7 @@ export const ClientGroupDefault = (overrides?: object): ClientGroup => {
     id: group.id,
     base: group,
     operations: [],
+    syncingOperations: [],
     lastchanged: +new Date(),
   }
 }
