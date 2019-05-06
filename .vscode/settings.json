@@ -79,5 +79,7 @@
   },
 
   // i18n
-  "vue-i18n.i18nPaths": "./locales"
+  "vue-i18n-ally.i18nPaths": "./locales",
+  "vue-i18n-ally.sourceLocale": "en",
+  "vue-i18n-ally.displayLocale": "zh-TW",
 }
