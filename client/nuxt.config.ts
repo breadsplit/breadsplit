@@ -2,6 +2,7 @@ import NuxtConfiguration from '@nuxt/config'
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 import pkg from '../package.json'
 import ServicesIntegrations from './meta/services_integrations'
+import theme from './meta/theme'
 
 const debug = process.env.NODE_ENV !== 'production'
 
@@ -13,15 +14,15 @@ const config: NuxtConfiguration = {
     title: pkg.fullname,
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
       { hid: 'description', name: 'description', content: pkg.description },
+      { name: 'HandheldFriendly', content: 'true' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
-        href:
-          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
+        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
       },
     ],
   },
@@ -31,6 +32,9 @@ const config: NuxtConfiguration = {
     short_name: pkg.fullname,
     display: 'standalone',
     orientation: 'portrait-primary',
+    start_url: '/',
+    theme_color: theme.primary,
+    background_color: theme.background,
   },
 
   env: {
