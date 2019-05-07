@@ -1,12 +1,11 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
-// @ts-ignore
-import JsCache from 'js-cache'
-import { ProcessOperations, EvalTransforms, TransOperationOption } from 'opschain'
-import { ServerGroup, Group, Operation, ServerOperations } from '../../../types/models'
+
+import { ServerGroup, ServerOperations } from '../../../types/models'
 import { GenerateId } from '../../../core/id_helper'
-import { Transforms } from '../../../core/transforms'
+import { ProcessServerOperations, Eval } from './opschain'
+import { PushGroupNotification } from './push_notifications'
 
 admin.initializeApp()
 
@@ -15,34 +14,6 @@ const GroupsRef = (id: string) => db.collection('groups').doc(id)
 const OperationsRef = (id: string) => db.collection('_operations').doc(id)
 
 const f = functions.https.onCall
-const transformCache = new JsCache()
-const transformCacheTTL = 10 * 24 * 60 * 60 * 1000 // 10 days
-
-// warpper functions
-function ProcessServerOperations(operations: TransOperationOption[], uid: string, server_timestamp?: number): Operation[] {
-  return ProcessOperations(operations).map((o): Operation => {
-    return {
-      ...o,
-      uid,
-      server_timestamp: server_timestamp || +new Date(),
-    }
-  })
-}
-
-const _eval = EvalTransforms<Group>(Transforms, {
-  cacheObject: transformCache,
-  cacheTTL: transformCacheTTL,
-  shouldCache: (operation) => {
-    // skip caches that is too old
-    return operation.timestamp + transformCacheTTL > +new Date()
-  },
-})
-
-function Eval(operations: Operation[]): Group {
-  /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
-  return _eval({} as Group, operations)
-  /* eslint-enable @typescript-eslint/no-object-literal-type-assertion */
-}
 
 // firebase functions
 export const groupsCount = f(async (data, context) => {
@@ -150,4 +121,11 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
       'operations': ops.map(o => o.hash),
     })
   })
+
+  await PushGroupNotification(id, {
+    notification: {
+      'title': 'Hello World',
+      'body': 'From firebase functions',
+    },
+  }, uid)
 })
