@@ -2,7 +2,9 @@ export function getUserAgent() {
   return navigator.userAgent || navigator.vendor || ''
 }
 
-export function isInsideWebview(userAgent: string) {
+export function webviewName(userAgent?: string) {
+  if (!userAgent)
+    userAgent = getUserAgent()
   userAgent = userAgent.toLowerCase()
 
   if (userAgent.includes('micromessenger'))

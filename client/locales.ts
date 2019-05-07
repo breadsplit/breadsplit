@@ -19,7 +19,14 @@ export const Config = {
   messages: Messages,
 }
 
-export function AcceptLanguage(raw: string) {
+export function getBrowserLanguage(): string {
+  // @ts-ignore
+  return window.navigator.language || window.navigator.userLanguage || ''
+}
+
+export function acceptLanguage(raw?: string) {
+  if (!raw)
+    raw = getBrowserLanguage()
   const fullcode = raw.trim().toLowerCase()
   const avaliable = AvaliableLocales.map(l => l.code)
   if (avaliable.indexOf(fullcode) > -1)

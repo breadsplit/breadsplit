@@ -1,8 +1,9 @@
-import { GenerateId } from '~/utils/id_helper'
-import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '../types/models'
-import { RootState, GroupState, UserState, AppOptions } from '../types/store'
 import { merge, mapValues } from 'lodash'
-import { getUserAgent, isInsideWebview } from './webview_detect'
+import { GenerateId } from '~/utils/id_helper'
+import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '~/types/models'
+import { RootState, GroupState, UserState, AppOptions } from '~/types/store'
+import { getUserAgent, webviewName } from './webview_detect'
+import { acceptLanguage } from '~/locales'
 
 export const MemberDefault = (overrides?: object): Member => merge({
   id: GenerateId.LocalMember(),
@@ -88,7 +89,7 @@ export const AppOptionsDefault = (overrides?: object): AppOptions => merge({
 }, overrides)
 
 export const RootStateDefault = (overrides?: object): RootState => merge({
-  browser_locale: 'en',
+  browser_locale: acceptLanguage(),
   user_locale: null,
   loaded: false,
   group: GroupStateDefault(),
@@ -96,5 +97,5 @@ export const RootStateDefault = (overrides?: object): RootState => merge({
   options: AppOptionsDefault(),
   messaging_token: null,
   userAgent: getUserAgent(),
-  webview: isInsideWebview(getUserAgent()),
+  webview: webviewName(),
 }, overrides)
