@@ -42,10 +42,10 @@ export default class MoneyLabel extends Vue {
 
   get format() {
     const f_num = new Intl.NumberFormat('en-US').format(parseFloat(this.abs))
-    if (/[0-9]*\.[0-9]{2}/.test(f_num))
+    if (/0 || [0-9]*\.[0-9]{2}/.test(f_num))
       return f_num
     else
-      return `${f_num  }0`
+      return `${f_num}0`
   }
 
   get neg() {
