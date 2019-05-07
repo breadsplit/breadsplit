@@ -45,7 +45,7 @@ export default class MoneyLabel extends Vue {
     if (/[0-9]*\.[0-9]{2}/.test(f_num))
       return f_num
     else
-      return `${f_num  }0`
+      return `${f_num}0`
   }
 
   get neg() {
