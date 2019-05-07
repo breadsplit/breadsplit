@@ -1,6 +1,5 @@
 <template lang='pug'>
 v-app(:dark='dark')
-
   style.
     :root {
       --app-font: {{localeFont}};
@@ -14,119 +13,124 @@ v-app(:dark='dark')
       caret-color: {{primaryColor}} !important;
     }
 
-  v-navigation-drawer(
-    v-model='drawer', :mini-variant='miniVariant'
-    :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
-  )
-    v-list
-      v-list-tile
-        v-list-tile-content
-          v-list-tile-title.app-name {{$t('appname')}}
-      v-divider.my-1
+  template(v-if='$store.state.webview')
+    v-content
+      app-inside-webview
 
-      template(v-if='groups.length')
-        v-list-tile(
-          v-for='(group, i) in groups'
-          :key='i', :to='`/group/${group.id}`'
-          router, exact)
-          v-list-tile-action
-            v-icon mdi-{{ group.icon }}
+  template(v-else)
+    v-navigation-drawer(
+      v-model='drawer', :mini-variant='miniVariant'
+      :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
+    )
+      v-list
+        v-list-tile
           v-list-tile-content
-            v-list-tile-title(v-text='group.name')
-          v-list-tile-action(v-if='group.online')
-            template(v-if='isSync(group.id)')
-              v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
-            template(v-else)
-              v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
-
+            v-list-tile-title.app-name {{$t('appname')}}
         v-divider.my-1
 
-      // New group item
-      v-list-tile(@click='$refs.newgroup.open()')
-        v-list-tile-action
-          v-icon mdi-plus
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.group_editing.new_group')}}
-
-      // Join group button
-      v-list-tile(v-if='!user.anonymous' @click='joinGroup')
-        v-list-tile-action
-          v-icon mdi-shape-circle-plus
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.button_join_group')}}
-
-      .drawer-list-bottom
-
-        // Homepage
-        v-list-tile(@click='$router.push("/")', v-show='$route.path !== "/"')
-          v-list-tile-action
-            v-icon mdi-home
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.homepage')}}
-
-        // Sign in
-        template(v-if='user.anonymous')
-          v-list-tile(@click='loginWithGoogle()')
+        template(v-if='groups.length')
+          v-list-tile(
+            v-for='(group, i) in groups'
+            :key='i', :to='`/group/${group.id}`'
+            router, exact)
             v-list-tile-action
-              v-avatar(size='36', color='#00000020', style='margin: -6px;')
-                v-icon mdi-account
+              v-icon mdi-{{ group.icon }}
             v-list-tile-content
-              v-list-tile-title {{$t('ui.sign_in')}}
+              v-list-tile-title(v-text='group.name')
+            v-list-tile-action(v-if='group.online')
+              template(v-if='isSync(group.id)')
+                v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
+              template(v-else)
+                v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
 
-        // User profile
-        template(v-else)
-          v-list-tile(@click='promptLogout()')
-            v-list-tile-action
-              v-avatar(size='36', color='#00000020', style='margin: -6px;')
-                img(:src='user.avatar_url')
-            v-list-tile-content
-              v-list-tile-title {{ user.name || user.email }}
-            v-list-tile-action(v-if='!userIsOnline')
-              v-icon(color='red', size='20') mdi-cloud-off-outline
+          v-divider.my-1
 
-        // Settings
-        v-list-tile(@click='$refs.settings.open()')
+        // New group item
+        v-list-tile(@click='$refs.newgroup.open()')
           v-list-tile-action
-            v-icon mdi-settings
+            v-icon mdi-plus
           v-list-tile-content
-            v-list-tile-title {{$t('ui.settings')}}
+            v-list-tile-title {{$t('ui.group_editing.new_group')}}
 
-  v-toolbar.app-toolbar(
-    :clipped-left='clipped' app flat color='transparent' height='60'
-    ).primary--text
-    v-btn(icon, flat, @click='drawer = !drawer')
-      v-icon(color='primary') mdi-menu
-    v-toolbar-title(v-text='title')
-    v-spacer
-    v-toolbar-items(v-if='current')
-      template(v-if='isSync()')
-        v-btn(icon, flat).syncing-icon
-          v-icon(color='primary') mdi-cloud-sync
-      template(v-if='currentShareLink')
-        v-btn(icon, flat, @click='copyShareLink()')
-          v-icon.op-50 mdi-share-variant
-      v-menu(offset-y='')
-        v-btn(icon, flat, slot='activator')
-          v-icon.op-50 mdi-dots-vertical
-        v-list
-          v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
-            v-list-tile-title {{ $t(item.title) }}
+        // Join group button
+        v-list-tile(v-if='!user.anonymous' @click='joinGroup')
+          v-list-tile-action
+            v-icon mdi-shape-circle-plus
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.button_join_group')}}
 
-  v-content
-    nuxt
+        .drawer-list-bottom
 
-  app-dialog(ref='newgroup', :route='true', persistent, no-click-animation)
-    app-form-new-group(@close='$refs.newgroup.close()')
+          // Homepage
+          v-list-tile(@click='$router.push("/")', v-show='$route.path !== "/"')
+            v-list-tile-action
+              v-icon mdi-home
+            v-list-tile-content
+              v-list-tile-title {{$t('ui.homepage')}}
 
-  app-dialog(ref='settings', :route='true', :fullscreen='true')
-    app-settings(@close='$refs.settings.close()')
+          // Sign in
+          template(v-if='user.anonymous')
+            v-list-tile(@click='loginWithGoogle()')
+              v-list-tile-action
+                v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                  v-icon mdi-account
+              v-list-tile-content
+                v-list-tile-title {{$t('ui.sign_in')}}
 
-  app-dialog(ref='about', :route='true', :fullscreen='true')
-    app-about-page(@close='$refs.about.close()')
+          // User profile
+          template(v-else)
+            v-list-tile(@click='promptLogout()')
+              v-list-tile-action
+                v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                  img(:src='user.avatar_url')
+              v-list-tile-content
+                v-list-tile-title {{ user.name || user.email }}
+              v-list-tile-action(v-if='!userIsOnline')
+                v-icon(color='red', size='20') mdi-cloud-off-outline
 
-  app-confirm(ref='confirm')
+          // Settings
+          v-list-tile(@click='$refs.settings.open()')
+            v-list-tile-action
+              v-icon mdi-settings
+            v-list-tile-content
+              v-list-tile-title {{$t('ui.settings')}}
 
-  app-snackbar(ref='snack')
+    v-toolbar.app-toolbar(
+      :clipped-left='clipped' app flat color='transparent' height='60'
+      ).primary--text
+      v-btn(icon, flat, @click='drawer = !drawer')
+        v-icon(color='primary') mdi-menu
+      v-toolbar-title(v-text='title')
+      v-spacer
+      v-toolbar-items(v-if='current')
+        template(v-if='isSync()')
+          v-btn(icon, flat).syncing-icon
+            v-icon(color='primary') mdi-cloud-sync
+        template(v-if='currentShareLink')
+          v-btn(icon, flat, @click='copyShareLink()')
+            v-icon.op-50 mdi-share-variant
+        v-menu(offset-y='')
+          v-btn(icon, flat, slot='activator')
+            v-icon.op-50 mdi-dots-vertical
+          v-list
+            v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
+              v-list-tile-title {{ $t(item.title) }}
+
+    v-content
+      nuxt
+
+    app-dialog(ref='newgroup', :route='true', persistent, no-click-animation)
+      app-form-new-group(@close='$refs.newgroup.close()')
+
+    app-dialog(ref='settings', :route='true', :fullscreen='true')
+      app-settings(@close='$refs.settings.close()')
+
+    app-dialog(ref='about', :route='true', :fullscreen='true')
+      app-about-page(@close='$refs.about.close()')
+
+    app-confirm(ref='confirm')
+
+    app-snackbar(ref='snack')
 </template>
 
 <script lang='ts'>

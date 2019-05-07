@@ -54,4 +54,8 @@ export const mutations: MutationTree<RootState> = {
     state.messaging_token = value
   },
 
+  userAgent(state, { userAgent, webview }) {
+    state.userAgent = userAgent
+    state.webview = webview
+  },
 }

@@ -2,6 +2,7 @@ import { GenerateId } from '~/utils/id_helper'
 import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '../types/models'
 import { RootState, GroupState, UserState, AppOptions } from '../types/store'
 import { merge, mapValues } from 'lodash'
+import { getUserAgent, isInsideWebview } from './webview_detect'
 
 export const MemberDefault = (overrides?: object): Member => merge({
   id: GenerateId.LocalMember(),
@@ -94,4 +95,6 @@ export const RootStateDefault = (overrides?: object): RootState => merge({
   user: UserStateDefault(),
   options: AppOptionsDefault(),
   messaging_token: null,
+  userAgent: getUserAgent(),
+  webview: isInsideWebview(getUserAgent()),
 }, overrides)
