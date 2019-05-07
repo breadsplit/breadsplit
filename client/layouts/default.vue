@@ -19,6 +19,9 @@ v-app(:dark='dark')
     :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
   )
     v-list
+      p.pa-3 LOGO
+      v-divider.my-1
+
       template(v-if='groups.length')
         v-list-tile(
           v-for='(group, i) in groups'
@@ -87,25 +90,22 @@ v-app(:dark='dark')
             v-list-tile-title {{$t('ui.settings')}}
 
   v-toolbar.app-toolbar(
-    :clipped-left='clipped'
-    fixed, app, dark, color='primary'
-    )
-    v-toolbar-side-icon(@click='drawer = !drawer')
+    :clipped-left='clipped' app flat color='transparent' height='60'
+    ).primary--text
+    v-btn(icon, flat, @click='drawer = !drawer')
+      v-icon(color='primary') mdi-menu
     v-toolbar-title(v-text='title')
-      v-spacer
-        v-btn(icon, @click.stop='rightDrawer = !rightDrawer')
-          v-icon mdi-menu
     v-spacer
     v-toolbar-items(v-if='current')
       template(v-if='isSync()')
         v-btn(icon, flat).syncing-icon
-          v-icon mdi-cloud-sync
+          v-icon(color='primary') mdi-cloud-sync
       template(v-if='currentShareLink')
         v-btn(icon, flat, @click='copyShareLink()')
-          v-icon mdi-share-variant
+          v-icon.op-50 mdi-share-variant
       v-menu(offset-y='')
         v-btn(icon, flat, slot='activator')
-          v-icon mdi-dots-vertical
+          v-icon.op-50 mdi-dots-vertical
         v-list
           v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
             v-list-tile-title {{ $t(item.title) }}
@@ -137,7 +137,7 @@ import FontFamilyBuilder from '../meta/font_family'
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin) {
   // Data
-  clipped = true
+  clipped = false
   drawer = false
   fixed = false
   miniVariant = false
@@ -268,6 +268,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   bottom 10px
   left 0
   right 0
+
 .app-toolbar
   .v-toolbar__content
     padding-right 2px

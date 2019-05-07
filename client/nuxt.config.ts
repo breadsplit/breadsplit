@@ -33,7 +33,7 @@ const config: NuxtConfiguration = {
     display: 'standalone',
     orientation: 'portrait-primary',
     start_url: '/',
-    theme_color: theme.primary,
+    theme_color: '#fafafa',
     background_color: theme.background,
   },
 
