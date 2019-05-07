@@ -19,7 +19,9 @@ v-app(:dark='dark')
     :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
   )
     v-list
-      p.pa-3 LOGO
+      v-list-tile
+        v-list-tile-content
+          v-list-tile-title.app-name {{$t('appname')}}
       v-divider.my-1
 
       template(v-if='groups.length')
@@ -272,6 +274,10 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 .app-toolbar
   .v-toolbar__content
     padding-right 2px
+
+.app-name
+  font-size 1.3em
+  font-weight bold
 
 .v-navigation-drawer
   .v-list__tile
