@@ -3,10 +3,11 @@ v-btn(
   v-bind='$attrs',
   :color='color',
   :dark='dark',
+  :light='!dark',
 )
   v-avatar(size='21', tile).mr-2
     img(:src='require(`~/assets/brands/${brand}.svg`)')
-  slot
+  slot {{brand}}
 </template>
 
 <script lang='ts'>

@@ -6,11 +6,16 @@ v-card
     v-toolbar-title {{$t('ui.about')}}
 
   v-container.pa-4.text-xs-center
-    p BreadSplit
+    p.title BreadSplit
     p balabalbala
 
     app-brand-button(brand='patreon' :href='socials.patreon' target='__blank')
-      span Become a patreon
+      span Become a Patreon
+
+    br
+
+    app-brand-button(brand='github_dark' :href='socials.github' target='__blank')
+      span Github
 
     app-credit
 </template>
