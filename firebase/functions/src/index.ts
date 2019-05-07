@@ -122,6 +122,7 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
     })
   })
 
+  // TODO: send real notification
   await PushGroupNotification(id, {
     notification: {
       'title': 'Hello World',

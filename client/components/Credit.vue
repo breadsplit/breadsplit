@@ -4,7 +4,7 @@
   .section v{{version}} {{target}}
   br
   .buildinfo
-    span Build {{buildtime}}
+    span Build {{buildtime}} - {{buildTimeFromNow}}
     span(v-if='machine') /{{machine}}
   .my-2
   //.line-divider
@@ -26,6 +26,7 @@
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
+import dayjs from 'dayjs'
 
 @Component
 export default class Credit extends Vue {
@@ -35,6 +36,10 @@ export default class Credit extends Vue {
   target = process.env.BUILD_TARGET
   buildtime = process.env.BUILD_TIME
   machine = process.env.BUILD_MACHINE
+
+  get buildTimeFromNow() {
+    return dayjs(this.buildtime).fromNow()
+  }
 }
 </script>
 
