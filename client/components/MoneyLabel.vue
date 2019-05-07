@@ -2,7 +2,7 @@
 .money-label(:class='balanceColorClass')
   span.neg.mx-1(v-if='neg') -
   span.currency {{currencyDisplay}}
-  span.fee.mr-1 {{abs.toFixed(2)}}
+  span.fee.mr-1 {{format}}
 </template>
 
 <script lang='ts'>
@@ -37,7 +37,15 @@ export default class MoneyLabel extends Vue {
   }
 
   get abs() {
-    return Math.abs(this.rounded)
+    return Math.abs(this.rounded).toFixed(2)
+  }
+
+  get format() {
+    const f_num = new Intl.NumberFormat('en-US').format(parseFloat(this.abs))
+    if (/[0-9]*\.[0-9]{2}/.test(f_num))
+      return f_num
+    else
+      return `${f_num  }0`
   }
 
   get neg() {
