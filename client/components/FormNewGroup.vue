@@ -10,7 +10,7 @@ v-card
       v-flex
         v-text-field(
           v-model='name' :label='$t("ui.group_editing.group_name")'
-          prepend-icon='mdi-group-open-variant'
+          prepend-icon='mdi-group-open-variant' clearable
         )
           template(slot='prepend')
             app-icon-select(:icon.sync='icon' :color.sync='color', style='margin-top:-20px')
@@ -18,7 +18,7 @@ v-card
       v-flex
         v-autocomplete(
           v-model='currency' :items='currencies'
-          prepend-icon='mdi-currency-usd' label='Currency'
+          prepend-icon='mdi-currency-usd' label='Currency' clearable
         )
 
       v-flex
@@ -26,7 +26,7 @@ v-card
           v-model='members', :items='members_suggestions'
           :search-input.sync='search', hide-selected
           label='Members', multiple, persistent-hint
-          small-chips, prepend-icon='mdi-account-multiple'
+          small-chips, prepend-icon='mdi-account-multiple' clearable
         )
           template(v-slot:no-data='')
             v-list-tile
@@ -40,7 +40,7 @@ v-card
 
       v-flex
         v-btn(@click='create()', :color='color', :dark='submitFlag', :disabled='!submitFlag') {{$t('ui.button_create')}}
-        v-btn(@click='exit()', flat, color='grey') {{$t('ui.button_cancel')}}
+        v-btn(@click='close(false)', flat, color='grey') {{$t('ui.button_cancel')}}
 
 </template>
 
