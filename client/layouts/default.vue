@@ -204,7 +204,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     this.$root.$about = this.$refs.about
     // @ts-ignore
-    this.$root.login = this.$refs.login
+    this.$root.$login = this.$refs.login
 
     if (!this.isMobile)
       this.drawer = true
@@ -238,10 +238,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
         // TODO:
         break
     }
-  }
-
-  async loginWithGoogle() {
-    await this.$fire.loginWithGoogle()
   }
 
   async promptLogout() {

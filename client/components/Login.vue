@@ -9,10 +9,10 @@ v-card(:dark='dark').login
         v-img(:src='require("../assets/img/toast.jpg")')
         v-card-text 登入您的帳戶，以啟用備分與同步功能
       v-flex(mx-auto my-2)
-          app-brand-button(brand='google' @click='loginWithGoogle()' large)
-            span 使用google登入
+        app-brand-button(brand='google' @click='loginWith("google")' large)
+          span 使用Google登入
       v-flex(mx-auto my-2)
-        v-btn(@click='loginWithFacebook()' color="rgb(66,103,178)" class="white--text" large)
+        app-brand-button(@click='loginWith("facebook")' color="rgb(66,103,178)" class="white--text" large)
           v-icon(left) mdi-facebook-box
           span 使用臉書登入
 </template>
@@ -48,13 +48,9 @@ export default class Login extends Vue {
     this.$emit('close')
   }
 
-  async loginWithGoogle() {
-    // TODO: can not work in app-brand-button
-    await this.$fire.loginWithGoogle()
-    this.close()
-  }
-  async loginWithFacebook() {
-    // TODO: FB Login api
+  async loginWith(provider: 'google'|'facebook'|'github') {
+    // TODO: error handling
+    await this.$fire.loginWith(provider)
     this.close()
   }
 }

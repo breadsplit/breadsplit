@@ -97,8 +97,14 @@ export class FirebasePlugin {
     return await this.auth.signInWithEmailAndPassword(email, password)
   }
 
-  async loginWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider()
+  async loginWith(providerName: 'google'|'facebook'|'github') {
+    const providers = {
+      google: () => new firebase.auth.GoogleAuthProvider(),
+      facebook: () => new firebase.auth.FacebookAuthProvider(),
+      github: () => new firebase.auth.GithubAuthProvider(),
+    }
+
+    const provider = providers[providerName]()
 
     try {
       // For some reasons, popups are not functional in Electron
