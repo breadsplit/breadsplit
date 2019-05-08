@@ -21,7 +21,7 @@ export default class UserInfoMixin extends Vue {
     if (!id)
       return null
     if (IsThisId.UID(id))
-      return this.$store.state.user.users[id]
+      return this.$store.getters['user/user'](id)
     return null
   }
 

@@ -37,7 +37,7 @@
 
   v-fab-transition
     v-btn(
-      fab fixed color='primary'
+      fab color='primary'
       :style='fabStyle'
       @click='openNewTransDialog()'
     )
@@ -105,9 +105,10 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
   get fabStyle() {
     const style = {
       right: '50%',
-      bottom: '16px',
+      bottom: '12px',
       transform: 'translateX(50%)',
-      position: 'absolute',
+      position: this.isMobile ? 'fixed' : 'absolute',
+      'z-index': 5,
     }
 
     return style
