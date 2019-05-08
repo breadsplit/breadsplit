@@ -62,9 +62,10 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.homepage')}}
 
-        // Sign in
+        // Log in
         template(v-if='user.anonymous')
-          v-list-tile(@click='loginWithGoogle()')
+          // Log in
+          v-list-tile(@click='$refs.login.open()')
             v-list-tile-action
               v-avatar(size='36', color='#00000020', style='margin: -6px;')
                 v-icon mdi-account
@@ -118,6 +119,8 @@ v-app(:dark='dark')
 
   app-dialog(ref='settings', :route='true', :fullscreen='true')
     app-settings(@close='$refs.settings.close()')
+  app-dialog(ref='login', :route='true', :fullscreen='false')
+    app-login(@close='$refs.login.close()')
 
   app-dialog(ref='about', :route='true', :fullscreen='true')
     app-about-page(@close='$refs.about.close()')
@@ -193,7 +196,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     this.$root.$settings = this.$refs.settings
     // @ts-ignore
-    this.$root.$about = this.$refs.about
+    this.$root.login = this.$refs.login
 
     if (!this.isMobile)
       this.drawer = true

@@ -67,7 +67,7 @@ v-card.settings
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
-import { AvaliableLocales } from '../locales'
+import { AvaliableLocales } from '~/locales'
 
 const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display }))
 
