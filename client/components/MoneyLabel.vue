@@ -8,6 +8,7 @@
 <script lang='ts'>
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import Currencies from '~/meta/currencies'
+import getcur from 'locale-currency'
 
 @Component
 export default class MoneyLabel extends Vue {
@@ -29,31 +30,26 @@ export default class MoneyLabel extends Vue {
     const c = Currencies.find(c => c.cc === this.currency)
     if (!c)
       return this.currency
-    return c.symbol || c.cc || this.currency
-  }
-
-  get rounded() {
-    return Math.round(this.amount * 100) / 100
+    return c.cc || this.currency
   }
 
   get abs() {
-    return Math.abs(this.rounded).toFixed(2)
+    return Math.abs(this.amount)
   }
 
   get format() {
-    const f_num = new Intl.NumberFormat('en-US').format(parseFloat(this.abs))
-    if (/0 || [0-9]*\.[0-9]{2}/.test(f_num))
-      return f_num
-    else
-      return `${f_num}0`
+    const currency = getcur.getCurrency(this.$store.getters.locale)
+    const f_num = new Intl.NumberFormat(this.$store.getters.locale, { style: 'currency', currency, maximumFractionDigits: 2 }).format(this.abs)
+
+    return f_num
   }
 
   get neg() {
-    return this.rounded < 0
+    return this.amount < 0
   }
 
   get zero() {
-    return this.rounded === 0
+    return this.amount === 0
   }
 }
 </script>
