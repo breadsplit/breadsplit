@@ -65,6 +65,12 @@
       "notification_disabled": "Notifications are disabled",
       "clear_all_data": "Clear all Data"
     },
+    "signin_options": {
+      "tip": "Sign in to activate Backup & Sync",
+      "Google": "Sign in with Google",
+      "Facebook": "Sign in with Facebook",
+      "Github": "Sign in with Github"
+    },
     "misc": "Misc.",
     "invited_to_join": "You are invited to join <b>{0}</b>"
   },

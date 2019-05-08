@@ -7,16 +7,16 @@ v-card.login
     v-layout(column).pd-4
       v-flex(mx-auto)
         v-img(:src='require("../assets/img/toast.jpg")')
-        v-card-text 登入您的帳戶，以啟用備分與同步功能
+        v-card-text {{$t('ui.signin_options.tip')}}
       v-flex(mx-auto my-1)
         app-brand-button(brand='google' @click='loginWith("google")' large width='220px')
-          span 使用 Google 登入
+          span {{$t('ui.signin_options.Google')}}
       v-flex(mx-auto my-1)
         app-brand-button(brand='facebook' @click='loginWith("facebook")' large width='220px')
-          span 使用臉書登入
+          span {{$t('ui.signin_options.Facebook')}}
       v-flex(mx-auto my-1)
         app-brand-button(brand='github_dark' @click='loginWith("github")' large width='220px')
-          span 使用 Github 登入
+          span {{$t('ui.signin_options.Github')}}
 </template>
 
 <script lang='ts'>
