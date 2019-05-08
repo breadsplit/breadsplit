@@ -7,7 +7,7 @@ import { deleteCollection } from './_utils'
 const initTest = require('firebase-functions-test')
 
 const keypath = process.env.ONLINE_TEST_KEY_PATH || path.join(__dirname, './service-account-key.json')
-const projectId = process.env.FIREBASE_PROJECT_ID || 'splitoast-test'
+const projectId = process.env.FIREBASE_PROJECT_ID || 'breadsplit-test'
 
 const test = initTest({ projectId }, path.resolve(keypath))
 

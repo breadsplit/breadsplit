@@ -86,4 +86,9 @@ export const Transforms: TransformFunctions<Group> = {
 
     return snap
   },
+
+  new_activity(snap, data) {
+    snap.activities.push(data)
+    return snap
+  },
 }

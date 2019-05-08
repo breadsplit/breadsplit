@@ -1,7 +1,7 @@
 {
   "projects": {
-    "default": "splitoast-development",
-    "test": "splitoast-test",
-    "production": "splitoast-production"
+    "default": "breadsplit-dev",
+    "test": "breadsplit-test",
+    "production": "breadsplit-prod"
   }
 }
