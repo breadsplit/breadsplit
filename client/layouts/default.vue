@@ -120,6 +120,8 @@ v-app(:dark='dark')
 
     app-confirm(ref='confirm')
 
+    app-loading-dialog(ref='loading')
+
     app-snackbar(ref='snack')
 </template>
 
@@ -193,6 +195,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     this.$root.$about = this.$refs.about
     // @ts-ignore
     this.$root.$login = this.$refs.login
+    // @ts-ignore
+    this.$root.$loading = this.$refs.loading
 
     if (!this.isMobile)
       this.drawer = true
@@ -208,18 +212,33 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
       case 'delete':
         // @ts-ignore
         if (await this.$root.$confirm('Are you sure?')) {
+          // @ts-ignore
+          this.$root.$loading.open('Deleting group')
           const groupid = this.$store.state.group.currentId
           if (this.current && this.current.online)
             await this.$fire.deleteGroup(groupid)
           this.removeGroup()
+          // @ts-ignore
+          this.$root.$loading.close()
           this.$router.push('/')
         }
         break
 
       case 'transfer_online':
         // @ts-ignore
-        if (await this.$root.$confirm('Are you sure?'))
-          await this.$fire.publishGroup(this.$store.state.group.currentId)
+        if (await this.$root.$confirm('Are you sure?')) {
+        // @ts-ignore
+          this.$root.$loading.open('Converting to Online group')
+          try {
+            await this.$fire.publishGroup(this.$store.state.group.currentId)
+          }
+          catch (e) {
+            console.error(e)
+            // TODO:ERROR error handling
+          }
+          // @ts-ignore
+          this.$root.$loading.close()
+        }
 
         break
 
