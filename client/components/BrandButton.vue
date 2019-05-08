@@ -1,6 +1,7 @@
 <template lang='pug'>
 v-btn(
   v-bind='$attrs',
+  v-on='$listeners',
   :color='color',
   :dark='dark',
   :light='!dark',
