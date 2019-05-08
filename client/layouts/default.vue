@@ -249,8 +249,10 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   }
 
   async promptLogout() {
-    if (await this.$root.$confirm('Are you sure to logout?'))
+    if (await this.$root.$confirm('Are you sure to logout?')) {
       await this.$fire.logout()
+      this.$router.push('/')
+    }
   }
 
   async syncCurrentGroup() {
