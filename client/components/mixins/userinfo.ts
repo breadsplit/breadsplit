@@ -39,6 +39,11 @@ export default class UserInfoMixin extends Vue {
     return avatarProvider(this.id || nanoid(), dark)
   }
 
+  get fallbackAvatar() {
+    const dark = this.$store.getters.dark
+    return avatarProvider(this.id || nanoid(), dark)
+  }
+
   get name() {
     if (this.user)
       return this.user.name

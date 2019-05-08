@@ -2,7 +2,7 @@
 app-action-with-text.app-avatar(:class='{inline}')
   template(slot='action')
     v-avatar(:size='size')
-      img(:src='avatarUrl')
+      img(:src='avatarUrl', v-img-fallback='fallbackAvatar')
   span(slot='text', v-if='showName') {{name}}
 </template>
 
