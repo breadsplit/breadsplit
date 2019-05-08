@@ -29,7 +29,7 @@
         v-container(:class='{"pa-0": isMobile}')
           app-members(:members='members')
 
-  v-bottom-nav(:active.sync='tab_id', :value='true', absolute)
+  v-bottom-nav(:active.sync='tab_id', :value='true', :absolute='!isMobile', :fixed='isMobile')
     template(v-for='item in tabItems')
       v-btn(color='primary', flat, :value='item.key', :disabled='item.disabled')
         span {{item.text}}

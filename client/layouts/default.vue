@@ -3,6 +3,8 @@ v-app(:dark='dark')
   style.
     :root {
       --app-font: {{localeFont}};
+      --window-height: {{windowHeight}}px;
+      --vh: {{windowHeight * 0.01}}px;
     }
     .primary {
       background-color: {{primaryColor}} !important;
@@ -23,7 +25,7 @@ v-app(:dark='dark')
       :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
     )
       v-list
-        v-list-tile
+        v-list-tile(@click='$router.push("/")')
           v-list-tile-content
             v-list-tile-title.app-name {{$t('appname')}}
         v-divider.my-1
@@ -52,22 +54,7 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title {{$t('ui.group_editing.new_group')}}
 
-        // Join group button
-        v-list-tile(v-if='!user.anonymous' @click='joinGroup')
-          v-list-tile-action
-            v-icon mdi-shape-circle-plus
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.button_join_group')}}
-
         .drawer-list-bottom
-
-          // Homepage
-          v-list-tile(@click='$router.push("/")', v-show='$route.path !== "/"')
-            v-list-tile-action
-              v-icon mdi-home
-            v-list-tile-content
-              v-list-tile-title {{$t('ui.homepage')}}
-
           // Sign in
           template(v-if='user.anonymous')
             v-list-tile(@click='$refs.login.open()')
@@ -151,6 +138,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   fixed = false
   miniVariant = false
   mobileBreakPoint = 700
+  windowHeight = 0
 
   @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
@@ -208,6 +196,11 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
     if (!this.isMobile)
       this.drawer = true
+
+    this.windowHeight = window.innerHeight
+    window.addEventListener('resize', () => {
+      this.windowHeight = window.innerHeight
+    })
   }
 
   async onGroupMenu(key) {
@@ -246,12 +239,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
       await this.$fire.logout()
   }
 
-  async joinGroup() {
-    const id = prompt('Group ID')
-    if (id)
-      this.$router.push(`/join?id=${id}`)
-  }
-
   async syncCurrentGroup() {
     if (this.current)
       await this.$fire.manualSync(this.current.id)
@@ -260,7 +247,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   async copyShareLink() {
     if (this.currentShareLink)
       await this.$copyText(this.currentShareLink)
-    alert(this.$t('ui.share_link_copied'))
+    // @ts-ignore
+    this.$root.$snack(this.$t('ui.share_link_copied'))
   }
 
   isSync(id) {
