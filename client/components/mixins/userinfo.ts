@@ -2,6 +2,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Member, UserInfo } from '~/types/models'
 import { IsThisId } from '~/utils/id_helper'
 import { GetMemberAvatarUrl, avatarProvider } from '~/utils/avatarProvider'
+import nanoid from 'nanoid'
 
 @Component
 export default class UserInfoMixin extends Vue {
@@ -32,9 +33,10 @@ export default class UserInfoMixin extends Vue {
   get avatarUrl() {
     if (this.user && this.user.avatar_url)
       return this.user.avatar_url
+    const dark = this.$store.getters.dark
     if (this.member)
-      return GetMemberAvatarUrl(this.member)
-    return avatarProvider(this.id || '')
+      return GetMemberAvatarUrl(this.member, dark)
+    return avatarProvider(this.id || nanoid(), dark)
   }
 
   get name() {
