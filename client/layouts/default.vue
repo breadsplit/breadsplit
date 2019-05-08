@@ -188,7 +188,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     this.$root.$confirm = this.$refs.confirm.open
     // @ts-ignore
-    this.$root.$loading = this.$refs.loading
+    this.$root.$apploading = this.$refs.loading
 
     // @ts-ignore
     this.$root.$newgroup = this.$refs.newgroup
@@ -212,19 +212,19 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     switch (key) {
       case 'delete':
         if (await this.$root.$confirm('Are you sure?')) {
-          this.$root.$loading.open('Deleting group')
+          this.$root.$apploading.open('Deleting group')
           const groupid = this.$store.state.group.currentId
           if (this.current && this.current.online)
             await this.$fire.deleteGroup(groupid)
           this.removeGroup()
-          this.$root.$loading.close()
+          this.$root.$apploading.close()
           this.$router.push('/')
         }
         break
 
       case 'transfer_online':
         if (await this.$root.$confirm('Are you sure?')) {
-          this.$root.$loading.open('Converting to Online group')
+          this.$root.$apploading.open('Converting to Online group')
           try {
             await this.$fire.publishGroup(this.$store.state.group.currentId)
           }
@@ -233,7 +233,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
             // TODO:ERROR error handling
           }
           // @ts-ignore
-          this.$root.$loading.close()
+          this.$root.$apploading.close()
         }
 
         break
