@@ -24,6 +24,8 @@
         v-container
           v-subheader {{$t('ui.tabs.activities')}}
           v-alert(:value='true', type='warning') Work in progress...
+          template(v-for='a in group.activities')
+            pre {{JSON.stringify(a, null, 2)}}
 
       v-tab-item(key='3')
         v-container(:class='{"pa-0": isMobile}')

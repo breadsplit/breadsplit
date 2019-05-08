@@ -36,6 +36,10 @@ export const getters: GetterTree<UserState, RootState> = {
     return state.me.uid
   },
 
+  name(state) {
+    return state.me.name
+  },
+
   online(state) {
     return state.online
   },

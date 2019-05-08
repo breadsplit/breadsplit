@@ -82,7 +82,7 @@ export default class Members extends Mixins(MemberMixin) {
   }
 
   thisIsMe(member) {
-    this.$store.commit('group/changeMemberId', { from: member.id, to: this.uid })
+    this.$store.dispatch('group/changeMemberId', { from: member.id, to: this.uid })
   }
 
   isLocalMember(id) {

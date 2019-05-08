@@ -83,11 +83,14 @@ export interface CurrencyChangeRate {
 }
 
 export interface Activity {
-  id: string
   timestamp: number
   by: string
+  by_name?: string
   action: ActivityAction
   entity: Entity
+  entity_id: string
+  entity_name?: string
+  entity_desc?: string
   // TODO:
 }
 

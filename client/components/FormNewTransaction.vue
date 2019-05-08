@@ -102,7 +102,7 @@ export default class FormNewTransaction extends Mixins(GroupMixin) {
       this.form, {
         category: this.form.category || this.categorySense,
       })
-    this.$store.commit('group/newTranscation', { id: this.group.id, trans })
+    this.$store.dispatch('group/newTranscation', { id: this.group.id, trans })
     this.close()
   }
 

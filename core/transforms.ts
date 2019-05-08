@@ -5,7 +5,7 @@ If you made any modification,
 Please DO DEPLOY firebase functions before merge into master.
 */
 import { TransformFunctions } from 'opschain'
-import { Group, Member, Transaction } from '../types/models'
+import { Group, Member, Transaction, ActivityAction, Entity } from '../types/models'
 
 export const Transforms: TransformFunctions<Group> = {
   init(snap, data) {
@@ -45,11 +45,21 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  insert_transaction(snap, data) {
+  insert_transaction(snap, data, { by, by_name, timestamp } = {}) {
     if (!data)
       return snap
     const transaction = data as Transaction
     snap.transactions.push(transaction)
+    snap.activities.push({
+      by,
+      by_name,
+      timestamp,
+      action: ActivityAction.insert,
+      entity: Entity.transaction,
+      entity_id: transaction.id,
+      entity_name: transaction.desc,
+      entity_desc: `${transaction.currency} ${transaction.total_fee}`,
+    })
     return snap
   },
 

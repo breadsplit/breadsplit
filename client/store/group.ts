@@ -3,7 +3,7 @@ import merge from 'lodash/merge'
 import includes from 'lodash/includes'
 import orderBy from 'lodash/orderBy'
 import union from 'lodash/union'
-import { MutationTree, ActionTree, GetterTree } from 'vuex'
+import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
 import { MemberDefault, GroupStateDefault, ClientGroupDefault, TransactionDefault } from '~/utils/defaults'
 import { GroupState, RootState } from '~/types/store'
 import { ClientGroup, Group, ServerGroup, Operation } from '~/types/models'
@@ -19,10 +19,6 @@ export function Eval(group?: ClientGroup): Group | undefined {
   if (!base)
     return undefined
   return EvalTransforms<Group>(Transforms, { cacheObject: OperationCache })(base, operations)
-}
-
-function NewOperation(group: ClientGroup, name: string, data) {
-  group.operations.push(ProcessOperation({ name, data }))
 }
 
 function origin() {
@@ -89,8 +85,49 @@ export const getters: GetterTree<GroupState, RootState> = {
   },
 }
 
-export const actions: ActionTree<GroupState, RootState> = {
+function NewOperation(
+  context: ActionContext<GroupState, RootState>,
+  groupid: string,
+  name: string,
+  data: any,
+  meta: object = {}
+) {
+  meta = {
+    ...meta,
+    by: context.rootGetters['user/uid'],
+    by_name: context.rootGetters['user/name'],
+    timestamp: +new Date(),
+  }
+  context.commit('newOperation', { id: groupid, name, data, meta })
+}
 
+export const actions: ActionTree<GroupState, RootState> = {
+  addMember(context, { id, member }) {
+    member = MemberDefault(member)
+    NewOperation(context, id, 'insert_member', member)
+  },
+
+  removeMember(context, { id, memberid }) {
+    NewOperation(context, id, 'remove_member', memberid)
+  },
+
+  editMember(context, { id, memberid, changes }) {
+    NewOperation(context, id, 'modify_member', { id: memberid, changes })
+  },
+
+  // Transcations
+  newTranscation(context, { id, trans }) {
+    trans = TransactionDefault(trans)
+    NewOperation(context, id, 'insert_transaction', trans)
+  },
+
+  editTranscation(context, { id, transid, changes }) {
+    NewOperation(context, id, 'modify_transaction', { id: transid, changes })
+  },
+
+  changeMemberId(context, { id, from, to }) {
+    NewOperation(context, id, 'change_member_id', { from, to })
+  },
 }
 
 export const mutations: MutationTree<GroupState> = {
@@ -124,42 +161,16 @@ export const mutations: MutationTree<GroupState> = {
     }
   },
 
-  // Members
-  addMember(state, { id, member }) {
+  newOperation(state, { id, name, data, meta }) {
     id = id || state.currentId
-    member = MemberDefault(member)
-    NewOperation(state.groups[id], 'insert_member', member)
-  },
-
-  removeMember(state, { id, memberid }) {
-    id = id || state.currentId
-    NewOperation(state.groups[id], 'remove_member', memberid)
-  },
-
-  editMember(state, { id, memberid, changes }) {
-    id = id || state.currentId
-    NewOperation(state.groups[id], 'modify_member', { id: memberid, changes })
-  },
-
-  // Transcations
-  newTranscation(state, { id, trans }) {
-    id = id || state.currentId
-    if (state.groups[id]) {
-      trans = TransactionDefault(trans)
-      NewOperation(state.groups[id], 'insert_transaction', trans)
-      state.groups[id].lastchanged = +new Date()
+    const group = state.groups[id]
+    if (group) {
+      group.operations.push(ProcessOperation({ name, data, meta }))
+      group.lastchanged = +new Date()
     }
   },
 
-  editTranscation(state, { id, transid, changes }) {
-    id = id || state.currentId
-    NewOperation(state.groups[id], 'modify_transaction', { id: transid, changes })
-  },
-
-  changeMemberId(state, { id, from, to }) {
-    id = id || state.currentId
-    NewOperation(state.groups[id], 'change_member_id', { from, to })
-  },
+  // Members
 
   // Firebase
   onServerUpdate(state, { data, timestamp }) {
