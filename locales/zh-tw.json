@@ -58,7 +58,9 @@
       "clear_all_data": "清除所有數據"
     },
     "misc": "其他",
-    "button_join": "加入"
+    "button_join": "加入",
+    "invited_to_join": "您被邀請加入<b>{0}</b>",
+    "loading_group_info": "加載小組信息中..."
   },
   "cats": {
     "transport": {

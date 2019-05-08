@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { MutationTree, GetterTree } from 'vuex'
 import { RootState, UserState } from '~/types/store'
 import { UserStateDefault } from '~/utils/defaults'
@@ -21,7 +22,7 @@ export const mutations: MutationTree<UserState> = {
   },
 
   profileUpdate(state, { uid, user }) {
-    state.users[uid] = user
+    Vue.set(state.users, uid, user)
   },
 }
 

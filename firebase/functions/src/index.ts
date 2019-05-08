@@ -130,3 +130,20 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
     },
   }, uid)
 })
+
+export const groupMeta = f(async ({ id }, context) => {
+  if (!id)
+    return undefined
+  const doc = await GroupsRef(id).get()
+  if (!doc.exists)
+    return undefined
+  const serverGroup = doc.data() as ServerGroup
+  const group = serverGroup.present
+
+  return {
+    name: group.name,
+    icon: group.icon,
+    color: group.color,
+    viewers: serverGroup.viewers,
+  }
+})

@@ -16,6 +16,12 @@ export default class Avatar extends Mixins(UserInfoMixin) {
 
   @Prop(Boolean) readonly inline?: boolean
   @Prop(Boolean) readonly showName?: boolean
+  @Prop({ default: true }) readonly autoFetch!: boolean
   @Prop([Number, String]) readonly size?: number|string
+
+  mounted() {
+    if (this.autoFetch && this.id)
+      this.fetchUserProfile(this.id)
+  }
 }
 </script>

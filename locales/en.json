@@ -65,7 +65,8 @@
       "notification_disabled": "Notifications are disabled",
       "clear_all_data": "Clear all Data"
     },
-    "misc": "Misc."
+    "misc": "Misc.",
+    "invited_to_join": "You are invited to join <b>{0}</b>"
   },
   "prompt": {
     "are_you_sure": "Are you sure?"

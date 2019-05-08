@@ -123,25 +123,25 @@ export class FirebasePlugin {
     await this.auth.signOut()
   }
 
-  async publishGroup({ groupid }) {
-    const group = this.store.getters['group/id'](groupid) as Group
+  async publishGroup(id) {
+    const group = this.store.getters['group/id'](id) as Group
 
     const result = await this.functions.httpsCallable('publishGroup')({ group })
     const serverid = (result.data || {}).id
     if (typeof serverid === 'string' && IsThisId.OnlineGroup(serverid)) {
-      this.store.commit('group/remove', groupid)
+      this.store.commit('group/remove', id)
       await this.manualSync(serverid)
       this.store.commit('group/switch', serverid)
       this.router.push(`/group/${serverid}`)
     }
   }
 
-  async deleteGroup(groupid: string) {
+  async deleteGroup(id: string) {
     // if it's online group, invoke server function
-    if (this.store.getters['group/id'](groupid).online)
-      await this.functions.httpsCallable('removeGroup')(groupid)
+    if (this.store.getters['group/id'](id).online)
+      await this.functions.httpsCallable('removeGroup')(id)
     else
-      this.store.commit('group/remove', groupid)
+      this.store.commit('group/remove', id)
   }
 
   async requestNotificationPermission() {
@@ -159,6 +159,9 @@ export class FirebasePlugin {
     this.store.commit('setMessagingToken', token)
     if (token)
       log(`📢 Messaging enabled with token: ${token}`)
+
+    if (!token || !this.uid)
+      return token
 
     // async update tokens to firestore
     this.db
@@ -305,6 +308,13 @@ export class FirebasePlugin {
       if (!user || !user.lastupdate || (now - user.lastupdate) > threshold)
         this.downloadProfile(uid)
     }
+  }
+
+  async groupMeta(id: string): Promise<object|null> {
+    const result = await this.functions.httpsCallable('groupMeta')({ id })
+    if (result)
+      return result.data || null
+    return null
   }
 
   watchStoreChanges() {
