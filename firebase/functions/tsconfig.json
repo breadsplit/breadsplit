@@ -10,7 +10,7 @@
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
-    "target": "es2015",
+    "target": "es2016",
   },
   "compileOnSave": true,
   "include": [
