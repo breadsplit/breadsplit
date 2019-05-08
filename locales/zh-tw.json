@@ -88,6 +88,9 @@
     "are_you_sure": "你確定嗎？"
   },
   "tips": {
-    "already_joined_group": "你已經加入了此小組。"
+    "already_joined_group": "你已經加入了此小組。",
+    "select_open_in_browser": "選擇 \"<b>在瀏覽器中打開</b>\"",
+    "click_right_corner_icon_part1": "請點選右上角 \"",
+    "click_right_corner_icon_part2": "\" 圖標"
   }
 }

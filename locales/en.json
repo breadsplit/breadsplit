@@ -98,6 +98,9 @@
     }
   },
   "tips": {
-    "already_joined_group": "You have already joined this group."
+    "already_joined_group": "You have already joined this group.",
+    "click_right_corner_icon_part1": "Please click top right ",
+    "click_right_corner_icon_part2": " icon",
+    "select_open_in_browser": "Then select  \"<b>Open in browser</b>\""
   }
 }

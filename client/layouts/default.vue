@@ -188,6 +188,9 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     // @ts-ignore
     this.$root.$confirm = this.$refs.confirm.open
     // @ts-ignore
+    this.$root.$loading = this.$refs.loading
+
+    // @ts-ignore
     this.$root.$newgroup = this.$refs.newgroup
     // @ts-ignore
     this.$root.$settings = this.$refs.settings
@@ -195,8 +198,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     this.$root.$about = this.$refs.about
     // @ts-ignore
     this.$root.$login = this.$refs.login
-    // @ts-ignore
-    this.$root.$loading = this.$refs.loading
 
     if (!this.isMobile)
       this.drawer = true
@@ -210,24 +211,19 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   async onGroupMenu(key) {
     switch (key) {
       case 'delete':
-        // @ts-ignore
         if (await this.$root.$confirm('Are you sure?')) {
-          // @ts-ignore
           this.$root.$loading.open('Deleting group')
           const groupid = this.$store.state.group.currentId
           if (this.current && this.current.online)
             await this.$fire.deleteGroup(groupid)
           this.removeGroup()
-          // @ts-ignore
           this.$root.$loading.close()
           this.$router.push('/')
         }
         break
 
       case 'transfer_online':
-        // @ts-ignore
         if (await this.$root.$confirm('Are you sure?')) {
-        // @ts-ignore
           this.$root.$loading.open('Converting to Online group')
           try {
             await this.$fire.publishGroup(this.$store.state.group.currentId)
@@ -253,7 +249,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   }
 
   async promptLogout() {
-    // @ts-ignore
     if (await this.$root.$confirm('Are you sure to logout?'))
       await this.$fire.logout()
   }
@@ -266,8 +261,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   async copyShareLink() {
     if (this.currentShareLink)
       await this.$copyText(this.currentShareLink)
-    // @ts-ignore
-    this.$root.$snack(this.$t('ui.share_link_copied'))
+    this.$root.$snack(this.$t('ui.share_link_copied', '').toString())
   }
 
   isSync(id) {
