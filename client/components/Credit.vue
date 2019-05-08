@@ -3,6 +3,9 @@
 
   .section v{{version}} {{target}}
   br
+  .buildinfo.mb-2
+    span {{$store.state.userAgent}}
+    span {{$store.state.webview}}
   .buildinfo
     span Build {{buildtime}} - {{buildTimeFromNow}}
     span(v-if='machine') /{{machine}}
