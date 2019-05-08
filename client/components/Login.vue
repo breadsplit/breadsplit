@@ -8,12 +8,15 @@ v-card.login
       v-flex(mx-auto)
         v-img(:src='require("../assets/img/toast.jpg")')
         v-card-text 登入您的帳戶，以啟用備分與同步功能
-      v-flex(mx-auto my-2)
+      v-flex(mx-auto my-1)
         app-brand-button(brand='google' @click='loginWith("google")' large width='220px')
-          span 使用Google登入
-      v-flex(mx-auto my-2)
+          span 使用 Google 登入
+      v-flex(mx-auto my-1)
         app-brand-button(brand='facebook' @click='loginWith("facebook")' large width='220px')
           span 使用臉書登入
+      v-flex(mx-auto my-1)
+        app-brand-button(brand='github_dark' @click='loginWith("github")' large width='220px')
+          span 使用 Github 登入
 </template>
 
 <script lang='ts'>

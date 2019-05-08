@@ -1,6 +1,6 @@
 export default {
   patreon: '#F86753',
   github: '#ffffff',
-  github_dark: '#24292e',
+  github_dark: '#333',
   facebook: 'rgb(66,103,178)',
 }
