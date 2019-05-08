@@ -125,10 +125,9 @@ v-app(:dark='dark')
     app-dialog(ref='settings', :route='true', :fullscreen='true')
       app-settings(@close='$refs.settings.close()')
 
-  app-dialog(ref='settings', :route='true', :fullscreen='true')
-    app-settings(@close='$refs.settings.close()')
-  app-dialog(ref='login', :route='true', :fullscreen='false')
-    app-login(@close='$refs.login.close()')
+    app-dialog(ref='login', :route='true', :fullscreen='false')
+      app-login(@close='$refs.login.close()')
+
     app-dialog(ref='about', :route='true', :fullscreen='true')
       app-about-page(@close='$refs.about.close()')
 
@@ -202,6 +201,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     this.$root.$newgroup = this.$refs.newgroup
     // @ts-ignore
     this.$root.$settings = this.$refs.settings
+    // @ts-ignore
+    this.$root.$about = this.$refs.about
     // @ts-ignore
     this.$root.login = this.$refs.login
 
