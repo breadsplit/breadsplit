@@ -63,10 +63,6 @@ v-app(:dark='dark')
 
           // Homepage
           v-list-tile(@click='$router.push("/")', v-show='$route.path !== "/"')
-        // Log in
-        template(v-if='user.anonymous')
-          // Log in
-          v-list-tile(@click='$refs.login.open()')
             v-list-tile-action
               v-icon mdi-home
             v-list-tile-content
@@ -74,7 +70,7 @@ v-app(:dark='dark')
 
           // Sign in
           template(v-if='user.anonymous')
-            v-list-tile(@click='loginWithGoogle()')
+            v-list-tile(@click='$refs.login.open()')
               v-list-tile-action
                 v-avatar(size='36', color='#00000020', style='margin: -6px;')
                   v-icon mdi-account
