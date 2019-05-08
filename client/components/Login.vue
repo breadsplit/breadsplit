@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card(:dark='dark').login
+v-card.login
   v-toolbar(dark, color='primary')
     //- v-btn(icon, dark, @click='close()')
     v-toolbar-title {{$t('appname')}}
@@ -9,10 +9,10 @@ v-card(:dark='dark').login
         v-img(:src='require("../assets/img/toast.jpg")')
         v-card-text 登入您的帳戶，以啟用備分與同步功能
       v-flex(mx-auto my-2)
-        app-brand-button(brand='google' @click='loginWith("google")' large style='width:220px')
+        app-brand-button(brand='google' @click='loginWith("google")' large width='220px')
           span 使用Google登入
       v-flex(mx-auto my-2)
-        app-brand-button(brand='facebook' @click='loginWith("facebook")' large style='width:220px')
+        app-brand-button(brand='facebook' @click='loginWith("facebook")' large width='220px')
           span 使用臉書登入
 </template>
 

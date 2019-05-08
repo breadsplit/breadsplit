@@ -5,10 +5,12 @@ v-btn(
   :color='color',
   :dark='dark',
   :light='!dark',
+  :style='style',
 )
-  v-avatar(size='21', tile).mr-2
+  v-avatar.brand-icon(size='21', tile).mr-2
     img(:src='require(`~/assets/brands/${brand}.svg`)')
-  slot {{brand}}
+  span.brand-text
+    slot {{brand}}
 </template>
 
 <script lang='ts'>
@@ -21,6 +23,7 @@ import chroma from 'chroma-js'
 })
 export default class BrandButton extends Vue {
   @Prop(String) readonly brand!: string
+  @Prop(String) readonly width!: string | number
 
   get color() {
     return BrandColors[this.brand] || '#fff'
@@ -29,5 +32,25 @@ export default class BrandButton extends Vue {
   get dark() {
     return chroma(this.color).luminance() < 0.5
   }
+
+  get style() {
+    let width = this.width
+    if (typeof width === 'number')
+      width = `${width}px`
+    return {
+      width,
+    }
+  }
 }
 </script>
+
+<style lang='stylus' scoped>
+.v-btn
+  padding 0
+.brand-icon
+  position absolute
+  left 15px
+.brand-text
+  padding-left 30px
+  margin 0 20px
+</style>
