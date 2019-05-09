@@ -6,6 +6,7 @@ v-snackbar(
   :right='!isMobile'
   :top='!isMobile'
   :bottom='isMobile'
+  :color='options.color'
 )
   span {{message}}
   template(v-for='button in options.buttons')
@@ -13,18 +14,9 @@ v-snackbar(
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
-import CommonMixin from '../mixins/common'
-
-interface SnackOptions {
-  color?: string
-  buttonColor?: string
-  timeout?: number
-  buttons?: {
-    handler: () => void
-    text: string
-  }[]
-}
+import { Component, Mixins, Vue } from 'vue-property-decorator'
+import CommonMixin from '~/mixins/common'
+import { SnackOptions } from '~/types/models'
 
 @Component({
   inheritAttrs: false,
@@ -45,10 +37,22 @@ export default class Snackbar extends Mixins(CommonMixin) {
     }
   }
 
-  open(message: string, options: SnackOptions) {
-    this.message = message
-    this.options = Object.assign(this.options, this.defaultOption, options)
-    this.show = true
+  open(message: string, options?: SnackOptions) {
+    const open = () => {
+      this.message = message
+      this.options = Object.assign({}, this.defaultOption, options)
+      this.show = true
+    }
+
+    // if already opened, reset and open again
+    if (this.show) {
+      this.show = false
+      Vue.nextTick(open)
+      return
+    }
+
+    // not opened
+    open()
   }
 }
 </script>

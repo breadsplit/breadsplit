@@ -2,14 +2,14 @@
 v-card
   v-subheader {{$t('ui.tabs.activities')}}
   v-list.pa-0(two-line)
-    template(v-for='(trans, index) in displayed')
+    template(v-for='(act, index) in displayed')
       v-divider(v-if='index!=0')
-      v-list-tile(:key='trans.id', avatar, @click='')
+      v-list-tile(:key='act.id', avatar, @click='onActivityClick(act)')
         v-list-tile-avatar
-          app-user-avatar(:id='trans.by')
+          app-user-avatar(:id='act.by')
         v-list-tile-content
-          v-list-tile-title {{activityDescription(trans)}}
-          v-list-tile-sub-title.time-label {{$dt(trans.timestamp).fromNow()}}
+          v-list-tile-title(v-html='activityDescription(act)')
+          v-list-tile-sub-title.time-label {{$dt(act.timestamp).fromNow()}}
 
     template(v-if='needShowMore')
       v-divider
@@ -26,9 +26,9 @@ v-card
 
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
+import { Activity } from '~/types/models'
 import GroupMixin from '~/mixins/group'
-import MemberMixin from '../mixins/member'
-import { Activity } from '../../types/models'
+import MemberMixin from '~/mixins/member'
 
 @Component
 export default class Activities extends Mixins(GroupMixin, MemberMixin) {
@@ -37,6 +37,7 @@ export default class Activities extends Mixins(GroupMixin, MemberMixin) {
 
   get activities() {
     return this.group.activities
+      .map(a => a)
       .sort((a, b) => b.timestamp - a.timestamp)
   }
 
@@ -60,13 +61,17 @@ export default class Activities extends Mixins(GroupMixin, MemberMixin) {
 
   activityDescription(act: Activity) {
     const key = `${act.action}.${act.entity}`
-    const by_name = act.by_name || this.$t('ui.anonymous').toString()
+    const by_name = `<b>${act.by_name || this.$t('ui.anonymous')}</b>`
     const entity_name = act.entity_name || act.entity_desc || ''
     switch (key) {
       case 'insert.transaction':
         return this.$t('acts.insert_transaction', [by_name, entity_name])
     }
     return key
+  }
+
+  onActivityClick(act: Activity) {
+    this.$root.$snack('TODO: implement', { color: 'orange' })
   }
 }
 </script>

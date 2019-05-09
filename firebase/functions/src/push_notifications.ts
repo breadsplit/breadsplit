@@ -26,6 +26,8 @@ export async function PushGroupNotification(groupid: string, payload: object, ig
     }))
   })
   const messages = _.flatten(await Promise.all(tasks))
+  if (!messages.length)
+    return 0
   await admin.messaging().sendAll(messages)
   return messages.length
 }

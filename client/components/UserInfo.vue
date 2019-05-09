@@ -15,14 +15,10 @@ export default class UserInfo extends Mixins(UserInfoMixin) {
     return this.getUser(this.id)
   }
 
-  get email() {
-    if (this.user)
-      return this.user.email
-    return ''
-  }
-
   get value() {
-    return this[this.field]
+    if (this.user)
+      return this.user[this.field]
+    return ''
   }
 }
 </script>
