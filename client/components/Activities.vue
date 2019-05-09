@@ -28,10 +28,10 @@ v-card
 import { Component, Mixins } from 'vue-property-decorator'
 import { Activity } from '~/types/models'
 import GroupMixin from '~/mixins/group'
-import MemberMixin from '~/mixins/member'
+import UserInfoMixin from '~/mixins/userinfo'
 
 @Component
-export default class Activities extends Mixins(GroupMixin, MemberMixin) {
+export default class Activities extends Mixins(GroupMixin, UserInfoMixin) {
   collapsed = true
   collapsed_amount = 3
 
@@ -61,11 +61,13 @@ export default class Activities extends Mixins(GroupMixin, MemberMixin) {
 
   activityDescription(act: Activity) {
     const key = `${act.action}.${act.entity}`
-    const by_name = `<b>${act.by_name || this.$t('ui.anonymous')}</b>`
+    const by_name = `<b>${this.getUserName(act.by) || act.by_name || this.$t('ui.anonymous')}</b>`
     const entity_name = act.entity_name || act.entity_desc || ''
     switch (key) {
       case 'insert.transaction':
         return this.$t('acts.insert_transaction', [by_name, entity_name])
+      case 'insert.group':
+        return this.$t('acts.insert_group', [by_name])
     }
     return key
   }

@@ -1,12 +1,12 @@
 import { Vue, Component } from 'vue-property-decorator'
-import { UserInfo } from '~/types/models'
+import { UserInfo, Member } from '~/types/models'
 import { IsThisId } from '~/utils/id_helper'
 import { avatarProvider } from '~/utils/avatarProvider'
 import nanoid from 'nanoid'
 
 @Component
 export default class UserInfoMixin extends Vue {
-  getUser(id?: string, autoFetch: boolean = true): UserInfo | null {
+  getUser(id?: string, autoFetch: boolean = true): UserInfo | Member | null {
     if (!id)
       return null
     if (IsThisId.UID(id)) {
@@ -15,12 +15,18 @@ export default class UserInfoMixin extends Vue {
         this.$fire.updateUserProfiles([id])
       return user
     }
-    return null
+    return this.getMember(id)
+  }
+
+  getMember(id: string): Member | null {
+    return this.$store.getters['group/memberById']({
+      memberId: id,
+    })
   }
 
   getAvatarUrl(id: string) {
     const user = this.getUser(id)
-    if (user && user.avatar_url)
+    if (user && 'avatar_url' in user)
       return user.avatar_url
     return this.getFallbackAvatar(id)
   }
@@ -30,7 +36,7 @@ export default class UserInfoMixin extends Vue {
     return avatarProvider(id || nanoid(), dark)
   }
 
-  getName(id: string) {
+  getUserName(id: string) {
     const user = this.getUser(id)
     if (user)
       return user.name

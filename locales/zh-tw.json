@@ -97,6 +97,7 @@
     "click_right_corner_icon_part2": "\" 圖標"
   },
   "acts": {
-    "insert_transaction": "{0} 添加了一筆支出：{1}"
+    "insert_transaction": "{0} 添加了一筆支出：{1}",
+    "insert_group": "{0} 創建了小組"
   }
 }

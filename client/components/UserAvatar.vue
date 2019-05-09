@@ -3,7 +3,7 @@ app-action-with-text.app-avatar(:class='{inline}')
   template(slot='action')
     v-avatar(:size='size')
       img(:src='getAvatarUrl(id)')
-  span(slot='text', v-if='showName') {{getName(id)}}
+  span(slot='text', v-if='showName') {{getUserName(id)}}
 </template>
 
 <script lang='ts'>

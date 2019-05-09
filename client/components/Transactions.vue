@@ -31,10 +31,10 @@ v-card.transactions
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import GroupMixin from '~/mixins/group'
-import MemberMixin from '~/mixins/member'
+import UserInfoMixin from '~/mixins/userinfo'
 
 @Component
-export default class Transactions extends Mixins(GroupMixin, MemberMixin) {
+export default class Transactions extends Mixins(GroupMixin, UserInfoMixin) {
   collapsed = true
   collapsed_amount = 3
 
@@ -64,7 +64,7 @@ export default class Transactions extends Mixins(GroupMixin, MemberMixin) {
 
   parseTrans(trans) {
     const creditor_ids = trans.creditors.map(c => c.memberId)
-    const creditor_names = creditor_ids.map(id => this.getMemberFromId({ id }).name)
+    const creditor_names = creditor_ids.map(id => this.getUserName(id))
 
     return {
       ...trans,

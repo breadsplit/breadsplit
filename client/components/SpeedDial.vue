@@ -20,7 +20,7 @@ import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
 })
 export default class SpeedDial extends Vue {
   fab= false
-  tooltips=false
+  tooltips= false
   tooltipsDisabled= false
 
   @Prop({ default: false }) readonly value!: boolean

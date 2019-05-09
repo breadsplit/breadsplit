@@ -108,6 +108,7 @@
     "select_open_in_browser": "Then select  \"<b>Open in browser</b>\""
   },
   "acts": {
-    "insert_transaction": "{0} added an expense: {1}"
+    "insert_transaction": "{0} added an expense: {1}",
+    "insert_group": "{0} create this group"
   }
 }
