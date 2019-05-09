@@ -15,6 +15,7 @@ export const enum ActivityAction {
 
 export const enum Entity {
   member = 'member',
+  viewer = 'viewer',
   group ='group',
   transaction ='transaction',
   currency_record = 'currency_record',

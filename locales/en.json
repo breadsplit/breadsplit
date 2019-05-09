@@ -109,6 +109,7 @@
   },
   "acts": {
     "insert_transaction": "{0} added an expense: {1}",
-    "insert_group": "{0} create this group"
+    "insert_group": "{0} created the group",
+    "insert_viewer": "{0} joined the group"
   }
 }

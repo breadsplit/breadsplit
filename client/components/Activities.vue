@@ -68,6 +68,8 @@ export default class Activities extends Mixins(GroupMixin, UserInfoMixin) {
         return this.$t('acts.insert_transaction', [by, entity_name])
       case 'insert.group':
         return this.$t('acts.insert_group', [by])
+      case 'insert.viewer':
+        return this.$t('acts.insert_viewer', [by])
     }
     return key
   }

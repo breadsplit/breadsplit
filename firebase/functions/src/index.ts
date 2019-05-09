@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
 
-import { ServerGroup, ServerOperations } from '../../../types/models'
+import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types/models'
 import { GenerateId } from '../../../core/id_helper'
 import { ProcessServerOperations, Eval } from './opschain'
 import { PushGroupNotification } from './push_notifications'
@@ -66,16 +66,30 @@ export const joinGroup = f(async ({ id }, context) => {
 
   const uid = context.auth.uid
 
-  await db.runTransaction(async (t) => {
-    const doc = await t.get(GroupsRef(id))
+  const join_operation = ProcessServerOperations([{
+    name: 'new_activity',
+    data: {
+      by: uid,
+      timestamp: +new Date(),
+      entity: Entity.viewer,
+      action: ActivityAction.insert,
+    },
+  }], uid)[0]
 
-    const group = doc.data()
-    if (!group)
+  await db.runTransaction(async (t) => {
+    const group = (await t.get(GroupsRef(id))).data() as ServerGroup
+    const ops = (await t.get(OperationsRef(id))).data() as ServerOperations
+
+    if (!group || !ops)
       throw new Error('group_not_exists')
 
     const viewers = _.union(group.viewers || [], [uid])
+    const operations = ops.operations
+
+    operations.push(join_operation)
 
     t.update(GroupsRef(id), 'viewers', viewers)
+    t.update(OperationsRef(id), 'operations', operations)
   })
 })
 

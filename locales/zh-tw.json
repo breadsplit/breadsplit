@@ -98,6 +98,7 @@
   },
   "acts": {
     "insert_transaction": "{0} 添加了一筆支出：{1}",
-    "insert_group": "{0} 創建了小組"
+    "insert_group": "{0} 創建了小組",
+    "insert_viewer": "{0} 加入了小組"
   }
 }
