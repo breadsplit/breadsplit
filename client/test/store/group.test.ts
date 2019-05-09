@@ -1,4 +1,4 @@
-import { mutations, getters, Eval } from '~/store/group'
+import { mutations, getters, Eval, actions } from '~/store/group'
 import { RootStateDefault, GroupStateDefault } from '~/utils/defaults'
 import { GroupState } from '~/types/store'
 import { Group } from 'types/models'
@@ -52,17 +52,9 @@ describe('group state mutations', () => {
 
   it('members', () => {
     const client = state.groups.group1
-    let group = Eval(client) as Group
+    const group = Eval(client) as Group
     expect(group).toBeTruthy()
     expect(client.operations).toHaveLength(0)
     expect(Object.keys(group.members)).toHaveLength(0)
-
-    // Add
-    mutations.addMember(state, { id: 'group1', member: { id: 'member1', name: 'member1' } })
-    expect(client.operations).toHaveLength(1)
-    group = Eval(client) as Group
-    expect(Object.keys(group.members)).toHaveLength(1)
-    expect(group.members).toHaveProperty('member1')
-    expect(group.members.member1).toHaveProperty('name', 'member1')
   })
 })
