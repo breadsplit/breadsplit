@@ -229,6 +229,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
             await this.$fire.publishGroup(this.$store.state.group.currentId)
           }
           catch (e) {
+            // eslint-disable-next-line
             console.error(e)
             // TODO:ERROR error handling
           }

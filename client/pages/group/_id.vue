@@ -13,7 +13,7 @@
           div(style='height:15px')
 
       v-tab-item(key='1')
-        v-container
+        v-container(:class='{"pa-0": isMobile}')
           v-subheader {{$t('ui.tabs.expenses')}}
           v-alert(:value='true', type='warning') Work in progress...
           pre {{JSON.stringify(group, null, 2)}}
@@ -21,8 +21,7 @@
       v-tab-item(key='4')
 
       v-tab-item(key='2')
-        v-container
-
+        v-container(:class='{"pa-0": isMobile}')
           app-activities
 
       v-tab-item(key='3')
@@ -128,6 +127,7 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
 
   // Methods
   promptNewMember() {
+    // eslint-disable-next-line
     const name = prompt('Name?')
     if (name)
       this.newMember({ member: { name } })

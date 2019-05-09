@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
 
-import { ServerGroup, ServerOperations, UserInfo } from '../../../types/models'
+import { ServerGroup, ServerOperations } from '../../../types/models'
 import { GenerateId } from '../../../core/id_helper'
 import { ProcessServerOperations, Eval } from './opschain'
 import { PushGroupNotification } from './push_notifications'
@@ -10,7 +10,6 @@ import { PushGroupNotification } from './push_notifications'
 admin.initializeApp()
 
 const db = admin.firestore()
-const UserRef = (id: string) => db.collection('users').doc(id)
 const GroupsRef = (id: string) => db.collection('groups').doc(id)
 const OperationsRef = (id: string) => db.collection('_operations').doc(id)
 
@@ -35,32 +34,28 @@ export const publishGroup = f(async ({ group }, context) => {
   group.online = true
   group.activities = []
 
-  await db.runTransaction(async (t) => {
-    const userSnap = await t.get(UserRef(id))
-    const user = userSnap.data() as UserInfo
-    const username = (user && user.name) || ''
+  const initOperations = ProcessServerOperations([{
+    name: 'init',
+    data: group,
+    meta: {
+      by: user_uid,
+      timestamp: +new Date(),
+    },
+  }], user_uid)
 
-    const initOperations = ProcessServerOperations([{
-      name: 'init',
-      data: group,
-      meta: {
-        by: user_uid,
-        by_name: username,
-        timestamp: +new Date(),
-      },
-    }], user_uid)
+  const serverGroup: ServerGroup = {
+    id,
+    present: Eval(initOperations),
+    owner: user_uid,
+    viewers: [user_uid],
+    operations: initOperations.map(i => i.hash),
+  }
 
-    const serverGroup: ServerGroup = {
-      id,
-      present: Eval(initOperations),
-      owner: user_uid,
-      viewers: [user_uid],
-      operations: initOperations.map(i => i.hash),
-    }
+  const batch = db.batch()
+  batch.set(GroupsRef(id), serverGroup)
+  batch.set(OperationsRef(id), { operations: initOperations })
 
-    t.set(GroupsRef(id), serverGroup)
-    t.set(OperationsRef(id), { operations: initOperations })
-  })
+  await batch.commit()
 
   return { id }
 })

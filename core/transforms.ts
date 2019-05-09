@@ -8,15 +8,14 @@ import { TransformFunctions } from 'opschain'
 import { Group, Member, Transaction, ActivityAction, Entity } from '../types/models'
 
 export const Transforms: TransformFunctions<Group> = {
-  init(snap, data, { by, by_name, timestamp } = {}) {
+  init(snap, data, { by, timestamp } = {}) {
     snap = Object.assign(snap || {}, data)
-    snap.activities.push({
+    snap.activities = [{
       by,
-      by_name,
       timestamp,
       action: ActivityAction.insert,
       entity: Entity.group,
-    })
+    }]
     return snap
   },
 
@@ -53,14 +52,13 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  insert_transaction(snap, data, { by, by_name, timestamp } = {}) {
+  insert_transaction(snap, data, { by, timestamp } = {}) {
     if (!data)
       return snap
     const transaction = data as Transaction
     snap.transactions.push(transaction)
     snap.activities.push({
       by,
-      by_name,
       timestamp,
       action: ActivityAction.insert,
       entity: Entity.transaction,

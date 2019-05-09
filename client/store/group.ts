@@ -95,7 +95,6 @@ function NewOperation(
   meta = {
     ...meta,
     by: context.rootGetters['user/uid'],
-    by_name: context.rootGetters['user/name'],
     timestamp: +new Date(),
   }
   context.commit('newOperation', { id: groupid, name, data, meta })
