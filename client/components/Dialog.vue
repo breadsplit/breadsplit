@@ -2,7 +2,7 @@
 v-dialog(
   v-model='dialog', @keydown.esc='cancel'
   v-bind='$attrs', style='z-index:200',
-  :transition='transition', :max-width='800'
+  :transition='transition', :max-width='600'
   :fullscreen='getfullscreen'
 )
   slot(v-if='dialog')

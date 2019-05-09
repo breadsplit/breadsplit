@@ -1,20 +1,16 @@
 <template lang='pug'>
 .group-page
   .scroll-page
-    v-tabs-items(v-model='tab_index', v-if='group')
+    v-tabs-items(v-model='tab_index', v-if='group').pt-1
       v-tab-item(key='0')
         v-container(:class='{"pa-0": isMobile}')
           app-balances
 
-          p.my-4
+      v-tab-item(key='1')
+        v-container(:class='{"pa-0": isMobile}')
 
           app-transactions
 
-          div(style='height:15px')
-
-      v-tab-item(key='1')
-        v-container(:class='{"pa-0": isMobile}')
-          v-subheader {{$t('ui.tabs.expenses')}}
           v-alert(:value='true', type='warning') Work in progress...
           pre {{JSON.stringify(group, null, 2)}}
 
@@ -27,6 +23,8 @@
       v-tab-item(key='3')
         v-container(:class='{"pa-0": isMobile}')
           app-members(:members='members')
+
+    div(style='height:15px')
 
   v-bottom-nav(:active.sync='tab_id', :value='true', :absolute='!isMobile', :fixed='isMobile')
     template(v-for='item in tabItems')
