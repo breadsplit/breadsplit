@@ -11,6 +11,7 @@ import { RootState } from '~/types/store'
 import { Group, UserInfo, ServerGroup } from '~/types/models'
 import { IsThisId } from '~/utils/id_helper'
 import FirebaseServers from '~/meta/firebase_servers'
+import { ClientGroup } from '../../types/models'
 
 /* eslint-disable no-console */
 const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
@@ -317,29 +318,38 @@ export class FirebasePlugin {
     return null
   }
 
+  uploadLocalChanges(groups?: ClientGroup[]) {
+    if (!groups)
+      groups = Object.values(this.store.state.group.groups)
+    return Promise.all(
+      groups.map(async (group) => {
+        if (!group.online)
+          return
+
+        const unsynced = this.store.getters['group/unsyncedOperationsOf'](group.id)
+
+        if (!unsynced.length)
+          return
+
+        const payload = {
+          id: group.id,
+          operations: unsynced,
+          lastsync: group.lastsync,
+        }
+        this.store.commit('group/syncOperations', { id: group.id, operations: unsynced })
+        log('🚀 Outcoming operations', payload)
+        await this.functions.httpsCallable('uploadOperations')(payload)
+      }))
+  }
+
   watchStoreChanges() {
+    this.store.commit('group/resetSyncingStates')
+
     this._unwatchCallback = this.store.watch(
       (state) => {
         return state.group.groups
-      }, (value) => {
-        Object.values(value).forEach(async (group) => {
-          if (!group.online)
-            return
-
-          const unsynced = this.store.getters['group/unsyncedOperationsOf'](group.id)
-
-          if (!unsynced.length)
-            return
-
-          const payload = {
-            id: group.id,
-            operations: unsynced,
-            lastsync: group.lastsync,
-          }
-          this.store.commit('group/syncOperations', { id: group.id, operations: unsynced })
-          log('🚀 Outcoming operations', payload)
-          await this.functions.httpsCallable('uploadOperations')(payload)
-        })
+      }, () => {
+        this.uploadLocalChanges()
       }, {
         deep: true,
         immediate: true,

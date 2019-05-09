@@ -204,4 +204,10 @@ export const mutations: MutationTree<GroupState> = {
     const group = state.groups[id]
     group.syncingOperations = union(group.syncingOperations || [], operations.map(o => o.hash))
   },
+
+  resetSyncingStates(state) {
+    Object.values(state.groups).forEach((group) => {
+      group.syncingOperations = []
+    })
+  },
 }

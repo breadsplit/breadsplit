@@ -4,7 +4,7 @@ import _ from 'lodash'
 
 import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types/models'
 import { GenerateId } from '../../../core/id_helper'
-import { ProcessServerOperations, Eval } from './opschain'
+import { ProcessServerOperations, Eval, omitDeep } from './opschain'
 import { PushGroupNotification } from './push_notifications'
 
 admin.initializeApp()
@@ -52,8 +52,9 @@ export const publishGroup = f(async ({ group }, context) => {
   }
 
   const batch = db.batch()
-  batch.set(GroupsRef(id), serverGroup)
-  batch.set(OperationsRef(id), { operations: initOperations })
+
+  batch.set(GroupsRef(id), omitDeep(serverGroup))
+  batch.set(OperationsRef(id), omitDeep({ operations: initOperations }))
 
   await batch.commit()
 
@@ -89,7 +90,7 @@ export const joinGroup = f(async ({ id }, context) => {
     operations.push(join_operation)
 
     t.update(GroupsRef(id), 'viewers', viewers)
-    t.update(OperationsRef(id), 'operations', operations)
+    t.update(OperationsRef(id), 'operations', omitDeep(operations))
   })
 })
 
@@ -118,6 +119,8 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
+  // TODO: verify user permission
+
   const uid = context.auth.uid
   const timestamp = +new Date()
   const processed = ProcessServerOperations(operations, uid, timestamp)
@@ -133,11 +136,11 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
 
     const present = Eval(ops)
 
-    t.update(OperationsRef(id), 'operations', ops)
-    t.update(GroupsRef(id), {
+    t.update(OperationsRef(id), 'operations', omitDeep(ops))
+    t.update(GroupsRef(id), omitDeep({
       present,
       'operations': ops.map(o => o.hash),
-    })
+    }))
   })
 
   // TODO: send real notification
