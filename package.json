@@ -57,7 +57,6 @@
     "express": "^4.16.4",
     "firebase": "^5.10.1",
     "jdenticon": "^2.1.1",
-    "locale-currency": "0.0.2",
     "lodash": "^4.17.11",
     "nanoid": "^2.0.1",
     "nuxt": "^2.6.3",

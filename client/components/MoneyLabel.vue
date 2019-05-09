@@ -1,14 +1,10 @@
 <template lang='pug'>
 .money-label(:class='balanceColorClass')
-  span.neg.mx-1(v-if='neg') -
-  span.currency {{currencyDisplay}}
-  span.fee.mr-1 {{format}}
+  span.fee.mr-1 {{formatted}}
 </template>
 
 <script lang='ts'>
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import Currencies from '~/meta/currencies'
-import getcur from 'locale-currency'
 
 @Component
 export default class MoneyLabel extends Vue {
@@ -26,22 +22,17 @@ export default class MoneyLabel extends Vue {
       return 'green--text'
   }
 
-  get currencyDisplay() {
-    const c = Currencies.find(c => c.cc === this.currency)
-    if (!c)
-      return this.currency
-    return c.cc || this.currency
-  }
-
-  get abs() {
-    return Math.abs(this.amount)
-  }
-
-  get format() {
-    const currency = getcur.getCurrency(this.$store.getters.locale)
-    const f_num = new Intl.NumberFormat(this.$store.getters.locale, { style: 'currency', currency, maximumFractionDigits: 2 }).format(this.abs)
-
-    return f_num
+  get formatted() {
+    if (this.zero)
+      return '-'
+    const currency = this.currency
+    const locale = this.$store.getters.locale
+    const formatter = new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency,
+      maximumFractionDigits: 2,
+    })
+    return formatter.format(this.amount)
   }
 
   get neg() {
