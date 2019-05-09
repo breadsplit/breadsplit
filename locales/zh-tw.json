@@ -59,6 +59,12 @@
       "notification_disabled": "通知已禁用",
       "clear_all_data": "清除所有數據"
     },
+    "signin_options": {
+      "tip": "登入您的帳戶，以啟用備份與同步功能",
+      "Google": "使用Google登入",
+      "Facebook": "使用臉書登入",
+      "Github": "使用Github登入"
+    },
     "misc": "其他",
     "button_join": "加入",
     "invited_to_join": "您被邀請加入<b>{0}</b>",
