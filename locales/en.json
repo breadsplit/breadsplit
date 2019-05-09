@@ -73,6 +73,13 @@
       "Facebook": "Sign in with Facebook",
       "Github": "Sign in with Github"
     },
+    "splitting": {
+      "split_by": "Split by",
+      "average": "Equally",
+      "amount": "Amount",
+      "percent": "Percent",
+      "weight": "Weights"
+    },
     "misc": "Misc.",
     "invited_to_join": "You are invited to join <b>{0}</b>",
     "unknown_user": "",

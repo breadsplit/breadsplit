@@ -1,6 +1,5 @@
 // @ts-ignore
 import JsCache from 'js-cache'
-import _ from 'lodash'
 import { ProcessOperations, EvalTransforms, TransOperationOption } from 'opschain'
 import { Transforms } from '../../../core/transforms'
 import { Group, Operation } from '../../../types/models'

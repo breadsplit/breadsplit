@@ -35,23 +35,7 @@ v-card.new-trans-form
                 app-category-icon(:category='form.category || categorySense')
 
           v-flex.ma-2
-            v-alert(:value='true', type='warning') Work in progress...
-
-          v-flex.px-2.mb-3
-            v-list(subheader).pb-1
-              template(v-for='(i,idx) in balanceChanges')
-                v-divider(v-if='idx!==0')
-                v-list-tile(avatar)
-                  v-list-tile-action.mt-1
-                    app-user-avatar(:id='i.memberId', inline, size='40')
-                  v-list-tile-content
-                    v-list-tile-title.text-xs-right.pr-3
-                      app-money-label(:amount='i.balance', :currency='form.currency')
-                  v-list-tile-action
-                    v-text-field(
-                      type='number' style='width:50px'
-                      solo hide-details reverse
-                      v-model.number='form.debtors.find(d=>d.memberId===i.memberId).weight')
+            app-splitting(:trans='form')
 
   .bottom-nav
     v-divider
@@ -77,7 +61,6 @@ import Categories, { CategoryKeys } from '~/meta/categories'
 import GroupMixin from '~/mixins/group'
 import { Transaction, Weight } from '~/types/models'
 import { TransactionDefault } from '~/utils/defaults'
-import { TransactionBalanceChanges } from '~/utils/core'
 
 @Component
 export default class FormNewTransaction extends Mixins(GroupMixin) {
@@ -102,10 +85,6 @@ export default class FormNewTransaction extends Mixins(GroupMixin) {
         return (this.form.desc || '').toLowerCase().includes(key)
       })
     return (category && category.value) || null
-  }
-
-  get balanceChanges() {
-    return TransactionBalanceChanges(this.form)
   }
 
   @Watch('group', { immediate: true })
