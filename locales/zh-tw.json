@@ -32,7 +32,9 @@
       "expenses": "支出",
       "members": "成員",
       "summary": "總覽",
-      "activities": "更新"
+      "activities": "記錄",
+      "transactions": "交易記錄",
+      "balances": "債務情況"
     },
     "speed_dials": {
       "new_expense": "支出",
@@ -60,7 +62,8 @@
     "misc": "其他",
     "button_join": "加入",
     "invited_to_join": "您被邀請加入<b>{0}</b>",
-    "loading_group_info": "加載小組信息中..."
+    "loading_group_info": "加載小組信息中...",
+    "anonymous": "匿名"
   },
   "cats": {
     "transport": {
@@ -92,5 +95,8 @@
     "select_open_in_browser": "選擇 \"<b>在瀏覽器中打開</b>\"",
     "click_right_corner_icon_part1": "請點選右上角 \"",
     "click_right_corner_icon_part2": "\" 圖標"
+  },
+  "acts": {
+    "insert_transaction": "{0} 添加了一筆支出：{1}"
   }
 }

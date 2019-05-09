@@ -88,10 +88,10 @@ export interface Activity {
   by_name?: string
   action: ActivityAction
   entity: Entity
-  entity_id: string
+  entity_id?: string
   entity_name?: string
   entity_desc?: string
-  // TODO:
+  meta?: any
 }
 
 export interface GroupOptions {

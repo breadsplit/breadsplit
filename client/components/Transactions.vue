@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-card.transactions
-  v-subheader Transactions
+  v-subheader {{$t('ui.tabs.transactions')}}
   v-list.pa-0(three-line)
     template(v-for='(trans, index) in displayedTransactions')
       v-divider(v-if='index!=0')
@@ -31,7 +31,7 @@ v-card.transactions
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import GroupMixin from '~/mixins/group'
-import MemberMixin from '../mixins/member'
+import MemberMixin from '~/mixins/member'
 
 @Component
 export default class Transactions extends Mixins(GroupMixin, MemberMixin) {

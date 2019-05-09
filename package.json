@@ -67,7 +67,6 @@
     "svg-to-dataurl": "^1.0.0",
     "ts-node": "^8.1.0",
     "typescript": "^3.4.3",
-    "v-img-fallback": "^0.1.4",
     "vue-clipboard2": "^0.3.0",
     "vue-i18n": "^8.10.0",
     "vue-property-decorator": "^8.1.0",

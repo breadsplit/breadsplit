@@ -4,11 +4,16 @@ span(v-if='value') {{value}}
 
 <script lang='ts'>
 import { Mixins, Component, Prop } from 'vue-property-decorator'
-import UserInfoMixin from './mixins/userinfo'
+import UserInfoMixin from '~/mixins/userinfo'
 
 @Component
 export default class UserInfo extends Mixins(UserInfoMixin) {
+  @Prop(String) readonly id?: string
   @Prop({ default: 'name' }) readonly field!: string
+
+  get user() {
+    return this.getUser(this.id)
+  }
 
   get email() {
     if (this.user)

@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-card.balances
-  v-subheader Balances
+  v-subheader {{$t('ui.tabs.balances')}}
   v-list.pa-0(two-line)
     template(v-for='(balance, index) in balances')
       v-divider(v-if='index!=0')

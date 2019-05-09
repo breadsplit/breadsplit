@@ -2,26 +2,25 @@
 app-action-with-text.app-avatar(:class='{inline}')
   template(slot='action')
     v-avatar(:size='size')
-      img(:src='avatarUrl', v-img-fallback='fallbackAvatar')
-  span(slot='text', v-if='showName') {{name}}
+      img(:src='getAvatarUrl(id)')
+  span(slot='text', v-if='showName') {{getName(id)}}
 </template>
 
 <script lang='ts'>
 import { Mixins, Component, Prop } from 'vue-property-decorator'
-import UserInfoMixin from './mixins/userinfo'
+import UserInfoMixin from '~/mixins/userinfo'
 
 @Component
 export default class Avatar extends Mixins(UserInfoMixin) {
-  menu = false
-
+  @Prop(String) readonly id?: string
+  @Prop(String) readonly groupId?: string
   @Prop(Boolean) readonly inline?: boolean
   @Prop(Boolean) readonly showName?: boolean
   @Prop({ default: true }) readonly autoFetch!: boolean
   @Prop([Number, String]) readonly size?: number|string
 
-  mounted() {
-    if (this.autoFetch && this.id)
-      this.fetchUserProfile(this.id)
+  get user() {
+    return this.getUser(this.id, this.autoFetch)
   }
 }
 </script>

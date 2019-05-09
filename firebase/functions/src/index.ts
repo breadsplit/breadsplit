@@ -32,10 +32,15 @@ export const publishGroup = f(async ({ group }, context) => {
 
   group.id = id
   group.online = true
+  group.activities = []
 
   const initOperations = ProcessServerOperations([{
     name: 'init',
     data: group,
+    meta: {
+      by: context.auth.uid,
+      timestamp: +new Date(),
+    },
   }], context.auth.uid)
 
   const serverGroup: ServerGroup = {

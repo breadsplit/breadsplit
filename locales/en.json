@@ -40,7 +40,9 @@
       "expenses": "Expenses",
       "members": "Members",
       "summary": "Summary",
-      "activities": "Activities"
+      "activities": "Activities",
+      "transactions": "Transactions",
+      "balances": "Balances"
     },
     "speed_dials": {
       "new_expense": "New Expense",
@@ -66,7 +68,9 @@
       "clear_all_data": "Clear all Data"
     },
     "misc": "Misc.",
-    "invited_to_join": "You are invited to join <b>{0}</b>"
+    "invited_to_join": "You are invited to join <b>{0}</b>",
+    "unknown_user": "",
+    "anonymous": "Anonymous"
   },
   "prompt": {
     "are_you_sure": "Are you sure?"
@@ -102,5 +106,8 @@
     "click_right_corner_icon_part1": "Please click top right ",
     "click_right_corner_icon_part2": " icon",
     "select_open_in_browser": "Then select  \"<b>Open in browser</b>\""
+  },
+  "acts": {
+    "insert_transaction": "{0} added an expense: {1}"
   }
 }
