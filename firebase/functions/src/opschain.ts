@@ -10,11 +10,15 @@ const transformCacheTTL = 10 * 24 * 60 * 60 * 1000 // 10 days
 // warpper functions
 export function ProcessServerOperations(operations: TransOperationOption[], uid: string, server_timestamp?: number): Operation[] {
   return ProcessOperations(operations).map((o): Operation => {
-    return {
+    const op = {
       ...o,
       uid,
       server_timestamp: server_timestamp || +new Date(),
     }
+    // undefined values is not acceptable in firestore
+    if (op.meta === undefined)
+      delete op.meta
+    return op
   })
 }
 

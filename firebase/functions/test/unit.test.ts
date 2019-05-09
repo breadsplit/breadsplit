@@ -1,6 +1,7 @@
 import * as path from 'path'
 import * as admin from 'firebase-admin'
 import * as functions from '../src'
+import { Group } from '../../../types/models'
 import { deleteCollection } from './_utils'
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -42,6 +43,27 @@ describe('Cloud Functions', () => {
       expect(await wrapped()).toEqual(1)
       await collection.doc('addone').delete()
       expect(await wrapped()).toEqual(0)
+    })
+  })
+
+  describe('PublishGroup', () => {
+    it('demo', async () => {
+      const wrapped = test.wrap(functions.publishGroup)
+
+      const group: Group = {
+        id: '233',
+        name: 'Good',
+        options: {
+          multiple_currencies: true,
+        },
+        currencies: [],
+        timestamp: +new Date(),
+        members: {},
+        transactions: [],
+        activities: [],
+        currency_records: [],
+      }
+      await wrapped({ group }, { auth: { uid: 'yes' } })
     })
   })
 })
