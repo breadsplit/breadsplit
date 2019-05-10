@@ -1,5 +1,8 @@
+
 module.exports = {
-  appId: 'breadsplit.electron',
+  appId: 'com.breadsplit.electron',
+  productName: 'BreadSplit',
+  copyright: 'Copyright © 2019 The BreadSplit Team',
   directories: {
     buildResources: 'static',
   },
@@ -21,11 +24,23 @@ module.exports = {
     },
     {
       from: '..',
-      to: 'dist',
+      to: '.',
       filter: [
         'LICENSE',
         'AUTHORS',
       ],
     },
   ],
+  win: {
+    target: 'nsis',
+    icon: '../client/dist/icon.png',
+    publisherName: 'The BreadSplit Team',
+  },
+  // Windows installer
+  nsis: {
+    oneClick: true,
+    deleteAppDataOnUninstall: true,
+    createDesktopShortcut: true,
+    uninstallDisplayName: 'Uninstall BreadSplit',
+  },
 }

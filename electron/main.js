@@ -18,7 +18,7 @@ function start() {
 
   const newWin = () => {
     win = new BrowserWindow({
-      icon: path.join(__dirname, 'dist/favicon.png'),
+      icon: path.join(__dirname, 'dist/icon.png'),
     })
     win.on('closed', () => {
       win = null
