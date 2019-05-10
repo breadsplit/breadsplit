@@ -25,6 +25,9 @@ export interface RootState {
   user: UserState
   options: AppOptions
   messaging_token: string | null
-  userAgent: string
-  webview?: string
+  ua: {
+    raw: string
+    webview?: string
+    os: string
+  }
 }

@@ -15,7 +15,7 @@ v-app(:dark='dark')
       caret-color: {{primaryColor}} !important;
     }
 
-  template(v-if='$store.state.webview')
+  template(v-if='$store.state.ua.webview')
     v-content
       app-inside-webview
 

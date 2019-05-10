@@ -2,7 +2,7 @@ import { merge, mapValues } from 'lodash'
 import { GenerateId } from '~/utils/id_helper'
 import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '~/types/models'
 import { RootState, GroupState, UserState, AppOptions } from '~/types/store'
-import { getUserAgent, webviewName } from './webview_detect'
+import { getUserAgent, webviewType, osType } from './ua'
 import { acceptLanguage } from '~/locales'
 
 export const MemberDefault = (overrides?: object): Member => merge({
@@ -96,6 +96,9 @@ export const RootStateDefault = (overrides?: object): RootState => merge({
   user: UserStateDefault(),
   options: AppOptionsDefault(),
   messaging_token: null,
-  userAgent: getUserAgent(),
-  webview: webviewName(),
+  ua: {
+    raw: getUserAgent(),
+    webview: webviewType(),
+    os: osType(),
+  },
 }, overrides)

@@ -4,8 +4,8 @@
   .section v{{version}} {{target}}
   br
   .buildinfo.mb-2
-    span {{$store.state.userAgent}}
-    span {{$store.state.webview}}
+    span {{$store.state.ua.raw}}
+    p {{$store.state.ua.webview || 'browser'}} | {{$store.state.ua.os}}
   .buildinfo
     span Build {{buildtime}} - {{buildTimeFromNow}}
     span(v-if='machine') /{{machine}}
