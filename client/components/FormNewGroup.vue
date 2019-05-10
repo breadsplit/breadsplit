@@ -1,9 +1,7 @@
 <template lang='pug'>
 v-card
-  v-toolbar(dark, :color='color')
-    v-btn(icon, dark, @click='close(false)')
-      v-icon mdi-close
-    v-toolbar-title {{$t('ui.group_editing.new_group')}}
+  app-dialog-bar(@close='close()' :color='color')
+    | {{$t('ui.group_editing.new_group')}}
 
   v-container.pa-4
     v-layout(column)

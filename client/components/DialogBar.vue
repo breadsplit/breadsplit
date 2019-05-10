@@ -2,7 +2,7 @@
 v-toolbar(flat :color='backgroundColor' v-bind='$attrs')
   v-btn(icon v-if='!closeOnRight' @click='close(false)')
     v-icon(:color='color') mdi-close
-  v-toolbar-title.primary--text
+  v-toolbar-title(:style='{color}', :class='`${color}--text`')
     slot
   template(v-if='closeOnRight')
     v-spacer

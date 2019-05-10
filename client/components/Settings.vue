@@ -1,11 +1,9 @@
 <template lang='pug'>
 v-card.settings
-  v-toolbar(dark, color='primary')
-    v-btn(icon, dark, @click='close()')
-      v-icon mdi-close
-    v-toolbar-title {{$t('ui.settings')}}
+  app-dialog-bar(@close='close()')
+    | {{$t('ui.settings')}}
 
-  v-container.px-0(ref='container')
+  v-container(ref='container', :class='{"px-0": isMobile}')
     v-list(two-line, subheader)
       v-subheader {{$t('ui.general')}}
       v-divider
@@ -66,13 +64,14 @@ v-card.settings
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import { AvaliableLocales } from '~/locales'
+import CommonMixin from '~/mixins/common'
 
 const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display }))
 
 @Component
-export default class Settings extends Vue {
+export default class Settings extends Mixins(CommonMixin) {
   localeItems = localeItems
   languageSelecting = false
 

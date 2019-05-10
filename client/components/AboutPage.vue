@@ -1,9 +1,7 @@
 <template lang='pug'>
 v-card
-  v-toolbar(dark, color='primary')
-    v-btn(icon, dark, @click='close(false)')
-      v-icon mdi-close
-    v-toolbar-title {{$t('ui.about')}}
+  app-dialog-bar(@close='close()')
+    | {{$t('ui.about')}}
 
   v-container.pa-4.text-xs-center
     p.title BreadSplit

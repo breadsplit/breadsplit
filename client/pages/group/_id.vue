@@ -69,7 +69,7 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
 })
 export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMixin) {
   fab = false
-  tab_index = 1
+  tab_index = 0
   tab_id: string|null = 'summary'
 
   // Computed

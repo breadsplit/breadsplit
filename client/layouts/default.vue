@@ -109,13 +109,13 @@ v-app(:dark='dark')
     app-dialog(ref='newgroup', :route='true', persistent, no-click-animation)
       app-form-new-group(@close='$refs.newgroup.close()')
 
-    app-dialog(ref='settings', :route='true', :fullscreen='true')
+    app-dialog(ref='settings', :route='true')
       app-settings(@close='$refs.settings.close()')
 
-    app-dialog(ref='login', :route='true', :fullscreen='false')
+    app-dialog(ref='login', :route='true')
       app-login(@close='$refs.login.close()')
 
-    app-dialog(ref='about', :route='true', :fullscreen='true')
+    app-dialog(ref='about', :route='true')
       app-about-page(@close='$refs.about.close()')
 
     app-confirm(ref='confirm')
