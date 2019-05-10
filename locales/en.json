@@ -84,7 +84,8 @@
     "invited_to_join": "You are invited to join <b>{0}</b>",
     "unknown_user": "",
     "anonymous": "Anonymous",
-    "become_a_patreon": "Become a Patreon"
+    "become_a_patreon": "Become a Patreon",
+    "help": "Help"
   },
   "prompt": {
     "are_you_sure": "Are you sure?"
@@ -126,7 +127,11 @@
     "insert_group": "{0} created the group",
     "insert_viewer": "{0} joined the group"
   },
-  "help_tips": {
-    "no_password_login": "For security reasons, we don't support login with password."
+  "help": {
+    "no_password_login": {
+      "tips": "For security reasons, we don't support login with password.",
+      "details": "",
+      "title": ""
+    }
   }
 }

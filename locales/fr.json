@@ -19,7 +19,8 @@
       "notification_disabled": "Les notifications sont désactivées",
       "clear_all_data": "Effacer toutes les données"
     },
-    "tabs": {}
+    "tabs": {},
+    "help": "Aide"
   },
   "acts": {}
 }

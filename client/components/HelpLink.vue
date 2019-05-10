@@ -2,7 +2,10 @@
 .help-link(@click='onClick()')
   v-icon.icon(size='20') mdi-help-circle-outline
   .text
-    slot
+    slot {{$t(`help.${help}.tips`)}}
+
+  v-dialog(v-model='dialog', width='350px')
+    app-help-dialog(:help='help', @close='dialog = false')
 </template>
 
 <script lang='ts'>
@@ -10,11 +13,13 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class HelpLink extends Vue {
+  dialog = false
+
   @Prop({ default: true }) readonly icon!: boolean
   @Prop(String) readonly help?: string
 
   onClick() {
-    // TODO: open help dialog
+    this.dialog = true
   }
 }
 </script>

@@ -1,10 +1,11 @@
 <template lang='pug'>
 v-toolbar(flat :color='backgroundColor' v-bind='$attrs')
-  v-btn(icon v-if='!closeOnRight' @click='close(false)')
-    v-icon(:color='color') mdi-close
+  template(v-if='closeButtons')
+    v-btn(icon v-if='!closeOnRight' @click='close(false)')
+      v-icon(:color='color') mdi-close
   v-toolbar-title(:style='{color}', :class='`${color}--text`')
     slot
-  template(v-if='closeOnRight')
+  template(v-if='closeOnRight && closeButtons')
     v-spacer
     v-btn(icon @click='close(false)')
       v-icon(:color='color') mdi-close
@@ -20,6 +21,7 @@ import CommonMixin from '~/mixins/common'
 export default class DialogBar extends Mixins(CommonMixin) {
   @Prop({ default: 'primary' }) readonly color!: string
   @Prop({ default: 'transparent' }) readonly backgroundColor!: string
+  @Prop({ default: true }) readonly closeButtons!: boolean
 
   close(flag?: boolean) {
     this.$emit('close', flag)
