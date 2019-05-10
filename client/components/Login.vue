@@ -19,7 +19,7 @@ v-card.login.pa-1
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { AvaliableLocales } from '~/locales'
 
 const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display }))
@@ -53,6 +53,17 @@ export default class Login extends Vue {
     // TODO:CODE: error handling
     await this.$fire.loginWith(provider)
     this.close()
+  }
+
+  get uid() {
+    return this.$store.getters['user/uid']
+  }
+
+  @Watch('uid')
+  onUidChanged(uid) {
+    // close dialog on user signed in
+    if (uid)
+      this.close()
   }
 }
 </script>

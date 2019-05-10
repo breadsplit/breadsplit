@@ -87,6 +87,7 @@ module.exports = {
     'vars-on-top': 'error',
     'require-await': 'off',
     'no-return-assign': 'off',
+    'operator-linebreak': [2, 'before'],
 
     // TS
     '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],

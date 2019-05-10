@@ -1,11 +1,18 @@
 {
   "recommendations": [
+    // vue
     "octref.vetur",
-    "dbaeumer.vscode-eslint",
-    "davidanson.vscode-markdownlint",
-    "sysoev.language-stylus",
     "antfu.vue-i18n-ally",
-    "streetsidesoftware.code-spell-checker",
+
+    // languages
+    "dotjoshjohnson.xml",
+    "sysoev.language-stylus",
+
+    // lint/formatting
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "davidanson.vscode-markdownlint",
     "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker",
   ]
 }

@@ -91,6 +91,7 @@ test.vue
 cordova/platforms
 cordova/plugins
 cordova/www
+cordova/ul_web_hooks
 
 # Firebase Compiled JavaScript files
 .firebase

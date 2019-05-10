@@ -16,6 +16,9 @@
   "[json]": {
     "editor.formatOnSave": true
   },
+  "[xml]": {
+    "editor.formatOnSave": true
+  },
 
   // Eslint
   "eslint.autoFixOnSave": true,

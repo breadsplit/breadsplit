@@ -110,8 +110,12 @@ export class FirebasePlugin {
     try {
       // For some reasons, popups are not functional in Electron
       // refer to: https://github.com/firebase/firebase-js-sdk/issues/1334
-      if (process.env.BUILD_TARGET === 'electron')
+      if (process.env.BUILD_TARGET === 'electron'
+        || process.env.BUILD_TARGET === 'cordova'
+      ) {
         await this.auth.signInWithRedirect(provider)
+        return firebase.auth().getRedirectResult()
+      }
 
       return await this.auth.signInWithPopup(provider)
     }
