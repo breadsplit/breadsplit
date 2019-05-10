@@ -11,7 +11,6 @@
     "language": "顯示語言",
     "settings": "設定",
     "sign_in": "登錄",
-    "about": "關於我們",
     "general": "一般",
     "advance": "進階",
     "homepage": "首頁",
@@ -61,15 +60,17 @@
     },
     "signin_options": {
       "tip": "登入您的帳戶，以啟用備份與同步功能",
-      "Google": "使用Google登入",
+      "Google": "使用 Google 登入",
       "Facebook": "使用臉書登入",
-      "Github": "使用Github登入"
+      "Github": "使用 Github 登入"
     },
     "misc": "其他",
     "button_join": "加入",
     "invited_to_join": "您被邀請加入<b>{0}</b>",
     "loading_group_info": "加載小組信息中...",
-    "anonymous": "匿名"
+    "anonymous": "匿名",
+    "about": "關於我們",
+    "become_a_patreon": "在 Patreon 上成為贊助者"
   },
   "cats": {
     "transport": {

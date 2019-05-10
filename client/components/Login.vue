@@ -1,21 +1,17 @@
 <template lang='pug'>
-v-card.login
-  v-toolbar(dark, color='primary')
-    //- v-btn(icon, dark, @click='close()')
-    v-toolbar-title {{$t('appname')}}
-  v-container
-    v-layout(column).pd-4
+v-card.login.pa-4
+  v-container.mb-2
+    v-layout(column)
       v-flex(mx-auto)
-        v-img(:src='require("../assets/img/toast.jpg")')
         v-card-text {{$t('ui.signin_options.tip')}}
       v-flex(mx-auto my-1)
-        app-brand-button(brand='google' @click='loginWith("google")' large width='220px')
+        app-brand-button(brand='google' @click='loginWith("google")' large width='250px')
           span {{$t('ui.signin_options.Google')}}
       v-flex(mx-auto my-1)
-        app-brand-button(brand='facebook' @click='loginWith("facebook")' large width='220px')
+        app-brand-button(brand='facebook' @click='loginWith("facebook")' large width='250px')
           span {{$t('ui.signin_options.Facebook')}}
       v-flex(mx-auto my-1)
-        app-brand-button(brand='github_dark' @click='loginWith("github")' large width='220px')
+        app-brand-button(brand='github_dark' @click='loginWith("github")' large width='250px')
           span {{$t('ui.signin_options.Github')}}
 </template>
 

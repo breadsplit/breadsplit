@@ -83,7 +83,8 @@
     "misc": "Misc.",
     "invited_to_join": "You are invited to join <b>{0}</b>",
     "unknown_user": "",
-    "anonymous": "Anonymous"
+    "anonymous": "Anonymous",
+    "become_a_patreon": "Become a Patreon"
   },
   "prompt": {
     "are_you_sure": "Are you sure?"

@@ -4,11 +4,11 @@ v-card
     | {{$t('ui.about')}}
 
   v-container.pa-4.text-xs-center
-    p.title BreadSplit
+    p.title {{$t('appname')}}
     p balabalbala
 
     app-brand-button(brand='patreon' :href='socials.patreon' target='__blank')
-      span Become a Patreon
+      span {{$t('ui.become_a_patreon')}}
 
     br
 

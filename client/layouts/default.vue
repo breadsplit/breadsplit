@@ -112,7 +112,7 @@ v-app(:dark='dark')
   app-dialog(ref='settings', :route='true')
     app-settings(@close='$refs.settings.close()')
 
-  app-dialog(ref='login', :route='true')
+  app-dialog(ref='login', :route='true' width='350' :fullscreen='false')
     app-login(@close='$refs.login.close()')
 
   app-dialog(ref='about', :route='true')
