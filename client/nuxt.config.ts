@@ -117,6 +117,7 @@ const config: NuxtConfiguration = {
   modules: [
     '@nuxtjs/pwa',
     '@nuxtjs/google-gtag',
+    '@nuxtjs/sentry',
   ],
 
   'google-gtag': {
@@ -128,6 +129,15 @@ const config: NuxtConfiguration = {
     offlineAnalytics: true,
     offline: true,
     swURL: './firebase-messaging-sw.js',
+  },
+
+  sentry: {
+    dsn: process.env.SENTRY_DSN || ServicesIntegrations.sentry_dsn,
+    config: {
+      tags: {
+        build_target: process.env.BUILD_TARGET,
+      },
+    },
   },
 }
 

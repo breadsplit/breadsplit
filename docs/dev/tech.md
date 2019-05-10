@@ -24,9 +24,13 @@ Assets
 
 - [Material Design Icons](https://materialdesignicons.com/) (Icon set)
 
-Server Request
+Services
 
-- [Firebase](https://firebase.google.com/docs)
+- [Firebase](https://firebase.google.com/) (Auth, Serverless and Database)
+- [Sentry](https://sentry.io/) (Error capturing & reporting)
+- [Netlify](https://www.netlify.com/) (Web build and deploy)
+- [CircleCI](https://circleci.com/) (Testing CI)
+- [Codecov](https://codecov.io/) (Code coverage)
 
 ## Backend (Serverless)
 
