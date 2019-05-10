@@ -1,9 +1,6 @@
 <template lang='pug'>
 v-card.new-trans-form
-  v-toolbar(flat, color='transparent')
-    v-btn(icon, @click='close(false)')
-      v-icon(color='primary') mdi-close
-    v-toolbar-title.primary--text New Expense
+  app-dialog-bar(@close='close()') New Expense
 
   v-window(v-model='step')
     v-window-item(:value='1')
