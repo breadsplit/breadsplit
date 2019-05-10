@@ -107,5 +107,8 @@
     "insert_transaction": "{0} 添加了一筆支出：{1}",
     "insert_group": "{0} 創建了小組",
     "insert_viewer": "{0} 加入了小組"
+  },
+  "help_tips": {
+    "no_password_login": "出於資安考量，我們不支援使用賬號密碼登入。"
   }
 }

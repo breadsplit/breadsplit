@@ -125,5 +125,8 @@
     "insert_transaction": "{0} added an expense: {1}",
     "insert_group": "{0} created the group",
     "insert_viewer": "{0} joined the group"
+  },
+  "help_tips": {
+    "no_password_login": "For security reasons, we don't support login with password."
   }
 }

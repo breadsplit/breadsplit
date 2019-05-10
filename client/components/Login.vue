@@ -1,18 +1,21 @@
 <template lang='pug'>
-v-card.login.pa-4
+v-card.login.pa-1
   v-container.mb-2
     v-layout(column)
       v-flex(mx-auto)
         v-card-text {{$t('ui.signin_options.tip')}}
       v-flex(mx-auto my-1)
         app-brand-button(brand='google' @click='loginWith("google")' large width='250px')
-          span {{$t('ui.signin_options.Google')}}
+          | {{$t('ui.signin_options.Google')}}
       v-flex(mx-auto my-1)
         app-brand-button(brand='facebook' @click='loginWith("facebook")' large width='250px')
-          span {{$t('ui.signin_options.Facebook')}}
+          | {{$t('ui.signin_options.Facebook')}}
       v-flex(mx-auto my-1)
         app-brand-button(brand='github_dark' @click='loginWith("github")' large width='250px')
-          span {{$t('ui.signin_options.Github')}}
+          | {{$t('ui.signin_options.Github')}}
+      v-flex(mx-auto my-1).mx-4.mt-2
+        app-help-link
+          | {{$t('help_tips.no_password_login')}}
 </template>
 
 <script lang='ts'>
