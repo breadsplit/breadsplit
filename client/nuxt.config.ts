@@ -19,7 +19,11 @@ const config: NuxtConfiguration = {
       { name: 'HandheldFriendly', content: 'true' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '194x194', href: '/favicon-194x194.png' },
+      { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/android-chrome-192x192.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
       {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
@@ -35,6 +39,16 @@ const config: NuxtConfiguration = {
     start_url: '/',
     theme_color: '#888',
     background_color: theme.background,
+    icons: [{
+      src: '/android-chrome-192x192.png',
+      sizes: '192x192',
+      type: 'image/png',
+    },
+    {
+      src: '/android-chrome-512x512.png',
+      sizes: '512x512',
+      type: 'image/png',
+    }],
   },
 
   env: {
