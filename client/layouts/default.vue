@@ -15,7 +15,7 @@ v-app(:dark='dark')
       caret-color: {{primaryColor}} !important;
     }
 
-  template(v-if='$store.state.ua.webview')
+  template(v-if='blockedByWebview')
     v-content
       app-inside-webview
 
@@ -106,23 +106,23 @@ v-app(:dark='dark')
     v-content
       nuxt
 
-    app-dialog(ref='newgroup', :route='true', persistent, no-click-animation)
-      app-form-new-group(@close='$refs.newgroup.close()')
+  app-dialog(ref='newgroup', :route='true', persistent, no-click-animation)
+    app-form-new-group(@close='$refs.newgroup.close()')
 
-    app-dialog(ref='settings', :route='true')
-      app-settings(@close='$refs.settings.close()')
+  app-dialog(ref='settings', :route='true')
+    app-settings(@close='$refs.settings.close()')
 
-    app-dialog(ref='login', :route='true')
-      app-login(@close='$refs.login.close()')
+  app-dialog(ref='login', :route='true')
+    app-login(@close='$refs.login.close()')
 
-    app-dialog(ref='about', :route='true')
-      app-about-page(@close='$refs.about.close()')
+  app-dialog(ref='about', :route='true')
+    app-about-page(@close='$refs.about.close()')
 
-    app-confirm(ref='confirm')
+  app-confirm(ref='confirm')
 
-    app-loading-dialog(ref='loading')
+  app-loading-dialog(ref='loading')
 
-    app-snackbar(ref='snack')
+  app-snackbar(ref='snack')
 </template>
 
 <script lang='ts'>
@@ -147,6 +147,7 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   @Getter('group/currentShareLink') currentShareLink: string | undefined
   @Getter('user/me') user!: UserInfo
   @Getter('user/online') userIsOnline!: boolean
+  @Getter('blockedByWebview') blockedByWebview!: boolean
 
   @Mutation('group/remove') removeGroup
 

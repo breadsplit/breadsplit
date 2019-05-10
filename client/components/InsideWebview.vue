@@ -16,8 +16,10 @@ v-container
 
     .subheader(v-html='$t("tips.select_open_in_browser")')
 
+  .text-xs-center(style='margin-top: 150px')
+    v-btn(color='primary', flat, @click='()=>$store.commit("bypassWebviewBlock")') Continue anyway
+
   // TODO:WRITING: more details instructions
-  // TODO:CODE: add "continue anyway" button
 </template>
 
 <style lang="stylus" scoped>

@@ -100,5 +100,6 @@ export const RootStateDefault = (overrides?: object): RootState => merge({
     raw: getUserAgent(),
     webview: webviewType(),
     os: osType(),
+    bypass_webview: false,
   },
 }, overrides)
