@@ -68,10 +68,9 @@ const config: NuxtConfiguration = {
   ],
 
   plugins: [
-    // LocalStorage is not available in server side
-    // the SSR is disabled for this plugin
-    { src: '~/plugins/localstorage', ssr: false },
-    { src: '~/plugins/i18n', ssr: false },
+    '~/plugins/sw',
+    '~/plugins/localstorage',
+    '~/plugins/i18n',
     '~/plugins/dayjs',
     '~/plugins/utils',
     '~/plugins/firebase',
@@ -132,7 +131,6 @@ const config: NuxtConfiguration = {
   workbox: {
     offlineAnalytics: true,
     offline: true,
-    swURL: './firebase-messaging-sw.js',
   },
 
   sentry: {
