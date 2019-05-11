@@ -20,7 +20,6 @@
     ├── types               # Typescript types
     ├── locales             #🌎i18n texts
     ├── docs                #📕For generating documentation website in the future
-    ├── cordova             #📱Cordova build scripts and platform specify code
     ├── electron            #💻Electron build scripts and platform specify code
     ├── scripts             # Scripts helps to manage this project
     ├── LICENSE

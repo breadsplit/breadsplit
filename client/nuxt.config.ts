@@ -19,7 +19,7 @@ const config: NuxtConfiguration = {
       { name: 'HandheldFriendly', content: 'true' },
     ],
     link: [
-      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png', media: '(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)' },
       { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
       { rel: 'icon', type: 'image/png', sizes: '194x194', href: '/favicon-194x194.png' },
       { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/android-chrome-192x192.png' },
@@ -39,6 +39,7 @@ const config: NuxtConfiguration = {
     start_url: '/',
     theme_color: '#888',
     background_color: theme.background,
+    prefer_related_applications: false,
     icons: [{
       src: '/android-chrome-192x192.png',
       sizes: '192x192',
@@ -118,6 +119,7 @@ const config: NuxtConfiguration = {
     '@nuxtjs/pwa',
     '@nuxtjs/google-gtag',
     '@nuxtjs/sentry',
+    'modules/manifest-ios',
   ],
 
   'google-gtag': {

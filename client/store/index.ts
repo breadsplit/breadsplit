@@ -25,10 +25,6 @@ export const getters: GetterTree<RootState, RootState> = {
   },
 
   blockedByWebview(state) {
-    // skip cordova
-    if (process.env.BUILD_TARGET === 'cordova')
-      return false
-
     // if app runs inside an webview
     return !state.ua.bypass_webview && !!state.ua.webview
   },

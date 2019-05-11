@@ -49,7 +49,7 @@ Official Publish: **`2019/06/15`**
 
 ## Stage 4 Multi-platform
 
-- ✅ Integrate [Cordova](https://cordova.apache.org/) for Android and iOS
+- ❌ Integrate [Cordova](https://cordova.apache.org/) for Android and iOS
 - ✅ Integrate [Electron](https://electronjs.org/) for Windows, MacOS and Linux
 - Automatic build & Release
 - Platform optimized

@@ -41,4 +41,3 @@ Services
 ## Multi-platform Support
 
 - [Electron](https://electronjs.org/) (Windows & MacOS & Linux)
-- [Cordova](https://cordova.apache.org/) (Android & iOS)

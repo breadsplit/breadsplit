@@ -1,5 +1,10 @@
 import { AssertionError } from 'assert'
-import { sumBy, merge, find, map, uniq, concat } from 'lodash'
+import sumBy from 'lodash/sumBy'
+import merge from 'lodash/merge'
+import find from 'lodash/find'
+import map from 'lodash/map'
+import uniq from 'lodash/uniq'
+import concat from 'lodash/concat'
 import { Transaction, Group } from '../types/models'
 
 export function TransactionBalanceChanges(trans: Transaction) {
