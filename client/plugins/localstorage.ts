@@ -18,4 +18,12 @@ export default ({ store, route, app }) => {
   })(store)
   store.commit('loaded')
   GroupRouter({ store, route })
+  window.addEventListener('storage', (e) => {
+    if (e.key !== StoreKey)
+      return
+    if (!e.newValue)
+      return
+    const data = JSON.parse(e.newValue)
+    store.commit('localstorageLoad', data)
+  })
 }
