@@ -7,7 +7,7 @@ export function getValue(key: string, locale: string, fallback = 'en') {
   if (!value)
     value = _.get(Messages, `${fallback}.${key}`) || ''
 
-  return locale.toString()
+  return value.toString()
 }
 
 function format(str: string, args: any[]) {

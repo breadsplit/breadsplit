@@ -3,7 +3,6 @@ import * as admin from 'firebase-admin'
 import * as functions from '../src'
 import { Group, Operation, Transaction, TransactionType } from '../../../types/models'
 import { deleteCollection } from './_utils'
-import nanoid = require('nanoid');
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const initTest = require('firebase-functions-test')
@@ -74,7 +73,7 @@ describe('Cloud Functions', () => {
       const wrapped = test.wrap(functions.uploadOperations)
 
       const trans: Transaction = {
-        id: nanoid(),
+        id: '2332',
         timestamp: +new Date(),
         currency: 'USD',
         total_fee: 200,

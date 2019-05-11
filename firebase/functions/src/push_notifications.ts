@@ -1,19 +1,10 @@
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
-import { ServerGroup } from '../../../types/models'
+import firebase from 'firebase'
 
-export async function PushGroupNotification(groupid: string, payload: object, ignore?: string|string[]) {
-  const db = admin.firestore()
-  const groupDoc = await db.collection('groups').doc(groupid).get()
-  const group = groupDoc.data() as ServerGroup
-  const viewers = group.viewers
-  if (typeof ignore === 'string')
-    ignore = [ignore]
-
-  const tasks = viewers.map(async (uid) => {
-    if (ignore && ignore.includes(uid))
-      return []
-    const tokenDoc = await db.collection('messaging_tokens').doc(uid).get()
+export async function PushGroupNotification(receivers: string[], payload: object) {
+  const tasks = receivers.map(async (uid) => {
+    const tokenDoc = await firebase.firestore().collection('messaging_tokens').doc(uid).get()
     if (!tokenDoc.exists)
       return []
     const data = tokenDoc.data()

@@ -122,6 +122,7 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
 
   // TODO: verify user permission
 
+  const groupid = id as string
   const uid = context.auth.uid
   const timestamp = +new Date()
   const incomingOperations = ProcessServerOperations(operations, uid, timestamp)
@@ -137,8 +138,8 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
 
     const present = Eval(ops)
 
-    t.update(OperationsRef(id), 'operations', omitDeep(ops))
-    t.update(GroupsRef(id), omitDeep({
+    t.update(OperationsRef(groupid), 'operations', omitDeep(ops))
+    t.update(GroupsRef(groupid), omitDeep({
       present,
       'operations': ops.map(o => o.hash),
     }))
@@ -151,9 +152,16 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
       if (!act)
         continue
 
-      await PushGroupNotification(id, {
-        notification: buildNotificationFromActivities(act, 'en', '不知道'),
-      }, uid)
+      const notification = buildNotificationFromActivities(act, 'zh-tw', '不知道') // TODO:
+
+      const groupDoc = await GroupsRef(groupid).get()
+      const group = groupDoc.data() as ServerGroup
+      const viewers = group.viewers
+      const receivers = _.without(viewers, uid)
+
+      await PushGroupNotification(receivers, {
+        notification,
+      })
     }
   }
 })
