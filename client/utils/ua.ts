@@ -27,7 +27,10 @@ const UA = (userAgent?: string) => {
   }
 }
 
-export function webviewType(userAgent?: string) {
+export type WebviewType = 'wechat' | 'alipay' | 'line' | 'facebook' | 'instagram' | 'pinterest' | 'twitter' | 'webview' | undefined
+export type OSType = 'android' | 'windows' | 'linux' | 'ios' | 'macos' | 'other'
+
+export function getWebviewType(userAgent?: string): WebviewType {
   const ua = UA(userAgent)
 
   if (ua.oneOf('micromessenger'))
@@ -51,13 +54,13 @@ export function webviewType(userAgent?: string) {
   if (ua.oneOf('twitter'))
     return 'twitter'
 
-  if (ua.oneOf('webview') || ua.oneOf('wv'))
+  if (ua.oneOf('webview', 'wv'))
     return 'webview'
 
   return undefined
 }
 
-export function osType(userAgent?: string) {
+export function getOSType(userAgent?: string): OSType {
   const ua = UA(userAgent)
 
   if (ua.oneOf('android'))
@@ -78,8 +81,13 @@ export function osType(userAgent?: string) {
   return 'other'
 }
 
-export function isStandalone() {
+export function isStandalone(): boolean {
+  try {
   // @ts-ignore
-  return window.navigator.standalone === true // iOS
+    return window.navigator.standalone === true // iOS
     || window.matchMedia('(display-mode: standalone)').matches // Android
+  }
+  catch (e) {
+    return false
+  }
 }

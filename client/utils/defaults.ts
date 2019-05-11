@@ -1,11 +1,12 @@
-import { merge, mapValues } from 'lodash'
+import merge from 'lodash/merge'
+import mapValues from 'lodash/mapValues'
 import { GenerateId } from '~/utils/id_helper'
 import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '~/types/models'
 import { RootState, GroupState, UserState, AppOptions } from '~/types/store'
-import { getUserAgent, webviewType, osType, isStandalone } from './ua'
+import { getUserAgent, getWebviewType, getOSType, isStandalone } from './ua'
 import { acceptLanguage } from '~/locales'
 
-export const MemberDefault = (overrides?: object): Member => merge({
+export const MemberDefault = (overrides?: Partial<Member>): Member => merge({
   id: GenerateId.LocalMember(),
   name: '',
   role: MemberRoles.collaborator,
@@ -44,7 +45,7 @@ export const GroupDefault = (overrides?: object): Group => {
   return group
 }
 
-export const ClientGroupDefault = (overrides?: object): ClientGroup => {
+export const ClientGroupDefault = (overrides?: Partial<ClientGroup>): ClientGroup => {
   const group = GroupDefault(overrides)
   return {
     id: group.id,
@@ -55,7 +56,7 @@ export const ClientGroupDefault = (overrides?: object): ClientGroup => {
   }
 }
 
-export const TransactionDefault = (overrides?: object): Transaction => merge({
+export const TransactionDefault = (overrides?: Partial<Transaction>): Transaction => merge({
   id: GenerateId.Transaction(),
   timestamp: +new Date(),
   creditors: [],
@@ -68,12 +69,12 @@ export const TransactionDefault = (overrides?: object): Transaction => merge({
   type: TransactionType.expenses,
 }, overrides)
 
-export const GroupStateDefault = (overrides?: object): GroupState => merge({
+export const GroupStateDefault = (overrides?: Partial<GroupState>): GroupState => merge({
   groups: {},
   currentId: null,
 }, overrides)
 
-export const UserStateDefault = (overrides?: object): UserState => merge({
+export const UserStateDefault = (overrides?: Partial<UserState>): UserState => merge({
   me: {
     uid: null,
     anonymous: true,
@@ -83,12 +84,12 @@ export const UserStateDefault = (overrides?: object): UserState => merge({
   online: false,
 }, overrides)
 
-export const AppOptionsDefault = (overrides?: object): AppOptions => merge({
+export const AppOptionsDefault = (overrides?: Partial<AppOptions>): AppOptions => merge({
   dark: false,
   firebase_server: 'development',
 }, overrides)
 
-export const RootStateDefault = (overrides?: object): RootState => merge({
+export const RootStateDefault = (overrides?: Partial<RootState>): RootState => merge({
   browser_locale: acceptLanguage(),
   user_locale: null,
   loaded: false,
@@ -98,8 +99,8 @@ export const RootStateDefault = (overrides?: object): RootState => merge({
   messaging_token: null,
   ua: {
     raw: getUserAgent(),
-    webview: webviewType(),
-    os: osType(),
+    webview: getWebviewType(),
+    os: getOSType(),
     bypass_webview: false,
     standalone: isStandalone(),
   },

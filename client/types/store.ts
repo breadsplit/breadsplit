@@ -1,4 +1,5 @@
 import { ClientGroup, UserInfo } from './models'
+import { OSType, WebviewType } from '~/utils/ua'
 
 export interface GroupState {
   groups: { [s: string]: ClientGroup }
@@ -27,8 +28,8 @@ export interface RootState {
   messaging_token: string | null
   ua: {
     raw: string
-    webview?: string
-    os: string
+    webview?: WebviewType
+    os: OSType
     bypass_webview: boolean
     standalone: boolean
   }
