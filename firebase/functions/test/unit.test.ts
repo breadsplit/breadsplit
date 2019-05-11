@@ -1,8 +1,9 @@
 import * as path from 'path'
 import * as admin from 'firebase-admin'
 import * as functions from '../src'
-import { Group } from '../../../types/models'
+import { Group, Operation, Transaction, TransactionType } from '../../../types/models'
 import { deleteCollection } from './_utils'
+import nanoid = require('nanoid');
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const initTest = require('firebase-functions-test')
@@ -46,8 +47,10 @@ describe('Cloud Functions', () => {
     })
   })
 
-  describe('PublishGroup', () => {
-    it('demo', async () => {
+  describe('functions', () => {
+    let groupid = '233'
+
+    it('PublishGroup', async () => {
       const wrapped = test.wrap(functions.publishGroup)
 
       const group: Group = {
@@ -63,7 +66,30 @@ describe('Cloud Functions', () => {
         activities: [],
         currency_records: [],
       }
-      await wrapped({ group }, { auth: { uid: 'yes' } })
+      const { id } = await wrapped({ group }, { auth: { uid: 'yes' } })
+      groupid = id
+    })
+
+    it('uploadOperations', async () => {
+      const wrapped = test.wrap(functions.uploadOperations)
+
+      const trans: Transaction = {
+        id: nanoid(),
+        timestamp: +new Date(),
+        currency: 'USD',
+        total_fee: 200,
+        creditors: [],
+        debtors: [],
+        creator: 'yes',
+        type: TransactionType.expenses,
+      }
+      const operations: Operation[] = [{
+        name: 'insert_transaction',
+        timestamp: +new Date(),
+        hash: '00',
+        data: trans,
+      }]
+      await wrapped({ id: groupid, operations }, { auth: { uid: 'yes' } })
     })
   })
 })
