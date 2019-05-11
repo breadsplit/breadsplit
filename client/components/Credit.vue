@@ -24,7 +24,6 @@
     span Made with
     v-icon.heart(color='#ff4057') mdi-heart
     span in Taiwan
-
 </template>
 
 <script lang='ts'>
@@ -49,7 +48,8 @@ export default class Credit extends Vue {
 <style lang='stylus'>
 .credit
   text-align center
-  padding 100px 0
+  padding-top 100px
+  padding-bottom 20px
   opacity 0.7
 
   .buildinfo

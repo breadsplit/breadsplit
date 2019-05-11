@@ -129,7 +129,7 @@
   },
   "help": {
     "no_password_login": {
-      "tips": "For security reasons, we don't support login with password.",
+      "tips": "No login with email and password?",
       "details": "",
       "title": ""
     }

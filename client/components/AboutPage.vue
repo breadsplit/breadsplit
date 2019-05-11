@@ -1,10 +1,11 @@
 <template lang='pug'>
-v-card
+v-card.about-page
   app-dialog-bar(@close='close()')
     | {{$t('ui.about')}}
 
-  v-container.pa-4.text-xs-center
-    p.title {{$t('appname')}}
+  v-container.text-xs-center
+    img(src='/icon.png', height='100px')
+    .appname {{$t('appname')}}
     p balabalbala
 
     app-brand-button(brand='patreon' :href='socials.patreon' target='__blank')
@@ -31,3 +32,9 @@ export default class AboutPage extends Vue {
   }
 }
 </script>
+
+<style lang='stylus' scoped>
+.appname
+  font-size 2em
+  font-weight bold
+</style>

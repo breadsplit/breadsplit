@@ -25,7 +25,6 @@ module.exports = {
     'quotes': ['error', 'single'],
     'no-unused-vars': 'warn',
     'no-param-reassign': 'off',
-    'indent': ['error', 2, { 'VariableDeclarator': 2, 'ArrayExpression': 1 }],
     'brace-style': ['error', 'stroustrup', { 'allowSingleLine': true }],
     'array-bracket-spacing': ['error', 'never'],
     'block-spacing': ['error', 'always'],
