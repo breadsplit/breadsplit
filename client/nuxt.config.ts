@@ -68,7 +68,7 @@ const config: NuxtConfiguration = {
   ],
 
   plugins: [
-    '~/plugins/sw',
+    '~/plugins/messaging-sw',
     '~/plugins/localstorage',
     '~/plugins/i18n',
     '~/plugins/dayjs',
