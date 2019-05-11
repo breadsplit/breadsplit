@@ -77,3 +77,9 @@ export function osType(userAgent?: string) {
 
   return 'other'
 }
+
+export function isStandalone() {
+  // @ts-ignore
+  return window.navigator.standalone === true // iOS
+    || window.matchMedia('(display-mode: standalone)').matches // Android
+}

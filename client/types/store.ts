@@ -30,5 +30,6 @@ export interface RootState {
     webview?: string
     os: string
     bypass_webview: boolean
+    standalone: boolean
   }
 }

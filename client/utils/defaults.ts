@@ -2,7 +2,7 @@ import { merge, mapValues } from 'lodash'
 import { GenerateId } from '~/utils/id_helper'
 import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '~/types/models'
 import { RootState, GroupState, UserState, AppOptions } from '~/types/store'
-import { getUserAgent, webviewType, osType } from './ua'
+import { getUserAgent, webviewType, osType, isStandalone } from './ua'
 import { acceptLanguage } from '~/locales'
 
 export const MemberDefault = (overrides?: object): Member => merge({
@@ -101,5 +101,6 @@ export const RootStateDefault = (overrides?: object): RootState => merge({
     webview: webviewType(),
     os: osType(),
     bypass_webview: false,
+    standalone: isStandalone(),
   },
 }, overrides)
