@@ -19,7 +19,9 @@
     "js-cache": "^1.0.3",
     "lodash": "^4.17.11",
     "nanoid": "^2.0.1",
-    "opschain": "^0.4.1"
+    "opschain": "^0.4.1",
+    "vue": "^2.6.10",
+    "vue-i18n": "^8.11.2"
   },
   "devDependencies": {
     "typescript": "^3.4.5"

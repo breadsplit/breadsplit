@@ -5,7 +5,8 @@ import _ from 'lodash'
 import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types/models'
 import { GenerateId } from '../../../core/id_helper'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
-import { PushGroupNotification } from './push_notifications'
+// import { PushGroupNotification } from './push_notifications'
+// import { buildNotificationFromActivities } from './activities'
 
 admin.initializeApp()
 
@@ -123,14 +124,14 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
 
   const uid = context.auth.uid
   const timestamp = +new Date()
-  const processed = ProcessServerOperations(operations, uid, timestamp)
+  const incomingOperations = ProcessServerOperations(operations, uid, timestamp)
 
   await db.runTransaction(async (t) => {
     const doc = await t.get(OperationsRef(id))
     const serverOps = doc.data() as ServerOperations
     const ops = _
       .chain(serverOps.operations)
-      .unionBy(processed, 'hash')
+      .unionBy(incomingOperations, 'hash')
       .sortBy('timestamp')
       .value()
 
@@ -143,13 +144,18 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
     }))
   })
 
-  // TODO: send real notification
-  await PushGroupNotification(id, {
-    notification: {
-      'title': 'Hello World',
-      'body': 'From firebase functions',
-    },
-  }, uid)
+  /* for (const op of incomingOperations) {
+    if (op.name === 'insert_transaction') {
+      const data = Eval([op])
+      const act = data.activities[0]
+      if (!act)
+        continue
+
+      await PushGroupNotification(id, {
+        notification: buildNotificationFromActivities(act, 'en', '不知道'),
+      }, uid)
+    }
+  } */
 })
 
 export const groupMeta = f(async ({ id }, context) => {

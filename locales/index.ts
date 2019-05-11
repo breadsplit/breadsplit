@@ -23,7 +23,8 @@ export const AvaliableLocales = Object
     }
   })
 
-export function CreateVueI18n(defaultLocale: string) {
+export function CreateVueI18n(Vue: any, defaultLocale: string) {
+  Vue.use(VueI18n)
   return new VueI18n({
     locale: defaultLocale,
     fallbackLocale: 'en',
