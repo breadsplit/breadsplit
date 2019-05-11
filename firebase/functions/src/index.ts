@@ -5,8 +5,8 @@ import _ from 'lodash'
 import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types/models'
 import { GenerateId } from '../../../core/id_helper'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
-// import { PushGroupNotification } from './push_notifications'
-// import { buildNotificationFromActivities } from './activities'
+import { PushGroupNotification } from './push_notifications'
+import { buildNotificationFromActivities } from './activities'
 
 admin.initializeApp()
 
@@ -144,7 +144,7 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
     }))
   })
 
-  /* for (const op of incomingOperations) {
+  for (const op of incomingOperations) {
     if (op.name === 'insert_transaction') {
       const data = Eval([op])
       const act = data.activities[0]
@@ -155,7 +155,7 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
         notification: buildNotificationFromActivities(act, 'en', '不知道'),
       }, uid)
     }
-  } */
+  }
 })
 
 export const groupMeta = f(async ({ id }, context) => {

@@ -1,8 +1,7 @@
-import { TranslateResult } from 'vue-i18n'
 import { Activity } from '../types/models'
 
 export function getActivityDescription(
-  t: (key: string, locale: string, args?: any[]) => TranslateResult,
+  t: (key: string, locale: string, args?: any[]) => any,
   act: Activity,
   locale: string,
   getUserName: string | ((id: string) => string|undefined),

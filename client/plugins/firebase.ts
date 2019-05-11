@@ -172,7 +172,8 @@ export class FirebasePlugin {
     this.db
       .collection('messaging_tokens')
       .doc(this.uid)
-      // TODO: merge with other tokens
+      // TODO:ANFTU: merge with other tokens
+      // TODO:ANTFU: upload locale
       .set({ tokens: [token] })
     return token
   }

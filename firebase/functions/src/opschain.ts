@@ -1,6 +1,7 @@
 // @ts-ignore
 import JsCache from 'js-cache'
 import { ProcessOperations, EvalTransforms, TransOperationOption } from 'opschain'
+import nanoid from 'nanoid'
 import { Transforms } from '../../../core/transforms'
 import { Group, Operation } from '../../../types/models'
 
@@ -28,9 +29,21 @@ const _eval = EvalTransforms<Group>(Transforms, {
 })
 
 export function Eval(operations: Operation[]): Group {
-  /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
-  return _eval({} as Group, operations)
-  /* eslint-enable @typescript-eslint/no-object-literal-type-assertion */
+  const base: Group = {
+    id: nanoid(),
+    name: '',
+    options: {
+      multiple_currencies: true,
+    },
+    timestamp: +new Date(),
+    members: { },
+    currencies: [],
+    currency_records: [],
+    transactions: [],
+    activities: [],
+    online: false,
+  }
+  return _eval(base, operations)
 }
 
 export function omitDeep(data: any) {

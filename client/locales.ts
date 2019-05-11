@@ -1,6 +1,6 @@
-import { AvaliableLocales, CreateVueI18n } from '../locales'
+import { AvaliableLocales, Messages } from '../locales'
 
-export { AvaliableLocales, CreateVueI18n }
+export { AvaliableLocales, Messages }
 
 export function getBrowserLanguage(): string {
   // @ts-ignore
