@@ -29,6 +29,7 @@ import { Component, Mixins } from 'vue-property-decorator'
 import { Activity } from '~/types/models'
 import GroupMixin from '~/mixins/group'
 import UserInfoMixin from '~/mixins/userinfo'
+import { getActivityDescription } from '../../core/activities_parser'
 
 @Component
 export default class Activities extends Mixins(GroupMixin, UserInfoMixin) {
@@ -59,19 +60,12 @@ export default class Activities extends Mixins(GroupMixin, UserInfoMixin) {
     return !this.collapsed && this.amount > this.collapsed_amount
   }
 
+  get locale() {
+    return this.$store.getters.locale
+  }
+
   activityDescription(act: Activity) {
-    const key = `${act.action}.${act.entity}`
-    const by = `<b>${this.getUserName(act.by) || this.$t('ui.anonymous')}</b>`
-    const entity_name = act.entity_name || act.entity_desc || ''
-    switch (key) {
-      case 'insert.transaction':
-        return this.$t('acts.insert_transaction', [by, entity_name])
-      case 'insert.group':
-        return this.$t('acts.insert_group', [by])
-      case 'insert.viewer':
-        return this.$t('acts.insert_viewer', [by])
-    }
-    return key
+    return getActivityDescription(this.$t.bind(this), act, this.locale, this.getUserName.bind(this))
   }
 
   onActivityClick(act: Activity) {

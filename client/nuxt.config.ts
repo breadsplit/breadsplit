@@ -14,7 +14,7 @@ const config: NuxtConfiguration = {
     title: pkg.fullname,
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
       { hid: 'description', name: 'description', content: pkg.description },
       { name: 'HandheldFriendly', content: 'true' },
     ],
@@ -119,7 +119,8 @@ const config: NuxtConfiguration = {
     '@nuxtjs/pwa',
     '@nuxtjs/google-gtag',
     '@nuxtjs/sentry',
-    'modules/manifest-ios',
+    // disable ios manifest fix for now
+    // 'modules/manifest-ios',
   ],
 
   'google-gtag': {
