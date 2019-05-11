@@ -33,7 +33,8 @@
     "docs:deploy": "node scripts/docs-deploy.js",
     "test": "jest",
     "test:firebase": "jest --config=./firebase/functions/jest.config.js",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "bundlesize": "cross-env BUNDLESIZE_GITHUB_TOKEN=418265009d9ef0229a96ad68760e0c1333a4668f bundlesize"
   },
   "dependencies": {
     "@dicebear/avatars": "^3.0.6",
@@ -79,6 +80,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.7.1",
+    "bundlesize": "^0.17.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-standard": ">=12.0.0",
@@ -104,5 +106,10 @@
     "ts-jest": "^24.0.2",
     "vue-jest": "^3.0.4",
     "vuepress": "^0.14.11"
-  }
+  },
+  "bundlesize": [
+    {
+      "path": "./client/dist/nuxt/*.js"
+    }
+  ]
 }

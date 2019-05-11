@@ -41,3 +41,7 @@ jobs:
       - codecov/upload:
           file: ./src/coverage/*.json
           token: 5cc49569-d518-4ff6-9579-f0487c51b3a5
+
+      # update bundle size
+      - run: npm run generate
+      - run: npm run bundlesize
