@@ -3,7 +3,7 @@ importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js')
 importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js')
 
 firebase.initializeApp({
-  messagingSenderId: '918223121466',
+  messagingSenderId: '729380567565',
 })
 
 const messaging = firebase.messaging()
@@ -14,7 +14,7 @@ messaging.setBackgroundMessageHandler((payload) => {
   const notificationTitle = 'Background Message Title'
   const notificationOptions = {
     body: 'Background Message body.',
-    icon: '/firebase-logo.png',
+    icon: '/icon.png',
   }
 
   return self.registration.showNotification(notificationTitle, notificationOptions)

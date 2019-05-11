@@ -7,7 +7,7 @@ https://www.howtogeek.com/113439/how-to-change-your-browsers-user-agent-without-
 
 <template lang='pug'>
 v-container
-  img.arrow(src='~/assets/img/top-right-arrow.svg')
+  img.arrow(src='/img/top-right-arrow.svg')
   .text
     .header
       span(v-html='$t("tips.click_right_corner_icon_part1",)')

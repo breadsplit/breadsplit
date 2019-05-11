@@ -8,7 +8,7 @@ v-btn(
   :style='style',
 )
   v-avatar.brand-icon(size='21', tile).mr-2
-    img(:src='require(`~/assets/brands/${brand}.svg`)')
+    img(:src='`/img/brands/${brand}.svg`')
   span.brand-text
     slot {{brand}}
 </template>
