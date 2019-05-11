@@ -4,7 +4,7 @@ export function getActivityDescription(
   t: (key: string, locale: string, args?: any[]) => any,
   act: Activity,
   locale: string,
-  getUserName: string | ((id: string) => string|undefined),
+  getUserName: string | undefined | ((id: string) => string|undefined),
   serverSide: boolean = false
 ) {
   const $t = (key: string, args?: any[]) => t(key, locale, args).toString()
@@ -12,7 +12,7 @@ export function getActivityDescription(
   let name: string|undefined
   if (typeof getUserName === 'string')
     name = getUserName
-  else
+  else if (getUserName != null)
     name = getUserName(act.by)
 
   name = name || $t('ui.anonymous')

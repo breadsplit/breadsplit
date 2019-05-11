@@ -152,3 +152,10 @@ export interface ServerOperations {
 export interface ServerBase {
   base: Group
 }
+
+export interface TokenRecord {
+  token: string
+  locale: string
+  enabled: boolean
+  uid?: string
+}

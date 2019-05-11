@@ -168,13 +168,17 @@ export class FirebasePlugin {
     if (!token || !this.uid)
       return token
 
+    const locale = this.store.getters.locale
     // async update tokens to firestore
     this.db
       .collection('messaging_tokens')
       .doc(this.uid)
       // TODO:ANFTU: merge with other tokens
-      // TODO:ANTFU: upload locale
-      .set({ tokens: [token] })
+      .set({ tokens: [{
+        token,
+        locale,
+        enabled: true,
+      }] })
     return token
   }
 

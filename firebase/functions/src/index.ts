@@ -5,8 +5,7 @@ import _ from 'lodash'
 import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types/models'
 import { GenerateId } from '../../../core/id_helper'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
-import { PushGroupNotification } from './push_notifications'
-import { buildNotificationFromActivities } from './activities'
+import { PushGroupOperationsNotification } from './push_notifications'
 
 admin.initializeApp()
 
@@ -145,25 +144,7 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
     }))
   })
 
-  for (const op of incomingOperations) {
-    if (op.name === 'insert_transaction') {
-      const data = Eval([op])
-      const act = data.activities[0]
-      if (!act)
-        continue
-
-      const notification = buildNotificationFromActivities(act, 'zh-tw', '不知道') // TODO:
-
-      const groupDoc = await GroupsRef(groupid).get()
-      const group = groupDoc.data() as ServerGroup
-      const viewers = group.viewers
-      const receivers = _.without(viewers, uid)
-
-      await PushGroupNotification(receivers, {
-        notification,
-      })
-    }
-  }
+  await PushGroupOperationsNotification(groupid, incomingOperations, [uid])
 })
 
 export const groupMeta = f(async ({ id }, context) => {
