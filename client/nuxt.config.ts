@@ -25,8 +25,14 @@ const config: NuxtConfiguration = {
       { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/android-chrome-192x192.png' },
       { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
       {
+        async: true,
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
+      },
+      {
+        async: true,
+        rel: 'stylesheet',
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css',
       },
     ],
   },
@@ -37,7 +43,7 @@ const config: NuxtConfiguration = {
     display: 'standalone',
     orientation: 'portrait-primary',
     start_url: '/',
-    theme_color: '#888',
+    theme_color: '#666',
     background_color: theme.background,
     prefer_related_applications: false,
     icons: [{
@@ -63,7 +69,6 @@ const config: NuxtConfiguration = {
   loading: { color: '#fff' },
 
   css: [
-    '@mdi/font/css/materialdesignicons.min.css',
     '~/assets/style/app.styl',
   ],
 
@@ -112,6 +117,14 @@ const config: NuxtConfiguration = {
           exclude: /(node_modules)/,
         })
       }
+    },
+  },
+
+  render: {
+    bundleRenderer: {
+      shouldPreload: (file, type) => {
+        return ['script', 'style'].includes(type)
+      },
     },
   },
 
