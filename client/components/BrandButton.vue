@@ -16,7 +16,7 @@ v-btn(
 <script lang='ts'>
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import BrandColors from '~/meta/brandcolors'
-import chroma from 'chroma-js'
+import { isDark } from '../utils/colors'
 
 @Component({
   inheritAttrs: false,
@@ -30,7 +30,7 @@ export default class BrandButton extends Vue {
   }
 
   get dark() {
-    return chroma(this.color).luminance() < 0.5
+    return isDark(this.color)
   }
 
   get style() {
