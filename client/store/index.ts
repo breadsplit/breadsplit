@@ -65,4 +65,8 @@ export const mutations: MutationTree<RootState> = {
   bypassWebviewBlock(state) {
     state.ua.bypass_webview = true
   },
+
+  localstorageLoad(state, newData) {
+    Object.assign(state, newData)
+  },
 }
