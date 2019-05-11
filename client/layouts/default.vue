@@ -89,19 +89,25 @@ v-app(:dark='dark')
         v-icon(color='primary') mdi-menu
       v-toolbar-title(v-text='title')
       v-spacer
-      v-toolbar-items(v-if='current')
-        template(v-if='isSync()')
-          v-btn(icon, flat).syncing-icon
-            v-icon(color='primary') mdi-cloud-sync
-        template(v-if='currentShareLink')
-          v-btn(icon, flat, @click='copyShareLink()')
-            v-icon.op-50 mdi-share-variant
-        v-menu(offset-y='')
-          v-btn(icon, flat, slot='activator')
-            v-icon.op-50 mdi-dots-vertical
-          v-list
-            v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
-              v-list-tile-title {{ $t(item.title) }}
+      v-toolbar-items
+        template(v-if='current')
+          template(v-if='isSync()')
+            v-btn(icon, flat).syncing-icon
+              v-icon(color='primary') mdi-cloud-sync
+          template(v-if='currentShareLink')
+            v-btn(icon, flat, @click='copyShareLink()')
+              v-icon.op-50 mdi-share-variant
+          v-menu(offset-y='')
+            v-btn(icon, flat, slot='activator')
+              v-icon.op-50 mdi-dots-vertical
+            v-list
+              v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
+                v-list-tile-title {{ $t(item.title) }}
+
+        // User profile
+        template(v-if='!user.anonymous')
+          v-avatar(size='36', @click='promptLogout()', color='#00000020').avatar-in-toolbar
+            img(:src='user.avatar_url')
 
     v-content
       nuxt
@@ -299,4 +305,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
     .v-list__tile
       padding 6px 24px
+
+.avatar-in-toolbar
+  margin 12px
+  cursor pointer
 </style>
