@@ -119,6 +119,7 @@ const config: NuxtConfiguration = {
     '@nuxtjs/pwa',
     '@nuxtjs/google-gtag',
     '@nuxtjs/sentry',
+    'modules/manifest-ios',
   ],
 
   'google-gtag': {
