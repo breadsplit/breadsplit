@@ -1,5 +1,5 @@
 import { Member } from '~/types/models'
-import md5 from 'crypto-js/md5'
+import md5 from 'blueimp-md5'
 import Avatars from '@dicebear/avatars'
 import JdenticonAvatars from '@dicebear/avatars-jdenticon-sprites'
 import Svg2DataUrl from 'svg-to-dataurl'

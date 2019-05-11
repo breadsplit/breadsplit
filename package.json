@@ -28,8 +28,8 @@
     "electron:dev": "npm run dev --prefix=./electron",
     "electron:pack": "npm run build --prefix=./electron",
     "electron:build": "cross-env BUILD_TARGET=electron npm run generate && npm run electron:pack",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "docs:dev": "npx vuepress dev docs",
+    "docs:build": "npx vuepress build docs",
     "docs:deploy": "node scripts/docs-deploy.js",
     "test": "jest",
     "test:firebase": "jest --config=./firebase/functions/jest.config.js",
@@ -40,13 +40,10 @@
     "@dicebear/avatars": "^3.0.6",
     "@dicebear/avatars-jdenticon-sprites": "^1.0.3",
     "@mdi/font": "^3.5.95",
-    "@nuxtjs/axios": "^5.4.1",
     "@nuxtjs/google-gtag": "^1.0.4",
     "@nuxtjs/pwa": "^3.0.0-beta.14",
     "@nuxtjs/sentry": "^2.3.2",
-    "@types/crypto-js": "^3.1.43",
-    "chroma-js": "^2.0.3",
-    "crypto-js": "^3.1.9-1",
+    "blueimp-md5": "^2.10.0",
     "dayjs": "^1.8.12",
     "express": "^4.16.4",
     "firebase": "^5.10.1",
@@ -104,8 +101,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "ts-jest": "^24.0.2",
-    "vue-jest": "^3.0.4",
-    "vuepress": "^0.14.11"
+    "vue-jest": "^3.0.4"
   },
   "bundlesize": [
     {
