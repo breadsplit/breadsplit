@@ -6,6 +6,7 @@ export function getActivityDescription(
   act: Activity,
   locale: string,
   getUserName: string | ((id: string) => string|undefined),
+  serverSide: boolean = false
 ) {
   const $t = (key: string, args?: any[]) => t(key, locale, args).toString()
 
@@ -15,8 +16,10 @@ export function getActivityDescription(
   else
     name = getUserName(act.by)
 
+  name = name || $t('ui.anonymous')
+
   const key = `${act.action}.${act.entity}`
-  const by = `<b>${name || $t('ui.anonymous')}</b>`
+  const by = serverSide ? name : `<b>${name}</b>`
   const entity_name = act.entity_name || act.entity_desc || ''
   switch (key) {
     case 'insert.transaction':

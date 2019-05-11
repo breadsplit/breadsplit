@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import { Config } from '~/locales'
+import { CreateVueI18n } from '~/locales'
 
 Vue.use(VueI18n)
 
@@ -9,10 +9,5 @@ export default ({ app, store }) => {
   // we assume a store/index.js file has been defined and the variable 'locale' defined on store, we'll go into this in detail in the next code snippet
   // construction a new VueI18n
 
-  app.i18n = new VueI18n({
-    locale: store.getters.locale,
-    messages: Config.messages,
-    fallbackLocale: Config.fallbackLocale,
-    silentFallbackWarn: true,
-  })
+  app.i18n = CreateVueI18n(store.getters.locale)
 }

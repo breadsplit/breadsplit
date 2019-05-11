@@ -1,23 +1,6 @@
-import locales from '../locales'
+import { AvaliableLocales, CreateVueI18n } from '../locales'
 
-export const AvaliableLocales = Object
-  .values(locales)
-  .map((locale) => {
-    return {
-      code: locale.code,
-      iso: locale.iso,
-      display: locale.language_name,
-    }
-  })
-
-export const Messages = locales
-
-export const Config = {
-  defaultLocale: 'en',
-  fallbackLocale: 'en',
-  locales: AvaliableLocales,
-  messages: Messages,
-}
+export { AvaliableLocales, CreateVueI18n }
 
 export function getBrowserLanguage(): string {
   // @ts-ignore
