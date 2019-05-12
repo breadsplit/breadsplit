@@ -1,5 +1,5 @@
 module.exports = {
-  title: '🍞 BreadSplit Develop',
+  title: '🍞 BreadSplit Developer',
   description: 'Group bills split made easy, fast and customizable.',
   base: '/breadsplit/',
   head: [

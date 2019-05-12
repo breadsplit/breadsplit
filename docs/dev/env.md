@@ -3,8 +3,9 @@
 ## Avaliable to setup
 
 - `NODE_ENV` build mode, can be `development` or `production`
-- `GOOGLE_GTAG_ID` Google analytics tag.
 - `BUILD_TARGET` target platform, can be `web`,`electron`,`android` or `ios`
+- `GOOGLE_GTAG_ID` Google analytics tag.
+- `SENTRY_DSN` Sentry.io DSN url
 
 ## Auto generated env
 

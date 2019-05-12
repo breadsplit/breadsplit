@@ -1,4 +1,6 @@
-# 🍞 BreadSplit
+<img src='./client/static/img/svg/favicon.svg' width='150'>
+
+# BreadSplit 分賬吐司
 
 Group bills split made easy, fast and customizable.
 
@@ -6,28 +8,24 @@ Group bills split made easy, fast and customizable.
 [![codecov](https://codecov.io/gh/antfu/breadsplit/branch/master/graph/badge.svg?token=JRYbmADObn)](https://codecov.io/gh/antfu/breadsplit)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7595b445-ccf4-4925-a7e8-ec6bd6033af3/deploy-status)](https://app.netlify.com/sites/breadsplit/deploys)
 
-[📋 **Stage Progress**](https://github.com/antfu/breadsplit/projects/1)
-
 ## 🌟 Key Features
 
-`Further discussion required`
+- Free and Open Source
+- No-Ads
+- Works offline
+- Online sharing & collaborating
+- Multi-currencies supported
+- Expenses chart
+- i18n (Current supporting: English, 繁體中文, 简体中文, 日本語)
+- Activities history
+- Group permission control
 
-## 📚 Development
+## Development
 
-[Online Document](https://antfu.github.io/breadsplit/)
+[📚 Developer Docs](https://antfu.github.io/breadsplit/)
 
-## Simliar Apps 🚗🚓🚕🚙
-
-- [Settle Up⭐](https://www.tricount.com/)
-- [Splitwise⭐](https://www.splitwise.com/)
-- [Splid⭐](https://splid.app/)
-- [Tricount](https://www.tricount.com/)
-- [SplittyPie](https://splittypie.com/) *Open Source*
-- [KittySplit](https://www.kittysplit.com/en/)
-- [iHateMoney](https://ihatemoney.org/)
-- [Acasa](https://www.helloacasa.com/)
-- [Spend Together](https://itunes.apple.com/us/app/spend-together/id1446549608?mt=8)
+[📋 Developing Progress Track](https://github.com/antfu/breadsplit/projects/1)
 
 ## License
 
-[GPLv3 License](./LICENSE)
+BreadSplit is licensed under [GUN GPLv3](./LICENSE) © 2019
