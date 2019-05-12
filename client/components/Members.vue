@@ -96,7 +96,7 @@ export default class Members extends Mixins(MemberMixin) {
   }
 
   async promptRenameMember(member) {
-    const name = await this.$root.$prompt('Name', member.id)
+    const name = await this.$root.$prompt('Name', member.name)
     if (name)
       await this.editMember({ memberid: member.id, changes: { name } })
   }
