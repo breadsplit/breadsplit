@@ -21,7 +21,7 @@ v-card
                   v-list-tile-title {{$t(item.title, member)}}
       v-divider
     v-list-tile
-      v-btn(v-if='!iamJoined', @click='joinTheGroup()', color='primary', large, round).pl-0
+      v-btn(v-if='this.uid && !iamJoined', @click='joinTheGroup()', color='primary', large, round).pl-0
         app-user-avatar(:id='uid', :size='44').mr-3
         span {{$t('ui.join_as_me', [me.name])}}
       v-btn(@click='promptNewMember()', dark, color='grey darken-2')
@@ -31,7 +31,6 @@ v-card
 </template>
 
 <script lang='ts'>
-/* eslint-disable no-alert */
 import MemberMixin from '~/mixins/member'
 import { Component, Mixins, Prop } from 'vue-property-decorator'
 import { IsThisId } from '~/utils/id_helper'

@@ -105,7 +105,12 @@
   },
   "bundlesize": [
     {
-      "path": "./client/dist/nuxt/*.js"
+      "path": "./client/dist/nuxt/*.js",
+      "maxSize": "400 kB"
+    },
+    {
+      "path": "./client/dist/nuxt/*.css",
+      "maxSize": "80 kB"
     }
   ]
 }
