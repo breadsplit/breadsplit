@@ -14,8 +14,6 @@
           v-alert(:value='true', type='warning') Work in progress...
           pre {{JSON.stringify(group, null, 2)}}
 
-      v-tab-item(key='4')
-
       v-tab-item(key='2')
         v-container(:class='{"pa-0": isMobile}')
           app-activities
@@ -28,7 +26,9 @@
 
   v-bottom-nav(:active.sync='tab_id', :value='true', :absolute='!isMobile', :fixed='isMobile')
     template(v-for='item in tabItems')
-      v-btn(color='primary', flat, :value='item.key', :disabled='item.disabled')
+      v-btn(
+        color='primary' flat :style='item.style'
+        :value='item.key', :disabled='item.disabled')
         span {{item.text}}
         v-icon mdi-{{item.icon}}
 
@@ -83,13 +83,12 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
         text: this.$t('ui.tabs.expenses'),
         icon: 'wallet',
         key: 'expenses',
-      }, {
-        key: 'placeholder',
-        disabled: true,
+        style: 'margin-right: 25px',
       }, {
         text: this.$t('ui.tabs.activities'),
         icon: 'calendar-text',
         key: 'activities',
+        style: 'margin-left: 25px',
       }, {
         text: this.$t('ui.tabs.members'),
         icon: 'account-group',
@@ -106,6 +105,7 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
       transform: 'translateX(50%)',
       position: this.isMobile ? 'fixed' : 'absolute',
       'z-index': 5,
+      margin: '0',
     }
 
     return style
