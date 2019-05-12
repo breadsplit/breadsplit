@@ -126,6 +126,8 @@ v-app(:dark='dark')
 
   app-confirm(ref='confirm')
 
+  app-prompt(ref='prompt')
+
   app-loading-dialog(ref='loading')
 
   app-snackbar(ref='snack')
@@ -194,6 +196,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     this.$root.$snack = this.$refs.snack.open
     // @ts-ignore
     this.$root.$confirm = this.$refs.confirm.open
+    // @ts-ignore
+    this.$root.$prompt = this.$refs.prompt.open
     // @ts-ignore
     this.$root.$apploading = this.$refs.loading
 
