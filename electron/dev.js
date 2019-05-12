@@ -17,7 +17,7 @@ const app = electron.app
 
 const newWin = () => {
   win = new electron.BrowserWindow({
-    icon: path.join(root, 'static/favicon-194x194.png'),
+    icon: path.join(root, 'static/img/png/favicon-194x194.png'),
   })
 
   // win.maximize()

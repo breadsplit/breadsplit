@@ -33,7 +33,7 @@ module.exports = {
   ],
   win: {
     target: 'nsis',
-    icon: '../client/dist/favicon-194x194.png',
+    icon: '../client/dist/img/png/favicon-194x194.png',
     publisherName: 'The BreadSplit Team',
   },
   // Windows installer

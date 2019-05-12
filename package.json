@@ -39,7 +39,6 @@
   "dependencies": {
     "@dicebear/avatars": "^3.0.6",
     "@dicebear/avatars-jdenticon-sprites": "^1.0.3",
-    "@mdi/font": "^3.5.95",
     "@nuxtjs/google-gtag": "^1.0.4",
     "@nuxtjs/pwa": "^3.0.0-beta.14",
     "@nuxtjs/sentry": "^2.3.2",
