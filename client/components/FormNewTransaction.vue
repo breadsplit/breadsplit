@@ -14,8 +14,9 @@ v-card.new-trans-form
                 span.mr-2 paid
 
             v-flex.ma-2
-              v-text-field(
+              app-number-input(
                 label='Total'
+                ref='total_fee_input'
                 v-model='form.total_fee'
                 :prefix='form.currency'
                 @focus='openKeyboard'
@@ -39,7 +40,7 @@ v-card.new-trans-form
 
   app-absolute-placeholder
     app-div.bottom-nav
-      app-soft-numpad(v-show='step === 1' :bind='keyboardBind')
+      app-soft-numpad(v-show='step === 1' ref='numpad')
       v-divider
       v-card-actions.pa-3
         v-btn(v-show='step !== 1', flat, @click='step--')
@@ -112,8 +113,9 @@ export default class FormNewTransaction extends Mixins(GroupMixin) {
     this.close()
   }
 
-  openKeyboard(e: FocusEvent) {
-    this.keyboardBind = e.target as HTMLInputElement
+  openKeyboard(e) {
+    // @ts-ignore
+    this.$refs.total_fee_input.registerKeyboard(this.$refs.numpad)
   }
 
   close(result?) {
