@@ -53,7 +53,7 @@ export default class Prompt extends Vue {
 
   cancel() {
     if (this.resolve)
-      this.resolve(this.val)
+      this.resolve(false)
     this.dialog = false
   }
 }
