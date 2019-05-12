@@ -4,7 +4,7 @@ v-card.about-page
     | {{$t('ui.about')}}
 
   v-container.text-xs-center
-    img(src='/icon.png', height='100px')
+    img(src='/favicon-194x194.png', height='100px')
     .appname {{$t('appname')}}
     p balabalbala
 

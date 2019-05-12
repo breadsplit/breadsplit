@@ -98,9 +98,7 @@ const config: NuxtConfiguration = {
         import: ['~vuetify/src/stylus/settings/_variables.styl'],
       },
     },
-    splitChunks: {
-      layouts: true,
-    },
+    splitChunks: {},
     extractCSS: true,
     publicPath: '/nuxt/',
     /*
