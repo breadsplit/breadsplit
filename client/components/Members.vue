@@ -27,10 +27,10 @@ v-card
       v-btn(@click='promptNewMember()', dark, color='grey darken-2')
         v-icon.mr-2 mdi-account-plus
         span {{$t('ui.button_new_member')}}
+
 </template>
 
 <script lang='ts'>
-// TODO: replace prompt with better form
 /* eslint-disable no-alert */
 import MemberMixin from '~/mixins/member'
 import { Component, Mixins, Prop } from 'vue-property-decorator'
@@ -89,21 +89,21 @@ export default class Members extends Mixins(MemberMixin) {
     return IsThisId.LocalMember(id)
   }
 
-  promptNewMember() {
-    const name = prompt('Name?')
+  async promptNewMember() {
+    const name = await this.$root.$prompt('Name')
     if (name)
-      this.newMember({ member: { name } })
+      await this.newMember({ member: { name } })
   }
 
-  promptRenameMember(member) {
-    const name = prompt('Name?')
+  async promptRenameMember(member) {
+    const name = await this.$root.$prompt('Name', member.id)
     if (name)
-      this.editMember({ memberid: member.id, changes: { name } })
+      await this.editMember({ memberid: member.id, changes: { name } })
   }
 
-  promptRemoveMember(member) {
-    if (confirm('Sure?'))
-      this.removeMember({ memberid: member.id })
+  async promptRemoveMember(member) {
+    if (await this.$root.$confirm('Sure?'))
+      await this.removeMember({ memberid: member.id })
   }
 }
 </script>
