@@ -11,6 +11,7 @@ v-container
 
     v-flex.text-xs-center(xs12, sm8, md6)
       v-btn(@click='$root.$newgroup.open()', color='primary') {{$t('ui.button_new_group')}}
+
 </template>
 
 <script lang='ts'>
