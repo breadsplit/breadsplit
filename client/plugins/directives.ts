@@ -1,11 +1,6 @@
 import Vue from 'vue'
-import VueClipboard from 'vue-clipboard2'
 
-VueClipboard.config.autoSetContainer = true
-Vue.use(VueClipboard)
-
-const PRESS_TIMEOUT = 800
-
+const PRESS_TIMEOUT = 600
 Vue.directive('longpress', {
   bind(el, { value }) {
     if (typeof value !== 'function')

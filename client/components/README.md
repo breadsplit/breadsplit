@@ -10,7 +10,7 @@ The importing code is locating in `~/plugins/components.js`
 
 ## Name Casing
 
-Refer to https://vuejs.org/v2/guide/components-registration.html#Name-Casing
+Refer to <https://vuejs.org/v2/guide/components-registration.html#Name-Casing>
 
 The `PascalCase` components names will be converted to `kebab-case` in templates section.
 

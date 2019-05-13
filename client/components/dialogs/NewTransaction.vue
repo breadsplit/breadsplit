@@ -4,6 +4,8 @@ v-card.new-trans-form
 
   .layout-relative.height-100
     v-window(v-model='step')
+
+      // First page
       v-window-item(:value='1')
         v-container
           v-layout(column)
@@ -24,19 +26,38 @@ v-card.new-trans-form
                 required hide-details
               )
 
+      // Second page
       v-window-item(:value='2')
-        v-container
-          v-layout(column)
+        .my-3
+          app-form
+            app-category-icon(:category='form.category || categorySense', label)
+            v-text-field(
+              v-model='form.desc' label='Description' placeholder='Some expense...' required)
 
-            v-flex.ma-2
-              v-text-field(
-                v-model='form.desc' label='Description' placeholder='Some expense...'
-                hide-details required box)
-                template(slot='append')
-                  app-category-icon(:category='form.category || categorySense')
+          v-divider
+          app-form
+            v-icon(color='primary') mdi-cash-usd
+            v-subheader Paid by
 
-            v-flex.ma-2
-              app-splitting(:trans='form')
+          v-divider
+          app-form
+            v-icon(color='primary') mdi-chart-pie
+            app-splitting(:trans='form')
+
+          v-divider
+          app-form(@click.native='pickDate()', v-ripple)
+            v-icon(color='primary') mdi-calendar
+            v-subheader {{dateDisplay}}
+
+          v-divider
+          app-form
+            v-icon(color='primary') mdi-map-marker
+            v-subheader Add Location
+
+          v-divider
+          app-form
+            v-icon(color='primary') mdi-history
+            v-subheader Repeat
 
   app-absolute-placeholder
     app-div.bottom-nav
@@ -56,6 +77,8 @@ v-card.new-trans-form
         template(v-if='step === 2')
           v-btn(:disabled='step === 3', color='primary', depressed, @click='submit')
             | Save
+
+  app-date-picker(ref='datePicker')
 </template>
 
 <script lang='ts'>
@@ -63,13 +86,13 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
 import GroupMixin from '~/mixins/group'
 import { Transaction, Weight } from '~/types'
-import { TransactionDefault } from '~/core'
+import { TransactionDefault, relativeDate } from '~/core'
 
 @Component
 export default class NewTransaction extends Mixins(GroupMixin) {
   form: Transaction = TransactionDefault()
   cats = Categories
-  step = 1
+  step = 2
 
   get categoriesKeywords() {
     const keys: {key: string; value: string}[] = []
@@ -80,6 +103,10 @@ export default class NewTransaction extends Mixins(GroupMixin) {
       return keywords
     })
     return keys
+  }
+
+  get dateDisplay() {
+    return relativeDate(this.form.timestamp)
   }
 
   get categorySense() {
@@ -114,6 +141,13 @@ export default class NewTransaction extends Mixins(GroupMixin) {
   openKeyboard(e) {
     // @ts-ignore
     this.$refs.total_fee_input.registerKeyboard(this.$refs.numpad)
+  }
+
+  async pickDate() {
+    // @ts-ignore
+    const date: number | null = await this.$refs.datePicker.open(this.form.timestamp)
+    if (date)
+      this.form.timestamp = date
   }
 
   close(result?) {

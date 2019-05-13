@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card
+div
   v-subheader {{$t('ui.splitting.split_by')}}
   v-layout
 

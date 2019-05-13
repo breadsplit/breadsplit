@@ -1,16 +1,10 @@
 import Vue from 'vue'
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import { RootState } from '~/types/store'
+import VueClipboard from 'vue-clipboard2'
+import { RootState } from '~/types'
 
-import 'dayjs/locale/en'
-import 'dayjs/locale/zh-tw'
-import 'dayjs/locale/zh-cn'
-import 'dayjs/locale/ja'
-import 'dayjs/locale/fr'
-
-dayjs.extend(relativeTime)
-
+VueClipboard.config.autoSetContainer = true
+Vue.use(VueClipboard)
 Vue.use(() => {
   Vue.prototype.$dt = dayjs
 })

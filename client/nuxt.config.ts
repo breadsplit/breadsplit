@@ -76,10 +76,10 @@ const config: NuxtConfiguration = {
     '~/plugins/messaging-sw',
     '~/plugins/localstorage',
     '~/plugins/i18n',
-    '~/plugins/dayjs',
-    '~/plugins/utils',
+    '~/plugins/packages',
     '~/plugins/firebase',
     '~/plugins/vuetify',
+    '~/plugins/directives',
     '~/plugins/components',
   ],
 
