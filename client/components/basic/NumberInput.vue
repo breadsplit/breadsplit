@@ -1,6 +1,7 @@
 <template lang='pug'>
 v-text-field(
   :label='calculated.toString()'
+  :class='classes'
   v-bind='$attrs',
   v-model='inner_value'
   :readonly='isMobile'
@@ -15,14 +16,22 @@ import SoftNumpad from './SoftNumpad.vue'
 import CommonMixin from '~/mixins/common'
 
 @Component({
-  inheritAttrs: true,
+  inheritAttrs: false,
 })
 export default class NumberInput extends Mixins(CommonMixin) {
   @Prop({ default: 0 }) readonly value!: number
   @Prop({ default: 100000000 }) readonly max!: number
+  @Prop({ default: false }) readonly flat!: boolean
 
   numpad: SoftNumpad | null = null
   inner_value: string = ''
+
+  get classes() {
+    return {
+      'number-input': true,
+      flat: this.flat,
+    }
+  }
 
   deregisterKeyboard() {
     if (this.numpad) {
@@ -162,3 +171,10 @@ export default class NumberInput extends Mixins(CommonMixin) {
   }
 }
 </script>
+
+<style lang='stylus'>
+.number-input
+  &.flat
+    .v-input__slot
+      border none !important
+</style>

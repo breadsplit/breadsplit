@@ -15,17 +15,6 @@ v-card.new-trans-form
                   app-member-select(:members='members', v-model='form.creditors[0].uid')
                 span.mr-2 paid
 
-            v-flex.ma-2
-              app-number-input(
-                label='Total'
-                ref='total_fee_input'
-                v-model.number='form.total_fee'
-                :prefix='form.currency'
-                @focus='openKeyboard'
-                reverse outline autofocus
-                required hide-details
-              )
-
       // Second page
       v-window-item(:value='2')
         .my-3
@@ -61,6 +50,16 @@ v-card.new-trans-form
 
   app-absolute-placeholder(:salt='step + visible')
     app-div.bottom-nav
+      .pa-1
+        app-number-input(
+          label='Total'
+          ref='total_fee_input'
+          v-model.number='form.total_fee'
+          :prefix='form.currency'
+          @focus='openKeyboard'
+          reverse outline autofocus
+          required hide-details flat='true'
+        )
       app-soft-numpad(v-show='step === 1' ref='numpad')
       v-divider
       v-card-actions.pa-3
