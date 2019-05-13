@@ -1,6 +1,7 @@
 <template lang='pug'>
 v-card.new-trans-form
-  app-dialog-bar(@close='close()') New Expense
+  app-dialog-bar(@close='close()')
+    | {{$t('ui.new_expense')}}
 
   .layout-relative.height-100
     v-window(v-model='step')
@@ -13,7 +14,7 @@ v-card.new-trans-form
               .vertical-aligned
                 template(v-if='form.creditors.length === 1')
                   app-member-select(:members='members', v-model='form.creditors[0].uid')
-                span.mr-2 paid
+                span.mr-2 {{$t('ui.paid_money')}}
 
       // Second page
       v-window-item(:value='2')
@@ -26,7 +27,7 @@ v-card.new-trans-form
           v-divider
           app-grid(columns='70px auto')
             v-icon(color='primary') mdi-cash-usd
-            v-subheader Paid by
+            v-subheader {{$t('ui.paid_by')}}
 
           v-divider
           app-grid(columns='70px auto')
@@ -41,12 +42,12 @@ v-card.new-trans-form
           v-divider
           app-grid(columns='70px auto')
             v-icon(color='primary') mdi-map-marker
-            v-subheader Add Location
+            v-subheader {{$t('ui.add_location')}}
 
           v-divider
           app-grid(columns='70px auto')
             v-icon(color='primary') mdi-history
-            v-subheader Repeat
+            v-subheader {{$t('ui.repeat_expense')}}
 
   app-absolute-placeholder(:salt='step + visible')
     app-div.bottom-nav

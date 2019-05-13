@@ -77,7 +77,12 @@
     "button_quick_add": "快速添加",
     "button_back": "返回",
     "feedback": "意見回饋",
-    "wip": "功能開發中，敬請期待…"
+    "wip": "功能開發中，敬請期待…",
+    "new_expense": "新的支出",
+    "paid_money": "支付了",
+    "paid_by": "付款人",
+    "add_location": "添加位置",
+    "repeat_expense": "重複"
   },
   "cats": {
     "transport": {

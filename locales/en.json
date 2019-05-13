@@ -91,7 +91,12 @@
     "button_next": "Next",
     "button_save": "Save",
     "feedback": "Feedback",
-    "wip": "Working in progress..."
+    "wip": "Working in progress...",
+    "new_expense": "New expense",
+    "paid_money": "paid",
+    "paid_by": "Paid by",
+    "add_location": "Add location",
+    "repeat_expense": "Repeat"
   },
   "prompt": {
     "are_you_sure": "Are you sure?"
