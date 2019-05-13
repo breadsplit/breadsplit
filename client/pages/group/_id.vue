@@ -40,7 +40,7 @@
     )
       v-icon mdi-plus
 
-  nuxt-child(:key='$route.params.id')
+  nuxt-child
 </template>
 
 <script lang='ts'>

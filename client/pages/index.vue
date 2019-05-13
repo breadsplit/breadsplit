@@ -47,6 +47,9 @@ export default class Homepage extends Vue {
   cursor pointer
   background white
 
+  .theme--dark &
+    background #252525
+
   .v-btn__content
     display block
     opacity 0.6

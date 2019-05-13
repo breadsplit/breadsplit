@@ -1,4 +1,20 @@
 <template lang='pug'>
+mixin inputs()
+  app-grid.my-2.mx-3(columns='auto 65px' style='vertical-align:bottom')
+    app-number-input(
+      ref='total_fee_input'
+      v-model.number='form.total_fee'
+      placeholder='0'
+      @focus='openKeyboard'
+      reverse outline autofocus
+      required hide-details flat='true' main='true'
+    )
+    app-grid(rows='auto 45px')
+      span
+      app-currency-select.mt-0.pt-0(v-model='form.currency')
+
+  app-soft-numpad(ref='numpad')
+
 v-card.new-trans-form
   app-dialog-bar(@close='close()')
     | {{$t('ui.new_expense')}}
@@ -8,13 +24,12 @@ v-card.new-trans-form
 
       // First page
       v-window-item(:value='1')
-        v-container
-          v-layout(column)
-            v-flex.ma-2
-              .vertical-aligned
-                template(v-if='form.creditors.length === 1')
-                  app-member-select(:members='members', v-model='form.creditors[0].uid')
-                span.mr-2 {{$t('ui.paid_money')}}
+        .vertical-aligned.ma-4
+          template(v-if='form.creditors.length === 1')
+            app-member-select(:members='members', v-model='form.creditors[0].uid')
+          span.mr-2 {{$t('ui.paid_money')}}
+        template(v-if='!isMobile')
+          +inputs()
 
       // Second page
       v-window-item(:value='2')
@@ -51,20 +66,8 @@ v-card.new-trans-form
 
   app-absolute-placeholder(:salt='step + visible')
     app-div.bottom-nav
-      app-grid.my-2.mx-3(v-show='step === 1' columns='auto 65px' style='vertical-align:bottom')
-        app-number-input(
-          ref='total_fee_input'
-          v-model.number='form.total_fee'
-          placeholder='0'
-          @focus='openKeyboard'
-          reverse outline autofocus
-          required hide-details flat='true' main='true'
-        )
-        app-grid(rows='auto 45px')
-          span
-          app-currency-select.mt-0.pt-0(v-model='form.currency')
-
-      app-soft-numpad(v-show='step === 1' ref='numpad')
+      div(v-if='isMobile && step === 1')
+        +inputs()
 
       v-divider
       v-card-actions.pa-3
@@ -92,12 +95,12 @@ v-card.new-trans-form
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
-import { GroupMixin, DialogChildMixin } from '~/mixins'
+import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, dateToRelative } from '~/core'
 
 @Component
-export default class NewTransaction extends Mixins(GroupMixin, DialogChildMixin) {
+export default class NewTransaction extends Mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
   cats = Categories
   step = 1

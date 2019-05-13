@@ -20,7 +20,7 @@ v-card
                 v-list-tile(@click='item.handler')
                   v-list-tile-title {{$t(item.title, member)}}
       v-divider
-    v-list-tile
+    .px-3.pt-3.py-2
       v-btn(v-if='this.uid && !iamJoined', @click='joinTheGroup()', color='primary', large, round).pl-0
         app-user-avatar(:id='uid', :size='44').mr-3
         span {{$t('ui.join_as_me', [me.name])}}
