@@ -4,18 +4,22 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 
 @Component
 export default class AbsolutePlaceholder extends Vue {
   // this variable is fore forcing vue to recalculate computed "height"
-  salt = 0
+  inner_salt = 0
 
   @Prop() readonly for?: Vue | Element
+  @Prop() readonly salt?: any
 
   get height() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
     const salt = this.salt
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
+    const inner_salt = this.inner_salt
+
     const target = this.for || this.$children
     if (!target)
       return 0
@@ -42,8 +46,15 @@ export default class AbsolutePlaceholder extends Vue {
     }
   }
 
+  @Watch('salt')
+  onSaltChanged() {
+    this.$nextTick(() => {
+      this.inner_salt += 1
+    })
+  }
+
   recalculate() {
-    this.salt += 1
+    this.inner_salt += 1
   }
 
   mounted() {

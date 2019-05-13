@@ -85,7 +85,11 @@
     "unknown_user": "",
     "anonymous": "Anonymous",
     "become_a_patreon": "Become a Patreon",
-    "help": "Help"
+    "help": "Help",
+    "button_back": "Back",
+    "button_quick_add": "Quick Add",
+    "button_next": "Next",
+    "button_save": "Save"
   },
   "prompt": {
     "are_you_sure": "Are you sure?"

@@ -59,24 +59,28 @@ v-card.new-trans-form
             v-icon(color='primary') mdi-history
             v-subheader Repeat
 
-  app-absolute-placeholder
+  app-absolute-placeholder(:salt='step')
     app-div.bottom-nav
-      app-soft-numpad(v-show='step === 1' ref='numpad')
+      app-soft-numpad(v-if='step === 1' ref='numpad')
       v-divider
       v-card-actions.pa-3
+        v-btn(v-show='step === 1', flat, @click='close')
+          | {{$t('ui.button_cancel')}}
+
         v-btn(v-show='step !== 1', flat, @click='step--')
-          | Back
+          | {{$t('ui.button_back')}}
         v-spacer
 
         template(v-if='step === 1')
           v-btn(:disabled='!form.total_fee', color='primary', flat, @click='submit')
-            | Quick add
+            | {{$t('ui.button_quick_add')}}
+
           v-btn(:disabled='!form.total_fee', color='primary', depressed, @click='step++')
-            | Next
+            | {{$t('ui.button_next')}}
 
         template(v-if='step === 2')
           v-btn(:disabled='step === 3', color='primary', depressed, @click='submit')
-            | Save
+            | {{$t('ui.button_save')}}
 
   app-date-picker(ref='datePicker')
 </template>
@@ -92,7 +96,7 @@ import { TransactionDefault, relativeDate } from '~/core'
 export default class NewTransaction extends Mixins(GroupMixin) {
   form: Transaction = TransactionDefault()
   cats = Categories
-  step = 2
+  step = 1
 
   get categoriesKeywords() {
     const keys: {key: string; value: string}[] = []

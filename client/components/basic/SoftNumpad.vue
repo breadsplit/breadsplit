@@ -78,8 +78,8 @@ export default class SoftNumpad extends Vue {
     grid-template-columns 1fr 1fr 1fr
 
     .button
-      height 80px
-      line-height 80px
+      height 70px
+      line-height 70px
       font-size 1.8em
 
   .operators
