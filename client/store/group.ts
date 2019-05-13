@@ -50,12 +50,12 @@ export const getters: GetterTree<GroupState, RootState> = {
     return Eval(state.groups[id])
   },
 
-  memberById: state => ({ groupId, memberId }) => {
+  memberById: state => ({ groupId, uid }) => {
     groupId = groupId || state.currentId
     const group = Eval(state.groups[groupId])
     if (!group)
       return null
-    return group.members[memberId]
+    return group.members[uid]
   },
 
   activeMembersOf: state => (id?: string) => {

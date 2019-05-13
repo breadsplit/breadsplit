@@ -10,7 +10,7 @@ export default class MemberMixin extends Vue {
   getMemberFromId({ id, groupId }: {id: string; groupId?: string}) {
     return this.$store.getters['group/memberById']({
       groupId,
-      memberId: id,
+      uid: id,
     }) || {}
   }
 }

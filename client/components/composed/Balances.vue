@@ -6,10 +6,10 @@ v-card.balances
       v-divider(v-if='index!=0')
       v-list-tile(:key='balance.id', avatar, @click='')
         v-list-tile-avatar.ma-1
-          app-user-avatar(:id='balance.memberId')
+          app-user-avatar(:id='balance.uid')
         v-list-tile-content
           v-list-tile-title
-            app-user-info(:id='balance.memberId')
+            app-user-info(:id='balance.uid')
         v-list-tile-action.pr-1
           v-list-tile-title
             app-money-label(:amount='balance.balance[group.currencies[0]]', :currency='group.currencies[0]')

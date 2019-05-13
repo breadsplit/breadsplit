@@ -20,7 +20,7 @@ export default class UserInfoMixin extends Vue {
 
   getMember(id: string): Member | null {
     return this.$store.getters['group/memberById']({
-      memberId: id,
+      uid: id,
     })
   }
 

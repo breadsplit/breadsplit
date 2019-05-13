@@ -29,7 +29,7 @@ export const enum TransactionType {
 }
 
 export interface Weight {
-  memberId: uid
+  uid: uid
   weight?: number
   fee?: number
   percent?: number

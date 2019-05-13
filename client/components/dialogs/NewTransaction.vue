@@ -12,7 +12,7 @@ v-card.new-trans-form
             v-flex.ma-2
               .vertical-aligned
                 template(v-if='form.creditors.length === 1')
-                  app-member-select(:members='members', v-model='form.creditors[0].memberId')
+                  app-member-select(:members='members', v-model='form.creditors[0].uid')
                 span.mr-2 paid
 
             v-flex.ma-2
@@ -128,8 +128,8 @@ export default class NewTransaction extends Mixins(GroupMixin) {
       const me = (this.members[0] || {}).id // TODO: get my id
       this.form.creator = me
       this.form.currency = this.group.currencies[0]
-      this.form.creditors.push({ weight: 1, memberId: me })
-      this.form.debtors = this.members.map((m): Weight => ({ weight: 1, memberId: m.id }))
+      this.form.creditors.push({ weight: 1, uid: me })
+      this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.id }))
     }
   }
 

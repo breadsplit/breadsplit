@@ -36,7 +36,7 @@ import UserInfoMixin from '~/mixins/userinfo'
 @Component
 export default class Transactions extends Mixins(GroupMixin, UserInfoMixin) {
   collapsed = true
-  collapsed_amount = 3
+  collapsed_amount = 10
 
   get transactions() {
     return this.group.transactions
@@ -63,7 +63,7 @@ export default class Transactions extends Mixins(GroupMixin, UserInfoMixin) {
   }
 
   parseTrans(trans) {
-    const creditor_ids = trans.creditors.map(c => c.memberId)
+    const creditor_ids = trans.creditors.map(c => c.uid)
     const creditor_names = creditor_ids.map(id => this.getUserName(id))
 
     return {

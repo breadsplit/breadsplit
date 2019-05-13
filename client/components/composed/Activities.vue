@@ -33,8 +33,8 @@ import { getActivityDescription } from '~/core'
 
 @Component
 export default class Activities extends Mixins(GroupMixin, UserInfoMixin) {
-  collapsed = false
-  collapsed_amount = 3
+  collapsed = true
+  collapsed_amount = 10
 
   get activities() {
     return this.group.activities

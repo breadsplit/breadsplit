@@ -91,13 +91,13 @@ export const Transforms: TransformFunctions<Group> = {
         object[field] = to
     }
 
-    // change memberIds in transactions
+    // change uids in transactions
     for (const trans of snap.transactions) {
       replacer(trans, 'creator')
       for (const c of trans.creditors)
-        replacer(c, 'memberId')
+        replacer(c, 'uid')
       for (const d of trans.debtors)
-        replacer(d, 'memberId')
+        replacer(d, 'uid')
     }
 
     return snap

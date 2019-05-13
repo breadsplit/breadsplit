@@ -28,10 +28,10 @@ div
           v-divider
           v-list-tile
             v-list-tile-action(style='min-width: 40px')
-              app-user-avatar(:id='i.memberId', size='30')
+              app-user-avatar(:id='i.uid', size='30')
             v-list-tile-content
               v-list-tile-title
-                app-user-info(:id='i.memberId', field='name')
+                app-user-info(:id='i.uid', field='name')
             v-list-tile-content
               v-list-tile-title.text-xs-right.pr-3
                 app-money-label(:amount='i.balance', :currency='trans.currency')
@@ -39,7 +39,7 @@ div
               v-text-field(
                 type='number' style='width:50px'
                 flat hide-details reverse
-                v-model.number='trans.debtors.find(d=>d.memberId===i.memberId).weight')
+                v-model.number='trans.debtors.find(d=>d.uid===i.uid).weight')
 </template>
 
 <script lang='ts'>

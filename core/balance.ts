@@ -7,20 +7,29 @@ import uniq from 'lodash/uniq'
 import concat from 'lodash/concat'
 import { Transaction, Group } from '../types'
 
+export interface Balance {
+  uid: string
+  credit_weight: number
+  debt_weight: number
+  credit: number
+  debt: number
+  balance: number
+}
+
 export function TransactionBalanceChanges(trans: Transaction) {
   const fee = trans.total_fee
   const creditorWeights = sumBy(trans.creditors, 'weight')
   const debtorWeights = sumBy(trans.debtors, 'weight')
-  const involvedIds = uniq(concat(map(trans.creditors, 'memberId'), map(trans.debtors, 'memberId')))
+  const involvedIds = uniq(concat(map(trans.creditors, 'uid'), map(trans.debtors, 'uid')))
 
-  const changes = involvedIds.map((memberId) => {
-    const credit_weight = merge({ weight: 0 }, find(trans.creditors, { memberId })).weight
-    const debt_weight = merge({ weight: 0 }, find(trans.debtors, { memberId })).weight
+  const changes = involvedIds.map((uid): Balance => {
+    const credit_weight = merge({ weight: 0 }, find(trans.creditors, { uid })).weight
+    const debt_weight = merge({ weight: 0 }, find(trans.debtors, { uid })).weight
     const credit = fee * credit_weight / creditorWeights
     const debt = fee * debt_weight / debtorWeights
     const balance = credit - debt
     return {
-      memberId,
+      uid,
       credit_weight,
       debt_weight,
       credit,
@@ -41,7 +50,7 @@ export function GroupBalances(group: Group) {
         balance[currency] = 0
       })
       return {
-        memberId: m.id,
+        uid: m.id,
         balance,
         mainBalance: 0,
         removed: m.removed,
@@ -51,9 +60,9 @@ export function GroupBalances(group: Group) {
     const currency = t.currency
     const changes = TransactionBalanceChanges(t)
     changes.forEach((c) => {
-      const info = find(balances, { memberId: c.memberId })
+      const info = find(balances, { uid: c.uid })
       if (!info)
-        throw new AssertionError({ message: `Member with id:"${c.memberId}" is not found.` })
+        throw new AssertionError({ message: `Member with id:"${c.uid}" is not found.` })
       if (!info.balance.hasOwnProperty(currency))
         info.balance[currency] = 0
 
