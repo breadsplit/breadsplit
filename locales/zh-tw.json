@@ -71,11 +71,13 @@
     "anonymous": "匿名",
     "about": "關於我們",
     "become_a_patreon": "在 Patreon 上成為贊助者",
-    "help": "幫助",
+    "help": "使用幫助",
     "button_save": "儲存",
     "button_next": "下一步",
     "button_quick_add": "快速添加",
-    "button_back": "返回"
+    "button_back": "返回",
+    "feedback": "意見回饋",
+    "wip": "功能開發中，敬請期待…"
   },
   "cats": {
     "transport": {

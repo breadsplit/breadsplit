@@ -31,13 +31,17 @@ v-card
 </template>
 
 <script lang='ts'>
-import MemberMixin from '~/mixins/member'
-import { Component, Mixins, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IsThisId } from '~/core'
 import { Member } from '~/types'
+import { Action } from 'vuex-class'
 
 @Component
-export default class Members extends Mixins(MemberMixin) {
+export default class Members extends Vue {
+  @Action('group/addMember') newMember
+  @Action('group/editMember') editMember
+  @Action('group/removeMember') removeMember
+
   @Prop({ default: () => ([]) }) readonly members!: Member[]
 
   get uid() {

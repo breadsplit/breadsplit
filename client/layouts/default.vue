@@ -112,17 +112,20 @@ v-app(:dark='dark')
     v-content
       nuxt
 
-  app-dialog(ref='newgroup', :route='true', persistent, no-click-animation)
-    app-new-group(@close='$refs.newgroup.close()')
+  app-dialog(ref='newgroup' :route='true', persistent, no-click-animation)
+    app-new-group
 
-  app-dialog(ref='settings', :route='true')
-    app-settings(@close='$refs.settings.close()')
+  app-dialog(ref='newtrans' :lazy='false' persistent no-click-animation)
+    app-new-transaction
 
-  app-dialog(ref='login', :route='true' width='350' :fullscreen='false')
-    app-login(@close='$refs.login.close()')
+  app-dialog(ref='settings' :route='true')
+    app-settings
 
-  app-dialog(ref='about', :route='true')
-    app-about-page(@close='$refs.about.close()')
+  app-dialog(ref='login' :route='true' width='350' :fullscreen='false')
+    app-login
+
+  app-dialog(ref='about' :route='true')
+    app-about-page
 
   app-confirm(ref='confirm')
 
@@ -203,6 +206,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
     // @ts-ignore
     this.$root.$newgroup = this.$refs.newgroup
+    // @ts-ignore
+    this.$root.$newtrans = this.$refs.newtrans
     // @ts-ignore
     this.$root.$settings = this.$refs.settings
     // @ts-ignore

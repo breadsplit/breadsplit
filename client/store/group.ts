@@ -41,6 +41,10 @@ export const getters: GetterTree<GroupState, RootState> = {
     return `${origin()}/#/join?id=${current.id}`
   },
 
+  currentId(state) {
+    return state.currentId
+  },
+
   all(state) {
     return orderBy(Object.values(state.groups), ['lastchanged'], ['desc'])
       .map(g => Eval(g))

@@ -49,6 +49,19 @@ v-card.settings
     v-list(two-line, subheader)
       v-subheader {{$t('ui.misc')}}
       v-divider
+
+      v-list-tile(avatar, @click='WIP')
+        v-list-tile-avatar
+          v-icon mdi-help-circle-outline
+        v-list-tile-content
+          v-list-tile-title {{$t('ui.help')}}
+
+      v-list-tile(avatar, @click='WIP')
+        v-list-tile-avatar
+          v-icon mdi-message-alert-outline
+        v-list-tile-content
+          v-list-tile-title {{$t('ui.feedback')}}
+
       v-list-tile(avatar, @click='$root.$about.open')
         v-list-tile-avatar
           v-icon mdi-information-outline
@@ -97,11 +110,13 @@ export default class Settings extends Mixins(CommonMixin) {
   close() {
     this.$emit('close')
   }
+
   switchLocale(locale) {
     this.$store.commit('switchLocale', locale)
     this.$i18n.locale = locale
     this.languageSelecting = false
   }
+
   async purgeData() {
     // @ts-ignore
     if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
@@ -111,6 +126,7 @@ export default class Settings extends Mixins(CommonMixin) {
       this.$router.push('/')
     }
   }
+
   async notificationButton() {
     if (!this.notificationEnabled) {
       await this.$fire.requestNotificationPermission()
@@ -119,7 +135,6 @@ export default class Settings extends Mixins(CommonMixin) {
       const token = this.$store.state.messaging_token
       // @ts-ignore
       await this.$copyText(token, this.$refs.container)
-      // @ts-ignore
       this.$root.$snack('Messaging token copied')
     }
   }

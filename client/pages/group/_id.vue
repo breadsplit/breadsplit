@@ -36,17 +36,15 @@
     v-btn(
       fab color='primary'
       :style='fabStyle'
-      @click='openNewTransDialog()'
+      @click='gotoNewTransaction()'
     )
       v-icon mdi-plus
 
-  nuxt-child(:key="$route.params.id")
+  nuxt-child(:key='$route.params.id')
 </template>
 
 <script lang='ts'>
-import GroupMixin from '~/mixins/group'
-import CommonMixin from '~/mixins/common'
-import MemberMixin from '~/mixins/member'
+import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 
 @Component({
@@ -67,7 +65,7 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
     return { params }
   },
 })
-export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMixin) {
+export default class GroupPage extends Mixins(CommonMixin, NavigationMixin, GroupMixin) {
   fab = false
   tab_index = 0
   tab_id: string|null = 'summary'
@@ -121,18 +119,6 @@ export default class GroupPage extends Mixins(CommonMixin, MemberMixin, GroupMix
   onTabIdChanged() {
     const tab = this.tabItems.find(t => t.key === this.tab_id)
     this.tab_index = tab ? this.tabItems.indexOf(tab) : -1
-  }
-
-  // Methods
-  promptNewMember() {
-    // eslint-disable-next-line
-    const name = prompt('Name?')
-    if (name)
-      this.newMember({ member: { name } })
-  }
-
-  openNewTransDialog(options = { type: 'expense' }) {
-    this.$router.push(`/group/${this.group.id}/new_trans?type=${options.type}`)
   }
 }
 </script>

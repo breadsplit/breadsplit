@@ -49,7 +49,7 @@ export default class AbsolutePlaceholder extends Vue {
   @Watch('salt')
   onSaltChanged() {
     this.$nextTick(() => {
-      this.inner_salt += 1
+      this.recalculate()
     })
   }
 

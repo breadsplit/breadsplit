@@ -4,7 +4,7 @@ v-card.balances
   v-list.pa-0(two-line)
     template(v-for='(balance, index) in balances')
       v-divider(v-if='index!=0')
-      v-list-tile(:key='balance.id', avatar, @click='')
+      v-list-tile(:key='balance.uid', avatar, @click='gotoNewTransaction({uid: balance.uid})')
         v-list-tile-avatar.ma-1
           app-user-avatar(:id='balance.uid')
         v-list-tile-content
@@ -16,13 +16,12 @@ v-card.balances
 </template>
 
 <script lang='ts'>
-import GroupMixin from '~/mixins/group'
 import { Component, Mixins } from 'vue-property-decorator'
 import { GroupBalances } from '~/core'
-import MemberMixin from '~/mixins/member'
+import { GroupMixin, NavigationMixin } from '~/mixins'
 
 @Component
-export default class Balances extends Mixins(GroupMixin, MemberMixin) {
+export default class Balances extends Mixins(GroupMixin, NavigationMixin) {
   get balances() {
     return GroupBalances(this.group)
   }

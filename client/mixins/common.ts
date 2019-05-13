@@ -7,4 +7,8 @@ export default class CommonMixin extends Vue {
     // @ts-ignore
     return this.$vuetify.breakpoint.xs
   }
+
+  WIP() {
+    this.$root.$snack(this.$t('ui.wip'), { color: 'red' })
+  }
 }

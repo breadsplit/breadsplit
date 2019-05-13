@@ -59,9 +59,9 @@ v-card.new-trans-form
             v-icon(color='primary') mdi-history
             v-subheader Repeat
 
-  app-absolute-placeholder(:salt='step')
+  app-absolute-placeholder(:salt='step + visible')
     app-div.bottom-nav
-      app-soft-numpad(v-if='step === 1' ref='numpad')
+      app-soft-numpad(v-show='step === 1' ref='numpad')
       v-divider
       v-card-actions.pa-3
         v-btn(v-show='step === 1', flat, @click='close')
@@ -86,17 +86,29 @@ v-card.new-trans-form
 </template>
 
 <script lang='ts'>
-import { Component, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
-import GroupMixin from '~/mixins/group'
+import { GroupMixin, DialogChildMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, relativeDate } from '~/core'
 
 @Component
-export default class NewTransaction extends Mixins(GroupMixin) {
+export default class NewTransaction extends Mixins(GroupMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
   cats = Categories
   step = 1
+
+  reset() {
+    this.$set(this, 'form', TransactionDefault())
+    const me = this.options.uid || (this.members[0] || {}).id // TODO: get my id
+    this.form.creator = me
+    this.form.currency = this.group.currencies[0]
+    this.form.creditors.push({ weight: 1, uid: me })
+    this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.id }))
+    // @ts-ignore
+    this.$refs.total_fee_input.inner_value = ''
+    this.step = 1
+  }
 
   get categoriesKeywords() {
     const keys: {key: string; value: string}[] = []
@@ -121,18 +133,6 @@ export default class NewTransaction extends Mixins(GroupMixin) {
     return (category && category.value) || null
   }
 
-  @Watch('group', { immediate: true })
-  onGroupChanged() {
-    if (this.group) {
-      this.$set(this, 'form', TransactionDefault())
-      const me = (this.members[0] || {}).id // TODO: get my id
-      this.form.creator = me
-      this.form.currency = this.group.currencies[0]
-      this.form.creditors.push({ weight: 1, uid: me })
-      this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.id }))
-    }
-  }
-
   submit() {
     const trans = Object.assign({},
       this.form, {
@@ -152,10 +152,6 @@ export default class NewTransaction extends Mixins(GroupMixin) {
     const date: number | null = await this.$refs.datePicker.open(this.form.timestamp)
     if (date)
       this.form.timestamp = date
-  }
-
-  close(result?) {
-    this.$emit('close', result)
   }
 }
 </script>

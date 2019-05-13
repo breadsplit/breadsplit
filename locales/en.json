@@ -89,7 +89,9 @@
     "button_back": "Back",
     "button_quick_add": "Quick Add",
     "button_next": "Next",
-    "button_save": "Save"
+    "button_save": "Save",
+    "feedback": "Feedback",
+    "wip": "Working in progress..."
   },
   "prompt": {
     "are_you_sure": "Are you sure?"

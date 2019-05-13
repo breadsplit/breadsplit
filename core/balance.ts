@@ -7,7 +7,7 @@ import uniq from 'lodash/uniq'
 import concat from 'lodash/concat'
 import { Transaction, Group } from '../types'
 
-export interface Balance {
+export interface TransactionBalance {
   uid: string
   credit_weight: number
   debt_weight: number
@@ -16,13 +16,20 @@ export interface Balance {
   balance: number
 }
 
-export function TransactionBalanceChanges(trans: Transaction) {
+export interface Balance {
+  uid: string
+  balance: Record<string, number>
+  main_balance: number
+  removed?: boolean
+}
+
+export function TransactionBalanceChanges(trans: Transaction): TransactionBalance[] {
   const fee = trans.total_fee
   const creditorWeights = sumBy(trans.creditors, 'weight')
   const debtorWeights = sumBy(trans.debtors, 'weight')
   const involvedIds = uniq(concat(map(trans.creditors, 'uid'), map(trans.debtors, 'uid')))
 
-  const changes = involvedIds.map((uid): Balance => {
+  const changes = involvedIds.map((uid): TransactionBalance => {
     const credit_weight = merge({ weight: 0 }, find(trans.creditors, { uid })).weight
     const debt_weight = merge({ weight: 0 }, find(trans.debtors, { uid })).weight
     const credit = fee * credit_weight / creditorWeights
@@ -41,18 +48,18 @@ export function TransactionBalanceChanges(trans: Transaction) {
   return changes
 }
 
-export function GroupBalances(group: Group) {
+export function GroupBalances(group: Group): Balance[] {
   const mainCurrency = group.currencies[0]
   let balances = Object.values(group.members)
-    .map((m) => {
-      const balance: { [s: string]: number } = { }
+    .map((m): Balance => {
+      const balance: Record<string, number> = { }
       group.currencies.forEach((currency) => {
         balance[currency] = 0
       })
       return {
         uid: m.id,
         balance,
-        mainBalance: 0,
+        main_balance: 0,
         removed: m.removed,
       }
     })
@@ -71,14 +78,14 @@ export function GroupBalances(group: Group) {
   })
   balances.forEach((b) => {
     // TODO: curency change
-    b.mainBalance = b.balance[mainCurrency]
+    b.main_balance = b.balance[mainCurrency]
   })
   // remove the "Removed members" when theire balance equal to 0
-  balances = balances.filter(b => !b.removed || b.mainBalance !== 0)
+  balances = balances.filter(b => !b.removed || b.main_balance !== 0)
   // sort by the balance
   balances.sort((a, b) => {
     if (a.removed === b.removed)
-      return a.mainBalance - b.mainBalance
+      return a.main_balance - b.main_balance
     if (a.removed)
       return 1
     return -1

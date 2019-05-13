@@ -12,12 +12,11 @@
 </template>
 
 <script lang='ts'>
-import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Member } from '~/types'
-import MemberMixin from '~/mixins/member'
 
 @Component
-export default class MemberSelect extends Mixins(MemberMixin) {
+export default class MemberSelect extends Vue {
   menu = false
 
   @Prop(String) readonly value!: string
