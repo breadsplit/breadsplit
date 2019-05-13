@@ -18,49 +18,54 @@ v-card.new-trans-form
       // Second page
       v-window-item(:value='2')
         .my-3
-          app-form
+          app-grid(columns='70px auto')
             app-category-icon(:category='form.category || categorySense', label)
             v-text-field(
               v-model='form.desc' label='Description' placeholder='Some expense...' required)
 
           v-divider
-          app-form
+          app-grid(columns='70px auto')
             v-icon(color='primary') mdi-cash-usd
             v-subheader Paid by
 
           v-divider
-          app-form
+          app-grid(columns='70px auto')
             v-icon(color='primary') mdi-chart-pie
             app-splitting(:trans='form')
 
           v-divider
-          app-form(@click.native='pickDate()', v-ripple)
+          app-grid(columns='70px auto' @click.native='pickDate()' v-ripple)
             v-icon(color='primary') mdi-calendar
             v-subheader {{dateDisplay}}
 
           v-divider
-          app-form
+          app-grid(columns='70px auto')
             v-icon(color='primary') mdi-map-marker
             v-subheader Add Location
 
           v-divider
-          app-form
+          app-grid(columns='70px auto')
             v-icon(color='primary') mdi-history
             v-subheader Repeat
 
   app-absolute-placeholder(:salt='step + visible')
     app-div.bottom-nav
-      .pa-1
+      app-grid.my-2.mx-3(columns='auto 65px', style='vertical-align:bottom')
         app-number-input(
-          label='Total'
+          v-show='step === 1'
           ref='total_fee_input'
           v-model.number='form.total_fee'
-          :prefix='form.currency'
+          placeholder='0'
           @focus='openKeyboard'
           reverse outline autofocus
-          required hide-details flat='true'
+          required hide-details flat='true' main='true'
         )
+        app-grid(rows='auto 45px')
+          span
+          app-currency-select.mt-0.pt-0(v-model='form.currency')
+
       app-soft-numpad(v-show='step === 1' ref='numpad')
+
       v-divider
       v-card-actions.pa-3
         v-btn(v-show='step === 1', flat, @click='close')

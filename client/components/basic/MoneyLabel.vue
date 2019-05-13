@@ -28,6 +28,7 @@ export default class MoneyLabel extends Vue {
     const formatter = new Intl.NumberFormat(locale, {
       style: 'currency',
       currency,
+      minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })
     return formatter.format(this.amount)

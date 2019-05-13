@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-text-field(
-  :label='calculated.toString()'
+  :label='label'
   :class='classes'
   v-bind='$attrs',
   v-model='inner_value'
@@ -22,6 +22,7 @@ export default class NumberInput extends Mixins(CommonMixin) {
   @Prop({ default: 0 }) readonly value!: number
   @Prop({ default: 100000000 }) readonly max!: number
   @Prop({ default: false }) readonly flat!: boolean
+  @Prop({ default: false }) readonly main!: boolean
 
   numpad: SoftNumpad | null = null
   inner_value: string = ''
@@ -30,7 +31,21 @@ export default class NumberInput extends Mixins(CommonMixin) {
     return {
       'number-input': true,
       flat: this.flat,
+      main: this.main,
     }
+  }
+
+  get label() {
+    if (this.calculatedStr !== this.inner_value)
+      return `=${this.calculated.toString()}`
+    return null
+  }
+
+  get calculatedStr() {
+    if (this.calculated === 0)
+      return ''
+    else
+      return this.calculated.toString()
   }
 
   deregisterKeyboard() {
@@ -158,15 +173,27 @@ export default class NumberInput extends Mixins(CommonMixin) {
     this.$refs.input.$el.focus()
   }
 
+  warned = false
   onKeydown(e: KeyboardEvent) {
     // TODO: more checks based on value
+
+    if (!this.warned) {
+      this.$root.$snack('Using keyboard to input is an experimenting function.', { color: 'red' })
+      this.warned = true
+    }
 
     if (e.keyCode === 8) // Backspace
       return
     if (e.keyCode === 13) // Enter
       return this.calculate()
+    if ([37, 39].includes(e.keyCode)) // Left & Right key
+      return
     if ('1234567890+-*/'.includes(e.key))
       return
+
+    // eslint-disable-next-line
+    console.log('KEY_PRESSED', e)
+
     e.preventDefault()
   }
 }
@@ -174,7 +201,9 @@ export default class NumberInput extends Mixins(CommonMixin) {
 
 <style lang='stylus'>
 .number-input
-  &.flat
-    .v-input__slot
-      border none !important
+  &.main
+    input
+      max-height inherit
+      font-size 3em
+
 </style>
