@@ -3,19 +3,21 @@ v-text-field(
   :label='calculated.toString()'
   v-bind='$attrs',
   v-model='inner_value'
+  :readonly='isMobile'
   @keydown.native='onKeydown'
   @focus='onFocus'
 )
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
 import SoftNumpad from './SoftNumpad.vue'
+import CommonMixin from '~/mixins/common'
 
 @Component({
   inheritAttrs: true,
 })
-export default class NumberInput extends Vue {
+export default class NumberInput extends Mixins(CommonMixin) {
   @Prop({ default: 0 }) readonly value!: number
   @Prop({ default: 100000000 }) readonly max!: number
 
