@@ -37,7 +37,7 @@ export default class NumberInput extends Mixins(CommonMixin) {
 
   get label() {
     if (this.calculatedStr !== this.inner_value)
-      return `=${this.calculated.toString()}`
+      return `= ${this.calculated.toString()}`
     return null
   }
 
@@ -132,6 +132,8 @@ export default class NumberInput extends Mixins(CommonMixin) {
       this.inputDot()
     if (this.calculated > this.max)
       return this.error()
+    if (this.inner_value === '' && char === '0')
+      return this.error()
 
     if (this.isOperator(char))
       this.addOperator(char)
@@ -162,6 +164,8 @@ export default class NumberInput extends Mixins(CommonMixin) {
 
   backspace() {
     this.inner_value = this.inner_value.slice(0, this.inner_value.length - 1)
+    if (this.inner_value === '0')
+      this.inner_value = ''
   }
 
   clear() {
@@ -202,6 +206,11 @@ export default class NumberInput extends Mixins(CommonMixin) {
 <style lang='stylus'>
 .number-input
   &.main
+    label
+      font-size 1.8em
+      height inherit
+      line-height inherit
+
     input
       max-height inherit
       font-size 3em

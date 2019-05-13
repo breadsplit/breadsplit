@@ -50,9 +50,8 @@ v-card.new-trans-form
 
   app-absolute-placeholder(:salt='step + visible')
     app-div.bottom-nav
-      app-grid.my-2.mx-3(columns='auto 65px', style='vertical-align:bottom')
+      app-grid.my-2.mx-3(v-show='step === 1' columns='auto 65px' style='vertical-align:bottom')
         app-number-input(
-          v-show='step === 1'
           ref='total_fee_input'
           v-model.number='form.total_fee'
           placeholder='0'
@@ -94,7 +93,7 @@ import { Component, Mixins } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
 import { GroupMixin, DialogChildMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
-import { TransactionDefault, relativeDate } from '~/core'
+import { TransactionDefault, dateToRelative } from '~/core'
 
 @Component
 export default class NewTransaction extends Mixins(GroupMixin, DialogChildMixin) {
@@ -126,7 +125,7 @@ export default class NewTransaction extends Mixins(GroupMixin, DialogChildMixin)
   }
 
   get dateDisplay() {
-    return relativeDate(this.form.timestamp)
+    return dateToRelative(this.form.timestamp)
   }
 
   get categorySense() {

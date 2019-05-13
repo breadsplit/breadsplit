@@ -5,6 +5,7 @@
 
 <script lang='ts'>
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { numberToMoney } from '~/core'
 
 @Component
 export default class MoneyLabel extends Vue {
@@ -12,34 +13,20 @@ export default class MoneyLabel extends Vue {
   @Prop(String) readonly currency?: string
 
   get balanceColorClass() {
-    if (this.neg)
+    if (this.amount < 0)
       return ['deep-orange--text', 'text--darken-2']
-    else if (this.zero)
-      return ['grey--text', 'text--lighten-1']
-    else
+    else if (this.amount > 0)
       return ['green--text']
+    else
+      return ['grey--text', 'text--lighten-1']
   }
 
   get formatted() {
-    if (this.zero)
+    if (this.amount === 0)
       return '-'
     const currency = this.currency
     const locale = this.$store.getters.locale
-    const formatter = new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency,
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })
-    return formatter.format(this.amount)
-  }
-
-  get neg() {
-    return this.amount < 0
-  }
-
-  get zero() {
-    return this.amount === 0
+    return numberToMoney(this.amount, locale, currency)
   }
 }
 </script>

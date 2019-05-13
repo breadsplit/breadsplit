@@ -88,6 +88,7 @@ export default class SoftNumpad extends Vue {
 
   .button
     position relative
+    cursor pointer
 
     .v-icon
       position absolute
