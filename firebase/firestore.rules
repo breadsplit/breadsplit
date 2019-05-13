@@ -10,5 +10,8 @@ service cloud.firestore {
     match /messaging_tokens/{uid} {
       allow write, read: if request.auth.uid == uid;
     }
+    match /feedbacks/{uid} {
+      allow write, read: if request.auth.uid != null;
+    }
   }
 }

@@ -173,3 +173,14 @@ export interface TokenRecord {
   enabled: boolean
   uid?: string
 }
+
+export interface FeedbackOptions {
+  email: string | null
+  title: string
+  content: string
+}
+
+export interface Feedback extends FeedbackOptions {
+  uid: string | null
+  timestamp: number
+}

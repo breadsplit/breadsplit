@@ -7,9 +7,10 @@ import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/messaging'
 
-import { RootState, Group, UserInfo, ServerGroup, ClientGroup } from '~/types'
+import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions } from '~/types'
 import { IsThisId } from '~/core'
 import FirebaseServers from '~/meta/firebase_servers'
+import nanoid from 'nanoid'
 
 // eslint-disable-next-line no-console
 const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
@@ -178,6 +179,21 @@ export class FirebasePlugin {
         enabled: true,
       }] })
     return token
+  }
+
+  async sendFeedback(feedback: FeedbackOptions) {
+    const email = (this.me && this.me.email) || null
+    const uid = this.uid || null
+    const data: Feedback = {
+      ...feedback,
+      uid,
+      email,
+      timestamp: +new Date(),
+    }
+    await this.db
+      .collection('feedbacks')
+      .doc(nanoid())
+      .set(data)
   }
 
   subscribe() {
