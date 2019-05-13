@@ -17,7 +17,7 @@ v-card.new-trans-form
               app-number-input(
                 label='Total'
                 ref='total_fee_input'
-                v-model='form.total_fee'
+                v-model.number='form.total_fee'
                 :prefix='form.currency'
                 @focus='openKeyboard'
                 reverse outline autofocus
@@ -70,8 +70,6 @@ export default class NewTransaction extends Mixins(GroupMixin) {
   form: Transaction = TransactionDefault()
   cats = Categories
   step = 1
-
-  keyboardBind: HTMLInputElement | null = null
 
   get categoriesKeywords() {
     const keys: {key: string; value: string}[] = []

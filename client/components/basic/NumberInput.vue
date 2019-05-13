@@ -9,7 +9,7 @@ v-text-field(
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import SoftNumpad from './SoftNumpad.vue'
 
 @Component({
@@ -17,6 +17,7 @@ import SoftNumpad from './SoftNumpad.vue'
 })
 export default class NumberInput extends Vue {
   @Prop({ default: 0 }) readonly value!: number
+  @Prop({ default: 100000000 }) readonly max!: number
 
   numpad: SoftNumpad | null = null
   inner_value: string = ''
@@ -65,6 +66,11 @@ export default class NumberInput extends Vue {
     }
   }
 
+  @Watch('calculated')
+  onCalculated() {
+    this.$emit('input', this.calculated)
+  }
+
   mounted() {
     this.inner_value = this.value.toString()
     this.calculate()
@@ -83,6 +89,8 @@ export default class NumberInput extends Vue {
 
   addOperator(operator) {
     this.inner_value = this.trimTailOperator(this.inner_value)
+    if (this.inner_value === '')
+      return this.error()
     this.inner_value += operator
   }
 
@@ -96,10 +104,17 @@ export default class NumberInput extends Vue {
   input(char: string) {
     if (char === '.')
       this.inputDot()
-    else if (this.isOperator(char))
+    if (this.calculated > this.max)
+      return this.error()
+
+    if (this.isOperator(char))
       this.addOperator(char)
     else
       this.inner_value += char
+  }
+
+  error() {
+    // TODO: shake
   }
 
   onFocus() {
@@ -133,6 +148,8 @@ export default class NumberInput extends Vue {
   }
 
   onKeydown(e: KeyboardEvent) {
+    // TODO: more checks based on value
+
     if (e.keyCode === 8) // Backspace
       return
     if (e.keyCode === 13) // Enter
