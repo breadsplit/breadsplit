@@ -16,7 +16,7 @@ v-snackbar(
 <script lang='ts'>
 import { Component, Mixins, Vue } from 'vue-property-decorator'
 import CommonMixin from '~/mixins/common'
-import { SnackOptions } from '~/types/models'
+import { SnackOptions } from '~/types'
 
 @Component({
   inheritAttrs: false,

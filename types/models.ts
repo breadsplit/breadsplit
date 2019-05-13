@@ -1,5 +1,7 @@
 import { TransOperation } from 'opschain'
 
+type uid = string
+
 export const enum MemberRoles {
   owner = 'owner',
   collaborator = 'collaborator',
@@ -27,21 +29,22 @@ export const enum TransactionType {
 }
 
 export interface Weight {
-  memberId: string
+  memberId: uid
   weight?: number
   fee?: number
   percent?: number
 }
 
 export interface Member {
-  id: string
+  id: uid
   name: string
   role: MemberRoles
+  defaultWeight?: number
   removed?: boolean
 }
 
 export interface UserInfo {
-  uid: string | null
+  uid: uid | null
   anonymous: boolean
   email?: string
   name: string
@@ -62,12 +65,14 @@ export interface Transaction {
   service_fee_rate?: number
   creditors: Weight[]
   debtors: Weight[]
-  creator: string
+  creator: uid
   type: TransactionType
+  hashtags?: string[]
+  note?: string
 }
 
 export interface CurrencyRecord {
-  id: string
+  id: uid
   from_currency: string
   from_fee: number
   to_currency: string
@@ -85,7 +90,7 @@ export interface CurrencyChangeRate {
 
 export interface Activity {
   timestamp: number
-  by: string
+  by: uid
   action: ActivityAction
   entity: Entity
   entity_id?: string
@@ -98,6 +103,14 @@ export interface GroupOptions {
   multiple_currencies: boolean
 }
 
+export interface Budget {
+  creator: uid
+  from: number
+  to: number
+  budget: number
+  currency: string
+}
+
 export interface Group {
   // Basic
   id: string
@@ -106,9 +119,10 @@ export interface Group {
   icon?: string
   options: GroupOptions
   timestamp: number
+  budgets: Budget[]
 
   // Records
-  members: {[s: string]: Member}
+  members: Record<uid, Member>
   currencies: string[]
   currency_records: CurrencyRecord[]
   transactions: Transaction[]

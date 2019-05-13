@@ -1,5 +1,5 @@
 import { FirebasePlugin } from '~/plugins/firebase'
-import { SnackOptions } from '~/types/models'
+import { SnackOptions } from '~/types'
 
 declare module 'vue/types/vue' {
   interface Vue {

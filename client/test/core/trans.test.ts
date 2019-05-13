@@ -1,4 +1,4 @@
-import { TransactionDefault } from '~/utils/defaults'
+import { TransactionDefault } from '~/../core/defaults'
 import { TransactionBalanceChanges } from '~/../core'
 
 describe('transaction balances', () => {

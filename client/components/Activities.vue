@@ -26,10 +26,10 @@ v-card
 
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
-import { Activity } from '~/types/models'
+import { Activity } from '~/types'
 import GroupMixin from '~/mixins/group'
 import UserInfoMixin from '~/mixins/userinfo'
-import { getActivityDescription } from '../../core/activities_parser'
+import { getActivityDescription } from '~/core'
 
 @Component
 export default class Activities extends Mixins(GroupMixin, UserInfoMixin) {

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { MutationTree, GetterTree } from 'vuex'
 import { RootState, UserState } from '~/types/store'
-import { UserStateDefault } from '~/utils/defaults'
+import { UserStateDefault } from '~/store'
 
 export const state = UserStateDefault
 

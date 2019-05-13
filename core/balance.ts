@@ -5,7 +5,7 @@ import find from 'lodash/find'
 import map from 'lodash/map'
 import uniq from 'lodash/uniq'
 import concat from 'lodash/concat'
-import { Transaction, Group } from '../types/models'
+import { Transaction, Group } from '../types'
 
 export function TransactionBalanceChanges(trans: Transaction) {
   const fee = trans.total_fee

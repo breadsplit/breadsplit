@@ -62,7 +62,7 @@ v-card.new-trans-form
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
 import GroupMixin from '~/mixins/group'
-import { Transaction, Weight } from '~/types/models'
+import { Transaction, Weight } from '~/types'
 import { TransactionDefault } from '~/utils/defaults'
 
 @Component

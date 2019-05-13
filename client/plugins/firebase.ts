@@ -7,11 +7,9 @@ import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/messaging'
 
-import { RootState } from '~/types/store'
-import { Group, UserInfo, ServerGroup } from '~/types/models'
-import { IsThisId } from '~/utils/id_helper'
+import { RootState, Group, UserInfo, ServerGroup, ClientGroup } from '~/types'
+import { IsThisId } from '~/core'
 import FirebaseServers from '~/meta/firebase_servers'
-import { ClientGroup } from '../../types/models'
 
 /* eslint-disable no-console */
 const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)

@@ -1,7 +1,7 @@
 import { Vue, Component } from 'vue-property-decorator'
-import { UserInfo, Member } from '~/types/models'
-import { IsThisId } from '~/utils/id_helper'
-import { avatarProvider } from '~/utils/avatarProvider'
+import { UserInfo, Member } from '~/types'
+import { IsThisId } from '~/core'
+import { avatarProvider } from '~/utils/avatar_providers'
 import nanoid from 'nanoid'
 
 @Component

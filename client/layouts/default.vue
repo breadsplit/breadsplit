@@ -136,9 +136,9 @@ v-app(:dark='dark')
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
-import { Group, UserInfo } from '../types/models'
-import CommonMixin from '../mixins/common'
-import FontFamilyBuilder from '../meta/font_family'
+import { Group, UserInfo } from '~/types'
+import CommonMixin from '~/mixins/common'
+import FontFamilyBuilder from '~/meta/font_family'
 
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin) {

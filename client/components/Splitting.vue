@@ -44,8 +44,8 @@ v-card
 
 <script lang='ts'>
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { TransactionBalanceChanges } from '~/utils/core'
-import { Transaction } from '~/types/models'
+import { TransactionBalanceChanges } from '~/core'
+import { Transaction } from '~/types'
 
 type Splitmode = 'average' | 'amount' | 'percent' | 'weight'
 

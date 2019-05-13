@@ -19,7 +19,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./client/*"],
-      "@/*": ["./client/*"]
+      "@/*": ["./*"]
     },
     "types": [
       "@types/node",

@@ -1,4 +1,4 @@
-import { Activity } from '../types/models'
+import { Activity } from '../types'
 
 export function getActivityDescription(
   t: (key: string, locale: string, args?: any[]) => any,

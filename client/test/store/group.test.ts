@@ -1,7 +1,6 @@
-import { mutations, getters, Eval, actions } from '~/store/group'
-import { RootStateDefault, GroupStateDefault } from '~/utils/defaults'
-import { GroupState } from '~/types/store'
-import { Group } from 'types/models'
+import { mutations, getters, Eval } from '~/store/group'
+import { RootStateDefault, GroupStateDefault } from '~/store'
+import { GroupState, Group } from '~/types'
 
 describe('group state getters', () => {
   it('current', () => {

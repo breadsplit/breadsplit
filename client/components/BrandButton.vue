@@ -16,7 +16,7 @@ v-btn(
 <script lang='ts'>
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import BrandColors from '~/meta/brandcolors'
-import { isDark } from '../utils/colors'
+import { isDark } from '~/utils/colors'
 
 @Component({
   inheritAttrs: false,

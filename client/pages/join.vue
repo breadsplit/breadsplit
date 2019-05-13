@@ -21,7 +21,7 @@ v-container
 
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
-import { Group } from '~/types/models'
+import { Group } from '~/types'
 
 @Component({
   watchQuery: true,

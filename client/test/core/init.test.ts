@@ -1,5 +1,4 @@
-import { MemberDefault, GroupDefault, TransactionDefault } from '~/utils/defaults'
-import { IsThisId } from '~/utils/id_helper'
+import { MemberDefault, GroupDefault, TransactionDefault, IsThisId } from '~/core'
 
 describe('models initialization', () => {
   test('member', () => {

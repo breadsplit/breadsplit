@@ -1,9 +1,8 @@
 // @ts-ignore
 import JsCache from 'js-cache'
 import { ProcessOperations, EvalTransforms, TransOperationOption } from 'opschain'
-import nanoid from 'nanoid'
-import { Transforms } from '../../../core/transforms'
-import { Group, Operation } from '../../../types/models'
+import { Transforms, GroupDefault } from '../../../core'
+import { Group, Operation } from '../../../types'
 
 const transformCache = new JsCache()
 const transformCacheTTL = 10 * 24 * 60 * 60 * 1000 // 10 days
@@ -29,20 +28,7 @@ const _eval = EvalTransforms<Group>(Transforms, {
 })
 
 export function Eval(operations: Operation[]): Group {
-  const base: Group = {
-    id: nanoid(),
-    name: '',
-    options: {
-      multiple_currencies: true,
-    },
-    timestamp: +new Date(),
-    members: { },
-    currencies: [],
-    currency_records: [],
-    transactions: [],
-    activities: [],
-    online: false,
-  }
+  const base: Group = GroupDefault()
   return _eval(base, operations)
 }
 

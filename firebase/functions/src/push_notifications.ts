@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
-import { ServerGroup, Operation, TokenRecord, UserInfo } from '../../../types/models'
+import { ServerGroup, Operation, TokenRecord, UserInfo } from '../../../types'
 import { getActivityDescription } from '../../../core/activities_parser'
 import { Eval } from './opschain'
 import { t } from './i18n'

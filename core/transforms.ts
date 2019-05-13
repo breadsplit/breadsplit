@@ -5,7 +5,7 @@ If you made any modification,
 Please DO DEPLOY firebase functions before merge into master.
 */
 import { TransformFunctions } from 'opschain'
-import { Group, Member, Transaction, ActivityAction, Entity } from '../types/models'
+import { Group, Member, Transaction, ActivityAction, Entity } from '../types'
 
 export const Transforms: TransformFunctions<Group> = {
   init(snap, data, { by, timestamp } = {}) {

@@ -1,7 +1,8 @@
 import * as path from 'path'
 import * as admin from 'firebase-admin'
 import * as functions from '../src'
-import { Group, Operation, Transaction, TransactionType } from '../../../types/models'
+import { Group, Operation, Transaction } from '../../../types'
+import { GroupDefault, TransactionDefault } from '../../../core'
 import { deleteCollection } from './_utils'
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -52,19 +53,10 @@ describe('Cloud Functions', () => {
     it('PublishGroup', async () => {
       const wrapped = test.wrap(functions.publishGroup)
 
-      const group: Group = {
+      const group: Group = GroupDefault({
         id: '233',
         name: 'Good',
-        options: {
-          multiple_currencies: true,
-        },
-        currencies: [],
-        timestamp: +new Date(),
-        members: {},
-        transactions: [],
-        activities: [],
-        currency_records: [],
-      }
+      })
       const { id } = await wrapped({ group }, { auth: { uid: 'yes' } })
       groupid = id
     })
@@ -72,16 +64,11 @@ describe('Cloud Functions', () => {
     it('uploadOperations', async () => {
       const wrapped = test.wrap(functions.uploadOperations)
 
-      const trans: Transaction = {
+      const trans: Transaction = TransactionDefault({
         id: '2332',
-        timestamp: +new Date(),
         currency: 'USD',
         total_fee: 200,
-        creditors: [],
-        debtors: [],
-        creator: 'yes',
-        type: TransactionType.expenses,
-      }
+      })
       const operations: Operation[] = [{
         name: 'insert_transaction',
         timestamp: +new Date(),

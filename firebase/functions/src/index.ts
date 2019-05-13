@@ -2,8 +2,8 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
 
-import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types/models'
-import { GenerateId } from '../../../core/id_helper'
+import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types'
+import { GenerateId } from '../../../core'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
 import { PushGroupOperationsNotification } from './push_notifications'
 

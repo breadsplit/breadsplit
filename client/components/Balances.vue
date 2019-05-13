@@ -18,8 +18,8 @@ v-card.balances
 <script lang='ts'>
 import GroupMixin from '~/mixins/group'
 import { Component, Mixins } from 'vue-property-decorator'
-import { GroupBalances } from '~/utils/core'
-import MemberMixin from '../mixins/member'
+import { GroupBalances } from '~/core'
+import MemberMixin from '~/mixins/member'
 
 @Component
 export default class Balances extends Mixins(GroupMixin, MemberMixin) {

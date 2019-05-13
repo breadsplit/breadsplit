@@ -1,4 +1,4 @@
-import { Member } from '~/types/models'
+import { Member } from '~/types'
 import md5 from 'blueimp-md5'
 import Avatars from '@dicebear/avatars'
 import JdenticonAvatars from '@dicebear/avatars-jdenticon-sprites'

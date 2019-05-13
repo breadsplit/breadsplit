@@ -1,4 +1,5 @@
-export * from '../../types/models'
+export * from '@/types'
+export * from './store'
 
 export interface SnackOptions {
   color?: string

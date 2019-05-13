@@ -34,7 +34,7 @@ v-card
 import MemberMixin from '~/mixins/member'
 import { Component, Mixins, Prop } from 'vue-property-decorator'
 import { IsThisId } from '~/utils/id_helper'
-import { Member } from '~/types/models'
+import { Member } from '~/types'
 
 @Component
 export default class Members extends Mixins(MemberMixin) {
