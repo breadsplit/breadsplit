@@ -4,7 +4,19 @@
   "version": "0.2.0",
   "private": true,
   "description": "The BreadSplit web application",
-  "author": "Anthony Fu",
+  "author": "The BreadSplit Team <https://github.com/antfu/breadsplit>",
+  "keywords": [
+    "accounting",
+    "opensource",
+    "expenses",
+    "split",
+    "splitbill",
+    "breadsplit",
+    "money",
+    "vue",
+    "pwa",
+    "shared-expenses"
+  ],
   "license": "GPLv3",
   "repository": {
     "type": "git",

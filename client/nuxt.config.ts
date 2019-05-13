@@ -14,9 +14,15 @@ const config: NuxtConfiguration = {
     title: pkg.fullname,
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-      { hid: 'description', name: 'description', content: pkg.description },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
+      { name: 'description', content: pkg.description },
+      { name: 'author', content: pkg.author },
+      { name: 'keywords', content: pkg.keywords.join(',') },
       { name: 'HandheldFriendly', content: 'true' },
+
+      { property: 'og:title', content: pkg.fullname },
+      { property: 'og:image', content: '/img/png/favicon-194x194.png' },
+      { property: 'og:description', content: pkg.description },
     ],
     link: [
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/img/png/apple-touch-icon.png', media: '(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)' },
