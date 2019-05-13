@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-dialog(
-  v-model='visible', @keydown.esc='cancel'
+  v-model='visible', @keydown.esc='close()'
   v-bind='$attrs', style='z-index:200',
   :transition='transition', :max-width='600'
   :fullscreen='getfullscreen'
@@ -14,6 +14,7 @@ import CommonMixin from '~/mixins/common'
 
 @Component({
   inheritAttrs: false,
+  // passing down vars to children
   provide() {
     const dialog = {}
     Object.defineProperty(dialog, 'options', {

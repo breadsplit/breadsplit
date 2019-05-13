@@ -112,7 +112,7 @@ v-app(:dark='dark')
     v-content
       nuxt
 
-  app-dialog(ref='newgroup' :route='true', persistent, no-click-animation)
+  app-dialog(ref='newgroup' :route='true' persistent no-click-animation)
     app-new-group
 
   app-dialog(ref='newtrans' :lazy='false' persistent no-click-animation)

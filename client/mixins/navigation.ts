@@ -14,7 +14,19 @@ export default class NavigationMixin extends Vue {
     return this.$store.getters['group/currentId']
   }
 
-  gotoNewTransaction(options = { type: 'expense', uid: undefined }) {
-    this.$router.push(`/group/${this.navGroupId}/new_trans?${QuerySerialize(options)}`)
+  gotoHome() {
+    this.$router.push('/')
+  }
+
+  gotoGroup(id?: string) {
+    this.$router.push(`/group/${id || this.navGroupId}`)
+  }
+
+  gotoNewTransaction(options = { type: 'expense', uid: undefined }, groupid?: string) {
+    this.$router.push(`/group/${groupid || this.navGroupId}/new_trans?${QuerySerialize(options)}`)
+  }
+
+  gotoTransaction(transId: string, groupid?: string) {
+    this.$router.push(`/group/${groupid || this.navGroupId}/trans/${transId}`)
   }
 }

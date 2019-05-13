@@ -4,7 +4,7 @@ v-card.transactions
   v-list.pa-0(three-line)
     template(v-for='(trans, index) in displayedTransactions')
       v-divider(v-if='index!=0')
-      v-list-tile(:key='trans.id', avatar, @click='')
+      v-list-tile(:key='trans.id', avatar, @click='gotoTransaction(trans.id)')
         v-list-tile-avatar.ma-2
           app-category-icon.mx-2.my-1(:category='trans.category', :text='false', :size='48')
         v-list-tile-content
@@ -30,11 +30,10 @@ v-card.transactions
 
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
-import GroupMixin from '~/mixins/group'
-import UserInfoMixin from '~/mixins/userinfo'
+import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 
 @Component
-export default class Transactions extends Mixins(GroupMixin, UserInfoMixin) {
+export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
   collapsed = true
   collapsed_amount = 10
 

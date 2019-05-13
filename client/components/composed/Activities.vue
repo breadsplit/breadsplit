@@ -27,12 +27,11 @@ v-card
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import { Activity } from '~/types'
-import GroupMixin from '~/mixins/group'
-import UserInfoMixin from '~/mixins/userinfo'
+import { GroupMixin, UserInfoMixin, NavigationMixin, CommonMixin } from '~/mixins'
 import { getActivityDescription } from '~/core'
 
 @Component
-export default class Activities extends Mixins(GroupMixin, UserInfoMixin) {
+export default class Activities extends Mixins(GroupMixin, UserInfoMixin, NavigationMixin, CommonMixin) {
   collapsed = true
   collapsed_amount = 10
 
@@ -69,7 +68,10 @@ export default class Activities extends Mixins(GroupMixin, UserInfoMixin) {
   }
 
   onActivityClick(act: Activity) {
-    this.$root.$snack('TODO: implement', { color: 'orange' })
+    if (act.entity === 'transaction' && act.entity_id)
+      this.gotoTransaction(act.entity_id)
+    else
+      this.WIP()
   }
 }
 </script>
