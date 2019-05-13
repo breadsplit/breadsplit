@@ -48,7 +48,7 @@ import currencies from '~/meta/currencies'
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component
-export default class FromNewGroup extends Vue {
+export default class NewGroup extends Vue {
   search = ''
   currency = ''
   icon = 'account-group'

@@ -1,4 +1,4 @@
-import { AvaliableLocales, Messages } from '@/locales'
+import { AvaliableLocales, Messages } from '../locales'
 
 export { AvaliableLocales, Messages }
 

@@ -3,7 +3,7 @@ app-dialog(
   ref='dialog' :fullscreen='isMobile' max-width='800'
   transition='dialog-bottom-transition' persistent no-click-animation
   @exit='$router.go(-1)')
-  app-form-new-transaction(v-bind='options', @close='close()')
+  app-new-transaction(v-bind='options', @close='close()')
 </template>
 
 <script lang='ts'>

@@ -59,6 +59,7 @@ export default class NumberInput extends Vue {
       return (Math.round(eval(escaped) * 100) / 100)
     }
     catch (e) {
+      // eslint-disable-next-line
       console.error(e)
       return 0
     }
@@ -132,7 +133,6 @@ export default class NumberInput extends Vue {
   }
 
   onKeydown(e: KeyboardEvent) {
-    console.log(e)
     if (e.keyCode === 8) // Backspace
       return
     if (e.keyCode === 13) // Enter

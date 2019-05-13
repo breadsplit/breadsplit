@@ -113,7 +113,7 @@ v-app(:dark='dark')
       nuxt
 
   app-dialog(ref='newgroup', :route='true', persistent, no-click-animation)
-    app-form-new-group(@close='$refs.newgroup.close()')
+    app-new-group(@close='$refs.newgroup.close()')
 
   app-dialog(ref='settings', :route='true')
     app-settings(@close='$refs.settings.close()')

@@ -63,10 +63,10 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
 import GroupMixin from '~/mixins/group'
 import { Transaction, Weight } from '~/types'
-import { TransactionDefault } from '~/utils/defaults'
+import { TransactionDefault } from '~/core'
 
 @Component
-export default class FormNewTransaction extends Mixins(GroupMixin) {
+export default class NewTransaction extends Mixins(GroupMixin) {
   form: Transaction = TransactionDefault()
   cats = Categories
   step = 1

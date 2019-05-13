@@ -33,7 +33,7 @@ v-card
 <script lang='ts'>
 import MemberMixin from '~/mixins/member'
 import { Component, Mixins, Prop } from 'vue-property-decorator'
-import { IsThisId } from '~/utils/id_helper'
+import { IsThisId } from '~/core'
 import { Member } from '~/types'
 
 @Component

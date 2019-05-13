@@ -11,9 +11,8 @@ import { RootState, Group, UserInfo, ServerGroup, ClientGroup } from '~/types'
 import { IsThisId } from '~/core'
 import FirebaseServers from '~/meta/firebase_servers'
 
-/* eslint-disable no-console */
+// eslint-disable-next-line no-console
 const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
-/* eslint-enable no-console */
 
 export class FirebasePlugin {
   store: Store<RootState>
@@ -153,6 +152,7 @@ export class FirebasePlugin {
       return await this.updateMessagingToken()
     }
     catch (error) {
+      // eslint-disable-next-line no-console
       console.error(error)
     }
   }
