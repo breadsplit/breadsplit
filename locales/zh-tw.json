@@ -3,7 +3,7 @@
   "iso": "zh-TW",
   "language_name": "繁體中文",
   "translators": "antfu<anthonyfu117@hotmail.com>",
-  "appname": "分賬吐司",
+  "appname": "分帳吐司",
   "css": {
     "font_of_locale": "\"微軟正黑體\", \"Microsoft JhengHei\""
   },
@@ -14,18 +14,18 @@
     "general": "一般",
     "advance": "進階",
     "homepage": "首頁",
-    "button_new_group": "新增小組",
+    "button_new_group": "新增群組",
     "button_new_member": "添加成員",
-    "button_join_group": "加入小組",
+    "button_join_group": "加入群組",
     "button_create": "創建",
     "button_ok": "好的",
     "button_cancel": "取消",
     "join_as_me": "以\"{0}\"加入",
     "group_editing": {
-      "new_group": "新建小組",
-      "enter_group_name": "請輸入小組名稱",
-      "default_group_name": "未命名小組",
-      "group_name": "小組名稱"
+      "new_group": "新建群組",
+      "enter_group_name": "請輸入群組名稱",
+      "default_group_name": "未命名群組",
+      "group_name": "群組名稱"
     },
     "tabs": {
       "expenses": "支出",
@@ -41,12 +41,12 @@
       "settle_up": "償還債務"
     },
     "menu": {
-      "edit_group": "編輯小組",
+      "edit_group": "編輯群組",
       "make_group_online": "轉換為綫上模式",
-      "remove_group": "刪除小組",
+      "remove_group": "刪除群組",
       "rename_member": "重命名",
       "member_is_me": "這是我",
-      "remove_member": "將 {name} 從小組中移除"
+      "remove_member": "將 {name} 從群組中移除"
     },
     "setting_options": {
       "enabled": "開啓",
@@ -67,7 +67,7 @@
     "misc": "其他",
     "button_join": "加入",
     "invited_to_join": "您被邀請加入<b>{0}</b>",
-    "loading_group_info": "加載小組信息中...",
+    "loading_group_info": "加載群組信息中...",
     "anonymous": "匿名",
     "about": "關於我們",
     "become_a_patreon": "在 Patreon 上成為贊助者",
@@ -83,25 +83,28 @@
     "paid_by": "付款人",
     "add_location": "添加位置",
     "repeat_expense": "重複",
-    "title_join_a_group": "加入小組"
+    "title_join_a_group": "加入群組"
   },
   "cats": {
     "transport": {
       "display": "交通",
-      "keywords": "地鐵,捷運,mrt,計程車,飛機,機票,公車,uber,mrt,lrt,grab,的士"
+      "keywords": "地鐵,捷運,mrt,計程車,飛機,機票,公車,uber,mrt,lrt,grab,的士,船票,火車,高鐵,輕軌,車票"
     },
     "lodging": {
-      "display": "住宿"
+      "display": "住宿",
+      "keywords": "飯店,酒店,民宿,住宿,青旅"
     },
     "travel": {
-      "display": "景點"
+      "display": "旅行",
+      "keywords": "旅行,門票,景點"
     },
     "food": {
       "display": "飲食",
       "keywords": "早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品"
     },
     "transfer": {
-      "display": "債務轉移"
+      "display": "債務轉移",
+      "keywords": "債務轉移"
     },
     "other": {
       "display": "其他"
@@ -111,15 +114,15 @@
     "are_you_sure": "你確定嗎？"
   },
   "tips": {
-    "already_joined_group": "你已經加入了此小組。",
+    "already_joined_group": "你已經加入了此群組。",
     "select_open_in_browser": "選擇 \"<b>在瀏覽器中打開</b>\"",
     "click_right_corner_icon_part1": "請點選右上角 \"",
     "click_right_corner_icon_part2": "\" 圖標"
   },
   "acts": {
     "insert_transaction": "{0} 添加了一筆支出：{1}",
-    "insert_group": "{0} 創建了小組",
-    "insert_viewer": "{0} 加入了小組"
+    "insert_group": "{0} 創建了群組",
+    "insert_viewer": "{0} 加入了群組"
   },
   "help": {
     "no_password_login": {
