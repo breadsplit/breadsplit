@@ -335,11 +335,20 @@ export class FirebasePlugin {
     }
   }
 
-  async groupMeta(id: string): Promise<object|null> {
-    const result = await this.functions.httpsCallable('groupMeta')({ id })
-    if (result)
-      return result.data || null
-    return null
+  async groupInfo(id: string): Promise<ServerGroup|undefined> {
+    try {
+      const result = await this.db
+        .collection('groups')
+        .doc(id)
+        .get()
+
+      if (result && result.data())
+        return result.data() as ServerGroup
+      return undefined
+    }
+    catch (e) {
+      return undefined
+    }
   }
 
   uploadLocalChanges(groups?: ClientGroup[]) {

@@ -14,14 +14,16 @@ v-container
       v-icon(:color='color', size='120').ma-3 mdi-{{group.icon}}
       div(v-html='$t("ui.invited_to_join", [group.name])' style='font-size: 1.8em')
       .avatars.mb-3
-        app-user-avatar(v-for='uid in group.viewers', :id='uid', :key='uid' size='32').ma-1
+        app-user-avatar(v-for='uid in serverGroup.viewers', :id='uid', :key='uid' size='32').ma-1
 
       v-btn(:color='color' dark :loading='joining' @click='join') {{$t('ui.button_join')}}
+
+  app-login(ref='login')
 </template>
 
 <script lang='ts'>
 import { Vue, Component } from 'vue-property-decorator'
-import { Group } from '~/types'
+import { ServerGroup } from '~/types'
 
 @Component({
   // @ts-ignore
@@ -37,7 +39,7 @@ import { Group } from '~/types'
   },
 })
 export default class JoinPage extends Vue {
-  group: Group | null = null
+  serverGroup: ServerGroup | undefined = undefined
   loading = true
   joining = false
   id: string | null = null
@@ -46,14 +48,20 @@ export default class JoinPage extends Vue {
     return (this.group && this.group.color) || 'primary'
   }
 
+  get group() {
+    if (this.serverGroup)
+      return this.serverGroup.present
+    return undefined
+  }
+
   async join() {
     if (!this.id)
       return
     if (!this.$store.getters['user/uid']) {
+      // if false, the login is canceled
       // @ts-ignore
-      this.$root.$login.open()
-      // TODO:CODE: auto join after login
-      return
+      if (!await this.$refs.login.login())
+        return
     }
     this.joining = true
     await this.$fire.joinGroup(this.id)
@@ -72,8 +80,7 @@ export default class JoinPage extends Vue {
       this.loading = false
       return
     }
-    // @ts-ignore
-    this.group = await this.$fire.groupMeta(this.id)
+    this.serverGroup = await this.$fire.groupInfo(this.id)
     this.loading = false
   }
 }

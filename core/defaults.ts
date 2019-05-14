@@ -51,6 +51,7 @@ export const ClientGroupDefault = (overrides?: Partial<ClientGroup>): ClientGrou
     operations: [],
     syncingOperations: [],
     lastchanged: +new Date(),
+    open: true,
   }
 }
 

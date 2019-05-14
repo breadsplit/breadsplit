@@ -49,6 +49,7 @@ export const publishGroup = f(async ({ group }, context) => {
     owner: user_uid,
     viewers: [user_uid],
     operations: initOperations.map(i => i.hash),
+    open: true,
   }
 
   const batch = db.batch()

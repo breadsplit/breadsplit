@@ -103,8 +103,7 @@ v-app(:dark='dark')
   app-dialog(ref='settings' :route='true')
     app-settings
 
-  app-dialog(ref='login' :route='true' width='350' :fullscreen='false')
-    app-login
+  app-login(ref='login')
 
   app-dialog(ref='about' :route='true')
     app-about-page

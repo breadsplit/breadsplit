@@ -147,6 +147,7 @@ export interface ClientGroup {
   // Options
   lastchanged: number
   favorite?: boolean
+  open: boolean
 }
 
 export interface ServerGroup {
@@ -154,6 +155,7 @@ export interface ServerGroup {
   // user ids
   viewers: string[]
   owner: string
+  open: boolean
 
   present: Group
   operations: string[]
