@@ -321,16 +321,17 @@ export class FirebasePlugin {
     }
   }
 
-  async updateUserProfiles(uids: string[], threshold = 1000 * 60 * 60 * 24) {
+  async updateUserProfiles(uids: string[], threshold_hours = 24) {
     const now = +new Date()
     for (const uid of uids) {
       // skip profile updates for user self
       if (uid === this.uid)
         continue
 
+      const threshold = threshold_hours * 60 * 60 * 1000
       // if local user lastupdate expire the threshold, update from server
       const user = this.store.getters['user/user'](uid) as UserInfo
-      if (!user || !user.lastupdate || (now - user.lastupdate) > threshold)
+      if (!user || !user.lastsync || (now - user.lastsync) > threshold)
         this.downloadProfile(uid)
     }
   }
