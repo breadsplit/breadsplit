@@ -1,7 +1,5 @@
 
 export default function ({ store, route }) {
-  if (!store.state.loaded)
-    return
   let path = route.fullPath || route.path
   if (path.startsWith('/#'))
     path = path.slice(2)

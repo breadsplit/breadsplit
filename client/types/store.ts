@@ -21,7 +21,6 @@ export interface AppOptions {
 export interface RootState {
   user_locale: string|null
   browser_locale: string
-  loaded: boolean
   group: GroupState
   user: UserState
   options: AppOptions

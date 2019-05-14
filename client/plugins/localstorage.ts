@@ -16,7 +16,6 @@ export default ({ store, route, app }) => {
     key: StoreKey,
     paths: PathsEnabled,
   })(store)
-  store.commit('loaded')
   GroupRouter({ store, route })
   window.addEventListener('storage', (e) => {
     if (e.key !== StoreKey)

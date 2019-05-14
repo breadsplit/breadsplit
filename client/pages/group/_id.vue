@@ -57,8 +57,6 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
     }
   },
   async asyncData({ params, store, error }) {
-    if (!store.state.loaded)
-      return { params }
     if (!store.getters['group/current'])
       // @ts-ignore
       return error({ icon: 'account-alert-outline', statusCode: 'Group not found', message: 'It seems to be a local group' })

@@ -26,7 +26,6 @@ export const AppOptionsDefault = (overrides?: Partial<AppOptions>): AppOptions =
 export const RootStateDefault = (overrides?: Partial<RootState>): RootState => merge({
   browser_locale: acceptLanguage(),
   user_locale: null,
-  loaded: false,
   group: GroupStateDefault(),
   user: UserStateDefault(),
   options: AppOptionsDefault(),
