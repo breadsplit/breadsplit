@@ -1,19 +1,6 @@
 <template lang='pug'>
 v-app(:dark='dark')
-  style.
-    :root {
-      --app-font: {{localeFont}};
-      --window-height: {{windowHeight}}px;
-      --vh: {{windowHeight * 0.01}}px;
-    }
-    .primary {
-      background-color: {{primaryColor}} !important;
-      border-color: {{primaryColor}} !important;
-    }
-    .primary--text {
-      color: {{primaryColor}} !important;
-      caret-color: {{primaryColor}} !important;
-    }
+  app-global-style
 
   template(v-if='blockedByWebview')
     v-content
@@ -141,7 +128,6 @@ import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
 import { Group, UserInfo } from '~/types'
 import CommonMixin from '~/mixins/common'
-import FontFamilyBuilder from '~/meta/font_family'
 
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin) {
@@ -151,13 +137,13 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   fixed = false
   miniVariant = false
   mobileBreakPoint = 700
-  windowHeight = 0
 
   @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
   @Getter('group/currentShareLink') currentShareLink: string | undefined
   @Getter('user/me') user!: UserInfo
   @Getter('user/online') userIsOnline!: boolean
+  @Getter('dark') dark!: boolean
   @Getter('blockedByWebview') blockedByWebview!: boolean
 
   @Mutation('group/remove') removeGroup
@@ -166,18 +152,11 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   get debug() {
     return process.env.NODE_ENV !== 'production'
   }
-  get dark() {
-    return this.$store.getters.dark
-  }
   get title() {
     if (this.current)
       return this.current.name
     else
       return this.$t('appname')
-  }
-  get localeFont() {
-    const font_of_locale = this.$t('css.font_of_locale', '').toString()
-    return FontFamilyBuilder(font_of_locale)
   }
   get group_menu() {
     const menu: ({title: string; key: string})[] = []
@@ -188,9 +167,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     menu.push({ title: 'ui.menu.remove_group', key: 'delete' })
 
     return menu
-  }
-  get primaryColor() {
-    return this.$store.getters.primary
   }
 
   // Methods
@@ -217,11 +193,6 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
 
     if (!this.isMobile)
       this.drawer = true
-
-    this.windowHeight = window.innerHeight
-    window.addEventListener('resize', () => {
-      this.windowHeight = window.innerHeight
-    })
   }
 
   async onGroupMenu(key) {

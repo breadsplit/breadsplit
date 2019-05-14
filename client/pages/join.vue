@@ -20,13 +20,20 @@ v-container
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
 import { Group } from '~/types'
 
 @Component({
+  // @ts-ignore
+  layout: 'base',
   watchQuery: true,
   async asyncData({ query }) {
     return { id: query.id }
+  },
+  head() {
+    return {
+      title: this.$t('ui.title_join_a_group'),
+    }
   },
 })
 export default class JoinPage extends Vue {

@@ -30,7 +30,7 @@
     "share_link_copied": "Share link copied!",
     "join_group": "Joining <b>{0}</b>",
     "group_editing": {
-      "new_group": "New team",
+      "new_group": "New group",
       "group_name": "Group's name",
       "enter_group_name": "Enter group's name",
       "default_group_name": "Untitled Group"
@@ -96,7 +96,8 @@
     "paid_money": "paid",
     "paid_by": "Paid by",
     "add_location": "Add location",
-    "repeat_expense": "Repeat"
+    "repeat_expense": "Repeat",
+    "title_join_a_group": "Join a group"
   },
   "prompt": {
     "are_you_sure": "Are you sure?"
