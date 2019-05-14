@@ -2,13 +2,13 @@
   "code": "zh-tw",
   "iso": "zh-TW",
   "language_name": "繁體中文",
-  "translators": "antfu<anthonyfu117@hotmail.com>",
+  "translators": "offical",
   "appname": "分帳吐司",
   "css": {
     "font_of_locale": "\"微軟正黑體\", \"Microsoft JhengHei\""
   },
   "ui": {
-    "language": "顯示語言",
+    "language": "語言",
     "settings": "設定",
     "sign_in": "登錄",
     "general": "一般",
@@ -20,7 +20,7 @@
     "button_create": "創建",
     "button_ok": "好的",
     "button_cancel": "取消",
-    "join_as_me": "以\"{0}\"加入",
+    "join_as_me": "作爲 {0} 加入",
     "group_editing": {
       "new_group": "新建群組",
       "enter_group_name": "請輸入群組名稱",
@@ -66,8 +66,8 @@
     },
     "misc": "其他",
     "button_join": "加入",
-    "invited_to_join": "您被邀請加入<b>{0}</b>",
-    "loading_group_info": "加載群組信息中...",
+    "invited_to_join": "您被邀請加入 <b>{0}</b> 小組",
+    "loading_group_info": "正在加載群組信息...",
     "anonymous": "匿名",
     "about": "關於我們",
     "become_a_patreon": "在 Patreon 上成為贊助者",
@@ -120,7 +120,7 @@
     "click_right_corner_icon_part2": "\" 圖標"
   },
   "acts": {
-    "insert_transaction": "{0} 添加了一筆支出：{1}",
+    "insert_transaction": "{0} 添加了支出：{1}",
     "insert_group": "{0} 創建了群組",
     "insert_viewer": "{0} 加入了群組"
   },
