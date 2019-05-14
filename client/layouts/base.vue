@@ -2,7 +2,8 @@
 v-app(:dark='dark')
   app-global-style
 
-  nuxt
+  v-content
+    nuxt
 </template>
 
 <script lang='ts'>

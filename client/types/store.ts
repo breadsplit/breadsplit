@@ -29,7 +29,6 @@ export interface RootState {
     raw: string
     webview?: WebviewType
     os: OSType
-    bypass_webview: boolean
     standalone: boolean
   }
 }

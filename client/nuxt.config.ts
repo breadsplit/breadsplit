@@ -79,19 +79,27 @@ const config: NuxtConfiguration = {
   ],
 
   plugins: [
-    '~/plugins/messaging-sw',
-    '~/plugins/localstorage',
+    /* The order of plugins is important */
+
+    /* Request handling */
+    // '~/plugins/ua', // detect webview
+
+    /* Data */
+    '~/plugins/localstorage', // load store from localstorage
     '~/plugins/i18n',
-    '~/plugins/packages',
+
+    /* Plugins and Components */
+    '~/plugins/packages', // 3-rd party dependencies
     '~/plugins/firebase',
     '~/plugins/vuetify',
     '~/plugins/directives',
-    '~/plugins/components',
+    '~/plugins/components', // register components
   ],
 
   router: {
     mode: 'hash',
     middleware: [
+      'ua',
       'group',
     ],
   },

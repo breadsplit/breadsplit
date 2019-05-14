@@ -2,102 +2,97 @@
 v-app(:dark='dark')
   app-global-style
 
-  template(v-if='blockedByWebview')
-    v-content
-      app-inside-webview
+  v-navigation-drawer(
+    v-model='drawer', :mini-variant='miniVariant'
+    :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
+  )
+    v-list
+      v-list-tile(@click='$router.push("/")')
+        v-list-tile-content
+          v-list-tile-title.app-name {{$t('appname')}}
+      v-divider.my-1
 
-  template(v-else)
-    v-navigation-drawer(
-      v-model='drawer', :mini-variant='miniVariant'
-      :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
-    )
-      v-list
-        v-list-tile(@click='$router.push("/")')
+      template(v-if='groups.length')
+        v-list-tile(
+          v-for='(group, i) in groups'
+          :key='i', :to='`/group/${group.id}`'
+          router, exact)
+          v-list-tile-action
+            v-icon mdi-{{ group.icon }}
           v-list-tile-content
-            v-list-tile-title.app-name {{$t('appname')}}
+            v-list-tile-title(v-text='group.name')
+          v-list-tile-action(v-if='group.online')
+            template(v-if='isSync(group.id)')
+              v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
+            template(v-else)
+              v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
+
         v-divider.my-1
 
-        template(v-if='groups.length')
-          v-list-tile(
-            v-for='(group, i) in groups'
-            :key='i', :to='`/group/${group.id}`'
-            router, exact)
+      // New group item
+      v-list-tile(@click='$refs.newgroup.open()')
+        v-list-tile-action
+          v-icon mdi-plus
+        v-list-tile-content
+          v-list-tile-title {{$t('ui.group_editing.new_group')}}
+
+      .drawer-list-bottom
+        // Sign in
+        template(v-if='user.anonymous')
+          v-list-tile(@click='$refs.login.open()')
             v-list-tile-action
-              v-icon mdi-{{ group.icon }}
+              v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                v-icon mdi-account
             v-list-tile-content
-              v-list-tile-title(v-text='group.name')
-            v-list-tile-action(v-if='group.online')
-              template(v-if='isSync(group.id)')
-                v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
-              template(v-else)
-                v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
-
-          v-divider.my-1
-
-        // New group item
-        v-list-tile(@click='$refs.newgroup.open()')
-          v-list-tile-action
-            v-icon mdi-plus
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.group_editing.new_group')}}
-
-        .drawer-list-bottom
-          // Sign in
-          template(v-if='user.anonymous')
-            v-list-tile(@click='$refs.login.open()')
-              v-list-tile-action
-                v-avatar(size='36', color='#00000020', style='margin: -6px;')
-                  v-icon mdi-account
-              v-list-tile-content
-                v-list-tile-title {{$t('ui.sign_in')}}
-
-          // User profile
-          template(v-else)
-            v-list-tile(@click='promptLogout()')
-              v-list-tile-action
-                v-avatar(size='36', color='#00000020', style='margin: -6px;')
-                  img(:src='user.avatar_url')
-              v-list-tile-content
-                v-list-tile-title {{ user.name || user.email }}
-              v-list-tile-action(v-if='!userIsOnline')
-                v-icon(color='red', size='20') mdi-cloud-off-outline
-
-          // Settings
-          v-list-tile(@click='$refs.settings.open()')
-            v-list-tile-action
-              v-icon mdi-settings
-            v-list-tile-content
-              v-list-tile-title {{$t('ui.settings')}}
-
-    v-toolbar.app-toolbar(
-      :clipped-left='clipped' app flat color='transparent' height='60'
-      ).primary--text
-      v-btn(icon, flat, @click='drawer = !drawer')
-        v-icon(color='primary') mdi-menu
-      v-toolbar-title(v-text='title')
-      v-spacer
-      v-toolbar-items
-        template(v-if='current')
-          template(v-if='isSync()')
-            v-btn(icon, flat).syncing-icon
-              v-icon(color='primary') mdi-cloud-sync
-          template(v-if='currentShareLink')
-            v-btn(icon, flat, @click='copyShareLink()')
-              v-icon.op-50 mdi-share-variant
-          v-menu(offset-y='')
-            v-btn(icon, flat, slot='activator')
-              v-icon.op-50 mdi-dots-vertical
-            v-list
-              v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
-                v-list-tile-title {{ $t(item.title) }}
+              v-list-tile-title {{$t('ui.sign_in')}}
 
         // User profile
-        template(v-if='!user.anonymous')
-          v-avatar(size='36', @click='promptLogout()', color='#00000020').avatar-in-toolbar
-            img(:src='user.avatar_url')
+        template(v-else)
+          v-list-tile(@click='promptLogout()')
+            v-list-tile-action
+              v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                img(:src='user.avatar_url')
+            v-list-tile-content
+              v-list-tile-title {{ user.name || user.email }}
+            v-list-tile-action(v-if='!userIsOnline')
+              v-icon(color='red', size='20') mdi-cloud-off-outline
 
-    v-content
-      nuxt
+        // Settings
+        v-list-tile(@click='$refs.settings.open()')
+          v-list-tile-action
+            v-icon mdi-settings
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.settings')}}
+
+  v-toolbar.app-toolbar(
+    :clipped-left='clipped' app flat color='transparent' height='60'
+    ).primary--text
+    v-btn(icon, flat, @click='drawer = !drawer')
+      v-icon(color='primary') mdi-menu
+    v-toolbar-title(v-text='title')
+    v-spacer
+    v-toolbar-items
+      template(v-if='current')
+        template(v-if='isSync()')
+          v-btn(icon, flat).syncing-icon
+            v-icon(color='primary') mdi-cloud-sync
+        template(v-if='currentShareLink')
+          v-btn(icon, flat, @click='copyShareLink()')
+            v-icon.op-50 mdi-share-variant
+        v-menu(offset-y='')
+          v-btn(icon, flat, slot='activator')
+            v-icon.op-50 mdi-dots-vertical
+          v-list
+            v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
+              v-list-tile-title {{ $t(item.title) }}
+
+      // User profile
+      template(v-if='!user.anonymous')
+        v-avatar(size='36', @click='promptLogout()', color='#00000020').avatar-in-toolbar
+          img(:src='user.avatar_url')
+
+  v-content
+    nuxt
 
   app-dialog(ref='newgroup' :route='true' persistent no-click-animation)
     app-new-group

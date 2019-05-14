@@ -82,6 +82,7 @@ export class FirebasePlugin {
     await this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 
     await this.updateMessagingToken()
+    this.installMessagingServiceWorker()
 
     this.messaging.onMessage((data) => {
       log('📢 Incoming Message:', data)
@@ -385,6 +386,18 @@ export class FirebasePlugin {
     if (this._unwatchCallback) {
       log('🔕 Store unwatched')
       this._unwatchCallback()
+    }
+  }
+
+  async installMessagingServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      try {
+        await navigator.serviceWorker.register('/firebase-messaging-sw.js', { scope: '/' })
+        log('✅ Messaging SW registration succeeded')
+      }
+      catch (error) {
+        log(`💥 Messaging SW registration failed with ${error}`)
+      }
     }
   }
 }

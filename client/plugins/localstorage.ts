@@ -1,6 +1,6 @@
 
 import CreatePersistedState from 'vuex-persistedstate'
-import GroupRouter from '~/middleware/group'
+import { Context } from '@nuxt/vue-app'
 
 const StoreKey = 'breadsplit-store'
 const PathsEnabled = [
@@ -11,12 +11,11 @@ const PathsEnabled = [
   'options',
 ]
 
-export default ({ store, route, app }) => {
+export default ({ store }: Context) => {
   CreatePersistedState({
     key: StoreKey,
     paths: PathsEnabled,
   })(store)
-  GroupRouter({ store, route })
   window.addEventListener('storage', (e) => {
     if (e.key !== StoreKey)
       return
