@@ -20,7 +20,7 @@ v-card.new-trans-form
     | {{$t('ui.new_expense')}}
 
   .layout-relative.height-100
-    v-window(v-model='step')
+    v-window(v-model='step', touchless)
 
       // First page
       v-window-item(:value='1')
