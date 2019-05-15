@@ -131,17 +131,16 @@ const config: NuxtConfiguration = {
       }
     },
     babel: {
-      presets: () => {
-        return [[
+      presets: [
+        [
           '@nuxt/babel-preset-app',
           {
             targets: '>0.25%, not ie 11, not op_mini all',
           },
-        ]]
-      },
+        ],
+      ],
     },
   },
-
   render: {
     bundleRenderer: {
       shouldPreload: (file, type) => {

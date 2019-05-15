@@ -47,10 +47,6 @@ jobs:
           token: 5cc49569-d518-4ff6-9579-f0487c51b3a5
 
       # update bundle size
-      - run:
-          name: Build the app
-          command: npm run generate
-
-      - run:
-          name: Upload bundlesize
-          command: npm run bundlesize
+      #- run:
+      #    name: Build the app
+      #    command: npm run generate
