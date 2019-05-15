@@ -165,6 +165,38 @@ const config: NuxtConfiguration = {
   workbox: {
     offlineAnalytics: true,
     offline: true,
+    runtimeCaching: [
+      {
+        urlPattern: 'https://cdnjs.cloudflare.com/.*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '.*googleusercontent.com.*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '.*\\.(?:png|jpg|jpeg|svg)$',
+        handler: 'staleWhileRevalidate',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '.*\\.(?:wottf|wottf2|otf)$',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '/img/.*',
+        handler: 'staleWhileRevalidate',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+    ],
   },
 
   sentry: {
