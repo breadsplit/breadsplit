@@ -130,6 +130,16 @@ const config: NuxtConfiguration = {
         })
       }
     },
+    babel: {
+      presets: () => {
+        return [[
+          '@nuxt/babel-preset-app',
+          {
+            targets: '>0.25%, not ie 11, not op_mini all',
+          },
+        ]]
+      },
+    },
   },
 
   render: {
