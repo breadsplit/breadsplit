@@ -163,6 +163,7 @@ const config: NuxtConfiguration = {
   },
 
   workbox: {
+    dev: true,
     offlineAnalytics: true,
     offline: true,
     runtimeCaching: [
@@ -179,13 +180,19 @@ const config: NuxtConfiguration = {
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
       },
       {
-        urlPattern: '.*\\.(?:png|jpg|jpeg|svg)$',
+        urlPattern: '.*googleapis.com.*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '.*(?:png|jpg|jpeg|svg)$',
         handler: 'staleWhileRevalidate',
         method: 'GET',
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
       },
       {
-        urlPattern: '.*\\.(?:wottf|wottf2|otf)$',
+        urlPattern: '.*(?:wottf|wottf2|otf)$',
         handler: 'cacheFirst',
         method: 'GET',
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
