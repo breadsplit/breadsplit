@@ -103,8 +103,16 @@
       "keywords": "早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品"
     },
     "transfer": {
-      "display": "債務轉移",
-      "keywords": "債務轉移"
+      "display": "轉移",
+      "keywords": "轉移"
+    },
+    "shopping": {
+      "display": "購物",
+      "keywords": "購物"
+    },
+    "tips": {
+      "display": "小費",
+      "keywords": "tip,小費"
     },
     "other": {
       "display": "其他"

@@ -26,9 +26,19 @@ const DefaultCategories: Category[] = [
     color: '#d39523',
   },
   {
+    name: 'shopping',
+    icon: 'shopping',
+    color: '#af44a1',
+  },
+  {
+    name: 'tips',
+    icon: 'coin',
+    color: '#308270',
+  },
+  {
     name: 'transfer',
     icon: 'bank-transfer',
-    color: '#a963d8',
+    color: '#774231',
   },
   {
     name: 'other',

@@ -34,10 +34,14 @@ v-card.new-trans-form
       // Second page
       v-window-item(:value='2')
         .my-3
-          app-grid(columns='70px auto')
-            app-category-icon(:category='form.category || categorySense', label)
-            v-text-field(
-              v-model='form.desc' label='Description' placeholder='Some expense...' required)
+          app-grid(columns='max-content auto')
+            app-category-select.pl-3(
+              :value='form.category || categorySense',
+              @input='i=> form.category = i'
+              :categories='cats'
+            )
+            v-text-field.pr-3(
+              v-model='form.desc' label='Description' placeholder='Some expense...' solo required)
 
           v-divider
           app-grid(columns='70px auto')

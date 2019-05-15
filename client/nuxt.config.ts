@@ -164,7 +164,6 @@ const config: NuxtConfiguration = {
 
   // https://pwa.nuxtjs.org/modules/workbox.html
   workbox: {
-    dev: true,
     offlineAnalytics: true,
     offline: true,
     runtimeCaching: [
@@ -188,7 +187,7 @@ const config: NuxtConfiguration = {
       },
       {
         urlPattern: '.*(?:png|jpg|jpeg|svg)$',
-        handler: 'staleWhileRevalidate',
+        handler: 'cacheFirst',
         method: 'GET',
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
       },

@@ -123,6 +123,14 @@
       "display": "Transfer",
       "keywords": "hotel"
     },
+    "shopping": {
+      "display": "Shopping",
+      "keywords": "shopping"
+    },
+    "tips": {
+      "display": "Tips",
+      "keywords": "tip,tips"
+    },
     "other": {
       "display": "Other",
       "keywords": ""
