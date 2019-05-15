@@ -122,9 +122,11 @@ import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
 import { Group, UserInfo } from '~/types'
 import CommonMixin from '~/mixins/common'
+// import FontFamilyBuilder from '~/meta/font_family'
+import { GroupMixin } from '~/mixins'
 
 @Component
-export default class DefaultLayout extends Mixins(CommonMixin) {
+export default class DefaultLayout extends Mixins(CommonMixin, GroupMixin) {
   // Data
   clipped = false
   drawer = false
@@ -190,11 +192,13 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   }
 
   async onGroupMenu(key) {
+    const groupid = this.$store.state.group.currentId
+    const group = this.$store.state.group.groups[groupid].base
+
     switch (key) {
       case 'delete':
         if (await this.$root.$confirm('Are you sure?')) {
           this.$root.$apploading.open('Deleting group')
-          const groupid = this.$store.state.group.currentId
           if (this.current && this.current.online)
             await this.$fire.deleteGroup(groupid)
           this.removeGroup()
@@ -225,7 +229,8 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
         break
 
       case 'edit':
-        // TODO:
+        // @ts-ignore
+        this.$refs.newgroup.open({ mode: 'edit', name: group.name, currency: group.currencies[0], members: group.members, color: group.color, icon: group.icon })
         break
     }
   }
