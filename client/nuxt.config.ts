@@ -162,6 +162,7 @@ const config: NuxtConfiguration = {
     debug,
   },
 
+  // https://pwa.nuxtjs.org/modules/workbox.html
   workbox: {
     dev: true,
     offlineAnalytics: true,
@@ -192,7 +193,7 @@ const config: NuxtConfiguration = {
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
       },
       {
-        urlPattern: '.*(?:wottf|wottf2|otf)$',
+        urlPattern: '.*(?:woff|woff2|otf)$',
         handler: 'cacheFirst',
         method: 'GET',
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
@@ -206,6 +207,7 @@ const config: NuxtConfiguration = {
     ],
   },
 
+  // https://sentry.io/
   sentry: {
     dsn: process.env.SENTRY_DSN || ServicesIntegrations.sentry_dsn,
     config: {
