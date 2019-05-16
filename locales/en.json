@@ -23,6 +23,7 @@
     "button_join_group": "Join the group",
     "button_create": "Create",
     "button_ok": "OK",
+    "button_confirm": "Confirm",
     "button_cancel": "Cancel",
     "button_join": "Join",
     "join_as_me": "Join as {0}",
@@ -51,6 +52,7 @@
     },
     "menu": {
       "edit_group": "Edit group",
+      "view_group": "View group",
       "make_group_online": "Make this group online",
       "remove_group": "Remove group",
       "rename_member": "Rename",

@@ -19,6 +19,7 @@
     "button_join_group": "加入群組",
     "button_create": "創建",
     "button_ok": "好的",
+    "button_confirm": "確認",
     "button_cancel": "取消",
     "join_as_me": "作爲 {0} 加入",
     "group_editing": {
@@ -42,6 +43,7 @@
     },
     "menu": {
       "edit_group": "編輯群組",
+      "view_group": "檢視群組",
       "make_group_online": "轉換為綫上模式",
       "remove_group": "刪除群組",
       "rename_member": "重命名",
