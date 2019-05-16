@@ -21,14 +21,15 @@ v-card.new-trans-form(v-rows='"max-content auto max-content"')
 
   v-window.height-100(v-model='step', touchless)
     // First page
-    v-window-item(:value='1', v-rows='"auto max-content"')
-      .vertical-aligned.ma-4
-        template(v-if='form.creditors.length === 1')
-          app-member-select(:members='members', v-model='form.creditors[0].uid')
-        span.mr-2 {{$t('ui.paid_money')}}
+    v-window-item(:value='1')
+      div.height-100(v-rows='"auto max-content"')
+        .vertical-aligned.ma-4
+          template(v-if='form.creditors.length === 1')
+            app-member-select(:members='members', v-model='form.creditors[0].uid')
+          span.mr-2 {{$t('ui.paid_money')}}
 
-      div
-        +inputs()
+        div
+          +inputs()
 
     // Second page
     v-window-item(:value='2')
