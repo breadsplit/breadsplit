@@ -1,6 +1,6 @@
 <template lang='pug'>
 mixin inputs()
-  app-grid.my-2.mx-3(columns='auto 65px' style='vertical-align:bottom')
+  .my-2.mx-3(v-columns='"auto 65px"' style='vertical-align:bottom')
     app-number-input(
       ref='total_fee_input'
       v-model.number='form.total_fee'
@@ -9,78 +9,77 @@ mixin inputs()
       reverse outline autofocus
       required hide-details flat='true' main='true'
     )
-    app-grid(rows='auto 45px')
+    div(v-rows='"auto 45px"')
       span
       app-currency-select.mt-0.pt-0(v-model='form.currency')
 
   app-soft-numpad(ref='numpad')
 
-v-card.new-trans-form(style='display:grid;grid-template-rows:max-content auto max-content')
+v-card.new-trans-form(v-rows='"max-content auto max-content"')
   app-dialog-bar(@close='close()')
     | {{$t('ui.new_expense')}}
 
-  .layout-relative.height-100
-    v-window(v-model='step', touchless)
+  v-window.height-100(v-model='step', touchless)
+    // First page
+    v-window-item(:value='1', v-rows='"auto max-content"')
+      .vertical-aligned.ma-4
+        template(v-if='form.creditors.length === 1')
+          app-member-select(:members='members', v-model='form.creditors[0].uid')
+        span.mr-2 {{$t('ui.paid_money')}}
 
-      // First page
-      v-window-item(:value='1')
-        .vertical-aligned.ma-4
-          template(v-if='form.creditors.length === 1')
-            app-member-select(:members='members', v-model='form.creditors[0].uid')
-          span.mr-2 {{$t('ui.paid_money')}}
-        template(v-if='!isMobile')
-          +inputs()
+      div
+        +inputs()
 
-      // Second page
-      v-window-item(:value='2')
-        .my-3
-          app-grid(columns='max-content auto')
-            app-category-select.pl-3(
-              :value='form.category || categorySense',
-              @input='i=> form.category = i'
-              :categories='cats'
-            )
-            v-text-field.pr-3(
-              v-model='form.desc' label='Description' placeholder='Some expense...' solo required)
+    // Second page
+    v-window-item(:value='2')
+      .my-3
+        div(v-columns='"max-content auto"')
+          app-category-select.pl-3(
+            :value='form.category || categorySense',
+            @input='i=> form.category = i'
+            :categories='cats'
+          )
+          v-text-field.pr-3(
+            v-model='form.desc' label='Description' placeholder='Some expense...' solo required)
 
-          v-divider
-          app-grid(columns='70px auto')
-            v-icon(color='primary') mdi-cash-usd
-            app-splitting(:trans='form' on='creditors' :show-tabs='false')
-              v-subheader(slot='header') {{$t('ui.paid_by')}}
+        v-divider
+        div(v-columns='"70px auto"')
+          v-icon(color='primary') mdi-cash-usd
+          app-splitting(:trans='form' on='creditors' :show-tabs='false')
+            v-subheader(slot='header') {{$t('ui.paid_by')}}
 
-          v-divider
-          app-grid(columns='70px auto')
-            v-icon(color='primary') mdi-chart-pie
-            app-splitting(:trans='form' on='debtors')
-              v-subheader(slot='header') {{$t('ui.splitting.split_by')}}
+        v-divider
+        div(v-columns='"70px auto"')
+          v-icon(color='primary') mdi-chart-pie
+          app-splitting(:trans='form' on='debtors')
+            v-subheader(slot='header') {{$t('ui.splitting.split_by')}}
 
-          v-divider
-          app-grid(columns='70px auto' @click.native='pickDate()' v-ripple)
-            v-icon(color='primary') mdi-calendar
-            v-subheader {{dateDisplay}}
+        v-divider
+        div(v-columns='"70px auto"' @click.native='pickDate()' v-ripple)
+          v-icon(color='primary') mdi-calendar
+          v-subheader {{dateDisplay}}
 
-          v-divider
-          app-grid(columns='70px auto')
-            v-icon(color='primary') mdi-map-marker
-            v-subheader {{$t('ui.add_location')}}
+        v-divider
+        div(v-columns='"70px auto"')
+          v-icon(color='primary') mdi-map-marker
+          v-subheader {{$t('ui.add_location')}}
 
-          v-divider
-          app-grid(columns='70px auto')
-            v-icon(color='primary') mdi-history
-            v-subheader {{$t('ui.repeat_expense')}}
+        v-divider
+        div(v-columns='"70px auto"')
+          v-icon(color='primary') mdi-history
+          v-subheader {{$t('ui.repeat_expense')}}
 
   div
-    div(v-if='isMobile && step === 1')
-      +inputs()
-
     v-divider
     v-card-actions.pa-3
-      v-btn(v-show='step === 1', flat, @click='close')
-        | {{$t('ui.button_cancel')}}
+      template(v-if='step === 1')
+        v-btn(flat, @click='close')
+          | {{$t('ui.button_cancel')}}
 
-      v-btn(v-show='step !== 1', flat, @click='step--')
-        | {{$t('ui.button_back')}}
+      template(v-else)
+        v-btn(flat, @click='step--')
+          | {{$t('ui.button_back')}}
+
       v-spacer
 
       template(v-if='step === 1')

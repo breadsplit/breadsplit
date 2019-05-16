@@ -1,6 +1,6 @@
 <template lang='pug'>
 div
-  app-grid(columns='max-content auto')
+  div(v-columns='"max-content auto"')
     slot(name='header')
 
     v-tabs(v-model='tab', v-if='showTabs', slider-color='transparent' grow)
