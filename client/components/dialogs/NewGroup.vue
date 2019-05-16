@@ -36,7 +36,7 @@ v-card
                   | to create a new one
 
       v-flex
-        v-btn(@click='create()', :color='color', :dark='checkEmpty', :disabled='checkEmpty') {{submitBtnName}}
+        v-btn(@click='create()', :color='color', :disabled='checkEmpty') {{submitBtnName}}
         v-btn(@click='close(false)', flat, color='grey') {{$t('ui.button_cancel')}}
 
 </template>
@@ -110,7 +110,6 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
     return []
   }
   get checkEmpty(): boolean {
-    // FIXME: Still disabled when create group
     const hasEmpty = !(this.name && this.currency)
     return hasEmpty || this.viewmode
   }

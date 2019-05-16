@@ -31,7 +31,7 @@ v-app(:dark='dark')
       .drawer-list-bottom.pb-2
         v-divider.mb-2
         // New group item
-        v-list-tile(@click='$refs.newgroup.open()')
+        v-list-tile(@click='newGroup()')
           v-list-tile-action
             v-icon mdi-plus
           v-list-tile-content
@@ -232,6 +232,11 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
         this.$refs.newgroup.open({ mode: 'edit', name: group.name, currency: group.currencies[0], members: group.members, color: group.color, icon: group.icon })
         break
     }
+  }
+  async newGroup() {
+    this.closeDrawer()
+    // @ts-ignore
+    this.$refs.newgroup.open()
   }
 
   async promptLogout() {
