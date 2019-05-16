@@ -10,13 +10,31 @@ v-container
       p TODO:WRITING
 
     template(v-else)
+      img(src='/img/png/favicon-194x194.png', height='200px')
+      .appname {{$t('appname')}}
 
-      v-icon(:color='color', size='120').ma-3 mdi-{{group.icon}}
-      div(v-html='$t("ui.invited_to_join", [group.name])' style='font-size: 1.8em')
-      .avatars.mb-3
-        app-user-avatar(v-for='uid in serverGroup.viewers', :id='uid', :key='uid' size='32').ma-1
+      div(v-columns='"80px auto"')
+        v-icon(:color='color', size='50') mdi-{{group.icon}}
+        .text-xs-left.mt-2(v-html='$t("ui.invited_to_join", [group.name])' style='font-size: 1.8em')
 
-      v-btn(:color='color' dark :loading='joining' @click='join') {{$t('ui.button_join')}}
+      v-list(two-line)
+        template(v-for='(member, index) in members')
+          v-list-tile(:key='member.id', avatar)
+            v-list-tile-avatar
+              app-user-avatar(:id='member.id')
+            v-list-tile-content
+              v-list-tile-title
+                span(v-if='isLocal(member.id)') {{member.name}}
+                app-user-info(v-else :id='member.id', field='name')
+            v-list-tile-action(v-if='isLocal(member.id)')
+              v-btn(:color='color' dark :loading='joining' @click='join') 認領我
+            v-list-tile-action(v-else)
+              v-btn(disabled) 我有人囉
+
+        v-btn(:color='color' dark :loading='joining' @click='join') 我不在這ㄟ~
+
+      v-card.scroll-page.text-xs-left
+        pre {{JSON.stringify(members, null, 2)}}
 
   app-login(ref='login')
 </template>
@@ -24,6 +42,7 @@ v-container
 <script lang='ts'>
 import { Vue, Component } from 'vue-property-decorator'
 import { ServerGroup } from '~/types'
+import { IsThisId } from '~/core'
 
 @Component({
   // @ts-ignore
@@ -54,6 +73,12 @@ export default class JoinPage extends Vue {
     return undefined
   }
 
+  get members() {
+    if (!this.group)
+      return []
+    return Object.values(this.group.members)
+  }
+
   async join() {
     if (!this.id)
       return
@@ -66,6 +91,10 @@ export default class JoinPage extends Vue {
     this.joining = true
     await this.$fire.joinGroup(this.id)
     this.joining = false
+  }
+
+  isLocal(id: string) {
+    return IsThisId.LocalMember(id)
   }
 
   async mounted() {
