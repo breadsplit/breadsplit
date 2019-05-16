@@ -6,13 +6,14 @@ v-app(:dark='dark')
     v-model='drawer', :mini-variant='miniVariant'
     :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
   )
-    v-list
-      v-list-tile(@click='$router.push("/")')
-        v-list-tile-content
-          v-list-tile-title.app-name {{$t('appname')}}
-      v-divider.my-1
+    .height-100(v-rows='"max-content auto max-content"')
+      div
+        v-list-tile(@click='$router.push("/")')
+          v-list-tile-content
+            v-list-tile-title.app-name {{$t('appname')}}
+        v-divider.my-1
 
-      template(v-if='groups.length')
+      div(v-if='groups.length', style='overflow-y:auto')
         v-list-tile(
           v-for='(group, i) in groups'
           :key='i', :to='`/group/${group.id}`'
@@ -27,16 +28,15 @@ v-app(:dark='dark')
             template(v-else)
               v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
 
-        v-divider.my-1
-
-      // New group item
-      v-list-tile(@click='$refs.newgroup.open()')
-        v-list-tile-action
-          v-icon mdi-plus
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.group_editing.new_group')}}
-
       .drawer-list-bottom
+        v-divider.my-1
+        // New group item
+        v-list-tile(@click='$refs.newgroup.open()')
+          v-list-tile-action
+            v-icon mdi-plus
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.group_editing.new_group')}}
+
         // Sign in
         template(v-if='user.anonymous')
           v-list-tile(@click='$refs.login.open()')
@@ -267,12 +267,6 @@ export default class DefaultLayout extends Mixins(CommonMixin, GroupMixin) {
 </script>
 
 <style lang='stylus'>
-.drawer-list-bottom
-  position absolute
-  bottom 10px
-  left 0
-  right 0
-
 .app-toolbar
   .v-toolbar__content
     padding-right 2px
