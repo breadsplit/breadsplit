@@ -1,26 +1,25 @@
 <template lang='pug'>
 .group-page
-  .scroll-page
-    v-tabs-items(v-model='tab_index', v-if='group').pt-1
-      v-tab-item(key='0')
-        v-container(:class='{"pa-0": isMobile}')
-          app-balances
+  v-tabs-items(v-model='tab_index', v-if='group').pt-1
+    v-tab-item(key='0').scroll-page
+      v-container(:class='{"pa-0": isMobile}')
+        app-balances
 
-      v-tab-item(key='1')
-        v-container(:class='{"pa-0": isMobile}')
+    v-tab-item(key='1').scroll-page
+      v-container(:class='{"pa-0": isMobile}')
 
-          app-transactions
+        app-transactions
 
-          v-alert(:value='true', type='warning') Work in progress...
-          pre {{JSON.stringify(group, null, 2)}}
+        v-alert(:value='true', type='warning') Work in progress...
+        pre {{JSON.stringify(group, null, 2)}}
 
-      v-tab-item(key='2')
-        v-container(:class='{"pa-0": isMobile}')
-          app-activities
+    v-tab-item(key='2').scroll-page
+      v-container(:class='{"pa-0": isMobile}')
+        app-activities
 
-      v-tab-item(key='3')
-        v-container(:class='{"pa-0": isMobile}')
-          app-members(:members='members')
+    v-tab-item(key='3').scroll-page
+      v-container(:class='{"pa-0": isMobile}')
+        app-members(:members='members')
 
     div(style='height:15px')
 
