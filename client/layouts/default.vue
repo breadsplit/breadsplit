@@ -11,6 +11,7 @@ v-app(:dark='dark')
         .branding-area(v-ripple, @click='goHome()')
           img.logo(src='/img/png/favicon-194x194.png', height='40px')
           .app-name(:style='{color:$vuetify.theme.primary}') {{$t('appname')}}
+            .channel(v-text='channel')
         v-divider
 
       div(style='overflow-y:auto')
@@ -131,6 +132,7 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
   fixed = false
   miniVariant = false
   mobileBreakPoint = 700
+  channel: string = process.env.RELEASE_CHANNEL || ''
 
   @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
@@ -233,6 +235,7 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
         break
     }
   }
+
   async newGroup() {
     this.closeDrawer()
     // @ts-ignore
@@ -297,7 +300,15 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
     font-size 1.3em
     line-height 1em
     font-weight bold
-    padding: 6px 6px 0 6px;
+    padding 6px 6px 0 6px
+
+  .channel
+    display inline-block
+    font-size 0.6em
+    color rgba(125,125,125, 0.4)
+    font-weight normal
+    text-transform uppercase
+    margin-left 3px
 
 .v-navigation-drawer
   .v-list__tile

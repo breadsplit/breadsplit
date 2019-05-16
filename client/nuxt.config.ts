@@ -67,6 +67,7 @@ const config: NuxtConfiguration = {
   env: {
     NODE_ENV: process.env.NODE_ENV || 'development',
     BUILD_TARGET: process.env.BUILD_TARGET || '',
+    RELEASE_CHANNEL: process.env.RELEASE_CHANNEL || 'dev',
     BUILD_TIME: new Date().toISOString(),
     BUILD_MACHINE: process.env.BUILD_MACHINE || process.env.OSTYPE || '',
     APP_VERSION: pkg.version,
@@ -113,7 +114,7 @@ const config: NuxtConfiguration = {
       },
     },
     splitChunks: {},
-    extractCSS: true,
+    extractCSS: !debug,
     publicPath: '/nuxt/',
     /*
     ** You can extend webpack config here
@@ -124,7 +125,7 @@ const config: NuxtConfiguration = {
         // @ts-ignore
         config.module.rules.push({
           enforce: 'pre',
-          test: /\.(js|vue)$/,
+          test: /\.(js|vue|ts)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/,
         })
