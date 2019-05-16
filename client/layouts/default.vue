@@ -8,9 +8,9 @@ v-app(:dark='dark')
   )
     .height-100(v-rows='"max-content auto max-content"')
       div
-        .branding-area(v-ripple, @click='gotoHome()')
+        .branding-area(v-ripple, @click='goHome()')
           img.logo(src='/img/png/favicon-194x194.png', height='40px')
-          .app-name {{$t('appname')}}
+          .app-name(:style='{color:$vuetify.theme.primary}') {{$t('appname')}}
         v-divider
 
       div(style='overflow-y:auto')
@@ -242,9 +242,19 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
   }
 
   async settingPage() {
-    this.drawer = !this.drawer
+    this.closeDrawer()
     // @ts-ignore
     this.$refs.settings.open()
+  }
+
+  goHome() {
+    this.closeDrawer()
+    this.gotoHome()
+  }
+
+  closeDrawer() {
+    if (this.isMobile)
+      this.drawer = false
   }
 
   async syncCurrentGroup() {
