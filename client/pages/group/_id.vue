@@ -1,5 +1,5 @@
 <template lang='pug'>
-.group-page
+.group-page.height-100(style='margin-bottom: -60px')
   v-tabs-items(v-model='tab_index', v-if='group').pt-1
     v-tab-item(key='0').scroll-page
       v-container(:class='{"pa-0": isMobile}')

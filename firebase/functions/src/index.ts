@@ -2,9 +2,10 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
 
+import { TransOperationOption } from 'opschain'
 import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types'
 import { GenerateId } from '../../../core'
-import { Group } from '../../../types/models'
+import { Group, Operation } from '../../../types/models'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
 import { PushGroupOperationsNotification } from './push_notifications'
 
@@ -15,6 +16,16 @@ const GroupsRef = (id: string) => db.collection('groups').doc(id)
 const OperationsRef = (id: string) => db.collection('_operations').doc(id)
 
 const f = functions.https.onCall
+
+function recalculateGroupOperations(t: FirebaseFirestore.Transaction, groupid: string, ops: Operation[]) {
+  const present = Eval(ops)
+
+  t.update(OperationsRef(groupid), 'operations', omitDeep(ops))
+  t.update(GroupsRef(groupid), omitDeep({
+    present,
+    'operations': ops.map(o => o.hash),
+  }))
+}
 
 // firebase functions
 export const groupsCount = f(async (data, context) => {
@@ -68,13 +79,13 @@ export const publishGroup = f(async ({ group }: { group: Group }, context) => {
   return { id }
 })
 
-export const joinGroup = f(async ({ id }, context) => {
+export const joinGroup = f(async ({ id, join_as }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
   const uid = context.auth.uid
 
-  const join_operation = ProcessServerOperations([{
+  const operations: TransOperationOption[] = [{
     name: 'new_activity',
     data: {
       by: uid,
@@ -82,7 +93,17 @@ export const joinGroup = f(async ({ id }, context) => {
       entity: Entity.viewer,
       action: ActivityAction.insert,
     },
-  }], uid)[0]
+  }]
+  if (join_as) {
+    operations.push({
+      name: 'change_member_id',
+      data: {
+        from: join_as.toString(),
+        to: uid,
+      },
+    })
+  }
+  const join_operations = ProcessServerOperations(operations, uid)
 
   await db.runTransaction(async (t) => {
     const group = (await t.get(GroupsRef(id))).data() as ServerGroup
@@ -97,10 +118,13 @@ export const joinGroup = f(async ({ id }, context) => {
     const viewers = _.union(group.viewers || [], [uid])
     const operations = ops.operations
 
-    operations.push(join_operation)
+    join_operations.forEach((op) => {
+      operations.push(op)
+    })
 
     t.update(GroupsRef(id), 'viewers', viewers)
-    t.update(OperationsRef(id), 'operations', omitDeep(operations))
+
+    recalculateGroupOperations(t, id, operations)
   })
 })
 
@@ -145,13 +169,7 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
       .sortBy('timestamp')
       .value()
 
-    const present = Eval(ops)
-
-    t.update(OperationsRef(groupid), 'operations', omitDeep(ops))
-    t.update(GroupsRef(groupid), omitDeep({
-      present,
-      'operations': ops.map(o => o.hash),
-    }))
+    recalculateGroupOperations(t, groupid, ops)
   })
 
   await PushGroupOperationsNotification(groupid, incomingOperations, [uid])

@@ -4,6 +4,8 @@ v-app(:dark='dark')
 
   v-content
     nuxt
+
+  app-snackbar(ref='snack')
 </template>
 
 <script lang='ts'>
@@ -13,5 +15,10 @@ import { Getter } from 'vuex-class'
 @Component
 export default class BaseLayout extends Vue {
   @Getter('dark') dark!: boolean
+
+  mounted() {
+    // @ts-ignore
+    this.$root.$snack = this.$refs.snack.open
+  }
 }
 </script>
