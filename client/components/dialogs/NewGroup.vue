@@ -46,35 +46,45 @@ import swatches from '~/meta/swatches'
 import currencies from '~/meta/currencies'
 import { Component, Mixins } from 'vue-property-decorator'
 import { DialogChildMixin } from '~/mixins'
+import { TranslateResult } from 'vue-i18n'
 
 @Component
 export default class NewGroup extends Mixins(DialogChildMixin) {
   search = ''
-  get viewmode(): boolean {
-    return this.mode === 'view'
+  mode = ''
+  name = ''
+  currency = ''
+  icon = ''
+  color = swatches[Math.floor(Math.random() * swatches.length)]
+  viewmode = false
+
+  reset() {
+    if (this.options) {
+      this.mode = this.options.mode
+      this.name = this.options.name
+      this.currency = this.options.currency
+      this.viewmode = this.mode === 'view'
+      this.icon = this.options.icon || 'account-group'
+      this.color = this.options.color || swatches[Math.floor(Math.random() * swatches.length)]
+    }
   }
 
-  get title(): string {
-    // @ts-ignore
+  get title(): TranslateResult {
     if (!this.mode) return this.$t('ui.group_editing.new_group')
-    // @ts-ignore
     else if (this.mode === 'edit') return this.$t('ui.menu.edit_group')
-    // @ts-ignore
     else if (this.mode === 'view') return this.$t('ui.menu.view_group')
-    // @ts-ignore
     else return this.$t('ui.group_editing.default_group_name')
   }
 
-  get mode(): string {
-    return this.options.mode || ''
+  get submitBtnName(): TranslateResult {
+    if (this.mode)
+      return this.$t('ui.button_confirm')
+    else
+      return this.$t('ui.button_create')
   }
 
-  get name(): string {
-    return this.options.name || ''
-  }
-
-  get currency(): string {
-    return this.options.currency || ''
+  get currencies() {
+    return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
   }
 
   get members(): string[] {
@@ -85,26 +95,6 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
     return member
   }
 
-  get submitBtnName(): string {
-    if (this.mode)
-      // @ts-ignore
-      return this.$t('ui.button_confirm')
-    else
-      // @ts-ignore
-      return this.$t('ui.button_create')
-  }
-
-  get color(): string {
-    return this.options.color || swatches[Math.floor(Math.random() * swatches.length)]
-  }
-
-  get icon(): string {
-    return this.options.icon || 'account-group'
-  }
-
-  get currencies() {
-    return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
-  }
   get members_suggestions() {
     // TODO: load suggestions from another group
     return []
