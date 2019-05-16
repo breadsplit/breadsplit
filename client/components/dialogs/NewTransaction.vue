@@ -15,7 +15,7 @@ mixin inputs()
 
   app-soft-numpad(ref='numpad')
 
-v-card.new-trans-form
+v-card.new-trans-form(style='display:grid;grid-template-rows:max-content auto max-content')
   app-dialog-bar(@close='close()')
     | {{$t('ui.new_expense')}}
 
@@ -70,32 +70,31 @@ v-card.new-trans-form
             v-icon(color='primary') mdi-history
             v-subheader {{$t('ui.repeat_expense')}}
 
-  app-absolute-placeholder(:salt='step + visible')
-    app-div.bottom-nav
-      div(v-if='isMobile && step === 1')
-        +inputs()
+  div
+    div(v-if='isMobile && step === 1')
+      +inputs()
 
-      v-divider
-      v-card-actions.pa-3
-        v-btn(v-show='step === 1', flat, @click='close')
-          | {{$t('ui.button_cancel')}}
+    v-divider
+    v-card-actions.pa-3
+      v-btn(v-show='step === 1', flat, @click='close')
+        | {{$t('ui.button_cancel')}}
 
-        v-btn(v-show='step !== 1', flat, @click='step--')
-          | {{$t('ui.button_back')}}
-        v-spacer
+      v-btn(v-show='step !== 1', flat, @click='step--')
+        | {{$t('ui.button_back')}}
+      v-spacer
 
-        template(v-if='step === 1')
-          v-btn(:disabled='!form.total_fee', color='primary', flat, @click='submit')
-            | {{$t('ui.button_quick_add')}}
+      template(v-if='step === 1')
+        v-btn(:disabled='!form.total_fee', color='primary', flat, @click='submit')
+          | {{$t('ui.button_quick_add')}}
 
-          v-btn(:disabled='!form.total_fee', color='primary', depressed, @click='step++')
-            | {{$t('ui.button_next')}}
+        v-btn(:disabled='!form.total_fee', color='primary', depressed, @click='step++')
+          | {{$t('ui.button_next')}}
 
-        template(v-if='step === 2')
-          v-btn(:disabled='step === 3', color='primary', depressed, @click='submit')
-            | {{$t('ui.button_save')}}
+      template(v-if='step === 2')
+        v-btn(:disabled='step === 3', color='primary', depressed, @click='submit')
+          | {{$t('ui.button_save')}}
 
-  app-date-picker(ref='datePicker')
+    app-date-picker(ref='datePicker')
 </template>
 
 <script lang='ts'>
