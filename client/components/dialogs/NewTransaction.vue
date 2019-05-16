@@ -46,12 +46,14 @@ v-card.new-trans-form
           v-divider
           app-grid(columns='70px auto')
             v-icon(color='primary') mdi-cash-usd
-            v-subheader {{$t('ui.paid_by')}}
+            app-splitting(:trans='form' on='creditors' :show-tabs='false')
+              v-subheader(slot='header') {{$t('ui.paid_by')}}
 
           v-divider
           app-grid(columns='70px auto')
             v-icon(color='primary') mdi-chart-pie
-            app-splitting(:trans='form')
+            app-splitting(:trans='form' on='debtors')
+              v-subheader(slot='header') {{$t('ui.splitting.split_by')}}
 
           v-divider
           app-grid(columns='70px auto' @click.native='pickDate()' v-ripple)
@@ -168,9 +170,6 @@ export default class NewTransaction extends Mixins(GroupMixin, CommonMixin, Dial
 </script>
 
 <style lang='stylus' scoped>
-.bottom-nav
-  position absolute
-  bottom 0
-  left 0
-  right 0
+.new-trans-form
+  overflow-x hidden
 </style>

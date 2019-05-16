@@ -84,7 +84,14 @@
     "paid_by": "付款人",
     "add_location": "添加位置",
     "repeat_expense": "重複",
-    "title_join_a_group": "加入群組"
+    "title_join_a_group": "加入群組",
+    "splitting": {
+      "split_by": "拆分方式",
+      "average": "AA制",
+      "amount": "按金額",
+      "percent": "按趴數",
+      "weight": "按權重"
+    }
   },
   "cats": {
     "transport": {

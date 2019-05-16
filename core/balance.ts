@@ -23,10 +23,18 @@ export interface Balance {
   removed?: boolean
 }
 
+export function CreditorWeights(trans: Transaction): number {
+  return sumBy(trans.creditors, c => c.weight || 0)
+}
+
+export function DebtorWeights(trans: Transaction): number {
+  return sumBy(trans.debtors, d => d.weight || 0)
+}
+
 export function TransactionBalanceChanges(trans: Transaction): TransactionBalance[] {
   const fee = trans.total_fee
-  const creditorWeights = sumBy(trans.creditors, 'weight')
-  const debtorWeights = sumBy(trans.debtors, 'weight')
+  const creditorWeights = CreditorWeights(trans)
+  const debtorWeights = DebtorWeights(trans)
   const involvedIds = uniq(concat(map(trans.creditors, 'uid'), map(trans.debtors, 'uid')))
 
   const changes = involvedIds.map((uid): TransactionBalance => {

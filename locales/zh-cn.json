@@ -44,7 +44,8 @@
       "notification_enabled": "通知已启用",
       "notification_disabled": "通知已禁用",
       "clear_all_data": "清除所有数据"
-    }
+    },
+    "splitting": {}
   },
   "prompt": {
     "are_you_sure": "你确定吗？"
