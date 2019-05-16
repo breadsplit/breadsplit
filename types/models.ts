@@ -13,6 +13,7 @@ export const enum ActivityAction {
   insert = 'insert',
   remove = 'remove',
   update = 'update',
+  publish = 'publish',
 }
 
 export const enum Entity {

@@ -18,7 +18,7 @@ function format(str: string, args: any[]) {
   })
 };
 
-export function t(key: string, locale: string, values?: any[], fallback = 'en') {
+export function t(key: string, locale: string = 'en', values?: any[], fallback = 'en') {
   const value = getValue(key, locale, fallback)
   return format(value, values || [])
 }

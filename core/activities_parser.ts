@@ -26,6 +26,8 @@ export function getActivityDescription(
       return $t('acts.insert_transaction', [by, entity_name])
     case 'insert.group':
       return $t('acts.insert_group', [by])
+    case 'publish.group':
+      return $t('acts.publish_group', [by])
     case 'insert.viewer':
       return $t('acts.insert_viewer', [by])
   }

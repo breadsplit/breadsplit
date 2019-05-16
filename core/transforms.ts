@@ -10,12 +10,14 @@ import { Group, Member, Transaction, ActivityAction, Entity } from '../types'
 export const Transforms: TransformFunctions<Group> = {
   init(snap, data, { by, timestamp } = {}) {
     snap = Object.assign(snap || {}, data)
-    snap.activities = [{
+    if (!snap.activities)
+      snap.activities = []
+    snap.activities.push({
       by,
       timestamp,
-      action: ActivityAction.insert,
+      action: ActivityAction.publish,
       entity: Entity.group,
-    }]
+    })
     return snap
   },
 

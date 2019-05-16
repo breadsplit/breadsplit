@@ -155,7 +155,8 @@
   "acts": {
     "insert_transaction": "{0} added an expense: {1}",
     "insert_group": "{0} created the group",
-    "insert_viewer": "{0} joined the group"
+    "insert_viewer": "{0} joined the group",
+    "publish_group": "{0} changed group to online mode"
   },
   "help": {
     "no_password_login": {

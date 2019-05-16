@@ -127,7 +127,7 @@ export class FirebasePlugin {
     await this.auth.signOut()
   }
 
-  async publishGroup(id) {
+  async publishGroup(id: string) {
     const group = this.store.getters['group/id'](id) as Group
 
     const result = await this.functions.httpsCallable('publishGroup')({ group })
@@ -234,9 +234,9 @@ export class FirebasePlugin {
     }
   }
 
-  async joinGroup(id: string) {
+  async joinGroup(id: string, localmemberId?: string) {
     if (this.store.getters['group/all'].map(g => g.id).indexOf(id) === -1) {
-      await this.functions.httpsCallable('joinGroup')({ id })
+      await this.functions.httpsCallable('joinGroup')({ id, join_as: localmemberId })
       await this.manualSync(id)
     }
     this.router.push(`/group/${id}`)
