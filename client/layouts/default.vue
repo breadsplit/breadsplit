@@ -8,10 +8,10 @@ v-app(:dark='dark')
   )
     .height-100(v-rows='"max-content auto max-content"')
       div
-        v-list-tile(@click='$router.push("/")')
-          v-list-tile-content
-            v-list-tile-title.app-name {{$t('appname')}}
-        v-divider.my-1
+        .branding-area(v-ripple, @click='gotoHome()')
+          img.logo(src='/img/png/favicon-194x194.png', height='40px')
+          .app-name {{$t('appname')}}
+        v-divider
 
       div(style='overflow-y:auto')
         v-list-tile(
@@ -28,8 +28,8 @@ v-app(:dark='dark')
             template(v-else)
               v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
 
-      .drawer-list-bottom
-        v-divider.my-1
+      .drawer-list-bottom.pb-2
+        v-divider.mb-2
         // New group item
         v-list-tile(@click='$refs.newgroup.open()')
           v-list-tile-action
@@ -121,10 +121,10 @@ v-app(:dark='dark')
 import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
 import { Group, UserInfo } from '~/types'
-import { GroupMixin, CommonMixin } from '~/mixins'
+import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 
 @Component
-export default class DefaultLayout extends Mixins(CommonMixin, GroupMixin) {
+export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, GroupMixin) {
   // Data
   clipped = false
   drawer = false
@@ -269,9 +269,20 @@ export default class DefaultLayout extends Mixins(CommonMixin, GroupMixin) {
   .v-toolbar__content
     padding-right 2px
 
-.app-name
-  font-size 1.3em
-  font-weight bold
+.branding-area
+  cursor pointer
+  padding 12px
+  text-align center
+
+  .logo, .app-name
+    display inline-block
+    vertical-align middle
+
+  .app-name
+    font-size 1.3em
+    line-height 1em
+    font-weight bold
+    padding: 6px 6px 0 6px;
 
 .v-navigation-drawer
   .v-list__tile
