@@ -3,9 +3,12 @@ import VueI18n from 'vue-i18n'
 import { Messages } from '~/locales'
 import { Context } from '@nuxt/vue-app'
 
-export default ({ app, store }: Context) => {
+export default ({ app, store, route }: Context) => {
   // inject our i18n instance into the app root to be used in middleware
   // construction a new VueI18n
+
+  if (route.query.locale)
+    store.commit('switchLocale', route.query.locale)
 
   Vue.use(VueI18n)
 

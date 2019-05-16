@@ -46,7 +46,10 @@ jobs:
           file: ./src/coverage/*.json
           token: 5cc49569-d518-4ff6-9579-f0487c51b3a5
 
-      # update bundle size
-      #- run:
-      #    name: Build the app
-      #    command: npm run generate
+      # - run:
+      #     name: Build
+      #     command: npm run generate
+
+      # - run:
+      #     name: Run e2e tests
+      #     command: npm run test:e2e
