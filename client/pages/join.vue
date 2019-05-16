@@ -27,11 +27,11 @@ v-container
                 span(v-if='isLocal(member.id)') {{member.name}}
                 app-user-info(v-else :id='member.id', field='name')
             v-list-tile-action(v-if='isLocal(member.id)')
-              v-btn(:color='color' dark :loading='joining' @click='join') 認領我
+              v-btn(:color='color' dark :loading='joining' @click='join(member.id)') 認領我
             v-list-tile-action(v-else)
               v-btn(disabled) 我有人囉
 
-        v-btn(:color='color' dark :loading='joining' @click='join') 我不在這ㄟ~
+        v-btn(:color='color' dark :loading='joining' @click='join()') 我不在這ㄟ~
 
       v-card.scroll-page.text-xs-left
         pre {{JSON.stringify(members, null, 2)}}
@@ -79,7 +79,7 @@ export default class JoinPage extends Vue {
     return Object.values(this.group.members)
   }
 
-  async join() {
+  async join(memberId?: string) {
     if (!this.id)
       return
     if (!this.$store.getters['user/uid']) {
@@ -89,7 +89,7 @@ export default class JoinPage extends Vue {
         return
     }
     this.joining = true
-    await this.$fire.joinGroup(this.id)
+    await this.$fire.joinGroup(this.id, memberId)
     this.joining = false
   }
 
