@@ -14,7 +14,7 @@ v-card.settings
           v-list-tile-title {{$t('ui.setting_options.dark_mode')}}
           v-list-tile-sub-title {{ darkMode ? $t('ui.setting_options.enabled') : $t('ui.setting_options.disabled') }}
         v-list-tile-action
-          v-switch(color='primary', :value='darkMode')
+          v-switch(color='primary', :input-value='darkMode')
       v-list-tile(avatar, @click='languageSelecting=true')
         v-list-tile-avatar
           v-icon mdi-web
