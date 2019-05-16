@@ -13,7 +13,7 @@ v-app(:dark='dark')
             v-list-tile-title.app-name {{$t('appname')}}
         v-divider.my-1
 
-      div(v-if='groups.length', style='overflow-y:auto')
+      div(style='overflow-y:auto')
         v-list-tile(
           v-for='(group, i) in groups'
           :key='i', :to='`/group/${group.id}`'
@@ -121,9 +121,7 @@ v-app(:dark='dark')
 import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
 import { Group, UserInfo } from '~/types'
-import CommonMixin from '~/mixins/common'
-// import FontFamilyBuilder from '~/meta/font_family'
-import { GroupMixin } from '~/mixins'
+import { GroupMixin, CommonMixin } from '~/mixins'
 
 @Component
 export default class DefaultLayout extends Mixins(CommonMixin, GroupMixin) {
