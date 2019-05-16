@@ -66,7 +66,7 @@ export default class Members extends Vue {
         title: 'ui.menu.rename_member',
         handler: () => this.promptRenameMember(member),
       })
-      if (!this.iamJoined) {
+      if (!this.iamJoined && this.uid) {
         items.push({
           title: 'ui.menu.member_is_me',
           handler: () => this.thisIsMe(member),

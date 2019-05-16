@@ -64,7 +64,7 @@ export default class Activities extends Mixins(GroupMixin, UserInfoMixin, Naviga
   }
 
   activityDescription(act: Activity) {
-    return getActivityDescription(this.$t.bind(this), act, this.locale, this.getUserName.bind(this))
+    return getActivityDescription(this.$t.bind(this), act, this.locale, id => this.getUserName(id))
   }
 
   onActivityClick(act: Activity) {

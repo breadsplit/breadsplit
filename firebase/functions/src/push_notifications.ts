@@ -2,8 +2,8 @@ import * as admin from 'firebase-admin'
 import _ from 'lodash'
 import { ServerGroup, Operation, TokenRecord, UserInfo } from '../../../types'
 import { getActivityDescription } from '../../../core/activities_parser'
+import { t } from '../../../core/i18n'
 import { Eval } from './opschain'
-import { t } from './i18n'
 
 const GroupsRef = (id: string) => admin.firestore().collection('groups').doc(id)
 const MessageTokensRef = (id: string) => admin.firestore().collection('messaging_tokens').doc(id)

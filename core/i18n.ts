@@ -1,11 +1,11 @@
-import _ from 'lodash'
-import { Messages } from '../../../locales'
+import get from 'lodash/get'
+import { Messages } from '../locales'
 
 export function getValue(key: string, locale: string, fallback = 'en') {
-  let value = _.get(Messages, `${locale}.${key}`) || ''
+  let value = get(Messages, `${locale}.${key}`) || ''
 
   if (!value)
-    value = _.get(Messages, `${fallback}.${key}`) || ''
+    value = get(Messages, `${fallback}.${key}`) || ''
 
   return value.toString()
 }
@@ -22,3 +22,5 @@ export function t(key: string, locale: string, values?: any[], fallback = 'en') 
   const value = getValue(key, locale, fallback)
   return format(value, values || [])
 }
+
+export type Translator = (key: string, locale?: string, args?: any[]) => any

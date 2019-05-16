@@ -133,7 +133,7 @@ export default class NewTransaction extends Mixins(GroupMixin, CommonMixin, Dial
   }
 
   get dateDisplay() {
-    return dateToRelative(this.form.timestamp)
+    return dateToRelative(this.form.timestamp, this.$t.bind(this))
   }
 
   get categorySense() {

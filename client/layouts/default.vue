@@ -138,6 +138,7 @@ export default class DefaultLayout extends Mixins(CommonMixin, GroupMixin) {
   @Getter('group/current') current: Group | undefined
   @Getter('group/currentShareLink') currentShareLink: string | undefined
   @Getter('user/me') user!: UserInfo
+  @Getter('user/uid') uid: string | undefined
   @Getter('user/online') userIsOnline!: boolean
   @Getter('dark') dark!: boolean
   @Getter('blockedByWebview') blockedByWebview!: boolean
@@ -158,7 +159,7 @@ export default class DefaultLayout extends Mixins(CommonMixin, GroupMixin) {
     const menu: ({title: string; key: string})[] = []
 
     menu.push({ title: 'ui.menu.edit_group', key: 'edit' })
-    if (this.current && !this.current.online)
+    if (this.current && !this.current.online && this.uid)
       menu.push({ title: 'ui.menu.make_group_online', key: 'transfer_online' })
     menu.push({ title: 'ui.menu.remove_group', key: 'delete' })
 

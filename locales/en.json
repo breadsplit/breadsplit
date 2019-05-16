@@ -84,8 +84,6 @@
     },
     "misc": "Misc.",
     "invited_to_join": "You are invited to join group <b>{0}</b>",
-    "unknown_user": "",
-    "anonymous": "Anonymous",
     "become_a_patreon": "Become a Patreon",
     "help": "Help",
     "button_back": "Back",
@@ -100,6 +98,16 @@
     "add_location": "Add location",
     "repeat_expense": "Repeat",
     "title_join_a_group": "Join a group"
+  },
+  "pronoun": {
+    "me": "Me",
+    "i": "I",
+    "anonymous": "Anonymous"
+  },
+  "noun": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow"
   },
   "prompt": {
     "are_you_sure": "Are you sure?"

@@ -1,7 +1,8 @@
 import { Activity } from '../types'
+import { Translator } from './i18n'
 
 export function getActivityDescription(
-  t: (key: string, locale: string, args?: any[]) => any,
+  t: Translator,
   act: Activity,
   locale: string,
   getUserName: string | undefined | ((id: string) => string|undefined),
@@ -15,7 +16,7 @@ export function getActivityDescription(
   else if (getUserName != null)
     name = getUserName(act.by)
 
-  name = name || $t('ui.anonymous')
+  name = name || $t('pronoun.anonymous')
 
   const key = `${act.action}.${act.entity}`
   const by = serverSide ? name : `<b>${name}</b>`

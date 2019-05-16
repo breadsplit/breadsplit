@@ -1,4 +1,5 @@
 import { Vue, Component } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
 import { UserInfo, Member } from '~/types'
 import { IsThisId } from '~/core'
 import { avatarProvider } from '~/utils/avatar_providers'
@@ -6,6 +7,8 @@ import nanoid from 'nanoid'
 
 @Component
 export default class UserInfoMixin extends Vue {
+  @Getter('user/uid') uid: string|undefined
+
   getUser(id?: string, autoFetch: boolean = true): UserInfo | Member | null {
     if (!id)
       return null
@@ -36,7 +39,10 @@ export default class UserInfoMixin extends Vue {
     return avatarProvider(id || nanoid(), dark)
   }
 
-  getUserName(id: string) {
+  getUserName(id: string, pronoun = true) {
+    if (pronoun && id === this.uid)
+      return this.$t('pronoun.i').toString()
+
     const user = this.getUser(id)
     if (user)
       return user.name

@@ -4,6 +4,7 @@ import _ from 'lodash'
 
 import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types'
 import { GenerateId } from '../../../core'
+import { Group } from '../../../types/models'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
 import { PushGroupOperationsNotification } from './push_notifications'
 
@@ -23,7 +24,7 @@ export const groupsCount = f(async (data, context) => {
   return groups.size
 })
 
-export const publishGroup = f(async ({ group }, context) => {
+export const publishGroup = f(async ({ group }: { group: Group }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
@@ -32,7 +33,12 @@ export const publishGroup = f(async ({ group }, context) => {
 
   group.id = id
   group.online = true
-  group.activities = []
+  group.activities = (group.activities || [])
+    .map((act) => {
+      if (!act.by)
+        act.by = user_uid
+      return act
+    })
 
   const initOperations = ProcessServerOperations([{
     name: 'init',
@@ -84,6 +90,9 @@ export const joinGroup = f(async ({ id }, context) => {
 
     if (!group || !ops)
       throw new Error('group_not_exists')
+
+    if (group.viewers.includes(uid))
+      return // user already inside the group
 
     const viewers = _.union(group.viewers || [], [uid])
     const operations = ops.operations

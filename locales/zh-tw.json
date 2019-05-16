@@ -70,7 +70,6 @@
     "button_join": "加入",
     "invited_to_join": "您被邀請加入 <b>{0}</b> 小組",
     "loading_group_info": "正在加載群組信息...",
-    "anonymous": "匿名",
     "about": "關於我們",
     "become_a_patreon": "在 Patreon 上成為贊助者",
     "help": "使用幫助",
@@ -119,6 +118,16 @@
     "other": {
       "display": "其他"
     }
+  },
+  "pronoun": {
+    "me": "我",
+    "i": "我",
+    "anonymous": "匿名"
+  },
+  "noun": {
+    "today": "今天",
+    "yesterday": "昨天",
+    "tomorrow": "明天"
   },
   "prompt": {
     "are_you_sure": "你確定嗎？"
