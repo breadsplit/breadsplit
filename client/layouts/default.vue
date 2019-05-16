@@ -58,7 +58,7 @@ v-app(:dark='dark')
               v-icon(color='red', size='20') mdi-cloud-off-outline
 
         // Settings
-        v-list-tile(@click='$refs.settings.open()')
+        v-list-tile(@click='settingPage()')
           v-list-tile-action
             v-icon mdi-settings
           v-list-tile-content
@@ -240,6 +240,12 @@ export default class DefaultLayout extends Mixins(CommonMixin, GroupMixin) {
       await this.$fire.logout()
       this.$router.push('/')
     }
+  }
+
+  async settingPage() {
+    this.drawer = !this.drawer
+    // @ts-ignore
+    this.$refs.settings.open()
   }
 
   async syncCurrentGroup() {
