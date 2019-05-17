@@ -11,24 +11,28 @@ orbs:
 jobs:
   unit_test:
     docker:
-      - image: cypress/node:10
+      - image: circleci/node:10
+
+    working_directory: ~/app
 
     steps:
       - checkout
 
       - restore_cache:
           keys:
-            - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
       - run:
-          name: Npm CI
-          command: npm ci
+          name: Install dependencies
+          command: npm i
 
       - save_cache:
-          key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
-            - ~/.npm
-            - ~/.cache
+            - node_modules
+
+          key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
           name: Run tests
