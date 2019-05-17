@@ -42,9 +42,11 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - unit_test
-
       - cypress/install
+
+      - unit_test:
+          requires:
+            - cypress/install
 
       - cypress/run:
           requires:
