@@ -23,7 +23,7 @@ v-card
           v-model='members', :items='members_suggestions'
           :search-input.sync='search', hide-selected
           label='Members', multiple, persistent-hint
-          small-chips, prepend-icon='mdi-account-multiple' clearable :disabled='viewmode'
+          chips, deletable-chips, prepend-icon='mdi-account-multiple' clearable :disabled='viewmode'
         )
           template(v-slot:no-data='')
             v-list-tile
