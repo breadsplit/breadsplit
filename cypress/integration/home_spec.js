@@ -27,8 +27,9 @@ describe('The Home Page', () => {
 
     cy.url().should('include', '/group/')
 
-    /* cy.get('.balances')
-      .should('include', 'UserA')
-      .should('include', 'UserB') */
+    cy.get('.balances').should((balances) => {
+      expect(balances).to.contain('UserA')
+      expect(balances).to.contain('UserB')
+    })
   })
 })

@@ -41,7 +41,7 @@
     "electron:dev": "npm run dev --prefix=./electron",
     "electron:pack": "npm run build --prefix=./electron",
     "electron:build": "cross-env BUILD_TARGET=electron npm run generate && npm run electron:pack",
-    "cy:run": "cypress run",
+    "cy:run:ci": "cypress run --record",
     "cy:open": "cypress open",
     "cy:dev": "concurrently \"npm run dev\" \"npm run cy:open\"",
     "docs:dev": "npx vuepress dev docs",
@@ -50,7 +50,7 @@
     "test": "jest",
     "test:firebase": "jest --config=./firebase/functions/jest.config.js",
     "test:watch": "jest --watch",
-    "test:e2e": "start-server-and-test generate:host http://localhost:3000 cy:run"
+    "test:e2e": "start-server-and-test generate:host http://localhost:3000 cy:run:ci"
   },
   "dependencies": {
     "@dicebear/avatars": "^3.0.6",
