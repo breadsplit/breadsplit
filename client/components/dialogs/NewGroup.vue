@@ -23,7 +23,7 @@ v-card
           v-model='members', :items='members_suggestions'
           :search-input.sync='search', hide-selected
           label='Members', multiple, persistent-hint
-          chips, deletable-chips, prepend-icon='mdi-account-multiple' clearable :disabled='viewmode'
+          small-chips, deletable-chips, prepend-icon='mdi-account-multiple' clearable :disabled='viewmode'
         )
           template(v-slot:no-data='')
             v-list-tile
@@ -54,18 +54,21 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
   mode = ''
   name = ''
   currency = ''
-  icon = ''
+  icon = 'account-group'
   color = swatches[Math.floor(Math.random() * swatches.length)]
   viewmode = false
+  members = []
 
   reset() {
-    if (this.options) {
+    if (this.options.mode) {
       this.mode = this.options.mode
       this.name = this.options.name
       this.currency = this.options.currency
+      // @ts-ignore
+      Object.values(this.options.members).forEach((m) => { this.members.push(m.name) })
       this.viewmode = this.mode === 'view'
-      this.icon = this.options.icon || 'account-group'
-      this.color = this.options.color || swatches[Math.floor(Math.random() * swatches.length)]
+      this.icon = this.options.icon
+      this.color = this.options.color
     }
   }
 
@@ -85,14 +88,6 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
 
   get currencies() {
     return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
-  }
-
-  get members(): string[] {
-    const member = []
-    if (this.options.members)
-    // @ts-ignore
-      Object.values(this.options.members).forEach((m) => { member.push(m.name) })
-    return member
   }
 
   get members_suggestions() {
