@@ -198,7 +198,7 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
 
     switch (key) {
       case 'delete':
-        if (await this.$root.$confirm('Are you sure?')) {
+        if (await this.$root.$confirm(`確定要刪除 ${group.name} ?`)) {
           this.$root.$apploading.open('Deleting group')
           if (this.current && this.current.online)
             await this.$fire.deleteGroup(groupid)
