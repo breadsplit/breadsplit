@@ -46,15 +46,9 @@ workflows:
   version: 2
   build_and_test:
     jobs:
-      - cypress/install
-
-      - unit_test:
-          requires:
-            - cypress/install
+      - unit_test
 
       - cypress/run:
-          requires:
-            - cypress/install
           record: true
           wait-on: 'http://localhost:3000'
           start: FIERBASE_SERVER=test npm run generate && npm run generate:host
