@@ -224,7 +224,7 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
 
       case 'edit':
         // @ts-ignore
-        this.$refs.newgroup.open({ mode: 'edit', name: group.name, currency: group.currencies[0], members: group.members, color: group.color, icon: group.icon })
+        this.$refs.newgroup.open({ mode: 'edit' })
         break
     }
   }

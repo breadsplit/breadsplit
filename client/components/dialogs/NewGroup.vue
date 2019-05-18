@@ -45,8 +45,10 @@ v-card.new-group
 import swatches from '~/meta/swatches'
 import currencies from '~/meta/currencies'
 import { Component, Mixins } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
+import { Group, UserInfo, GroupMetaChanges } from '~/types'
 import { IdMe } from '~/core'
 
 @Component
@@ -60,24 +62,23 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
   viewmode = false
   members = []
 
+  @Getter('group/current') current: Group | undefined
+  @Getter('user/me') user!: UserInfo
+  @Getter('user/uid') uid: string | undefined
+
   reset() {
     if (this.options.mode) {
-      this.mode = this.options.mode
-      this.name = this.options.name
-      this.currency = this.options.currency
-      // @ts-ignore
-      Object.values(this.options.members).forEach((m) => { this.members.push(m.name) })
-      this.viewmode = this.mode === 'view'
-      this.icon = this.options.icon
-      this.color = this.options.color
+      if (this.current) {
+        this.name = this.current.name
+        this.currency = this.current.currencies[0]
+        this.icon = this.current.icon || ''
+        this.color = this.current.color || ''
+        // @ts-ignore
+        Object.values(this.current.members).forEach((m) => { this.members.push(m.name) })
+      }
     }
-  }
-
-  get uid() {
-    return this.$store.getters['user/uid']
-  }
-  get me() {
-    return this.$store.getters['user/me']
+    this.mode = this.options.mode
+    this.viewmode = this.mode === 'view'
   }
 
   get title(): TranslateResult {
@@ -108,25 +109,31 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
     if (!this.uid)
       m.push({ id: IdMe, name: this.$t('pronoun.me') })
     else
-      m.push({ id: this.uid, name: this.me.name })
+      m.push({ id: this.uid, name: this.user.name })
   }
 
   close(result?) {
     this.$emit('close', result)
   }
   create() {
-    const payload = {
-      name: this.name,
-      color: this.color,
-      icon: this.icon,
-      members: this.members.map((m) => { return { name: m } }),
-      currencies: [this.currency],
-    }
     if (this.mode) {
-      // TODO: update group implement
+      const pay: GroupMetaChanges = {
+        name: this.name,
+        color: this.color,
+        icon: this.icon,
+        currency: [this.currency],
+      }
+      this.$store.dispatch('group/modify', { changes: pay })
       this.close()
     }
     else {
+      const payload = {
+        name: this.name,
+        color: this.color,
+        icon: this.icon,
+        members: this.members.map((m) => { return { name: m } }),
+        currencies: [this.currency],
+      }
       this.defaultMember(payload.members)
       this.$store.commit('group/add', payload)
       this.close()
