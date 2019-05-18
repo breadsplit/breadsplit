@@ -4,8 +4,8 @@ v-card.about-page
     | {{$t('ui.about')}}
 
   v-container.text-xs-center
-    img(src='/img/png/favicon-194x194.png', height='100px')
-    .appname {{$t('appname')}}
+    app-logo-name.large
+
     p balabalbala
 
     app-brand-button(brand='patreon' :href='socials.patreon' target='__blank')

@@ -8,10 +8,7 @@ v-app(:dark='dark')
   )
     .height-100(v-rows='"max-content auto max-content"')
       div
-        .branding-area(v-ripple, @click='goHome()')
-          img.logo(src='/img/png/favicon-194x194.png', height='40px')
-          .app-name(:style='{color:$vuetify.theme.primary}') {{$t('appname')}}
-            .channel(v-text='channel')
+        app-logo-name.clickable(v-ripple, @click.native='goHome()')
         v-divider
 
       div(style='overflow-y:auto')
@@ -282,29 +279,6 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
 .app-toolbar
   .v-toolbar__content
     padding-right 2px
-
-.branding-area
-  cursor pointer
-  padding 12px
-  text-align center
-
-  .logo, .app-name
-    display inline-block
-    vertical-align middle
-
-  .app-name
-    font-size 1.3em
-    line-height 1em
-    font-weight bold
-    padding 6px 6px 0 6px
-
-  .channel
-    display inline-block
-    font-size 0.6em
-    color rgba(125,125,125, 0.4)
-    font-weight normal
-    text-transform uppercase
-    margin-left 3px
 
 .v-navigation-drawer
   .v-list__tile
