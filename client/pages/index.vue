@@ -5,7 +5,7 @@ v-container
       template(v-for='(group, i) in groups')
         nuxt-link.group-entry(v-ripple, :to='`/group/${group.id}`', :style='groupCssVars(group)')
           v-icon mdi-{{ group.icon }}
-          .groupname(v-text='group.name')
+          .groupname.text-truncate(v-text='group.name')
 
     v-divider.my-3
 
@@ -58,6 +58,7 @@ export default class Homepage extends Vue {
   .groupname
     position absolute
     left var(--group-padding)
+    right var(--group-padding)
     bottom var(--group-padding)
     color var(--group-color)
     line-height 1em
