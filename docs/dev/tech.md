@@ -24,6 +24,11 @@ Assets
 
 - [Material Design Icons](https://materialdesignicons.com/) (Icon set)
 
+Testing
+
+- [Jest](https://jestjs.io/) (Unit testing)
+- [Cypress](https://www.cypress.io/) (End-to-end testing)
+
 Services
 
 - [Firebase](https://firebase.google.com/) (Auth, Serverless and Database)
@@ -31,6 +36,7 @@ Services
 - [Netlify](https://www.netlify.com/) (Web build and deploy)
 - [CircleCI](https://circleci.com/) (Testing CI)
 - [Codecov](https://codecov.io/) (Code coverage)
+- [Cypress Dashboard](https://www.cypress.io/dashboard) (E2E testing records)
 
 ## Backend (Serverless)
 
