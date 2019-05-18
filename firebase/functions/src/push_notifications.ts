@@ -55,9 +55,20 @@ export async function PushGroupOperationsNotification(
   const viewers = group.viewers
   const receivers = _.without(viewers, ...excludesIds)
   const receiversTokens = await GetMessagingTokens(receivers)
-  const users = await GetUserInfos(receivers)
+  const users: Record<string, UserInfo> = {}
 
-  const messages: any[] = []
+  const getUserInfo = async (uid: string) => {
+    if (users[uid])
+      return users[uid]
+    const doc = await UserInfoRef(uid).get()
+    if (!doc.exists)
+      return undefined
+    const user = doc.data() as UserInfo
+    users[uid] = user
+    return user
+  }
+
+  const messages: admin.messaging.Message[] = []
 
   for (const op of operations) {
     if (op.name === 'insert_transaction') {
@@ -67,13 +78,19 @@ export async function PushGroupOperationsNotification(
         continue
 
       for (const token of receiversTokens) {
-        const username = token.uid && users[token.uid] && users[token.uid].name
-        const title = getActivityDescription(t, act, token.locale, username, true)
+        const user = await getUserInfo(act.by)
+        const username = user && user.name
+        const description = getActivityDescription(t, act, token.locale, username, true)
+        const groupname = group.present.name
 
         messages.push({
           notification: {
-            title,
-            body: group.present.name,
+            title: description,
+            body: groupname,
+          },
+          data: {
+            title: description,
+            body: groupname,
           },
           token: token.token,
         })

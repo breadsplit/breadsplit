@@ -4,12 +4,13 @@ This file is shared both in client and server.
 If you made any modification,
 Please DO DEPLOY firebase functions before merge into master.
 */
+import cloneDeep from 'lodash/cloneDeep'
 import { TransformFunctions } from 'opschain'
 import { Group, Member, Transaction, ActivityAction, Entity } from '../types'
 
 export const Transforms: TransformFunctions<Group> = {
   init(snap, data, { by, timestamp } = {}) {
-    snap = Object.assign(snap || {}, data)
+    snap = Object.assign(snap || {}, cloneDeep(data))
     if (!snap.activities)
       snap.activities = []
     snap.activities.push({
