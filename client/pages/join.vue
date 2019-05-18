@@ -15,8 +15,9 @@ v-container
 
     template(v-else)
       div(v-columns='"80px auto"')
-        v-icon(:color='color', size='50') mdi-{{group.icon}}
-        .text-xs-left.mt-2(v-html='$t("ui.invited_to_join", [group.name])' style='font-size: 1.4em')
+        v-icon(color='primary', size='50') mdi-{{group.icon}}
+        .text-xs-left.mt-2(v-html='$t("ui.invited_to_join",[])' style='font-size: 1.4em')
+        span.primary--text {{group.name}}
 
       v-card.px-2.pb-2.ma-2
         v-list(two-line style='height: 300px; overflow-y: auto;')
@@ -29,12 +30,12 @@ v-container
                   span(v-if='isLocal(member.id)') {{member.name}}
                   app-user-info(v-else :id='member.id', field='name')
               v-list-tile-action(v-if='isLocal(member.id)')
-                v-btn(:color='color' dark :loading='joining' @click='join(member.id)') 認領我
+                v-btn(color='primary' dark :loading='joining' @click='join(member.id)') 認領我
               v-list-tile-action(v-else)
-                v-btn(disabled) 我有人囉
+                v-icon(color='green lighten-1', size='50') mdi-account-check
             v-divider
 
-        v-btn(:color='color' dark :loading='joining' @click='join()') 我不在這ㄟ~
+      v-btn(color='primary' dark :loading='joining' @click='join()') 我不在這ㄟ~
 
   app-login(ref='login')
 </template>
