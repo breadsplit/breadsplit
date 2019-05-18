@@ -121,7 +121,7 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
         name: this.name,
         color: this.color,
         icon: this.icon,
-        currency: [this.currency],
+        currencies: [this.currency],
       }
       this.$store.dispatch('group/modify', { changes: pay })
       this.close()
