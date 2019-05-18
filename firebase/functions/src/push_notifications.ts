@@ -88,10 +88,6 @@ export async function PushGroupOperationsNotification(
             title: description,
             body: groupname,
           },
-          data: {
-            title: description,
-            body: groupname,
-          },
           token: token.token,
         })
       }

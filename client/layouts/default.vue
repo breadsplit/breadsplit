@@ -118,7 +118,18 @@ import { Getter, Mutation } from 'vuex-class'
 import { Group, UserInfo } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 
-@Component
+@Component({
+  head() {
+    if (this.$route.path !== '/') {
+      return {
+        titleTemplate: `%s - ${this.$t('appname')}`,
+      }
+    }
+    return {
+      title: this.$t('appname').toString(),
+    }
+  },
+})
 export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, GroupMixin) {
   // Data
   clipped = false
