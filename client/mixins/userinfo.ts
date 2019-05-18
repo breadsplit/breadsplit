@@ -13,9 +13,8 @@ export default class UserInfoMixin extends Vue {
     if (!id)
       return undefined
     if (IsThisId.Me(id)) {
-      const me = this.$store.getters['user/me']
-      if (me)
-        return me
+      if (this.$store.getters['user/uid'])
+        return this.$store.getters['user/me']
       return {
         id,
         name: this.$t('pronoun.me').toString(),
