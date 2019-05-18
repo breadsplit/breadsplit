@@ -192,6 +192,6 @@ export interface GroupMetaChanges {
   name?: string
   icon?: string
   color?: string
-  currency?: string[]
+  currencies?: string[]
   options?: Partial<GroupOptions>
 }
