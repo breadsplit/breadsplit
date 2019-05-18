@@ -1,4 +1,6 @@
 {
   "baseUrl": "http://localhost:3000",
-  "projectId": "m9d7tr"
+  "projectId": "m9d7tr",
+  "viewportWidth": 1280,
+  "viewportHeight": 800
 }

@@ -32,7 +32,7 @@
         v-icon mdi-{{item.icon}}
 
   v-fab-transition
-    v-btn(
+    v-btn.new-transaction-button(
       fab color='primary'
       :style='fabStyle'
       @click='gotoNewTransaction()'

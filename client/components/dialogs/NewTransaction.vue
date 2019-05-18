@@ -40,7 +40,7 @@ v-card.new-transaction(v-rows='"max-content auto max-content"')
             @input='i=> form.category = i'
             :categories='cats'
           )
-          v-text-field.pr-3(
+          v-text-field.pr-3.description-field(
             v-model='form.desc' label='Description' placeholder='Some expense...' solo required)
 
         v-divider
@@ -74,24 +74,24 @@ v-card.new-transaction(v-rows='"max-content auto max-content"')
     v-divider
     v-card-actions.pa-3
       template(v-if='step === 1')
-        v-btn(flat, @click='close')
+        v-btn.button-cancel(flat, @click='close')
           | {{$t('ui.button_cancel')}}
 
       template(v-else)
-        v-btn(flat, @click='step--')
+        v-btn.button-back(flat, @click='step--')
           | {{$t('ui.button_back')}}
 
       v-spacer
 
       template(v-if='step === 1')
-        v-btn(:disabled='!form.total_fee', color='primary', flat, @click='submit')
+        v-btn.button-quick-add(:disabled='!form.total_fee', color='primary', flat, @click='submit')
           | {{$t('ui.button_quick_add')}}
 
-        v-btn(:disabled='!form.total_fee', color='primary', depressed, @click='step++')
+        v-btn.button-next-step(:disabled='!form.total_fee', color='primary', depressed, @click='step++')
           | {{$t('ui.button_next')}}
 
       template(v-if='step === 2')
-        v-btn(:disabled='step === 3', color='primary', depressed, @click='submit')
+        v-btn.button-save(:disabled='step === 3', color='primary', depressed, @click='submit')
           | {{$t('ui.button_save')}}
 
     app-date-picker(ref='datePicker')
