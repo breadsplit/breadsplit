@@ -1,9 +1,17 @@
-describe('The Home Page', () => {
+describe('Offline functions', () => {
   it('can be visited', () => {
-    cy.visit('/?locale=en')
+    cy.visit('/?lang=en')
 
     cy.title()
       .should('equal', 'BreadSplit')
+  })
+
+  it('should popup welcome message', () => {
+    cy.get('.init-page .v-toolbar__title')
+      .should('contain', 'Welcome to BreadSplit')
+
+    cy.get('.init-page .v-card__actions > .v-btn.primary')
+      .click()
   })
 
   it('can create group', () => {

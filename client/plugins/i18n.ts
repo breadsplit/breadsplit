@@ -7,8 +7,8 @@ export default ({ app, store, route }: Context) => {
   // inject our i18n instance into the app root to be used in middleware
   // construction a new VueI18n
 
-  if (route.query.locale)
-    store.commit('switchLocale', route.query.locale)
+  if (route.query.lang)
+    store.commit('switchLocale', route.query.lang)
 
   Vue.use(VueI18n)
 
