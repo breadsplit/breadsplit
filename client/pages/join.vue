@@ -20,7 +20,7 @@ v-container
 
       v-card.px-2.pb-2.ma-2
         v-list(two-line style='height: 300px; overflow-y: auto;')
-          template(v-for='(member, index) in members')
+          template(v-for='(member, index) in orderMembers(members)')
             v-list-tile(:key='member.id', avatar)
               v-list-tile-avatar
                 app-user-avatar(:id='member.id', size='40')
@@ -77,6 +77,17 @@ export default class JoinPage extends Vue {
     if (!this.group)
       return []
     return Object.values(this.group.members)
+  }
+
+  orderMembers(members: object) {
+    const orderList = []
+    members.forEach((m) => {
+      if (this.isLocal(m.id))
+        orderList.unshift(m)
+      else
+        orderList.push(m)
+    })
+    return orderList
   }
 
   async join(memberId?: string) {
