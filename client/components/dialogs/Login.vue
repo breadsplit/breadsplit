@@ -32,6 +32,8 @@ export default class Login extends Vue {
       this.close(true)
     }
     catch (e) {
+      // TODO: show user feedback
+      // eslint-disable-next-line no-console
       console.error(e)
     }
   }

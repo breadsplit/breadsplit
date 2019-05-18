@@ -66,6 +66,7 @@ const config: NuxtConfiguration = {
 
   env: {
     NODE_ENV: process.env.NODE_ENV || 'development',
+    FIREBASE_SERVER: process.env.FIREBASE_SERVER || 'development',
     BUILD_TARGET: process.env.BUILD_TARGET || '',
     RELEASE_CHANNEL: process.env.RELEASE_CHANNEL || 'dev',
     BUILD_TIME: new Date().toISOString(),

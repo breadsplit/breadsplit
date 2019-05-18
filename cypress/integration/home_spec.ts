@@ -1,5 +1,7 @@
 describe('The Home Page', () => {
   it('Add a group', () => {
+    cy.viewport('macbook-13')
+
     cy.visit('/?locale=en')
 
     cy.contains('new group').click()

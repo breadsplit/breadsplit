@@ -82,6 +82,7 @@
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
+    "@cypress/webpack-preprocessor": "^4.0.3",
     "@nuxt/typescript": "^2.6.2",
     "@nuxtjs/eslint-config": "^0.0.1",
     "@types/jest": "^24.0.11",
@@ -99,6 +100,8 @@
     "eslint": "^5.16.0",
     "eslint-config-standard": ">=12.0.0",
     "eslint-loader": "^2.1.2",
+    "eslint-plugin-chai-friendly": "^0.4.1",
+    "eslint-plugin-cypress": "^2.2.1",
     "eslint-plugin-import": ">=2.16.0",
     "eslint-plugin-jest": ">=22.4.1",
     "eslint-plugin-node": ">=8.0.1",

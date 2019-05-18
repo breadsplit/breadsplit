@@ -317,6 +317,7 @@ export class FirebasePlugin {
     }
     catch (e) {
       log(`🐛 Error on download profile of ${uid}`)
+      // eslint-disable-next-line no-console
       console.error(e)
     }
   }

@@ -5,6 +5,8 @@
   .buildinfo
     span Build {{buildtime}} - {{buildTimeFromNow}}
     span(v-if='machine') /{{machine}}
+  .section
+    span Server: {{serverName}}
   .my-2
   //.line-divider
 
@@ -14,6 +16,7 @@
     .divider
     .section
       a(:href='i.href', target='_blank') {{i.name}}
+
   .newline
 
   .section
@@ -37,6 +40,7 @@ export default class Credit extends Vue {
   buildtime = process.env.BUILD_TIME
   machine = process.env.BUILD_MACHINE
   channel = process.env.RELEASE_CHANNEL
+  serverName = process.env.FIREBASE_SERVER
 
   get buildTimeFromNow() {
     return dayjs(this.buildtime).fromNow()
