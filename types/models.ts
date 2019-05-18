@@ -19,7 +19,7 @@ export const enum ActivityAction {
 export const enum Entity {
   member = 'member',
   viewer = 'viewer',
-  group ='group',
+  group = 'group',
   transaction ='transaction',
   currency_record = 'currency_record',
 }
@@ -94,6 +94,7 @@ export interface Activity {
   by: uid
   action: ActivityAction
   entity: Entity
+  update_fields?: string | string[]
   entity_id?: string
   entity_name?: string
   entity_desc?: string
@@ -186,4 +187,11 @@ export interface FeedbackOptions {
 export interface Feedback extends FeedbackOptions {
   uid: string | null
   timestamp: number
+}
+
+export interface GroupMetaChanges {
+  name?: string
+  icon?: string
+  color?: string
+  options?: Partial<GroupOptions>
 }
