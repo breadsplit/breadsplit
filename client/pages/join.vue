@@ -19,8 +19,8 @@ v-container
         .text-xs-left.mt-2(v-html='$t("ui.invited_to_join", [group.name])' style='font-size: 1.4em')
 
       v-card.px-2.pb-2.ma-2
-        v-list(two-line)
-          template(v-for='(member, index) in members')
+        v-list(two-line style='height: 300px; overflow-y: auto;')
+          template(v-for='(member, index) in members()')
             v-list-tile(:key='member.id', avatar)
               v-list-tile-avatar
                 app-user-avatar(:id='member.id', size='40')
@@ -41,7 +41,7 @@ v-container
 
 <script lang='ts'>
 import { Vue, Component } from 'vue-property-decorator'
-import { ServerGroup } from '~/types'
+import { ServerGroup, Member } from '~/types'
 import { IsThisId } from '~/core'
 
 @Component({
@@ -73,10 +73,17 @@ export default class JoinPage extends Vue {
     return undefined
   }
 
-  get members() {
+  members() {
     if (!this.group)
       return []
-    return Object.values(this.group.members)
+    const orderList: Member[] = []
+    Object.values(this.group.members).forEach((m) => {
+      if (this.isLocal(m.id))
+        orderList.unshift(m)
+      else
+        orderList.push(m)
+    })
+    return orderList
   }
 
   async join(memberId?: string) {

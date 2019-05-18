@@ -72,6 +72,13 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
     }
   }
 
+  get uid() {
+    return this.$store.getters['user/uid']
+  }
+  get me() {
+    return this.$store.getters['user/me']
+  }
+
   get title(): TranslateResult {
     if (!this.mode) return this.$t('ui.group_editing.new_group')
     else if (this.mode === 'edit') return this.$t('ui.menu.edit_group')
@@ -80,10 +87,7 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
   }
 
   get submitBtnName(): TranslateResult {
-    if (this.mode)
-      return this.$t('ui.button_confirm')
-    else
-      return this.$t('ui.button_create')
+    return this.mode ? this.$t('ui.button_confirm') : this.$t('ui.button_create')
   }
 
   get currencies() {
@@ -97,6 +101,13 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
   get checkEmpty(): boolean {
     const hasEmpty = !(this.name && this.currency)
     return hasEmpty || this.viewmode
+  }
+
+  defaultMember(m) {
+    if (!this.uid)
+      m.push({ name: this.$t('pronoun.me') })
+    else
+      m.push({ id: this.uid, name: this.me.name })
   }
 
   close(result?) {
@@ -115,6 +126,7 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
       this.close()
     }
     else {
+      this.defaultMember(payload.members)
       this.$store.commit('group/add', payload)
       this.close()
     }
