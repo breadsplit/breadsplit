@@ -16,7 +16,6 @@ export interface UserState {
 
 export interface AppOptions {
   dark: boolean
-  firebase_server: string
 }
 export interface RootState {
   user_locale: string|null

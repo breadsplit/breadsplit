@@ -1,4 +1,4 @@
-# 🌀 Test
+# 🌀 Testing
 
 ## Unit test
 

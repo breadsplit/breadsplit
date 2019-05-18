@@ -57,4 +57,4 @@ workflows:
             - cypress/install
           record: true
           wait-on: 'http://localhost:3000'
-          start: npm run generate && npm run generate:host
+          start: FIERBASE_SERVER=test npm run generate && npm run generate:host

@@ -25,7 +25,7 @@ export class FirebasePlugin {
     this.store = store
     this.router = router
 
-    const config_name = this.store.state.options.firebase_server
+    const config_name = process.env.FIREBASE_SERVER || 'development'
     log(`🔥 Connecting to firebase server <${config_name}>`)
     firebase.initializeApp(FirebaseServers[config_name])
   }
