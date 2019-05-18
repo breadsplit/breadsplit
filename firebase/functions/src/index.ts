@@ -3,9 +3,8 @@ import * as admin from 'firebase-admin'
 import _ from 'lodash'
 
 import { TransOperationOption } from 'opschain'
-import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types'
-import { GenerateId } from '../../../core'
-import { Group, Operation } from '../../../types/models'
+import { ServerGroup, ServerOperations, Entity, ActivityAction, Group, Operation } from '../../../types'
+import { GenerateId, IsThisId, MemberDefault } from '../../../core'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
 import { PushGroupOperationsNotification } from './push_notifications'
 
@@ -85,26 +84,6 @@ export const joinGroup = f(async ({ id, join_as }, context) => {
 
   const uid = context.auth.uid
 
-  const operations: TransOperationOption[] = [{
-    name: 'new_activity',
-    data: {
-      by: uid,
-      timestamp: +new Date(),
-      entity: Entity.viewer,
-      action: ActivityAction.insert,
-    },
-  }]
-  if (join_as) {
-    operations.push({
-      name: 'change_member_id',
-      data: {
-        from: join_as.toString(),
-        to: uid,
-      },
-    })
-  }
-  const join_operations = ProcessServerOperations(operations, uid)
-
   await db.runTransaction(async (t) => {
     const group = (await t.get(GroupsRef(id))).data() as ServerGroup
     const ops = (await t.get(OperationsRef(id))).data() as ServerOperations
@@ -112,19 +91,55 @@ export const joinGroup = f(async ({ id, join_as }, context) => {
     if (!group || !ops)
       throw new Error('group_not_exists')
 
+    // skip if user already inside the group
     if (group.viewers.includes(uid))
-      return // user already inside the group
+      return
 
-    const viewers = _.union(group.viewers || [], [uid])
-    const operations = ops.operations
+    group.viewers.push(uid)
 
-    join_operations.forEach((op) => {
-      operations.push(op)
-    })
+    const newoperations: TransOperationOption[] = [{
+      name: 'new_activity',
+      data: {
+        by: uid,
+        timestamp: +new Date(),
+        entity: Entity.viewer,
+        action: ActivityAction.insert,
+      },
+    }]
 
-    t.update(GroupsRef(id), 'viewers', viewers)
+    const memberOfGroup = Object.keys(group.present.members).includes(uid)
 
-    recalculateGroupOperations(t, id, operations)
+    // if user is not a member of group
+    if (!memberOfGroup) {
+      // if a local member is specified, convert it to the user
+      if (join_as && IsThisId.LocalMember(join_as)) {
+        newoperations.push({
+          name: 'change_member_id',
+          data: {
+            from: join_as.toString(),
+            to: uid,
+          },
+        })
+      }
+      // otherwise join as a new member
+      else {
+        newoperations.push({
+          name: 'insert_member',
+          data: MemberDefault({
+            id: uid,
+          }),
+        })
+      }
+    }
+
+    ProcessServerOperations(newoperations, uid)
+      .forEach((op) => {
+        ops.operations.push(op)
+      })
+
+    t.update(GroupsRef(id), 'viewers', group.viewers)
+
+    recalculateGroupOperations(t, id, ops.operations)
   })
 })
 

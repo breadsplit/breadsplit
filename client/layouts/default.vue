@@ -95,6 +95,8 @@ v-app(:dark='dark')
   v-content
     nuxt
 
+  app-global-components
+
   app-dialog(ref='newgroup' :route='true' persistent no-click-animation)
     app-new-group
 
@@ -108,14 +110,6 @@ v-app(:dark='dark')
 
   app-dialog(ref='about' :route='true')
     app-about-page
-
-  app-confirm(ref='confirm')
-
-  app-prompt(ref='prompt')
-
-  app-loading-dialog(ref='loading')
-
-  app-snackbar(ref='snack')
 </template>
 
 <script lang='ts'>
@@ -168,15 +162,6 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
 
   // Methods
   mounted() {
-    // @ts-ignore
-    this.$root.$snack = this.$refs.snack.open
-    // @ts-ignore
-    this.$root.$confirm = this.$refs.confirm.open
-    // @ts-ignore
-    this.$root.$prompt = this.$refs.prompt.open
-    // @ts-ignore
-    this.$root.$apploading = this.$refs.loading
-
     // @ts-ignore
     this.$root.$newgroup = this.$refs.newgroup
     // @ts-ignore

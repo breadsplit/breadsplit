@@ -49,7 +49,13 @@ export const mutations: MutationTree<RootState> = {
     state.messaging_token = value
   },
 
-  localstorageLoad(state, newData) {
-    Object.assign(state, newData)
+  localstorageLoad(state, data: RootState) {
+    const group = data.group
+    delete data.group
+    Object.assign(state, data)
+
+    // do not update currentGroups from other tabs
+    delete group.currentId
+    Object.assign(state.group, group)
   },
 }
