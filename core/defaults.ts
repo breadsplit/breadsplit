@@ -1,12 +1,12 @@
 import merge from 'lodash/merge'
 import mapValues from 'lodash/mapValues'
-import { Member, MemberRoles, Group, Transaction, TransactionType, ClientGroup } from '../types'
+import { Member, Group, Transaction, TransactionType, ClientGroup } from '../types'
 import { GenerateId } from './id_helper'
 
 export const MemberDefault = (overrides?: Partial<Member>): Member => merge({
   id: GenerateId.LocalMember(),
   name: '',
-  role: MemberRoles.collaborator,
+  role: 'collaborator',
 }, overrides)
 
 export const GroupDefault = (overrides?: any): Group => {

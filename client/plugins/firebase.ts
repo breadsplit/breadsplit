@@ -305,11 +305,19 @@ export class FirebasePlugin {
   }
 
   async downloadProfile(uid: string) {
+    if (IsThisId.LocalMember(uid))
+      return
+    if (IsThisId.Me(uid))
+      return
     try {
       const doc = await this.db
         .collection('users')
         .doc(uid)
         .get()
+      if (!doc.exists) {
+        log(`🐛 Profile of ${uid} not found`)
+        return
+      }
       const user = doc.data() as UserInfo
       user.lastsync = +new Date()
       this.store.commit('user/profileUpdate', { uid, user })

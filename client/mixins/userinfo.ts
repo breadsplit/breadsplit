@@ -9,9 +9,19 @@ import nanoid from 'nanoid'
 export default class UserInfoMixin extends Vue {
   @Getter('user/uid') uid: string|undefined
 
-  getUser(id?: string, autoFetch: boolean = true): UserInfo | Member | null {
+  getUser(id?: string, autoFetch: boolean = true): UserInfo | Member | undefined {
     if (!id)
-      return null
+      return undefined
+    if (IsThisId.Me(id)) {
+      const me = this.$store.getters['user/me']
+      if (me)
+        return me
+      return {
+        id,
+        name: this.$t('pronoun.me').toString(),
+        role: 'owner',
+      }
+    }
     if (IsThisId.UID(id)) {
       const user = this.$store.getters['user/user'](id)
       if (!user && autoFetch)
@@ -21,7 +31,7 @@ export default class UserInfoMixin extends Vue {
     return this.getMember(id)
   }
 
-  getMember(id: string): Member | null {
+  getMember(id: string): Member | undefined {
     return this.$store.getters['group/memberById']({
       uid: id,
     })
@@ -40,7 +50,7 @@ export default class UserInfoMixin extends Vue {
   }
 
   getUserName(id: string, pronoun = true) {
-    if (pronoun && id === this.uid)
+    if (pronoun && (id === this.uid || IsThisId.Me(id)))
       return this.$t('pronoun.i').toString()
 
     const user = this.getUser(id)

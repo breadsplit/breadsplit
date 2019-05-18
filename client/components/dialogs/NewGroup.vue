@@ -47,6 +47,7 @@ import currencies from '~/meta/currencies'
 import { Component, Mixins } from 'vue-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
+import { IdMe } from '~/core'
 
 @Component
 export default class NewGroup extends Mixins(DialogChildMixin) {
@@ -105,7 +106,7 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
 
   defaultMember(m) {
     if (!this.uid)
-      m.push({ name: this.$t('pronoun.me') })
+      m.push({ id: IdMe, name: this.$t('pronoun.me') })
     else
       m.push({ id: this.uid, name: this.me.name })
   }

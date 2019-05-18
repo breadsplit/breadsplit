@@ -35,6 +35,7 @@ export const Transforms: TransformFunctions<Group> = {
   modify_meta(snap, changes?: GroupMetaChanges, { by, timestamp } = {}) {
     if (!changes)
       return snap
+    changes = Object.assign({}, changes)
     if (changes.name) {
       snap.name = changes.name
       snap.activities.push({
@@ -44,6 +45,10 @@ export const Transforms: TransformFunctions<Group> = {
         entity: Entity.group,
         update_fields: 'name',
       })
+    }
+    if (changes.options) {
+      Object.assign(snap.options, changes.options)
+      delete changes.options
     }
     Object.assign(snap, changes)
     return snap

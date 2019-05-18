@@ -2,12 +2,11 @@ import { TransOperation } from 'opschain'
 
 type uid = string
 
-export const enum MemberRoles {
-  owner = 'owner',
-  collaborator = 'collaborator',
-  participant = 'participant',
-  visitor = 'visitor',
-}
+export type MemberRoles =
+| 'owner'
+| 'collaborator'
+| 'participant'
+| 'visitor'
 
 export const enum ActivityAction {
   insert = 'insert',

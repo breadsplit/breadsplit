@@ -45,7 +45,7 @@ export const publishGroup = f(async ({ group }: { group: Group }, context) => {
   group.online = true
   group.activities = (group.activities || [])
     .map((act) => {
-      if (!act.by)
+      if (!act.by || act.by === 'me')
         act.by = user_uid
       return act
     })
@@ -56,6 +56,12 @@ export const publishGroup = f(async ({ group }: { group: Group }, context) => {
     meta: {
       by: user_uid,
       timestamp: +new Date(),
+    },
+  }, {
+    name: 'change_member_id',
+    data: {
+      from: 'me',
+      to: user_uid,
     },
   }], user_uid)
 

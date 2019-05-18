@@ -5,7 +5,7 @@ import union from 'lodash/union'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
 import { GroupState, RootState, ClientGroup, Group, ServerGroup, Operation } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache } from 'opschain'
-import { Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys } from '~/core'
+import { Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe } from '~/core'
 import { GroupStateDefault } from '~/store'
 
 const OperationCache = new BasicCache<Group>()
@@ -96,7 +96,7 @@ function NewOperation(
 ) {
   meta = {
     ...meta,
-    by: context.rootGetters['user/uid'],
+    by: context.rootGetters['user/uid'] || IdMe,
     timestamp: +new Date(),
   }
   context.commit('newOperation', { id: groupid, name, data, meta })

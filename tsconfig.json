@@ -30,6 +30,7 @@
     "strictFunctionTypes": false,
   },
   "include": [
+    "client/**/*.ts",
     "node_modules/cypress",
     "cypress/*/*.ts"
   ]
