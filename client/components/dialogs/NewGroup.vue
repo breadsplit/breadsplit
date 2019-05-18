@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card
+v-card.new-group
   app-dialog-bar(@close='close()' :color='color')
     | {{title}}
   v-container.pa-4

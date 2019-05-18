@@ -35,7 +35,7 @@ export default class DefaultLayout extends Vue {
   .channel
     display inline-block
     font-size 0.7em
-    color rgba(125,125,125, 0.3)
+    color rgba(125,125,125,0.3)
     font-weight normal
     text-transform uppercase
 
@@ -49,5 +49,11 @@ export default class DefaultLayout extends Vue {
 
     .logo
       height 80px
+
+.theme--dark .channel
+  color rgba(255,255,255,0.3)
+
+.theme--light .channel
+  color rgba(0,0,0,0.2)
 
 </style>

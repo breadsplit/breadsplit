@@ -15,7 +15,7 @@ mixin inputs()
 
   app-soft-numpad(ref='numpad')
 
-v-card.new-trans-form(v-rows='"max-content auto max-content"')
+v-card.new-transaction(v-rows='"max-content auto max-content"')
   app-dialog-bar(@close='close()')
     | {{$t('ui.new_expense')}}
 

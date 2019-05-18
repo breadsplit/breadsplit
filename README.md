@@ -1,6 +1,6 @@
 <img src='./client/static/img/png/android-chrome-192x192.png' width='150' align='right'>
 
-# BreadSplit 分賬吐司
+# BreadSplit
 
 Group bills split made easy, fast and customizable.
 

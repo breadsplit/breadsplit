@@ -91,7 +91,8 @@
       "amount": "按金額",
       "percent": "按趴數",
       "weight": "按權重"
-    }
+    },
+    "support_us": "支持我們"
   },
   "cats": {
     "transport": {
