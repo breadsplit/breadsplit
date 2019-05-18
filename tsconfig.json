@@ -28,9 +28,9 @@
       "cypress"
     ],
     "strictFunctionTypes": false,
-    "include": [
-      "node_modules/cypress",
-      "cypress/*/*.ts"
-    ]
-  }
+  },
+  "include": [
+    "node_modules/cypress",
+    "cypress/*/*.ts"
+  ]
 }
