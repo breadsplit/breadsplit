@@ -11,9 +11,14 @@ v-card.transactions
           v-list-tile-title {{trans.desc || 'Expense'}}
           v-list-tile-sub-title Paid by {{trans.creditor_names.join(', ')}}
           v-list-tile-sub-title.time-label {{$dt(trans.timestamp).fromNow()}}
-        v-list-tile-action.pr-1
-          v-list-tile-title
-            app-money-label(:amount='-trans.total_fee' :currency='trans.currency')
+        v-list-tile-action.pr-1(v-rows='"auto max-content"')
+          app-money-label(:amount='-trans.total_fee' :currency='trans.currency')
+          .creators-debtors
+            .creators
+              app-user-avatar(v-for='c in trans.creditor_ids' :id='c' :key='c' size='24')
+            v-icon(size='20') mdi-arrow-right
+            .debtors
+              app-user-avatar(v-for='d in trans.debtor_ids' :id='d' :key='d' size='24')
 
     template(v-if='needShowMore')
       v-divider
@@ -31,6 +36,7 @@ v-card.transactions
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
+import { Transaction } from '~/types'
 
 @Component
 export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
@@ -61,13 +67,15 @@ export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, Navi
     return !this.collapsed && this.amount > this.collapsed_amount
   }
 
-  parseTrans(trans) {
+  parseTrans(trans: Transaction) {
     const creditor_ids = trans.creditors.map(c => c.uid)
+    const debtor_ids = trans.debtors.map(c => c.uid)
     const creditor_names = creditor_ids.map(id => this.getUserName(id))
 
     return {
       ...trans,
       creditor_ids,
+      debtor_ids,
       creditor_names,
     }
   }
@@ -79,4 +87,21 @@ export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, Navi
   .time-label
     font-size 0.8em
     opacity 0.8
+
+.creators-debtors
+  & > *
+    display inline-block
+    vertical-align middle
+
+  .v-icon
+    opacity 0.4
+
+  .user-avatar:not(:first-child)
+    margin-left -8px
+
+  .v-avatar
+    .theme--light & img
+      border 2px solid #fff
+    .theme--dark & img
+      border 2px solid #424242
 </style>
