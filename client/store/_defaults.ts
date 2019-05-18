@@ -37,4 +37,8 @@ export const RootStateDefault = (overrides?: Partial<RootState>): RootState => m
     bypass_webview: false,
     standalone: isStandalone(),
   },
+  app: {
+    init: false,
+    version: '0.0.0',
+  },
 }, overrides)

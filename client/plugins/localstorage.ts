@@ -8,6 +8,7 @@ const PathsEnabled = [
   'user.me',
   'user.users',
   'options',
+  'app',
 ]
 
 export default ({ store }: Context) => {

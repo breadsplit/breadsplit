@@ -98,7 +98,11 @@
     "add_location": "Add location",
     "repeat_expense": "Repeat",
     "title_join_a_group": "Join a group",
-    "support_us": "Support us"
+    "support_us": "Support us",
+    "welcome_breadsplit": "Welcome to BreadSplit!",
+    "button_more_about_us": "More about us",
+    "button_no": "No",
+    "button_yes": "Yes"
   },
   "pronoun": {
     "me": "Me",

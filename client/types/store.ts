@@ -30,4 +30,8 @@ export interface RootState {
     os: OSType
     standalone: boolean
   }
+  app: {
+    init: boolean
+    version: string
+  }
 }

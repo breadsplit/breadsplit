@@ -1,7 +1,6 @@
 <template lang='pug'>
 v-card.about-page
   app-dialog-bar(@close='close()')
-    | {{$t('ui.about')}}
 
   v-container.text-xs-center.pt-0
     app-logo-name.large

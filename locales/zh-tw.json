@@ -92,7 +92,11 @@
       "percent": "按趴數",
       "weight": "按權重"
     },
-    "support_us": "支持我們"
+    "support_us": "支持我們",
+    "welcome_breadsplit": "歡迎使用分帳吐司!",
+    "button_more_about_us": "更多關於我們",
+    "button_yes": "是",
+    "button_no": "否"
   },
   "cats": {
     "transport": {

@@ -107,9 +107,13 @@ v-app(:dark='dark')
 
   app-dialog(ref='about' :route='true')
     app-about-page
+
+  app-dialog(ref='init', :fullscreen='false')
+    app-init-page
 </template>
 
 <script lang='ts'>
+import { setTimeout } from 'timers'
 import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
 import { Group, UserInfo } from '~/types'
@@ -183,6 +187,8 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
 
     if (!this.isMobile)
       this.drawer = true
+
+    setTimeout(() => this.checkFirstStart(), 1000)
   }
 
   async onGroupMenu(key) {
@@ -271,6 +277,14 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
 
   isSync(id) {
     return this.$store.getters['group/isSyncing'](id)
+  }
+
+  async checkFirstStart() {
+    if (!this.$store.state.app.init) {
+      this.$store.commit('init')
+      // @ts-ignore
+      await this.$refs.init.open()
+    }
   }
 }
 </script>

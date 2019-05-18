@@ -58,4 +58,11 @@ export const mutations: MutationTree<RootState> = {
     delete group.currentId
     Object.assign(state.group, group)
   },
+
+  init(state) {
+    state.app = {
+      init: true,
+      version: process.env.APP_VERSION || '',
+    }
+  },
 }
