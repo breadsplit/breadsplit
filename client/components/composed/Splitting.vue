@@ -1,5 +1,5 @@
 <template lang='pug'>
-div
+.splitting
   div(v-columns='"max-content auto"')
     slot(name='header')
 

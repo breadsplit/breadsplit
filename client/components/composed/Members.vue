@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card
+v-card.members
   v-subheader {{$t('ui.tabs.members')}}
   v-list(two-line)
     template(v-for='(member, index) in members')

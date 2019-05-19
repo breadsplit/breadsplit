@@ -34,7 +34,8 @@
       "summary": "總覽",
       "activities": "記錄",
       "transactions": "交易記錄",
-      "balances": "債務情況"
+      "balances": "債務情況",
+      "settle_up": "算清債務"
     },
     "speed_dials": {
       "new_expense": "支出",

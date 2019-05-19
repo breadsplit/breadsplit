@@ -5,13 +5,20 @@
       v-container(:class='{"pa-0": isMobile}')
         app-balances
 
+        .pa-2
+
+        app-transactions(:max='3')
+
+        .pa-2
+
+        app-settle-up
+
+        .pa-2
+
     v-tab-item(key='1').scroll-page
       v-container(:class='{"pa-0": isMobile}')
 
         app-transactions
-
-        v-alert(:value='true', type='warning') Work in progress...
-        pre {{JSON.stringify(group, null, 2)}}
 
     v-tab-item(key='2').scroll-page
       v-container(:class='{"pa-0": isMobile}')

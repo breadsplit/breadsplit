@@ -12,7 +12,7 @@ v-card.transactions
           v-list-tile-sub-title Paid by {{trans.creditor_names.join(', ')}}
           v-list-tile-sub-title.time-label {{$dt(trans.timestamp).fromNow()}}
         v-list-tile-action.pr-1(v-rows='"auto max-content"')
-          app-money-label(:amount='-trans.total_fee' :currency='trans.currency')
+          app-money-label.text-xs-right(:amount='-trans.total_fee' :currency='trans.currency')
           .creators-debtors
             .creators
               app-user-avatar(v-for='c in trans.creditor_ids' :id='c' :key='c' size='24')
@@ -34,14 +34,15 @@ v-card.transactions
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Prop } from 'vue-property-decorator'
 import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 import { Transaction } from '~/types'
 
 @Component
 export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
   collapsed = true
-  collapsed_amount = 10
+
+  @Prop({ default: 10 }) readonly max!: number
 
   get transactions() {
     return this.group.transactions
@@ -55,16 +56,16 @@ export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, Navi
 
   get displayedTransactions() {
     if (this.collapsed)
-      return this.transactions.slice(0, this.collapsed_amount)
+      return this.transactions.slice(0, this.max)
     return this.transactions
   }
 
   get needShowMore() {
-    return this.collapsed && this.amount > this.collapsed_amount
+    return this.collapsed && this.amount > this.max
   }
 
   get needCollapsed() {
-    return !this.collapsed && this.amount > this.collapsed_amount
+    return !this.collapsed && this.amount > this.max
   }
 
   parseTrans(trans: Transaction) {
