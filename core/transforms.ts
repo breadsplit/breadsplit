@@ -44,6 +44,7 @@ export const Transforms: TransformFunctions<Group> = {
         action: ActivityAction.update,
         entity: Entity.group,
         update_fields: 'name',
+        entity_name: changes.name,
       })
     }
     if (changes.options) {

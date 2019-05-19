@@ -19,8 +19,17 @@ export function getActivityDescription(
   name = name || $t('pronoun.anonymous')
 
   const key = `${act.action}.${act.entity}`
-  const by = serverSide ? name : `<b>${name}</b>`
-  const entity_name = act.entity_name || act.entity_desc || ''
+  const key_field = `${act.action}.${act.entity}.${act.update_fields}`
+  let by = name
+  let entity_name = act.entity_name || act.entity_desc || ''
+  if (!serverSide) {
+    by = `<b>${by}</b>`
+    entity_name = `<b>${entity_name}</b>`
+  }
+  switch (key_field) {
+    case 'update.group.name':
+      return $t('acts.rename_group', [by, entity_name])
+  }
   switch (key) {
     case 'insert.transaction':
       return $t('acts.insert_transaction', [by, entity_name])

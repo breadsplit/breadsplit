@@ -161,7 +161,8 @@
     "insert_transaction": "{0} added an expense: {1}",
     "insert_group": "{0} created the group",
     "insert_viewer": "{0} joined the group",
-    "publish_group": "{0} changed group to online mode"
+    "publish_group": "{0} changed group to online mode",
+    "rename_group": "{0} changed group name to {1}"
   },
   "help": {
     "no_password_login": {

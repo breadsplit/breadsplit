@@ -155,7 +155,8 @@
     "insert_transaction": "{0} 添加了支出：{1}",
     "insert_group": "{0} 創建了群組",
     "insert_viewer": "{0} 加入了群組",
-    "publish_group": "{0} 將群組轉換為在綫模式"
+    "publish_group": "{0} 將群組轉換為在綫模式",
+    "rename_group": "{0} 將群組更名為 {1}"
   },
   "help": {
     "no_password_login": {
