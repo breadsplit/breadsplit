@@ -69,8 +69,8 @@ export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, Navi
   }
 
   parseTrans(trans: Transaction) {
-    const creditor_ids = trans.creditors.map(c => c.uid)
-    const debtor_ids = trans.debtors.map(c => c.uid)
+    const creditor_ids = trans.creditors.filter(c => c.weight).map(c => c.uid)
+    const debtor_ids = trans.debtors.filter(c => c.weight).map(c => c.uid)
     const creditor_names = creditor_ids.map(id => this.getUserName(id))
 
     return {
