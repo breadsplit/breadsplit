@@ -1,8 +1,5 @@
 <template lang='pug'>
 svg.chart-settle-up-solutions(:width='width', :height='height')
-  defs
-    marker#arrow(markerunits='strokeWidth', markerwidth='12', markerheight='12', viewbox='0 0 12 12', refx='6', refy='6', orient='auto')
-      path(d='M2,2 L10,6 L2,10 L6,6 L2,2', style='fill: #f00;')
 </template>
 
 <script lang='ts'>
@@ -52,13 +49,11 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
     const svg = this.svg
 
     const simulation = d3.forceSimulation<Node>()
-    // @ts-ignore
-      .force('link', d3.forceLink().id((d) => { return d.uid || d.id }))
-      // .force("charge", d3.forceManyBody().strength(-200))
+      .force('link', d3.forceLink<Node, Link>().id((d) => { return d.uid || d.id }))
       .force('charge', d3.forceManyBody()
-        .strength(-200)
+        .strength(-1000)
         .theta(0.8)
-        .distanceMax(150)
+        .distanceMax(500)
       )
       .force('center', d3.forceCenter(this.width / 2, this.height / 2))
 
@@ -66,24 +61,25 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart()
       d.fx = d.x
       d.fy = d.y
-      //  simulation.fix(d);
     }
 
     function dragged(d) {
       d.fx = d3.event.x
       d.fy = d3.event.y
-      //  simulation.fix(d, d3.event.x, d3.event.y);
     }
 
     function dragended(d) {
-      d.fx = d3.event.x
-      d.fy = d3.event.y
+      d.fx = null
+      d.fy = null
       if (!d3.event.active) simulation.alphaTarget(0)
-      // simulation.unfix(d);
     }
 
-    svg.append('svg:defs').append('svg:marker')
-      .attr('id', 'triangle')
+    const defs = svg.append('svg:defs')
+    const avatar_size = 48
+
+    // arrow
+    defs.append('svg:marker')
+      .attr('id', 'arrow')
       .attr('refX', 6)
       .attr('refY', 6)
       .attr('markerWidth', 15)
@@ -92,6 +88,24 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
       .append('path')
       .attr('d', 'M 0 0 12 6 0 12 3 6')
       .style('fill', 'black')
+
+    // avatars
+    defs.selectAll('.avatar-defs')
+      .data(this.nodes)
+      .enter()
+      .append('pattern')
+      .attr('class', 'avatar-defs')
+      .attr('id', d => d.uid || d.id)
+      .attr('height', 1)
+      .attr('width', 1)
+      .attr('x', 0)
+      .attr('y', 0)
+      .append('image')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('height', avatar_size)
+      .attr('width', avatar_size)
+      .attr('xlink:href', d => d.avatar_url || '')
 
     const link = svg.append('g')
       .style('stroke', '#aaa')
@@ -115,17 +129,18 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
         .on('drag', dragged)
         .on('end', dragended))
 
-    node.append('svg:image')
-      .attr('xlink:href', d => d.avatar_url || '')
-      .attr('x', -24)
-      .attr('y', -24)
-      .attr('width', 48)
-      .attr('height', 48)
+    node.append('circle')
+      .attr('class', 'avatar')
+      .attr('r', avatar_size / 2)
+      .attr('rx', 0)
+      .attr('ry', 0)
+      .attr('stroke-width', '2px')
+      .attr('fill', d => `url(#${d.uid || d.id})`)
 
     node.append('text')
       .attr('class', 'name-tag')
       .attr('text-anchor', 'middle')
-      .style('font-size', '10px').style('fill', '#333')
+      .style('font-size', '1em')
       .text((d) => { return d.name })
 
     function ticked() {
@@ -160,4 +175,15 @@ svg.chart-settle-up-solutions
 
   .name-tag
     transform translate(0, 40px)
+    font-size 1em
+    fill #333
+
+    .theme--dark &
+      fill #fff
+
+  .avatar
+    stroke #fff
+
+    .theme--dark &
+      stroke #555
 </style>
