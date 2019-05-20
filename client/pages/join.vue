@@ -19,9 +19,14 @@ div.scroll-page
           .text-xs-left.mt-2(v-html='$t("ui.invited_to_join",[])' style='font-size: 1.4em')
           span.primary--text {{group.name}}
 
+        span.primary--text 我的名字是
+
         v-card.px-2.pb-2.ma-2
           v-list(two-line style='height: 300px; overflow-y: auto;')
             template(v-for='(member, index) in members()')
+              template(v-if='index!=0 && !isLocal(member.id) && isLocal(members()[index-1].id)')
+                br
+                span.primary--text 以下為已存在用戶
               v-list-tile(:key='member.id', avatar)
                 v-list-tile-avatar
                   app-user-avatar(:id='member.id', size='40')
