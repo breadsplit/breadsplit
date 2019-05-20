@@ -7,7 +7,8 @@ import nanoid from 'nanoid'
 
 @Component
 export default class UserInfoMixin extends Vue {
-  @Getter('user/uid') uid: string|undefined
+  @Getter('user/uid') uid: string | undefined
+  @Getter('user/me') me: UserInfo | undefined
 
   getUser(id?: string, autoFetch: boolean = true): UserInfo | Member | undefined {
     if (!id)

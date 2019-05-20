@@ -2,7 +2,7 @@
 v-app(:dark='dark')
   app-global-style
 
-  v-content
+  v-content.scrolling.height-100
     nuxt
 
   app-global-components
