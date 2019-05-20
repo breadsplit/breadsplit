@@ -4,6 +4,7 @@
   "language_name": "English",
   "translators": "offical",
   "appname": "BreadSplit",
+  "appname_dev": "BreadSplit Dev",
   "css": {
     "font_of_locale": ""
   },

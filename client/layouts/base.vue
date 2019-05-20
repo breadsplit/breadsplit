@@ -11,8 +11,11 @@ v-app(:dark='dark')
 <script lang='ts'>
 import { Component, Vue } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
+import head from './head'
 
-@Component
+@Component({
+  head,
+})
 export default class BaseLayout extends Vue {
   @Getter('dark') dark!: boolean
 }
