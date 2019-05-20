@@ -10,7 +10,7 @@ v-card.transactions
         v-list-tile-content
           v-list-tile-title {{trans.desc || 'Expense'}}
           v-list-tile-sub-title Paid by {{trans.creditor_names.join(', ')}}
-          v-list-tile-sub-title.time-label {{$dt(trans.timestamp).fromNow()}}
+          v-list-tile-sub-title.time-label {{dateFromNow(trans.timestamp)}}
         v-list-tile-action.pr-1(v-rows='"auto max-content"')
           app-money-label.text-xs-right(:amount='-trans.total_fee' :currency='trans.currency')
           .creators-debtors
@@ -37,6 +37,7 @@ v-card.transactions
 import { Component, Mixins, Prop } from 'vue-property-decorator'
 import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 import { Transaction } from '~/types'
+import { dateFromNow } from '~/core'
 
 @Component
 export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
@@ -67,6 +68,8 @@ export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, Navi
   get needCollapsed() {
     return !this.collapsed && this.amount > this.max
   }
+
+  dateFromNow=dateFromNow
 
   parseTrans(trans: Transaction) {
     const creditor_ids = trans.creditors.filter(c => c.weight).map(c => c.uid)

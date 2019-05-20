@@ -5,8 +5,7 @@ If you made any modification,
 Please DO DEPLOY firebase functions before merge into master.
 */
 import cloneDeep from 'lodash/cloneDeep'
-import { TransformFunctions } from 'opschain'
-import { Group, Member, Transaction, ActivityAction, Entity, GroupMetaChanges } from '../types'
+import { TransformFunctions, Group, Member, Transaction, ActivityAction, Entity, GroupMetaChanges } from '../types'
 
 export type TransformKeys =
 | 'init'
@@ -55,10 +54,18 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  insert_member(snap, member?: Member) {
+  insert_member(snap, member?: Member, { by, timestamp } = {}) {
     if (!member)
       return snap
     snap.members[member.id] = member
+    snap.activities.push({
+      by,
+      timestamp,
+      action: ActivityAction.insert,
+      entity: Entity.member,
+      entity_id: member.id,
+      entity_name: member.name,
+    })
     return snap
   },
 

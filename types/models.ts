@@ -1,4 +1,4 @@
-import { TransOperation } from 'opschain'
+import { TransOperation } from './operation_transformer'
 
 type uid = string
 

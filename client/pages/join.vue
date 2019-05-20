@@ -1,8 +1,8 @@
 <template lang='pug'>
-div.scroll-page
+.scroll-page
   v-container
     .text-xs-center.mt-4.pt-3
-      app-logo-name.large
+      app-logo-name(:class='{large:!isMobile}')
       .my-4.py-2
 
       template(v-if='loading')
@@ -23,8 +23,8 @@ div.scroll-page
 
         v-card.px-2.pb-2.ma-2
           v-list(two-line style='height: 300px; overflow-y: auto;')
-            template(v-for='(member, index) in members()')
-              template(v-if='index!=0 && !isLocal(member.id) && isLocal(members()[index-1].id)')
+            template(v-for='(member, index) in members')
+              template(v-if='index!=0 && !isLocal(member.id) && isLocal(members[index-1].id)')
                 br
                 span.primary--text 以下為已存在用戶
               v-list-tile(:key='member.id', avatar)
@@ -46,9 +46,10 @@ div.scroll-page
 </template>
 
 <script lang='ts'>
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import { ServerGroup, Member } from '~/types'
 import { IsThisId } from '~/core'
+import { CommonMixin } from '~/mixins'
 
 @Component({
   // @ts-ignore
@@ -63,7 +64,7 @@ import { IsThisId } from '~/core'
     }
   },
 })
-export default class JoinPage extends Vue {
+export default class JoinPage extends Mixins(CommonMixin) {
   serverGroup: ServerGroup | undefined = undefined
   loading = true
   joining = false
@@ -79,16 +80,18 @@ export default class JoinPage extends Vue {
     return undefined
   }
 
-  members() {
+  get members() {
     if (!this.group)
       return []
     const orderList: Member[] = []
-    Object.values(this.group.members).forEach((m) => {
-      if (this.isLocal(m.id))
-        orderList.unshift(m)
-      else
-        orderList.push(m)
-    })
+    Object.values(this.group.members)
+      .filter(m => !m.removed)
+      .forEach((m) => {
+        if (this.isLocal(m.id))
+          orderList.unshift(m)
+        else
+          orderList.push(m)
+      })
     return orderList
   }
 

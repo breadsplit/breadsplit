@@ -56,7 +56,7 @@ v-card.new-transaction(v-rows='"max-content auto max-content"')
             v-subheader(slot='header') {{$t('ui.splitting.split_by')}}
 
         v-divider
-        div(v-columns='"70px auto"' @click.native='pickDate()' v-ripple)
+        div(v-columns='"70px auto"' @click='pickDate()' v-ripple)
           v-icon(color='primary') mdi-calendar
           v-subheader {{dateDisplay}}
 
