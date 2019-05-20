@@ -10,38 +10,36 @@ export default class UserInfoMixin extends Vue {
   @Getter('user/uid') uid: string | undefined
   @Getter('user/me') me: UserInfo | undefined
 
-  getUser(id?: string, autoFetch: boolean = true): UserInfo | Member | undefined {
+  getUser(id?: string, autoFetch: boolean = true): (UserInfo & Member) | undefined {
     if (!id)
       return undefined
+    const member = this.getMember(id)
+    let user: UserInfo | undefined
+    if (IsThisId.Me(id) && this.uid) {
+      user = this.me
+    }
+    else if (IsThisId.UID(id)) {
+      user = this.$store.getters['user/user'](id)
+      if (!user && autoFetch)
+        this.$fire.updateUserProfiles([id])
+    }
+    const result = Object.assign({}, member, user)
+    if (!result.avatar_url)
+      result.avatar_url = this.getFallbackAvatar(id)
+    return result
+  }
+
+  getMember(id: string): Member | undefined {
     if (IsThisId.Me(id)) {
-      if (this.$store.getters['user/uid'])
-        return this.$store.getters['user/me']
       return {
         id,
         name: this.$t('pronoun.me').toString(),
         role: 'owner',
       }
     }
-    if (IsThisId.UID(id)) {
-      const user = this.$store.getters['user/user'](id)
-      if (!user && autoFetch)
-        this.$fire.updateUserProfiles([id])
-      return user
-    }
-    return this.getMember(id)
-  }
-
-  getMember(id: string): Member | undefined {
     return this.$store.getters['group/memberById']({
       uid: id,
     })
-  }
-
-  getAvatarUrl(id: string) {
-    const user = this.getUser(id)
-    if (user && 'avatar_url' in user)
-      return user.avatar_url
-    return this.getFallbackAvatar(id)
   }
 
   getFallbackAvatar(id: string) {

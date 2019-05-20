@@ -1,47 +1,48 @@
 <template lang='pug'>
-svg.chart-basic(:width='width', :height='width')
-  g(style='transform: translate(0, 10px)')
-    path(:d='line')
+svg.chart-settle-up-solutions(:width='width', :height='height')
+  defs
+    marker#arrow(markerunits='strokeWidth', markerwidth='12', markerheight='12', viewbox='0 0 12 12', refx='6', refy='6', orient='auto')
+      path(d='M2,2 L10,6 L2,10 L6,6 L2,2', style='fill: #f00;')
 </template>
 
 <script lang='ts'>
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Prop, Mixins } from 'vue-property-decorator'
+import union from 'lodash/union'
+import { Solution } from '~/core'
+import { UserInfoMixin } from '~/mixins'
+import { Member, UserInfo } from '~/types'
 import * as d3 from 'd3'
 
-interface Node extends d3.SimulationNodeDatum {
-  id: string
-  group: number
-}
+interface Node extends d3.SimulationNodeDatum, UserInfo, Member {}
 
 interface Link extends d3.SimulationLinkDatum<Node>{
   value: number
 }
 
-const nodes: Node[] = [
-  { 'id': '1', 'group': 1 },
-  { 'id': '2', 'group': 2 },
-  { 'id': '4', 'group': 3 },
-  { 'id': '8', 'group': 4 },
-  { 'id': '16', 'group': 5 },
-  { 'id': '11', 'group': 1 },
-  { 'id': '12', 'group': 2 },
-  { 'id': '14', 'group': 3 },
-  { 'id': '18', 'group': 4 },
-  { 'id': '116', 'group': 5 },
-]
-const links: Link[] = [
-  { 'source': '1', 'target': '2', 'value': 1 },
-  { 'source': '2', 'target': '4', 'value': 1 },
-  { 'source': '4', 'target': '8', 'value': 1 },
-  { 'source': '4', 'target': '8', 'value': 1 },
-  { 'source': '8', 'target': '16', 'value': 1 },
-  { 'source': '16', 'target': '1', 'value': 1 },
-]
-
 @Component
-export default class ChartBasic extends Vue {
+export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
   width = 500
   height = 500
+
+  @Prop(Array) readonly solutions!: Solution[]
+
+  get ids() {
+    return union(this.solutions.flatMap(s => [s.from, s.to]))
+  }
+
+  get nodes(): Node[] {
+    return this.ids
+      .map(id => this.getUser(id))
+      .filter(i => i !== undefined) as Node[]
+  }
+
+  get links(): Link[] {
+    return this.solutions.map(s => ({
+      target: s.to,
+      source: s.from,
+      value: s.amount,
+    }))
+  }
 
   get svg() {
     return d3.select(this.$el)
@@ -52,7 +53,7 @@ export default class ChartBasic extends Vue {
 
     const simulation = d3.forceSimulation<Node>()
     // @ts-ignore
-      .force('link', d3.forceLink().id((d) => { return d.id }))
+      .force('link', d3.forceLink().id((d) => { return d.uid || d.id }))
       // .force("charge", d3.forceManyBody().strength(-200))
       .force('charge', d3.forceManyBody()
         .strength(-200)
@@ -84,14 +85,18 @@ export default class ChartBasic extends Vue {
     const link = svg.append('g')
       .style('stroke', '#aaa')
       .selectAll('line')
-      .data(links)
-      .enter().append('line')
+      .data(this.links)
+      .enter()
+      .append('line')
+      .attr('stroke-width', 2)
+      .attr('marker-end', 'url(#arrow)')
 
     const node = svg.append('g')
       .attr('class', 'nodes')
       .selectAll('circle')
-      .data(nodes)
-      .enter().append('circle')
+      .data(this.nodes)
+      .enter()
+      .append('circle')
       .attr('r', 2)
       .call(d3.drag()
         .on('start', dragstarted)
@@ -101,10 +106,12 @@ export default class ChartBasic extends Vue {
     const label = svg.append('g')
       .attr('class', 'labels')
       .selectAll('text')
-      .data(nodes)
-      .enter().append('text')
-      .attr('class', 'label')
-      .text((d) => { return d.id })
+      .data(this.nodes)
+      .enter()
+      .append('text')
+      .attr('class', 'name-tag')
+      .attr('text-anchor', 'middle')
+      .text((d) => { return d.name })
 
     function ticked() {
       link
@@ -135,16 +142,19 @@ export default class ChartBasic extends Vue {
     }
 
     simulation
-      .nodes(nodes)
+      .nodes(this.nodes)
       .on('tick', ticked)
 
     // @ts-ignore
-    simulation.force('link').links(links)
+    simulation.force('link').links(this.links)
   }
 }
 </script>
 
 <style lang='stylus'>
-svg
+svg.chart-settle-up-solutions
   user-select none
+
+  .name-tag
+    transform translate(5px, 25px)
 </style>
