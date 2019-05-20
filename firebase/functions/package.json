@@ -1,5 +1,6 @@
 {
   "name": "functions",
+  "private": true,
   "scripts": {
     "build": "rimraf ./lib && tsc",
     "serve": "npm run build && firebase serve --only functions",
