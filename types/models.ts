@@ -179,7 +179,7 @@ export interface TokenRecord {
 
 export interface FeedbackOptions {
   email: string | null
-  title: string
+  // title: string
   content: string
 }
 
