@@ -39,7 +39,7 @@ describe('Offline functions', () => {
       .should('include', '/group/')
 
     cy.title()
-      .should('equal', 'GroupA - BreadSplit')
+      .should('contain', 'GroupA')
 
     cy.get('.balances')
       .should((balances) => {
