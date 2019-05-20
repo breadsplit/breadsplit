@@ -59,6 +59,7 @@
     "@nuxtjs/pwa": "^3.0.0-beta.14",
     "@nuxtjs/sentry": "^2.3.2",
     "blueimp-md5": "^2.10.0",
+    "d3": "^5.9.2",
     "dayjs": "^1.8.12",
     "express": "^4.16.4",
     "firebase": "^5.10.1",
