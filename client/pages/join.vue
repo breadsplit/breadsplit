@@ -2,7 +2,7 @@
 .scroll-page
   v-container
     .text-xs-center.mt-4.pt-3
-      app-logo-name.large
+      app-logo-name(:class='{large:!isMobile}')
       .my-4.py-2
 
       template(v-if='loading')
@@ -46,9 +46,10 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import { ServerGroup, Member } from '~/types'
 import { IsThisId } from '~/core'
+import { CommonMixin } from '~/mixins'
 
 @Component({
   // @ts-ignore
@@ -63,7 +64,7 @@ import { IsThisId } from '~/core'
     }
   },
 })
-export default class JoinPage extends Vue {
+export default class JoinPage extends Mixins(CommonMixin) {
   serverGroup: ServerGroup | undefined = undefined
   loading = true
   joining = false
