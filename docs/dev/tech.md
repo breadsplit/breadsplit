@@ -29,6 +29,11 @@ Testing
 - [Jest](https://jestjs.io/) (Unit testing)
 - [Cypress](https://www.cypress.io/) (End-to-end testing)
 
+Visualization
+
+- [D3.js](https://d3js.org/)
+  - [D3.js Graph Gallery](https://www.d3-graph-gallery.com/)
+
 Services
 
 - [Firebase](https://firebase.google.com/) (Auth, Serverless and Database)
