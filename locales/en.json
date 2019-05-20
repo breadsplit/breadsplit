@@ -162,7 +162,8 @@
     "insert_group": "{0} created the group",
     "insert_viewer": "{0} joined the group",
     "publish_group": "{0} changed group to online mode",
-    "rename_group": "{0} changed group name to {1}"
+    "rename_group": "{0} changed group name to {1}",
+    "insert_member": "{0} added a member: {1}"
   },
   "help": {
     "no_password_login": {
