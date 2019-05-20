@@ -1,6 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 // @ts-ignore
-import * as ObjectHash from 'object-hash'
+import rusha from 'rusha'
+import stringify from 'json-stable-stringify'
 import { SnapshotCache, TransOperation, TransformFunctions, OpschainOption, TransOperationOption } from '../types'
 
 export class BasicCache<S> implements SnapshotCache<S> {
@@ -16,11 +17,17 @@ export class BasicCache<S> implements SnapshotCache<S> {
   }
 }
 
+function basicHashFunction(object: any): string {
+  const hash = rusha.createHash()
+  hash.update(stringify(object))
+  return hash.digest('hex')
+}
+
 export function TreeHash(
   operations: TransOperation[],
   baseHash: string,
   operationIndex: number,
-  hashFunction = ObjectHash.sha1,
+  hashFunction: (object: any) => string
 ) {
   const operationHashes = operations
     .slice(0, operationIndex)
@@ -41,7 +48,7 @@ export function EvalTransforms<S>(
     cacheTTL,
     shouldCache,
   } = Object.assign({
-    hashFunction: ObjectHash.sha1,
+    hashFunction: basicHashFunction,
     shouldCache: () => true,
   }, options || {})
 
@@ -52,7 +59,7 @@ export function EvalTransforms<S>(
     let snap = base
     const baseHash = hashFunction(base)
     let snapIndex = 0
-    const treeHash = (index: number) => TreeHash(operations, baseHash, index, hashFunction)
+    const treeHash = (index: number) => TreeHash(operations, baseHash, index, basicHashFunction)
 
     if (cacheObject) {
       // search reverse
@@ -79,7 +86,7 @@ export function EvalTransforms<S>(
   }
 }
 
-export function ProcessOperations(operations: TransOperationOption[], hashFunction = ObjectHash.sha1): TransOperation[] {
+export function ProcessOperations(operations: TransOperationOption[], hashFunction = basicHashFunction): TransOperation[] {
   return operations.map((operation) => {
     if (typeof operation === 'string') {
       return {
@@ -100,6 +107,6 @@ export function ProcessOperations(operations: TransOperationOption[], hashFuncti
   })
 }
 
-export function ProcessOperation(operation: TransOperationOption, hashFunction = ObjectHash.sha1): TransOperation {
-  return ProcessOperations([operation])[0]
+export function ProcessOperation(operation: TransOperationOption, hashFunction = basicHashFunction): TransOperation {
+  return ProcessOperations([operation], hashFunction)[0]
 }

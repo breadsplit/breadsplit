@@ -1,4 +1,3 @@
-import * as ObjectHash from 'object-hash'
 import { EvalTransforms, ProcessOperation, ProcessOperations, BasicCache } from '~/core'
 import { TransformFunctions, SnapshotCache, TransOperation, TransOperationOption } from '~/types'
 
@@ -6,22 +5,16 @@ let transformCount = 0
 
 class OperationChain<S> {
   base: Readonly<S>
-  baseHash: string
   operations: TransOperation[]
   transforms: TransformFunctions<S>
   cache: SnapshotCache<S>
 
   constructor(baseSnapshot: S, transforms: TransformFunctions<S>, operations: TransOperationOption[] = []) {
     this.base = Object.freeze(baseSnapshot)
-    this.baseHash = this.objectHash(this.base)
     this.transforms = transforms
     this.operations = []
     this.insertOperations(operations)
     this.cache = new BasicCache<S>()
-  }
-
-  objectHash(object: any) {
-    return ObjectHash.sha1(object)
   }
 
   insertOperation(operation: TransOperationOption) {
@@ -29,14 +22,13 @@ class OperationChain<S> {
   }
 
   insertOperations(operations: TransOperationOption[]) {
-    const processed = ProcessOperations(operations, this.objectHash)
+    const processed = ProcessOperations(operations)
     this.operations = this.operations.concat(processed).sort((a, b) => a.timestamp - b.timestamp)
   }
 
   eval(cache = true) {
     return EvalTransforms(
       this.transforms, {
-        hashFunction: this.objectHash,
         cacheObject: cache ? this.cache : undefined,
       })(
       this.base,
@@ -84,8 +76,6 @@ describe('demo', () => {
     const snap: Snap = { name: 'hello' }
 
     const ops = new OperationChain<Snap>(snap, transforms, [{ name: 'upper' }])
-
-    expect(ops.objectHash(snap)).toEqual(ops.baseHash)
 
     expect(ops.eval()).toEqual({ name: 'HELLO' })
     // should be immutable
