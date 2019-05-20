@@ -1,8 +1,7 @@
 // @ts-ignore
 import JsCache from 'js-cache'
-import { ProcessOperations, EvalTransforms, TransOperationOption } from 'opschain'
-import { Transforms, GroupDefault } from '../../../core'
-import { Group, Operation } from '../../../types'
+import { Transforms, EvalTransforms, GroupDefault, ProcessOperations } from '../../../core'
+import { Group, Operation, TransOperationOption } from '../../../types'
 
 const transformCache = new JsCache()
 const transformCacheTTL = 10 * 24 * 60 * 60 * 1000 // 10 days

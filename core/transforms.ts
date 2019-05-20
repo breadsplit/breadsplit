@@ -5,8 +5,7 @@ If you made any modification,
 Please DO DEPLOY firebase functions before merge into master.
 */
 import cloneDeep from 'lodash/cloneDeep'
-import { TransformFunctions } from 'opschain'
-import { Group, Member, Transaction, ActivityAction, Entity, GroupMetaChanges } from '../types'
+import { TransformFunctions, Group, Member, Transaction, ActivityAction, Entity, GroupMetaChanges } from '../types'
 
 export type TransformKeys =
 | 'init'
