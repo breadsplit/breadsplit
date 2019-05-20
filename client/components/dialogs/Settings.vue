@@ -56,7 +56,7 @@ v-card.settings
         v-list-tile-content
           v-list-tile-title {{$t('ui.help')}}
 
-      v-list-tile(avatar, @click='WIP')
+      v-list-tile(avatar, @click='$refs.feedback.open()')
         v-list-tile-avatar
           v-icon mdi-message-alert-outline
         v-list-tile-content
@@ -74,6 +74,9 @@ v-card.settings
         v-list-tile-title {{ locale.text }}
         v-list-tile-action(v-if='locale.value === currentLocale')
           v-icon mdi-check
+
+  app-dialog(ref='feedback' :route='true')
+    app-feed-back
 </template>
 
 <script lang='ts'>

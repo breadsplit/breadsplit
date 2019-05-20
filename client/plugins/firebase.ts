@@ -183,12 +183,10 @@ export class FirebasePlugin {
   }
 
   async sendFeedback(feedback: FeedbackOptions) {
-    const email = (this.me && this.me.email) || null
     const uid = this.uid || null
     const data: Feedback = {
       ...feedback,
       uid,
-      email,
       timestamp: +new Date(),
     }
     await this.db
