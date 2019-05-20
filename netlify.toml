@@ -1,0 +1,18 @@
+# https://www.netlify.com/docs/netlify-toml-reference/
+
+[build]
+  base = ""
+  publish = "client/dist/"
+  command = "npm run generate"
+
+[build.environment]
+  GOOGLE_GTAG_ID = "UA-139660905-1" # dev gtag
+  RELEASE_CHANNEL = "dev"
+  FIREBASE_SERVER = "development"
+  SENTRY_DSN = "https://5decd6ec1a0e42d7b1f47d92675e0b59@sentry.io/1457153"
+
+# Production branches
+[context.production.environment]
+  GOOGLE_GTAG_ID = "UA-139660905-3" # prod gtag
+  RELEASE_CHANNEL = "beta"
+  FIREBASE_SERVER = "production"

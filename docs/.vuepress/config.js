@@ -14,7 +14,7 @@ module.exports = {
     docsBranch: 'master',
     nav: [
       { text: 'Getting Started', link: '/' },
-      { text: 'Live', link: 'https://breadsplit.netlify.com/' },
+      { text: 'Live', link: 'https://app.breadsplit.com/' },
     ],
     sidebar: {
       '/': [
