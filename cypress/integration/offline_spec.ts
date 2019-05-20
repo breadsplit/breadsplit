@@ -3,7 +3,7 @@ describe('Offline functions', () => {
     cy.visit('/?lang=en')
 
     cy.title()
-      .should('equal', 'BreadSplit')
+      .should('contain', 'BreadSplit')
   })
 
   it('should popup welcome message', () => {
