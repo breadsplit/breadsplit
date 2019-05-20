@@ -1,5 +1,10 @@
 <template lang='pug'>
-svg.chart-settle-up-solutions(:width='width', :height='height')
+svg.chart-settle-up-solutions(
+  :width='fixed?width:undefined'
+  :height='fixed?height:undefined'
+  :viewBox='`0 0 ${width} ${height}`'
+  preserveAspectRatio='xMidYMid meet'
+)
 </template>
 
 <script lang='ts'>
@@ -18,10 +23,12 @@ interface Link extends d3.SimulationLinkDatum<Node>{
 
 @Component
 export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
-  width = 500
-  height = 500
-
   @Prop(Array) readonly solutions!: Solution[]
+  @Prop({ default: 800 }) readonly width!: number
+  @Prop({ default: 600 }) readonly height!: number
+  @Prop({ default: false }) readonly fixed!: boolean
+
+  simulation!: d3.Simulation<Node, Link>
 
   get ids() {
     return union(this.solutions.flatMap(s => [s.from, s.to]))
@@ -45,10 +52,13 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
     return d3.select(this.$el)
   }
 
-  async mounted() {
-    const svg = this.svg
+  mounted() {
+    this.init()
+    this.draw()
+  }
 
-    const simulation = d3.forceSimulation<Node>()
+  init() {
+    this.simulation = d3.forceSimulation<Node, Link>()
       .force('link', d3.forceLink<Node, Link>().id((d) => { return d.uid || d.id }))
       .force('charge', d3.forceManyBody()
         .strength(-1000)
@@ -56,23 +66,29 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
         .distanceMax(500)
       )
       .force('center', d3.forceCenter(this.width / 2, this.height / 2))
+  }
 
-    function dragstarted(d) {
-      if (!d3.event.active) simulation.alphaTarget(0.3).restart()
-      d.fx = d.x
-      d.fy = d.y
-    }
+  dragstarted(d) {
+    if (!d3.event.active)
+      this.simulation.alphaTarget(0.3).restart()
+    d.fx = d.x
+    d.fy = d.y
+  }
 
-    function dragged(d) {
-      d.fx = d3.event.x
-      d.fy = d3.event.y
-    }
+  dragged(d) {
+    d.fx = d3.event.x
+    d.fy = d3.event.y
+  }
 
-    function dragended(d) {
-      d.fx = null
-      d.fy = null
-      if (!d3.event.active) simulation.alphaTarget(0)
-    }
+  dragended(d) {
+    d.fx = null
+    d.fy = null
+    if (!d3.event.active)
+      this.simulation.alphaTarget(0)
+  }
+
+  draw() {
+    const svg = this.svg
 
     const defs = svg.append('svg:defs')
     const avatar_size = 48
@@ -125,9 +141,9 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
       .attr('r', 16)
       .attr('class', 'node')
       .call(d3.drag()
-        .on('start', dragstarted)
-        .on('drag', dragged)
-        .on('end', dragended))
+        .on('start', this.dragstarted)
+        .on('drag', this.dragged)
+        .on('end', this.dragended))
 
     node.append('circle')
       .attr('class', 'avatar')
@@ -141,30 +157,30 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
       .attr('class', 'name-tag')
       .attr('text-anchor', 'middle')
       .style('font-size', '1em')
-      .text((d) => { return d.name })
+      .text(d => d.name)
 
     function ticked() {
       link
         // @ts-ignore
-        .attr('x1', (d) => { return d.source.x })
+        .attr('x1', d => d.source.x)
         // @ts-ignore
-        .attr('y1', (d) => { return d.source.y })
+        .attr('y1', d => d.source.y)
         // @ts-ignore
-        .attr('x2', (d) => { return d.target.x })
+        .attr('x2', d => d.target.x)
         // @ts-ignore
-        .attr('y2', (d) => { return d.target.y })
+        .attr('y2', d => d.target.y)
 
       node
         // @ts-ignore
         .attr('transform', d => `translate(${d.x},${d.y})`)
     }
 
-    simulation
+    this.simulation
       .nodes(this.nodes)
       .on('tick', ticked)
 
     // @ts-ignore
-    simulation.force('link').links(this.links)
+    this.simulation.force('link').links(this.links)
   }
 }
 </script>
