@@ -1,43 +1,43 @@
 <template lang='pug'>
-v-container
-  .text-xs-center.mt-4.pt-3
-    app-logo-name.large
+div.scroll-page
+  v-container
+    .text-xs-center.mt-4.pt-3
+      app-logo-name.large
+      .my-4.py-2
 
-    .my-4.py-2
+      template(v-if='loading')
+        v-progress-circular(indeterminate, size='80', color='grey lighten-2')
+        p.ma-4 {{$t('ui.loading_group_info')}}
 
-    template(v-if='loading')
-      v-progress-circular(indeterminate, size='80', color='grey lighten-2')
-      p.ma-4 {{$t('ui.loading_group_info')}}
+      template(v-else-if='!group')
+        p Group Not Found
+        p TODO:WRITING
 
-    template(v-else-if='!group')
-      p Group Not Found
-      p TODO:WRITING
+      template(v-else)
+        div(v-columns='"80px auto"')
+          v-icon(color='primary', size='50') mdi-{{group.icon}}
+          .text-xs-left.mt-2(v-html='$t("ui.invited_to_join",[])' style='font-size: 1.4em')
+          span.primary--text {{group.name}}
 
-    template(v-else)
-      div(v-columns='"80px auto"')
-        v-icon(color='primary', size='50') mdi-{{group.icon}}
-        .text-xs-left.mt-2(v-html='$t("ui.invited_to_join",[])' style='font-size: 1.4em')
-        span.primary--text {{group.name}}
+        v-card.px-2.pb-2.ma-2
+          v-list(two-line style='height: 300px; overflow-y: auto;')
+            template(v-for='(member, index) in members()')
+              v-list-tile(:key='member.id', avatar)
+                v-list-tile-avatar
+                  app-user-avatar(:id='member.id', size='40')
+                v-list-tile-content
+                  v-list-tile-title
+                    span(v-if='isLocal(member.id)') {{member.name}}
+                    app-user-info(v-else :id='member.id', field='name')
+                v-list-tile-action(v-if='isLocal(member.id)')
+                  v-btn(color='primary' dark :loading='joining' @click='join(member.id)') 認領我
+                v-list-tile-action(v-else)
+                  v-icon(color='green lighten-1', size='50') mdi-account-check
+              v-divider
 
-      v-card.px-2.pb-2.ma-2
-        v-list(two-line style='height: 300px; overflow-y: auto;')
-          template(v-for='(member, index) in members()')
-            v-list-tile(:key='member.id', avatar)
-              v-list-tile-avatar
-                app-user-avatar(:id='member.id', size='40')
-              v-list-tile-content
-                v-list-tile-title
-                  span(v-if='isLocal(member.id)') {{member.name}}
-                  app-user-info(v-else :id='member.id', field='name')
-              v-list-tile-action(v-if='isLocal(member.id)')
-                v-btn(color='primary' dark :loading='joining' @click='join(member.id)') 認領我
-              v-list-tile-action(v-else)
-                v-icon(color='green lighten-1', size='50') mdi-account-check
-            v-divider
+        v-btn(color='primary' dark :loading='joining' @click='join()') 我不在這ㄟ~
 
-      v-btn(color='primary' dark :loading='joining' @click='join()') 我不在這ㄟ~
-
-  app-login(ref='login')
+    app-login(ref='login')
 </template>
 
 <script lang='ts'>
