@@ -68,9 +68,6 @@ workflows:
 
       # auto deploy to firebase only on production server
       - firebase_deploy:
-          requires:
-            - unit_test
-            - cypress/run
           filters:
             branches:
               only: app
