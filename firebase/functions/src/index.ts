@@ -184,7 +184,7 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
     const doc = await t.get(OperationsRef(id))
     const serverOps = doc.data() as ServerOperations
     const ops = _
-      .chain(serverOps.operations)
+      .chain((serverOps && serverOps.operations) || [])
       .unionBy(incomingOperations, 'hash')
       .sortBy('timestamp')
       .value()
