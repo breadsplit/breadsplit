@@ -48,10 +48,10 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: cd firebase/functions && npm ci
+          command: cd ./firebase/functions && npm ci
       - run:
           name: Deploy to Firebase
-          command: cd firebase && npx firebase deploy --project production --token=$FIREBASE_DEPLOY_TOKEN
+          command: cd ./firebase && npx firebase deploy --project production --token=$FIREBASE_DEPLOY_TOKEN
 
 
 workflows:
