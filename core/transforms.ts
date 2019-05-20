@@ -54,10 +54,18 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  insert_member(snap, member?: Member) {
+  insert_member(snap, member?: Member, { by, timestamp } = {}) {
     if (!member)
       return snap
     snap.members[member.id] = member
+    snap.activities.push({
+      by,
+      timestamp,
+      action: ActivityAction.insert,
+      entity: Entity.member,
+      entity_id: member.id,
+      entity_name: member.name,
+    })
     return snap
   },
 

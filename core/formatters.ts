@@ -5,7 +5,11 @@ import { Translator, t } from './i18n'
 type Time = string | number | Dayjs | Date
 
 export function dateFromNow(time: Time) {
-  return dayjs(time).fromNow()
+  const d = dayjs(time)
+  const now = dayjs()
+  if (now.diff(d, 'day') >= 1)
+    return d.format('ll')
+  return d.fromNow()
 }
 
 export function dateToRelative(time: Time, $t: Translator = t, locale?: string) {
