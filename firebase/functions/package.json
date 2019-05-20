@@ -14,16 +14,17 @@
   },
   "main": "lib/firebase/functions/src/index.js",
   "dependencies": {
-    "json-stable-stringify": "^1.0.1",
-    "rusha": "^0.8.13",
     "dayjs": "^1.8.14",
     "firebase-admin": "~7.3.0",
     "firebase-functions": "^2.3.0",
     "js-cache": "^1.0.3",
+    "json-stable-stringify": "^1.0.1",
     "lodash": "^4.17.11",
-    "nanoid": "^2.0.1"
+    "nanoid": "^2.0.1",
+    "rusha": "^0.8.13"
   },
   "devDependencies": {
     "typescript": "^3.4.5"
-  }
+  },
+  "version": "0.3.0"
 }
