@@ -82,6 +82,17 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
       // simulation.unfix(d);
     }
 
+    svg.append('svg:defs').append('svg:marker')
+      .attr('id', 'triangle')
+      .attr('refX', 6)
+      .attr('refY', 6)
+      .attr('markerWidth', 15)
+      .attr('markerHeight', 15)
+      .attr('orient', 'auto')
+      .append('path')
+      .attr('d', 'M 0 0 12 6 0 12 3 6')
+      .style('fill', 'black')
+
     const link = svg.append('g')
       .style('stroke', '#aaa')
       .selectAll('line')
@@ -89,28 +100,32 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
       .enter()
       .append('line')
       .attr('stroke-width', 2)
-      .attr('marker-end', 'url(#arrow)')
+      .attr('marker-end', 'url(#triangle)')
 
     const node = svg.append('g')
       .attr('class', 'nodes')
-      .selectAll('circle')
+      .selectAll('.node')
       .data(this.nodes)
       .enter()
-      .append('circle')
-      .attr('r', 2)
+      .append('g')
+      .attr('r', 16)
+      .attr('class', 'node')
       .call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
         .on('end', dragended))
 
-    const label = svg.append('g')
-      .attr('class', 'labels')
-      .selectAll('text')
-      .data(this.nodes)
-      .enter()
-      .append('text')
+    node.append('svg:image')
+      .attr('xlink:href', d => d.avatar_url || '')
+      .attr('x', -24)
+      .attr('y', -24)
+      .attr('width', 48)
+      .attr('height', 48)
+
+    node.append('text')
       .attr('class', 'name-tag')
       .attr('text-anchor', 'middle')
+      .style('font-size', '10px').style('fill', '#333')
       .text((d) => { return d.name })
 
     function ticked() {
@@ -125,20 +140,8 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
         .attr('y2', (d) => { return d.target.y })
 
       node
-        .attr('r', 16)
-        .style('fill', '#efefef')
-        .style('stroke', '#424242')
-        .style('stroke-width', '1px')
         // @ts-ignore
-        .attr('cx', (d) => { return d.x + 5 })
-        // @ts-ignore
-        .attr('cy', (d) => { return d.y - 3 })
-
-      label
-        // @ts-ignore
-        .attr('x', (d) => { return d.x })
-        .attr('y', (d) => { return d.y })
-        .style('font-size', '10px').style('fill', '#333')
+        .attr('transform', d => `translate(${d.x},${d.y})`)
     }
 
     simulation
@@ -156,5 +159,5 @@ svg.chart-settle-up-solutions
   user-select none
 
   .name-tag
-    transform translate(5px, 25px)
+    transform translate(0, 40px)
 </style>
