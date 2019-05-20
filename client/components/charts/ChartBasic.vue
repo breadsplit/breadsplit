@@ -1,11 +1,12 @@
 <template lang='pug'>
-.chart-basic
+svg.chart-basic(width='500', height='270')
+  g(style='transform: translate(0, 10px)')
+    path(:d='line')
 </template>
 
 <script lang='ts'>
 import { Vue, Component } from 'vue-property-decorator'
 import {
-  select,
   scaleLinear,
   axisLeft,
   axisTop,
@@ -18,13 +19,7 @@ const data = [99, 71, 78, 25, 36, 92]
 
 @Component
 export default class ChartBasic extends Vue {
-  mounted() {
-    const svg = select(this.$el)
-      .append('svg')
-      .attr('width', 500)
-      .attr('height', 270)
-      .append('g')
-      .attr('transform', 'translate(0, 10)')
+  get line() {
     const x = scaleLinear().range([0, 430])
     const y = scaleLinear().range([210, 0])
     axisLeft().scale(x)
@@ -34,17 +29,16 @@ export default class ChartBasic extends Vue {
     const createPath = line()
       .x((d, i) => x(i))
       .y(d => y(d))
-    svg.append('path').attr('d', createPath(data))
+    return createPath(data)
   }
 }
 </script>
 
 <style lang='stylus'>
-.chart-basic
-  svg
-    margin 25px
-    path
-      fill none
-      stroke #76BF8A
-      stroke-width 3px
+svg.chart-basic
+  margin 25px
+  path
+    fill none
+    stroke #76BF8A
+    stroke-width 3px
 </style>
