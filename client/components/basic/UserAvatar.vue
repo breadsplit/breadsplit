@@ -1,5 +1,5 @@
 <template lang='pug'>
-app-action-with-text.app-avatar(:class='{inline}')
+app-action-with-text.user-avatar(:class='{inline}')
   template(slot='action')
     v-avatar(:size='size')
       img(:src='getAvatarUrl(id)')

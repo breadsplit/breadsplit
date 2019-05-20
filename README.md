@@ -1,12 +1,14 @@
-<img src='./client/static/img/svg/favicon.svg' width='150'>
+<img src='./client/static/img/png/android-chrome-192x192.png' width='150' align='right'>
 
-# BreadSplit 分賬吐司
+# BreadSplit
 
 Group bills split made easy, fast and customizable.
 
 [![CircleCI](https://circleci.com/gh/antfu/breadsplit.svg?style=svg&circle-token=b26ce4526201e0c7fbeb42287d360930a69b3988)](https://circleci.com/gh/antfu/breadsplit)
+[![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-green.svg)](https://dashboard.cypress.io/#/projects/m9d7tr/runs)
 [![codecov](https://codecov.io/gh/antfu/breadsplit/branch/master/graph/badge.svg?token=JRYbmADObn)](https://codecov.io/gh/antfu/breadsplit)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/7595b445-ccf4-4925-a7e8-ec6bd6033af3/deploy-status)](https://app.netlify.com/sites/breadsplit/deploys)
+[![Sentry.io](https://img.shields.io/badge/sentry.io-reports-teal.svg)](https://sentry.io/organizations/breadsplit/issues/?project=1457153)
 
 ## 🌟 Key Features
 

@@ -4,38 +4,67 @@ This file is shared both in client and server.
 If you made any modification,
 Please DO DEPLOY firebase functions before merge into master.
 */
+import cloneDeep from 'lodash/cloneDeep'
 import { TransformFunctions } from 'opschain'
-import { Group, Member, Transaction, ActivityAction, Entity } from '../types'
+import { Group, Member, Transaction, ActivityAction, Entity, GroupMetaChanges } from '../types'
+
+export type TransformKeys =
+| 'init'
+| 'modify_meta'
+| 'insert_member'
+| 'remove_member'
+| 'modify_member'
+| 'insert_transaction'
+| 'change_member_id'
+| 'new_activity'
 
 export const Transforms: TransformFunctions<Group> = {
   init(snap, data, { by, timestamp } = {}) {
-    snap = Object.assign(snap || {}, data)
-    snap.activities = [{
+    snap = Object.assign(snap || {}, cloneDeep(data))
+    if (!snap.activities)
+      snap.activities = []
+    snap.activities.push({
       by,
       timestamp,
-      action: ActivityAction.insert,
+      action: ActivityAction.publish,
       entity: Entity.group,
-    }]
+    })
     return snap
   },
 
-  rename(snap, name) {
-    snap.name = (name || '').toString()
-    return snap
-  },
-
-  insert_member(snap, data) {
-    if (!data)
+  modify_meta(snap, changes?: GroupMetaChanges, { by, timestamp } = {}) {
+    if (!changes)
       return snap
-    const member = data as Member
+    changes = Object.assign({}, changes)
+    if (changes.name) {
+      snap.name = changes.name
+      snap.activities.push({
+        by,
+        timestamp,
+        action: ActivityAction.update,
+        entity: Entity.group,
+        update_fields: 'name',
+        entity_name: changes.name,
+      })
+    }
+    if (changes.options) {
+      Object.assign(snap.options, changes.options)
+      delete changes.options
+    }
+    Object.assign(snap, changes)
+    return snap
+  },
+
+  insert_member(snap, member?: Member) {
+    if (!member)
+      return snap
     snap.members[member.id] = member
     return snap
   },
 
-  remove_member(snap, data) {
-    if (!data)
+  remove_member(snap, id?: string) {
+    if (!id)
       return snap
-    const id = data as string
     if (!snap.members[id])
       return snap
     snap.members[id].removed = true
@@ -52,10 +81,9 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  insert_transaction(snap, data, { by, timestamp } = {}) {
-    if (!data)
+  insert_transaction(snap, transaction?: Transaction, { by, timestamp } = {}) {
+    if (!transaction)
       return snap
-    const transaction = data as Transaction
     snap.transactions.push(transaction)
     snap.activities.push({
       by,

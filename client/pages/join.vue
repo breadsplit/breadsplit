@@ -1,36 +1,70 @@
 <template lang='pug'>
-v-container
-  .text-xs-center.mt-4.pt-4
-    template(v-if='loading')
-      v-progress-circular(indeterminate, size='80', color='grey lighten-2')
-      p.ma-4 {{$t('ui.loading_group_info')}}
+div.scroll-page
+  v-container
+    .text-xs-center.mt-4.pt-3
+      app-logo-name.large
+      .my-4.py-2
 
-    template(v-else-if='!group')
-      p Group Not Found
-      p TODO:WRITING
+      template(v-if='loading')
+        v-progress-circular(indeterminate, size='80', color='grey lighten-2')
+        p.ma-4 {{$t('ui.loading_group_info')}}
 
-    template(v-else)
+      template(v-else-if='!group')
+        p Group Not Found
+        p TODO:WRITING
 
-      v-icon(:color='color', size='120').ma-3 mdi-{{group.icon}}
-      div(v-html='$t("ui.invited_to_join", [group.name])' style='font-size: 1.8em')
-      .avatars.mb-3
-        app-user-avatar(v-for='uid in group.viewers', :id='uid', :key='uid' size='32').ma-1
+      template(v-else)
+        div(v-columns='"80px auto"')
+          v-icon(color='primary', size='50') mdi-{{group.icon}}
+          .text-xs-left.mt-2(v-html='$t("ui.invited_to_join",[])' style='font-size: 1.4em')
+          span.primary--text {{group.name}}
 
-      v-btn(:color='color' dark :loading='joining' @click='join') {{$t('ui.button_join')}}
+        span.primary--text 我的名字是
+
+        v-card.px-2.pb-2.ma-2
+          v-list(two-line style='height: 300px; overflow-y: auto;')
+            template(v-for='(member, index) in members()')
+              template(v-if='index!=0 && !isLocal(member.id) && isLocal(members()[index-1].id)')
+                br
+                span.primary--text 以下為已存在用戶
+              v-list-tile(:key='member.id', avatar)
+                v-list-tile-avatar
+                  app-user-avatar(:id='member.id', size='40')
+                v-list-tile-content
+                  v-list-tile-title
+                    span(v-if='isLocal(member.id)') {{member.name}}
+                    app-user-info(v-else :id='member.id', field='name')
+                v-list-tile-action(v-if='isLocal(member.id)')
+                  v-btn(color='primary' dark :loading='joining' @click='join(member.id)') 認領我
+                v-list-tile-action(v-else)
+                  v-icon(color='green lighten-1', size='50') mdi-account-check
+              v-divider
+
+        v-btn(color='primary' dark :loading='joining' @click='join()') 我不在這ㄟ~
+
+    app-login(ref='login')
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
-import { Group } from '~/types'
+import { Vue, Component } from 'vue-property-decorator'
+import { ServerGroup, Member } from '~/types'
+import { IsThisId } from '~/core'
 
 @Component({
+  // @ts-ignore
+  layout: 'base',
   watchQuery: true,
   async asyncData({ query }) {
     return { id: query.id }
   },
+  head() {
+    return {
+      title: this.$t('ui.title_join_a_group'),
+    }
+  },
 })
 export default class JoinPage extends Vue {
-  group: Group | null = null
+  serverGroup: ServerGroup | undefined = undefined
   loading = true
   joining = false
   id: string | null = null
@@ -39,18 +73,41 @@ export default class JoinPage extends Vue {
     return (this.group && this.group.color) || 'primary'
   }
 
-  async join() {
+  get group() {
+    if (this.serverGroup)
+      return this.serverGroup.present
+    return undefined
+  }
+
+  members() {
+    if (!this.group)
+      return []
+    const orderList: Member[] = []
+    Object.values(this.group.members).forEach((m) => {
+      if (this.isLocal(m.id))
+        orderList.unshift(m)
+      else
+        orderList.push(m)
+    })
+    return orderList
+  }
+
+  async join(memberId?: string) {
     if (!this.id)
       return
     if (!this.$store.getters['user/uid']) {
+      // if false, the login is canceled
       // @ts-ignore
-      this.$root.$login.open()
-      // TODO:CODE: auto join after login
-      return
+      if (!await this.$refs.login.login())
+        return
     }
     this.joining = true
-    await this.$fire.joinGroup(this.id)
+    await this.$fire.joinGroup(this.id, memberId)
     this.joining = false
+  }
+
+  isLocal(id: string) {
+    return IsThisId.LocalMember(id)
   }
 
   async mounted() {
@@ -65,8 +122,7 @@ export default class JoinPage extends Vue {
       this.loading = false
       return
     }
-    // @ts-ignore
-    this.group = await this.$fire.groupMeta(this.id)
+    this.serverGroup = await this.$fire.groupInfo(this.id)
     this.loading = false
   }
 }

@@ -1,4 +1,5 @@
 import { Vue, Component } from 'vue-property-decorator'
+import { Getter } from 'vuex-class'
 import { UserInfo, Member } from '~/types'
 import { IsThisId } from '~/core'
 import { avatarProvider } from '~/utils/avatar_providers'
@@ -6,9 +7,20 @@ import nanoid from 'nanoid'
 
 @Component
 export default class UserInfoMixin extends Vue {
-  getUser(id?: string, autoFetch: boolean = true): UserInfo | Member | null {
+  @Getter('user/uid') uid: string|undefined
+
+  getUser(id?: string, autoFetch: boolean = true): UserInfo | Member | undefined {
     if (!id)
-      return null
+      return undefined
+    if (IsThisId.Me(id)) {
+      if (this.$store.getters['user/uid'])
+        return this.$store.getters['user/me']
+      return {
+        id,
+        name: this.$t('pronoun.me').toString(),
+        role: 'owner',
+      }
+    }
     if (IsThisId.UID(id)) {
       const user = this.$store.getters['user/user'](id)
       if (!user && autoFetch)
@@ -18,7 +30,7 @@ export default class UserInfoMixin extends Vue {
     return this.getMember(id)
   }
 
-  getMember(id: string): Member | null {
+  getMember(id: string): Member | undefined {
     return this.$store.getters['group/memberById']({
       uid: id,
     })
@@ -36,7 +48,10 @@ export default class UserInfoMixin extends Vue {
     return avatarProvider(id || nanoid(), dark)
   }
 
-  getUserName(id: string) {
+  getUserName(id: string, pronoun = true) {
+    if (pronoun && (id === this.uid || IsThisId.Me(id)))
+      return this.$t('pronoun.i').toString()
+
     const user = this.getUser(id)
     if (user)
       return user.name

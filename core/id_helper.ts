@@ -7,10 +7,13 @@ export const GenerateId = {
   LocalMember: () => `M:${nanoid(10)}`,
 }
 
+export const IdMe = 'me'
+
 export const IsThisId = {
   LocalMember: (id: string) => id.startsWith('M:'),
   LocalGroup: (id: string) => id.startsWith('L:'),
   OnlineGroup: (id: string) => id.startsWith('O:'),
   Transaction: (id: string) => id.startsWith('T:'),
-  UID: (id: string) => !id.startsWith('M:'),
+  UID: (id: string) => !id.startsWith('M:') && id !== IdMe,
+  Me: (id: string) => id === IdMe,
 }

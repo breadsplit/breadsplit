@@ -1,12 +1,11 @@
 import Vue from 'vue'
-import merge from 'lodash/merge'
 import includes from 'lodash/includes'
 import orderBy from 'lodash/orderBy'
 import union from 'lodash/union'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
 import { GroupState, RootState, ClientGroup, Group, ServerGroup, Operation } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache } from 'opschain'
-import { Transforms, MemberDefault, ClientGroupDefault, TransactionDefault } from '~/core'
+import { Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe } from '~/core'
 import { GroupStateDefault } from '~/store'
 
 const OperationCache = new BasicCache<Group>()
@@ -91,19 +90,23 @@ export const getters: GetterTree<GroupState, RootState> = {
 function NewOperation(
   context: ActionContext<GroupState, RootState>,
   groupid: string,
-  name: string,
+  name: TransformKeys,
   data: any,
   meta: object = {}
 ) {
   meta = {
     ...meta,
-    by: context.rootGetters['user/uid'],
+    by: context.rootGetters['user/uid'] || IdMe,
     timestamp: +new Date(),
   }
   context.commit('newOperation', { id: groupid, name, data, meta })
 }
 
 export const actions: ActionTree<GroupState, RootState> = {
+  modify(context, { id, changes }) {
+    NewOperation(context, id, 'modify_meta', changes)
+  },
+
   addMember(context, { id, member }) {
     member = MemberDefault(member)
     NewOperation(context, id, 'insert_member', member)
@@ -123,9 +126,9 @@ export const actions: ActionTree<GroupState, RootState> = {
     NewOperation(context, id, 'insert_transaction', trans)
   },
 
-  editTranscation(context, { id, transid, changes }) {
-    NewOperation(context, id, 'modify_transaction', { id: transid, changes })
-  },
+  // editTranscation(context, { id, transid, changes }) {
+  //  NewOperation(context, id, 'modify_transaction', { id: transid, changes })
+  // },
 
   changeMemberId(context, { id, from, to }) {
     NewOperation(context, id, 'change_member_id', { from, to })
@@ -149,11 +152,6 @@ export const mutations: MutationTree<GroupState> = {
     id = id || state.currentId
     state.currentId = null
     Vue.delete(state.groups, id)
-  },
-
-  edit(state, { id, changes }) {
-    id = id || state.currentId
-    merge(state.groups[id], changes)
   },
 
   removeOnlineGroups(state) {

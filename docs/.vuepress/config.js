@@ -35,6 +35,7 @@ module.exports = {
             'dev/tech',
             'dev/env',
             'dev/build',
+            'dev/test',
           ]
         },
         {

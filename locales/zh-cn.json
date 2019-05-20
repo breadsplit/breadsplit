@@ -44,7 +44,10 @@
       "notification_enabled": "通知已启用",
       "notification_disabled": "通知已禁用",
       "clear_all_data": "清除所有数据"
-    }
+    },
+    "splitting": {},
+    "button_no": "否",
+    "button_yes": "是"
   },
   "prompt": {
     "are_you_sure": "你确定吗？"

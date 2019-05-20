@@ -33,7 +33,7 @@ const config: NuxtConfiguration = {
       {
         async: true,
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700',
+        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap',
       },
       {
         async: true,
@@ -66,7 +66,9 @@ const config: NuxtConfiguration = {
 
   env: {
     NODE_ENV: process.env.NODE_ENV || 'development',
+    FIREBASE_SERVER: process.env.FIREBASE_SERVER || 'development',
     BUILD_TARGET: process.env.BUILD_TARGET || '',
+    RELEASE_CHANNEL: process.env.RELEASE_CHANNEL || 'dev',
     BUILD_TIME: new Date().toISOString(),
     BUILD_MACHINE: process.env.BUILD_MACHINE || process.env.OSTYPE || '',
     APP_VERSION: pkg.version,
@@ -79,19 +81,27 @@ const config: NuxtConfiguration = {
   ],
 
   plugins: [
-    '~/plugins/messaging-sw',
-    '~/plugins/localstorage',
+    /* The order of plugins is important */
+
+    /* Request handling */
+    // '~/plugins/ua', // detect webview
+
+    /* Data */
+    '~/plugins/localstorage', // load store from localstorage
     '~/plugins/i18n',
-    '~/plugins/packages',
+
+    /* Plugins and Components */
+    '~/plugins/packages', // 3-rd party dependencies
     '~/plugins/firebase',
     '~/plugins/vuetify',
     '~/plugins/directives',
-    '~/plugins/components',
+    '~/plugins/components', // register components
   ],
 
   router: {
     mode: 'hash',
     middleware: [
+      'ua',
       'group',
     ],
   },
@@ -105,7 +115,7 @@ const config: NuxtConfiguration = {
       },
     },
     splitChunks: {},
-    extractCSS: true,
+    extractCSS: !debug,
     publicPath: '/nuxt/',
     /*
     ** You can extend webpack config here
@@ -116,14 +126,23 @@ const config: NuxtConfiguration = {
         // @ts-ignore
         config.module.rules.push({
           enforce: 'pre',
-          test: /\.(js|vue)$/,
+          test: /\.(js|vue|ts)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/,
         })
       }
     },
+    babel: {
+      presets: [
+        [
+          '@nuxt/babel-preset-app',
+          {
+            targets: '>0.25%, not ie 11, not op_mini all',
+          },
+        ],
+      ],
+    },
   },
-
   render: {
     bundleRenderer: {
       shouldPreload: (file, type) => {
@@ -145,11 +164,51 @@ const config: NuxtConfiguration = {
     debug,
   },
 
+  // https://pwa.nuxtjs.org/modules/workbox.html
   workbox: {
     offlineAnalytics: true,
     offline: true,
+    runtimeCaching: [
+      {
+        urlPattern: 'https://cdnjs.cloudflare.com/.*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '.*googleusercontent.com.*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '.*googleapis.com.*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '.*(?:png|jpg|jpeg|svg)$',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '.*(?:woff|woff2|otf)$',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
+        urlPattern: '/img/.*',
+        handler: 'staleWhileRevalidate',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+    ],
   },
 
+  // https://sentry.io/
   sentry: {
     dsn: process.env.SENTRY_DSN || ServicesIntegrations.sentry_dsn,
     config: {

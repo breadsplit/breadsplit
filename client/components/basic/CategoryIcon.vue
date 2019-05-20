@@ -1,5 +1,5 @@
 <template lang='pug'>
-app-action-with-text.category-icon
+app-action-with-text.category-icon(:class='inline')
   v-icon(slot='action', :size='size', :color='color') mdi-{{icon}}
   span(slot='text' :style='colorStyle', v-if='label') {{display}}
 </template>
@@ -14,6 +14,7 @@ export default class CategoryIcon extends Vue {
   @Prop(Boolean) readonly label!: boolean
   @Prop({ default: 32 }) readonly size!: number
   @Prop({ default: 'other' }) readonly fallback!: string
+  @Prop({ default: false }) readonly inline!: boolean
 
   get icon() {
     const cat = this.category || this.fallback

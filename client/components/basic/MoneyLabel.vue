@@ -1,5 +1,5 @@
 <template lang='pug'>
-.money-label(:class='balanceColorClass').text-xs-right
+.money-label(:class='balanceColorClass')
   span.fee.mr-1 {{formatted}}
 </template>
 
@@ -11,8 +11,11 @@ import { numberToMoney } from '~/core'
 export default class MoneyLabel extends Vue {
   @Prop({ default: 0 }) readonly amount!: number
   @Prop(String) readonly currency?: string
+  @Prop({ default: true }) readonly color!: boolean
 
   get balanceColorClass() {
+    if (!this.color)
+      return []
     if (this.amount < 0)
       return ['deep-orange--text', 'text--darken-2']
     else if (this.amount > 0)

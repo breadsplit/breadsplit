@@ -100,3 +100,7 @@ firebase/www
 
 # Firebase admin keys
 service-account-key.json
+
+# Cypress
+cypress/videos
+cypress/screenshots

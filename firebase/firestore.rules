@@ -1,17 +1,34 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /groups/{groupId} {
-      allow get, list: if resource == null || request.auth.uid in resource.data.viewers;
+
+    function isGroupMember() {
+      return resource != null && request.auth != null && request.auth.uid in resource.data.viewers;
     }
+
+    function isGroupOpen() {
+      return resource != null && resource.data.open == true
+    }
+
+    function notExists() {
+      return resource == null
+    }
+
+    match /groups/{groupId} {
+      allow get: if notExists() || isGroupMember() || isGroupOpen();
+      allow list: if notExists() || isGroupMember();
+    }
+
     match /users/{uid} {
       allow write: if request.auth.uid == uid;
       allow read: if true;
     }
+
     match /messaging_tokens/{uid} {
       allow write, read: if request.auth.uid == uid;
     }
+
     match /feedbacks/{uid} {
-      allow write, read: if request.auth.uid != null;
+      allow create: if request.auth.uid != null;
     }
   }
 }

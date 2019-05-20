@@ -24,8 +24,14 @@
     "types": [
       "@types/node",
       "@nuxt/vue-app",
-      "@types/jest"
+      "@types/jest",
+      "cypress"
     ],
-    "strictFunctionTypes": false
-  }
+    "strictFunctionTypes": false,
+  },
+  "include": [
+    "client/**/*.ts",
+    "node_modules/cypress",
+    "cypress/*/*.ts"
+  ]
 }

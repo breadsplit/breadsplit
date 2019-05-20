@@ -1,26 +1,32 @@
 <template lang='pug'>
-.group-page
-  .scroll-page
-    v-tabs-items(v-model='tab_index', v-if='group').pt-1
-      v-tab-item(key='0')
-        v-container(:class='{"pa-0": isMobile}')
-          app-balances
+.group-page.height-100(style='margin-bottom: -60px')
+  v-tabs-items(v-model='tab_index', v-if='group').pt-1
+    v-tab-item(key='0').scroll-page
+      v-container(:class='{"pa-0": isMobile}')
+        app-balances
 
-      v-tab-item(key='1')
-        v-container(:class='{"pa-0": isMobile}')
+        .pa-2
 
-          app-transactions
+        app-transactions(:max='3')
 
-          v-alert(:value='true', type='warning') Work in progress...
-          pre {{JSON.stringify(group, null, 2)}}
+        .pa-2
 
-      v-tab-item(key='2')
-        v-container(:class='{"pa-0": isMobile}')
-          app-activities
+        app-settle-up
 
-      v-tab-item(key='3')
-        v-container(:class='{"pa-0": isMobile}')
-          app-members(:members='members')
+        .pa-2
+
+    v-tab-item(key='1').scroll-page
+      v-container(:class='{"pa-0": isMobile}')
+
+        app-transactions
+
+    v-tab-item(key='2').scroll-page
+      v-container(:class='{"pa-0": isMobile}')
+        app-activities
+
+    v-tab-item(key='3').scroll-page
+      v-container(:class='{"pa-0": isMobile}')
+        app-members(:members='members')
 
     div(style='height:15px')
 
@@ -33,14 +39,14 @@
         v-icon mdi-{{item.icon}}
 
   v-fab-transition
-    v-btn(
+    v-btn.new-transaction-button(
       fab color='primary'
       :style='fabStyle'
       @click='gotoNewTransaction()'
     )
       v-icon mdi-plus
 
-  nuxt-child(:key='$route.params.id')
+  nuxt-child
 </template>
 
 <script lang='ts'>
@@ -57,8 +63,6 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
     }
   },
   async asyncData({ params, store, error }) {
-    if (!store.state.loaded)
-      return { params }
     if (!store.getters['group/current'])
       // @ts-ignore
       return error({ icon: 'account-alert-outline', statusCode: 'Group not found', message: 'It seems to be a local group' })

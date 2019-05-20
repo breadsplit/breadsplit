@@ -25,7 +25,7 @@ v-card
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Prop } from 'vue-property-decorator'
 import { Activity } from '~/types'
 import { GroupMixin, UserInfoMixin, NavigationMixin, CommonMixin } from '~/mixins'
 import { getActivityDescription } from '~/core'
@@ -33,7 +33,8 @@ import { getActivityDescription } from '~/core'
 @Component
 export default class Activities extends Mixins(GroupMixin, UserInfoMixin, NavigationMixin, CommonMixin) {
   collapsed = true
-  collapsed_amount = 10
+
+  @Prop({ default: 10 }) readonly max!: number
 
   get activities() {
     return this.group.activities
@@ -47,16 +48,16 @@ export default class Activities extends Mixins(GroupMixin, UserInfoMixin, Naviga
 
   get displayed() {
     if (this.collapsed)
-      return this.activities.slice(0, this.collapsed_amount)
+      return this.activities.slice(0, this.max)
     return this.activities
   }
 
   get needShowMore() {
-    return this.collapsed && this.amount > this.collapsed_amount
+    return this.collapsed && this.amount > this.max
   }
 
   get needCollapsed() {
-    return !this.collapsed && this.amount > this.collapsed_amount
+    return !this.collapsed && this.amount > this.max
   }
 
   get locale() {
@@ -64,7 +65,7 @@ export default class Activities extends Mixins(GroupMixin, UserInfoMixin, Naviga
   }
 
   activityDescription(act: Activity) {
-    return getActivityDescription(this.$t.bind(this), act, this.locale, this.getUserName.bind(this))
+    return getActivityDescription(this.$t.bind(this), act, this.locale, id => this.getUserName(id))
   }
 
   onActivityClick(act: Activity) {

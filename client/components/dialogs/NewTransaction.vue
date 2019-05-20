@@ -1,103 +1,111 @@
 <template lang='pug'>
-v-card.new-trans-form
+mixin inputs()
+  .my-2.mx-3(v-columns='"auto 65px"' style='vertical-align:bottom')
+    app-number-input(
+      ref='total_fee_input'
+      v-model.number='form.total_fee'
+      placeholder='0'
+      @focus='openKeyboard'
+      reverse outline autofocus
+      required hide-details flat='true' main='true'
+    )
+    div(v-rows='"auto 45px"')
+      span
+      app-currency-select.mt-0.pt-0(v-model='form.currency')
+
+  app-soft-numpad(ref='numpad')
+
+v-card.new-transaction(v-rows='"max-content auto max-content"')
   app-dialog-bar(@close='close()')
     | {{$t('ui.new_expense')}}
 
-  .layout-relative.height-100
-    v-window(v-model='step')
+  v-window.height-100(v-model='step', touchless)
+    // First page
+    v-window-item(:value='1')
+      div.height-100(v-rows='"auto max-content"')
+        .vertical-aligned.ma-4
+          template(v-if='form.creditors.length === 1')
+            app-member-select(:members='members', v-model='form.creditors[0].uid')
+          span.mr-2 {{$t('ui.paid_money')}}
 
-      // First page
-      v-window-item(:value='1')
-        v-container
-          v-layout(column)
-            v-flex.ma-2
-              .vertical-aligned
-                template(v-if='form.creditors.length === 1')
-                  app-member-select(:members='members', v-model='form.creditors[0].uid')
-                span.mr-2 {{$t('ui.paid_money')}}
+        div
+          +inputs()
 
-      // Second page
-      v-window-item(:value='2')
-        .my-3
-          app-grid(columns='70px auto')
-            app-category-icon(:category='form.category || categorySense', label)
-            v-text-field(
-              v-model='form.desc' label='Description' placeholder='Some expense...' required)
+    // Second page
+    v-window-item(:value='2')
+      .my-3
+        div(v-columns='"max-content auto"')
+          app-category-select.pl-3(
+            :value='form.category || categorySense',
+            @input='i=> form.category = i'
+            :categories='cats'
+          )
+          v-text-field.pr-3.description-field(
+            v-model='form.desc' label='Description' placeholder='Some expense...' solo required)
 
-          v-divider
-          app-grid(columns='70px auto')
-            v-icon(color='primary') mdi-cash-usd
-            v-subheader {{$t('ui.paid_by')}}
+        v-divider
+        div(v-columns='"70px auto"')
+          v-icon(color='primary') mdi-cash-usd
+          app-splitting(:trans='form' on='creditors' :show-tabs='false')
+            v-subheader(slot='header') {{$t('ui.paid_by')}}
 
-          v-divider
-          app-grid(columns='70px auto')
-            v-icon(color='primary') mdi-chart-pie
-            app-splitting(:trans='form')
+        v-divider
+        div(v-columns='"70px auto"')
+          v-icon(color='primary') mdi-chart-pie
+          app-splitting(:trans='form' on='debtors')
+            v-subheader(slot='header') {{$t('ui.splitting.split_by')}}
 
-          v-divider
-          app-grid(columns='70px auto' @click.native='pickDate()' v-ripple)
-            v-icon(color='primary') mdi-calendar
-            v-subheader {{dateDisplay}}
+        v-divider
+        div(v-columns='"70px auto"' @click.native='pickDate()' v-ripple)
+          v-icon(color='primary') mdi-calendar
+          v-subheader {{dateDisplay}}
 
-          v-divider
-          app-grid(columns='70px auto')
-            v-icon(color='primary') mdi-map-marker
-            v-subheader {{$t('ui.add_location')}}
+        v-divider
+        div(v-columns='"70px auto"')
+          v-icon(color='primary') mdi-map-marker
+          v-subheader {{$t('ui.add_location')}}
 
-          v-divider
-          app-grid(columns='70px auto')
-            v-icon(color='primary') mdi-history
-            v-subheader {{$t('ui.repeat_expense')}}
+        v-divider
+        div(v-columns='"70px auto"')
+          v-icon(color='primary') mdi-history
+          v-subheader {{$t('ui.repeat_expense')}}
 
-  app-absolute-placeholder(:salt='step + visible')
-    app-div.bottom-nav
-      app-grid.my-2.mx-3(v-show='step === 1' columns='auto 65px' style='vertical-align:bottom')
-        app-number-input(
-          ref='total_fee_input'
-          v-model.number='form.total_fee'
-          placeholder='0'
-          @focus='openKeyboard'
-          reverse outline autofocus
-          required hide-details flat='true' main='true'
-        )
-        app-grid(rows='auto 45px')
-          span
-          app-currency-select.mt-0.pt-0(v-model='form.currency')
-
-      app-soft-numpad(v-show='step === 1' ref='numpad')
-
-      v-divider
-      v-card-actions.pa-3
-        v-btn(v-show='step === 1', flat, @click='close')
+  div
+    v-divider
+    v-card-actions.pa-3
+      template(v-if='step === 1')
+        v-btn.button-cancel(flat, @click='close')
           | {{$t('ui.button_cancel')}}
 
-        v-btn(v-show='step !== 1', flat, @click='step--')
+      template(v-else)
+        v-btn.button-back(flat, @click='step--')
           | {{$t('ui.button_back')}}
-        v-spacer
 
-        template(v-if='step === 1')
-          v-btn(:disabled='!form.total_fee', color='primary', flat, @click='submit')
-            | {{$t('ui.button_quick_add')}}
+      v-spacer
 
-          v-btn(:disabled='!form.total_fee', color='primary', depressed, @click='step++')
-            | {{$t('ui.button_next')}}
+      template(v-if='step === 1')
+        v-btn.button-quick-add(:disabled='!form.total_fee', color='primary', flat, @click='submit')
+          | {{$t('ui.button_quick_add')}}
 
-        template(v-if='step === 2')
-          v-btn(:disabled='step === 3', color='primary', depressed, @click='submit')
-            | {{$t('ui.button_save')}}
+        v-btn.button-next-step(:disabled='!form.total_fee', color='primary', depressed, @click='step++')
+          | {{$t('ui.button_next')}}
 
-  app-date-picker(ref='datePicker')
+      template(v-if='step === 2')
+        v-btn.button-save(:disabled='step === 3', color='primary', depressed, @click='submit')
+          | {{$t('ui.button_save')}}
+
+    app-date-picker(ref='datePicker')
 </template>
 
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
-import { GroupMixin, DialogChildMixin } from '~/mixins'
+import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, dateToRelative } from '~/core'
 
 @Component
-export default class NewTransaction extends Mixins(GroupMixin, DialogChildMixin) {
+export default class NewTransaction extends Mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
   cats = Categories
   step = 1
@@ -126,7 +134,7 @@ export default class NewTransaction extends Mixins(GroupMixin, DialogChildMixin)
   }
 
   get dateDisplay() {
-    return dateToRelative(this.form.timestamp)
+    return dateToRelative(this.form.timestamp, this.$t.bind(this))
   }
 
   get categorySense() {
@@ -161,9 +169,6 @@ export default class NewTransaction extends Mixins(GroupMixin, DialogChildMixin)
 </script>
 
 <style lang='stylus' scoped>
-.bottom-nav
-  position absolute
-  bottom 0
-  left 0
-  right 0
+.new-trans-form
+  overflow-x hidden
 </style>

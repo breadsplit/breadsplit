@@ -20,13 +20,29 @@ export interface Balance {
   uid: string
   balance: Record<string, number>
   main_balance: number
+  main_currency: string
   removed?: boolean
+}
+
+export interface Solution {
+  from: string
+  to: string
+  amount: number
+  currency: string
+}
+
+export function CreditorWeights(trans: Transaction): number {
+  return sumBy(trans.creditors, c => c.weight || 0)
+}
+
+export function DebtorWeights(trans: Transaction): number {
+  return sumBy(trans.debtors, d => d.weight || 0)
 }
 
 export function TransactionBalanceChanges(trans: Transaction): TransactionBalance[] {
   const fee = trans.total_fee
-  const creditorWeights = sumBy(trans.creditors, 'weight')
-  const debtorWeights = sumBy(trans.debtors, 'weight')
+  const creditorWeights = CreditorWeights(trans)
+  const debtorWeights = DebtorWeights(trans)
   const involvedIds = uniq(concat(map(trans.creditors, 'uid'), map(trans.debtors, 'uid')))
 
   const changes = involvedIds.map((uid): TransactionBalance => {
@@ -49,7 +65,7 @@ export function TransactionBalanceChanges(trans: Transaction): TransactionBalanc
 }
 
 export function GroupBalances(group: Group): Balance[] {
-  const mainCurrency = group.currencies[0]
+  const main_currency = group.currencies[0]
   let balances = Object.values(group.members)
     .map((m): Balance => {
       const balance: Record<string, number> = { }
@@ -60,6 +76,7 @@ export function GroupBalances(group: Group): Balance[] {
         uid: m.id,
         balance,
         main_balance: 0,
+        main_currency,
         removed: m.removed,
       }
     })
@@ -78,7 +95,7 @@ export function GroupBalances(group: Group): Balance[] {
   })
   balances.forEach((b) => {
     // TODO: curency change
-    b.main_balance = b.balance[mainCurrency]
+    b.main_balance = b.balance[main_currency]
   })
   // remove the "Removed members" when theire balance equal to 0
   balances = balances.filter(b => !b.removed || b.main_balance !== 0)
@@ -91,4 +108,38 @@ export function GroupBalances(group: Group): Balance[] {
     return -1
   })
   return balances
+}
+
+export function SettleUp(balances: Balance[]): Solution[] {
+  let remaining = balances.map(b => ({
+    uid: b.uid,
+    balance: b.main_balance,
+  }))
+  const currency = balances[0].main_currency
+  const solutions: Solution[] = []
+
+  function sort() {
+    remaining = remaining
+      .filter(i => Math.abs(i.balance) > 0.001)
+      .sort((a, b) => a.balance - b.balance)
+  }
+
+  sort()
+
+  while (remaining.length > 1) {
+    const first = remaining[0]
+    const last = remaining[remaining.length - 1]
+    const amount = Math.min(Math.abs(first.balance), Math.abs(last.balance))
+    solutions.push({
+      to: last.uid,
+      from: first.uid,
+      amount,
+      currency,
+    })
+    first.balance += amount
+    last.balance -= amount
+    sort()
+  }
+
+  return solutions
 }

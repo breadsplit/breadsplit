@@ -25,7 +25,7 @@ export class FirebasePlugin {
     this.store = store
     this.router = router
 
-    const config_name = this.store.state.options.firebase_server
+    const config_name = process.env.FIREBASE_SERVER || 'development'
     log(`🔥 Connecting to firebase server <${config_name}>`)
     firebase.initializeApp(FirebaseServers[config_name])
   }
@@ -82,6 +82,7 @@ export class FirebasePlugin {
     await this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 
     await this.updateMessagingToken()
+    this.installMessagingServiceWorker()
 
     this.messaging.onMessage((data) => {
       log('📢 Incoming Message:', data)
@@ -126,7 +127,7 @@ export class FirebasePlugin {
     await this.auth.signOut()
   }
 
-  async publishGroup(id) {
+  async publishGroup(id: string) {
     const group = this.store.getters['group/id'](id) as Group
 
     const result = await this.functions.httpsCallable('publishGroup')({ group })
@@ -233,9 +234,9 @@ export class FirebasePlugin {
     }
   }
 
-  async joinGroup(id: string) {
+  async joinGroup(id: string, localmemberId?: string) {
     if (this.store.getters['group/all'].map(g => g.id).indexOf(id) === -1) {
-      await this.functions.httpsCallable('joinGroup')({ id })
+      await this.functions.httpsCallable('joinGroup')({ id, join_as: localmemberId })
       await this.manualSync(id)
     }
     this.router.push(`/group/${id}`)
@@ -304,11 +305,19 @@ export class FirebasePlugin {
   }
 
   async downloadProfile(uid: string) {
+    if (IsThisId.LocalMember(uid))
+      return
+    if (IsThisId.Me(uid))
+      return
     try {
       const doc = await this.db
         .collection('users')
         .doc(uid)
         .get()
+      if (!doc.exists) {
+        log(`🐛 Profile of ${uid} not found`)
+        return
+      }
       const user = doc.data() as UserInfo
       user.lastsync = +new Date()
       this.store.commit('user/profileUpdate', { uid, user })
@@ -316,29 +325,40 @@ export class FirebasePlugin {
     }
     catch (e) {
       log(`🐛 Error on download profile of ${uid}`)
+      // eslint-disable-next-line no-console
       console.error(e)
     }
   }
 
-  async updateUserProfiles(uids: string[], threshold = 1000 * 60 * 60 * 24) {
+  async updateUserProfiles(uids: string[], threshold_hours = 24) {
     const now = +new Date()
     for (const uid of uids) {
       // skip profile updates for user self
       if (uid === this.uid)
         continue
 
+      const threshold = threshold_hours * 60 * 60 * 1000
       // if local user lastupdate expire the threshold, update from server
       const user = this.store.getters['user/user'](uid) as UserInfo
-      if (!user || !user.lastupdate || (now - user.lastupdate) > threshold)
+      if (!user || !user.lastsync || (now - user.lastsync) > threshold)
         this.downloadProfile(uid)
     }
   }
 
-  async groupMeta(id: string): Promise<object|null> {
-    const result = await this.functions.httpsCallable('groupMeta')({ id })
-    if (result)
-      return result.data || null
-    return null
+  async groupInfo(id: string): Promise<ServerGroup|undefined> {
+    try {
+      const result = await this.db
+        .collection('groups')
+        .doc(id)
+        .get()
+
+      if (result && result.data())
+        return result.data() as ServerGroup
+      return undefined
+    }
+    catch (e) {
+      return undefined
+    }
   }
 
   uploadLocalChanges(groups?: ClientGroup[]) {
@@ -385,6 +405,18 @@ export class FirebasePlugin {
     if (this._unwatchCallback) {
       log('🔕 Store unwatched')
       this._unwatchCallback()
+    }
+  }
+
+  async installMessagingServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      try {
+        await navigator.serviceWorker.register('/firebase-messaging-sw.js', { scope: '/' })
+        log('✅ Messaging SW registration succeeded')
+      }
+      catch (error) {
+        log(`💥 Messaging SW registration failed with ${error}`)
+      }
     }
   }
 }

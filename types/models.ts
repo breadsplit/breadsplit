@@ -2,23 +2,23 @@ import { TransOperation } from 'opschain'
 
 type uid = string
 
-export const enum MemberRoles {
-  owner = 'owner',
-  collaborator = 'collaborator',
-  participant = 'participant',
-  visitor = 'visitor',
-}
+export type MemberRoles =
+| 'owner'
+| 'collaborator'
+| 'participant'
+| 'visitor'
 
 export const enum ActivityAction {
   insert = 'insert',
   remove = 'remove',
   update = 'update',
+  publish = 'publish',
 }
 
 export const enum Entity {
   member = 'member',
   viewer = 'viewer',
-  group ='group',
+  group = 'group',
   transaction ='transaction',
   currency_record = 'currency_record',
 }
@@ -93,6 +93,7 @@ export interface Activity {
   by: uid
   action: ActivityAction
   entity: Entity
+  update_fields?: string | string[]
   entity_id?: string
   entity_name?: string
   entity_desc?: string
@@ -147,6 +148,7 @@ export interface ClientGroup {
   // Options
   lastchanged: number
   favorite?: boolean
+  open: boolean
 }
 
 export interface ServerGroup {
@@ -154,6 +156,7 @@ export interface ServerGroup {
   // user ids
   viewers: string[]
   owner: string
+  open: boolean
 
   present: Group
   operations: string[]
@@ -183,4 +186,12 @@ export interface FeedbackOptions {
 export interface Feedback extends FeedbackOptions {
   uid: string | null
   timestamp: number
+}
+
+export interface GroupMetaChanges {
+  name?: string
+  icon?: string
+  color?: string
+  currencies?: string[]
+  options?: Partial<GroupOptions>
 }

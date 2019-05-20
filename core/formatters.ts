@@ -1,5 +1,6 @@
 import { Dayjs } from 'dayjs'
 import dayjs from './dayjs_config'
+import { Translator, t } from './i18n'
 
 type Time = string | number | Dayjs | Date
 
@@ -7,13 +8,13 @@ export function dateFromNow(time: Time) {
   return dayjs(time).fromNow()
 }
 
-export function dateToRelative(time: Time) {
+export function dateToRelative(time: Time, $t: Translator = t, locale?: string) {
   const d = dayjs(time)
   const days = dayjs().diff(d, 'day')
   if (days === 0)
-    return 'Today' // TODO: i18n
+    return $t('noun.today', locale).toString()
   if (days === 1)
-    return 'Yesterday'
+    return $t('noun.yesterday', locale).toString()
 
   // refer to https://github.com/iamkun/dayjs/blob/dev/docs/en/Plugin.md#localizedformat
   return d.format('ll')

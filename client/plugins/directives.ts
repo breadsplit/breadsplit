@@ -28,3 +28,13 @@ Vue.directive('longpress', {
     ['click', 'mouseout', 'touchend', 'touchcancel'].forEach(e => el.addEventListener(e, cancel))
   },
 })
+
+Vue.directive('columns', (el, binding) => {
+  el.style.display = 'grid'
+  el.style.gridTemplateColumns = binding.value
+})
+
+Vue.directive('rows', (el, binding) => {
+  el.style.display = 'grid'
+  el.style.gridTemplateRows = binding.value
+})

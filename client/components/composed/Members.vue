@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card
+v-card.members
   v-subheader {{$t('ui.tabs.members')}}
   v-list(two-line)
     template(v-for='(member, index) in members')
@@ -20,7 +20,7 @@ v-card
                 v-list-tile(@click='item.handler')
                   v-list-tile-title {{$t(item.title, member)}}
       v-divider
-    v-list-tile
+    .px-3.pt-3.py-2
       v-btn(v-if='this.uid && !iamJoined', @click='joinTheGroup()', color='primary', large, round).pl-0
         app-user-avatar(:id='uid', :size='44').mr-3
         span {{$t('ui.join_as_me', [me.name])}}
@@ -66,7 +66,7 @@ export default class Members extends Vue {
         title: 'ui.menu.rename_member',
         handler: () => this.promptRenameMember(member),
       })
-      if (!this.iamJoined) {
+      if (!this.iamJoined && this.uid) {
         items.push({
           title: 'ui.menu.member_is_me',
           handler: () => this.thisIsMe(member),

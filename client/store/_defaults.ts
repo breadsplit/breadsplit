@@ -26,7 +26,6 @@ export const AppOptionsDefault = (overrides?: Partial<AppOptions>): AppOptions =
 export const RootStateDefault = (overrides?: Partial<RootState>): RootState => merge({
   browser_locale: acceptLanguage(),
   user_locale: null,
-  loaded: false,
   group: GroupStateDefault(),
   user: UserStateDefault(),
   options: AppOptionsDefault(),
@@ -37,5 +36,9 @@ export const RootStateDefault = (overrides?: Partial<RootState>): RootState => m
     os: getOSType(),
     bypass_webview: false,
     standalone: isStandalone(),
+  },
+  app: {
+    init: false,
+    version: '0.0.0',
   },
 }, overrides)

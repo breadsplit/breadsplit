@@ -16,6 +16,7 @@
     |   ├── ...
     |   └── nuxt.config.ts      # Nuxt.js config file
     ├── core                #⭐Core logic of BreadSplit, shared both in client and server
+    ├── cypress             # End-to-end test Cypress
     ├── firebase            #⭐Server functions and rules
     ├── types               # Typescript types
     ├── locales             #🌎i18n texts

@@ -16,12 +16,10 @@ export interface UserState {
 
 export interface AppOptions {
   dark: boolean
-  firebase_server: string
 }
 export interface RootState {
   user_locale: string|null
   browser_locale: string
-  loaded: boolean
   group: GroupState
   user: UserState
   options: AppOptions
@@ -30,7 +28,10 @@ export interface RootState {
     raw: string
     webview?: WebviewType
     os: OSType
-    bypass_webview: boolean
     standalone: boolean
+  }
+  app: {
+    init: boolean
+    version: string
   }
 }

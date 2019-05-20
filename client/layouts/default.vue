@@ -1,116 +1,98 @@
 <template lang='pug'>
 v-app(:dark='dark')
-  style.
-    :root {
-      --app-font: {{localeFont}};
-      --window-height: {{windowHeight}}px;
-      --vh: {{windowHeight * 0.01}}px;
-    }
-    .primary {
-      background-color: {{primaryColor}} !important;
-      border-color: {{primaryColor}} !important;
-    }
-    .primary--text {
-      color: {{primaryColor}} !important;
-      caret-color: {{primaryColor}} !important;
-    }
+  app-global-style
 
-  template(v-if='blockedByWebview')
-    v-content
-      app-inside-webview
+  v-navigation-drawer(
+    v-model='drawer', :mini-variant='miniVariant'
+    :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
+  )
+    .height-100(v-rows='"max-content auto max-content"')
+      div
+        app-logo-name.clickable(v-ripple, @click.native='goHome()')
+        v-divider
 
-  template(v-else)
-    v-navigation-drawer(
-      v-model='drawer', :mini-variant='miniVariant'
-      :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
-    )
-      v-list
-        v-list-tile(@click='$router.push("/")')
+      div(style='overflow-y:auto')
+        v-list-tile(
+          v-for='(group, i) in groups'
+          :key='i', :to='`/group/${group.id}`'
+          router, exact)
+          v-list-tile-action
+            v-icon mdi-{{ group.icon }}
           v-list-tile-content
-            v-list-tile-title.app-name {{$t('appname')}}
-        v-divider.my-1
+            v-list-tile-title(v-text='group.name')
+          v-list-tile-action(v-if='group.online')
+            template(v-if='isSync(group.id)')
+              v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
+            template(v-else)
+              v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
 
-        template(v-if='groups.length')
-          v-list-tile(
-            v-for='(group, i) in groups'
-            :key='i', :to='`/group/${group.id}`'
-            router, exact)
-            v-list-tile-action
-              v-icon mdi-{{ group.icon }}
-            v-list-tile-content
-              v-list-tile-title(v-text='group.name')
-            v-list-tile-action(v-if='group.online')
-              template(v-if='isSync(group.id)')
-                v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
-              template(v-else)
-                v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
-
-          v-divider.my-1
-
+      .drawer-list-bottom.pb-2
+        v-divider.mb-2
         // New group item
-        v-list-tile(@click='$refs.newgroup.open()')
+        v-list-tile(@click='newGroup()')
           v-list-tile-action
             v-icon mdi-plus
           v-list-tile-content
             v-list-tile-title {{$t('ui.group_editing.new_group')}}
 
-        .drawer-list-bottom
-          // Sign in
-          template(v-if='user.anonymous')
-            v-list-tile(@click='$refs.login.open()')
-              v-list-tile-action
-                v-avatar(size='36', color='#00000020', style='margin: -6px;')
-                  v-icon mdi-account
-              v-list-tile-content
-                v-list-tile-title {{$t('ui.sign_in')}}
-
-          // User profile
-          template(v-else)
-            v-list-tile(@click='promptLogout()')
-              v-list-tile-action
-                v-avatar(size='36', color='#00000020', style='margin: -6px;')
-                  img(:src='user.avatar_url')
-              v-list-tile-content
-                v-list-tile-title {{ user.name || user.email }}
-              v-list-tile-action(v-if='!userIsOnline')
-                v-icon(color='red', size='20') mdi-cloud-off-outline
-
-          // Settings
-          v-list-tile(@click='$refs.settings.open()')
+        // Sign in
+        template(v-if='user.anonymous')
+          v-list-tile(@click='$refs.login.open()')
             v-list-tile-action
-              v-icon mdi-settings
+              v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                v-icon mdi-account
             v-list-tile-content
-              v-list-tile-title {{$t('ui.settings')}}
-
-    v-toolbar.app-toolbar(
-      :clipped-left='clipped' app flat color='transparent' height='60'
-      ).primary--text
-      v-btn(icon, flat, @click='drawer = !drawer')
-        v-icon(color='primary') mdi-menu
-      v-toolbar-title(v-text='title')
-      v-spacer
-      v-toolbar-items
-        template(v-if='current')
-          template(v-if='isSync()')
-            v-btn(icon, flat).syncing-icon
-              v-icon(color='primary') mdi-cloud-sync
-          template(v-if='currentShareLink')
-            v-btn(icon, flat, @click='copyShareLink()')
-              v-icon.op-50 mdi-share-variant
-          v-menu(offset-y='')
-            v-btn(icon, flat, slot='activator')
-              v-icon.op-50 mdi-dots-vertical
-            v-list
-              v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
-                v-list-tile-title {{ $t(item.title) }}
+              v-list-tile-title {{$t('ui.sign_in')}}
 
         // User profile
-        template(v-if='!user.anonymous')
-          v-avatar(size='36', @click='promptLogout()', color='#00000020').avatar-in-toolbar
-            img(:src='user.avatar_url')
+        template(v-else)
+          v-list-tile(@click='promptLogout()')
+            v-list-tile-action
+              v-avatar(size='36', color='#00000020', style='margin: -6px;')
+                img(:src='user.avatar_url')
+            v-list-tile-content
+              v-list-tile-title {{ user.name || user.email }}
+            v-list-tile-action(v-if='!userIsOnline')
+              v-icon(color='red', size='20') mdi-cloud-off-outline
 
-    v-content
-      nuxt
+        // Settings
+        v-list-tile(@click='settingPage()')
+          v-list-tile-action
+            v-icon mdi-settings
+          v-list-tile-content
+            v-list-tile-title {{$t('ui.settings')}}
+
+  v-toolbar.app-toolbar(
+    :clipped-left='clipped' app flat color='transparent' height='60'
+    ).primary--text
+    v-btn(icon, flat, @click='drawer = !drawer')
+      v-icon(color='primary') mdi-menu
+    v-toolbar-title(v-text='title')
+    v-spacer
+    v-toolbar-items
+      template(v-if='current')
+        template(v-if='isSync()')
+          v-btn(icon, flat).syncing-icon
+            v-icon(color='primary') mdi-cloud-sync
+        template(v-if='currentShareLink')
+          v-btn(icon, flat, @click='copyShareLink()')
+            v-icon.op-50 mdi-share-variant
+        v-menu(offset-y='')
+          v-btn(icon, flat, slot='activator')
+            v-icon.op-50 mdi-dots-vertical
+          v-list
+            v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
+              v-list-tile-title {{ $t(item.title) }}
+
+      // User profile
+      template(v-if='!user.anonymous')
+        v-avatar(size='36', @click='promptLogout()', color='#00000020').avatar-in-toolbar
+          img(:src='user.avatar_url')
+
+  v-content
+    nuxt
+
+  app-global-components
 
   app-dialog(ref='newgroup' :route='true' persistent no-click-animation)
     app-new-group
@@ -121,43 +103,50 @@ v-app(:dark='dark')
   app-dialog(ref='settings' :route='true')
     app-settings
 
-  app-dialog(ref='login' :route='true' width='350' :fullscreen='false')
-    app-login
+  app-login(ref='login')
 
   app-dialog(ref='about' :route='true')
     app-about-page
 
-  app-confirm(ref='confirm')
-
-  app-prompt(ref='prompt')
-
-  app-loading-dialog(ref='loading')
-
-  app-snackbar(ref='snack')
+  app-dialog(ref='init', :fullscreen='false')
+    app-init-page
 </template>
 
 <script lang='ts'>
+import { setTimeout } from 'timers'
 import { Component, Mixins } from 'vue-property-decorator'
 import { Getter, Mutation } from 'vuex-class'
 import { Group, UserInfo } from '~/types'
-import CommonMixin from '~/mixins/common'
-import FontFamilyBuilder from '~/meta/font_family'
+import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 
-@Component
-export default class DefaultLayout extends Mixins(CommonMixin) {
+@Component({
+  head() {
+    if (this.$route.path !== '/') {
+      return {
+        titleTemplate: `%s - ${this.$t('appname')}`,
+      }
+    }
+    return {
+      title: this.$t('appname').toString(),
+    }
+  },
+})
+export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, GroupMixin) {
   // Data
   clipped = false
   drawer = false
   fixed = false
   miniVariant = false
   mobileBreakPoint = 700
-  windowHeight = 0
+  channel: string = process.env.RELEASE_CHANNEL || ''
 
   @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
   @Getter('group/currentShareLink') currentShareLink: string | undefined
   @Getter('user/me') user!: UserInfo
+  @Getter('user/uid') uid: string | undefined
   @Getter('user/online') userIsOnline!: boolean
+  @Getter('dark') dark!: boolean
   @Getter('blockedByWebview') blockedByWebview!: boolean
 
   @Mutation('group/remove') removeGroup
@@ -166,44 +155,25 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   get debug() {
     return process.env.NODE_ENV !== 'production'
   }
-  get dark() {
-    return this.$store.getters.dark
-  }
   get title() {
     if (this.current)
       return this.current.name
     else
       return this.$t('appname')
   }
-  get localeFont() {
-    const font_of_locale = this.$t('css.font_of_locale', '').toString()
-    return FontFamilyBuilder(font_of_locale)
-  }
   get group_menu() {
     const menu: ({title: string; key: string})[] = []
 
     menu.push({ title: 'ui.menu.edit_group', key: 'edit' })
-    if (this.current && !this.current.online)
+    if (this.current && !this.current.online && this.uid)
       menu.push({ title: 'ui.menu.make_group_online', key: 'transfer_online' })
     menu.push({ title: 'ui.menu.remove_group', key: 'delete' })
 
     return menu
   }
-  get primaryColor() {
-    return this.$store.getters.primary
-  }
 
   // Methods
   mounted() {
-    // @ts-ignore
-    this.$root.$snack = this.$refs.snack.open
-    // @ts-ignore
-    this.$root.$confirm = this.$refs.confirm.open
-    // @ts-ignore
-    this.$root.$prompt = this.$refs.prompt.open
-    // @ts-ignore
-    this.$root.$apploading = this.$refs.loading
-
     // @ts-ignore
     this.$root.$newgroup = this.$refs.newgroup
     // @ts-ignore
@@ -218,18 +188,17 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
     if (!this.isMobile)
       this.drawer = true
 
-    this.windowHeight = window.innerHeight
-    window.addEventListener('resize', () => {
-      this.windowHeight = window.innerHeight
-    })
+    setTimeout(() => this.checkFirstStart(), 1000)
   }
 
   async onGroupMenu(key) {
+    const groupid = this.$store.state.group.currentId
+    const group = this.$store.state.group.groups[groupid].base
+
     switch (key) {
       case 'delete':
-        if (await this.$root.$confirm('Are you sure?')) {
+        if (await this.$root.$confirm(`確定要刪除 ${group.name} ?`)) {
           this.$root.$apploading.open('Deleting group')
-          const groupid = this.$store.state.group.currentId
           if (this.current && this.current.online)
             await this.$fire.deleteGroup(groupid)
           this.removeGroup()
@@ -260,9 +229,16 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
         break
 
       case 'edit':
-        // TODO:
+        // @ts-ignore
+        this.$refs.newgroup.open({ mode: 'edit' })
         break
     }
+  }
+
+  async newGroup() {
+    this.closeDrawer()
+    // @ts-ignore
+    this.$refs.newgroup.open()
   }
 
   async promptLogout() {
@@ -270,6 +246,22 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
       await this.$fire.logout()
       this.$router.push('/')
     }
+  }
+
+  async settingPage() {
+    this.closeDrawer()
+    // @ts-ignore
+    this.$refs.settings.open()
+  }
+
+  goHome() {
+    this.closeDrawer()
+    this.gotoHome()
+  }
+
+  closeDrawer() {
+    if (this.isMobile)
+      this.drawer = false
   }
 
   async syncCurrentGroup() {
@@ -286,23 +278,21 @@ export default class DefaultLayout extends Mixins(CommonMixin) {
   isSync(id) {
     return this.$store.getters['group/isSyncing'](id)
   }
+
+  async checkFirstStart() {
+    if (!this.$store.state.app.init) {
+      this.$store.commit('init')
+      // @ts-ignore
+      await this.$refs.init.open()
+    }
+  }
 }
 </script>
 
 <style lang='stylus'>
-.drawer-list-bottom
-  position absolute
-  bottom 10px
-  left 0
-  right 0
-
 .app-toolbar
   .v-toolbar__content
     padding-right 2px
-
-.app-name
-  font-size 1.3em
-  font-weight bold
 
 .v-navigation-drawer
   .v-list__tile

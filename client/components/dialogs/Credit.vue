@@ -1,14 +1,12 @@
 <template lang='pug'>
 .credit
-
-  .section v{{version}} {{target}}
+  .section v{{version}} {{channel}} {{target}}
   br
-  .buildinfo.mb-2
-    span {{$store.state.ua.raw}}
-    p {{$store.state.ua.webview || 'browser'}} | {{$store.state.ua.os}}
   .buildinfo
     span Build {{buildtime}} - {{buildTimeFromNow}}
     span(v-if='machine') /{{machine}}
+  .section
+    span Server: {{serverName}}
   .my-2
   //.line-divider
 
@@ -18,12 +16,15 @@
     .divider
     .section
       a(:href='i.href', target='_blank') {{i.name}}
+
   .newline
 
   .section
     span Made with
     v-icon.heart(color='#ff4057') mdi-heart
     span in Taiwan
+  .copyright
+    span Copyright © 2019 The BreadSplit Team
 </template>
 
 <script lang='ts'>
@@ -38,6 +39,8 @@ export default class Credit extends Vue {
   target = process.env.BUILD_TARGET
   buildtime = process.env.BUILD_TIME
   machine = process.env.BUILD_MACHINE
+  channel = process.env.RELEASE_CHANNEL
+  serverName = process.env.FIREBASE_SERVER
 
   get buildTimeFromNow() {
     return dayjs(this.buildtime).fromNow()
@@ -48,13 +51,17 @@ export default class Credit extends Vue {
 <style lang='stylus'>
 .credit
   text-align center
-  padding-top 100px
+  padding-top 30px
   padding-bottom 20px
   opacity 0.7
 
   .buildinfo
     font-size 0.85em
-    opacity 0.4
+    opacity 0.5
+
+  .copyright
+    font-size 0.85em
+    opacity 0.7
 
   .v-icon
     vertical-align bottom

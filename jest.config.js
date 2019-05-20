@@ -27,4 +27,9 @@ module.exports = {
     '!<rootDir>/client/utils/**/id_helper.ts',
   ],
   coverageDirectory: './coverage/',
+  globals: {
+    'ts-jest': {
+      tsConfig: './client/tsconfig.json',
+    },
+  },
 }

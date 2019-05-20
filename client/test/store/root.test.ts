@@ -11,16 +11,6 @@ describe('root state mutations', () => {
     mutations.browserLocale(state, 'zh-tw')
     expect(state.browser_locale).toEqual('zh-tw')
   })
-
-  it('loaded', () => {
-    const state = RootStateDefault()
-    expect(state.loaded).toBeFalsy()
-    mutations.loaded(state, undefined)
-    expect(state.loaded).toBeTruthy()
-    // "loaded" should ignore parameters
-    mutations.loaded(state, false)
-    expect(state.loaded).toBeTruthy()
-  })
 })
 
 describe('root state getters', () => {

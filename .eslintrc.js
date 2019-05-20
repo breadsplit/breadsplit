@@ -4,9 +4,12 @@ module.exports = {
     es6: true,
     browser: true,
     node: true,
+    'cypress/globals': true,
   },
   plugins: [
     '@typescript-eslint',
+    'cypress',
+    'chai-friendly',
   ],
   parser: 'vue-eslint-parser',
   parserOptions: {
@@ -15,7 +18,7 @@ module.exports = {
   extends: [
     '@nuxtjs',
     'plugin:nuxt/recommended',
-    'plugin:@typescript-eslint/recommended'
+    'plugin:@typescript-eslint/recommended',
   ],
   // add your custom rules here
   rules: {
@@ -97,5 +100,9 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+
+    // cypress
+    'no-unused-expressions': 0,
+    'chai-friendly/no-unused-expressions': 2
   }
 }

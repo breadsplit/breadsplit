@@ -1,6 +1,5 @@
-
 import CreatePersistedState from 'vuex-persistedstate'
-import GroupRouter from '~/middleware/group'
+import { Context } from '@nuxt/vue-app'
 
 const StoreKey = 'breadsplit-store'
 const PathsEnabled = [
@@ -9,15 +8,22 @@ const PathsEnabled = [
   'user.me',
   'user.users',
   'options',
+  'app',
 ]
 
-export default ({ store, route, app }) => {
+export default ({ store }: Context) => {
   CreatePersistedState({
     key: StoreKey,
     paths: PathsEnabled,
+    filter: (mutation) => {
+      if (mutation.type === 'group/switch')
+        return false
+      // do not write changes updated by other tabs
+      if (mutation.type === 'localstorageLoad')
+        return false
+      return true
+    },
   })(store)
-  store.commit('loaded')
-  GroupRouter({ store, route })
   window.addEventListener('storage', (e) => {
     if (e.key !== StoreKey)
       return

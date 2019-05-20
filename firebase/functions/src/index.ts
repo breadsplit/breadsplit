@@ -2,8 +2,9 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
 
-import { ServerGroup, ServerOperations, Entity, ActivityAction } from '../../../types'
-import { GenerateId } from '../../../core'
+import { TransOperationOption } from 'opschain'
+import { ServerGroup, ServerOperations, Entity, ActivityAction, Group, Operation } from '../../../types'
+import { GenerateId, IsThisId, MemberDefault } from '../../../core'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
 import { PushGroupOperationsNotification } from './push_notifications'
 
@@ -15,6 +16,16 @@ const OperationsRef = (id: string) => db.collection('_operations').doc(id)
 
 const f = functions.https.onCall
 
+function recalculateGroupOperations(t: FirebaseFirestore.Transaction, groupid: string, ops: Operation[]) {
+  const present = Eval(ops)
+
+  t.update(OperationsRef(groupid), 'operations', omitDeep(ops))
+  t.update(GroupsRef(groupid), omitDeep({
+    present,
+    'operations': ops.map(o => o.hash),
+  }))
+}
+
 // firebase functions
 export const groupsCount = f(async (data, context) => {
   const groups = await admin.firestore().collection('groups').get()
@@ -23,7 +34,7 @@ export const groupsCount = f(async (data, context) => {
   return groups.size
 })
 
-export const publishGroup = f(async ({ group }, context) => {
+export const publishGroup = f(async ({ group }: { group: Group }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
@@ -32,7 +43,12 @@ export const publishGroup = f(async ({ group }, context) => {
 
   group.id = id
   group.online = true
-  group.activities = []
+  group.activities = (group.activities || [])
+    .map((act) => {
+      if (!act.by || act.by === 'me')
+        act.by = user_uid
+      return act
+    })
 
   const initOperations = ProcessServerOperations([{
     name: 'init',
@@ -40,6 +56,12 @@ export const publishGroup = f(async ({ group }, context) => {
     meta: {
       by: user_uid,
       timestamp: +new Date(),
+    },
+  }, {
+    name: 'change_member_id',
+    data: {
+      from: 'me',
+      to: user_uid,
     },
   }], user_uid)
 
@@ -49,6 +71,7 @@ export const publishGroup = f(async ({ group }, context) => {
     owner: user_uid,
     viewers: [user_uid],
     operations: initOperations.map(i => i.hash),
+    open: true,
   }
 
   const batch = db.batch()
@@ -61,21 +84,11 @@ export const publishGroup = f(async ({ group }, context) => {
   return { id }
 })
 
-export const joinGroup = f(async ({ id }, context) => {
+export const joinGroup = f(async ({ id, join_as }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
   const uid = context.auth.uid
-
-  const join_operation = ProcessServerOperations([{
-    name: 'new_activity',
-    data: {
-      by: uid,
-      timestamp: +new Date(),
-      entity: Entity.viewer,
-      action: ActivityAction.insert,
-    },
-  }], uid)[0]
 
   await db.runTransaction(async (t) => {
     const group = (await t.get(GroupsRef(id))).data() as ServerGroup
@@ -84,13 +97,55 @@ export const joinGroup = f(async ({ id }, context) => {
     if (!group || !ops)
       throw new Error('group_not_exists')
 
-    const viewers = _.union(group.viewers || [], [uid])
-    const operations = ops.operations
+    // skip if user already inside the group
+    if (group.viewers.includes(uid))
+      return
 
-    operations.push(join_operation)
+    group.viewers.push(uid)
 
-    t.update(GroupsRef(id), 'viewers', viewers)
-    t.update(OperationsRef(id), 'operations', omitDeep(operations))
+    const newoperations: TransOperationOption[] = [{
+      name: 'new_activity',
+      data: {
+        by: uid,
+        timestamp: +new Date(),
+        entity: Entity.viewer,
+        action: ActivityAction.insert,
+      },
+    }]
+
+    const memberOfGroup = Object.keys(group.present.members).includes(uid)
+
+    // if user is not a member of group
+    if (!memberOfGroup) {
+      // if a local member is specified, convert it to the user
+      if (join_as && IsThisId.LocalMember(join_as)) {
+        newoperations.push({
+          name: 'change_member_id',
+          data: {
+            from: join_as.toString(),
+            to: uid,
+          },
+        })
+      }
+      // otherwise join as a new member
+      else {
+        newoperations.push({
+          name: 'insert_member',
+          data: MemberDefault({
+            id: uid,
+          }),
+        })
+      }
+    }
+
+    ProcessServerOperations(newoperations, uid)
+      .forEach((op) => {
+        ops.operations.push(op)
+      })
+
+    t.update(GroupsRef(id), 'viewers', group.viewers)
+
+    recalculateGroupOperations(t, id, ops.operations)
   })
 })
 
@@ -135,31 +190,8 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
       .sortBy('timestamp')
       .value()
 
-    const present = Eval(ops)
-
-    t.update(OperationsRef(groupid), 'operations', omitDeep(ops))
-    t.update(GroupsRef(groupid), omitDeep({
-      present,
-      'operations': ops.map(o => o.hash),
-    }))
+    recalculateGroupOperations(t, groupid, ops)
   })
 
   await PushGroupOperationsNotification(groupid, incomingOperations, [uid])
-})
-
-export const groupMeta = f(async ({ id }, context) => {
-  if (!id)
-    return undefined
-  const doc = await GroupsRef(id).get()
-  if (!doc.exists)
-    return undefined
-  const serverGroup = doc.data() as ServerGroup
-  const group = serverGroup.present
-
-  return {
-    name: group.name,
-    icon: group.icon,
-    color: group.color,
-    viewers: serverGroup.viewers,
-  }
 })

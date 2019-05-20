@@ -23,11 +23,6 @@ export const getters: GetterTree<RootState, RootState> = {
       color = current.color
     return color
   },
-
-  blockedByWebview(state) {
-    // if app runs inside an webview
-    return !state.ua.bypass_webview && !!state.ua.webview
-  },
 }
 
 export const mutations: MutationTree<RootState> = {
@@ -46,10 +41,6 @@ export const mutations: MutationTree<RootState> = {
     state.browser_locale = locale
   },
 
-  loaded(state) {
-    state.loaded = true
-  },
-
   dark(state, value) {
     state.options.dark = !!value
   },
@@ -58,11 +49,20 @@ export const mutations: MutationTree<RootState> = {
     state.messaging_token = value
   },
 
-  bypassWebviewBlock(state) {
-    state.ua.bypass_webview = true
+  localstorageLoad(state, data: RootState) {
+    const group = data.group
+    delete data.group
+    Object.assign(state, data)
+
+    // do not update currentGroups from other tabs
+    delete group.currentId
+    Object.assign(state.group, group)
   },
 
-  localstorageLoad(state, newData) {
-    Object.assign(state, newData)
+  init(state) {
+    state.app = {
+      init: true,
+      version: process.env.APP_VERSION || '',
+    }
   },
 }
