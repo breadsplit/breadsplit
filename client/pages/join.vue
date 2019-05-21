@@ -12,10 +12,10 @@
         v-icon.ma-2(color='primary', size='100') mdi-emoticon-sad-outline
         p(class='primary--text' color='primary' style='font-size: 1.4em') Group Not Found
 
-        v-btn.ma-2(color='teal lighten-1' dark)
+        v-btn.ma-2(color='teal lighten-1' dark @click='reload()')
           v-icon(size='20') mdi-autorenew
           span.ma-2 Reload
-        v-btn.ma-2(color='teal lighten-1' dark)
+        v-btn.ma-2(color='teal lighten-1' dark @click='gotoHome()')
           v-icon(size='20') mdi-home-variant
           span.ma-2 Go Home
 
@@ -53,7 +53,7 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import { ServerGroup, Member } from '~/types'
 import { IsThisId } from '~/core'
-import { CommonMixin, UserInfoMixin } from '~/mixins'
+import { CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 
 @Component({
   // @ts-ignore
@@ -68,15 +68,11 @@ import { CommonMixin, UserInfoMixin } from '~/mixins'
     }
   },
 })
-export default class JoinPage extends Mixins(UserInfoMixin, CommonMixin) {
+export default class JoinPage extends Mixins(UserInfoMixin, CommonMixin, NavigationMixin) {
   serverGroup: ServerGroup | undefined = undefined
   loading = true
   joining = false
   id: string | null = null
-
-  get color() {
-    return (this.group && this.group.color) || 'primary'
-  }
 
   get group() {
     if (this.serverGroup)

@@ -29,4 +29,8 @@ export default class NavigationMixin extends Vue {
   gotoTransaction(transId: string, groupid?: string) {
     this.$router.push(`/group/${groupid || this.navGroupId}/trans/${transId}`)
   }
+
+  reload() {
+    location.reload()
+  }
 }
