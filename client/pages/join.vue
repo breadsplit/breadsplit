@@ -9,8 +9,15 @@
         p.ma-4 {{$t('ui.loading_group_info')}}
 
       template(v-else-if='!group')
-        p Group Not Found
-        p TODO:WRITING
+        v-icon.ma-2(color='primary', size='100') mdi-emoticon-sad-outline
+        p(class='primary--text' color='primary' style='font-size: 1.4em') Group Not Found
+
+        v-btn.ma-2(color='teal lighten-1' dark)
+          v-icon(size='20') mdi-autorenew
+          span.ma-2 Reload
+        v-btn.ma-2(color='teal lighten-1' dark)
+          v-icon(size='20') mdi-home-variant
+          span.ma-2 Go Home
 
       div(v-else style='max-width:700px; margin: 0 auto;')
         p.ma-4(v-html='$t("ui.invited_to_join",[nameHtml])' style='font-size: 1.4em')
