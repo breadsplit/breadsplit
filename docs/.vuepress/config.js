@@ -7,6 +7,7 @@ module.exports = {
     ['meta', { name: 'theme-color', content: '#41b883' }],
     ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1' }],
   ],
+  ga: process.env.GOOGLE_GTAG_ID,
   themeConfig: {
     repo: 'antfu/breadsplit',
     docsRepo: 'antfu/breadsplit',
@@ -14,7 +15,7 @@ module.exports = {
     docsBranch: 'master',
     nav: [
       { text: 'Getting Started', link: '/' },
-      { text: 'Live', link: 'https://breadsplit.netlify.com/' },
+      { text: 'Live', link: 'https://app.breadsplit.com/' },
     ],
     sidebar: {
       '/': [

@@ -1,17 +1,18 @@
 import NuxtConfiguration from '@nuxt/config'
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 import pkg from '../package.json'
-import ServicesIntegrations from './meta/services_integrations'
 import theme from './meta/theme'
 
 const debug = process.env.NODE_ENV !== 'production'
+const RELEASE_CHANNEL = process.env.RELEASE_CHANNEL || 'dev'
+const fullname = RELEASE_CHANNEL !== 'dev' ? 'BreadSplit' : 'BreadSplit Dev'
 
 const config: NuxtConfiguration = {
   mode: 'spa',
   debug,
 
   head: {
-    title: pkg.fullname,
+    title: fullname,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
@@ -20,7 +21,7 @@ const config: NuxtConfiguration = {
       { name: 'keywords', content: pkg.keywords.join(',') },
       { name: 'HandheldFriendly', content: 'true' },
 
-      { property: 'og:title', content: pkg.fullname },
+      { property: 'og:title', content: fullname },
       { property: 'og:image', content: '/img/png/favicon-194x194.png' },
       { property: 'og:description', content: pkg.description },
     ],
@@ -44,8 +45,8 @@ const config: NuxtConfiguration = {
   },
 
   manifest: {
-    name: pkg.fullname,
-    short_name: pkg.fullname,
+    name: fullname,
+    short_name: fullname,
     display: 'standalone',
     orientation: 'portrait-primary',
     start_url: '/',
@@ -68,7 +69,7 @@ const config: NuxtConfiguration = {
     NODE_ENV: process.env.NODE_ENV || 'development',
     FIREBASE_SERVER: process.env.FIREBASE_SERVER || 'development',
     BUILD_TARGET: process.env.BUILD_TARGET || '',
-    RELEASE_CHANNEL: process.env.RELEASE_CHANNEL || 'dev',
+    RELEASE_CHANNEL,
     BUILD_TIME: new Date().toISOString(),
     BUILD_MACHINE: process.env.BUILD_MACHINE || process.env.OSTYPE || '',
     APP_VERSION: pkg.version,
@@ -160,7 +161,7 @@ const config: NuxtConfiguration = {
   ],
 
   'google-gtag': {
-    id: process.env.GOOGLE_GTAG_ID || ServicesIntegrations.google_gtag,
+    id: process.env.GOOGLE_GTAG_ID,
     debug,
   },
 
@@ -210,7 +211,7 @@ const config: NuxtConfiguration = {
 
   // https://sentry.io/
   sentry: {
-    dsn: process.env.SENTRY_DSN || ServicesIntegrations.sentry_dsn,
+    dsn: process.env.SENTRY_DSN,
     config: {
       tags: {
         build_target: process.env.BUILD_TARGET,
