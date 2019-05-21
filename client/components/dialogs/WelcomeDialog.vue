@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card.init-page
+v-card.welcome-dialog
   app-dialog-bar(@close='close()')
     | {{$t('ui.welcome_breadsplit')}}
 
@@ -26,14 +26,11 @@ v-card.init-page
 </template>
 
 <script lang='ts'>
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
+import { DialogChildMixin } from '~/mixins'
 
 @Component
-export default class InitPage extends Vue {
-  close(result?) {
-    this.$emit('close', result)
-  }
-
+export default class WelcomeDialog extends Mixins(DialogChildMixin) {
   more() {
     // @ts-ignore
     this.$root.$about.open()
@@ -41,9 +38,10 @@ export default class InitPage extends Vue {
 }
 </script>
 
-<style lang="stylus">
-.signature
-  font-style italic
-  opacity 0.7
-  margin-top -1em
+<style lang='stylus'>
+.welcome-dialog
+  .signature
+    font-style italic
+    opacity 0.7
+    margin-top -1em
 </style>

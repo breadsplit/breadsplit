@@ -25,16 +25,13 @@ v-card.about-page
 </template>
 
 <script lang='ts'>
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import socials from '~/meta/socials'
+import { DialogChildMixin } from '~/mixins'
 
 @Component
-export default class AboutPage extends Vue {
+export default class AboutPage extends Mixins(DialogChildMixin) {
   socials = socials
-
-  close(result?) {
-    this.$emit('close', result)
-  }
 }
 </script>
 

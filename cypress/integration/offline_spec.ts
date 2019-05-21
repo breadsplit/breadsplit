@@ -3,14 +3,14 @@ describe('Offline functions', () => {
     cy.visit('/?lang=en')
 
     cy.title()
-      .should('equal', 'BreadSplit')
+      .should('contain', 'BreadSplit')
   })
 
   it('should popup welcome message', () => {
-    cy.get('.init-page .v-toolbar__title')
+    cy.get('.welcome-dialog .v-toolbar')
       .should('contain', 'Welcome to BreadSplit')
 
-    cy.get('.init-page .v-card__actions > .v-btn.primary')
+    cy.get('.welcome-dialog .v-card__actions > .v-btn.primary')
       .click()
   })
 
@@ -39,7 +39,7 @@ describe('Offline functions', () => {
       .should('include', '/group/')
 
     cy.title()
-      .should('equal', 'GroupA - BreadSplit')
+      .should('contain', 'GroupA')
 
     cy.get('.balances')
       .should((balances) => {

@@ -109,7 +109,7 @@ v-app(:dark='dark')
     app-about-page
 
   app-dialog(ref='init', :fullscreen='false')
-    app-init-page
+    app-welcome-dialog
 </template>
 
 <script lang='ts'>
@@ -195,7 +195,7 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
             await this.$fire.deleteGroup(groupid)
           this.removeGroup()
           this.$root.$apploading.close()
-          this.$router.push('/')
+          this.gotoHome()
         }
         break
 
@@ -236,7 +236,7 @@ export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, 
   async promptLogout() {
     if (await this.$root.$confirm('Are you sure to logout?')) {
       await this.$fire.logout()
-      this.$router.push('/')
+      this.gotoHome()
     }
   }
 

@@ -1,7 +1,6 @@
 module.exports = {
   title: '🍞 BreadSplit Developer',
   description: 'Group bills split made easy, fast and customizable.',
-  base: '/breadsplit/',
   head: [
     ['meta', { charset: 'utf-8' }],
     ['meta', { name: 'theme-color', content: '#41b883' }],

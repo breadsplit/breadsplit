@@ -19,7 +19,7 @@ app-dialog(ref='dialog' :route='true' width='350' :fullscreen='false')
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Watch, Vue } from 'vue-property-decorator'
 
 @Component
 export default class Login extends Vue {

@@ -118,9 +118,6 @@ const config: NuxtConfiguration = {
     splitChunks: {},
     extractCSS: !debug,
     publicPath: '/nuxt/',
-    /*
-    ** You can extend webpack config here
-    */
     extend(config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {

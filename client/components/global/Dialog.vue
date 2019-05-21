@@ -33,15 +33,14 @@ import CommonMixin from '~/mixins/common'
 export default class Dialog extends Mixins(CommonMixin) {
   resolve: ((result) => void) | null = null
   reject: ((error) => void) | null = null
+  options = {}
+  visible = false
 
   @Prop({ default: false }) readonly route!: boolean
   @Prop({ default: 'dialog-bottom-transition' }) readonly transition!: boolean
   @Prop() readonly fullscreen: boolean | undefined
   @Prop({ default: true }) readonly lazy!: boolean
-  @Prop({ default: true }) readonly reset!: boolean
-
-  options = {}
-  visible = false
+  @Prop({ default: true }) readonly autoReset!: boolean
 
   get isOpened() {
     return !!this.visible
@@ -78,19 +77,28 @@ export default class Dialog extends Mixins(CommonMixin) {
     }
   }
 
+  registerListeners() {
+    this.children.forEach((c) => {
+      // auto listen on child 'close' event
+      c.$once('close', () => this.close())
+    })
+  }
+
+  resetChildren() {
+    this.children.forEach((c) => {
+      // @ts-ignore
+      if (this.autoReset && c.hasOwnProperty('reset') && c.reset instanceof Function)
+      // @ts-ignore
+        c.reset()
+    })
+  }
+
   open(options = {}) {
     this.visible = true
     this.options = options
     this.$nextTick(() => {
-      this.children.forEach((c) => {
-        // auto listen on child 'close' event
-        c.$once('close', () => this.close())
-
-        // @ts-ignore
-        if (this.reset && c.hasOwnProperty('reset') && c.reset instanceof Function)
-        // @ts-ignore
-          c.reset()
-      })
+      this.registerListeners()
+      this.resetChildren()
     })
     return new Promise((resolve, reject) => {
       this.resolve = resolve
@@ -103,6 +111,8 @@ export default class Dialog extends Mixins(CommonMixin) {
       this.resolve(flag)
     if (this.visible)
       this.visible = false
+    this.resolve = null
+    this.reject = null
   }
 }
 </script>

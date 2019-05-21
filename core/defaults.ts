@@ -4,7 +4,7 @@ import { Member, Group, Transaction, TransactionType, ClientGroup } from '../typ
 import { GenerateId } from './id_helper'
 
 export const MemberDefault = (overrides?: Partial<Member>): Member => merge({
-  id: GenerateId.LocalMember(),
+  uid: GenerateId.LocalMember(),
   name: '',
   role: 'collaborator',
 }, overrides)
@@ -32,7 +32,7 @@ export const GroupDefault = (overrides?: any): Group => {
     const members: Record<string, Member> = {}
     group.members.forEach((m) => {
       const member = MemberDefault(m)
-      members[member.id] = member
+      members[member.uid as string] = member
     })
     group.members = members
   }

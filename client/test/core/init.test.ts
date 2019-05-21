@@ -4,14 +4,14 @@ describe('models initialization', () => {
   test('member', () => {
     const member = MemberDefault({ name: 'Hello' })
     expect(member.name).toEqual('Hello')
-    expect(IsThisId.LocalMember(member.id)).toBeTruthy()
+    expect(IsThisId.LocalMember(member.uid as string)).toBeTruthy()
   })
 
   test('group', () => {
     const group = GroupDefault({
       name: 'Group A',
       members: [
-        { id: 'member1', name: 'Hello' },
+        { uid: 'member1', name: 'Hello' },
       ],
     })
     expect(group.name).toEqual('Group A')

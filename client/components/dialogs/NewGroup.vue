@@ -106,15 +106,9 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
   }
 
   defaultMember(m) {
-    if (!this.uid)
-      m.push({ id: IdMe, name: this.$t('pronoun.me') })
-    else
-      m.push({ id: this.uid, name: this.user.name })
+    m.push({ uid: IdMe })
   }
 
-  close(result?) {
-    this.$emit('close', result)
-  }
   create() {
     if (this.mode) {
       const pay: GroupMetaChanges = {
