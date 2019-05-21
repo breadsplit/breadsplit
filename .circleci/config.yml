@@ -76,12 +76,27 @@ workflows:
   build_and_test:
     jobs:
       # tests
-      - unit_test
+      - unit_test:
+          filters:
+            branches:
+              ignore:
+                - website
+                - gh-pages
+                - raymond
+                - docs
 
       - cypress/run:
           record: true
           wait-on: 'http://localhost:3000'
           start: FIERBASE_SERVER=test npm run generate && npm run generate:host
+          filters:
+            branches:
+              ignore:
+                - dev
+                - website
+                - gh-pages
+                - raymond
+                - docs
 
       # auto deploy to firebase only on production server
       - firebase_deploy:

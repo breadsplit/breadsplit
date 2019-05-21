@@ -24,7 +24,7 @@ Group bills split made easy, fast and customizable.
 
 ## Development
 
-[📚 Developer Docs](https://antfu.github.io/breadsplit/)
+[📚 Developer Docs](https://docs.breadsplit.com/)
 
 [📋 Developing Progress Track](https://github.com/antfu/breadsplit/projects/1)
 

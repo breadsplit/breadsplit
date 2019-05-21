@@ -12,27 +12,36 @@
   SENTRY_DSN = "https://5decd6ec1a0e42d7b1f47d92675e0b59@sentry.io/1457153"
 
 
-# App branch
+# "app" branch
 [context.app.environment]
   GOOGLE_GTAG_ID = "UA-139660905-3" # prod gtag
   RELEASE_CHANNEL = "beta"
   FIREBASE_SERVER = "production"
 
 
-# Website branch, currently used for docs, should move to website in the future
+# "website" branch
 [context.website]
+  base = ""
+  publish = "website/dist"
+  command = "npm run web:generate"
+
+[context.website.environment]
+  GOOGLE_GTAG_ID = "UA-139660905-5" # website gtag
+
+
+# "docs" branch
+[context.docs]
   base = ""
   publish = "docs/.vuepress/dist/"
   command = "npm run docs:build"
 
-[context.website.environment]
+[context.docs.environment]
   GOOGLE_GTAG_ID = "UA-139660905-4" # docs gtag
 
 
-# [context.docs]
-#   base = ""
-#   publish = "docs/.vuepress/dist/"
-#   command = "npm run docs:build"
-
-# [context.docs.environment]
-#   GOOGLE_GTAG_ID = "UA-139660905-4" # docs gtag
+# Redirects
+[[redirects]]
+  from = "https://breadsplit.netlify.com"
+  to = "https://app.breadsplit.com"
+  status = 200
+  force = true
