@@ -24,6 +24,7 @@
     "rusha": "^0.8.13"
   },
   "devDependencies": {
+    "firebase-tools": "^6.10.0",
     "typescript": "^3.4.5"
   },
   "version": "0.3.0"

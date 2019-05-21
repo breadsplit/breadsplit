@@ -3,7 +3,7 @@ describe('Offline functions', () => {
     cy.visit('/?lang=en')
 
     cy.title()
-      .should('equal', 'BreadSplit')
+      .should('contain', 'BreadSplit')
   })
 
   it('should popup welcome message', () => {
@@ -39,7 +39,7 @@ describe('Offline functions', () => {
       .should('include', '/group/')
 
     cy.title()
-      .should('equal', 'GroupA - BreadSplit')
+      .should('contain', 'GroupA')
 
     cy.get('.balances')
       .should((balances) => {
