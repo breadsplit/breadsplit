@@ -102,7 +102,7 @@ import { Component, Mixins } from 'vue-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
-import { TransactionDefault, dateToRelative } from '~/core'
+import { TransactionDefault, dateToRelative, IdMe } from '~/core'
 
 @Component
 export default class NewTransaction extends Mixins(GroupMixin, CommonMixin, DialogChildMixin) {
@@ -112,11 +112,11 @@ export default class NewTransaction extends Mixins(GroupMixin, CommonMixin, Dial
 
   reset() {
     this.$set(this, 'form', TransactionDefault())
-    const me = this.options.uid || (this.members[0] || {}).id // TODO: get my id
+    const me = this.options.uid || (this.members[0] || {}).uid // TODO: get my id
     this.form.creator = me
     this.form.currency = this.group.currencies[0]
     this.form.creditors.push({ weight: 1, uid: me })
-    this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.id }))
+    this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.uid || IdMe }))
     // @ts-ignore
     this.$refs.total_fee_input.inner_value = ''
     this.step = 1

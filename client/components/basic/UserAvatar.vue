@@ -2,7 +2,7 @@
 app-action-with-text.user-avatar(:class='{inline}')
   template(slot='action')
     v-avatar(:size='size')
-      img(:src='getAvatarUrl(id)')
+      img(:src='user.avatar_url')
   span(slot='text', v-if='showName') {{getUserName(id)}}
 </template>
 

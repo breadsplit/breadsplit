@@ -3,12 +3,12 @@
   v-menu(v-model='menu' :nudge-width='100')
     template(v-slot:activator='{ on }')
       .vertical-aligned(v-on='on', v-ripple)
-        app-user-avatar.ma-1(:id='current.id', inline, show-name)
+        app-user-avatar.ma-1(:id='current.uid', inline, show-name)
         v-icon mdi-menu-down
 
     v-card.pa-2
       template(v-for='member in members')
-        app-user-avatar.member-option.pa-3(:id='member.id', show-name, v-ripple, @click.native='setValue(member.id)')
+        app-user-avatar.member-option.pa-3(:id='member.uid', show-name, v-ripple, @click.native='setValue(member.uid)')
 </template>
 
 <script lang='ts'>
@@ -23,7 +23,7 @@ export default class MemberSelect extends Vue {
   @Prop(Array) readonly members!: Member[]
 
   get current() {
-    const member = this.members.find(m => m.id === this.value)
+    const member = this.members.find(m => m.uid === this.value)
     return member || {}
   }
 

@@ -73,7 +73,7 @@ export function GroupBalances(group: Group): Balance[] {
         balance[currency] = 0
       })
       return {
-        uid: m.id,
+        uid: m.uid as string,
         balance,
         main_balance: 0,
         main_currency,

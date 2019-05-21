@@ -10,10 +10,10 @@ export const GenerateId = {
 export const IdMe = 'me'
 
 export const IsThisId = {
-  LocalMember: (id: string) => id.startsWith('M:'),
-  LocalGroup: (id: string) => id.startsWith('L:'),
-  OnlineGroup: (id: string) => id.startsWith('O:'),
-  Transaction: (id: string) => id.startsWith('T:'),
-  UID: (id: string) => !id.startsWith('M:') && id !== IdMe,
-  Me: (id: string) => id === IdMe,
+  LocalMember: (id?: string|null) => id && id.startsWith('M:'),
+  LocalGroup: (id?: string|null) => id && id.startsWith('L:'),
+  OnlineGroup: (id?: string|null) => id && id.startsWith('O:'),
+  Transaction: (id?: string|null) => id && id.startsWith('T:'),
+  UID: (id?: string|null) => id && !id.startsWith('M:') && id !== IdMe,
+  Me: (id?: string|null) => id === IdMe,
 }

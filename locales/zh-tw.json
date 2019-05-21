@@ -4,6 +4,7 @@
   "language_name": "繁體中文",
   "translators": "offical",
   "appname": "分帳吐司",
+  "appname_dev": "分帳吐司内測版",
   "css": {
     "font_of_locale": "\"微軟正黑體\", \"Microsoft JhengHei\""
   },
