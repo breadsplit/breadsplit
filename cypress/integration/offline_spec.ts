@@ -7,10 +7,10 @@ describe('Offline functions', () => {
   })
 
   it('should popup welcome message', () => {
-    cy.get('.init-page .v-toolbar__title')
+    cy.get('.welcome-dialog .v-toolbar')
       .should('contain', 'Welcome to BreadSplit')
 
-    cy.get('.init-page .v-card__actions > .v-btn.primary')
+    cy.get('.welcome-dialog .v-card__actions > .v-btn.primary')
       .click()
   })
 
