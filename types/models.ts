@@ -50,6 +50,7 @@ export interface UserInfo {
   name: string
   avatar_url?: string
   lastupdate?: number
+  starrate?: string
 
   // client side only
   lastsync?: number
