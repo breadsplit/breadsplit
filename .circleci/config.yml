@@ -51,7 +51,7 @@ jobs:
           command: cd ./firebase/functions && npm ci
       - run:
           name: Install Firebase CLI
-          command: npm install -g firebase-tools
+          command: cd ./firebase && npm init -y && npm install firebase-tools
       - run:
           name: Deploy to Firebase
           command: cd ./firebase && npx firebase deploy --project production --token=$FIREBASE_DEPLOY_TOKEN
