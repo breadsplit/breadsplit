@@ -66,10 +66,6 @@ export default class Dialog extends Mixins(CommonMixin) {
     return this.isMobile
   }
 
-  mounted() {
-    console.log('DIALOG MOUNTED')
-  }
-
   get children() {
     try {
       // this first level child is v-dialog and second is v-theme-provider
@@ -91,7 +87,7 @@ export default class Dialog extends Mixins(CommonMixin) {
   resetChildren() {
     this.children.forEach((c) => {
       // @ts-ignore
-      if (this.autoReset && c.hasOwnProperty('reset') && c.autoReset instanceof Function)
+      if (this.autoReset && c.hasOwnProperty('reset') && c.reset instanceof Function)
       // @ts-ignore
         c.reset()
     })
@@ -115,6 +111,8 @@ export default class Dialog extends Mixins(CommonMixin) {
       this.resolve(flag)
     if (this.visible)
       this.visible = false
+    this.resolve = null
+    this.reject = null
   }
 }
 </script>
