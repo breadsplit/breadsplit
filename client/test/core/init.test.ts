@@ -11,7 +11,7 @@ describe('models initialization', () => {
     const group = GroupDefault({
       name: 'Group A',
       members: [
-        { id: 'member1', name: 'Hello' },
+        { uid: 'member1', name: 'Hello' },
       ],
     })
     expect(group.name).toEqual('Group A')
