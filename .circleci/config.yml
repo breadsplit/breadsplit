@@ -24,7 +24,7 @@ jobs:
 
       - run:
           name: Install dependencies
-          command: npm ci
+          command: npm i
 
       - save_cache:
           paths:
@@ -53,8 +53,8 @@ jobs:
             - v1-dependencies-
 
       - run:
-          name: Install firebase dependencies
-          command: npm ci
+          name: Install dependencies
+          command: npm i
 
       - save_cache:
           paths:
@@ -63,7 +63,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: Install dependencies
+          name: Install functions dependencies
           command: cd ./firebase/functions && npm ci
 
       - run:
