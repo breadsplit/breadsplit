@@ -22,11 +22,11 @@
 # "website" branch
 [context.website]
   base = ""
-  publish = "web/dist"
+  publish = "website/dist"
   command = "npm run web:generate"
 
 [context.website.environment]
-  GOOGLE_GTAG_ID = "UA-139660905-4" # docs gtag
+  GOOGLE_GTAG_ID = "UA-139660905-5" # website gtag
 
 
 # "docs" branch
