@@ -109,9 +109,6 @@ export default class NewGroup extends Mixins(DialogChildMixin) {
     m.push({ uid: IdMe })
   }
 
-  close(result?) {
-    this.$emit('close', result)
-  }
   create() {
     if (this.mode) {
       const pay: GroupMetaChanges = {

@@ -19,10 +19,11 @@ app-dialog(ref='dialog' :route='true' width='350' :fullscreen='false')
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Watch, Mixins } from 'vue-property-decorator'
+import { DialogChildMixin } from '~/mixins'
 
 @Component
-export default class Login extends Vue {
+export default class Login extends Mixins(DialogChildMixin) {
   resolve: ((result) => void) | null = null
   reject: ((error) => void) | null = null
 

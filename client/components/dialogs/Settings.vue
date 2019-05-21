@@ -82,12 +82,12 @@ v-card.settings
 <script lang='ts'>
 import { Component, Mixins } from 'vue-property-decorator'
 import { AvaliableLocales } from '~/locales'
-import CommonMixin from '~/mixins/common'
+import { NavigationMixin, CommonMixin, DialogChildMixin } from '~/mixins'
 
 const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display }))
 
 @Component
-export default class Settings extends Mixins(CommonMixin) {
+export default class Settings extends Mixins(CommonMixin, NavigationMixin, DialogChildMixin) {
   localeItems = localeItems
   languageSelecting = false
 
@@ -110,10 +110,6 @@ export default class Settings extends Mixins(CommonMixin) {
     return this.$store.state.messaging_token
   }
 
-  close() {
-    this.$emit('close')
-  }
-
   switchLocale(locale) {
     this.$store.commit('switchLocale', locale)
     this.$i18n.locale = locale
@@ -126,7 +122,7 @@ export default class Settings extends Mixins(CommonMixin) {
       await this.$fire.logout()
       this.$store.commit('purge')
       this.close()
-      this.$router.push('/')
+      this.gotoHome()
     }
   }
 

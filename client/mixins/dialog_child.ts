@@ -12,7 +12,12 @@ export default class DialogChildMixin extends Vue {
     return this.dialog.visible as boolean
   }
 
-  close(result?: any) {
+  close(result?) {
     this.$emit('close', result)
+    try {
+      // @ts-ignore
+      this.$parent.$parent.$parent.close()
+    }
+    catch {}
   }
 }
