@@ -36,7 +36,7 @@ export interface Weight {
 }
 
 export interface Member {
-  id: uid
+  uid: uid | null
   name: string
   role: MemberRoles
   defaultWeight?: number
@@ -54,6 +54,8 @@ export interface UserInfo {
   // client side only
   lastsync?: number
 }
+
+export interface UserMemberInfo extends Member, UserInfo {}
 
 export interface Transaction {
   id: string

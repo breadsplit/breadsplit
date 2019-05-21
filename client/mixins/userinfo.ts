@@ -1,6 +1,6 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { Getter } from 'vuex-class'
-import { UserInfo, Member } from '~/types'
+import { UserInfo, Member, UserMemberInfo } from '~/types'
 import { IsThisId } from '~/core'
 import { avatarProvider } from '~/utils/avatar_providers'
 import nanoid from 'nanoid'
@@ -10,50 +10,53 @@ export default class UserInfoMixin extends Vue {
   @Getter('user/uid') uid: string | undefined
   @Getter('user/me') me: UserInfo | undefined
 
-  getUser(id?: string, autoFetch: boolean = true): UserInfo | Member | undefined {
-    if (!id)
+  getUser(uid?: string, autoFetch: boolean = true): UserMemberInfo | undefined {
+    if (!uid)
       return undefined
-    if (IsThisId.Me(id)) {
-      if (this.$store.getters['user/uid'])
-        return this.$store.getters['user/me']
+    const member = this.getMember(uid)
+    let user: UserInfo | undefined
+    if (IsThisId.Me(uid) && this.uid) {
+      user = this.me
+    }
+    else if (IsThisId.UID(uid)) {
+      user = this.$store.getters['user/user'](uid)
+      if (!user && autoFetch)
+        this.$fire.updateUserProfiles([uid])
+    }
+    const result = Object.assign({}, member, user)
+    if (!result.avatar_url)
+      result.avatar_url = this.getFallbackAvatar(uid)
+    return result
+  }
+
+  getMember(uid: string): Member | undefined {
+    if (IsThisId.Me(uid)) {
       return {
-        id,
+        uid,
         name: this.$t('pronoun.me').toString(),
         role: 'owner',
       }
     }
-    if (IsThisId.UID(id)) {
-      const user = this.$store.getters['user/user'](id)
-      if (!user && autoFetch)
-        this.$fire.updateUserProfiles([id])
-      return user
-    }
-    return this.getMember(id)
+    return this.$store.getters['group/memberById']({ uid })
   }
 
-  getMember(id: string): Member | undefined {
-    return this.$store.getters['group/memberById']({
-      uid: id,
-    })
-  }
-
-  getAvatarUrl(id: string) {
-    const user = this.getUser(id)
+  getAvatarUrl(uid: string) {
+    const user = this.getUser(uid)
     if (user && 'avatar_url' in user)
       return user.avatar_url
-    return this.getFallbackAvatar(id)
+    return this.getFallbackAvatar(uid)
   }
 
-  getFallbackAvatar(id: string) {
+  getFallbackAvatar(uid: string) {
     const dark = this.$store.getters.dark
-    return avatarProvider(id || nanoid(), dark)
+    return avatarProvider(uid || nanoid(), dark)
   }
 
-  getUserName(id: string, pronoun = true) {
-    if (pronoun && (id === this.uid || IsThisId.Me(id)))
+  getUserName(uid: string, pronoun = true) {
+    if (pronoun && (uid === this.uid || IsThisId.Me(uid)))
       return this.$t('pronoun.i').toString()
 
-    const user = this.getUser(id)
+    const user = this.getUser(uid)
     if (user)
       return user.name
   }

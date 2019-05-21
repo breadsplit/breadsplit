@@ -16,7 +16,7 @@ export const dicebearOffline = (hash: string, dark?: boolean) => {
 export const avatarProvider = dicebearOffline
 
 export function GetMemberAvatarUrl(member: Member, dark?: boolean) {
-  const key = (member.id || '').trim().toLowerCase()
+  const key = (member.uid || '').trim().toLowerCase()
   const hash = md5(key).toString()
   return avatarProvider(hash, dark)
 }

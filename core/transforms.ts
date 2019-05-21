@@ -57,24 +57,26 @@ export const Transforms: TransformFunctions<Group> = {
   insert_member(snap, member?: Member, { by, timestamp } = {}) {
     if (!member)
       return snap
-    snap.members[member.id] = member
+    if (!member.uid)
+      return snap
+    snap.members[member.uid] = member
     snap.activities.push({
       by,
       timestamp,
       action: ActivityAction.insert,
       entity: Entity.member,
-      entity_id: member.id,
+      entity_id: member.uid,
       entity_name: member.name,
     })
     return snap
   },
 
-  remove_member(snap, id?: string) {
-    if (!id)
+  remove_member(snap, uid?: string) {
+    if (!uid)
       return snap
-    if (!snap.members[id])
+    if (!snap.members[uid])
       return snap
-    snap.members[id].removed = true
+    snap.members[uid].removed = true
     return snap
   },
 
@@ -116,7 +118,7 @@ export const Transforms: TransformFunctions<Group> = {
       return snap
 
     // change members field
-    member.id = to
+    member.uid = to
     delete snap.members[from]
     snap.members[to] = member
 

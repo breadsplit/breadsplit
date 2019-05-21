@@ -130,9 +130,7 @@ export const joinGroup = f(async ({ id, join_as }, context) => {
       else {
         newoperations.push({
           name: 'insert_member',
-          data: MemberDefault({
-            id: uid,
-          }),
+          data: MemberDefault({ uid }),
         })
       }
     }

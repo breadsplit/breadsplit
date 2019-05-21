@@ -18,18 +18,18 @@
 
         v-list(two-line, style='background:transparent;')
           template(v-for='(member, index) in members')
-            template(v-if='index!=0 && !isLocal(member.id) && isLocal(members[index-1].id)')
+            template(v-if='index!=0 && !isLocal(member.uid) && isLocal(members[index-1].uid)')
               br
               v-subheader 以下為已存在用戶
-            v-list-tile(:key='member.id', avatar)
+            v-list-tile(:key='member.uid', avatar)
               v-list-tile-avatar
-                app-user-avatar(:id='member.id', size='40')
+                app-user-avatar(:id='member.uid', size='40')
               v-list-tile-content
                 v-list-tile-title
-                  span(v-if='isLocal(member.id)') {{member.name}}
-                  app-user-info(v-else :id='member.id', field='name')
-              v-list-tile-action(v-if='isLocal(member.id)')
-                v-btn(color='primary' dark :loading='joining' @click='join(member.id)') 認領我
+                  span(v-if='isLocal(member.uid)') {{member.name}}
+                  app-user-info(v-else :id='member.uid', field='name')
+              v-list-tile-action(v-if='isLocal(member.uid)')
+                v-btn(color='primary' dark :loading='joining' @click='join(member.uid)') 認領我
               v-list-tile-action(v-else)
                 v-icon(color='green lighten-1', size='40') mdi-account-check
 
@@ -88,9 +88,9 @@ export default class JoinPage extends Mixins(UserInfoMixin, CommonMixin) {
       return []
     const orderList: Member[] = []
     Object.values(this.group.members)
-      .filter(m => !m.removed)
+      .filter(m => !m.removed && m.uid !== null)
       .forEach((m) => {
-        if (this.isLocal(m.id))
+        if (this.isLocal(m.uid as string))
           orderList.unshift(m)
         else
           orderList.push(m)
