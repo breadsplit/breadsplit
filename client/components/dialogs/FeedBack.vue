@@ -22,7 +22,7 @@ import { DialogChildMixin } from '~/mixins'
 
 @Component
 export default class FeedBack extends Mixins(DialogChildMixin) {
-  issueHint = 'Or you can create an issue on our <a href="https://github.com/antfu/breadsplit" target="_blank">github</a> '
+  issueHint = 'Or you can create an issue on our <a href="https://github.com/breadsplit/breadsplit" target="_blank">github</a> '
   submitFlag = false
   finish = true
   starrate = this.$store.getters['user/me'].starrate === undefined ? '0' : this.$store.getters['user/me'].starrate

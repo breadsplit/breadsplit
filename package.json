@@ -4,7 +4,7 @@
   "version": "0.2.0",
   "private": true,
   "description": "The BreadSplit web application",
-  "author": "The BreadSplit Team <https://github.com/antfu/breadsplit>",
+  "author": "The BreadSplit Team <https://github.com/breadsplit/breadsplit>",
   "keywords": [
     "accounting",
     "opensource",
@@ -20,9 +20,9 @@
   "license": "GPLv3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/antfu/breadsplit"
+    "url": "https://github.com/breadsplit/breadsplit"
   },
-  "bugs": "https://github.com/antfu/breadsplit/issues",
+  "bugs": "https://github.com/breadsplit/breadsplit/issues",
   "engines": {
     "node": ">= 10.0.0",
     "npm": ">= 5.0.0"

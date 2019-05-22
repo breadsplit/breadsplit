@@ -8,8 +8,8 @@ module.exports = {
   ],
   ga: process.env.GOOGLE_GTAG_ID,
   themeConfig: {
-    repo: 'antfu/breadsplit',
-    docsRepo: 'antfu/breadsplit',
+    repo: 'breadsplit/breadsplit',
+    docsRepo: 'breadsplit/breadsplit',
     docsDir: 'docs',
     docsBranch: 'master',
     nav: [

@@ -2,7 +2,8 @@
 
 export default {
   homepage: 'https://breadsplit.com',
-  github: 'https://github.com/antfu/breadsplit',
+  github: 'https://github.com/breadsplit/breadsplit',
+  github_issue: 'https://github.com/breadsplit/breadsplit/issues',
   patreon: 'https://www.patreon.com/user?u=19935929',
   instagram: '',
   twitter: 'https://twitter.com/BreadSplit',

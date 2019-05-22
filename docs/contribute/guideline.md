@@ -45,4 +45,4 @@ Reference(s):
 
 [VSCode]: https://code.visualstudio.com/
 [ESLint plugin]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-[eslintrc]: https://github.com/antfu/breadsplit/blob/master/.eslintrc.js
+[eslintrc]: https://github.com/breadsplit/breadsplit/blob/master/.eslintrc.js
