@@ -1,7 +1,7 @@
 import NuxtConfiguration from '@nuxt/config'
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 import pkg from '../package.json'
-import theme from './meta/theme'
+import theme from '../meta/theme'
 
 const debug = process.env.NODE_ENV !== 'production'
 const RELEASE_CHANNEL = process.env.RELEASE_CHANNEL || 'dev'

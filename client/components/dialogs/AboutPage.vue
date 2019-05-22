@@ -29,7 +29,7 @@ v-card.about-page
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
-import socials from '~/meta/socials'
+import socials from '~/../meta/socials'
 import { DialogChildMixin } from '~/mixins'
 
 @Component

@@ -8,7 +8,7 @@ v-card.privacy-page
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
-import socials from '~/meta/socials'
+import socials from '~/../meta/socials'
 import { DialogChildMixin, CommonMixin } from '~/mixins'
 
 @Component

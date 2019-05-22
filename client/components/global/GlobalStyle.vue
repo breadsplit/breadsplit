@@ -15,7 +15,7 @@ style.
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
-import FontFamilyBuilder from '~/meta/font_family'
+import FontFamilyBuilder from '~/../meta/font_family'
 
 @Component
 export default class GlobalStyle extends Vue {

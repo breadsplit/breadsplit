@@ -99,7 +99,7 @@ v-card.new-transaction(v-rows='"max-content auto max-content"')
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
-import Categories, { CategoryKeys } from '~/meta/categories'
+import Categories, { CategoryKeys } from '~/../meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, dateToRelative, IdMe } from '~/core'

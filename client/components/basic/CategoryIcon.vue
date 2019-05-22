@@ -5,7 +5,7 @@ app-action-with-text.category-icon(:class='inline')
 </template>
 
 <script lang='ts'>
-import Categories from '~/meta/categories'
+import Categories from '~/../meta/categories'
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 @Component

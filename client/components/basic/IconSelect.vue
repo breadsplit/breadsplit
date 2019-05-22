@@ -20,8 +20,8 @@
 
 <script lang='ts'>
 import { Vue, Component, Prop, Watch } from 'nuxt-property-decorator'
-import Iconsets from '~/meta/iconsets'
-import swatches from '~/meta/swatches'
+import Iconsets from '~/../meta/iconsets'
+import swatches from '~/../meta/swatches'
 
 @Component
 export default class IconSelect extends Vue {

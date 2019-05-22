@@ -9,7 +9,7 @@ v-select.flat(
 
 <script lang='ts'>
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import currencies from '~/meta/currencies'
+import currencies from '~/../meta/currencies'
 
 @Component
 export default class CurrencySelect extends Vue {

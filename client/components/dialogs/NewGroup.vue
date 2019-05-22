@@ -57,8 +57,8 @@ v-card.new-group
 </template>
 
 <script lang='ts'>
-import swatches from '~/meta/swatches'
-import currencies from '~/meta/currencies'
+import swatches from '~/../meta/swatches'
+import currencies from '~/../meta/currencies'
 import { Component, Getter, mixins } from 'nuxt-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'

@@ -13,7 +13,7 @@
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { Category } from '~/meta/categories'
+import { Category } from '~/../meta/categories'
 
 @Component
 export default class MemberSelect extends Vue {

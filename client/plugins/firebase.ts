@@ -9,7 +9,7 @@ import 'firebase/messaging'
 
 import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions } from '~/types'
 import { IsThisId } from '~/core'
-import FirebaseServers from '~/meta/firebase_servers'
+import FirebaseServers from '~/../meta/firebase_servers'
 import nanoid from 'nanoid'
 
 // eslint-disable-next-line no-console
