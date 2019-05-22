@@ -176,7 +176,8 @@ export default class NumberInput extends mixins(CommonMixin) {
     try {
       // @ts-ignore
       this.$refs.input.$el.focus()
-    } catch {}
+    }
+    catch {}
   }
 
   warned = false
