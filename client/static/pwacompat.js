@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*
  * Copyright 2018 Google Inc. All rights reserved.
  *
@@ -179,9 +180,9 @@
     meta('apple-mobile-web-app-title', manifest['short_name'] || manifest['name']);
 
     /**
-     * @param {{width: number, height: number}} arg 
-     * @param {string} orientation 
-     * @param {!Image|undefined} icon 
+     * @param {{width: number, height: number}} arg
+     * @param {string} orientation
+     * @param {!Image|undefined} icon
      * @return {function(): !HTMLLinkElement}
      */
     function splashFor({width, height}, orientation, icon) {

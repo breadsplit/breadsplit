@@ -58,7 +58,7 @@ v-card.new-group
 
 <script lang='ts'>
 import swatches from '~/../meta/swatches'
-import { getLocaleCurrencies } from '~/../meta/currencies'
+import { getCommonCurrencyCodes, getLocaleCurrencies } from '~/../meta/currencies'
 import { Component, Getter, mixins } from 'nuxt-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
@@ -107,7 +107,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   }
 
   get currencies() {
-    return getLocaleCurrencies(this.locale)
+    return getLocaleCurrencies(this.locale, getCommonCurrencyCodes(this.locale))
       .map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
   }
 
