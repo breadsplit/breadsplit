@@ -1,6 +1,7 @@
 <template lang='pug'>
 v-card.privacy-page
-  iframe(ref='iframe' :src='socials.privacy', :class='{mobile: isMobile}')
+  .iframe-wrapper
+    iframe(ref='iframe' :src='socials.privacy', :class='{mobile: isMobile}')
   v-btn.close-button(icon @click='close(false)', color='white')
     v-icon(color='primary') mdi-close
 </template>
@@ -20,6 +21,10 @@ export default class PrivacyPage extends Mixins(CommonMixin, DialogChildMixin) {
 .privacy-page
   overflow hidden
   height 100%
+
+  .iframe-wrapper
+    overflow auto
+    -webkit-overflow-scrolling touch
 
   iframe
     width 100%
