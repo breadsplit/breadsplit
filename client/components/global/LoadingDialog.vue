@@ -7,7 +7,7 @@ v-dialog(v-model='show', persistent, width='300', v-bind='$attrs')
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
   inheritAttrs: false,

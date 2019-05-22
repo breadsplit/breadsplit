@@ -1,4 +1,4 @@
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component } from 'nuxt-property-decorator'
 
 function QuerySerialize(obj) {
   return Object.keys(obj).reduce((a: string[], k) => {

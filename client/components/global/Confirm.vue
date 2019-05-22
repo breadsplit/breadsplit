@@ -11,7 +11,7 @@ v-dialog(v-model='dialog', :max-width='options.width', @keydown.esc='cancel', v-
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class Confirm extends Vue {

@@ -26,11 +26,11 @@ v-card.welcome-dialog
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 
 @Component
-export default class WelcomeDialog extends Mixins(DialogChildMixin) {
+export default class WelcomeDialog extends mixins(DialogChildMixin) {
   more() {
     // @ts-ignore
     this.$root.$about.open()

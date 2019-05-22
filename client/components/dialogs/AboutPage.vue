@@ -28,12 +28,12 @@ v-card.about-page
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import socials from '~/meta/socials'
 import { DialogChildMixin } from '~/mixins'
 
 @Component
-export default class AboutPage extends Mixins(DialogChildMixin) {
+export default class AboutPage extends mixins(DialogChildMixin) {
   socials = socials
 }
 </script>

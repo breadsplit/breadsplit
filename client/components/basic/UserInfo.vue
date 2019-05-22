@@ -3,11 +3,11 @@ span(v-if='value') {{value}}
 </template>
 
 <script lang='ts'>
-import { Mixins, Component, Prop } from 'vue-property-decorator'
+import { mixins, Component, Prop } from 'nuxt-property-decorator'
 import UserInfoMixin from '~/mixins/userinfo'
 
 @Component
-export default class UserInfo extends Mixins(UserInfoMixin) {
+export default class UserInfo extends mixins(UserInfoMixin) {
   @Prop(String) readonly id?: string
   @Prop({ default: 'name' }) readonly field!: string
 

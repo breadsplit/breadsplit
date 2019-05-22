@@ -9,20 +9,21 @@ v-container
   img.arrow(src='/img/svg/top-right-arrow.svg')
   .text
     .header
-      span(v-html='$t("tips.click_right_corner_icon_part1",)')
-      v-icon(size='24') mdi-dots-vertical
-      span(v-html='$t("tips.click_right_corner_icon_part2",)')
+      i18n(path='tips.click_right_corner_icon')
+        v-icon(size='24') mdi-dots-vertical
 
-    .subheader(v-html='$t("tips.select_open_in_browser")')
+    .subheader
+      i18n(path='tips.select_open_in_browser')
+        b {{$t('tips.open_in_browser_general')}}
 
   .text-xs-center(style='margin-top: 150px')
-    v-btn(color='primary', flat, @click='ingore()') Continue anyway
+    v-btn(color='primary', flat, @click='ingore()') {{$t('ui.continue_anyway')}}
 
   // TODO:WRITING: more details instructions
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
   layout: 'base',

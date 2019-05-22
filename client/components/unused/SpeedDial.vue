@@ -13,7 +13,7 @@ v-fab-transition
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Watch, Prop } from 'vue-property-decorator'
+import { Component, Vue, Watch, Prop } from 'nuxt-property-decorator'
 
 @Component({
   inheritAttrs: false,
@@ -34,10 +34,12 @@ export default class SpeedDial extends Vue {
   onFabChanged() {
     this.tooltips = false
     this.tooltipsDisabled = false
-    this.fab && setTimeout(() => {
-      this.tooltips = true
-      this.$nextTick(() => this.tooltipsDisabled = true)
-    }, 200)
+    if (this.fab) {
+      setTimeout(() => {
+        this.tooltips = true
+        this.$nextTick(() => this.tooltipsDisabled = true)
+      }, 200)
+    }
     this.$emit('input', this.fab)
   }
 

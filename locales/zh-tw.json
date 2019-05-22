@@ -70,7 +70,7 @@
     },
     "misc": "其他",
     "button_join": "加入",
-    "invited_to_join": "您被邀請加入 <b>{0}</b> 小組",
+    "invited_to_join": "您被邀請加入 {0} 小組",
     "loading_group_info": "正在加載群組信息...",
     "about": "關於我們",
     "become_a_patreon": "在 Patreon 上成為贊助者",
@@ -102,7 +102,8 @@
     "donate_on_paypal": "PayPal 一次性贊助",
     "star_on_github": "Star on Github",
     "continue_and_accept": "繼續使用即表示您同意我們的{0}",
-    "privacy_policy": "隱私政策"
+    "privacy_policy": "隱私政策",
+    "continue_anyway": "仍然繼續"
   },
   "cats": {
     "transport": {
@@ -152,9 +153,8 @@
   },
   "tips": {
     "already_joined_group": "你已經加入了此群組。",
-    "select_open_in_browser": "選擇 \"<b>在瀏覽器中打開</b>\"",
-    "click_right_corner_icon_part1": "請點選右上角 \"",
-    "click_right_corner_icon_part2": "\" 圖標"
+    "select_open_in_browser": "選擇 {0}",
+    "click_right_corner_icon": "請點選右上角 \"{0}\" 圖標"
   },
   "acts": {
     "insert_transaction": "{0} 添加了支出：{1}",

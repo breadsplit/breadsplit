@@ -51,7 +51,7 @@
 
 <script lang='ts'>
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
-import { Component, Mixins, Watch } from 'vue-property-decorator'
+import { Component, mixins, Watch } from 'nuxt-property-decorator'
 
 @Component({
   head() {
@@ -69,7 +69,7 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
     return { params }
   },
 })
-export default class GroupPage extends Mixins(CommonMixin, NavigationMixin, GroupMixin) {
+export default class GroupPage extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
   fab = false
   tab_index = 0
   tab_id: string|null = 'summary'

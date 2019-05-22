@@ -27,7 +27,7 @@ app-dialog.login-dialog(ref='dialog' :route='true' width='350' :fullscreen='fals
 </template>
 
 <script lang='ts'>
-import { Component, Watch, Vue } from 'vue-property-decorator'
+import { Component, Watch, Vue } from 'nuxt-property-decorator'
 
 @Component
 export default class Login extends Vue {

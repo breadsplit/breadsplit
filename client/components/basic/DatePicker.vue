@@ -7,7 +7,7 @@ v-dialog(v-model='dialog', :return-value.sync='date', persistent, lazy, full-wid
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
 
 @Component({

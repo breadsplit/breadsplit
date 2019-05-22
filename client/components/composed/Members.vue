@@ -28,10 +28,9 @@ v-card.members
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Action } from 'nuxt-property-decorator'
 import { IsThisId } from '~/core'
 import { Member } from '~/types'
-import { Action } from 'vuex-class'
 
 @Component
 export default class Members extends Vue {

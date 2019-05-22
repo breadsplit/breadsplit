@@ -11,14 +11,14 @@ v-text-field(
 </template>
 
 <script lang='ts'>
-import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import SoftNumpad from './SoftNumpad.vue'
 import CommonMixin from '~/mixins/common'
 
 @Component({
   inheritAttrs: false,
 })
-export default class NumberInput extends Mixins(CommonMixin) {
+export default class NumberInput extends mixins(CommonMixin) {
   @Prop({ default: 0 }) readonly value!: number
   @Prop({ default: 100000000 }) readonly max!: number
   @Prop({ default: false }) readonly flat!: boolean
@@ -173,8 +173,10 @@ export default class NumberInput extends Mixins(CommonMixin) {
   }
 
   focus() {
-    // @ts-ignore
-    this.$refs.input.$el.focus()
+    try {
+      // @ts-ignore
+      this.$refs.input.$el.focus()
+    } catch {}
   }
 
   warned = false

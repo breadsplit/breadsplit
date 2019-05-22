@@ -16,12 +16,12 @@ v-card.balances
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { GroupBalances } from '~/core'
 import { GroupMixin, NavigationMixin } from '~/mixins'
 
 @Component
-export default class Balances extends Mixins(GroupMixin, NavigationMixin) {
+export default class Balances extends mixins(GroupMixin, NavigationMixin) {
   get balances() {
     return GroupBalances(this.group)
   }

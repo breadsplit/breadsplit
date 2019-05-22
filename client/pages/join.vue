@@ -20,7 +20,10 @@
           span.ma-2 Go Home
 
       div(v-else style='max-width:700px; margin: 0 auto;')
-        p.ma-4(v-html='$t("ui.invited_to_join",[nameHtml])' style='font-size: 1.4em')
+        p.ma-4(v-if='group' style='font-size: 1.4em')
+          i18n(path='ui.invited_to_join')
+            b.primary--text {{group.name}}
+
         v-subheader 我的名字是
 
         v-list(two-line, style='background:transparent;')
@@ -38,7 +41,7 @@
               v-list-tile-action(v-if='isLocal(member.uid)')
                 v-btn(color='primary' dark :loading='joining' @click='join(member.uid)') 認領我
               v-list-tile-action(v-else)
-                v-icon(color='green lighten-1', size='40') mdi-account-check
+                v-icon(color='green lighten-1', size='32') mdi-account-check
 
         v-btn(v-if='uid', @click='join()', color='primary', large, round).pl-0
           app-user-avatar(:id='uid', :size='44').mr-3
@@ -50,7 +53,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { ServerGroup, Member } from '~/types'
 import { IsThisId } from '~/core'
 import { CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
@@ -68,7 +71,7 @@ import { CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
     }
   },
 })
-export default class JoinPage extends Mixins(UserInfoMixin, CommonMixin, NavigationMixin) {
+export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, NavigationMixin) {
   serverGroup: ServerGroup | undefined = undefined
   loading = true
   joining = false
@@ -78,12 +81,6 @@ export default class JoinPage extends Mixins(UserInfoMixin, CommonMixin, Navigat
     if (this.serverGroup)
       return this.serverGroup.present
     return undefined
-  }
-
-  get nameHtml() {
-    if (this.group)
-      return `<span class="primary--text">${this.group.name}</span>`
-    return ''
   }
 
   get members() {

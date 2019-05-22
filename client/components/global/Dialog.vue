@@ -9,7 +9,7 @@ v-dialog(
 </template>
 
 <script lang='ts'>
-import { Component, Mixins, Watch, Prop } from 'vue-property-decorator'
+import { Component, mixins, Watch, Prop } from 'nuxt-property-decorator'
 import CommonMixin from '~/mixins/common'
 
 @Component({
@@ -30,7 +30,7 @@ import CommonMixin from '~/mixins/common'
     return { dialog }
   },
 })
-export default class Dialog extends Mixins(CommonMixin) {
+export default class Dialog extends mixins(CommonMixin) {
   resolve: ((result) => void) | null = null
   reject: ((error) => void) | null = null
   options = {}

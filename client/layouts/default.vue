@@ -114,8 +114,7 @@ v-app(:dark='dark')
 
 <script lang='ts'>
 import { setTimeout } from 'timers'
-import { Component, Mixins } from 'vue-property-decorator'
-import { Getter, Mutation } from 'vuex-class'
+import { Component, Getter, Mutation, mixins } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 import head from './head'
@@ -123,7 +122,7 @@ import head from './head'
 @Component({
   head,
 })
-export default class DefaultLayout extends Mixins(CommonMixin, NavigationMixin, GroupMixin) {
+export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
   // Data
   clipped = false
   drawer = false

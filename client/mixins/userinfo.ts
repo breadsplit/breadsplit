@@ -1,5 +1,4 @@
-import { Vue, Component } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
+import { Vue, Component, Getter } from 'nuxt-property-decorator'
 import { UserInfo, Member, UserMemberInfo } from '~/types'
 import { IsThisId } from '~/core'
 import { avatarProvider } from '~/utils/avatar_providers'
@@ -49,7 +48,7 @@ export default class UserInfoMixin extends Vue {
 
   getFallbackAvatar(uid: string) {
     const dark = this.$store.getters.dark
-    return avatarProvider(uid || nanoid(), dark)
+    return avatarProvider(uid || nanoid(), dark) as string
   }
 
   getUserName(uid: string, pronoun = true) {
