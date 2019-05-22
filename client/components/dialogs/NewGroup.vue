@@ -58,7 +58,7 @@ v-card.new-group
 
 <script lang='ts'>
 import swatches from '~/../meta/swatches'
-import currencies from '~/../meta/currencies'
+import { getLocaleCurrencies } from '~/../meta/currencies'
 import { Component, Getter, mixins } from 'nuxt-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
@@ -78,6 +78,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   members = []
   // nextBtn = this.$t('ui.button_next')
 
+  @Getter('locale') locale!: string
   @Getter('group/current') current: Group | undefined
   @Getter('user/me') user!: UserInfo
   @Getter('user/uid') uid: string | undefined
@@ -106,7 +107,8 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   }
 
   get currencies() {
-    return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
+    return getLocaleCurrencies(this.locale)
+      .map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
   }
 
   get members_suggestions() {

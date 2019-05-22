@@ -165,4 +165,25 @@ const Currencies: Currency[] = [
   { 'cc': 'ZWR', 'symbol': 'Z$', 'name': 'Zimbabwean dollar' },
 ]
 
+export function getLocaleCurrencies(locale: string) {
+  return Currencies.map((c) => {
+    let name = new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: c.cc,
+      currencyDisplay: 'name',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+      .format(0)
+      .replace('0', '')
+      .trim()
+    if (!name || name === c.cc)
+      name = c.name
+    return {
+      ...c,
+      name,
+    }
+  })
+}
+
 export default Currencies
