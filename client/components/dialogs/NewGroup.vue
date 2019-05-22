@@ -44,15 +44,14 @@ v-card.new-group
 <script lang='ts'>
 import swatches from '~/meta/swatches'
 import currencies from '~/meta/currencies'
-import { Component, Mixins } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
+import { Component, Getter, mixins } from 'nuxt-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
 import { Group, UserInfo, GroupMetaChanges } from '~/types'
 import { IdMe } from '~/core'
 
 @Component
-export default class NewGroup extends Mixins(DialogChildMixin) {
+export default class NewGroup extends mixins(DialogChildMixin) {
   search = ''
   mode = ''
   name = ''

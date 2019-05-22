@@ -16,12 +16,12 @@ v-card.feedback
 
 <script lang='ts'>
 import { setTimeout } from 'timers'
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { FeedbackOptions } from '~/types'
 import { DialogChildMixin } from '~/mixins'
 
 @Component
-export default class FeedBack extends Mixins(DialogChildMixin) {
+export default class FeedBack extends mixins(DialogChildMixin) {
   issueHint = 'Or you can create an issue on our <a href="https://github.com/breadsplit/breadsplit" target="_blank">github</a> '
   submitFlag = false
   finish = true

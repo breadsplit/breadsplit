@@ -53,7 +53,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { ServerGroup, Member } from '~/types'
 import { IsThisId } from '~/core'
 import { CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
@@ -71,7 +71,7 @@ import { CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
     }
   },
 })
-export default class JoinPage extends Mixins(UserInfoMixin, CommonMixin, NavigationMixin) {
+export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, NavigationMixin) {
   serverGroup: ServerGroup | undefined = undefined
   loading = true
   joining = false

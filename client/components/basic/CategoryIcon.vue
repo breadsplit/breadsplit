@@ -6,7 +6,7 @@ app-action-with-text.category-icon(:class='inline')
 
 <script lang='ts'>
 import Categories from '~/meta/categories'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
 @Component
 export default class CategoryIcon extends Vue {

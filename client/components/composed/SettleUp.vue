@@ -18,12 +18,12 @@ v-card.settle-up
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { GroupBalances, SettleUp } from '~/core'
 import { GroupMixin, CommonMixin } from '~/mixins'
 
 @Component
-export default class SettleUpSolutions extends Mixins(GroupMixin, CommonMixin) {
+export default class SettleUpSolutions extends mixins(GroupMixin, CommonMixin) {
   get balances() {
     return GroupBalances(this.group)
   }

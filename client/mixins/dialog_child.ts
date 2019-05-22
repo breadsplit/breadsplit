@@ -1,5 +1,5 @@
 
-import { Vue, Component, Inject } from 'vue-property-decorator'
+import { Vue, Component, Inject } from 'nuxt-property-decorator'
 
 @Component
 export default class DialogChildMixin extends Vue {

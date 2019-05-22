@@ -6,7 +6,7 @@ v-layout.nuxt-error.my-5.py-3(column, justify-center, align-center)
 
 <script lang='ts'>
 import * as ErrorPages from '~/components/error'
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
 
 @Component({
   layout: 'default',

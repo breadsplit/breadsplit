@@ -1,5 +1,4 @@
-import { Vue, Component } from 'vue-property-decorator'
-import { Getter } from 'vuex-class'
+import { Vue, Component, Getter } from 'nuxt-property-decorator'
 import { Group, Member } from '~/types'
 
 @Component

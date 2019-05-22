@@ -1,5 +1,5 @@
 
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
 export default class CommonMixin extends Vue {

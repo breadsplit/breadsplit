@@ -14,14 +14,14 @@ v-snackbar(
 </template>
 
 <script lang='ts'>
-import { Component, Mixins, Vue } from 'vue-property-decorator'
+import { Component, mixins, Vue } from 'nuxt-property-decorator'
 import CommonMixin from '~/mixins/common'
 import { SnackOptions } from '~/types'
 
 @Component({
   inheritAttrs: false,
 })
-export default class Snackbar extends Mixins(CommonMixin) {
+export default class Snackbar extends mixins(CommonMixin) {
   show = false
   resolve: ((result?) => void) | null = null
   reject: ((error) => void) | null = null

@@ -7,12 +7,12 @@ v-card.privacy-page
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import socials from '~/meta/socials'
 import { DialogChildMixin, CommonMixin } from '~/mixins'
 
 @Component
-export default class PrivacyPage extends Mixins(CommonMixin, DialogChildMixin) {
+export default class PrivacyPage extends mixins(CommonMixin, DialogChildMixin) {
   socials = socials
 }
 </script>

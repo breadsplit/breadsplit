@@ -24,7 +24,8 @@
     "types": [
       "@nuxt/vue-app",
       "@types/node",
-      "@types/jest"
+      "@types/jest",
+      "vuetify"
     ]
   }
 }

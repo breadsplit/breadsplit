@@ -80,14 +80,14 @@ v-card.settings
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { AvaliableLocales } from '~/locales'
 import { NavigationMixin, CommonMixin, DialogChildMixin } from '~/mixins'
 
 const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display }))
 
 @Component
-export default class Settings extends Mixins(CommonMixin, NavigationMixin, DialogChildMixin) {
+export default class Settings extends mixins(CommonMixin, NavigationMixin, DialogChildMixin) {
   localeItems = localeItems
   languageSelecting = false
 

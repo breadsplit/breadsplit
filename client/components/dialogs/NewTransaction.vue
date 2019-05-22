@@ -98,14 +98,14 @@ v-card.new-transaction(v-rows='"max-content auto max-content"')
 </template>
 
 <script lang='ts'>
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import Categories, { CategoryKeys } from '~/meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, dateToRelative, IdMe } from '~/core'
 
 @Component
-export default class NewTransaction extends Mixins(GroupMixin, CommonMixin, DialogChildMixin) {
+export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
   cats = Categories
   step = 1

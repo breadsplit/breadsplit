@@ -34,13 +34,13 @@ v-card.transactions
 </template>
 
 <script lang='ts'>
-import { Component, Mixins, Prop } from 'vue-property-decorator'
+import { Component, mixins, Prop } from 'nuxt-property-decorator'
 import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 import { Transaction } from '~/types'
 import { dateFromNow } from '~/core'
 
 @Component
-export default class Transactions extends Mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
+export default class Transactions extends mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
   collapsed = true
 
   @Prop({ default: 10 }) readonly max!: number

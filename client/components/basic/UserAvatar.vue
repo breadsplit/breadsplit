@@ -8,11 +8,11 @@ app-action-with-text.user-avatar(:class='{inline}')
 </template>
 
 <script lang='ts'>
-import { Mixins, Component, Prop } from 'vue-property-decorator'
+import { mixins, Component, Prop } from 'nuxt-property-decorator'
 import UserInfoMixin from '~/mixins/userinfo'
 
 @Component
-export default class Avatar extends Mixins(UserInfoMixin) {
+export default class Avatar extends mixins(UserInfoMixin) {
   @Prop(String) readonly id?: string
   @Prop(String) readonly groupId?: string
   @Prop(Boolean) readonly inline?: boolean

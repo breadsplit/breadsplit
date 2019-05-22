@@ -4,7 +4,7 @@ app-dialog(ref='dialog' :lazy='false' persistent no-click-animation)
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component({
   async asyncData({ params }) {

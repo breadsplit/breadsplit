@@ -6,7 +6,8 @@
     "**/bower_components": true,
     "**/tmp": true,
     "**/dist": true,
-    "**/logs": true
+    "**/logs": true,
+    "**/package-lock.json": true,
   },
   "editor.tabSize": 2,
   "editor.renderWhitespace": "boundary",

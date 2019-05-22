@@ -12,13 +12,13 @@ v-toolbar(flat :color='backgroundColor' v-bind='$attrs')
 </template>
 
 <script lang='ts'>
-import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import CommonMixin from '~/mixins/common'
 
 @Component({
   inheritAttrs: false,
 })
-export default class DialogBar extends Mixins(CommonMixin) {
+export default class DialogBar extends mixins(CommonMixin) {
   @Prop({ default: 'primary' }) readonly color!: string
   @Prop({ default: 'transparent' }) readonly backgroundColor!: string
   @Prop({ default: true }) readonly closeButtons!: boolean

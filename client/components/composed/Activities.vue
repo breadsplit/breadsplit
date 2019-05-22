@@ -25,13 +25,13 @@ v-card
 </template>
 
 <script lang='ts'>
-import { Component, Mixins, Prop } from 'vue-property-decorator'
+import { Component, mixins, Prop } from 'nuxt-property-decorator'
 import { Activity } from '~/types'
 import { GroupMixin, UserInfoMixin, NavigationMixin, CommonMixin } from '~/mixins'
 import { getActivityDescription } from '~/core'
 
 @Component
-export default class Activities extends Mixins(GroupMixin, UserInfoMixin, NavigationMixin, CommonMixin) {
+export default class Activities extends mixins(GroupMixin, UserInfoMixin, NavigationMixin, CommonMixin) {
   collapsed = true
 
   @Prop({ default: 10 }) readonly max!: number
