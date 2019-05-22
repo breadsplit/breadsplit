@@ -49,7 +49,7 @@ export default class UserInfoMixin extends Vue {
 
   getFallbackAvatar(uid: string) {
     const dark = this.$store.getters.dark
-    return avatarProvider(uid || nanoid(), dark)
+    return avatarProvider(uid || nanoid(), dark) as string
   }
 
   getUserName(uid: string, pronoun = true) {

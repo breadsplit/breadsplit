@@ -84,7 +84,7 @@
       "weight": "Weights"
     },
     "misc": "Misc.",
-    "invited_to_join": "You are invited to join group <b>{0}</b>",
+    "invited_to_join": "You are invited to join group {0}",
     "become_a_patreon": "Become a Patreon",
     "help": "Help",
     "button_back": "Back",
@@ -107,7 +107,8 @@
     "donate_on_paypal": "One-time donation on PayPal",
     "star_on_github": "Star on Github",
     "continue_and_accept": "By continue, you accept our {0}",
-    "privacy_policy": "Privacy policy"
+    "privacy_policy": "Privacy policy",
+    "continue_anyway": "Continue anyway"
   },
   "pronoun": {
     "me": "Me",
@@ -158,9 +159,9 @@
   },
   "tips": {
     "already_joined_group": "You have already joined this group.",
-    "click_right_corner_icon_part1": "Please click top right ",
-    "click_right_corner_icon_part2": " icon",
-    "select_open_in_browser": "Then select \"<b>Open in browser</b>\""
+    "click_right_corner_icon": "Please click the \"{0}\" icon",
+    "select_open_in_browser": "Then select {0}",
+    "open_in_browser_general": "Open in browser"
   },
   "acts": {
     "insert_transaction": "{0} added an expense: {1}",
