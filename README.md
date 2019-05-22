@@ -7,7 +7,7 @@ Group bills split made easy, fast and customizable.
 [![CircleCI](https://circleci.com/gh/breadsplit/breadsplit/tree/dev.svg?style=svg&circle-token=b26ce4526201e0c7fbeb42287d360930a69b3988)](https://circleci.com/gh/breadsplit/breadsplit)
 [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-green.svg)](https://dashboard.cypress.io/#/projects/m9d7tr/runs)
 [![codecov](https://codecov.io/gh/breadsplit/breadsplit/branch/master/graph/badge.svg?token=JRYbmADObn)](https://codecov.io/gh/breadsplit/breadsplit)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/7595b445-ccf4-4925-a7e8-ec6bd6033af3/deploy-status)](https://app.netlify.com/sites/breadsplit/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/93608e39-4bf4-4781-95bc-6f69d6c173e1/deploy-status)](https://app.netlify.com/sites/breadsplit/deploys)
 [![Sentry.io](https://img.shields.io/badge/sentry.io-reports-teal.svg)](https://sentry.io/organizations/breadsplit/issues/?project=1457153)
 
 ## 🌟 Key Features

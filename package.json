@@ -46,7 +46,6 @@
     "cy:dev": "concurrently \"npm run dev\" \"npm run cy:open\"",
     "docs:dev": "npx vuepress dev docs",
     "docs:build": "npx vuepress build docs",
-    "docs:deploy": "node scripts/docs-deploy.js",
     "test": "jest",
     "test:firebase": "jest --config=./firebase/functions/jest.config.js",
     "test:watch": "jest --watch",
