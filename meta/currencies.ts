@@ -196,32 +196,38 @@ export function getCommonCurrencyCodes(locale: string, recents: string[] = [], t
       return localeMatch(c.locale, locale)
     })
     .map(c => c.cc)
+  console.log(list)
   return union(list, recents, commonCurrencyCodes).slice(0, take)
 }
 
 export function getLocaleCurrencies(locale: string, locales?: string[]) {
-  return currencies
-    .filter((c) => {
-      if (!locales)
-        return true
-      return locales.includes(c.cc)
-    })
-    .map((c) => {
-      let name = new Intl.NumberFormat(locale, {
-        style: 'currency',
-        currency: c.cc,
-        currencyDisplay: 'name',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
+  let filteredCurrencies = currencies
+  if (locales) {
+    filteredCurrencies = filteredCurrencies
+      .filter((c) => {
+        return locales.includes(c.cc)
       })
-        .format(0)
-        .replace('0', '')
-        .trim()
-      if (!name || name === c.cc)
-        name = c.name
-      return {
-        ...c,
-        name,
-      }
+      .sort((a, b) => {
+        return locales.indexOf(a.cc) - locales.indexOf(b.cc)
+      })
+  }
+
+  return filteredCurrencies.map((c) => {
+    let name = new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: c.cc,
+      currencyDisplay: 'name',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
     })
+      .format(0)
+      .replace('0', '')
+      .trim()
+    if (!name || name === c.cc)
+      name = c.name
+    return {
+      ...c,
+      name,
+    }
+  })
 }

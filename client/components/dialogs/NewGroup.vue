@@ -19,7 +19,7 @@ v-card.new-group
           v-flex
             v-autocomplete(
               v-model='currency' :items='currencies'
-              prepend-icon='mdi-currency-usd' label='Currency' clearable :disabled='viewmode'
+              prepend-icon='mdi-currency-usd' label='Currency' :disabled='viewmode'
             )
 
     // Second page
@@ -71,10 +71,9 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   step = 1
   mode = ''
   name = ''
-  currency = ''
+  currency = 'USD'
   icon = 'account-group'
   color = swatches[Math.floor(Math.random() * swatches.length)]
-  viewmode = false
   members = []
   // nextBtn = this.$t('ui.button_next')
 
@@ -96,7 +95,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
       }
     }
     this.mode = this.options.mode
-    this.viewmode = this.mode === 'view'
+    this.currency = this.codes[0] || 'USD'
   }
 
   get title(): TranslateResult {
@@ -106,8 +105,16 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     else return this.$t('ui.group_editing.default_group_name')
   }
 
+  get viewmode() {
+    return this.mode === 'view'
+  }
+
+  get codes() {
+    return getCommonCurrencyCodes(this.locale)
+  }
+
   get currencies() {
-    return getLocaleCurrencies(this.locale, getCommonCurrencyCodes(this.locale))
+    return getLocaleCurrencies(this.locale, this.codes)
       .map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
   }
 
