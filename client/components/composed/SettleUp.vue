@@ -1,6 +1,9 @@
 <template lang='pug'>
 v-card.settle-up
   v-subheader {{$t('ui.tabs.settle_up')}}
+
+  app-chart-settle-up-solutions(:solutions='solutions')
+
   v-list.pa-0(two-line)
     template(v-for='(solution, index) in solutions')
       v-divider(v-if='index!=0')
