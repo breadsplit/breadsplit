@@ -10,7 +10,6 @@ export default class UserInfoMixin extends Vue {
   @Getter('user/uid') uid: string | undefined
   @Getter('user/me') me: UserInfo | undefined
 
-<<<<<<< HEAD
   getUser(uid?: string, autoFetch: boolean = true): UserMemberInfo | undefined {
     if (!uid)
       return undefined
@@ -34,36 +33,10 @@ export default class UserInfoMixin extends Vue {
     if (IsThisId.Me(uid)) {
       return {
         uid,
-=======
-  getUser(id?: string, autoFetch: boolean = true): (UserInfo & Member) | undefined {
-    if (!id)
-      return undefined
-    const member = this.getMember(id)
-    let user: UserInfo | undefined
-    if (IsThisId.Me(id) && this.uid) {
-      user = this.me
-    }
-    else if (IsThisId.UID(id)) {
-      user = this.$store.getters['user/user'](id)
-      if (!user && autoFetch)
-        this.$fire.updateUserProfiles([id])
-    }
-    const result = Object.assign({}, member, user)
-    if (!result.avatar_url)
-      result.avatar_url = this.getFallbackAvatar(id)
-    return result
-  }
-
-  getMember(id: string): Member | undefined {
-    if (IsThisId.Me(id)) {
-      return {
-        id,
->>>>>>> feat-d3
         name: this.$t('pronoun.me').toString(),
         role: 'owner',
       }
     }
-<<<<<<< HEAD
     return this.$store.getters['group/memberById']({ uid })
   }
 
@@ -75,14 +48,6 @@ export default class UserInfoMixin extends Vue {
   }
 
   getFallbackAvatar(uid: string) {
-=======
-    return this.$store.getters['group/memberById']({
-      uid: id,
-    })
-  }
-
-  getFallbackAvatar(id: string) {
->>>>>>> feat-d3
     const dark = this.$store.getters.dark
     return avatarProvider(uid || nanoid(), dark)
   }
