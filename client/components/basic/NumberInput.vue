@@ -1,5 +1,6 @@
 <template lang='pug'>
 v-text-field(
+  ref='input'
   :label='label'
   :class='classes'
   v-bind='$attrs',
@@ -175,7 +176,7 @@ export default class NumberInput extends mixins(CommonMixin) {
   focus() {
     try {
       // @ts-ignore
-      this.$refs.input.$el.focus()
+      this.$refs.input.focus()
     }
     catch {}
   }

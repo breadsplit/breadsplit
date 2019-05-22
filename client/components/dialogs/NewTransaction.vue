@@ -15,26 +15,47 @@ mixin inputs()
 
   app-soft-numpad(ref='numpad')
 
-v-card.new-transaction(v-rows='"max-content auto max-content"')
-  app-dialog-bar(@close='close()')
-    | {{$t('ui.new_expense')}}
+v-card.new-transaction(v-rows='"auto max-content"')
+  app-close-button(@close='close')
 
   v-window.height-100(v-model='step', touchless)
-    // First page
-    v-window-item(:value='1')
-      div.height-100(v-rows='"auto max-content"')
-        .vertical-aligned.ma-4
-          template(v-if='form.creditors.length === 1')
-            app-member-select(:members='members', v-model='form.creditors[0].uid')
-          span.mr-2 {{$t('ui.paid_money')}}
+    v-window-item.page(:value='1')
+      .page-container
+        .header Expense paid by?
+        .subheader by the way, {0} should pay this time.
+
+        .member-choices
+          template(v-for='m in members')
+            app-user-avatar(:id='m.uid' @click.native='setCreditor(m.uid)' :show-name='true')
+
+    v-window-item.page(:value='2')
+      .height-100(v-rows='"auto max-content"')
+        .page-container
+          .header How much?
+
+          .creditors
+            .creditor(v-for='creditor in form.creditors')
+              app-user-avatar(:size='32' :id='creditor.uid' :show-name='true' inline)
+              span.ml-2 {{$t('ui.paid_money')}}
 
         div
           +inputs()
+    v-window-item.page(:value='3')
+      .page-container
+        .header For whom?
 
-    // Second page
-    v-window-item(:value='2')
-      .my-3
-        div(v-columns='"max-content auto"')
+        .member-choices
+          template(v-for='m in members')
+            app-user-avatar(:id='m.uid' @click.native='setCreditor(m.uid)' :show-name='true')
+
+        app-splitting(:trans='form' on='debtors')
+          v-subheader(slot='header') {{$t('ui.splitting.split_by')}}
+
+    v-window-item.page(:value='4')
+      .page-container
+        .header More details
+
+        .mt-4(v-columns='"max-content auto"')
           app-category-select.pl-3(
             :value='form.category || categorySense',
             @input='i=> form.category = i'
@@ -42,18 +63,6 @@ v-card.new-transaction(v-rows='"max-content auto max-content"')
           )
           v-text-field.pr-3.description-field(
             v-model='form.desc' label='Description' placeholder='Some expense...' solo required)
-
-        v-divider
-        div(v-columns='"70px auto"')
-          v-icon(color='primary') mdi-cash-usd
-          app-splitting(:trans='form' on='creditors' :show-tabs='false')
-            v-subheader(slot='header') {{$t('ui.paid_by')}}
-
-        v-divider
-        div(v-columns='"70px auto"')
-          v-icon(color='primary') mdi-chart-pie
-          app-splitting(:trans='form' on='debtors')
-            v-subheader(slot='header') {{$t('ui.splitting.split_by')}}
 
         v-divider
         div(v-columns='"70px auto"' @click='pickDate()' v-ripple)
@@ -83,16 +92,12 @@ v-card.new-transaction(v-rows='"max-content auto max-content"')
 
       v-spacer
 
-      template(v-if='step === 1')
+      template(v-if='step >= 2')
         v-btn.button-quick-add(:disabled='!form.total_fee', color='primary', flat, @click='submit')
           | {{$t('ui.button_quick_add')}}
 
-        v-btn.button-next-step(:disabled='!form.total_fee', color='primary', depressed, @click='step++')
-          | {{$t('ui.button_next')}}
-
-      template(v-if='step === 2')
-        v-btn.button-save(:disabled='step === 3', color='primary', depressed, @click='submit')
-          | {{$t('ui.button_save')}}
+      v-btn.button-save(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
+        | {{btnNextText}}
 
     app-date-picker(ref='datePicker')
 </template>
@@ -109,12 +114,13 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   form: Transaction = TransactionDefault()
   cats = Categories
   step = 1
+  steps = 4
 
   reset() {
     this.$set(this, 'form', TransactionDefault())
     const me = this.options.uid || (this.members[0] || {}).uid // TODO: get my id
     this.form.creator = me
-    this.form.currency = this.group.currencies[0]
+    this.form.currency = this.group.currencies[0] || 'USD'
     this.form.creditors.push({ weight: 1, uid: me })
     this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.uid || IdMe }))
     // @ts-ignore
@@ -145,6 +151,40 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     return (category && category.value) || null
   }
 
+  next() {
+    this.step++
+    if (this.step === 2) {
+      this.$nextTick(() => {
+      // @ts-ignore
+        this.$refs.total_fee_input.focus()
+      })
+    }
+  }
+
+  setCreditor(uid: string) {
+    this.form.creditors = [{ weight: 1, uid }]
+    this.next()
+  }
+
+  btnNext() {
+    if (this.btnNextDisabled)
+      return
+    if (this.step !== this.steps)
+      return this.next()
+    this.submit()
+  }
+
+  get btnNextText() {
+    if (this.step === this.steps)
+      return this.$t('ui.button_save')
+
+    return this.$t('ui.button_next')
+  }
+
+  get btnNextDisabled() {
+    return this.step === 2 && !this.form.total_fee
+  }
+
   submit() {
     const trans = Object.assign({},
       this.form, {
@@ -168,7 +208,40 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 }
 </script>
 
-<style lang='stylus' scoped>
-.new-trans-form
+<style lang='stylus'>
+.new-transaction
   overflow-x hidden
+
+  .page
+    min-height 400px
+
+.v-dialog--fullscreen
+  .new-transaction
+    height 100%
+
+    .page
+      height 100%
+
+.page-container
+  padding 1.5em 2em
+
+  .header
+    font-size 2.5em
+
+  .subheader
+    font-size 1.4em
+
+  .member-choices
+    padding 1.5em 0
+
+    .user-avatar
+      padding 0.7em
+      cursor pointer
+
+  .creditors
+    padding 1.5em 0
+
+    .creditor > *
+      vertical-align middle
+
 </style>

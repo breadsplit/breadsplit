@@ -2,8 +2,7 @@
 v-card.privacy-page
   .iframe-wrapper
     iframe(ref='iframe' :src='socials.privacy', :class='{mobile: isMobile}')
-  v-btn.close-button(icon @click='close(false)', color='white')
-    v-icon(color='primary') mdi-close
+  app-close-button(@close='close')
 </template>
 
 <script lang='ts'>
@@ -34,9 +33,4 @@ export default class PrivacyPage extends mixins(CommonMixin, DialogChildMixin) {
     &.mobile
       height 100vh
 
-  .close-button
-    position absolute
-    top 12px
-    right 12px
-    z-index 10
 </style>
