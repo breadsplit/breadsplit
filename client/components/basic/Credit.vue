@@ -25,6 +25,11 @@
     span in Taiwan
   .copyright
     span Copyright © 2019 The BreadSplit Team
+  .privacy
+    a(@click='$refs.privacy.open()') {{$t('ui.privacy_policy')}}
+
+  app-dialog(ref='privacy' :route='true')
+    app-privacy
 </template>
 
 <script lang='ts'>
@@ -101,4 +106,7 @@ export default class Credit extends Vue {
     &:hover
       opacity 1
 
+  .privacy
+    margin-top 0.5em
+    font-size 0.9em
 </style>

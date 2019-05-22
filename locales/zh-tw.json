@@ -100,7 +100,9 @@
     "button_yes": "是",
     "button_no": "否",
     "donate_on_paypal": "PayPal 一次性贊助",
-    "star_on_github": "Star on Github"
+    "star_on_github": "Star on Github",
+    "continue_and_accept": "繼續使用即表示您同意我們的{0}",
+    "privacy_policy": "隱私政策"
   },
   "cats": {
     "transport": {
