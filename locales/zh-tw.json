@@ -98,7 +98,9 @@
     "welcome_breadsplit": "歡迎使用分帳吐司!",
     "button_more_about_us": "更多關於我們",
     "button_yes": "是",
-    "button_no": "否"
+    "button_no": "否",
+    "donate_on_paypal": "PayPal 一次性贊助",
+    "star_on_github": "Star on Github"
   },
   "cats": {
     "transport": {

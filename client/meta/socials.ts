@@ -8,5 +8,5 @@ export default {
   twitter: 'https://twitter.com/BreadSplit',
   youtube: 'https://www.youtube.com/channel/UCmEUaFnOtwvSa7jorPf9HDQ',
   medium: 'https://medium.com/breadsplit',
-  paypal: 'https://paypal.me/breadsplit',
+  paypal: 'https://www.paypal.me/breadsplit/USD5',
 }

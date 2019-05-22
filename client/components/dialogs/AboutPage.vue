@@ -15,11 +15,14 @@ v-card.about-page
 
     .support-us {{$t('ui.support_us')}}
 
+    app-brand-button(brand='paypal' :href='socials.paypal' target='__blank')
+      span {{$t('ui.donate_on_paypal')}}
+    br
     app-brand-button(brand='patreon' :href='socials.patreon' target='__blank')
       span {{$t('ui.become_a_patreon')}}
     br
     app-brand-button(brand='github_dark' :href='socials.github' target='__blank')
-      span Github
+      span {{$t('ui.star_on_github')}}
 
     app-credit
 </template>
