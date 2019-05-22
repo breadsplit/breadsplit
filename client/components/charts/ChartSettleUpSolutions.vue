@@ -12,10 +12,11 @@ import { Component, Prop, Mixins } from 'vue-property-decorator'
 import union from 'lodash/union'
 import { Solution } from '~/core'
 import { UserInfoMixin } from '~/mixins'
-import { Member, UserInfo } from '~/types'
+import { UserMemberInfo } from '~/types'
 import * as d3 from 'd3'
+import { IdMe } from '../../../core/id_helper'
 
-interface Node extends d3.SimulationNodeDatum, UserInfo, Member {}
+interface Node extends d3.SimulationNodeDatum, UserMemberInfo {}
 
 interface Link extends d3.SimulationLinkDatum<Node>{
   value: number
@@ -36,7 +37,12 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
 
   get nodes(): Node[] {
     return this.ids
-      .map(id => this.getUser(id))
+      .map((id) => {
+        const user = this.getUser(id)
+        if (user && id === IdMe)
+          user.uid = IdMe
+        return user
+      })
       .filter(i => i !== undefined) as Node[]
   }
 
@@ -59,7 +65,7 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
 
   init() {
     this.simulation = d3.forceSimulation<Node, Link>()
-      .force('link', d3.forceLink<Node, Link>().id((d) => { return d.uid || d.id }))
+      .force('link', d3.forceLink<Node, Link>().id(d => d.uid || ''))
       .force('charge', d3.forceManyBody()
         .strength(-1000)
         .theta(0.8)
@@ -111,7 +117,7 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
       .enter()
       .append('pattern')
       .attr('class', 'avatar-defs')
-      .attr('id', d => d.uid || d.id)
+      .attr('id', d => d.uid)
       .attr('height', 1)
       .attr('width', 1)
       .attr('x', 0)
@@ -151,7 +157,7 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
       .attr('rx', 0)
       .attr('ry', 0)
       .attr('stroke-width', '2px')
-      .attr('fill', d => `url(#${d.uid || d.id})`)
+      .attr('fill', d => `url(#${d.uid})`)
 
     node.append('text')
       .attr('class', 'name-tag')

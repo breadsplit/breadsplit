@@ -196,7 +196,6 @@ export function getCommonCurrencyCodes(locale: string, recents: string[] = [], t
       return localeMatch(c.locale, locale)
     })
     .map(c => c.cc)
-  console.log(list)
   return union(list, recents, commonCurrencyCodes).slice(0, take)
 }
 

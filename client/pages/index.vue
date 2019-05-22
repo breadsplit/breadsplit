@@ -1,6 +1,5 @@
 <template lang='pug'>
 v-container
-  h2 THIS MESSAGE IS NEW FOR TEST
   v-layout(column, justify-center, align-center)
     v-flex.text-xs-center(xs12, sm8, md6)
       template(v-for='(group, i) in groups')
