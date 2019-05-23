@@ -2,9 +2,11 @@
 app-action-with-text.user-avatar(:class='{inline}')
   template(slot='action')
     v-avatar(:size='size', color='#00000010')
-      img(v-if='avatar_url' :src='avatar_url')
-      v-icon(v-else) mdi-account
-  span(slot='text', v-if='showName') {{getUserName(id)}}
+      slot
+        img(v-if='avatar_url' :src='avatar_url')
+        v-icon(v-else) mdi-account
+  span(slot='text', v-if='showName')
+    slot(name='text') {{getUserName(id)}}
 </template>
 
 <script lang='ts'>

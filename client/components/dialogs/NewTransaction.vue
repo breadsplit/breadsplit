@@ -103,7 +103,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
 </template>
 
 <script lang='ts'>
-import { Component, mixins } from 'nuxt-property-decorator'
+import { Component, mixins, Getter } from 'nuxt-property-decorator'
 import Categories, { CategoryKeys } from '~/../meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
@@ -116,9 +116,13 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   step = 1
   steps = 4
 
+  @Getter('user/uid') uid: string | undefined
+
   reset() {
     this.$set(this, 'form', TransactionDefault())
-    const me = this.options.uid || (this.members[0] || {}).uid // TODO: get my id
+    let me = IdMe
+    if (this.uid && this.uid in this.group.members)
+      me = this.uid
     this.form.creator = me
     this.form.currency = this.group.currencies[0] || 'USD'
     this.form.creditors.push({ weight: 1, uid: me })

@@ -153,8 +153,6 @@ const config: NuxtConfiguration = {
     '@nuxtjs/pwa',
     '@nuxtjs/google-gtag',
     '@nuxtjs/sentry',
-    // disable ios manifest fix for now
-    // 'modules/manifest-ios',
   ],
 
   'google-gtag': {
