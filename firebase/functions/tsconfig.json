@@ -2,6 +2,7 @@
   "compilerOptions": {
     "lib": [
       "esnext",
+      "dom",
     ],
     "module": "commonjs",
     "noImplicitReturns": true,

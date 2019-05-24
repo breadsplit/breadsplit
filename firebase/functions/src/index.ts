@@ -4,6 +4,7 @@ import _ from 'lodash'
 
 import { TransOperationOption, ServerGroup, ServerOperations, Entity, ActivityAction, Group, Operation } from '../../../types'
 import { GenerateId, IsThisId, MemberDefault } from '../../../core'
+import { formatDate, queryExchangeRates } from './exchanges'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
 import { PushGroupOperationsNotification } from './push_notifications'
 
@@ -12,6 +13,7 @@ admin.initializeApp()
 const db = admin.firestore()
 const GroupsRef = (id: string) => db.collection('groups').doc(id)
 const OperationsRef = (id: string) => db.collection('_operations').doc(id)
+const ExchangeRef = (id: string) => db.collection('exchanges').doc(id)
 
 const f = functions.https.onCall
 
@@ -191,4 +193,17 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
   })
 
   await PushGroupOperationsNotification(groupid, incomingOperations, [uid])
+})
+
+export const getExchangeRate = f(async ({ date } = {}, context) => {
+  date = formatDate(date)
+  // TODO: filter too old date or future date
+  const doc = await ExchangeRef(date).get()
+  if (doc.exists)
+    return doc.data
+
+  const data = await queryExchangeRates(date)
+  if (data)
+    await ExchangeRef(date).set(data)
+  return data
 })
