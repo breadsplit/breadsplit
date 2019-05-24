@@ -1,5 +1,5 @@
 import merge from 'lodash/merge'
-import { RootState, GroupState, UserState, AppOptions } from '~/types/store'
+import { RootState, GroupState, UserState, AppOptions, CacheState } from '~/types/store'
 import { getUserAgent, getWebviewType, getOSType, isStandalone } from '~/utils/ua'
 import { acceptLanguage } from '~/locales'
 
@@ -18,6 +18,10 @@ export const UserStateDefault = (overrides?: Partial<UserState>): UserState => m
   online: false,
 }, overrides)
 
+export const CacheStateDefault = (overrides?: Partial<CacheState>): CacheState => merge({
+  exchange_rates: {},
+}, overrides)
+
 export const AppOptionsDefault = (overrides?: Partial<AppOptions>): AppOptions => merge({
   dark: false,
   firebase_server: 'development',
@@ -28,6 +32,7 @@ export const RootStateDefault = (overrides?: Partial<RootState>): RootState => m
   user_locale: null,
   group: GroupStateDefault(),
   user: UserStateDefault(),
+  cache: CacheStateDefault(),
   options: AppOptionsDefault(),
   messaging_token: null,
   ua: {

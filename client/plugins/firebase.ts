@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import { Store } from 'vuex'
 import VueRouter from 'vue-router'
+import nanoid from 'nanoid'
+import dayjs from 'dayjs'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/messaging'
 
-import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions } from '~/types'
+import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
 import { IsThisId } from '~/core'
 import FirebaseServers from '~/../meta/firebase_servers'
-import nanoid from 'nanoid'
 
 // eslint-disable-next-line no-console
 const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
@@ -193,6 +194,17 @@ export class FirebasePlugin {
       .collection('feedbacks')
       .doc(nanoid())
       .set(data)
+  }
+
+  async getExchangeRate(date?: string): Promise<ExchangeRecord|undefined> {
+    date = dayjs(date).format('YYYY-MM-DD')
+    const cache = this.store.state.cache.exchange_rates[date]
+    if (cache)
+      return cache
+    const record = await this.functions.httpsCallable('getExchangeRate')({ date })
+    if (record.data)
+      this.store.commit('cache/save', { type: 'exchange_rates', key: date, data: record.data })
+    return record.data
   }
 
   subscribe() {

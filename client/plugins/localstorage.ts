@@ -9,6 +9,7 @@ const PathsEnabled = [
   'user.users',
   'options',
   'app',
+  'cache',
 ]
 
 export default ({ store }: Context) => {
