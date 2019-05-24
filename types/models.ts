@@ -182,7 +182,6 @@ export interface TokenRecord {
 
 export interface FeedbackOptions {
   email: string | null
-  // title: string
   content: string
 }
 
@@ -197,4 +196,12 @@ export interface GroupMetaChanges {
   color?: string
   currencies?: string[]
   options?: Partial<GroupOptions>
+}
+
+export interface ExchangeRecord {
+  base: string
+  date: string
+  rates: Record<string, number>
+  timestamp: number
+  provider: 'fixer'
 }

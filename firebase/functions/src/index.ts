@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
+import dayjs from 'dayjs'
 
 import { TransOperationOption, ServerGroup, ServerOperations, Entity, ActivityAction, Group, Operation } from '../../../types'
 import { GenerateId, IsThisId, MemberDefault } from '../../../core'
@@ -196,11 +197,16 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
 })
 
 export const getExchangeRate = f(async ({ date } = {}, context) => {
-  date = formatDate(date)
-  // TODO: filter too old date or future date
+  const d = dayjs(date)
+  if (d.isBefore('2019-01-01'))
+    return undefined
+  if (d.isAfter(dayjs(), 'day'))
+    return undefined
+
+  date = formatDate(d)
   const doc = await ExchangeRef(date).get()
   if (doc.exists)
-    return doc.data
+    return doc.data()
 
   const data = await queryExchangeRates(date)
   if (data)

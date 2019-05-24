@@ -1,21 +1,14 @@
 import axios from 'axios'
+import dayjs, { Dayjs } from 'dayjs'
 import { config } from 'firebase-functions'
-import dayjs from '../../../core/dayjs_config'
+import { ExchangeRecord } from '../../../types'
 
 // firebase functions:config:set fixer.token="xxx"
 
 const FIXER_TOKEN = (config().fixer || {}).token
 const API_URL = (date: string) => `http://data.fixer.io/api/${date}?access_key=${FIXER_TOKEN}`
 
-export interface ExchangeRecord {
-  base: string
-  date: string
-  rates: Record<string, number>
-  timestamp: number
-  provider: 'fixer'
-}
-
-export function formatDate(date?: number | string) {
+export function formatDate(date?: number | string | Dayjs) {
   return dayjs(date).format('YYYY-MM-DD')
 }
 
