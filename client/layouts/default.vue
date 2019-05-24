@@ -138,7 +138,6 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   @Getter('user/uid') uid: string | undefined
   @Getter('user/online') userIsOnline!: boolean
   @Getter('dark') dark!: boolean
-  @Getter('blockedByWebview') blockedByWebview!: boolean
 
   @Mutation('group/remove') removeGroup
 
