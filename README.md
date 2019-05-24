@@ -4,6 +4,8 @@
 
 Group bills split made easy, fast and customizable.
 
+**⚠ THIS PROJECT IS CURRENTLY UNDER HEAVY DEVELOPMENT ⚠**
+
 [![CircleCI](https://circleci.com/gh/breadsplit/breadsplit/tree/dev.svg?style=svg)](https://circleci.com/gh/breadsplit/breadsplit/tree/dev)
 [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-green.svg)](https://dashboard.cypress.io/#/projects/m9d7tr/runs)
 [![codecov](https://codecov.io/gh/breadsplit/breadsplit/branch/master/graph/badge.svg)](https://codecov.io/gh/breadsplit/breadsplit)
