@@ -10,7 +10,7 @@ mixin inputs()
       placeholder='0'
       @focus='openKeyboard'
       reverse outline autofocus
-      required hide-details flat='true' main='true'
+      required hide-details flat main
     )
     div(v-rows='"auto 45px"')
       span
@@ -37,30 +37,28 @@ v-card.new-transaction(v-rows='"auto max-content"')
           .header How much?
 
         .creditors
-          .creditor(v-for='creditor in form.creditors', v-columns='"auto max-content 80px"')
+          .creditor(v-for='creditor in form.creditors', v-columns='"auto 80px"')
             div
-              app-user-avatar(:size='38' :id='creditor.uid' show-name inline)
+              app-user-avatar(size='38' :id='creditor.uid' show-name inline)
               span.ml-2 {{$t('ui.paid_money')}}
+              v-btn.op-25(
+                v-if='form.creditors.length > 1'
+                @click='removeCreditor(creditor.uid)'
+                flat icon small)
+                v-icon(size='20') mdi-close
 
-            v-btn.op-25(
-              v-if='form.creditors.length > 1'
-              @click='removeCreditor(creditor.uid)'
-              flat icon)
-              v-icon mdi-trash-can-outline
-
-            app-number-input(
+            app-number-input.ma-0.pa-0(
               v-if='form.creditors.length > 1'
               v-model.number='creditor.weight'
               placeholder='0'
               @focus='openKeyboard'
-              small
-              solo hide-details reverse
+              hide-details reverse
             )
 
           .creditor.add(v-if='creditorCandidates.length')
             app-member-select(:members='creditorCandidates', @input='id=>addCreditor(id)')
-              app-user-avatar(:size='38' show-name inline)
-                v-icon(:size='24') mdi-plus
+              app-user-avatar(size='38' show-name inline)
+                v-icon(size='24') mdi-plus
                 span(slot='text') More payers
 
         div

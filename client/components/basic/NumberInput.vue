@@ -22,8 +22,9 @@ import CommonMixin from '~/mixins/common'
 export default class NumberInput extends mixins(CommonMixin) {
   @Prop({ default: 0 }) readonly value!: number
   @Prop({ default: 100000000 }) readonly max!: number
-  @Prop({ default: false }) readonly flat!: boolean
-  @Prop({ default: false }) readonly main!: boolean
+  @Prop(Boolean) readonly flat?: boolean
+  @Prop(Boolean) readonly main?: boolean
+  @Prop({ default: 'number-input--active' }) readonly activeClass!: string
 
   numpad: SoftNumpad | null = null
   inner_value: string = ''
@@ -33,6 +34,7 @@ export default class NumberInput extends mixins(CommonMixin) {
       'number-input': true,
       flat: this.flat,
       main: this.main,
+      [this.activeClass]: !!this.numpad,
     }
   }
 
