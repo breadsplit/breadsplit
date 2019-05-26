@@ -94,7 +94,7 @@
   },
 
   // i18n
-  "vue-i18n-ally.i18nPaths": "./locales",
-  "vue-i18n-ally.sourceLocale": "en",
-  "vue-i18n-ally.displayLocale": "zh-TW",
+  "vue-i18n-ally.sourceLanguage": "en",
+  "vue-i18n-ally.displayLanguage": "zh-TW",
+  "vue-i18n-ally.localesPaths": "locales",
 }
