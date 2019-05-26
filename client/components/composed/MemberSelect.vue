@@ -3,8 +3,9 @@
   v-menu(v-model='menu' :nudge-width='100')
     template(v-slot:activator='{ on }')
       .vertical-aligned(v-on='on', v-ripple)
-        app-user-avatar.ma-1(:id='current.uid', inline, show-name)
-        v-icon mdi-menu-down
+        slot
+          app-user-avatar(:id='current.uid', inline, show-name)
+          v-icon mdi-menu-down
 
     v-card.pa-2
       template(v-for='member in members')

@@ -1,6 +1,9 @@
 <template lang='pug'>
 mixin inputs()
-  .my-2.mx-3(v-columns='"auto 65px"' style='vertical-align:bottom')
+  .mx-3(v-columns='"max-content auto 65px"' style='vertical-align:bottom')
+    div(v-rows='"auto max-content"')
+      div
+      .my-3.ml-2 Total
     app-number-input(
       ref='total_fee_input'
       v-model.number='form.total_fee'
@@ -34,12 +37,33 @@ v-card.new-transaction(v-rows='"auto max-content"')
           .header How much?
 
           .creditors
-            .creditor(v-for='creditor in form.creditors')
-              app-user-avatar(:size='32' :id='creditor.uid' :show-name='true' inline)
-              span.ml-2 {{$t('ui.paid_money')}}
+            .creditor(v-for='creditor in form.creditors', v-columns='"auto max-content 80px"')
+              div
+                app-user-avatar(:size='42' :id='creditor.uid' show-name inline)
+                span.ml-2 {{$t('ui.paid_money')}}
+
+              v-btn(
+                v-if='form.creditors.length > 1'
+                @click='removeCreditor(creditor.uid)'
+                flat icon)
+                v-icon mdi-close
+              app-number-input(
+                v-if='form.creditors.length > 1'
+                v-model.number='creditor.weight'
+                placeholder='0'
+                @focus='openKeyboard'
+                solo hide-details reverse
+              )
+
+            .creditor.add(v-if='creditorCandidates.length')
+              app-member-select(:members='creditorCandidates', @input='id=>addCreditor(id)')
+                app-user-avatar(:size='42' show-name inline)
+                  v-icon(:size='24') mdi-plus
+                  span(slot='text') More payers
 
         div
           +inputs()
+
     v-window-item.page(:value='3')
       .page-container
         .header For whom?
@@ -165,10 +189,6 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     return keys
   }
 
-  get dateDisplay() {
-    return dateToRelative(this.form.timestamp, this.$t.bind(this))
-  }
-
   get categorySense() {
     const category = this.categoriesKeywords
       .find(({ key, value }) => {
@@ -177,19 +197,39 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     return (category && category.value) || null
   }
 
-  next() {
-    this.step++
-    if (this.step === 2) {
-      this.$nextTick(() => {
-      // @ts-ignore
-        this.$refs.total_fee_input.focus()
-      })
-    }
+  get dateDisplay() {
+    return dateToRelative(this.form.timestamp, this.$t.bind(this))
+  }
+
+  get creditorIds() {
+    return this.form.creditors.map(c => c.uid)
+  }
+
+  get creditorCandidates() {
+    return this.members.filter(m => m.uid != null && !this.creditorIds.includes(m.uid))
   }
 
   setCreditor(uid: string) {
     this.form.creditors = [{ weight: 1, uid }]
     this.next()
+  }
+
+  addCreditor(uid: string) {
+    this.form.creditors.push({ weight: 1, uid })
+  }
+
+  removeCreditor(uid: string) {
+    this.form.creditors = this.form.creditors.filter(c => c.uid !== uid)
+  }
+
+  next() {
+    this.step++
+    if (this.step === 2) {
+      this.$nextTick(() => {
+        // @ts-ignore
+        this.openKeyboard(this.$refs.total_fee_input)
+      })
+    }
   }
 
   btnNext() {
@@ -220,9 +260,17 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     this.close()
   }
 
+  registeredInput = null
   openKeyboard(e) {
+    if (this.registeredInput) {
+      // @ts-ignore
+      this.registeredInput.calculate()
+      // @ts-ignore
+      this.registeredInput.deregisterKeyboard()
+    }
     // @ts-ignore
-    this.$refs.total_fee_input.registerKeyboard(this.$refs.numpad)
+    e.registerKeyboard(this.$refs.numpad)
+    this.registeredInput = e
   }
 
   async pickDate() {
@@ -265,7 +313,13 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
       cursor pointer
 
   .creditors
-    padding 1.5em 0
+    padding-top 1.5em
+
+    .creditor
+      padding 0.5em 0
+
+      .add
+        cursor pointer
 
     .creditor > *
       vertical-align middle
