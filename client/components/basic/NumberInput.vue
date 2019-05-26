@@ -100,6 +100,11 @@ export default class NumberInput extends mixins(CommonMixin) {
     this.$emit('input', this.calculated)
   }
 
+  @Watch('value')
+  onValueChanged() {
+    this.inner_value = this.value.toString()
+  }
+
   mounted() {
     this.inner_value = this.value.toString()
     this.calculate()

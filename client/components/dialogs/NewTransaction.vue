@@ -9,6 +9,7 @@ mixin inputs()
       v-model.number='form.total_fee'
       placeholder='0'
       @focus='openKeyboard'
+      @click.native='gcdCredtors'
       reverse outline autofocus
       required hide-details flat main
     )
@@ -41,6 +42,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
             div
               app-user-avatar(size='38' :id='creditor.uid' show-name inline)
               span.ml-2 {{$t('ui.paid_money')}}
+              span {{creditor.weight}}
               v-btn.op-25(
                 v-if='form.creditors.length > 1'
                 @click='removeCreditor(creditor.uid)'
@@ -49,9 +51,10 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
             app-number-input.ma-0.pa-0(
               v-if='form.creditors.length > 1'
-              v-model.number='creditor.weight'
+              :value='getCreditorFee(creditor)'
               placeholder='0'
               @focus='openKeyboard'
+              @input='v=>setCreditorFee(creditor,v)'
               hide-details reverse
             )
 
@@ -127,11 +130,13 @@ v-card.new-transaction(v-rows='"auto max-content"')
 </template>
 
 <script lang='ts'>
+import sum from 'lodash/sumBy'
 import { Component, mixins, Getter } from 'nuxt-property-decorator'
 import Categories, { CategoryKeys } from '~/../meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, dateToRelative, IdMe } from '~/core'
+import { GCD } from '../../../core/balance'
 
 @Component
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
@@ -215,11 +220,46 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   }
 
   addCreditor(uid: string) {
-    this.form.creditors.push({ weight: 1, uid })
+    if (this.form.creditors.length === 1)
+      this.form.creditors[0].fee = this.form.total_fee
+    this.form.creditors.push({ weight: 0, uid })
   }
 
   removeCreditor(uid: string) {
     this.form.creditors = this.form.creditors.filter(c => c.uid !== uid)
+  }
+
+  getCreditorFee(creditor: Weight) {
+    if (creditor.fee)
+      return creditor.fee
+    let weights = sum(this.form.creditors.filter(c => c.fee == null).map(i => i.weight || 0))
+    const fees = sum(this.form.creditors.filter(c => c.fee != null).map(i => i.fee || 0))
+    if (!weights)
+      weights = 1
+    return ((creditor.weight || 0) / weights) * (this.form.total_fee - fees)
+  }
+
+  setCreditorFee(creditor: Weight, fee: number) {
+    if (fee === this.getCreditorFee(creditor))
+      return
+    creditor.fee = +fee
+    this.form.total_fee = sum(this.form.creditors.map(i => i.fee || 0))
+  }
+
+  gcdCredtors() {
+    const credtors = this.form.creditors.map(c => ({
+      uid: c.uid,
+      fee: this.getCreditorFee(c),
+    }))
+    const gcd = GCD(credtors.map(c => c.fee))
+    this.form.creditors.forEach((c) => {
+      const credtor = credtors.find(d => d.uid === c.uid)
+      if (!credtor || !credtor.fee)
+        c.weight = 0
+      else
+        c.weight = credtor.fee / gcd
+      c.fee = undefined
+    })
   }
 
   next() {
