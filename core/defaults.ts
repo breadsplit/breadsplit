@@ -60,7 +60,7 @@ export const TransactionDefault = (overrides?: Partial<Transaction>): Transactio
   timestamp: +new Date(),
   creditors: [],
   debtors: [],
-  currency: '',
+  currency: 'USD',
   creator: '',
   category: '',
   total_fee: 0,

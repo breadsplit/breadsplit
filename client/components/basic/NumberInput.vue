@@ -98,16 +98,22 @@ export default class NumberInput extends mixins(CommonMixin) {
   @Watch('calculated')
   onCalculated() {
     this.$emit('input', this.calculated)
+    if (this.numpad)
+      this.$emit('user-input', this.calculated)
   }
 
   @Watch('value')
   onValueChanged() {
+    this.updateInnerValue()
+  }
+
+  updateInnerValue() {
     this.inner_value = this.value.toString()
+    this.calculate()
   }
 
   mounted() {
-    this.inner_value = this.value.toString()
-    this.calculate()
+    this.updateInnerValue()
   }
 
   isOperator(char: string) {
@@ -136,6 +142,9 @@ export default class NumberInput extends mixins(CommonMixin) {
   }
 
   input(char: string) {
+    if (this.inner_value === '0')
+      this.inner_value = ''
+
     if (char === '.')
       this.inputDot()
     if (this.calculated > this.max)

@@ -42,19 +42,20 @@ v-card.new-transaction(v-rows='"auto max-content"')
             div
               app-user-avatar(size='38' :id='creditor.uid' show-name inline)
               span.ml-2 {{$t('ui.paid_money')}}
-              span {{creditor.weight}}
               v-btn.op-25(
                 v-if='form.creditors.length > 1'
                 @click='removeCreditor(creditor.uid)'
                 flat icon small)
                 v-icon(size='20') mdi-close
 
+              span ({{creditor.weight}})
+
             app-number-input.ma-0.pa-0(
               v-if='form.creditors.length > 1'
               :value='getCreditorFee(creditor)'
               placeholder='0'
               @focus='openKeyboard'
-              @input='v=>setCreditorFee(creditor,v)'
+              @user-input='v=>setCreditorFee(creditor,v)'
               hide-details reverse
             )
 
