@@ -1,6 +1,6 @@
-import { mutations, getters, Eval } from '~/store/group'
+import { mutations, getters } from '~/store/group'
 import { RootStateDefault, GroupStateDefault } from '~/store'
-import { GroupState, Group } from '~/types'
+import { GroupState } from '~/types'
 
 describe('group state getters', () => {
   it('current', () => {
@@ -47,13 +47,5 @@ describe('group state mutations', () => {
     mutations.remove(state, 'test')
     expect(Object.keys(state.groups).length).toEqual(groupsAmount)
     expect(state.groups).not.toHaveProperty('test')
-  })
-
-  it('members', () => {
-    const client = state.groups.group1
-    const group = Eval(client) as Group
-    expect(group).toBeTruthy()
-    expect(client.operations).toHaveLength(0)
-    expect(Object.keys(group.members)).toHaveLength(0)
   })
 })
