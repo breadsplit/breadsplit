@@ -32,34 +32,36 @@ v-card.new-transaction(v-rows='"auto max-content"')
             app-user-avatar(:id='m.uid' @click.native='setCreditor(m.uid)' :show-name='true')
 
     v-window-item.page(:value='2')
-      .height-100(v-rows='"auto max-content"')
+      .height-100(v-rows='"max-content auto max-content"')
         .page-container
           .header How much?
 
-          .creditors
-            .creditor(v-for='creditor in form.creditors', v-columns='"auto max-content 80px"')
-              div
-                app-user-avatar(:size='42' :id='creditor.uid' show-name inline)
-                span.ml-2 {{$t('ui.paid_money')}}
+        .creditors
+          .creditor(v-for='creditor in form.creditors', v-columns='"auto max-content 80px"')
+            div
+              app-user-avatar(:size='38' :id='creditor.uid' show-name inline)
+              span.ml-2 {{$t('ui.paid_money')}}
 
-              v-btn(
-                v-if='form.creditors.length > 1'
-                @click='removeCreditor(creditor.uid)'
-                flat icon)
-                v-icon mdi-close
-              app-number-input(
-                v-if='form.creditors.length > 1'
-                v-model.number='creditor.weight'
-                placeholder='0'
-                @focus='openKeyboard'
-                solo hide-details reverse
-              )
+            v-btn.op-25(
+              v-if='form.creditors.length > 1'
+              @click='removeCreditor(creditor.uid)'
+              flat icon)
+              v-icon mdi-trash-can-outline
 
-            .creditor.add(v-if='creditorCandidates.length')
-              app-member-select(:members='creditorCandidates', @input='id=>addCreditor(id)')
-                app-user-avatar(:size='42' show-name inline)
-                  v-icon(:size='24') mdi-plus
-                  span(slot='text') More payers
+            app-number-input(
+              v-if='form.creditors.length > 1'
+              v-model.number='creditor.weight'
+              placeholder='0'
+              @focus='openKeyboard'
+              small
+              solo hide-details reverse
+            )
+
+          .creditor.add(v-if='creditorCandidates.length')
+            app-member-select(:members='creditorCandidates', @input='id=>addCreditor(id)')
+              app-user-avatar(:size='38' show-name inline)
+                v-icon(:size='24') mdi-plus
+                span(slot='text') More payers
 
         div
           +inputs()
@@ -283,12 +285,6 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 </script>
 
 <style lang='stylus'>
-.new-transaction
-  overflow-x hidden
-
-  .page
-    min-height 400px
-
 .v-dialog--fullscreen
   .new-transaction
     height 100%
@@ -296,24 +292,30 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     .page
       height 100%
 
-.page-container
-  padding 1.5em 2em
+.new-transaction
+  overflow-x hidden
 
-  .header
-    font-size 2.5em
+  .page
+    min-height 400px
 
-  .subheader
-    font-size 1.4em
+  .page-container
+    padding 1.5em 2em
 
-  .member-choices
-    padding 1.5em 0
+    .header
+      font-size 2.5em
 
-    .user-avatar
-      padding 0.7em
-      cursor pointer
+    .subheader
+      font-size 1.4em
+
+    .member-choices
+      padding 1.5em 0
+
+      .user-avatar
+        padding 0.7em
+        cursor pointer
 
   .creditors
-    padding-top 1.5em
+    padding 0 2em 0 2em
 
     .creditor
       padding 0.5em 0
@@ -323,5 +325,4 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
     .creditor > *
       vertical-align middle
-
 </style>

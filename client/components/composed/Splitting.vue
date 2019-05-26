@@ -41,6 +41,7 @@
             template(v-if='tab === 0')
               v-list-tile-action(v-if='showTabs' style='width:32px;min-width:inherit')
                 v-checkbox(
+                  color='primary'
                   :input-value='getWeight(i.uid)'
                   @change='v=>setWeight(i.uid, v?1:0)')
             template(v-else-if='tab === 3')
