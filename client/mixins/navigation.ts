@@ -22,7 +22,7 @@ export default class NavigationMixin extends Vue {
     this.$router.push(`/group/${id || this.navGroupId}`)
   }
 
-  gotoNewTransaction(options = { type: 'expense', uid: undefined }, groupid?: string) {
+  gotoNewTransaction(options: Record<string, any> = { type: 'expense', uid: undefined }, groupid?: string) {
     this.$router.push(`/group/${groupid || this.navGroupId}/new_trans?${QuerySerialize(options)}`)
   }
 

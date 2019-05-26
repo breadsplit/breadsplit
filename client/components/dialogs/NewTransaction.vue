@@ -119,14 +119,36 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   @Getter('user/uid') uid: string | undefined
 
   reset() {
-    this.$set(this, 'form', TransactionDefault())
+    this.form = TransactionDefault()
     let me = IdMe
     if (this.uid && this.uid in this.group.members)
       me = this.uid
+    this.form.type = this.options.type || 'expense'
     this.form.creator = me
     this.form.currency = this.group.currencies[0] || 'USD'
-    this.form.creditors.push({ weight: 1, uid: me })
-    this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.uid || IdMe }))
+
+    if (this.options.from) {
+      this.form.creditors = this.options.from
+        .toString()
+        .split(',')
+        .map(uid => ({ weight: 1, uid }))
+    }
+    else {
+      this.form.creditors.push({ weight: 1, uid: me })
+    }
+
+    if (this.options.to) {
+      this.form.debtors = this.options.to
+        .toString()
+        .split(',')
+        .map(uid => ({ weight: 1, uid }))
+    }
+    else {
+      this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.uid || IdMe }))
+    }
+
+    this.form.total_fee = +this.options.amount || 0
+
     // @ts-ignore
     this.$refs.total_fee_input.inner_value = ''
     this.step = 1

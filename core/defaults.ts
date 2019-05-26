@@ -1,6 +1,6 @@
 import merge from 'lodash/merge'
 import mapValues from 'lodash/mapValues'
-import { Member, Group, Transaction, TransactionType, ClientGroup } from '../types'
+import { Member, Group, Transaction, ClientGroup } from '../types'
 import { GenerateId } from './id_helper'
 
 export const MemberDefault = (overrides?: Partial<Member>): Member => merge({
@@ -65,5 +65,5 @@ export const TransactionDefault = (overrides?: Partial<Transaction>): Transactio
   category: '',
   total_fee: 0,
   service_fee_rate: 0,
-  type: TransactionType.expenses,
+  type: 'expenses',
 }, overrides)

@@ -3,10 +3,14 @@ import { TransOperation } from './operation_transformer'
 type uid = string
 
 export type MemberRoles =
-| 'owner'
-| 'collaborator'
-| 'participant'
-| 'visitor'
+  | 'owner'
+  | 'collaborator'
+  | 'participant'
+  | 'visitor'
+
+export type TransactionType =
+  | 'expenses'
+  | 'transfer'
 
 export const enum ActivityAction {
   insert = 'insert',
@@ -21,11 +25,6 @@ export const enum Entity {
   group = 'group',
   transaction ='transaction',
   currency_record = 'currency_record',
-}
-
-export const enum TransactionType {
-  expenses = 'expenses',
-  transfer = 'transfer',
 }
 
 export interface Weight {

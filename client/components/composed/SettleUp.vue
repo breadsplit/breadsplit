@@ -7,7 +7,7 @@ v-card.settle-up
   v-list.pa-0(two-line)
     template(v-for='(solution, index) in solutions')
       v-divider(v-if='index!=0')
-      v-list-tile(:key='solution.uid', avatar, @click='WIP')
+      v-list-tile(:key='solution.uid', avatar, @click='settleUp(solution)')
         v-list-tile-content(v-columns='"1fr 1fr 1fr"' style='align-items:center').py-2.px-0
           div.text-xs-right.text-no-wrap
             app-user-info.pa-3(v-if='!isMobile' :id='solution.from')
@@ -22,17 +22,26 @@ v-card.settle-up
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
-import { GroupBalances, SettleUp } from '~/core'
-import { GroupMixin, CommonMixin } from '~/mixins'
+import { GroupBalances, SettleUp, Solution } from '~/core'
+import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 
 @Component
-export default class SettleUpSolutions extends mixins(GroupMixin, CommonMixin) {
+export default class SettleUpSolutions extends mixins(GroupMixin, NavigationMixin, CommonMixin) {
   get balances() {
     return GroupBalances(this.group)
   }
 
   get solutions() {
     return SettleUp(this.balances)
+  }
+
+  settleUp(solution: Solution) {
+    this.gotoNewTransaction({
+      type: 'transfer',
+      from: solution.from,
+      to: solution.to,
+      amount: solution.amount,
+    })
   }
 }
 </script>
