@@ -33,3 +33,11 @@ export function numberToMoney(value: number, locale: string = 'en', currency?: s
   })
   return formatter.format(value)
 }
+
+export function capitalize(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+export function capitalizeEachWords(s: string, divider = ' ') {
+  return s.split(divider).map(w => capitalize(w)).join(divider)
+}

@@ -1,4 +1,6 @@
 import union from 'lodash/union'
+import { capitalizeEachWords } from '../core/formatters'
+
 export interface Currency {
   cc: string
   symbol: string
@@ -199,6 +201,24 @@ export function getCommonCurrencyCodes(locale: string, recents: string[] = [], t
   return union(list, recents, commonCurrencyCodes).slice(0, take)
 }
 
+export function getCurrencyLocalName(locale: string, currency: string) {
+  let name = Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency,
+    currencyDisplay: 'name',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  })
+    .format(0)
+    .replace('0', '')
+    .trim()
+  if (!name || name === currency)
+    name = ''
+  else if (name)
+    name = capitalizeEachWords(name)
+  return name
+}
+
 export function getLocaleCurrencies(locale: string, locales?: string[]) {
   let filteredCurrencies = currencies
   if (locales) {
@@ -212,16 +232,7 @@ export function getLocaleCurrencies(locale: string, locales?: string[]) {
   }
 
   return filteredCurrencies.map((c) => {
-    let name = new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency: c.cc,
-      currencyDisplay: 'name',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    })
-      .format(0)
-      .replace('0', '')
-      .trim()
+    let name = getCurrencyLocalName(locale, c.cc)
     if (!name || name === c.cc)
       name = c.name
     return {
