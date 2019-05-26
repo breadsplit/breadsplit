@@ -2,6 +2,7 @@
 style.
   :root {
     --app-font: {{localeFont}};
+    --theme-primary: {{primaryColor}};
   }
   .primary {
     background-color: {{primaryColor}} !important;

@@ -221,4 +221,9 @@ export default class NumberInput extends mixins(CommonMixin) {
       max-height inherit
       font-size 3em
 
+.number-input--active
+  .v-input__slot:before
+    border-color var(--theme-primary) !important
+  input
+    color var(--theme-primary) !important
 </style>
