@@ -10,15 +10,16 @@ v-card.new-group
         v-layout(column)
           v-flex
             v-text-field(
-              v-model='name' :label='$t("ui.group_editing.group_name")'
+              v-model='form.name' :label='$t("ui.group_editing.group_name")'
               prepend-icon='mdi-group-open-variant' clearable :disabled='viewmode'
+              autofocus
             )
               template(slot='prepend')
                 app-icon-select(:icon.sync='icon' :color.sync='color', style='margin-top:-20px')
 
           v-flex
             v-autocomplete(
-              v-model='currency' :items='currencies'
+              v-model='form.currencies[0]' :items='currency_list'
               prepend-icon='mdi-currency-usd' label='Currency' :disabled='viewmode'
             )
 
@@ -31,7 +32,7 @@ v-card.new-group
               v-model='members', :items='members_suggestions'
               :search-input.sync='search', hide-selected
               label='Members', multiple, persistent-hint
-              small-chips, deletable-chips, prepend-icon='mdi-account-multiple' clearable :disabled='viewmode'
+              small-chips, deletable-chips, prepend-icon='mdi-account-multiple' clearable :disabled='viewmode' autofocus
             )
               template(v-slot:no-data='')
                 v-list-tile
@@ -63,19 +64,17 @@ import { Component, Getter, mixins } from 'nuxt-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
 import { Group, UserInfo, GroupMetaChanges } from '~/types'
-import { IdMe } from '~/core'
+import { IdMe, GroupDefault } from '~/core'
 
 @Component
 export default class NewGroup extends mixins(DialogChildMixin) {
+  form: Group = GroupDefault()
   search = ''
   step = 1
   mode = ''
-  name = ''
-  currency = 'USD'
   icon = 'account-group'
   color = swatches[Math.floor(Math.random() * swatches.length)]
   members = []
-  // nextBtn = this.$t('ui.button_next')
 
   @Getter('locale') locale!: string
   @Getter('group/current') current: Group | undefined
@@ -83,19 +82,21 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   @Getter('user/uid') uid: string | undefined
 
   reset() {
+    this.$set(this, 'form', GroupDefault())
     if (this.options.mode) {
       if (this.current) {
-        this.name = this.current.name
-        this.currency = this.current.currencies[0]
+        this.form.name = this.current.name
+        this.form.currencies[0] = this.current.currencies[0]
         this.icon = this.current.icon || ''
         this.color = this.current.color || ''
-        // this.nextBtn = this.$t('ui.button_confirm')
+        this.mode = this.options.mode
         // @ts-ignore
         Object.values(this.current.members).forEach((m) => { this.members.push(m.name) })
       }
     }
-    this.mode = this.options.mode
-    this.currency = this.codes[0] || 'USD'
+    else {
+      this.form.currencies[0] = this.codes[0] || 'USD'
+    }
   }
 
   get title(): TranslateResult {
@@ -113,7 +114,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     return getCommonCurrencyCodes(this.locale)
   }
 
-  get currencies() {
+  get currency_list() {
     return getLocaleCurrencies(this.locale, this.codes)
       .map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
   }
@@ -123,7 +124,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     return []
   }
   get checkEmpty(): boolean {
-    const hasEmpty = !(this.name && this.currency)
+    const hasEmpty = !(this.form.name && this.form.currencies[0])
     return hasEmpty || this.viewmode
   }
 
@@ -133,11 +134,11 @@ export default class NewGroup extends mixins(DialogChildMixin) {
 
   create() {
     const payload = {
-      name: this.name,
+      name: this.form.name,
       color: this.color,
       icon: this.icon,
       members: this.members.map((m) => { return { name: m } }),
-      currencies: [this.currency],
+      currencies: this.form.currencies,
     }
     this.defaultMember(payload.members)
     this.$store.commit('group/add', payload)
@@ -148,10 +149,10 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   }
   edit() {
     const payload: GroupMetaChanges = {
-      name: this.name,
+      name: this.form.name,
       color: this.color,
       icon: this.icon,
-      currencies: [this.currency],
+      currencies: this.form.currencies,
     }
     this.$store.dispatch('group/modify', { changes: payload })
     this.close()
