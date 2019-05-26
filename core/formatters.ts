@@ -38,6 +38,6 @@ export function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-export function capitalizeEachWords(s: string, divider = ' ') {
-  return s.split(divider).map(w => capitalize(w)).join(divider)
+export function capitalizeEachWords(s: string, delimiter = ' ') {
+  return s.split(delimiter).map(w => capitalize(w)).join(delimiter)
 }

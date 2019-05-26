@@ -2,21 +2,14 @@ import Vue from 'vue'
 import includes from 'lodash/includes'
 import orderBy from 'lodash/orderBy'
 import union from 'lodash/union'
+import mapValues from 'lodash/mapValues'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
-import { GroupState, RootState, ClientGroup, Group, ServerGroup, Operation } from '~/types'
+import { GroupState, RootState, Group, ServerGroup, Operation } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe } from '~/core'
 import { GroupStateDefault } from '~/store'
 
 const OperationCache = new BasicCache<Group>()
-
-export function Eval(group?: ClientGroup): Group | undefined {
-  if (!group)
-    return undefined
-  const { base, operations } = group
-  if (!base)
-    return undefined
-  return EvalTransforms<Group>(Transforms, { cacheObject: OperationCache })(base, operations)
-}
+const Transformer = EvalTransforms<Group>(Transforms, { cacheObject: OperationCache })
 
 function origin() {
   return window.location.origin
@@ -26,10 +19,22 @@ export const state = GroupStateDefault
 
 export const getters: GetterTree<GroupState, RootState> = {
 
-  current(state) {
+  evaluatedGroups(state) {
+    return mapValues(state.groups, (group) => {
+      if (!group)
+        return undefined
+      const { base, operations } = group
+      if (!base)
+        return undefined
+      const result = Transformer(base, operations)
+      return Object.freeze(result)
+    })
+  },
+
+  current(state, getters) {
     if (!state.currentId)
       return undefined
-    return Eval(state.groups[state.currentId])
+    return getters.evaluatedGroups[state.currentId]
   },
 
   currentShareLink(state, getters) {
@@ -43,26 +48,26 @@ export const getters: GetterTree<GroupState, RootState> = {
     return state.currentId
   },
 
-  all(state) {
+  all(state, getters) {
     return orderBy(Object.values(state.groups), ['lastchanged'], ['desc'])
-      .map(g => Eval(g))
+      .map(group => getters.evaluatedGroups[group.id])
   },
 
-  id: state => (id) => {
-    return Eval(state.groups[id])
+  id: (state, getters) => (id: string) => {
+    return getters.evaluatedGroups[id]
   },
 
-  memberById: state => ({ groupId, uid }) => {
+  memberById: (state, getters) => ({ groupId, uid }) => {
     groupId = groupId || state.currentId
-    const group = Eval(state.groups[groupId])
+    const group = getters.evaluatedGroups[groupId]
     if (!group)
       return null
     return group.members[uid]
   },
 
-  activeMembersOf: state => (id?: string) => {
-    id = id || state.currentId || ''
-    const group = Eval(state.groups[id])
+  activeMembersOf: (state, getters) => (groupid?: string) => {
+    groupid = groupid || state.currentId || ''
+    const group = getters.evaluatedGroups[groupid] as Group
     if (!group)
       return []
     return Object.values(group.members).filter(m => !m.removed)
@@ -72,9 +77,9 @@ export const getters: GetterTree<GroupState, RootState> = {
     return getters.activeMembersOf(state.currentId)
   },
 
-  isSyncing: state => (id?: string) => {
-    id = id || state.currentId || ''
-    const group = state.groups[id]
+  isSyncing: state => (groupId?: string) => {
+    groupId = groupId || state.currentId || ''
+    const group = state.groups[groupId]
     return !!(group.syncingOperations.length)
   },
 
@@ -195,7 +200,7 @@ export const mutations: MutationTree<GroupState> = {
 
     clientGroup.syncingOperations = (clientGroup.syncingOperations || [])
       .filter(i => !serverOperations.includes(i))
-    clientGroup.base = group.present
+    clientGroup.base = Object.freeze(group.present)
     clientGroup.operations = unsyncedOperations
     clientGroup.lastsync = timestamp
   },

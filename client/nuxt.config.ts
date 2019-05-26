@@ -3,13 +3,13 @@ import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 import pkg from '../package.json'
 import theme from '../meta/theme'
 
-const debug = process.env.NODE_ENV !== 'production'
+const dev = process.env.NODE_ENV !== 'production'
 const RELEASE_CHANNEL = process.env.RELEASE_CHANNEL || 'dev'
 const fullname = RELEASE_CHANNEL !== 'dev' ? 'BreadSplit' : 'BreadSplit Dev'
 
 const config: NuxtConfiguration = {
   mode: 'spa',
-  debug,
+  debug: dev,
 
   head: {
     title: fullname,
@@ -116,7 +116,7 @@ const config: NuxtConfiguration = {
       },
     },
     splitChunks: {},
-    extractCSS: !debug,
+    extractCSS: !dev,
     publicPath: '/nuxt/',
     extend(config, ctx) {
       // Run ESLint on save
@@ -157,7 +157,7 @@ const config: NuxtConfiguration = {
 
   'google-gtag': {
     id: process.env.GOOGLE_GTAG_ID,
-    debug,
+    debug: dev,
   },
 
   // https://pwa.nuxtjs.org/modules/workbox.html
