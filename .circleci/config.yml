@@ -67,8 +67,8 @@ jobs:
           command: cd ./firebase/functions && npm ci
 
       - run:
-        name: Config firebase functions
-        command: cd ./firebase && npx firebase functions:config:set fixer.token=$FIXER_TOKEN
+          name: Config firebase functions
+          command: cd ./firebase && npx firebase functions:config:set fixer.token=$FIXER_TOKEN
 
       - run:
           name: Deploy to Firebase
