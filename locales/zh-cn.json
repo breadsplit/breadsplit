@@ -46,10 +46,28 @@
       "notification_disabled": "通知已禁用",
       "clear_all_data": "清除所有数据"
     },
-    "splitting": {},
+    "splitting": {
+      "split_by": "拆分方式"
+    },
     "button_no": "否",
     "button_yes": "是",
-    "star_on_github": "Star on Github"
+    "star_on_github": "Star on Github",
+    "newtrans": {
+      "expense_paid_by": "费用由谁支付？",
+      "xx_should_pay": "这次轮到 {0} 付款。",
+      "how_much": "输入金额",
+      "more_payers": "更多的付款人",
+      "more_details": "更多信息"
+    },
+    "total": "合计",
+    "paid_money": "支付了",
+    "add_location": "添加位置",
+    "repeat_expense": "重复",
+    "button_cancel": "取消",
+    "button_back": "返回",
+    "button_quick_add": "快速添加",
+    "button_next": "下一步",
+    "button_save": "保存"
   },
   "prompt": {
     "are_you_sure": "你确定吗？"
