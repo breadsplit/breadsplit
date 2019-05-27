@@ -3,7 +3,7 @@ mixin inputs()
   .mx-3(v-columns='"max-content auto 65px"' style='vertical-align:bottom')
     div(v-rows='"auto max-content"')
       div
-      .my-3.ml-2 Total
+      .my-3.ml-2 {{$t('ui.total')}}
     app-number-input(
       ref='total_fee_input'
       v-model.number='form.total_fee'
@@ -25,8 +25,8 @@ v-card.new-transaction(v-rows='"auto max-content"')
   v-window.height-100(v-model='step', touchless)
     v-window-item.page(:value='1')
       .page-container
-        .header Expense paid by?
-        .subheader by the way, {0} should pay this time.
+        .header {{$t('ui.newtrans.expense_paid_by')}}
+        .subheader {{$t('ui.newtrans.xx_should_pay')}}
 
         .member-choices
           template(v-for='m in members')
@@ -35,7 +35,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
     v-window-item.page(:value='2')
       .height-100(v-rows='"max-content auto max-content"')
         .page-container
-          .header How much?
+          .header {{$t('ui.newtrans.how_much')}}
 
         .creditors
           .creditor(v-for='creditor in form.creditors', v-columns='"auto 80px"')
@@ -63,14 +63,14 @@ v-card.new-transaction(v-rows='"auto max-content"')
             app-member-select(:members='creditorCandidates', @input='id=>addCreditor(id)')
               app-user-avatar(size='38' show-name inline)
                 v-icon(size='24') mdi-plus
-                span(slot='text') More payers
+                span(slot='text') {{$t('ui.newtrans.more_payers')}}
 
         div
           +inputs()
 
     v-window-item.page(:value='3')
       .page-container
-        .header For whom?
+        .header {{$t('ui.newtrans.for_whom')}}
 
         .member-choices
           template(v-for='m in members')
@@ -81,7 +81,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
     v-window-item.page(:value='4')
       .page-container
-        .header More details
+        .header {{$t('ui.newtrans.more_details')}}
 
         .mt-4(v-columns='"max-content auto"')
           app-category-select.pl-3(

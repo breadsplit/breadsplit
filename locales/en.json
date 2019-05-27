@@ -108,7 +108,16 @@
     "star_on_github": "Star on Github",
     "continue_and_accept": "By continue, you accept our {0}",
     "privacy_policy": "Privacy policy",
-    "continue_anyway": "Continue anyway"
+    "continue_anyway": "Continue anyway",
+    "newtrans": {
+      "how_much": "How much?",
+      "expense_paid_by": "Expense paid by?",
+      "xx_should_pay": "by the way, {0} should pay this time.",
+      "more_payers": "More payers",
+      "for_whom": "For whom?",
+      "more_details": "More details"
+    },
+    "total": "Total"
   },
   "pronoun": {
     "me": "Me",
