@@ -136,8 +136,7 @@ import { Component, mixins, Getter } from 'nuxt-property-decorator'
 import Categories, { CategoryKeys } from '~/../meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
-import { TransactionDefault, dateToRelative, IdMe } from '~/core'
-import { GCD } from '../../../core/balance'
+import { TransactionDefault, dateToRelative, IdMe, GCD } from '~/core'
 
 @Component
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
