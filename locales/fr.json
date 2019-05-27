@@ -20,7 +20,9 @@
       "clear_all_data": "Effacer toutes les données"
     },
     "tabs": {},
-    "help": "Aide"
+    "help": "Aide",
+    "newtrans": {},
+    "splitting": {}
   },
   "acts": {}
 }
