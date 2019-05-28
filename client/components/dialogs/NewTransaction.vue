@@ -14,6 +14,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
     v-window-item.page(:value='2')
       app-splitting-page(
+        ref='splitting_creditors'
         :trans='form'
         :members='members'
         :title='$t("ui.newtrans.how_much")'
@@ -22,6 +23,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
     v-window-item.page(:value='3')
        app-splitting-page(
+        ref='splitting_debtors'
         :trans='form'
         :members='members'
         :title='$t("ui.newtrans.for_whom")'
@@ -80,12 +82,13 @@ v-card.new-transaction(v-rows='"auto max-content"')
 </template>
 
 <script lang='ts'>
-import { Component, mixins, Getter } from 'nuxt-property-decorator'
+import { Component, mixins, Getter, Watch } from 'nuxt-property-decorator'
 import Categories, { CategoryKeys } from '~/../meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, dateToRelative, IdMe, defaultCurrency } from '~/core'
 import DatePicker from '../basic/DatePicker.vue'
+import SplittingPage from '../composed/SplittingPage.vue'
 
 @Component
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
@@ -96,6 +99,8 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   $refs!: {
     date_picker: DatePicker
+    splitting_creditors: SplittingPage
+    splitting_debtors: SplittingPage
   }
 
   @Getter('user/uid') uid: string | undefined
@@ -163,6 +168,14 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   next() {
     this.step++
+  }
+
+  @Watch('step')
+  onStepChanged(value, oldvalue) {
+    if (oldvalue === 2)
+      this.$refs.splitting_creditors.finishUp()
+    if (oldvalue === 3)
+      this.$refs.splitting_debtors.finishUp()
   }
 
   btnNext() {

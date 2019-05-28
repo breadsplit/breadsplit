@@ -5,6 +5,9 @@
   "translators": "offical",
   "appname": "BreadSplit",
   "appname_dev": "BreadSplit Dev",
+  "utils": {
+    "bypass_1": "{0}"
+  },
   "css": {
     "font_of_locale": ""
   },

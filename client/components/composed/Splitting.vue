@@ -35,7 +35,7 @@
       .user-info-section
         app-user-avatar(size='38' :id='pa.uid')
         span.user-name-text.mx-2
-          i18n(path='ui.xx_paid_money')
+          i18n(:path='userTextI18nPath')
             b
               app-user-info(:id='pa.uid')
         v-expand-x-transition
@@ -147,6 +147,12 @@ export default class Splitting extends Vue {
     return this.trans.total_fee - this.fixedFees
   }
 
+  get userTextI18nPath() {
+    if (this.on === 'creditors')
+      return 'ui.xx_paid_money'
+    return 'utils.bypass_1'
+  }
+
   @Watch('mode')
   onModeChanged() {
     this.$emit('mode-changed', this.mode)
@@ -190,6 +196,8 @@ export default class Splitting extends Vue {
   getFee(participator: Weight) {
     if (participator.fee != null)
       return participator.fee
+    if (!this.flexibleWeights)
+      return 0
     return ((participator.weight || 0) / (this.flexibleWeights || 1)) * (this.flexibleFees)
   }
 
@@ -198,7 +206,6 @@ export default class Splitting extends Vue {
       return
     this.$set(participator, 'fee', +fee || 0)
     this.recalculateTotal()
-    // this.gcd()
   }
 
   setWeight(participator: Weight, weight: number) {
@@ -239,7 +246,7 @@ export default class Splitting extends Vue {
     const gcd = GCD(participators.map(c => c.fee))
     this.participators.forEach((c) => {
       const participator = participators.find(d => d.uid === c.uid)
-      if (participator && participator.fee)
+      if (participator && participator.fee != null)
         c.weight = participator.fee / gcd
     })
   }
