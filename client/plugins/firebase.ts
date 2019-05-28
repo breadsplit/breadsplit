@@ -3,11 +3,6 @@ import { Store } from 'vuex'
 import VueRouter from 'vue-router'
 import nanoid from 'nanoid'
 import dayjs from 'dayjs'
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
-import 'firebase/functions'
-import 'firebase/messaging'
 
 import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
 import { IsThisId } from '~/core'
@@ -19,29 +14,26 @@ const log = (...args) => process.env.NODE_ENV === 'production' || console.log('F
 export class FirebasePlugin {
   store: Store<RootState>
   router: VueRouter
+  firebase: any
   _unwatchCallback: (() => void) | null = null
   _unsubscribeCallback: (() => void) | null = null
 
   constructor(store: Store<RootState>, router: VueRouter) {
     this.store = store
     this.router = router
-
-    const config_name = process.env.FIREBASE_SERVER || 'development'
-    log(`🔥 Connecting to firebase server <${config_name}>`)
-    firebase.initializeApp(FirebaseServers[config_name])
   }
 
   get auth() {
-    return firebase.auth()
+    return this.firebase.auth()
   }
   get db() {
-    return firebase.firestore()
+    return this.firebase.firestore()
   }
   get functions() {
-    return firebase.functions()
+    return this.firebase.functions()
   }
   get messaging() {
-    return firebase.messaging()
+    return this.firebase.messaging()
   }
   get me(): UserInfo | undefined {
     return this.store.getters['user/me']
@@ -56,6 +48,18 @@ export class FirebasePlugin {
    * @memberof FirebasePlugin
    */
   async init() {
+    const config_name = process.env.FIREBASE_SERVER || 'development'
+
+    this.firebase = await import('firebase/app')
+    await Promise.all([import('firebase/auth'),
+    import('firebase/firestore'),
+    import('firebase/functions'),
+    import('firebase/messaging'),
+    ])
+
+    log(`🔥 Connecting to firebase server <${config_name}>`)
+    this.firebase.initializeApp(FirebaseServers[config_name])
+
     this.auth.onAuthStateChanged(async (user) => {
       if (user) {
         log('🙋 Login with uid:', user.uid)
@@ -80,7 +84,7 @@ export class FirebasePlugin {
       }
     })
 
-    await this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    await this.auth.setPersistence(this.firebase.auth.Auth.Persistence.LOCAL)
 
     await this.updateMessagingToken()
     this.installMessagingServiceWorker()
@@ -100,9 +104,9 @@ export class FirebasePlugin {
 
   async loginWith(providerName: 'google'|'facebook'|'github') {
     const providers = {
-      google: () => new firebase.auth.GoogleAuthProvider(),
-      facebook: () => new firebase.auth.FacebookAuthProvider(),
-      github: () => new firebase.auth.GithubAuthProvider(),
+      google: () => new this.firebase.auth.GoogleAuthProvider(),
+      facebook: () => new this.firebase.auth.FacebookAuthProvider(),
+      github: () => new this.firebase.auth.GithubAuthProvider(),
     }
 
     const provider = providers[providerName]()
@@ -114,7 +118,7 @@ export class FirebasePlugin {
         || (this.store.state.ua.os === 'ios' && this.store.state.ua.standalone)
       ) {
         await this.auth.signInWithRedirect(provider)
-        return firebase.auth().getRedirectResult()
+        return this.firebase.auth().getRedirectResult()
       }
 
       return await this.auth.signInWithPopup(provider)
