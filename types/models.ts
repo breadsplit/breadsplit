@@ -1,6 +1,6 @@
 import { TransOperation } from './operation_transformer'
 
-type uid = string
+export type UID = string
 
 export type MemberRoles =
   | 'owner'
@@ -12,30 +12,28 @@ export type TransactionType =
   | 'expenses'
   | 'transfer'
 
-export const enum ActivityAction {
-  insert = 'insert',
-  remove = 'remove',
-  update = 'update',
-  publish = 'publish',
-}
+export type ActivityAction =
+  | 'insert'
+  | 'remove'
+  | 'update'
+  | 'publish'
 
-export const enum Entity {
-  member = 'member',
-  viewer = 'viewer',
-  group = 'group',
-  transaction ='transaction',
-  currency_record = 'currency_record',
-}
+export type Entity =
+  | 'member'
+  | 'viewer'
+  | 'group'
+  | 'transaction'
+  | 'currency_record'
 
 export interface Weight {
-  uid: uid
+  uid: UID
   weight?: number
   fee?: number
   percent?: number
 }
 
 export interface Member {
-  uid: uid | null
+  uid: UID | null
   name: string
   role: MemberRoles
   defaultWeight?: number
@@ -43,7 +41,7 @@ export interface Member {
 }
 
 export interface UserInfo {
-  uid: uid | null
+  uid: UID | null
   anonymous: boolean
   email?: string
   name: string
@@ -67,14 +65,14 @@ export interface Transaction {
   service_fee_rate?: number
   creditors: Weight[]
   debtors: Weight[]
-  creator: uid
+  creator: UID
   type: TransactionType
   hashtags?: string[]
   note?: string
 }
 
 export interface CurrencyRecord {
-  id: uid
+  id: UID
   from_currency: string
   from_fee: number
   to_currency: string
@@ -92,7 +90,7 @@ export interface CurrencyChangeRate {
 
 export interface Activity {
   timestamp: number
-  by: uid
+  by: UID
   action: ActivityAction
   entity: Entity
   update_fields?: string | string[]
@@ -107,7 +105,7 @@ export interface GroupOptions {
 }
 
 export interface Budget {
-  creator: uid
+  creator: UID
   from: number
   to: number
   budget: number
@@ -125,7 +123,7 @@ export interface Group {
   budgets: Budget[]
 
   // Records
-  members: Record<uid, Member>
+  members: Record<UID, Member>
   currencies: string[]
   currency_records: CurrencyRecord[]
   transactions: Transaction[]
@@ -153,25 +151,6 @@ export interface ClientGroup {
   open: boolean
 }
 
-export interface ServerGroup {
-  id: string
-  // user ids
-  viewers: string[]
-  owner: string
-  open: boolean
-
-  present: Group
-  operations: string[]
-}
-
-export interface ServerOperations {
-  operations: Operation[]
-}
-
-export interface ServerBase {
-  base: Group
-}
-
 export interface TokenRecord {
   token: string
   locale: string
@@ -187,20 +166,4 @@ export interface FeedbackOptions {
 export interface Feedback extends FeedbackOptions {
   uid: string | null
   timestamp: number
-}
-
-export interface GroupMetaChanges {
-  name?: string
-  icon?: string
-  color?: string
-  currencies?: string[]
-  options?: Partial<GroupOptions>
-}
-
-export interface ExchangeRecord {
-  base: string
-  date: string
-  rates: Record<string, number>
-  timestamp: number
-  provider: 'fixer'
 }

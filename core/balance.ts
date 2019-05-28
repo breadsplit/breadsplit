@@ -5,31 +5,7 @@ import find from 'lodash/find'
 import map from 'lodash/map'
 import uniq from 'lodash/uniq'
 import concat from 'lodash/concat'
-import { Transaction, Group } from '../types'
-
-export interface TransactionBalance {
-  uid: string
-  credit_weight: number
-  debt_weight: number
-  credit: number
-  debt: number
-  balance: number
-}
-
-export interface Balance {
-  uid: string
-  balance: Record<string, number>
-  main_balance: number
-  main_currency: string
-  removed?: boolean
-}
-
-export interface Solution {
-  from: string
-  to: string
-  amount: number
-  currency: string
-}
+import { Transaction, Group, TransactionBalance, Balance, Solution } from '../types'
 
 export function GCD(arr: number[]) {
   // Use spread syntax to get minimum of array

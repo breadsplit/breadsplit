@@ -5,17 +5,17 @@ If you made any modification,
 Please DO DEPLOY firebase functions before merge into master.
 */
 import cloneDeep from 'lodash/cloneDeep'
-import { TransformFunctions, Group, Member, Transaction, ActivityAction, Entity, GroupMetaChanges } from '../types'
+import { TransformFunctions, Group, Member, Transaction, GroupMetaChanges } from '../types'
 
 export type TransformKeys =
-| 'init'
-| 'modify_meta'
-| 'insert_member'
-| 'remove_member'
-| 'modify_member'
-| 'insert_transaction'
-| 'change_member_id'
-| 'new_activity'
+  | 'init'
+  | 'modify_meta'
+  | 'insert_member'
+  | 'remove_member'
+  | 'modify_member'
+  | 'insert_transaction'
+  | 'change_member_id'
+  | 'new_activity'
 
 export const Transforms: TransformFunctions<Group> = {
   init(snap, data, { by, timestamp } = {}) {
@@ -25,8 +25,8 @@ export const Transforms: TransformFunctions<Group> = {
     snap.activities.push({
       by,
       timestamp,
-      action: ActivityAction.publish,
-      entity: Entity.group,
+      action: 'publish',
+      entity: 'group',
     })
     return snap
   },
@@ -40,8 +40,8 @@ export const Transforms: TransformFunctions<Group> = {
       snap.activities.push({
         by,
         timestamp,
-        action: ActivityAction.update,
-        entity: Entity.group,
+        action: 'update',
+        entity: 'group',
         update_fields: 'name',
         entity_name: changes.name,
       })
@@ -63,8 +63,8 @@ export const Transforms: TransformFunctions<Group> = {
     snap.activities.push({
       by,
       timestamp,
-      action: ActivityAction.insert,
-      entity: Entity.member,
+      action: 'insert',
+      entity: 'member',
       entity_id: member.uid,
       entity_name: member.name,
     })
@@ -97,8 +97,8 @@ export const Transforms: TransformFunctions<Group> = {
     snap.activities.push({
       by,
       timestamp,
-      action: ActivityAction.insert,
-      entity: Entity.transaction,
+      action: 'insert',
+      entity: 'transaction',
       entity_id: transaction.id,
       entity_name: transaction.desc,
       entity_desc: `${transaction.currency} ${transaction.total_fee}`,

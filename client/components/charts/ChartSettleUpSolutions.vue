@@ -8,13 +8,12 @@ svg.chart-settle-up-solutions(
 </template>
 
 <script lang='ts'>
-import { Component, Prop, Mixins } from 'vue-property-decorator'
 import union from 'lodash/union'
-import { Solution } from '~/core'
-import { UserInfoMixin } from '~/mixins'
-import { UserMemberInfo } from '~/types'
 import * as d3 from 'd3'
-import { IdMe } from '../../../core/id_helper'
+import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { IdMe } from '~/core'
+import { UserInfoMixin } from '~/mixins'
+import { UserMemberInfo, Solution } from '~/types'
 
 interface Node extends d3.SimulationNodeDatum, UserMemberInfo {}
 
