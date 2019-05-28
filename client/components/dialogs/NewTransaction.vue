@@ -1,24 +1,4 @@
 <template lang='pug'>
-mixin inputs()
-  .mx-3(v-columns='"max-content auto 65px"' style='vertical-align:bottom')
-    div(v-rows='"auto max-content"')
-      div
-      .my-3.ml-2 {{$t('ui.total')}}
-    app-number-input(
-      ref='total_fee_input'
-      v-model.number='form.total_fee'
-      placeholder='0'
-      @focus='openKeyboard'
-      @click.native='gcdCredtors'
-      reverse outline autofocus
-      required hide-details flat main
-    )
-    div(v-rows='"auto 45px"')
-      span
-      app-currency-select.mt-0.pt-0(v-model='form.currency')
-
-  app-soft-numpad(ref='numpad')
-
 v-card.new-transaction(v-rows='"auto max-content"')
   app-close-button(@close='close')
 
@@ -97,7 +77,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
       v-btn.button-save(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
         | {{btnNextText}}
 
-    app-date-picker(ref='datePicker')
+    app-date-picker(ref='date_picker')
 </template>
 
 <script lang='ts'>
@@ -106,6 +86,7 @@ import Categories, { CategoryKeys } from '~/../meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, dateToRelative, IdMe, defaultCurrency } from '~/core'
+import DatePicker from '../basic/DatePicker.vue'
 
 @Component
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
@@ -113,6 +94,10 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   cats = Categories
   step = 1
   steps = 4
+
+  $refs!: {
+    date_picker: DatePicker
+  }
 
   @Getter('user/uid') uid: string | undefined
 
@@ -146,8 +131,6 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     }
 
     this.form.total_fee = +this.options.amount || 0
-
-    // @ts-ignore
     this.step = 1
   }
 
@@ -212,8 +195,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   }
 
   async pickDate() {
-    // @ts-ignore
-    const date: number | null = await this.$refs.datePicker.open(this.form.timestamp)
+    const date: number | null = await this.$refs.date_picker.open(this.form.timestamp)
     if (date)
       this.form.timestamp = date
   }

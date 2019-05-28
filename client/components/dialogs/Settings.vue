@@ -117,7 +117,6 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
   }
 
   async purgeData() {
-    // @ts-ignore
     if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
       await this.$fire.logout()
       this.$store.commit('purge')

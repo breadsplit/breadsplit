@@ -5,6 +5,7 @@ app-dialog(ref='dialog' :lazy='false' persistent no-click-animation)
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
+import Dialog from '~/components/global/Dialog.vue'
 
 @Component({
   async asyncData({ params }) {
@@ -14,13 +15,16 @@ import { Component, Vue } from 'nuxt-property-decorator'
 export default class TransactionPage extends Vue {
   params: any
 
+  $refs!: {
+    dialog: Dialog
+  }
+
   get options() {
     return Object.assign({}, this.$route.query, this.params)
   }
 
   mounted() {
     this.$nextTick(async () => {
-      // @ts-ignore
       await this.$refs.dialog.open(this.options)
       this.$router.go(-1)
     })

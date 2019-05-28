@@ -57,6 +57,7 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import { ServerGroup, Member } from '~/types'
 import { IsThisId } from '~/core'
 import { CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
+import Login from '~/components/dialogs/Login.vue'
 
 @Component({
   // @ts-ignore
@@ -76,6 +77,10 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
   loading = true
   joining = false
   id: string | null = null
+
+  $refs!: {
+    login: Login
+  }
 
   get group() {
     if (this.serverGroup)
@@ -103,7 +108,6 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
       return
     if (!this.$store.getters['user/uid']) {
       // if false, the login is canceled
-      // @ts-ignore
       if (!await this.$refs.login.login())
         return
     }
@@ -120,7 +124,6 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
     this.loading = true
     if (this.$store.getters['group/all'].map(g => g.id).includes(this.id)) {
       this.$router.replace(`/group/${this.id}`)
-      // @ts-ignore
       this.$root.$snack(this.$t('tips.already_joined_group'))
       return
     }

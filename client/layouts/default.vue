@@ -108,7 +108,7 @@ v-app(:dark='dark')
   app-dialog(ref='about' :route='true')
     app-about-page
 
-  app-dialog(ref='init', :fullscreen='false')
+  app-dialog(ref='welcome', :fullscreen='false')
     app-welcome-dialog
 </template>
 
@@ -117,6 +117,7 @@ import { setTimeout } from 'timers'
 import { Component, Getter, Mutation, mixins } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
+import Dialog from '~/components/global/Dialog.vue'
 import head from './head'
 
 @Component({
@@ -140,6 +141,12 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   @Getter('dark') dark!: boolean
 
   @Mutation('group/remove') removeGroup
+
+  $refs!: {
+    settings: Dialog
+    newgroup: Dialog
+    welcome: Dialog
+  }
 
   // Computed
   get debug() {
@@ -208,7 +215,6 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
             console.error(e)
             // TODO:ERROR error handling
           }
-          // @ts-ignore
           this.$root.$apploading.close()
         }
 
@@ -219,7 +225,6 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
         break
 
       case 'edit':
-        // @ts-ignore
         this.$refs.newgroup.open({ mode: 'edit' })
         break
     }
@@ -227,7 +232,6 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
 
   async newGroup() {
     this.closeDrawer()
-    // @ts-ignore
     this.$refs.newgroup.open()
   }
 
@@ -240,7 +244,6 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
 
   async settingPage() {
     this.closeDrawer()
-    // @ts-ignore
     this.$refs.settings.open()
   }
 
@@ -272,8 +275,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   async checkFirstStart() {
     if (!this.$store.state.app.init) {
       this.$store.commit('init')
-      // @ts-ignore
-      await this.$refs.init.open()
+      await this.$refs.welcome.open()
     }
   }
 }

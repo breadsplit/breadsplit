@@ -28,11 +28,16 @@ app-dialog.login-dialog(ref='dialog' :route='true' width='350' :fullscreen='fals
 
 <script lang='ts'>
 import { Component, Watch, Vue } from 'nuxt-property-decorator'
+import Dialog from '../global/Dialog.vue'
 
 @Component
 export default class Login extends Vue {
   resolve: ((result) => void) | null = null
   reject: ((error) => void) | null = null
+
+  $refs!: {
+    dialog: Dialog
+  }
 
   async loginWith(provider: 'google'|'facebook'|'github') {
     try {
@@ -61,7 +66,6 @@ export default class Login extends Vue {
     return new Promise((resolve, reject) => {
       this.resolve = resolve
       this.reject = reject
-      // @ts-ignore
       this.$refs.dialog.open().then(() => this.close(false))
     })
   }
@@ -74,7 +78,6 @@ export default class Login extends Vue {
     if (this.resolve)
       this.resolve(true)
     this.resolve = null
-    // @ts-ignore
     this.$refs.dialog.close()
   }
 }

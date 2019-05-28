@@ -22,7 +22,7 @@ export default class DatePicker extends Vue {
   open(date?: number) {
     this.dialog = true
     this.date = dayjs(date).format('YYYY-MM-DD')
-    return new Promise((resolve, reject) => {
+    return new Promise<number|null>((resolve, reject) => {
       this.resolve = resolve
       this.reject = reject
     })
