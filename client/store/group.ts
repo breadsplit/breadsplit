@@ -160,6 +160,7 @@ export const mutations: MutationTree<GroupState> = {
   // Groups
   add(state, group: ClientGroup) {
     Vue.set(state.groups, group.base.id, group)
+    state.currentId = group.base.id
   },
 
   remove(state, id) {
