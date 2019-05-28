@@ -82,7 +82,8 @@
     "feedback": "意見回饋",
     "wip": "功能開發中，敬請期待…",
     "new_expense": "新的支出",
-    "paid_money": "支付了",
+    "xx_paid_money": "{0} 支付了",
+    "xx_paid_xx": "{0} 支付了 {1}",
     "paid_by": "付款人",
     "paid_by_xx": "由 {0} 付款",
     "add_location": "添加位置",
@@ -109,7 +110,7 @@
       "how_much": "付款金額",
       "expense_paid_by": "由誰支付？",
       "xx_should_pay": "這次輪到 {0} 付款。",
-      "more_payers": "更多付款人",
+      "add_payer": "添加付款人",
       "for_whom": "為了誰？",
       "more_details": "更多信息"
     },

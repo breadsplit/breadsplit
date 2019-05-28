@@ -56,7 +56,7 @@
       "expense_paid_by": "费用由谁支付？",
       "xx_should_pay": "这次轮到 {0} 付款。",
       "how_much": "输入金额",
-      "more_payers": "更多的付款人",
+      "add_payer": "添加付款人",
       "more_details": "更多信息"
     },
     "total": "合计",

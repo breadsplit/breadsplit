@@ -17,7 +17,6 @@
 
     & > .text
       font-size 0.9em
-      margin-top 2px
 
   &.inline
     & > *

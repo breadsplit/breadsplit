@@ -32,6 +32,7 @@
       )
       div(v-rows='"auto 45px"')
         span
+        // TODO:AF recent and common currencies
         app-currency-select.mt-0.pt-0(v-model='trans.currency')
 
     .mt-3(v-else)

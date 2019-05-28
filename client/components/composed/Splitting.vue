@@ -32,14 +32,18 @@
       :class='getParticipatorClass(pa)'
       @click='focusInput(pa)'
     )
-      div
-        app-user-avatar(size='38' :id='pa.uid' show-name inline)
-        span.ml-2 {{$t('ui.paid_money')}}
-        v-btn.op-25(
-          v-if='participators.length > 1 && removable'
-          @click='removeParticipator(pa.uid)'
-          flat icon small)
-          v-icon(size='20') mdi-close
+      .user-info-section
+        app-user-avatar(size='38' :id='pa.uid')
+        span.user-name-text.mx-2
+          i18n(path='ui.xx_paid_money')
+            b
+              app-user-info(:id='pa.uid')
+        v-expand-x-transition
+          v-btn.op-25.ma-0(
+            v-show='removable && focused===pa.uid'
+            @click='removeParticipator(pa.uid)'
+            flat icon small)
+            v-icon(size='20') mdi-close
 
         //span ({{pa.weight}})
 
@@ -54,11 +58,11 @@
         )
         .currency {{currency}}
 
-    .participator.add(v-if='candidates.length')
+    .participator.add.px-1(v-if='candidates.length')
       app-member-select(:members='candidates', @input='id=>addParticipator(id)')
-        app-user-avatar(size='38' show-name inline)
+        v-btn(icon small).op-50
           v-icon(size='24') mdi-plus
-          span(slot='text') {{$t('ui.newtrans.more_payers')}}
+        span {{$t('ui.newtrans.add_payer')}}
 
 </template>
 
@@ -256,8 +260,12 @@ export default class Splitting extends Vue {
       transition all .3s ease-in-out
       border-radius 5px
 
-      *
+      & > *,
+      .user-info-section > *
         vertical-align middle
+
+      .user-info-section
+        white-space nowrap
 
       &.add
         cursor pointer

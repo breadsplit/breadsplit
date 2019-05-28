@@ -94,7 +94,8 @@
     "feedback": "Feedback",
     "wip": "Working in progress...",
     "new_expense": "New expense",
-    "paid_money": "paid",
+    "xx_paid_money": "{0} paid",
+    "xx_paid_xx": "{0} paid {1}",
     "paid_by": "Paid by",
     "paid_by_xx": "Paid by {0}",
     "add_location": "Add location",
@@ -114,7 +115,7 @@
       "how_much": "How much?",
       "expense_paid_by": "Expense paid by?",
       "xx_should_pay": "by the way, {0} should pay this time.",
-      "more_payers": "More payers",
+      "add_payer": "Add payer",
       "for_whom": "For whom?",
       "more_details": "More details"
     },
