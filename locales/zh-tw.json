@@ -105,10 +105,10 @@
     "privacy_policy": "隱私政策",
     "continue_anyway": "仍然繼續",
     "newtrans": {
-      "how_much": "輸入金額",
-      "expense_paid_by": "費用由誰支付？",
+      "how_much": "付款金額",
+      "expense_paid_by": "由誰支付？",
       "xx_should_pay": "這次輪到 {0} 付款。",
-      "more_payers": "更多的付款人",
+      "more_payers": "更多付款人",
       "for_whom": "為了誰？",
       "more_details": "更多信息"
     },
