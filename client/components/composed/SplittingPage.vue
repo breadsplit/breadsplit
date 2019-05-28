@@ -25,7 +25,7 @@
         ref='total_fee_input'
         :value='trans.total_fee'
         @user-input='v=>trans.total_fee=v'
-        @focus='openKeyboard'
+        @focus='openKeyboardForMainInput'
         placeholder='0'
         reverse outline autofocus
         required hide-details flat main
@@ -47,10 +47,13 @@
 <script lang='ts'>
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Transaction, Member } from '~/types'
+import SoftNumpad from '../basic/SoftNumpad.vue'
+import NumberInput from '../basic/NumberInput.vue'
+import Splitting from './Splitting.vue'
 
 @Component
 export default class SplittingPage extends Vue {
-  registeredInput = null
+  registeredInput: NumberInput | null = null
 
   @Prop(Object) readonly trans!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
@@ -58,18 +61,30 @@ export default class SplittingPage extends Vue {
   @Prop({ default: '' }) readonly title!: string
   @Prop({ default: '' }) readonly subtitle!: string
 
+  $refs!: {
+    splitting: Splitting
+    numpad: SoftNumpad
+  }
+
   get showKeyboard() {
     return !!this.registeredInput
   }
 
-  openKeyboard(e) {
+  closeKeyboard() {
+    this.registeredInput = null
+  }
+
+  openKeyboardForMainInput(e) {
+    this.$refs.splitting.gcd()
+    this.$refs.splitting.clear()
+    this.openKeyboard(e)
+  }
+
+  openKeyboard(e: NumberInput) {
     if (this.registeredInput) {
-      // @ts-ignore
       this.registeredInput.calculate()
-      // @ts-ignore
       this.registeredInput.deregisterKeyboard()
     }
-    // @ts-ignore
     e.registerKeyboard(this.$refs.numpad)
     this.registeredInput = e
   }

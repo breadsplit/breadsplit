@@ -30,7 +30,7 @@
         app-user-avatar(size='38' :id='pa.uid' show-name inline)
         span.ml-2 {{$t('ui.paid_money')}}
         v-btn.op-25(
-          v-if='participators.length > 1 && removeable'
+          v-if='participators.length > 1 && removable'
           @click='removeParticipator(pa.uid)'
           flat icon small)
           v-icon(size='20') mdi-close
@@ -55,7 +55,6 @@
 </template>
 
 <script lang='ts'>
-import sum from 'lodash/sum'
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { TransactionBalanceChanges, GCD } from '~/core'
 import { Transaction, Member, Weight } from '~/types'
@@ -84,8 +83,8 @@ export default class Splitting extends Vue {
     }
   }
 
-  get removeable() {
-    return this.on === 'debtors'
+  get removable() {
+    return this.on === 'creditors'
   }
 
   get balanceChanges() {
@@ -128,45 +127,63 @@ export default class Splitting extends Vue {
     return this.members.filter(m => m.uid != null && !this.participatorIds.includes(m.uid))
   }
 
-  clear() {
-    this.participators.forEach((p) => {
-      this.$delete(p, 'fee')
-    })
+  setParticipator(uid: string, weight = 1) {
+    this.participators = [{ weight, uid }]
   }
 
-  setParticipator(uid: string) {
-    this.participators = [{ weight: 1, uid }]
-  }
-
-  addParticipator(uid: string) {
-    if (this.participators.length === 1)
-      this.participators[0].fee = this.trans.total_fee
-    this.participators.push({ weight: 0, uid })
+  addParticipator(uid: string, weight = 1) {
+    this.participators.push({ weight, uid })
   }
 
   removeParticipator(uid: string) {
     this.participators = this.participators.filter(c => c.uid !== uid)
   }
 
-  getFee(creditor: Weight) {
-    if (creditor.fee)
-      return creditor.fee
-    let weights = sum(this.participators.filter(c => c.fee == null).map(i => i.weight || 0))
-    const fees = sum(this.participators.filter(c => c.fee != null).map(i => i.fee || 0))
-    if (!weights)
-      weights = 1
-    return ((creditor.weight || 0) / weights) * (this.trans.total_fee - fees)
+  getFee(participator: Weight) {
+    if (participator.fee != null)
+      return participator.fee
+    return ((participator.weight || 0) / (this.flexibleWeights || 1)) * (this.flexibleFees)
   }
 
-  setFee(creditor: Weight, fee: number) {
-    if (fee === this.getFee(creditor))
+  get flexibleWeights() {
+    return this.participators
+      .filter(c => c.fee == null)
+      .map(i => i.weight || 0)
+      .reduce((a, b) => a + b, 0)
+  }
+
+  get fixedFees() {
+    return this.participators
+      .filter(c => c.fee != null)
+      .map(i => i.fee || 0)
+      .reduce((a, b) => a + b, 0)
+  }
+
+  get flexibleFees() {
+    return this.trans.total_fee - this.fixedFees
+  }
+
+  setFee(participator: Weight, fee: number) {
+    if (fee === this.getFee(participator))
       return
-    creditor.fee = +fee
-    this.trans.total_fee = sum(this.participators.map(i => i.fee || 0))
+    this.$set(participator, 'fee', +fee || 0)
+    this.recalculateTotal()
+    // this.trans.total_fee = sum(this.participators.map(i => i.fee || 0))
     // this.gcd()
   }
 
-  gcd() {
+  recalculateTotal() {
+    if (this.fixedFees > this.trans.total_fee || !this.flexibleWeights)
+      this.trans.total_fee = this.fixedFees
+  }
+
+  public clear() {
+    this.participators.forEach((p) => {
+      this.$delete(p, 'fee')
+    })
+  }
+
+  public gcd() {
     const participators = this.participators.map(c => ({
       uid: c.uid,
       fee: this.getFee(c),
@@ -174,9 +191,7 @@ export default class Splitting extends Vue {
     const gcd = GCD(participators.map(c => c.fee))
     this.participators.forEach((c) => {
       const participator = participators.find(d => d.uid === c.uid)
-      if (!participator || !participator.fee)
-        c.weight = 0
-      else
+      if (participator && participator.fee)
         c.weight = participator.fee / gcd
     })
   }
