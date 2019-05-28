@@ -3,6 +3,7 @@ import zhcn from './zh-cn.json'
 import zhtw from './zh-tw.json'
 import fr from './fr.json'
 import ja from './ja.json'
+import de from './de.json'
 
 export const Messages = {
   en,
@@ -10,6 +11,7 @@ export const Messages = {
   ja,
   'zh-cn': zhcn,
   'zh-tw': zhtw,
+  de,
 }
 
 export const AvaliableLocales = Object
