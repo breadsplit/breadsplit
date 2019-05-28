@@ -4,7 +4,7 @@ import orderBy from 'lodash/orderBy'
 import union from 'lodash/union'
 import mapValues from 'lodash/mapValues'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
-import { GroupState, RootState, Group, ServerGroup, Operation } from '~/types'
+import { GroupState, RootState, Group, ServerGroup, Operation, ClientGroup } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe } from '~/core'
 import { GroupStateDefault } from '~/store'
 
@@ -107,6 +107,18 @@ function NewOperation(
 }
 
 export const actions: ActionTree<GroupState, RootState> = {
+
+  add(context, payload) {
+    const group = ClientGroupDefault(payload)
+    group.base.activities.push({
+      by: context.rootGetters['user/uid'] || IdMe,
+      timestamp: +new Date(),
+      action: 'insert',
+      entity: 'group',
+    })
+    context.commit('add', group)
+  },
+
   modify(context, { id, changes }) {
     NewOperation(context, id, 'modify_meta', changes)
   },
@@ -146,10 +158,8 @@ export const mutations: MutationTree<GroupState> = {
   },
 
   // Groups
-  add(state, payload) {
-    const group = ClientGroupDefault(payload)
+  add(state, group: ClientGroup) {
     Vue.set(state.groups, group.base.id, group)
-    state.currentId = group.base.id
   },
 
   remove(state, id) {

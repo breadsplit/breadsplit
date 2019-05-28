@@ -33,7 +33,7 @@ export default class SettleUpSolutions extends mixins(GroupMixin, NavigationMixi
   }
 
   get solutions() {
-    return SettleUp(this.balances)
+    return SettleUp(this.balances, this.group)
   }
 
   settleUp(solution: Solution) {

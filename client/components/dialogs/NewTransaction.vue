@@ -136,7 +136,7 @@ import { Component, mixins, Getter } from 'nuxt-property-decorator'
 import Categories, { CategoryKeys } from '~/../meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
-import { TransactionDefault, dateToRelative, IdMe, GCD } from '~/core'
+import { TransactionDefault, dateToRelative, IdMe, GCD, defaultCurrency } from '~/core'
 
 @Component
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
@@ -154,7 +154,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
       me = this.uid
     this.form.type = this.options.type || 'expense'
     this.form.creator = me
-    this.form.currency = this.group.currencies[0] || 'USD'
+    this.form.currency = this.group.currencies[0] || defaultCurrency
 
     if (this.options.from) {
       this.form.creditors = this.options.from

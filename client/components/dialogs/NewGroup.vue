@@ -64,7 +64,7 @@ import { Component, Getter, mixins } from 'nuxt-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
 import { Group, UserInfo, GroupMetaChanges } from '~/types'
-import { IdMe, GroupDefault } from '~/core'
+import { IdMe, GroupDefault, defaultCurrency } from '~/core'
 
 @Component
 export default class NewGroup extends mixins(DialogChildMixin) {
@@ -95,7 +95,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
       }
     }
     else {
-      this.form.currencies[0] = this.codes[0] || 'USD'
+      this.form.currencies[0] = this.codes[0] || defaultCurrency
     }
   }
 
@@ -141,7 +141,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
       currencies: this.form.currencies,
     }
     this.defaultMember(payload.members)
-    this.$store.commit('group/add', payload)
+    this.$store.dispatch('group/add', payload)
     this.close()
     // Switch to new created group
     const id = this.$store.state.group.currentId

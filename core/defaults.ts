@@ -3,6 +3,8 @@ import mapValues from 'lodash/mapValues'
 import { Member, Group, Transaction, ClientGroup } from '../types'
 import { GenerateId } from './id_helper'
 
+export const defaultCurrency = 'USD'
+
 export const MemberDefault = (overrides?: Partial<Member>): Member => merge({
   uid: GenerateId.LocalMember(),
   name: '',
@@ -60,7 +62,7 @@ export const TransactionDefault = (overrides?: Partial<Transaction>): Transactio
   timestamp: +new Date(),
   creditors: [],
   debtors: [],
-  currency: 'USD',
+  currency: defaultCurrency,
   creator: '',
   category: '',
   total_fee: 0,

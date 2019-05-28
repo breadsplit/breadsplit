@@ -6,6 +6,7 @@ import map from 'lodash/map'
 import uniq from 'lodash/uniq'
 import concat from 'lodash/concat'
 import { Transaction, Group, TransactionBalance, Balance, Solution } from '../types'
+import { defaultCurrency } from './defaults'
 
 export function GCD(arr: number[]) {
   // Use spread syntax to get minimum of array
@@ -62,7 +63,7 @@ export function TransactionBalanceChanges(trans: Transaction): TransactionBalanc
 }
 
 export function GroupBalances(group: Group): Balance[] {
-  const main_currency = group.currencies[0]
+  const main_currency = group.currencies[0] || defaultCurrency
   let balances = Object.values(group.members)
     .map((m): Balance => {
       const balance: Record<string, number> = { }
@@ -107,12 +108,12 @@ export function GroupBalances(group: Group): Balance[] {
   return balances
 }
 
-export function SettleUp(balances: Balance[]): Solution[] {
+export function SettleUp(balances: Balance[], group: Group): Solution[] {
   let remaining = balances.map(b => ({
     uid: b.uid,
     balance: b.main_balance,
   }))
-  const currency = balances[0].main_currency
+  const currency = group.currencies[0] || defaultCurrency
   const solutions: Solution[] = []
 
   function sort() {
