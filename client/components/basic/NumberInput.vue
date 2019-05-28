@@ -17,19 +17,30 @@ import SoftNumpad from './SoftNumpad.vue'
 import CommonMixin from '~/mixins/common'
 
 const operatorRegex = /[+|-|*|/]/g
+const defaultMax = 1_000_000_000
 
 @Component({
   inheritAttrs: false,
 })
 export default class NumberInput extends mixins(CommonMixin) {
   @Prop({ default: 0 }) readonly value!: number
-  @Prop({ default: 100000000 }) readonly max!: number
+  @Prop({ default: defaultMax }) readonly max!: number
+  // for displaying style
   @Prop(Boolean) readonly flat?: boolean
   @Prop(Boolean) readonly main?: boolean
+  // if not true, value will be reset on every first input
+  @Prop(Boolean) readonly sustained?: boolean
+  // set class when actives
   @Prop({ default: 'number-input--active' }) readonly activeClass!: string
 
   numpad: SoftNumpad | null = null
   inner_value: string = ''
+  warned = false
+  dirty = false
+
+  private mounted() {
+    this.updateInnerValue()
+  }
 
   get classes() {
     return {
@@ -51,26 +62,6 @@ export default class NumberInput extends mixins(CommonMixin) {
       return ''
     else
       return this.calculated.toString()
-  }
-
-  deregisterKeyboard() {
-    if (this.numpad) {
-      this.numpad.$off('input', this.input)
-      this.numpad.$off('backspace', this.backspace)
-      this.numpad.$off('clear', this.clear)
-      this.numpad.$off('calculate', this.calculate)
-    }
-    this.numpad = null
-  }
-
-  registerKeyboard(numpad: SoftNumpad) {
-    this.deregisterKeyboard()
-    numpad.$on('input', this.input)
-    numpad.$on('backspace', this.backspace)
-    numpad.$on('clear', this.clear)
-    numpad.$on('calculate', this.calculate)
-
-    this.numpad = numpad
   }
 
   get parts() {
@@ -97,8 +88,8 @@ export default class NumberInput extends mixins(CommonMixin) {
     }
   }
 
-  round(value: number) {
-    return Math.round(value * 100) / 100
+  get hasOperator() {
+    return !!this.inner_value.match(operatorRegex)
   }
 
   @Watch('calculated')
@@ -113,6 +104,16 @@ export default class NumberInput extends mixins(CommonMixin) {
     this.updateInnerValue()
   }
 
+  @Watch('hasOperator')
+  updateKeyboardState() {
+    if (this.numpad)
+      this.numpad.dirty = this.hasOperator
+  }
+
+  round(value: number) {
+    return Math.round(value * 100) / 100
+  }
+
   updateInnerValue() {
     if (this.round(this.value) !== this.calculated) {
       this.inner_value = this.value.toString()
@@ -120,22 +121,8 @@ export default class NumberInput extends mixins(CommonMixin) {
     }
   }
 
-  mounted() {
-    this.updateInnerValue()
-  }
-
   isOperator(char: string) {
     return '+-*/.'.includes(char)
-  }
-
-  get hasOperator() {
-    return this.inner_value.match(operatorRegex)
-  }
-
-  @Watch('hasOperator')
-  updateKeyboardState() {
-    if (this.numpad)
-      this.numpad.dirty = this.hasOperator
   }
 
   trimTailOperator(value: string) {
@@ -160,8 +147,13 @@ export default class NumberInput extends mixins(CommonMixin) {
   }
 
   input(char: string) {
+    if (!this.sustained && !this.dirty)
+      this.clear()
+
     if (this.inner_value === '0')
-      this.inner_value = ''
+      this.clear()
+
+    this.dirty = true
 
     if (char === '.')
       this.inputDot()
@@ -184,7 +176,7 @@ export default class NumberInput extends mixins(CommonMixin) {
     this.$emit('focus', this)
   }
 
-  setValue(value) {
+  private setValue(value) {
     this.inner_value = value
   }
 
@@ -200,7 +192,9 @@ export default class NumberInput extends mixins(CommonMixin) {
   backspace() {
     this.inner_value = this.inner_value.slice(0, this.inner_value.length - 1)
     if (this.inner_value === '0')
-      this.inner_value = ''
+      this.clear()
+
+    this.dirty = true
   }
 
   clear() {
@@ -215,8 +209,7 @@ export default class NumberInput extends mixins(CommonMixin) {
     catch {}
   }
 
-  warned = false
-  onKeydown(e: KeyboardEvent) {
+  private onKeydown(e: KeyboardEvent) {
     // TODO:AF more checks based on value
 
     if (!this.warned) {
@@ -237,6 +230,27 @@ export default class NumberInput extends mixins(CommonMixin) {
     console.log('KEY_PRESSED', e)
 
     e.preventDefault()
+  }
+
+  public registerKeyboard(numpad: SoftNumpad) {
+    this.deregisterKeyboard()
+    numpad.$on('input', this.input)
+    numpad.$on('backspace', this.backspace)
+    numpad.$on('clear', this.clear)
+    numpad.$on('calculate', this.calculate)
+
+    this.numpad = numpad
+    this.dirty = false
+  }
+
+  public deregisterKeyboard() {
+    if (this.numpad) {
+      this.numpad.$off('input', this.input)
+      this.numpad.$off('backspace', this.backspace)
+      this.numpad.$off('clear', this.clear)
+      this.numpad.$off('calculate', this.calculate)
+    }
+    this.numpad = null
   }
 }
 </script>
