@@ -5,14 +5,14 @@ v-card.welcome-dialog
 
   v-card-text.px-4
 
-    p <b>Thank you so much to try BreadSplit</b>!
+    p <b>Thank you so much for trying BreadSplit</b>!
 
     p
       | We are currently in a very <b>early beta</b> stage.
       | Many features are still under developmenting.
-      | We will continuesly update and add features in next serval weeks.
-      | During this period, you may encounter some bugs or poor experiences,
-      | please kindly feedback to us, it's very important for us to make this a better app.
+      | We will continuesly update and add features in coming weeks.
+      | We are sorry as you may encounter some bugs or poor experiences,
+      | Also, please kindly feedback to us, it's very important for us to make it better.
 
     p Enjoy!
 

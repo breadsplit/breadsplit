@@ -96,6 +96,7 @@
     "new_expense": "New expense",
     "paid_money": "paid",
     "paid_by": "Paid by",
+    "paid_by_xx": "Paid by {0}",
     "add_location": "Add location",
     "repeat_expense": "Repeat",
     "title_join_a_group": "Join a group",
@@ -127,7 +128,8 @@
   "noun": {
     "today": "Today",
     "yesterday": "Yesterday",
-    "tomorrow": "Tomorrow"
+    "tomorrow": "Tomorrow",
+    "expense": "Expense"
   },
   "prompt": {
     "are_you_sure": "Are you sure?"

@@ -95,5 +95,8 @@
       "display": ""
     }
   },
-  "acts": {}
+  "acts": {},
+  "noun": {
+    "expense": "支出"
+  }
 }

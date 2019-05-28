@@ -22,7 +22,7 @@
     "button_ok": "好的",
     "button_confirm": "確認",
     "button_cancel": "取消",
-    "join_as_me": "作爲 {0} 加入",
+    "join_as_me": "以 {0} 加入",
     "group_editing": {
       "new_group": "新建群組",
       "enter_group_name": "請輸入群組名稱",
@@ -84,6 +84,7 @@
     "new_expense": "新的支出",
     "paid_money": "支付了",
     "paid_by": "付款人",
+    "paid_by_xx": "由 {0} 付款",
     "add_location": "添加位置",
     "repeat_expense": "重複",
     "title_join_a_group": "加入群組",
@@ -155,7 +156,8 @@
   "noun": {
     "today": "今天",
     "yesterday": "昨天",
-    "tomorrow": "明天"
+    "tomorrow": "明天",
+    "expense": "支出"
   },
   "prompt": {
     "are_you_sure": "你確定嗎？"
