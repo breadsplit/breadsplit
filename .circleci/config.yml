@@ -101,6 +101,7 @@ workflows:
                 - gh-pages
                 - raymond
                 - docs
+                - dev2
 
       # auto deploy to firebase only on production server
       - firebase_deploy:
