@@ -16,6 +16,8 @@ import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import SoftNumpad from './SoftNumpad.vue'
 import CommonMixin from '~/mixins/common'
 
+const operatorRegex = /[+|-|*|/]/g
+
 @Component({
   inheritAttrs: false,
 })
@@ -72,7 +74,7 @@ export default class NumberInput extends mixins(CommonMixin) {
   }
 
   get parts() {
-    return this.inner_value.split(/\+|-|\*|\//)
+    return this.inner_value.split(operatorRegex)
   }
 
   get lastPart() {
@@ -126,6 +128,16 @@ export default class NumberInput extends mixins(CommonMixin) {
     return '+-*/.'.includes(char)
   }
 
+  get hasOperator() {
+    return this.inner_value.match(operatorRegex)
+  }
+
+  @Watch('hasOperator')
+  updateKeyboardState() {
+    if (this.numpad)
+      this.numpad.dirty = this.hasOperator
+  }
+
   trimTailOperator(value: string) {
     const lastchar = value[value.length - 1]
     if (this.isOperator(lastchar))
@@ -165,7 +177,7 @@ export default class NumberInput extends mixins(CommonMixin) {
   }
 
   error() {
-    // TODO: shake
+    // TODO:AF shake
   }
 
   onFocus() {
@@ -205,7 +217,7 @@ export default class NumberInput extends mixins(CommonMixin) {
 
   warned = false
   onKeydown(e: KeyboardEvent) {
-    // TODO: more checks based on value
+    // TODO:AF more checks based on value
 
     if (!this.warned) {
       this.$root.$snack('Using keyboard to input is an experimenting function.', { color: 'red' })

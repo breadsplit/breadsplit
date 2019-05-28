@@ -191,7 +191,7 @@ export class FirebasePlugin {
     this.db
       .collection('messaging_tokens')
       .doc(this.uid)
-      // TODO:ANFTU: merge with other tokens
+      // TODO:AF merge with other tokens
       .set({ tokens: [{
         token,
         locale,

@@ -91,7 +91,7 @@ export function GroupBalances(group: Group): Balance[] {
     })
   })
   balances.forEach((b) => {
-    // TODO: curency change
+    // TODO:AF curency change
     b.main_balance = b.balance[main_currency]
   })
   // remove the "Removed members" when theire balance equal to 0

@@ -16,8 +16,10 @@ v-card.soft-numpad(flat :class='classes')
       v-icon mdi-multiplication
     .button(v-ripple @click='input("/")')
       v-icon mdi-division
-    .button(v-ripple @click='calculate()')
+    .button(v-if='dirty' v-ripple @click='calculate()')
       v-icon mdi-equal
+    .button(v-else v-ripple @click='close()')
+      v-icon mdi-keyboard-close
 
 </template>
 
@@ -28,6 +30,8 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 export default class SoftNumpad extends Vue {
   @Prop(Boolean) readonly absolute?: boolean
   @Prop(Boolean) readonly fixed?: ConstrainBoolean
+
+  dirty = false
 
   get classes() {
     return {
@@ -50,6 +54,10 @@ export default class SoftNumpad extends Vue {
 
   clear() {
     this.$emit('clear')
+  }
+
+  close() {
+    this.$emit('close')
   }
 }
 </script>

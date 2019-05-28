@@ -40,6 +40,7 @@
       app-soft-numpad(
         ref='numpad'
         v-show='showKeyboard'
+        @close='closeKeyboard'
       )
 
 </template>
