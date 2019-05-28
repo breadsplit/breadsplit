@@ -86,13 +86,17 @@ export default class NumberInput extends mixins(CommonMixin) {
         return 0
       const escaped = value.replace(/[^-()\d/*+.]/g, '')
       // eslint-disable-next-line no-eval
-      return (Math.round(eval(escaped) * 100) / 100)
+      return this.round(eval(escaped))
     }
     catch (e) {
       // eslint-disable-next-line
       console.error(e)
       return 0
     }
+  }
+
+  round(value: number) {
+    return Math.round(value * 100) / 100
   }
 
   @Watch('calculated')
@@ -108,8 +112,10 @@ export default class NumberInput extends mixins(CommonMixin) {
   }
 
   updateInnerValue() {
-    this.inner_value = this.value.toString()
-    this.calculate()
+    if (this.round(this.value) !== this.calculated) {
+      this.inner_value = this.value.toString()
+      this.calculate()
+    }
   }
 
   mounted() {
