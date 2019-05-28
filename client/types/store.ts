@@ -4,6 +4,7 @@ import { OSType, WebviewType } from '~/utils/ua'
 export interface GroupState {
   groups: { [s: string]: ClientGroup }
   currentId: string|null
+  unreads: { [s: string]: number }
 }
 
 export interface UserState {

@@ -89,6 +89,11 @@ export const getters: GetterTree<GroupState, RootState> = {
     const isUnsynced = (o: Operation) => !(group.syncingOperations || []).includes(o.hash)
     return group.operations.filter(isUnsynced)
   },
+
+  unreadsOf: state => (id?: string) => {
+    id = id || state.currentId || ''
+    return state.unreads[id] || 0
+  },
 }
 
 function NewOperation(
@@ -209,11 +214,21 @@ export const mutations: MutationTree<GroupState> = {
 
     const clientGroup = state.groups[group.id]
 
+    const activitiesCount = clientGroup.base.activities.length
+
     clientGroup.syncingOperations = (clientGroup.syncingOperations || [])
       .filter(i => !serverOperations.includes(i))
     clientGroup.base = Object.freeze(group.present)
     clientGroup.operations = unsyncedOperations
     clientGroup.lastsync = timestamp
+
+    const currentActivitiesCount = clientGroup.base.activities.length
+
+    state.unreads[group.id] = Math.max(currentActivitiesCount - activitiesCount, 0)
+  },
+
+  clearUnreads(state, id) {
+    state.unreads[id] = 0
   },
 
   syncOperations(state, { id, operations }) {

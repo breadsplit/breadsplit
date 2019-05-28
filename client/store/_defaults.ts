@@ -6,6 +6,7 @@ import { acceptLanguage } from '~/locales'
 export const GroupStateDefault = (overrides?: Partial<GroupState>): GroupState => merge({
   groups: {},
   currentId: null,
+  unreads: {},
 }, overrides)
 
 export const UserStateDefault = (overrides?: Partial<UserState>): UserState => merge({
