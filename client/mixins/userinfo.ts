@@ -22,7 +22,18 @@ export default class UserInfoMixin extends Vue {
       if (!user && autoFetch)
         this.$fire.updateUserProfiles([uid])
     }
-    const result = Object.assign({}, member, user)
+    const result = Object.assign({}, member, user) as UserMemberInfo
+
+    // when "member" has a name, override as nickname
+    if (member
+      && member.name
+      && result.name !== member.name
+    ) {
+      result.original_name = result.name
+      result.name = member.name
+    }
+
+    // set avatar url
     if (!result.avatar_url)
       result.avatar_url = this.getFallbackAvatar(uid)
     return result

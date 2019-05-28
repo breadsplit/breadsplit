@@ -119,6 +119,7 @@ export const Transforms: TransformFunctions<Group> = {
 
     // change members field
     member.uid = to
+    member.name = '' // reset member's name
     delete snap.members[from]
     snap.members[to] = member
 

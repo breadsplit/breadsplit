@@ -53,7 +53,9 @@ export interface UserInfo {
   lastsync?: number
 }
 
-export interface UserMemberInfo extends Member, UserInfo {}
+export interface UserMemberInfo extends Member, UserInfo {
+  original_name?: string
+}
 
 export interface Transaction {
   id: string
