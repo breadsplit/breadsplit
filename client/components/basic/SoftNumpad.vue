@@ -60,6 +60,7 @@ export default class SoftNumpad extends Vue {
   display grid
   grid-template-columns 80fr 20fr
   text-align center
+  user-select none
 
   &.absolute
     position absolute
@@ -78,8 +79,8 @@ export default class SoftNumpad extends Vue {
     grid-template-columns 1fr 1fr 1fr
 
     .button
-      height 70px
-      line-height 70px
+      height 65px
+      line-height 65px
       font-size 1.8em
 
   .operators

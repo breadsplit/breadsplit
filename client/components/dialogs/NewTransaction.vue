@@ -45,6 +45,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
         :trans='form'
         :members='members'
         :title='$t("ui.newtrans.for_whom")'
+        :subtitle='$t("ui.splitting.split_by")'
         on='debtors'
       )
 
@@ -234,13 +235,13 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     min-height 400px
 
   .page-container
-    padding 1.5em 2em
+    padding 1.5em 2em 0.5em 2em
 
     .header
       font-size 2.5em
 
     .subheader
-      font-size 1.4em
+      font-size 1.3em
 
     .member-choices
       padding 1.5em 0

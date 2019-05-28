@@ -2,6 +2,7 @@
 .height-100(v-rows='"max-content auto max-content"')
   .page-container
     .header {{title}}
+    .subheader(v-if='subtitle') {{subtitle}}
 
   app-splitting(
     ref='splitting'
@@ -35,10 +36,11 @@
 
     .mt-3(v-else)
 
-    app-soft-numpad(
-      ref='numpad'
-      v-show='showKeyboard'
-    )
+    v-expand-transition
+      app-soft-numpad(
+        ref='numpad'
+        v-show='showKeyboard'
+      )
 
 </template>
 
@@ -54,6 +56,7 @@ export default class SplittingPage extends Vue {
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
   @Prop({ default: () => [] }) readonly members!: Member[]
   @Prop({ default: '' }) readonly title!: string
+  @Prop({ default: '' }) readonly subtitle!: string
 
   get showKeyboard() {
     return !!this.registeredInput

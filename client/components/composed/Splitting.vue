@@ -1,12 +1,36 @@
 <template lang='pug'>
 .splitting
+
+  template(v-if='on === "debtors"')
+    v-tabs.mx-2(v-model='tab', v-if='showTabs', slider-color='transparent' grow)
+      v-tab(:class='tab == 0 ? "primary--text" : ""')
+        v-icon(style='color:inherit;transition:none;').mr-1 mdi-account-multiple
+        v-expand-x-transition
+          span(v-show='tab === 0') {{$t('ui.splitting.average')}}
+
+      v-tab(:class='tab == 1 ? "primary--text" : ""')
+        v-icon(style='color:inherit;transition:none;').mr-1 mdi-currency-usd
+        v-expand-x-transition
+          span(v-show='tab === 1') {{$t('ui.splitting.amount')}}
+
+      v-tab(:class='tab == 2 ? "primary--text" : ""')
+        v-icon(style='color:inherit;transition:none;').mr-1 mdi-percent
+        v-expand-x-transition
+          span(v-show='tab === 2') {{$t('ui.splitting.percent')}}
+
+      v-tab(:class='tab == 3 ? "primary--text" : ""')
+        v-icon(style='color:inherit;transition:none;').mr-1 mdi-scale-balance
+        v-expand-x-transition
+          span(v-show='tab === 3') {{$t('ui.splitting.weight')}}
+    v-divider.mb-3
+
   .participators
     .participator(v-for='pa in participators', v-columns='"auto 80px"')
       div
         app-user-avatar(size='38' :id='pa.uid' show-name inline)
         span.ml-2 {{$t('ui.paid_money')}}
         v-btn.op-25(
-          v-if='participators.length > 1'
+          v-if='participators.length > 1 && removeable'
           @click='removeParticipator(pa.uid)'
           flat icon small)
           v-icon(size='20') mdi-close
@@ -58,6 +82,10 @@ export default class Splitting extends Vue {
       default:
         return 'weight'
     }
+  }
+
+  get removeable() {
+    return this.on === 'debtors'
   }
 
   get balanceChanges() {
