@@ -1,4 +1,3 @@
-import { AssertionError } from 'assert'
 import sumBy from 'lodash/sumBy'
 import merge from 'lodash/merge'
 import find from 'lodash/find'
@@ -84,7 +83,7 @@ export function GroupBalances(group: Group): Balance[] {
     changes.forEach((c) => {
       const info = find(balances, { uid: c.uid })
       if (!info)
-        throw new AssertionError({ message: `Member with id:"${c.uid}" is not found.` })
+        throw new Error(`Member with id:"${c.uid}" is not found.`)
       if (!info.balance.hasOwnProperty(currency))
         info.balance[currency] = 0
 

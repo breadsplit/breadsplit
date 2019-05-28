@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import _ from 'lodash'
 import dayjs from 'dayjs'
 
-import { TransOperationOption, ServerGroup, ServerOperations, Entity, Group, Operation } from '../../../types'
+import { TransOperationOption, ServerGroup, ServerOperations, Group, Operation } from '../../../types'
 import { GenerateId, IsThisId, MemberDefault } from '../../../core'
 import { formatDate, queryExchangeRates } from './exchanges'
 import { ProcessServerOperations, Eval, omitDeep } from './opschain'
@@ -110,7 +110,7 @@ export const joinGroup = f(async ({ id, join_as }, context) => {
       data: {
         by: uid,
         timestamp: +new Date(),
-        entity: Entity.viewer,
+        entity: 'viewer',
         action: 'insert',
       },
     }]
