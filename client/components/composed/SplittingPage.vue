@@ -78,15 +78,17 @@ export default class SplittingPage extends Vue {
   openKeyboardForMainInput(e) {
     this.$refs.splitting.gcd()
     this.$refs.splitting.clear()
+    this.$refs.splitting.focused = null
     this.openKeyboard(e)
   }
 
-  openKeyboard(e: NumberInput) {
+  openKeyboard(e: NumberInput | null) {
     if (this.registeredInput) {
       this.registeredInput.calculate()
       this.registeredInput.deregisterKeyboard()
     }
-    e.registerKeyboard(this.$refs.numpad)
+    if (e)
+      e.registerKeyboard(this.$refs.numpad)
     this.registeredInput = e
   }
 }

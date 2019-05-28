@@ -22,10 +22,16 @@
         v-icon(style='color:inherit;transition:none;').mr-1 mdi-scale-balance
         v-expand-x-transition
           span(v-show='tab === 3') {{$t('ui.splitting.weight')}}
+
     v-divider.mb-3
 
-  .participators
-    .participator(v-for='pa in participators', v-columns='"auto 80px"')
+  .participators(v-if='mode==="amount"')
+    .participator(
+      v-for='pa in participators'
+      v-columns='"auto auto max-content"'
+      :class='getParticipatorClass(pa)'
+      @click='focusInput(pa)'
+    )
       div
         app-user-avatar(size='38' :id='pa.uid' show-name inline)
         span.ml-2 {{$t('ui.paid_money')}}
@@ -35,16 +41,18 @@
           flat icon small)
           v-icon(size='20') mdi-close
 
-        span ({{pa.weight}})
+        //span ({{pa.weight}})
 
-      app-number-input.ma-0.pa-0(
-        v-if='participators.length > 1'
-        :value='getFee(pa)'
-        placeholder='0'
-        @focus='e=>$emit("keyboard", e)'
-        @user-input='v=>setFee(pa,v)'
-        hide-details reverse
-      )
+      template(v-if='participators.length > 1')
+        app-number-input.ma-0.pa-0(
+          :ref='`fee_input_${pa.uid}`'
+          :value='getFee(pa)'
+          placeholder='0'
+          @user-input='v=>setFee(pa,v)'
+          hide-details reverse flat hide-label
+          style='padding-top: 5px !important;'
+        )
+        .currency {{currency}}
 
     .participator.add(v-if='candidates.length')
       app-member-select(:members='candidates', @input='id=>addParticipator(id)')
@@ -55,9 +63,10 @@
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
 import { TransactionBalanceChanges, GCD } from '~/core'
 import { Transaction, Member, Weight } from '~/types'
+import NumberInput from '../basic/NumberInput.vue'
 
 type Splitmode = 'average' | 'amount' | 'percent' | 'weight'
 
@@ -70,7 +79,12 @@ export default class Splitting extends Vue {
   @Prop({ default: true }) readonly showTabs!: boolean
   @Prop({ default: () => [] }) readonly members!: Member[]
 
-  get splitmode(): Splitmode {
+  focused: string|null = null
+
+  get mode(): Splitmode {
+    if (this.on === 'creditors')
+      return 'amount'
+
     switch (this.tab) {
       case 0:
         return 'average'
@@ -83,12 +97,58 @@ export default class Splitting extends Vue {
     }
   }
 
+  get currency() {
+    return this.trans.currency
+  }
+
   get removable() {
     return this.on === 'creditors'
   }
 
   get balanceChanges() {
     return TransactionBalanceChanges(this.trans)
+  }
+
+  get participators() {
+    return this.trans[this.on]
+  }
+
+  set participators(value: Weight[]) {
+    this.trans[this.on] = value
+  }
+
+  get participatorIds() {
+    return this.participators.map(c => c.uid)
+  }
+
+  get candidates() {
+    return this.members.filter(m => m.uid != null && !this.participatorIds.includes(m.uid))
+  }
+
+  get flexibleWeights() {
+    return this.participators
+      .filter(c => c.fee == null)
+      .map(i => i.weight || 0)
+      .reduce((a, b) => a + b, 0)
+  }
+
+  get fixedFees() {
+    return this.participators
+      .filter(c => c.fee != null)
+      .map(i => i.fee || 0)
+      .reduce((a, b) => a + b, 0)
+  }
+
+  get flexibleFees() {
+    return this.trans.total_fee - this.fixedFees
+  }
+
+  @Watch('mode')
+  onModeChanged() {
+    this.$emit('mode-changed', this.mode)
+    // close keyboard
+    this.focused = null
+    this.$emit('keyboard', null)
   }
 
   getRecord(uid: string) {
@@ -111,22 +171,6 @@ export default class Splitting extends Vue {
       return balance.credit
   }
 
-  get participators() {
-    return this.trans[this.on]
-  }
-
-  set participators(value: Weight[]) {
-    this.trans[this.on] = value
-  }
-
-  get participatorIds() {
-    return this.participators.map(c => c.uid)
-  }
-
-  get candidates() {
-    return this.members.filter(m => m.uid != null && !this.participatorIds.includes(m.uid))
-  }
-
   setParticipator(uid: string, weight = 1) {
     this.participators = [{ weight, uid }]
   }
@@ -145,31 +189,31 @@ export default class Splitting extends Vue {
     return ((participator.weight || 0) / (this.flexibleWeights || 1)) * (this.flexibleFees)
   }
 
-  get flexibleWeights() {
-    return this.participators
-      .filter(c => c.fee == null)
-      .map(i => i.weight || 0)
-      .reduce((a, b) => a + b, 0)
-  }
-
-  get fixedFees() {
-    return this.participators
-      .filter(c => c.fee != null)
-      .map(i => i.fee || 0)
-      .reduce((a, b) => a + b, 0)
-  }
-
-  get flexibleFees() {
-    return this.trans.total_fee - this.fixedFees
-  }
-
   setFee(participator: Weight, fee: number) {
     if (fee === this.getFee(participator))
       return
     this.$set(participator, 'fee', +fee || 0)
     this.recalculateTotal()
-    // this.trans.total_fee = sum(this.participators.map(i => i.fee || 0))
     // this.gcd()
+  }
+
+  setWeight(participator: Weight, weight: number) {
+    participator.weight = weight
+  }
+
+  getParticipatorClass(participator: Weight) {
+    if (this.participators.length <= 1)
+      return ['elevation-0']
+    if (this.focused === participator.uid)
+      return ['raised', 'elevation-4']
+    return ['elevation-0']
+  }
+
+  focusInput(participator: Weight) {
+    this.focused = participator.uid
+    const fee_input = this.$refs[`fee_input_${participator.uid}`] as NumberInput[]
+    if (fee_input && fee_input[0])
+      this.$emit('keyboard', fee_input[0])
   }
 
   recalculateTotal() {
@@ -204,15 +248,23 @@ export default class Splitting extends Vue {
 
 .splitting
   .participators
-    padding 0 2em 0 2em
+    padding 0 1em
 
     .participator
-      padding 0.5em 0
+      padding 0.5em 1em
+      margin 0.2em 0
+      transition all .3s ease-in-out
+      border-radius 5px
 
-      & > *
+      *
         vertical-align middle
 
-      .add
+      &.add
         cursor pointer
 
+  .currency
+    opacity 0.4
+    font-size 0.8em
+    padding-left 4px
+    margin-top 15px
 </style>

@@ -31,7 +31,7 @@ export default class SoftNumpad extends Vue {
   @Prop(Boolean) readonly absolute?: boolean
   @Prop(Boolean) readonly fixed?: ConstrainBoolean
 
-  dirty = false
+  public dirty = false
 
   get classes() {
     return {

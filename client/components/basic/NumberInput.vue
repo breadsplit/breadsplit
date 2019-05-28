@@ -16,7 +16,7 @@ import { Component, Prop, Watch, mixins } from 'nuxt-property-decorator'
 import SoftNumpad from './SoftNumpad.vue'
 import CommonMixin from '~/mixins/common'
 
-const operatorRegex = /[+|-|*|/]/g
+const operatorRegex = /[+|\-|*|/]/g
 const defaultMax = 1_000_000_000
 
 @Component({
@@ -27,7 +27,9 @@ export default class NumberInput extends mixins(CommonMixin) {
   @Prop({ default: defaultMax }) readonly max!: number
   // for displaying style
   @Prop(Boolean) readonly flat?: boolean
+  @Prop(Boolean) readonly bold?: boolean
   @Prop(Boolean) readonly main?: boolean
+  @Prop(Boolean) readonly hideLabel?: boolean
   // if not true, value will be reset on every first input
   @Prop(Boolean) readonly sustained?: boolean
   // set class when actives
@@ -47,11 +49,14 @@ export default class NumberInput extends mixins(CommonMixin) {
       'number-input': true,
       flat: this.flat,
       main: this.main,
+      bold: this.bold,
       [this.activeClass]: !!this.numpad,
     }
   }
 
   get label() {
+    if (this.hideLabel)
+      return null
     if (this.calculatedStr !== this.inner_value)
       return `= ${this.calculated.toString()}`
     return null
@@ -92,20 +97,24 @@ export default class NumberInput extends mixins(CommonMixin) {
     return !!this.inner_value.match(operatorRegex)
   }
 
+  get isFocused() {
+    return !!this.numpad
+  }
+
   @Watch('calculated')
-  onCalculated() {
+  private onCalculated() {
     this.$emit('input', this.calculated)
     if (this.numpad)
       this.$emit('user-input', this.calculated)
   }
 
   @Watch('value')
-  onValueChanged() {
+  private onValueChanged() {
     this.updateInnerValue()
   }
 
   @Watch('hasOperator')
-  updateKeyboardState() {
+  private updateKeyboardState() {
     if (this.numpad)
       this.numpad.dirty = this.hasOperator
   }
@@ -153,16 +162,16 @@ export default class NumberInput extends mixins(CommonMixin) {
     if (this.inner_value === '0')
       this.clear()
 
-    this.dirty = true
-
-    if (char === '.')
-      this.inputDot()
     if (this.calculated > this.max)
       return this.error()
     if (this.inner_value === '' && char === '0')
       return this.error()
 
-    if (this.isOperator(char))
+    this.dirty = true
+
+    if (char === '.')
+      this.inputDot()
+    else if (this.isOperator(char))
       this.addOperator(char)
     else
       this.inner_value += char
@@ -266,6 +275,10 @@ export default class NumberInput extends mixins(CommonMixin) {
     input
       max-height inherit
       font-size 3em
+
+  &.bold
+    input
+      font-weight bold
 
 .number-input--active
   .v-input__slot:before
