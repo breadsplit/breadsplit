@@ -1,6 +1,5 @@
-import { mutations, getters } from '~/store/group'
+import { getters } from '~/store/group'
 import { RootStateDefault, GroupStateDefault } from '~/store'
-import { GroupState } from '~/types'
 
 describe('group state getters', () => {
   it('current', () => {
@@ -12,13 +11,13 @@ describe('group state getters', () => {
   })
 })
 
-describe('group state mutations', () => {
+/* describe('group state mutations', () => {
   let state: GroupState
   let groupsAmount = 0
 
   beforeEach(() => {
     state = GroupStateDefault()
-    mutations.add(state, {
+    actions.add(state, {
       name: 'group1',
       id: 'group1',
     })
@@ -48,4 +47,4 @@ describe('group state mutations', () => {
     expect(Object.keys(state.groups).length).toEqual(groupsAmount)
     expect(state.groups).not.toHaveProperty('test')
   })
-})
+}) */

@@ -33,13 +33,19 @@ export class FirebasePlugin {
     return this.firebase.functions()
   }
   get messaging() {
-    return this.firebase.messaging()
+    if (this.messagingEnabled)
+      return this.firebase.messaging()
+    else
+      return null
   }
   get me(): UserInfo | undefined {
     return this.store.getters['user/me']
   }
   get uid(): string | undefined {
     return this.store.getters['user/uid']
+  }
+  get messagingEnabled() {
+    return this.store.state.ua.os !== 'ios'
   }
 
   /**
@@ -51,11 +57,13 @@ export class FirebasePlugin {
     const config_name = process.env.FIREBASE_SERVER || 'development'
 
     this.firebase = await import('firebase/app')
-    await Promise.all([import('firebase/auth'),
-    import('firebase/firestore'),
-    import('firebase/functions'),
-    import('firebase/messaging'),
+    await Promise.all([
+      import('firebase/auth'),
+      import('firebase/firestore'),
+      import('firebase/functions'),
     ])
+    if (this.messagingEnabled)
+      await import('firebase/messaging')
 
     log(`🔥 Connecting to firebase server <${config_name}>`)
     this.firebase.initializeApp(FirebaseServers[config_name])
@@ -86,8 +94,10 @@ export class FirebasePlugin {
 
     await this.auth.setPersistence(this.firebase.auth.Auth.Persistence.LOCAL)
 
-    await this.updateMessagingToken()
-    this.installMessagingServiceWorker()
+    if (this.messagingEnabled) {
+      await this.updateMessagingToken()
+      this.installMessagingServiceWorker()
+    }
 
     this.messaging.onMessage((data) => {
       log('📢 Incoming Message:', data)
@@ -165,7 +175,10 @@ export class FirebasePlugin {
   }
 
   async updateMessagingToken() {
-    const token = await this.messaging.getToken()
+    if (!this.messagingEnabled)
+      return null
+
+    const token: string = await this.messaging.getToken()
     this.store.commit('setMessagingToken', token)
     if (token)
       log(`📢 Messaging enabled with token: ${token}`)
@@ -446,6 +459,9 @@ export class FirebasePlugin {
 export default async (context: any) => {
   const store = context.store
   const fire = new FirebasePlugin(store, context.app.router)
-  fire.init()
   Vue.prototype.$fire = fire
+  // @ts-ignore
+  window.onNuxtReady(() => {
+    fire.init()
+  })
 }
