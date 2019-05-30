@@ -25,6 +25,6 @@ Install the following tools and plugins.
 - [⭐ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 - [markdownlint](https://marketplace.visualstudio.com/items?itemName=davidanson.vscode-markdownlint)
 - [language-stylus](https://marketplace.visualstudio.com/items?itemName=sysoev.language-stylus)
-- [🌐vue-i18n](https://marketplace.visualstudio.com/items?itemName=think2011.vue-i18n)
+- [🌐vue-i18n-ally](https://marketplace.visualstudio.com/items?itemName=antfu.vue-i18n-ally)
 - [TODO Highlight](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight)
 - [Code Spell Checker](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker)

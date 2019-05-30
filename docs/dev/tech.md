@@ -7,9 +7,10 @@ Languages
 - [Typescript](https://www.typescriptlang.org/) (Main language, JS with type support)
   - [vue-property-decorator](https://github.com/kaorun343/vue-property-decorator) (for Vue components)
   - [vuex-class](https://github.com/ktsn/vuex-class) (for Vuex)
-- [Pug.js](https://pugjs.org/api/getting-started.html) *formerly Jade* (HTML)
-  - [HTML to Pug](https://html2jade.org/) (Tools)
-- [Stylus](http://stylus-lang.com/) (CSS)
+  - [ts-optchain](https://github.com/rimeto/ts-optchain) (Support for optional chaining)
+- [Pug.js](https://pugjs.org/api/getting-started.html) *formerly Jade* (HTML Preprocessor)
+  - [HTML to Pug](https://html2jade.org/) (Converting tool)
+- [Stylus](http://stylus-lang.com/) (CSS Preprocessor)
 
 Frameworks
 
@@ -34,12 +35,14 @@ Visualization
 - [D3.js](https://d3js.org/)
   - [D3.js Graph Gallery](https://www.d3-graph-gallery.com/)
 
+CI/CD
+- [CircleCI](https://circleci.com/) (Testing CI)
+- [Netlify](https://www.netlify.com/) (Web build and deploy)
+
 Services
 
 - [Firebase](https://firebase.google.com/) (Auth, Serverless and Database)
 - [Sentry](https://sentry.io/) (Error capturing & reporting)
-- [Netlify](https://www.netlify.com/) (Web build and deploy)
-- [CircleCI](https://circleci.com/) (Testing CI)
 - [Codecov](https://codecov.io/) (Code coverage)
 - [Cypress Dashboard](https://www.cypress.io/dashboard) (E2E testing records)
 
