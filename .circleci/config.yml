@@ -68,7 +68,7 @@ jobs:
 
       - run:
           name: Config firebase functions
-          command: cd ./firebase && npx firebase functions:config:set fixer.token=$FIXER_TOKEN
+          command: cd ./firebase && npx firebase functions:config:set fixer.token=$FIXER_TOKEN --project production
 
       - run:
           name: Deploy to Firebase
@@ -85,9 +85,8 @@ workflows:
             branches:
               ignore:
                 - website
-                - gh-pages
-                - raymond
                 - docs
+                - i18n
 
       - cypress/run:
           record: true
@@ -95,13 +94,10 @@ workflows:
           start: FIERBASE_SERVER=test npm run generate && npm run generate:host
           filters:
             branches:
-              ignore:
-                - dev
-                - website
-                - gh-pages
-                - raymond
-                - docs
-                - dev2
+              only:
+                - app
+                - master
+                - e2e
 
       # auto deploy to firebase only on production server
       - firebase_deploy:
