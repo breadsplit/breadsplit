@@ -68,11 +68,11 @@ jobs:
 
       - run:
           name: Config firebase functions
-          command: cd ./firebase && npx firebase functions:config:set fixer.token=$FIXER_TOKEN --project production
+          command: cd ./firebase && npx firebase functions:config:set fixer.token=$FIXER_TOKEN --project=production --token=$FIREBASE_DEPLOY_TOKEN
 
       - run:
           name: Deploy to Firebase
-          command: cd ./firebase && npx firebase deploy --project production --token=$FIREBASE_DEPLOY_TOKEN
+          command: cd ./firebase && npx firebase deploy --project=production --token=$FIREBASE_DEPLOY_TOKEN
 
 
 workflows:
