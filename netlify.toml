@@ -41,7 +41,7 @@
 
 # Redirects
 [[redirects]]
-  from = "https://breadsplit.netlify.com"
-  to = "https://app.breadsplit.com"
-  status = 200
+  from = "https://breadsplit.netlify.com/*"
+  to = "https://breadsplit.com/:splat"
+  status = 301
   force = true
