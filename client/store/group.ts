@@ -214,7 +214,9 @@ export const mutations: MutationTree<GroupState> = {
 
     const clientGroup = state.groups[group.id]
 
-    const activitiesCount = clientGroup.base.activities.length
+    let activitiesCount = 0
+    if (clientGroup && clientGroup.base && clientGroup.base.activities)
+      activitiesCount = clientGroup.base.activities.length
 
     clientGroup.syncingOperations = (clientGroup.syncingOperations || [])
       .filter(i => !serverOperations.includes(i))
