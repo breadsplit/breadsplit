@@ -10,7 +10,7 @@ const config: NuxtConfiguration = {
   debug,
 
   head: {
-    title: 'website',
+    title: pkg.fullname,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -21,6 +21,16 @@ const config: NuxtConfiguration = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        async: true,
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap',
+      },
+      {
+        async: true,
+        rel: 'stylesheet',
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css',
+      },
     ],
   },
 
@@ -53,8 +63,11 @@ const config: NuxtConfiguration = {
     },
   },
 
+  plugins: [
+    '~/plugins/vuetify',
+  ],
+
   modules: [
-    '@nuxtjs/pwa',
     '@nuxtjs/google-gtag',
   ],
 

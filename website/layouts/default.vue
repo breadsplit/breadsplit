@@ -1,4 +1,6 @@
 <template lang='pug'>
-dev
-  nuxt
+v-app
+  v-content
+    v-container
+      nuxt
 </template>
