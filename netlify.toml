@@ -45,3 +45,15 @@
   to = "https://breadsplit.com/:splat"
   status = 301
   force = true
+
+[[redirects]]
+  from = 'https://docs.breadsplit.com/*'
+  to = '/:splat'
+  status = 200
+  force = true
+
+[[redirects]]
+  from = '/*'
+  to = '/index.html'
+  status = 200
+

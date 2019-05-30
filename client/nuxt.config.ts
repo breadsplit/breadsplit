@@ -100,7 +100,6 @@ const config: NuxtConfiguration = {
   ],
 
   router: {
-    mode: 'hash',
     middleware: [
       'ua',
       'group',

@@ -23,6 +23,7 @@ const config: NuxtConfiguration = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
   },
+
   loading: { color: '#3B8070' },
 
   css: [
