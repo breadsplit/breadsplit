@@ -82,6 +82,7 @@ dist
 
 # Service worker
 sw.*
+client/static/*.sw.js
 
 # Testing vue components
 test.vue

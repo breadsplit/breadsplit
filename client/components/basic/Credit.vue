@@ -4,7 +4,6 @@
   br
   .buildinfo
     span Build {{buildtime}} - {{buildTimeFromNow}}
-    span(v-if='machine') /{{machine}}
   .section
     span Server: {{serverName}}
   .my-2
@@ -43,7 +42,6 @@ export default class Credit extends Vue {
   version = process.env.APP_VERSION
   target = process.env.BUILD_TARGET
   buildtime = process.env.BUILD_TIME
-  machine = process.env.BUILD_MACHINE
   channel = process.env.RELEASE_CHANNEL
   serverName = process.env.FIREBASE_SERVER
 

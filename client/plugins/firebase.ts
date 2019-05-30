@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 
 import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
 import { IsThisId } from '~/core'
-import FirebaseServers from '~/../meta/firebase_servers'
+import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
 
 // eslint-disable-next-line no-console
 const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
@@ -54,8 +54,6 @@ export class FirebasePlugin {
    * @memberof FirebasePlugin
    */
   async init() {
-    const config_name = process.env.FIREBASE_SERVER || 'development'
-
     this.firebase = await import('firebase/app')
     await Promise.all([
       import('firebase/auth'),
@@ -65,8 +63,8 @@ export class FirebasePlugin {
     if (this.messagingEnabled)
       await import('firebase/messaging')
 
-    log(`🔥 Connecting to firebase server <${config_name}>`)
-    this.firebase.initializeApp(FirebaseServers[config_name])
+    log(`🔥 Connecting to firebase server <${CurrentServerName}>`)
+    this.firebase.initializeApp(FirebaseServerConfig)
 
     this.auth.onAuthStateChanged(async (user) => {
       if (user) {

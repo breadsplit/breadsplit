@@ -12,5 +12,4 @@
 ## Auto generated env
 
 - `BUILD_TIME` ISO datetime string of current time on building
-- `BUILD_MACHINE` build machine name or type
 - `APP_VERSION` version from `package.json`

@@ -1,4 +1,20 @@
-export default {
+export interface FirebaseServer {
+  name: string
+  apiKey: string
+  authDomain: string
+  databaseURL: string
+  projectId: string
+  storageBucket: string
+  messagingSenderId: string
+  appId: string
+}
+
+export type FirebaseServerName =
+  | 'production'
+  | 'development'
+  | 'test'
+
+export const FirebaseServers: Record<FirebaseServerName, FirebaseServer> = {
   production: {
     name: 'BreadSplit',
     apiKey: 'AIzaSyA959crhQz0tmrjpg7-2uVuTGOXjoy6WsU',
@@ -30,3 +46,7 @@ export default {
     appId: '1:758227201981:web:d05b2fce9b9846c6',
   },
 }
+
+export const CurrentServerName = (process.env.FIREBASE_SERVER || 'development') as FirebaseServerName
+
+export default FirebaseServers[CurrentServerName]
