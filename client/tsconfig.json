@@ -26,6 +26,9 @@
       "@types/node",
       "@types/jest",
       "vuetify"
-    ]
+    ],
+    "plugins": [
+      { "transform": "ts-optchain/transform" },
+    ],
   }
 }

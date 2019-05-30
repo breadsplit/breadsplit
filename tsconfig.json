@@ -29,6 +29,9 @@
       "cypress",
       "vuetify"
     ],
+    "plugins": [
+      { "transform": "ts-optchain/transform" },
+    ],
   },
   "include": [
     "client/**/*.ts",

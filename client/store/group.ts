@@ -3,6 +3,7 @@ import includes from 'lodash/includes'
 import orderBy from 'lodash/orderBy'
 import union from 'lodash/union'
 import mapValues from 'lodash/mapValues'
+import { oc } from 'ts-optchain'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
 import { GroupState, RootState, Group, ServerGroup, Operation, ClientGroup } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe } from '~/core'
@@ -214,9 +215,7 @@ export const mutations: MutationTree<GroupState> = {
 
     const clientGroup = state.groups[group.id]
 
-    let activitiesCount = 0
-    if (clientGroup && clientGroup.base && clientGroup.base.activities)
-      activitiesCount = clientGroup.base.activities.length
+    const activitiesCount = oc(clientGroup).base.activities.length(0)
 
     clientGroup.syncingOperations = (clientGroup.syncingOperations || [])
       .filter(i => !serverOperations.includes(i))
@@ -224,7 +223,7 @@ export const mutations: MutationTree<GroupState> = {
     clientGroup.operations = unsyncedOperations
     clientGroup.lastsync = timestamp
 
-    const currentActivitiesCount = clientGroup.base.activities.length
+    const currentActivitiesCount = oc(clientGroup).base.activities.length(0)
 
     state.unreads[group.id] = Math.max(currentActivitiesCount - activitiesCount, 0)
   },
