@@ -48,6 +48,7 @@
     "breadsplit",
     "cond",
     "dayjs",
+    "devtool",
     "eval",
     "fullname",
     "groupid",

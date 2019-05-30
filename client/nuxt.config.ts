@@ -119,15 +119,20 @@ const config: NuxtConfiguration = {
     extractCSS: !dev,
     publicPath: '/nuxt/',
     extend(config, ctx) {
-      // Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
-        // @ts-ignore
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue|ts)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/,
-        })
+      if (ctx.isDev) {
+        if (ctx.isClient) {
+          // @ts-ignore
+          config.module.rules.push({
+            enforce: 'pre',
+            test: /\.(js|vue|ts)$/,
+            loader: 'eslint-loader',
+            exclude: /(node_modules)/,
+          })
+          config.devtool = 'eval-source-map'
+        }
+        else {
+          config.devtool = 'inline-source-map'
+        }
       }
     },
     babel: {

@@ -1,0 +1,54 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Chrome",
+      "url": "http://localhost:3000",
+      "breakOnLoad": true,
+      "sourceMaps": true,
+      "webRoot": "${workspaceFolder}/client",
+      "sourceMapPathOverrides": {
+        "webpack:///@": "${webRoot}/*",
+        "webpack:///@@": "${webRoot}/*",
+        "webpack:///~": "${webRoot}/*",
+        "webpack:///~~": "${webRoot}/*",
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "protocol": "inspector",
+      "name": "Nuxt Dev",
+      "osx": {
+        "program": "${workspaceFolder}/node_modules/.bin/nuxt"
+      },
+      "linux": {
+        "program": "${workspaceFolder}/node_modules/.bin/nuxt"
+      },
+      "windows": {
+        "program": "${workspaceFolder}/node_modules/nuxt/bin/nuxt.js"
+      },
+      "args": [
+        "dev",
+      ],
+      "stopOnEntry": false,
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}/client",
+      "env": {
+        "NODE_ENV": "development",
+        "DEBUG": "nuxt:*,app"
+      }
+    },
+  ],
+  "compounds": [
+    {
+      "name": "Debugger",
+      "configurations": [
+        "Nuxt Dev",
+        "Chrome"
+      ]
+    }
+  ]
+}
