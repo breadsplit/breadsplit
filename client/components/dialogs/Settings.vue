@@ -1,9 +1,9 @@
 <template lang='pug'>
 v-card.settings
-  app-dialog-bar(@close='close()')
+  app-dialog-bar(@close='close()', attached)
     | {{$t('ui.settings')}}
 
-  v-container(ref='container', :class='{"px-0": isMobile}')
+  v-container.pt-0.pb-1(ref='container', :class='{"px-0": isMobile}')
     v-list(two-line, subheader)
       v-subheader {{$t('ui.general')}}
       v-divider

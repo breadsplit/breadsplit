@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-card.about-page
-  app-dialog-bar(@close='close()')
+  app-dialog-bar(@close='close()' attached absolute height='30px')
 
   v-container.text-xs-center.pt-0
     app-logo-name.large
