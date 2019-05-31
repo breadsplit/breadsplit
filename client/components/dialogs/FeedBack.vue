@@ -1,50 +1,60 @@
 <template lang='pug'>
 v-card.feedback
-  app-dialog-bar(@close='close()')
-    | 意見回饋
+  app-dialog-bar(@close='close()') {{$t('ui.feedback')}}
+
   v-container.text-xs-center
-    v-rating(v-model='starrate' hover light background-color="grey darken-1" v-if='online')
+    v-text-field(
+      :label='$t("feedback.contact_info") + $t("ui.optional")'
+      v-model='feedbackInfo.email'
+      clearable auto-grow box)
 
-    v-text-field(name="femail" label='Email' clearable='true' height='10' v-model='feedbackInfo.email' auto-grow box)
+    v-textarea(
+      :label='$t("feedback.describe")'
+      v-model='feedbackInfo.content'
+      :counter='closeToMaxLength ? maxlength : null'
+      autofocus box clearable
+      persistent-hint :hint='issueHint')
 
-    v-textarea(name="fissue" label='Describe your issue or idea.' auto-grow='true' autofocus='true' box='true' clearable='true' v-model='feedbackInfo.content' persistent-hint :hint='issueHint')
-
-    v-btn(block depressed flat @click='upload()' :loading='submitFlag' v-if='finish') Submit
-    v-btn(block depressed flat disabled v-if='!finish') 提交完畢
+    v-btn(block flat @click='upload()' :disabled='!hasMeaningfulContent') {{$t('ui.button_send')}}
 
 </template>
 
 <script lang='ts'>
-import { setTimeout } from 'timers'
 import { Component, mixins } from 'nuxt-property-decorator'
 import { FeedbackOptions } from '~/types'
 import { DialogChildMixin } from '~/mixins'
+import socials from '~/../meta/socials'
 
 @Component
 export default class FeedBack extends mixins(DialogChildMixin) {
-  issueHint = 'Or you can create an issue on our <a href="https://github.com/breadsplit/breadsplit" target="_blank">github</a> '
-  submitFlag = false
-  finish = true
-  starrate = this.$store.getters['user/me'].starrate === undefined ? '0' : this.$store.getters['user/me'].starrate
+  socials = socials
+  maxlength = 2000
+
   feedbackInfo: FeedbackOptions = {
-    email: this.$store.getters['user/me'].email ? this.$store.getters['user/me'].email : '',
+    email: this.$store.getters['user/me'].email || '',
     content: '',
   }
-  close(result?) {
-    this.$emit('close', result)
+
+  get issueHint() {
+    return this.$t('feedback.github_hint', [`<a href="${socials.github} target="_blank">Github</a>`])
   }
 
-  upload() {
-    this.$fire.sendFeedback(this.feedbackInfo)
-    this.$store.commit('setStarRate', this.starrate)
-    this.submitFlag = true
-    setTimeout(() => {
-      this.submitFlag = false
-      this.finish = false
-      setTimeout(() => {
-        this.close()
-      }, 700)
-    }, 1500)
+  get hasMeaningfulContent() {
+    const content = this.feedbackInfo.content || ''
+    return content.trim().length > 5 && content.length <= this.maxlength
+  }
+
+  get closeToMaxLength() {
+    const content = this.feedbackInfo.content || ''
+    return content.length / this.maxlength >= 0.9
+  }
+
+  async upload() {
+    this.$root.$apploading.open(this.$t('prompt.sending').toString())
+    await this.$fire.sendFeedback(this.feedbackInfo)
+    this.$root.$apploading.close()
+    this.$root.$snack(this.$t('prompt.feedback_delivered'), { color: 'success', timeout: 3000 })
+    this.close()
   }
 
   get online() {

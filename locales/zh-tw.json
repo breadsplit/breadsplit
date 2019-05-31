@@ -114,7 +114,10 @@
       "for_whom": "為了誰？",
       "more_details": "更多信息"
     },
-    "total": "合計"
+    "total": "合計",
+    "button_submit": "提交",
+    "optional": "（可選）",
+    "button_send": "發送"
   },
   "cats": {
     "transport": {
@@ -161,7 +164,9 @@
     "expense": "支出"
   },
   "prompt": {
-    "are_you_sure": "你確定嗎？"
+    "are_you_sure": "你確定嗎？",
+    "sending": "發送中...",
+    "feedback_delivered": "您的意見回饋已經成功寄出，感謝您的支持！"
   },
   "tips": {
     "already_joined_group": "你已經加入了此群組。",
@@ -182,5 +187,10 @@
       "title": "不使用賬號密碼登入",
       "details": "我們使用一種稱爲 OAuth 的技術接入由 Google、Facebook 等平台提供的賬號驗證服務。通過 OAuth，我們<b>不會</b>獲得您的密碼等敏感信息。<br>同時，關閉賬號密碼登入可以進一步確保<b>不會有任何敏感信息儲存在我們的資料庫中</b>，以此更好地確保您的信息安全。"
     }
+  },
+  "feedback": {
+    "contact_info": "聯絡方式",
+    "describe": "請描述您的問題或建議。",
+    "github_hint": "或者您也可以在 {0} 上創建Issue"
   }
 }
