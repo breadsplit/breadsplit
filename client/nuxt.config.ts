@@ -89,7 +89,7 @@ const config: NuxtConfiguration = {
     /* The order of plugins is important */
 
     /* Request handling */
-    // '~/plugins/ua', // detect webview
+    // '~/plugins/ua', // FIXME:detect webview
 
     /* Data */
     '~/plugins/localstorage', // load store from localstorage
@@ -105,7 +105,7 @@ const config: NuxtConfiguration = {
 
   router: {
     middleware: [
-      'ua',
+      'ua', // FIXME: remove this, use plugins instead
       'group',
     ],
   },
@@ -122,20 +122,13 @@ const config: NuxtConfiguration = {
     extractCSS: !dev,
     publicPath: '/nuxt/',
     extend(config, ctx) {
-      if (ctx.isDev) {
-        if (ctx.isClient) {
-          // @ts-ignore
-          config.module.rules.push({
-            enforce: 'pre',
-            test: /\.(js|vue|ts)$/,
-            loader: 'eslint-loader',
-            exclude: /(node_modules)/,
-          })
-          config.devtool = 'eval-source-map'
-        }
-        else {
-          config.devtool = 'inline-source-map'
-        }
+      if (ctx.isDev && ctx.isClient && config.module) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue|ts)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/,
+        })
       }
     },
     babel: {
@@ -149,6 +142,7 @@ const config: NuxtConfiguration = {
       ],
     },
   },
+
   render: {
     bundleRenderer: {
       shouldPreload: (file, type) => {

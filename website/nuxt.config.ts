@@ -40,9 +40,7 @@ const config: NuxtConfiguration = {
     },
     extractCSS: !debug,
     extend(config, ctx) {
-      // Run ESLint on save
-      if (ctx.isDev && ctx.isClient) {
-        // @ts-ignore
+      if (ctx.isDev && ctx.isClient && config.module) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue|ts)$/,

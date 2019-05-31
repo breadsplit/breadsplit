@@ -74,7 +74,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   mode = ''
   icon = 'account-group'
   color = swatches[Math.floor(Math.random() * swatches.length)]
-  members = []
+  members: string[] = []
 
   @Getter('locale') locale!: string
   @Getter('group/current') current: Group | undefined
@@ -90,8 +90,11 @@ export default class NewGroup extends mixins(DialogChildMixin) {
         this.icon = this.current.icon || ''
         this.color = this.current.color || ''
         this.mode = this.options.mode
-        // @ts-ignore
-        Object.values(this.current.members).forEach((m) => { this.members.push(m.name) })
+        Object
+          .values(this.current.members)
+          .forEach((m) => {
+            this.members.push(m.name)
+          })
       }
     }
     else {
