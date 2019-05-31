@@ -63,7 +63,7 @@
     "title_join_a_group": "Join a group",
     "total": "Total",
     "welcome_breadsplit": "Welcome to BreadSplit!",
-    "wip": "Working in progress...",
+    "wip": "🚧 Working in progress...",
     "xx_paid_money": "{0} paid",
     "xx_paid_xx": "{0} paid {1}",
     "group_editing": {
@@ -125,7 +125,8 @@
       "add_payer": "Add payer",
       "for_whom": "For whom?",
       "more_details": "More details"
-    }
+    },
+    "faq": "FAQ"
   },
   "pronoun": {
     "me": "Me",
@@ -196,6 +197,14 @@
       "tips": "No login with email and password?",
       "details": "",
       "title": ""
+    },
+    "splitting_intro": {
+      "details": "",
+      "title": "What is Splitting?"
+    },
+    "support": {
+      "details": "",
+      "title": "How can I support this project?"
     }
   },
   "feedback": {

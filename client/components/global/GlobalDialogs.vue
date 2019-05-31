@@ -28,4 +28,9 @@ div
   )
     app-about-page
 
+  app-dialog(
+    watch-on-query='faq'
+  )
+    app-faq
+
 </template>

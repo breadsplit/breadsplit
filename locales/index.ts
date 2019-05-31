@@ -5,6 +5,8 @@ import fr from './fr.json'
 import ja from './ja.json'
 import de from './de.json'
 
+export const EN_MESSAGES = en
+
 export const Messages = {
   en,
   fr,

@@ -50,11 +50,11 @@ v-card.settings
       v-subheader {{$t('ui.misc')}}
       v-divider
 
-      v-list-tile(avatar, @click='WIP')
+      v-list-tile(avatar, @click='openDialog("faq")')
         v-list-tile-avatar
           v-icon mdi-help-circle-outline
         v-list-tile-content
-          v-list-tile-title {{$t('ui.help')}}
+          v-list-tile-title {{$t('ui.faq')}}
 
       v-list-tile(avatar, @click='$refs.feedback.open()')
         v-list-tile-avatar
