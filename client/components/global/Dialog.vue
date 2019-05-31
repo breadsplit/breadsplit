@@ -5,7 +5,7 @@ v-dialog(
   :transition='transition', :max-width='600'
   :fullscreen='getfullscreen'
 )
-  slot(v-if='!lazy || visible')
+  slot(v-if='loaded')
 </template>
 
 <script lang='ts'>
@@ -35,11 +35,12 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   reject: ((error) => void) | null = null
   options = {}
   visible = false
+  loaded = false
 
   @Prop({ default: false }) readonly route!: boolean
   @Prop({ default: 'dialog-bottom-transition' }) readonly transition!: boolean
   @Prop() readonly fullscreen: boolean | undefined
-  @Prop({ default: true }) readonly lazy!: boolean
+  @Prop(Boolean) readonly preload?: boolean
   @Prop({ default: true }) readonly autoReset!: boolean
   @Prop(String) readonly watchOnQuery!: string
 
@@ -106,6 +107,8 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   }
 
   open(options = {}) {
+    if (!this.loaded)
+      this.loaded = true
     this.visible = true
     this.options = options
     this.$nextTick(() => {
@@ -126,9 +129,13 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
     this.resolve = null
     this.reject = null
 
-    // unset the dialog query
     if (this.watchOnQuery && this.$route.query.dialog === this.watchOnQuery)
       this.closeDialog()
+  }
+
+  mounted() {
+    if (this.preload && !this.loaded)
+      this.loaded = true
   }
 }
 </script>

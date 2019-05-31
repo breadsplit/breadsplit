@@ -20,21 +20,17 @@ v-card.welcome-dialog
 
   v-card-actions.pt-0.pb-3.px-3
     v-spacer
-    v-btn(color='primary' flat @click.native='more()') {{$t('ui.button_more_about_us')}}
+    v-btn(color='primary' flat @click.native='openDialog("about")') {{$t('ui.button_more_about_us')}}
     v-btn(color='primary darken-1' @click.native='close()') {{$t('ui.button_ok')}}
 
 </template>
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
-import { DialogChildMixin } from '~/mixins'
+import { DialogChildMixin, NavigationMixin } from '~/mixins'
 
 @Component
-export default class WelcomeDialog extends mixins(DialogChildMixin) {
-  more() {
-    // @ts-ignore
-    this.$root.$about.open()
-  }
+export default class WelcomeDialog extends mixins(DialogChildMixin, NavigationMixin) {
 }
 </script>
 

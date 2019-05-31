@@ -10,16 +10,17 @@ v-container
     v-divider.my-3
 
     v-flex.text-xs-center(xs12, sm8, md6)
-      v-btn(@click='$root.$newgroup.open()' round color='primary')
+      v-btn(@click='openDialog("newgroup")' round color='primary')
         v-icon.mr-2 mdi-plus
         span {{$t('ui.button_new_group')}}
 </template>
 
 <script lang='ts'>
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
+import { NavigationMixin } from '~/mixins'
 
 @Component
-export default class Homepage extends Vue {
+export default class Homepage extends mixins(NavigationMixin) {
   get groups() {
     return this.$store.getters['group/all']
   }

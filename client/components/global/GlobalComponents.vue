@@ -13,13 +13,13 @@ import { Component, Vue } from 'nuxt-property-decorator'
 export default class GlobalComponents extends Vue {
   mounted() {
     // @ts-ignore
-    this.$root.$snack = this.$refs.snack.open
+    Vue.prototype.$snack = this.$refs.snack.open
     // @ts-ignore
-    this.$root.$confirm = this.$refs.confirm.open
+    Vue.prototype.$confirm = this.$refs.confirm.open
     // @ts-ignore
-    this.$root.$prompt = this.$refs.prompt.open
+    Vue.prototype.$prompt = this.$refs.prompt.open
     // @ts-ignore
-    this.$root.$apploading = this.$refs.loading
+    Vue.prototype.$apploading = this.$refs.loading
   }
 }
 </script>

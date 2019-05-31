@@ -97,9 +97,6 @@ v-app(:dark='dark')
 
   app-login(ref='login')
 
-  app-dialog(ref='about' :route='true' watch-on-query='about')
-    app-about-page
-
   app-dialog(ref='welcome', :fullscreen='false')
     app-welcome-dialog
 </template>
@@ -161,9 +158,6 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
 
   // Methods
   mounted() {
-    // @ts-ignore
-    this.$root.$about = this.$refs.about
-
     if (!this.isMobile)
       this.drawer = true
 
@@ -176,19 +170,19 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
 
     switch (key) {
       case 'delete':
-        if (await this.$root.$confirm(`確定要刪除 ${group.name} ?`)) {
-          this.$root.$apploading.open('Deleting group')
+        if (await this.$confirm(`確定要刪除 ${group.name} ?`)) {
+          this.$apploading.open('Deleting group')
           if (this.current && this.current.online)
             await this.$fire.deleteGroup(groupid)
           this.removeGroup()
-          this.$root.$apploading.close()
+          this.$apploading.close()
           this.gotoHome()
         }
         break
 
       case 'transfer_online':
-        if (await this.$root.$confirm('Are you sure?')) {
-          this.$root.$apploading.open('Converting to Online group')
+        if (await this.$confirm('Are you sure?')) {
+          this.$apploading.open('Converting to Online group')
           try {
             await this.$fire.publishGroup(this.$store.state.group.currentId)
           }
@@ -197,7 +191,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
             console.error(e)
             // TODO:ERROR error handling
           }
-          this.$root.$apploading.close()
+          this.$apploading.close()
         }
 
         break
@@ -218,7 +212,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   }
 
   async promptLogout() {
-    if (await this.$root.$confirm('Are you sure to logout?')) {
+    if (await this.$confirm('Are you sure to logout?')) {
       await this.$fire.logout()
       this.gotoHome()
     }
@@ -247,7 +241,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   async copyShareLink() {
     if (this.currentShareLink)
       await this.$copyText(this.currentShareLink)
-    this.$root.$snack(this.$t('ui.share_link_copied', '').toString())
+    this.$snack(this.$t('ui.share_link_copied', '').toString())
   }
 
   isSync(id) {

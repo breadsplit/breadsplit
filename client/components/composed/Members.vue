@@ -76,19 +76,19 @@ export default class Members extends Vue {
   }
 
   async promptNewMember() {
-    const name = await this.$root.$prompt('Name')
+    const name = await this.$prompt('Name')
     if (name)
       await this.newMember({ member: { name } })
   }
 
   async promptRenameMember(member) {
-    const name = await this.$root.$prompt('Name', member.name)
+    const name = await this.$prompt('Name', member.name)
     if (name)
       await this.editMember({ memberid: member.uid, changes: { name } })
   }
 
   async promptRemoveMember(member) {
-    if (await this.$root.$confirm('Sure?'))
+    if (await this.$confirm('Sure?'))
       await this.removeMember({ memberid: member.uid })
   }
 }

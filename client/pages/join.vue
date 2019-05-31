@@ -111,9 +111,9 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
       if (!await this.$refs.login.login())
         return
     }
-    this.$root.$apploading.open('Joining group...')
+    this.$apploading.open('Joining group...')
     await this.$fire.joinGroup(this.id, memberId)
-    this.$root.$apploading.close()
+    this.$apploading.close()
   }
 
   isLocal(id: string) {
@@ -124,7 +124,7 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
     this.loading = true
     if (this.$store.getters['group/all'].map(g => g.id).includes(this.id)) {
       this.$router.replace(`/group/${this.id}`)
-      this.$root.$snack(this.$t('tips.already_joined_group'))
+      this.$snack(this.$t('tips.already_joined_group'))
       return
     }
     if (!this.id) {

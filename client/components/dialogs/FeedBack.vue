@@ -50,10 +50,10 @@ export default class FeedBack extends mixins(DialogChildMixin) {
   }
 
   async upload() {
-    this.$root.$apploading.open(this.$t('prompt.sending').toString())
+    this.$apploading.open(this.$t('prompt.sending').toString())
     await this.$fire.sendFeedback(this.feedbackInfo)
-    this.$root.$apploading.close()
-    this.$root.$snack(this.$t('prompt.feedback_delivered'), { color: 'success', timeout: 3000 })
+    this.$apploading.close()
+    this.$snack(this.$t('prompt.feedback_delivered'), { color: 'success', timeout: 3000 })
     this.close()
   }
 

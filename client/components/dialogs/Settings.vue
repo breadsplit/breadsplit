@@ -62,7 +62,7 @@ v-card.settings
         v-list-tile-content
           v-list-tile-title {{$t('ui.feedback')}}
 
-      v-list-tile(avatar, @click='$root.$about.open')
+      v-list-tile(avatar, @click='openDialog("about")')
         v-list-tile-avatar
           v-icon mdi-information-outline
         v-list-tile-content
@@ -117,7 +117,7 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
   }
 
   async purgeData() {
-    if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
+    if (await this.$confirm(this.$t('prompt.are_you_sure'))) {
       await this.$fire.logout()
       this.$store.commit('purge')
       this.close()
@@ -133,7 +133,7 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
       const token = this.$store.state.messaging_token
       // @ts-ignore
       await this.$copyText(token, this.$refs.container)
-      this.$root.$snack('Messaging token copied')
+      this.$snack('Messaging token copied')
     }
   }
 }

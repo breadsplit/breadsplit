@@ -9,6 +9,6 @@ export default class CommonMixin extends Vue {
   }
 
   WIP() {
-    this.$root.$snack(this.$t('ui.wip'), { color: 'red' })
+    this.$snack(this.$t('ui.wip'), { color: 'red' })
   }
 }

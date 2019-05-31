@@ -7,7 +7,6 @@ div
     app-new-group
 
   app-dialog(
-    :lazy='false'
     watch-on-query='newtrans'
     persistent no-click-animation
   )
@@ -19,10 +18,14 @@ div
     app-settings
 
   app-dialog(
-    :lazy='false'
     watch-on-query='transaction'
     persistent no-click-animation
   )
     app-transaction-detail
+
+  app-dialog(
+    watch-on-query='about'
+  )
+    app-about-page
 
 </template>
