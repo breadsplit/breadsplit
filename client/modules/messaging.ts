@@ -1,11 +1,6 @@
 import { writeFileSync, readFileSync } from 'fs'
 import path from 'path'
-import NuxtConfiguration from '@nuxt/config'
-
-interface NuxtModuleContext {
-  options: NuxtConfiguration
-  nuxt: any
-}
+import { NuxtModuleContext } from './type'
 
 function render(template: string, object: object) {
   let a = template
@@ -26,7 +21,7 @@ async function build(this: NuxtModuleContext, moduleOptions: any) {
   writeFileSync(outputPath, script, 'utf-8')
 }
 
-export default async function (this: NuxtModuleContext, moduleOptions) {
+export default async function (this: NuxtModuleContext, moduleOptions: any) {
   const hook = async () => {
     await build.call(this, moduleOptions)
   }
