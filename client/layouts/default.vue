@@ -132,7 +132,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   miniVariant = false
   mobileBreakPoint = 700
   channel: string = RELEASE_CHANNEL
-  debug: DEBUG
+  debug = DEBUG
 
   @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined

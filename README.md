@@ -1,4 +1,4 @@
-<img src='./client/static/img/png/android-chrome-192x192.png' width='150' align='right'>
+<img src='./assets/logo/appicon192.png' width='150' align='right'>
 
 # BreadSplit
 

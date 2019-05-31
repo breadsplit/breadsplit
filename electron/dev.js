@@ -6,7 +6,7 @@ const { exec } = require('child_process')
 const electron = require('electron')
 const { default: installExtension, VUEJS_DEVTOOLS } = require('electron-devtools-installer')
 
-const root = '../breadsplit'
+const root = '..'
 const port = 3000 || process.env.NUXT_PORT || process.env.PORT
 
 const child = exec(`npm run dev --prefix=${root}`)
@@ -17,7 +17,7 @@ const app = electron.app
 
 const newWin = () => {
   win = new electron.BrowserWindow({
-    icon: path.join(root, 'static/img/png/favicon-194x194.png'),
+    icon: path.resolve(__dirname, '../assets/logo-dev/favicon.png'),
   })
 
   // win.maximize()

@@ -1,6 +1,6 @@
 <template lang='pug'>
 .logo-name
-  img.logo(src='/img/png/favicon-194x194.png')
+  img.logo(src='/img/logo/favicon.png')
   .app-name(:style='{color:$vuetify.theme.primary}') {{$t('appname')}}
   .channel(v-text='channel')
 </template>

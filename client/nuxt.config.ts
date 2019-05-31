@@ -22,15 +22,20 @@ const config: NuxtConfiguration = {
       { name: 'HandheldFriendly', content: 'true' },
 
       { property: 'og:title', content: fullname },
-      { property: 'og:image', content: '/img/png/favicon-194x194.png' },
+      { property: 'og:image', content: '/img/logo/favicon.png' },
       { property: 'og:description', content: pkg.description },
     ],
     link: [
-      { rel: 'apple-touch-icon', sizes: '180x180', href: '/img/png/apple-touch-icon.png', media: '(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)' },
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/img/png/favicon-32x32.png' },
-      { rel: 'icon', type: 'image/png', sizes: '194x194', href: '/img/png/favicon-194x194.png' },
-      { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/android-chrome-192x192.png' },
-      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/img/png/favicon-16x16.png' },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/img/logo/touch-icon.png',
+        media: '(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)',
+      },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/img/logo/favicon32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '194x194', href: '/img/logo/favicon.png' },
+      { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/img/logo/appicon192.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/img/logo/favicon16.png' },
       {
         async: true,
         rel: 'stylesheet',
@@ -54,12 +59,12 @@ const config: NuxtConfiguration = {
     background_color: theme.background,
     prefer_related_applications: false,
     icons: [{
-      src: '/img/png/android-chrome-192x192.png',
+      src: '/img/logo/appicon192.png',
       sizes: '192x192',
       type: 'image/png',
     },
     {
-      src: '/img/png/android-chrome-512x512.png',
+      src: '/img/logo/appicon512.png',
       sizes: '512x512',
       type: 'image/png',
     }],
@@ -154,6 +159,7 @@ const config: NuxtConfiguration = {
 
   modules: [
     '~/modules/messaging',
+    '~/modules/assets',
     '@nuxtjs/pwa',
     '@nuxtjs/google-gtag',
     '@nuxtjs/sentry',

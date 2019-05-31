@@ -50,6 +50,7 @@
     "dayjs",
     "devtool",
     "eval",
+    "favicon",
     "fullname",
     "groupid",
     "instanceof",

@@ -7,6 +7,7 @@ const express = require('express')
 const appServer = express()
 const dist = path.join(__dirname, 'dist')
 const port = 9012
+
 appServer.use(express.static(path.join(dist, '')))
 
 appServer.get('*', (req, res) => {
@@ -18,7 +19,7 @@ function start() {
 
   const newWin = () => {
     win = new BrowserWindow({
-      icon: path.join(__dirname, 'dist/img/png/favicon-194x194.png'),
+      icon: path.join(__dirname, 'dist/img/logo/favicon.png'),
     })
     win.on('closed', () => {
       win = null
