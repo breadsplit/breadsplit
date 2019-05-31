@@ -1,3 +1,5 @@
+import { FIREBASE_SERVER, FirebaseServerName } from './env'
+
 export interface FirebaseServer {
   name: string
   apiKey: string
@@ -8,11 +10,6 @@ export interface FirebaseServer {
   messagingSenderId: string
   appId: string
 }
-
-export type FirebaseServerName =
-  | 'production'
-  | 'development'
-  | 'test'
 
 export const FirebaseServers: Record<FirebaseServerName, FirebaseServer> = {
   production: {
@@ -47,6 +44,6 @@ export const FirebaseServers: Record<FirebaseServerName, FirebaseServer> = {
   },
 }
 
-export const CurrentServerName = (process.env.FIREBASE_SERVER || 'development') as FirebaseServerName
+export const CurrentServerName = FIREBASE_SERVER
 
 export default FirebaseServers[CurrentServerName]

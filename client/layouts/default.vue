@@ -116,6 +116,7 @@ v-app(:dark='dark')
 import { setTimeout } from 'timers'
 import { Component, Getter, Mutation, mixins } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
+import { RELEASE_CHANNEL, DEBUG } from '~/../meta/env'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 import Dialog from '~/components/global/Dialog.vue'
 import head from './head'
@@ -130,7 +131,8 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   fixed = false
   miniVariant = false
   mobileBreakPoint = 700
-  channel: string = process.env.RELEASE_CHANNEL || ''
+  channel: string = RELEASE_CHANNEL
+  debug: DEBUG
 
   @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
@@ -149,9 +151,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   }
 
   // Computed
-  get debug() {
-    return process.env.NODE_ENV !== 'production'
-  }
+
   get title() {
     if (this.current)
       return this.current.name

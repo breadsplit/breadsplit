@@ -7,9 +7,10 @@ import dayjs from 'dayjs'
 import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
 import { IsThisId } from '~/core'
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
+import { DEBUG, BUILD_TARGET } from '~/../meta/env'
 
 // eslint-disable-next-line no-console
-const log = (...args) => process.env.NODE_ENV === 'production' || console.log('FBP', ...args)
+const log = (...args) => !DEBUG || console.log('FBP', ...args)
 
 export class FirebasePlugin {
   store: Store<RootState>
@@ -122,7 +123,7 @@ export class FirebasePlugin {
     try {
       // For some reasons, popups are not functional in Electron
       // refer to: https://github.com/firebase/firebase-js-sdk/issues/1334
-      if (process.env.BUILD_TARGET === 'electron'
+      if (BUILD_TARGET === 'electron'
         || (this.store.state.ua.os === 'ios' && this.store.state.ua.standalone)
       ) {
         await this.auth.signInWithRedirect(provider)

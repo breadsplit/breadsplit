@@ -9,8 +9,8 @@ function render(template: string, object: object) {
   return a
 }
 
-async function build(this: NuxtModuleContext, moduleOptions: any) {
-  const srcDir = this.options.srcDir || ''
+async function build(context: NuxtModuleContext, moduleOptions: any) {
+  const srcDir = context.options.srcDir || ''
   const templatePath = path.resolve(srcDir, 'modules', 'firebase-messaging.template.sw.js')
   const outputPath = path.resolve(srcDir, 'static', 'firebase-messaging.sw.js')
 
@@ -23,7 +23,7 @@ async function build(this: NuxtModuleContext, moduleOptions: any) {
 
 export default async function (this: NuxtModuleContext, moduleOptions: any) {
   const hook = async () => {
-    await build.call(this, moduleOptions)
+    await build(this, moduleOptions)
   }
 
   if (this.options.mode === 'spa')

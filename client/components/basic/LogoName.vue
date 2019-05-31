@@ -7,10 +7,11 @@
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
+import { RELEASE_CHANNEL } from '~/../meta/env'
 
 @Component
 export default class DefaultLayout extends Vue {
-  channel: string = process.env.RELEASE_CHANNEL || ''
+  channel: string = RELEASE_CHANNEL
 }
 </script>
 

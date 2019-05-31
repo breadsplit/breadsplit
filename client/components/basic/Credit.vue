@@ -29,17 +29,18 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
 import socials from '~/../meta/socials'
+import { APP_VERSION, BUILD_TARGET, BUILD_TIME, RELEASE_CHANNEL, FIREBASE_SERVER } from '~/../meta/env'
 
 @Component
 export default class Credit extends Vue {
   socials = socials
   code = []
   design = []
-  version = process.env.APP_VERSION
-  target = process.env.BUILD_TARGET
-  buildtime = process.env.BUILD_TIME
-  channel = process.env.RELEASE_CHANNEL
-  serverName = process.env.FIREBASE_SERVER
+  version = APP_VERSION
+  target = BUILD_TARGET
+  buildtime = BUILD_TIME
+  channel = RELEASE_CHANNEL
+  serverName = FIREBASE_SERVER
 
   get buildTimeFromNow() {
     return dayjs(this.buildtime).fromNow()
