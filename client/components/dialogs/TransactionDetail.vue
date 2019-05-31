@@ -12,7 +12,7 @@ import { DialogChildMixin, GroupMixin } from '~/mixins'
 @Component
 export default class Members extends mixins(GroupMixin, DialogChildMixin) {
   get transaction() {
-    return this.group.transactions.find(t => t.id === this.options.trans_id)
+    return this.group.transactions.find(t => t.id === this.options.transid)
   }
 }
 </script>

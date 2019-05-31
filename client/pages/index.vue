@@ -1,6 +1,5 @@
 <template lang='pug'>
 v-container
-  h2 This is a new label
   v-layout(column, justify-center, align-center)
     v-flex.text-xs-center(xs12, sm8, md6)
       template(v-for='(group, i) in groups')
@@ -11,7 +10,9 @@ v-container
     v-divider.my-3
 
     v-flex.text-xs-center(xs12, sm8, md6)
-      v-btn(@click='$root.$newgroup.open()', color='primary') {{$t('ui.button_new_group')}}
+      v-btn(@click='$root.$newgroup.open()' round color='primary')
+        v-icon.mr-2 mdi-plus
+        span {{$t('ui.button_new_group')}}
 </template>
 
 <script lang='ts'>

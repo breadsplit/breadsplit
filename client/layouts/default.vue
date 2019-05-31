@@ -29,7 +29,7 @@ v-app(:dark='dark')
       .drawer-list-bottom.pb-2
         v-divider.mb-2
         // New group item
-        v-list-tile(@click='newGroup()')
+        v-list-tile(@click='openNewGroupDialog()')
           v-list-tile-action
             v-icon mdi-plus
           v-list-tile-content
@@ -56,7 +56,7 @@ v-app(:dark='dark')
               v-icon(color='red', size='20') mdi-cloud-off-outline
 
         // Settings
-        v-list-tile(@click='settingPage()')
+        v-list-tile(@click='openSettings()')
           v-list-tile-action
             v-icon mdi-settings
           v-list-tile-content
@@ -93,19 +93,11 @@ v-app(:dark='dark')
     nuxt
 
   app-global-components
-
-  app-dialog(ref='newgroup' :route='true' persistent no-click-animation)
-    app-new-group
-
-  app-dialog(ref='newtrans' :lazy='false' persistent no-click-animation)
-    app-new-transaction
-
-  app-dialog(ref='settings' :route='true')
-    app-settings
+  app-global-dialogs
 
   app-login(ref='login')
 
-  app-dialog(ref='about' :route='true')
+  app-dialog(ref='about' :route='true' watch-on-query='about')
     app-about-page
 
   app-dialog(ref='welcome', :fullscreen='false')
@@ -145,8 +137,6 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   @Mutation('group/remove') removeGroup
 
   $refs!: {
-    settings: Dialog
-    newgroup: Dialog
     welcome: Dialog
   }
 
@@ -172,15 +162,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   // Methods
   mounted() {
     // @ts-ignore
-    this.$root.$newgroup = this.$refs.newgroup
-    // @ts-ignore
-    this.$root.$newtrans = this.$refs.newtrans
-    // @ts-ignore
-    this.$root.$settings = this.$refs.settings
-    // @ts-ignore
     this.$root.$about = this.$refs.about
-    // @ts-ignore
-    this.$root.$login = this.$refs.login
 
     if (!this.isMobile)
       this.drawer = true
@@ -225,14 +207,14 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
         break
 
       case 'edit':
-        this.$refs.newgroup.open({ mode: 'edit' })
+        this.openDialog('newgroup', { mode: 'edit' })
         break
     }
   }
 
-  async newGroup() {
-    this.closeDrawer()
-    this.$refs.newgroup.open()
+  async openNewGroupDialog() {
+    this.tryCloseDrawer()
+    this.openDialog('newgroup')
   }
 
   async promptLogout() {
@@ -242,17 +224,17 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
     }
   }
 
-  async settingPage() {
-    this.closeDrawer()
-    this.$refs.settings.open()
+  async openSettings() {
+    this.tryCloseDrawer()
+    this.openDialog('settings')
   }
 
   goHome() {
-    this.closeDrawer()
+    this.tryCloseDrawer()
     this.gotoHome()
   }
 
-  closeDrawer() {
+  tryCloseDrawer() {
     if (this.isMobile)
       this.drawer = false
   }

@@ -10,7 +10,7 @@ div
 import { Component, Vue } from 'nuxt-property-decorator'
 
 @Component
-export default class GlobalStyle extends Vue {
+export default class GlobalComponents extends Vue {
   mounted() {
     // @ts-ignore
     this.$root.$snack = this.$refs.snack.open

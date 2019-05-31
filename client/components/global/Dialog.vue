@@ -10,7 +10,7 @@ v-dialog(
 
 <script lang='ts'>
 import { Component, mixins, Watch, Prop } from 'nuxt-property-decorator'
-import CommonMixin from '~/mixins/common'
+import { CommonMixin, NavigationMixin } from '~/mixins'
 
 @Component({
   inheritAttrs: false,
@@ -30,7 +30,7 @@ import CommonMixin from '~/mixins/common'
     return { dialog }
   },
 })
-export default class Dialog extends mixins(CommonMixin) {
+export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   resolve: ((result) => void) | null = null
   reject: ((error) => void) | null = null
   options = {}
@@ -41,6 +41,7 @@ export default class Dialog extends mixins(CommonMixin) {
   @Prop() readonly fullscreen: boolean | undefined
   @Prop({ default: true }) readonly lazy!: boolean
   @Prop({ default: true }) readonly autoReset!: boolean
+  @Prop(String) readonly watchOnQuery!: string
 
   get isOpened() {
     return !!this.visible
@@ -57,6 +58,17 @@ export default class Dialog extends mixins(CommonMixin) {
     if (this.route && this.visible) {
       this.$router.go(1)
       this.close()
+    }
+  }
+
+  @Watch('$route.query', { deep: true, immediate: true })
+  onQueryChanged() {
+    if (this.watchOnQuery) {
+      if (this.$route.query.dialog === this.watchOnQuery)
+        this.open(this.$route.query)
+
+      else if (this.visible)
+        this.close()
     }
   }
 
@@ -113,6 +125,10 @@ export default class Dialog extends mixins(CommonMixin) {
       this.visible = false
     this.resolve = null
     this.reject = null
+
+    // unset the dialog query
+    if (this.watchOnQuery && this.$route.query.dialog === this.watchOnQuery)
+      this.closeDialog()
   }
 }
 </script>
