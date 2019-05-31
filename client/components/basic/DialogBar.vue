@@ -37,7 +37,7 @@ export default class DialogBar extends mixins(CommonMixin) {
   }
 
   get fixed() {
-    return this.isMobile && this.attached != null
+    return this.isMobile && this.attached
   }
 
   get placeholderHeight() {
