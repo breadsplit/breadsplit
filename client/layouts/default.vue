@@ -98,7 +98,7 @@ v-app(:dark='dark')
   app-login(ref='login')
 
   app-dialog(ref='welcome', :fullscreen='false')
-    app-welcome-dialog
+    app-welcome
 </template>
 
 <script lang='ts'>

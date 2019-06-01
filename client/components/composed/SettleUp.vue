@@ -13,7 +13,11 @@ v-card.settle-up
             app-user-info.pa-3(v-if='!isMobile' :id='solution.from')
             app-user-avatar(:id='solution.from')
           div(v-rows='"1fr 1fr"').text-xs-center.px-3
-            app-money-label(:amount='solution.amount' :currency='solution.currency')
+            app-money-label(
+              :amount='solution.amount'
+              :currency='solution.currency'
+              color
+            )
             v-icon mdi-ray-start-arrow
           div.text-no-wrap
             app-user-avatar(:id='solution.to')

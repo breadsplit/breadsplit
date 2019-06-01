@@ -12,7 +12,11 @@ v-card.balances
             app-user-info(:id='balance.uid')
         v-list-tile-action.pr-1
           v-list-tile-title
-            app-money-label(:amount='balance.balance[group.currencies[0]]', :currency='group.currencies[0]')
+            app-money-label(
+              :amount='balance.balance[group.currencies[0]]'
+              :currency='group.currencies[0]'
+              color
+            )
 </template>
 
 <script lang='ts'>

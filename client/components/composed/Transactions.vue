@@ -14,7 +14,11 @@ v-card.transactions
               b {{trans.creditor_names.join(', ')}}
           v-list-tile-sub-title.time-label {{dateFromNow(trans.timestamp)}}
         v-list-tile-action.pr-1(v-rows='"auto max-content"')
-          app-money-label.text-xs-right(:amount='-trans.total_fee' :currency='trans.currency')
+          app-money-label.text-xs-right(
+            :amount='-trans.total_fee'
+            :currency='trans.currency'
+            color
+          )
           .creators-debtors
             .creators
               app-user-avatar(v-for='c in trans.creditor_ids' :id='c' :key='c' size='24')

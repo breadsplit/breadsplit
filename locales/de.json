@@ -4,5 +4,9 @@
   "language_name": "Deutsche",
   "translators": "cleo",
   "appname": "BreadSplit",
-  "appname_dev": "BreadSplit Dev"
+  "appname_dev": "BreadSplit Dev",
+  "ui": {
+    "splitting": {},
+    "newtrans": {}
+  }
 }

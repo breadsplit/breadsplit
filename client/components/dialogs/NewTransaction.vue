@@ -26,7 +26,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
         ref='splitting_debtors'
         :trans='form'
         :members='members'
-        :title='$t("ui.newtrans.for_whom")'
+        :title='$t("ui.splitting.split_by")'
         on='debtors'
       )
 

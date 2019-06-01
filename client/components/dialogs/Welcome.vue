@@ -39,5 +39,5 @@ export default class WelcomeDialog extends mixins(DialogChildMixin, NavigationMi
   .signature
     font-style italic
     opacity 0.7
-    margin-top -1em
+    margin-top  -1em
 </style>

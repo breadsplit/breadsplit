@@ -116,13 +116,16 @@
       "average": "Equally",
       "amount": "Amount",
       "percent": "Percent",
-      "weight": "Weights"
+      "weight": "Weights",
+      "mode_average_tip": "Select those who spent with this expense",
+      "mode_average_details": "Splitting with {0} people, each of them spent",
+      "total": "Total expense: {0}"
     },
     "newtrans": {
       "how_much": "How much?",
       "expense_paid_by": "Expense paid by?",
       "xx_should_pay": "by the way, {0} should pay this time.",
-      "add_payer": "Add payer",
+      "add_payer": "Add more payer",
       "for_whom": "For whom?",
       "more_details": "More details"
     },

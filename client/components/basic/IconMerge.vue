@@ -11,6 +11,6 @@
 
   .append
     position absolute
-    bottom 0
-    right 0
+    bottom -2px
+    right -8px
 </style>

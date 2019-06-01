@@ -90,11 +90,14 @@
     "repeat_expense": "重複",
     "title_join_a_group": "加入群組",
     "splitting": {
-      "split_by": "拆分方式",
-      "average": "AA制",
+      "split_by": "分帳方式",
+      "average": "均分制",
       "amount": "按金額",
       "percent": "按趴數",
-      "weight": "按權重"
+      "weight": "按權重",
+      "mode_average_tip": "選擇參與這筆支出的人",
+      "mode_average_details": "{0} 人參與分帳，平均每個人花費",
+      "total": "支出金額: {0}"
     },
     "support_us": "支持我們",
     "welcome_breadsplit": "歡迎使用分帳吐司!",
