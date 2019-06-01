@@ -12,7 +12,7 @@
       v-model='tab' v-if='showTabs'
       slider-color='transparent' grow
     )
-      v-tab(v-for='(mode, idx) in modes' :class='tab==idx ? "primary--text" : ""' :ripple='false')
+      v-tab(v-for='(mode, idx) in modes' :key='mode.mode' :class='tab==idx ? "primary--text" : ""' :ripple='false')
         v-icon(style='color:inherit;transition:none;').mr-1 {{mode.icon}}
         v-expand-x-transition
           span(v-show='tab==idx') {{mode.text}}
