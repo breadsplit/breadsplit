@@ -48,7 +48,7 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { Transaction, Member } from '~/types'
 import SoftNumpad from '../basic/SoftNumpad.vue'
 import NumberInput from '../basic/NumberInput.vue'
@@ -68,11 +68,17 @@ export default class SplittingPage extends Vue {
   $refs!: {
     splitting: Splitting
     numpad: SoftNumpad
+    total_fee_input: NumberInput
   }
 
-  mounted() {
-    if (this.on === 'creditors')
+  @Watch('trans', { immediate: true })
+  onTransChanged() {
+    if (this.on === 'creditors') {
       this.mode = 'amount'
+      this.$nextTick(() => {
+        this.openKeyboardForMainInput(this.$refs.total_fee_input)
+      })
+    }
   }
 
   get showKeyboard() {

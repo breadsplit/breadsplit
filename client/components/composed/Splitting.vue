@@ -8,12 +8,16 @@
         :currency='trans.currency'
       )
 
-    v-tabs.mode-switcher(v-model='tab' v-if='showTabs' slider-color='transparent' grow)
+    v-tabs.mode-switcher(
+      v-model='tab' v-if='showTabs'
+      slider-color='transparent' grow
+    )
       v-tab(v-for='(mode, idx) in modes' :class='tab==idx ? "primary--text" : ""' :ripple='false')
         v-icon(style='color:inherit;transition:none;').mr-1 {{mode.icon}}
         v-expand-x-transition
           span(v-show='tab==idx') {{mode.text}}
 
+  //* ========== Average ========== *//
   .mode-average(v-if='mode==="average"')
 
     .tip {{$t('ui.splitting.mode_average_tip')}}
@@ -24,7 +28,10 @@
         v-for='pa in participators'
       )
         app-icon-merge(@click.native='toggleWeight(pa)')
-          app-user-avatar.op-ani(size='48' :id='pa.uid' :class='{"op-50": !pa.weight}')
+          app-user-avatar.op-ani(
+            size='48' :id='pa.uid'
+            :class='{"op-25": !pa.weight}'
+          )
           v-scale-transition(slot='append')
             v-avatar.elevation-1(v-show='pa.weight' size='22' color='primary')
               v-icon(color='white' size='15') mdi-check
@@ -37,6 +44,7 @@
       :currency='trans.currency'
     )
 
+  //* ========== Amount ========== *//
   .mode-amount(v-if='mode==="amount"')
     .participators
       .participator(
@@ -77,9 +85,11 @@
             v-icon(size='24') mdi-plus
           span {{$t('ui.newtrans.add_payer')}}
 
+  //* ========== Percent ========== *//
   .mode-percent(v-if='mode==="percent"')
     p.mx-4.pax-my-3 {{$t('ui.wip')}}
 
+  //* ========== Weight ========== *//
   .mode-weights(v-if='mode==="weight"')
     p.mx-4.pax-my-3 {{$t('ui.wip')}}
 
@@ -107,8 +117,8 @@ export default class Splitting extends Vue {
     return [
       { mode: 'average', icon: 'mdi-account-multiple', text: this.$t('ui.splitting.average') },
       { mode: 'amount', icon: 'mdi-currency-usd', text: this.$t('ui.splitting.amount') },
-      // { mode: 'percent', icon: 'mdi-percent', text: this.$t('ui.splitting.percent') },
-      // { mode: 'weight', icon: 'mdi-scale-balance', text: this.$t('ui.splitting.weight') },
+      { mode: 'percent', icon: 'mdi-percent', text: this.$t('ui.splitting.percent') },
+      { mode: 'weight', icon: 'mdi-scale-balance', text: this.$t('ui.splitting.weight') },
     ]
   }
 

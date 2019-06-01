@@ -4,10 +4,11 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
   v-window.height-100(v-model='step', touchless)
     v-window-item.page(:value='1')
-      .page-container
+      .page-container.height-100(v-rows='"max-content max-content auto max-content"')
         .header {{$t('ui.newtrans.expense_paid_by')}}
         .subheader {{$t('ui.newtrans.xx_should_pay')}}
 
+        div
         .member-choices
           template(v-for='m in members')
             app-user-avatar(:id='m.uid' @click.native='setCreditor(m.uid)' :show-name='true')
@@ -240,7 +241,8 @@ bottom-bar-height = 69px
       font-size 1.3em
 
     .member-choices
-      padding 1.5em 0
+      text-align center
+      padding 2em 0
 
       .user-avatar
         padding 0.7em
