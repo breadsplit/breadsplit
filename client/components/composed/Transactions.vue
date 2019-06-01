@@ -20,11 +20,9 @@ v-card.transactions
             color
           )
           .creators-debtors
-            .creators
-              app-user-avatar(v-for='c in trans.creditor_ids' :id='c' :key='c' size='24')
+            app-avatars-horizontal-group(:ids='trans.creditor_ids' size='24' max-length='3')
             v-icon(size='20') mdi-arrow-right
-            .debtors
-              app-user-avatar(v-for='d in trans.debtor_ids' :id='d' :key='d' size='24')
+            app-avatars-horizontal-group(:ids='trans.debtor_ids' size='24' max-length='3')
 
     template(v-if='needShowMore')
       v-divider
@@ -99,19 +97,7 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
     opacity 0.8
 
 .creators-debtors
-  & > *
-    display inline-block
-    vertical-align middle
-
   .v-icon
     opacity 0.4
-
-  .user-avatar:not(:first-child)
-    margin-left -8px
-
-  .v-avatar
-    .theme--light & img
-      border 2px solid #fff
-    .theme--dark & img
-      border 2px solid #424242
+    vertical-align middle
 </style>
