@@ -162,6 +162,11 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     return dateToRelative(this.form.timestamp, this.$t.bind(this))
   }
 
+  cleanUp() {
+    this.$refs.splitting_creditors.$refs.splitting.cleanUp()
+    this.$refs.splitting_debtors.$refs.splitting.cleanUp()
+  }
+
   setCreditor(uid: string) {
     this.form.creditors = [{ weight: 1, uid }]
     this.next()
@@ -199,6 +204,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   }
 
   submit() {
+    this.cleanUp()
     const trans = Object.assign({},
       this.form, {
         category: this.form.category || this.categorySense,
@@ -230,6 +236,10 @@ bottom-bar-height = 69px
 
   .page
     min-height 400px
+    height 100%
+
+    & > .height-100
+      min-height 400px
 
   .page-container
     padding 1.5em 2em 0.5em 2em

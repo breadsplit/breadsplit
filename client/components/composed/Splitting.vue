@@ -97,11 +97,9 @@
 
 <script lang='ts'>
 import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
-import { TransactionBalanceChanges, GCD } from '~/core'
+import { TransactionBalanceChanges, TransactionWeightsHelper, Splitmode } from '~/core'
 import { Transaction, Member, Weight } from '~/types'
 import NumberInput from '../basic/NumberInput.vue'
-
-export type Splitmode = 'average' | 'amount' | 'percent' | 'weight'
 
 @Component
 export default class Splitting extends Vue {
@@ -109,7 +107,7 @@ export default class Splitting extends Vue {
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
   @Prop({ default: true }) readonly showTabs!: boolean
   @Prop({ default: () => [] }) readonly members!: Member[]
-  @Prop({ default: 'average' }) readonly mode!: string
+  @Prop({ default: 'average' }) readonly mode!: Splitmode
 
   focused: string|null = null
 
@@ -139,7 +137,7 @@ export default class Splitting extends Vue {
   }
 
   get removable() {
-    return this.on === 'creditors'
+    return this.participators.length > 1 && this.on === 'creditors'
   }
 
   get balanceChanges() {
@@ -166,22 +164,20 @@ export default class Splitting extends Vue {
     return this.members.filter(m => m.uid != null && !this.participatorIds.includes(m.uid))
   }
 
+  get helper() {
+    return new TransactionWeightsHelper(this.trans, this.on)
+  }
+
   get flexibleWeights() {
-    return this.participators
-      .filter(c => c.fee == null)
-      .map(i => i.weight || 0)
-      .reduce((a, b) => a + b, 0)
+    return this.helper.flexibleWeights
   }
 
   get fixedFees() {
-    return this.participators
-      .filter(c => c.fee != null)
-      .map(i => i.fee || 0)
-      .reduce((a, b) => a + b, 0)
+    return this.helper.fixedFees
   }
 
   get flexibleFees() {
-    return this.trans.total_fee - this.fixedFees
+    return this.helper.flexibleFees
   }
 
   get userTextI18nPath() {
@@ -198,26 +194,6 @@ export default class Splitting extends Vue {
     this.$emit('keyboard', null)
   }
 
-  getRecord(uid: string) {
-    return this.trans[this.on]
-      .find(d => d.uid === uid)
-  }
-
-  getBalance(uid) {
-    return this.balanceChanges
-      .find(d => d.uid === uid)
-  }
-
-  getAmount(uid: string) {
-    const balance = this.getBalance(uid)
-    if (!balance)
-      return 0
-    if (this.on === 'debtors')
-      return -balance.debt
-    if (this.on === 'creditors')
-      return balance.credit
-  }
-
   setParticipator(uid: string, weight = 1) {
     this.participators = [{ weight, uid }]
   }
@@ -231,11 +207,7 @@ export default class Splitting extends Vue {
   }
 
   getFee(participator: Weight) {
-    if (participator.fee != null)
-      return participator.fee
-    if (!this.flexibleWeights)
-      return 0
-    return ((participator.weight || 0) / (this.flexibleWeights || 1)) * (this.flexibleFees)
+    return this.helper.getFee(participator)
   }
 
   setFee(participator: Weight, fee: number) {
@@ -287,16 +259,11 @@ export default class Splitting extends Vue {
   }
 
   public gcd() {
-    const participators = this.participators.map(c => ({
-      uid: c.uid,
-      fee: this.getFee(c),
-    }))
-    const gcd = GCD(participators.map(c => c.fee))
-    this.participators.forEach((c) => {
-      const participator = participators.find(d => d.uid === c.uid)
-      if (participator && participator.fee != null)
-        c.weight = participator.fee / gcd
-    })
+    this.helper.gcd()
+  }
+
+  public cleanUp() {
+    this.helper.cleanUp(this.mode)
   }
 }
 </script>
