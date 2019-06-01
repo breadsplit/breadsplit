@@ -148,6 +148,10 @@ export const actions: ActionTree<GroupState, RootState> = {
     NewOperation(context, id, 'insert_transaction', trans)
   },
 
+  removeTranscation(context, { id, transid }) {
+    NewOperation(context, id, 'remove_transaction', transid)
+  },
+
   // editTranscation(context, { id, transid, changes }) {
   //  NewOperation(context, id, 'modify_transaction', { id: transid, changes })
   // },
