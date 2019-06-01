@@ -4,6 +4,10 @@ import { Translator, t } from './i18n'
 
 type Time = string | number | Dayjs | Date
 
+export function getTimezone() {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone
+}
+
 export function dateFromNow(time: Time) {
   const d = dayjs(time)
   const now = dayjs()
