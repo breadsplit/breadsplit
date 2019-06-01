@@ -3,7 +3,7 @@ v-dialog(
   v-model='visible', @keydown.esc='close()'
   v-bind='$attrs', style='z-index:200',
   :transition='transition', :max-width='600'
-  :fullscreen='getfullscreen'
+  :fullscreen='isFullscreen'
 )
   slot(v-if='loaded')
 </template>
@@ -73,7 +73,7 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
     }
   }
 
-  get getfullscreen() {
+  get isFullscreen() {
     if (this.fullscreen != null)
       return this.fullscreen
     return this.isMobile
@@ -139,3 +139,9 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   }
 }
 </script>
+
+<style lang='stylus'>
+.v-dialog--fullscreen
+  height 100vh
+  overflow-y hidden
+</style>

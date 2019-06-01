@@ -215,12 +215,14 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 </script>
 
 <style lang='stylus'>
+bottom-bar-height = 69px
+
 .v-dialog--fullscreen
   .new-transaction
     height 100%
 
     .page
-      height 100%
+      height "calc(100vh - %s)" % bottom-bar-height
 
 .new-transaction
   overflow-x hidden

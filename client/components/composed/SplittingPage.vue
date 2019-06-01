@@ -9,6 +9,7 @@
     :trans='trans'
     :members='members'
     :on='on'
+    :mode.sync='mode'
     @keyboard='openKeyboard'
   )
 
@@ -51,11 +52,12 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Transaction, Member } from '~/types'
 import SoftNumpad from '../basic/SoftNumpad.vue'
 import NumberInput from '../basic/NumberInput.vue'
-import Splitting from './Splitting.vue'
+import Splitting, { Splitmode } from './Splitting.vue'
 
 @Component
 export default class SplittingPage extends Vue {
   registeredInput: NumberInput | null = null
+  mode: Splitmode = 'average'
 
   @Prop(Object) readonly trans!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
@@ -66,6 +68,11 @@ export default class SplittingPage extends Vue {
   $refs!: {
     splitting: Splitting
     numpad: SoftNumpad
+  }
+
+  mounted() {
+    if (this.on === 'creditors')
+      this.mode = 'amount'
   }
 
   get showKeyboard() {

@@ -1,33 +1,18 @@
 <template lang='pug'>
 .splitting
 
-  i18n(path='ui.splitting.total').total-fee
-    app-money-label.mx-1.primary--text(
-      :amount='trans.total_fee'
-      :currency='trans.currency'
-    )
-
   template(v-if='on === "debtors"')
+    i18n(path='ui.splitting.total').total-fee
+      app-money-label.mx-1.primary--text(
+        :amount='trans.total_fee'
+        :currency='trans.currency'
+      )
+
     v-tabs.mode-switcher(v-model='tab' v-if='showTabs' slider-color='transparent' grow)
-      v-tab(:class='tab == 0 ? "primary--text" : ""' :ripple='false')
-        v-icon(style='color:inherit;transition:none;').mr-1 mdi-account-multiple
+      v-tab(v-for='(mode, idx) in modes' :class='tab==idx ? "primary--text" : ""' :ripple='false')
+        v-icon(style='color:inherit;transition:none;').mr-1 {{mode.icon}}
         v-expand-x-transition
-          span(v-show='tab === 0') {{$t('ui.splitting.average')}}
-
-      v-tab(:class='tab == 1 ? "primary--text" : ""' :ripple='false')
-        v-icon(style='color:inherit;transition:none;').mr-1 mdi-currency-usd
-        v-expand-x-transition
-          span(v-show='tab === 1') {{$t('ui.splitting.amount')}}
-
-      v-tab(:class='tab == 2 ? "primary--text" : ""' :ripple='false')
-        v-icon(style='color:inherit;transition:none;').mr-1 mdi-percent
-        v-expand-x-transition
-          span(v-show='tab === 2') {{$t('ui.splitting.percent')}}
-
-      v-tab(:class='tab == 3 ? "primary--text" : ""' :ripple='false')
-        v-icon(style='color:inherit;transition:none;').mr-1 mdi-scale-balance
-        v-expand-x-transition
-          span(v-show='tab === 3') {{$t('ui.splitting.weight')}}
+          span(v-show='tab==idx') {{mode.text}}
 
   .mode-average(v-if='mode==="average"')
 
@@ -92,6 +77,12 @@
             v-icon(size='24') mdi-plus
           span {{$t('ui.newtrans.add_payer')}}
 
+  .mode-percent(v-if='mode==="percent"')
+    p.mx-4.pax-my-3 {{$t('ui.wip')}}
+
+  .mode-weights(v-if='mode==="weight"')
+    p.mx-4.pax-my-3 {{$t('ui.wip')}}
+
 </template>
 
 <script lang='ts'>
@@ -100,33 +91,37 @@ import { TransactionBalanceChanges, GCD } from '~/core'
 import { Transaction, Member, Weight } from '~/types'
 import NumberInput from '../basic/NumberInput.vue'
 
-type Splitmode = 'average' | 'amount' | 'percent' | 'weight'
+export type Splitmode = 'average' | 'amount' | 'percent' | 'weight'
 
 @Component
 export default class Splitting extends Vue {
-  tab = 0
-
   @Prop(Object) readonly trans!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
   @Prop({ default: true }) readonly showTabs!: boolean
   @Prop({ default: () => [] }) readonly members!: Member[]
+  @Prop({ default: 'average' }) readonly mode!: string
 
   focused: string|null = null
 
-  get mode(): Splitmode {
-    if (this.on === 'creditors')
-      return 'amount'
+  get modes() {
+    return [
+      { mode: 'average', icon: 'mdi-account-multiple', text: this.$t('ui.splitting.average') },
+      { mode: 'amount', icon: 'mdi-currency-usd', text: this.$t('ui.splitting.amount') },
+      // { mode: 'percent', icon: 'mdi-percent', text: this.$t('ui.splitting.percent') },
+      // { mode: 'weight', icon: 'mdi-scale-balance', text: this.$t('ui.splitting.weight') },
+    ]
+  }
 
-    switch (this.tab) {
-      case 0:
-        return 'average'
-      case 1:
-        return 'amount'
-      case 2:
-        return 'percent'
-      default:
-        return 'weight'
+  get tab() {
+    for (let i = 0; i < this.modes.length; i++) {
+      if (this.modes[i].mode === this.mode)
+        return i
     }
+    return 0
+  }
+
+  set tab(value) {
+    this.$emit('update:mode', this.modes[+value].mode)
   }
 
   get currency() {
@@ -297,8 +292,8 @@ export default class Splitting extends Vue {
 </script>
 
 <style lang='stylus'>
-
 .splitting
+  overflow-y auto
 
   .total-fee
     font-size 1.1em

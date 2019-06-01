@@ -275,6 +275,10 @@ export default class NumberInput extends mixins(CommonMixin) {
     input
       max-height inherit
       font-size 3em
+      margin-top 0
+
+    label
+      top -0.1em
 
   &.bold
     input
