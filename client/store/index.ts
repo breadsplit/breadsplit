@@ -34,10 +34,6 @@ export const mutations: MutationTree<RootState> = {
       Vue.set(state, key, defaults[key])
   },
 
-  setStarRate(state, value: string) {
-    state.user.me.starrate = value
-  },
-
   switchLocale(state, locale: string | null) {
     state.user_locale = locale
   },
