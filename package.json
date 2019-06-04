@@ -123,6 +123,7 @@
     "firebase-tools": "^6.10.0",
     "fs-extra": "^8.0.1",
     "jest": "^24.8.0",
+    "js-yaml-loader": "^1.2.0",
     "lerna": "^3.14.1",
     "nodemon": "^1.19.1",
     "replace-in-file": "^4.1.0",

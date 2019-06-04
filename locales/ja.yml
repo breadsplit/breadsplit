@@ -1,0 +1,22 @@
+code: ja
+iso: ja
+language_name: 日本語
+translators: ''
+css:
+  font_of_locale: ''
+ui:
+  group_editing:
+    new_group: 新チーム
+    group_name: グループ名
+  button_join_group: グループに参加する
+  homepage: ホーム
+  button_create: 作成する
+  setting_options:
+    notification_enabled: 通知が有効になります
+    notification_disabled: 通知は無効になります
+    clear_all_data: すべてのデータを消去
+  tabs: {}
+  newtrans: {}
+  splitting: {}
+acts: {}
+noun: {}

@@ -1,0 +1,82 @@
+code: zh-cn
+iso: zh-CN
+language_name: 简体中文
+translators: antfu<anthonyfu117@hotmail.com>
+appname: 分账吐司
+appname_dev: 分账吐司 Dev
+css:
+  font_of_locale: '"微軟雅黑", "Microsoft YaHei"'
+ui:
+  language: 显示语言
+  settings: 设置
+  sign_in: 登陆
+  about: 关于我们
+  advance: ''
+  homepage: 首页
+  button_new_group: 新建小组
+  button_new_member: 添加成员
+  user:
+    guest: 访客
+  group_editing:
+    new_group: 新建小组
+    enter_group_name: 请输入小组名称
+    default_group_name: 未命名小组
+    group_name: 小组名称
+  tabs:
+    settle_up: ''
+    expenses: 支出
+    members: 小组成员
+    summary: 总览
+    activities: ''
+  speed_dials:
+    new_expense: ''
+    new_member: ''
+    settle_up: ''
+  button_join_group: 加入小组
+  button_create: 创建
+  setting_options:
+    enabled: ''
+    notification_enabled: 通知已启用
+    notification_disabled: 通知已禁用
+    clear_all_data: 清除所有数据
+  splitting:
+    split_by: ''
+  button_no: 否
+  button_yes: 是
+  star_on_github: Star on Github
+  newtrans:
+    expense_paid_by: 费用由谁支付？
+    xx_should_pay: 这次轮到 {0} 付款。
+    how_much: 输入金额
+    add_payer: 添加付款人
+    more_details: 更多信息
+  total: 合计
+  paid_money: 支付了
+  add_location: 添加位置
+  repeat_expense: 重复
+  button_cancel: 取消
+  button_back: 返回
+  button_quick_add: 快速添加
+  button_next: 下一步
+  button_save: 保存
+prompt:
+  are_you_sure: 你确定吗？
+cats:
+  transport:
+    display: ''
+    keywords: ''
+  lodging:
+    display: ''
+    keywords: ''
+  travel:
+    display: ''
+  food:
+    display: ''
+    keywords: ''
+  transfer:
+    display: ''
+  other:
+    display: ''
+acts: {}
+noun:
+  expense: 支出

@@ -1,0 +1,10 @@
+code: de
+iso: de
+language_name: Deutsche
+translators: cleo
+appname: BreadSplit
+appname_dev: BreadSplit Dev
+ui:
+  splitting: {}
+  newtrans: {}
+acts: {}
