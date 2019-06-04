@@ -122,6 +122,12 @@ const config: NuxtConfiguration = {
     extractCSS: !dev,
     publicPath: '/nuxt/',
     extend(config, ctx) {
+      if (config.module) {
+        config.module.rules.push({
+          test: /\.ya?ml$/,
+          use: 'js-yaml-loader',
+        })
+      }
       if (ctx.isDev && ctx.isClient && config.module) {
         config.module.rules.push({
           enforce: 'pre',
