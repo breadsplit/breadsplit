@@ -153,7 +153,7 @@
     "firebase-admin": "8.0.0",
     "firebase-functions": "2.3.1",
     "firebase-functions-test": "0.1.6",
-    "firebase-tools": "6.10.0",
+    "firebase-tools": "6.11.0",
     "fs-extra": "8.0.1",
     "jest": "24.8.0",
     "jest-yaml-transform": "0.2.0",
