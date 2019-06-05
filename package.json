@@ -120,7 +120,7 @@
     "vuex-persistedstate": "2.5.4"
   },
   "devDependencies": {
-    "@cypress/webpack-preprocessor": "4.0.4",
+    "@cypress/webpack-preprocessor": "4.1.0",
     "@nuxt/typescript": "2.8.1",
     "@nuxtjs/eslint-config": "0.0.1",
     "@types/blueimp-md5": "2.7.0",
