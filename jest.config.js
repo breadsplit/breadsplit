@@ -9,6 +9,8 @@ module.exports = {
     'js',
     'vue',
     'json',
+    'yml',
+    'yaml',
   ],
   testMatch: [
     '**/client/**/?(*.)+(spec|test).[jt]s?(x)',
@@ -16,6 +18,7 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest',
     '.*\\.(vue)$': 'vue-jest',
+    '\\.yml$': 'jest-yaml-transform',
   },
   collectCoverage: true,
   collectCoverageFrom: [
