@@ -35,28 +35,30 @@ v-card.new-transaction(v-rows='"auto max-content"')
       .page-container
         .header {{$t('ui.newtrans.more_details')}}
 
-        .mt-4(v-columns='"max-content auto"')
-          app-category-select.pl-3(
-            :value='form.category || categorySense',
-            @input='i=> form.category = i'
-            :categories='cats'
-          )
-          v-text-field.pr-3.description-field(
-            v-model='form.desc' label='Description' placeholder='Some expense...' solo required)
+        v-text-field.px-2.py-3.description-field(
+          v-model='form.desc'
+          label='Description'
+          placeholder='Some expense...'
+          solo required hide-details
+        )
 
-        v-divider
-        div(v-columns='"70px auto"' @click='pickDate()' v-ripple)
-          v-icon(color='primary') mdi-calendar
+        app-category-select.ml-2(@input='i=> form.category = i' :categories='categories')
+          template(v-slot='{on}' )
+            div(v-on='on' v-columns='"40px auto"' v-ripple)
+              app-category-icon(:category='form.category || categorySense')
+              v-subheader
+                app-category-label(:category='form.category || categorySense')
+
+        div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple)
+          v-icon(color='grey') mdi-calendar
           v-subheader {{dateDisplay}}
 
-        v-divider
-        div(v-columns='"70px auto"')
-          v-icon(color='primary') mdi-map-marker
+        div.ml-2(v-columns='"40px auto"')
+          v-icon(color='grey') mdi-map-marker
           v-subheader {{$t('ui.add_location')}}
 
-        v-divider
-        div(v-columns='"70px auto"')
-          v-icon(color='primary') mdi-history
+        div.ml-2(v-columns='"40px auto"')
+          v-icon(color='grey') mdi-history
           v-subheader {{$t('ui.repeat_expense')}}
 
   div
@@ -94,7 +96,7 @@ import SplittingPage from '../composed/SplittingPage.vue'
 @Component
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
-  cats = Categories
+  categories = Categories
   step = 1
   steps = 4
 

@@ -4,7 +4,7 @@ v-card.balances
   v-list.pa-0(two-line)
     template(v-for='(balance, index) in balances')
       v-divider(v-if='index!=0')
-      v-list-tile(:key='balance.uid', avatar, @click='gotoNewTransaction({uid: balance.uid})')
+      v-list-tile(:key='balance.uid', avatar, @click='gotoNewTransaction({from: balance.uid})')
         v-list-tile-avatar.ma-1
           app-user-avatar(:id='balance.uid')
         v-list-tile-content
