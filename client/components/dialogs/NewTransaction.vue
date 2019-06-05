@@ -108,6 +108,8 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   reset() {
     this.form = TransactionDefault()
+    this.step = 1
+
     let me = IdMe
     if (this.uid && this.uid in this.group.members)
       me = this.uid
@@ -120,9 +122,18 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
         .toString()
         .split(',')
         .map(uid => ({ weight: 1, uid }))
+      // move to next step
+      this.step++
     }
     else {
       this.form.creditors.push({ weight: 1, uid: me })
+    }
+
+    if (this.options.amount) {
+      this.form.total_fee = +this.options.amount || 0
+      // move to next step
+      if (this.form.total_fee && this.step === 2)
+        this.step++
     }
 
     if (this.options.to) {
@@ -130,13 +141,13 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
         .toString()
         .split(',')
         .map(uid => ({ weight: 1, uid }))
+      // move to next step
+      if (this.step === 3)
+        this.step++
     }
     else {
       this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.uid || IdMe }))
     }
-
-    this.form.total_fee = +this.options.amount || 0
-    this.step = 1
   }
 
   get categoriesKeywords() {
