@@ -97,7 +97,7 @@
     "d3": "5.9.2",
     "dayjs": "1.8.14",
     "express": "4.17.1",
-    "firebase": "6.1.0",
+    "firebase": "6.1.1",
     "jdenticon": "2.1.1",
     "json-stable-stringify": "1.0.1",
     "lodash": "4.17.11",
