@@ -9,8 +9,10 @@
 import { Component, Vue } from 'nuxt-property-decorator'
 import { RELEASE_CHANNEL } from '~/../meta/env'
 
-@Component
-export default class DefaultLayout extends Vue {
+@Component({
+  name: 'LogoName',
+})
+export default class LogoName extends Vue {
   channel: string = RELEASE_CHANNEL
 }
 </script>

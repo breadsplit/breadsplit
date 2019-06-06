@@ -6,11 +6,26 @@ span.money-label(:class='balanceColorClass') {{formatted}}
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { numberToMoney } from '~/core'
 
-@Component
+@Component({
+  name: 'MoneyLabel',
+})
 export default class MoneyLabel extends Vue {
+  /**
+   * The amount of money
+   */
   @Prop({ default: 0 }) readonly amount!: number
+  /**
+   * Currency code
+   */
   @Prop(String) readonly currency?: string
+  /**
+   * Should change color based on value
+   */
   @Prop(Boolean) readonly color?: boolean
+  /**
+   * Override global locale
+   */
+  @Prop(String) readonly locale?: string
 
   get balanceColorClass() {
     if (!this.color)
@@ -27,7 +42,7 @@ export default class MoneyLabel extends Vue {
     if (this.amount === 0)
       return '-'
     const currency = this.currency
-    const locale = this.$store.getters.locale
+    const locale = this.locale || this.$store.getters.locale
     return numberToMoney(this.amount, locale, currency)
   }
 }

@@ -4,6 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader')
 const deepmerge = require('deepmerge')
 const { Nuxt } = require('nuxt')
 const tsConfig = require('./client/tsconfig.json')
+const { links } = require('./meta/html_headers')
 
 const srcDir = 'client'
 
@@ -14,6 +15,15 @@ const nuxtLoaders = nuxt.options.build.loaders
 module.exports = {
   components: `${srcDir}/components/basic/[A-Z]*.vue`,
   renderRootJsx: resolve(__dirname, srcDir, 'styleguide.root.ts'),
+  assetsDir: resolve(__dirname, srcDir, 'static'),
+  template: {
+    head: {
+      links,
+    },
+  },
+  require: [
+    resolve(__dirname, srcDir, 'assets/style/app.styl'),
+  ],
   webpackConfig: {
     resolve: {
       extensions: ['.js', '.json', '.vue', '.ts'],
@@ -88,5 +98,6 @@ module.exports = {
     plugins: [new VueLoaderPlugin()],
   },
   usageMode: 'expand',
+  exampleMode: 'expand',
   styleguideDir: 'dist',
 }
