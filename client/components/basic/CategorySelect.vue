@@ -5,7 +5,7 @@
       slot(:on='on')
 
     v-card.pa-2.category-options
-      template(v-for='cat in categories')
+      template(v-for='cat in categoryItems')
         app-action-with-text.option.pa-2(v-ripple @click.native='setValue(cat.name)')
           app-category-icon(
             slot='action'
@@ -20,14 +20,21 @@
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { Category } from '~/../meta/categories'
+// eslint-disable-next-line import/no-named-default
+import { Category, default as categories } from '~/../meta/categories'
 
-@Component
-export default class MemberSelect extends Vue {
+@Component({
+  name: 'AppCategorySelect',
+})
+export default class CategorySelect extends Vue {
   menu = false
 
   @Prop(String) readonly value!: string
   @Prop(Array) readonly categories!: Category[]
+
+  get categoryItems() {
+    return this.categories || categories
+  }
 
   setValue(value) {
     this.$emit('input', value)

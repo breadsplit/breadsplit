@@ -6,8 +6,10 @@ span(:style='colorStyle') {{display}}
 import Categories from '~/../meta/categories'
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 
-@Component
-export default class CategoryIcon extends Vue {
+@Component({
+  name: 'AppCategoryLabel',
+})
+export default class CategoryLabel extends Vue {
   @Prop({ default: '' }) readonly category!: string
   @Prop({ default: 'other' }) readonly fallback!: string
 

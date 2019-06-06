@@ -97,6 +97,7 @@ module.exports = {
     },
     plugins: [new VueLoaderPlugin()],
   },
+  simpleEditor: true,
   usageMode: 'expand',
   exampleMode: 'expand',
   styleguideDir: 'dist',

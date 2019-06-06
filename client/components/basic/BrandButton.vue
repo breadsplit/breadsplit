@@ -19,6 +19,7 @@ import BrandColors from '~/../meta/brandcolors'
 import { isDark } from '~/utils/colors'
 
 @Component({
+  name: 'AppBrandButton',
   inheritAttrs: false,
 })
 export default class BrandButton extends Vue {

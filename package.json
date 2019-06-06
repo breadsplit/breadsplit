@@ -68,6 +68,7 @@
     "web:generate": "cross-env NODE_ENV=production nuxt generate ./website",
     "start": "cross-env NODE_ENV=production nuxt start ./client",
     "styleguide": "vue-styleguidist server",
+    "styleguide:build": "vue-styleguidist build",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
     "deploy:firebase": "node scripts/firebase-deploy.js",

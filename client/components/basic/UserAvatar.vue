@@ -13,8 +13,10 @@ app-action-with-text.user-avatar(:class='{inline}')
 import { mixins, Component, Prop } from 'nuxt-property-decorator'
 import UserInfoMixin from '~/mixins/userinfo'
 
-@Component
-export default class Avatar extends mixins(UserInfoMixin) {
+@Component({
+  name: 'UserAvatar',
+})
+export default class UserAvatar extends mixins(UserInfoMixin) {
   @Prop(String) readonly id?: string
   @Prop(String) readonly groupId?: string
   @Prop(Boolean) readonly inline?: boolean

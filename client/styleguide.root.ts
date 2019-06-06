@@ -5,6 +5,8 @@ import Vuetify from 'vuetify'
 import { state, mutations, getters } from './store'
 import { Messages } from './locales'
 import theme from '~/../meta/theme'
+import 'vuetify/dist/vuetify.min.css'
+import './assets/style/app.styl'
 
 Vue.use(Vuex)
 Vue.use(VueI18n)
