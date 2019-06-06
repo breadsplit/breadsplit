@@ -1,4 +1,4 @@
-import { ClientGroup, UserInfo, ExchangeRecord } from '~/types'
+import { ClientGroup, UserInfo, ExchangeRecord } from '.'
 import { OSType, WebviewType } from '~/utils/ua'
 
 export interface GroupState {

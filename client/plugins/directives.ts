@@ -1,12 +1,13 @@
 import Vue from 'vue'
 
 const PRESS_TIMEOUT = 600
+
 Vue.directive('longpress', {
   bind(el, { value }) {
     if (typeof value !== 'function')
       return
 
-    let pressTimer: NodeJS.Timeout | null = null
+    let pressTimer: any = null
 
     const start = (e) => {
       if (e.type === 'click' && e.button !== 0)

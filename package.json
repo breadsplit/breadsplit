@@ -67,6 +67,7 @@
     "web:dev": "nuxt ./website",
     "web:generate": "cross-env NODE_ENV=production nuxt generate ./website",
     "start": "cross-env NODE_ENV=production nuxt start ./client",
+    "styleguide": "vue-styleguidist server",
     "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --fix --ext .ts,.js,.vue --ignore-path .gitignore .",
     "deploy:firebase": "node scripts/firebase-deploy.js",
@@ -138,6 +139,7 @@
     "babel-jest": "24.8.0",
     "concurrently": "4.1.0",
     "cross-env": "5.2.0",
+    "deepmerge": "^3.2.0",
     "eslint": "5.16.0",
     "eslint-config-standard": "12.0.0",
     "eslint-loader": "2.1.2",
@@ -169,7 +171,8 @@
     "stylus": "0.54.5",
     "stylus-loader": "3.0.2",
     "ts-jest": "24.0.2",
-    "vue-jest": "3.0.4"
+    "vue-jest": "3.0.4",
+    "vue-styleguidist": "^3.14.1"
   },
   "optionalDependencies": {
     "cypress": "^3.3.1"

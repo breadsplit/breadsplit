@@ -1,5 +1,5 @@
 import { FirebasePlugin } from '~/plugins/firebase'
-import { SnackOptions } from '~/types'
+import { SnackOptions } from '.'
 import { TranslateResult } from 'vue-i18n'
 
 declare module 'vue/types/vue' {

@@ -19,7 +19,7 @@
     ],
     "paths": {
       "~/*": ["./*"],
-      "@/*": ["./../*"],
+      "@/*": ["./../*"]
     },
     "types": [
       "@nuxt/vue-app",
@@ -28,7 +28,7 @@
       "vuetify"
     ],
     "plugins": [
-      { "transform": "ts-optchain/transform" },
-    ],
+      { "transform": "ts-optchain/transform" }
+    ]
   }
 }
