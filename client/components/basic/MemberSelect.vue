@@ -1,6 +1,6 @@
 <template lang='pug'>
 .member-select
-  v-menu(v-model='menu' :nudge-width='100')
+  v-menu(v-model='menu')
     template(v-slot:activator='{ on }')
       .vertical-aligned(v-on='on', v-ripple)
         slot
@@ -15,8 +15,11 @@
 <script lang='ts'>
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { Member } from '~/types'
+import UserAvatar from './UserAvatar.vue'
 
-@Component
+@Component({
+  components: { UserAvatar },
+})
 export default class MemberSelect extends Vue {
   menu = false
 

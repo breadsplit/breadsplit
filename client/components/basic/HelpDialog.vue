@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-card.py-2
-  app-dialog-bar(@close='close()' :close-buttons='false')
+  dialog-bar(@close='close()' :close-buttons='false')
     v-icon.mr-2(color='primary') mdi-help-circle-outline
     span {{$t(`help.${help}.title`)}}
 
@@ -12,8 +12,11 @@ v-card.py-2
 
 <script lang='ts'>
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import DialogBar from './DialogBar.vue'
 
-@Component
+@Component({
+  components: { DialogBar },
+})
 export default class HelpDialog extends Vue {
   @Prop(String) readonly help?: string
 

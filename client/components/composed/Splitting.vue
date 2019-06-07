@@ -27,14 +27,15 @@
       .participator(
         v-for='pa in participators'
       )
-        app-icon-merge(@click.native='toggleWeight(pa)')
+        .icon-merge(@click='toggleWeight(pa)')
           app-user-avatar.op-ani(
             size='48' :id='pa.uid'
             :class='{"op-25": !pa.weight}'
           )
-          v-scale-transition(slot='append')
-            v-avatar.elevation-1(v-show='pa.weight' size='22' color='primary')
-              v-icon(color='white' size='15') mdi-check
+          .append
+            v-scale-transition
+              v-avatar.elevation-1(v-show='pa.weight' size='22' color='primary')
+                v-icon(color='white' size='15') mdi-check
 
     i18n(path='ui.splitting.mode_average_details').tips
       b.primary--text {{realParticipators.length}}

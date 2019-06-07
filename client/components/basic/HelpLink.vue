@@ -5,13 +5,16 @@
     slot {{$t(`help.${help}.tips`)}}
 
   v-dialog(v-model='dialog', width='350px')
-    app-help-dialog(:help='help', @close='dialog = false')
+    help-dialog(:help='help', @close='dialog = false')
 </template>
 
 <script lang='ts'>
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import HelpDialog from './HelpDialog.vue'
 
-@Component
+@Component({
+  components: { HelpDialog },
+})
 export default class HelpLink extends Vue {
   dialog = false
 
