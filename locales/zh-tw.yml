@@ -26,6 +26,7 @@ ui:
     enter_group_name: 請輸入群組名稱
     default_group_name: 未命名群組
     group_name: 群組名稱
+    add_members: 添加成員
   tabs:
     expenses: 支出
     members: 成員
@@ -156,6 +157,7 @@ tips:
   already_joined_group: 你已經加入了此群組。
   select_open_in_browser: '選擇 {0}'
   click_right_corner_icon: '請點選右上角 "{0}" 圖標'
+  member_name_input_placeholder: 輸入成員昵稱
 acts:
   insert_transaction: '{0} 添加了支出 {1}'
   insert_group: '{0} 創建了群組'

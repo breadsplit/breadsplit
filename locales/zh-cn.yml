@@ -22,6 +22,7 @@ ui:
     enter_group_name: 请输入小组名称
     default_group_name: 未命名小组
     group_name: 小组名称
+    add_members: 添加成员
   tabs:
     settle_up: ''
     expenses: 支出

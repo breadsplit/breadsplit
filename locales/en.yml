@@ -68,6 +68,7 @@ ui:
     group_name: Group's name
     enter_group_name: Enter group's name
     default_group_name: Untitled Group
+    add_members: Add members
   tabs:
     settle_up: Settle Up
     expenses: Expenses
@@ -165,6 +166,7 @@ tips:
   click_right_corner_icon: 'Please click the "{0}" icon'
   select_open_in_browser: 'Then select {0}'
   open_in_browser_general: Open in browser
+  member_name_input_placeholder: Enter member's name
 acts:
   insert_transaction: '{0} added an expense {1}'
   insert_group: '{0} created the group'
