@@ -1,6 +1,6 @@
 <template lang='pug'>
 .member-select
-  v-menu(v-model='menu')
+  v-menu(v-model='menu' max-width='450px')
     template(v-slot:activator='{ on }')
       .vertical-aligned(v-on='on', v-ripple)
         slot
@@ -9,7 +9,7 @@
 
     v-card.pa-2.text-xs-center
       template(v-for='member in members')
-        app-user-avatar.member-option.pa-1(:id='member.uid', show-name, v-ripple, @click.native='setValue(member.uid)')
+        app-user-avatar.member-option.pa-2(:id='member.uid', show-name, v-ripple, @click.native='setValue(member.uid)')
 </template>
 
 <script lang='ts'>

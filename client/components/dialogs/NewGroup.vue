@@ -30,7 +30,7 @@ v-card.new-group(v-rows='" max-content auto max-content"')
     v-window-item(:value='2')
       v-container.pa-4
 
-        v-combobox(
+        v-combobox.member-name-input(
           ref='member_name_input'
           :items='members_suggestions'
           @input='name=>addMember(name)'
@@ -42,9 +42,9 @@ v-card.new-group(v-rows='" max-content auto max-content"')
         )
           template(v-slot:no-data='')
 
-        v-list(two-line)
+        v-list(two-line).members-list
           template(v-for='(member, index) in members')
-            v-divider
+            v-divider(v-if='index !== 0')
             v-list-tile(:key='member.uid', avatar, @click='')
               v-list-tile-avatar
                 app-user-avatar(:member='member')
