@@ -96,7 +96,7 @@
           div
           div
             b(style='font-size:1.1em') {{pa.percent}}%
-            app-money-label.op-75(
+            app-money-label.op-50(
               :amount='trans.total_fee * pa.percent / 100'
               :currency='trans.currency'
               style='font-size:0.9em;margin-top: -5px;display: block;')
@@ -292,10 +292,9 @@ export default class Splitting extends Vue {
 
   getParticipatorClass(participator: Weight) {
     if (this.participators.length <= 1)
-      return ['elevation-0']
+      return
     if (this.focused === participator.uid)
-      return ['raised', 'elevation-4']
-    return ['elevation-0']
+      return 'raised'
   }
 
   focusInput(participator: Weight) {
@@ -361,10 +360,14 @@ export default class Splitting extends Vue {
       padding 0 1em
 
       .participator
-        padding 0.5em 1em
+        padding 0.5em 0.7em
         margin 0.2em 0
         transition all .3s ease-in-out
-        border-radius 5px
+        border-radius 8px
+        border 2px solid transparent
+
+        &.raised
+          border-color var(--theme-primary)
 
         & > *,
         .user-info-section > *

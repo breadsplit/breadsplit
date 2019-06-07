@@ -68,7 +68,12 @@ v-card.new-group(v-rows='" max-content auto max-content"')
       template(v-if='step === 2 && !mode')
         v-btn(@click='step--' flat) {{$t('ui.button_back')}}
         v-spacer
-        v-btn(@click='create()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty') {{$t('ui.button_create')}}
+        template(v-if='search')
+          v-btn(@click='addMember(search)' :color='color' depressed) {{$t('ui.group_editing.add_member_xx', [search])}}
+        template(v-if='!search')
+          v-btn(@click='create()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')
+            v-icon.mr-1(size='20') mdi-check
+            | {{$t('ui.button_create_group')}}
 
       template(v-if='mode')
         v-btn(@click='close(false)' flat) {{$t('ui.button_cancel')}}
@@ -155,6 +160,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     // TODO: load suggestions from another group
     return []
   }
+
   get checkEmpty(): boolean {
     const hasEmpty = !(this.form.name && this.form.currencies[0])
     return hasEmpty || this.viewmode

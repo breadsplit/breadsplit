@@ -69,6 +69,7 @@ ui:
     enter_group_name: Enter group's name
     default_group_name: Untitled Group
     add_members: Add members
+    add_member_xx: 'Add "{0}"'
   tabs:
     settle_up: Settle Up
     expenses: Expenses
@@ -77,10 +78,6 @@ ui:
     activities: Activities
     transactions: Transactions
     balances: Balances
-  speed_dials:
-    new_expense: New Expense
-    new_member: New Member
-    settle_up: Settle up
   menu:
     edit_group: Edit group
     view_group: View group
@@ -124,6 +121,7 @@ ui:
   currency: Currency
   offline_mode: Offline mode
   online_mode: Online mode
+  button_create_group: Create Group
 pronoun:
   me: Me
   i: I

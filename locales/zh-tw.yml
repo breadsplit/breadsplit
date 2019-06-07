@@ -27,6 +27,7 @@ ui:
     default_group_name: 未命名群組
     group_name: 群組名稱
     add_members: 添加成員
+    add_member_xx: '添加成員 "{0}"'
   tabs:
     expenses: 支出
     members: 成員
@@ -35,10 +36,6 @@ ui:
     transactions: 交易記錄
     balances: 債務情況
     settle_up: 算清債務
-  speed_dials:
-    new_expense: 支出
-    new_member: 添加成員
-    settle_up: 償還債務
   menu:
     edit_group: 編輯群組
     view_group: 檢視群組
@@ -116,7 +113,8 @@ ui:
   faq: 常見問題
   currency: 幣種
   offline_mode: 離線模式
-  online_mode: 在線模式
+  online_mode: 綫上模式
+  button_create_group: 創建群組
 cats:
   transport:
     display: 交通
