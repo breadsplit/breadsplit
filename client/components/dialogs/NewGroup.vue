@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card.new-group
+v-card.new-group(v-rows='" max-content auto max-content"')
   app-dialog-bar(@close='close()' :color='color')
     | {{title}}
 
@@ -18,10 +18,14 @@ v-card.new-group
                 app-icon-select(:icon.sync='icon' :color.sync='color', style='margin-top:-20px')
 
           v-flex
-            v-autocomplete(
-              v-model='form.currencies[0]' :items='currency_list'
-              prepend-icon='mdi-currency-usd' label='Currency' :disabled='viewmode'
-            )
+            app-currency-select(v-model='form.currencies[0]')
+
+          v-flex.my-3
+            v-switch(v-model='online')
+              template(slot='label')
+                span(v-if='online') {{$t('ui.online_mode')}}
+                span(v-else) {{$t('ui.offline_mode')}}
+                app-help-link(help='online_mode')
 
     // Second page
     v-window-item(:value='2')
@@ -43,18 +47,24 @@ v-card.new-group
                       | . Press
                       kbd enter
                       | to create a new one  div
+
+  div
     v-divider
     v-card-actions.pa-3
-      v-spacer
       template(v-if='step === 1 && !mode')
-        v-btn(@click='close(false)', depressed, color='grey') {{$t('ui.button_cancel')}}
-        v-btn(@click='step++', :color='color', :disabled='checkEmpty')  {{$t('ui.button_next')}}
+        v-btn(@click='close(false)' flat) {{$t('ui.button_cancel')}}
+        v-spacer
+        v-btn(@click='step++' :color='color' depressed :disabled='checkEmpty')  {{$t('ui.button_next')}}
+
       template(v-if='step === 2 && !mode')
-        v-btn(@click='step--', color='grey') {{$t('ui.button_back')}}
-        v-btn(@click='create()', :color='color', :disabled='checkEmpty') {{$t('ui.button_create')}}
+        v-btn(@click='step--' flat) {{$t('ui.button_back')}}
+        v-spacer
+        v-btn(@click='create()' :color='color' depressed :disabled='checkEmpty') {{$t('ui.button_create')}}
+
       template(v-if='mode')
-        v-btn(@click='close(false)', depressed, color='grey') {{$t('ui.button_cancel')}}
-        v-btn(@click='edit()', :color='color', :disabled='checkEmpty') {{$t('ui.button_confirm')}}
+        v-btn(@click='close(false)' flat) {{$t('ui.button_cancel')}}
+        v-spacer
+        v-btn(@click='edit()' :color='color' depressed :disabled='checkEmpty') {{$t('ui.button_confirm')}}
 </template>
 
 <script lang='ts'>
@@ -75,6 +85,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   icon = 'account-group'
   color = swatches[Math.floor(Math.random() * swatches.length)]
   members: string[] = []
+  online = false
 
   @Getter('locale') locale!: string
   @Getter('group/current') current: Group | undefined

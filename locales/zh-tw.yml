@@ -20,7 +20,7 @@ ui:
   button_ok: 好的
   button_confirm: 確認
   button_cancel: 取消
-  join_as_me: 以 {0} 加入
+  join_as_me: '以 {0} 加入'
   group_editing:
     new_group: 新建群組
     enter_group_name: 請輸入群組名稱
@@ -45,7 +45,7 @@ ui:
     remove_group: 刪除群組
     rename_member: 重命名
     member_is_me: 這是我
-    remove_member: 將 {name} 從群組中移除
+    remove_member: '將 {name} 從群組中移除'
   setting_options:
     enabled: 開啓
     disabled: 關閉
@@ -62,7 +62,7 @@ ui:
     Github: 使用 Github 登入
   misc: 其他
   button_join: 加入
-  invited_to_join: 您被邀請加入 {0} 小組
+  invited_to_join: '您被邀請加入 {0} 小組'
   loading_group_info: 正在加載群組信息...
   about: 關於我們
   become_a_patreon: 在 Patreon 上成為贊助者
@@ -74,10 +74,10 @@ ui:
   feedback: 意見回饋
   wip: "\U0001F6A7 功能開發中，敬請期待…"
   new_expense: 新的支出
-  xx_paid_money: "{0} 支付了"
-  xx_paid_xx: "{0} 支付了 {1}"
+  xx_paid_money: '{0} 支付了'
+  xx_paid_xx: '{0} 支付了 {1}'
   paid_by: 付款人
-  paid_by_xx: 由 {0} 付款
+  paid_by_xx: '由 {0} 付款'
   add_location: 添加位置
   repeat_expense: 重複
   title_join_a_group: 加入群組
@@ -88,7 +88,7 @@ ui:
     percent: 按趴數
     weight: 按權重
     mode_average_tip: 選擇參與這筆支出的人
-    mode_average_details: "{0} 人參與分帳，平均每個人花費"
+    mode_average_details: '{0} 人參與分帳，平均每個人花費'
     total: '支出金額: {0}'
   support_us: 支持我們
   welcome_breadsplit: 歡迎使用分帳吐司!
@@ -97,34 +97,37 @@ ui:
   button_no: 否
   donate_on_paypal: PayPal 一次性贊助
   star_on_github: Star on Github
-  continue_and_accept: 繼續使用即表示您同意我們的{0}
+  continue_and_accept: '繼續使用即表示您同意我們的{0}'
   privacy_policy: 隱私政策
   continue_anyway: 仍然繼續
   newtrans:
     how_much: 付款金額
     expense_paid_by: 由誰支付？
-    xx_should_pay: 這次輪到 {0} 付款。
+    xx_should_pay: '這次輪到 {0} 付款。'
     add_payer: 添加付款人
     for_whom: 為了誰？
     more_details: 更多信息
   total: 合計
   button_submit: 提交
-  optional: "（可選）"
+  optional: （可選）
   button_send: 發送
   faq: 常見問題
+  currency: 幣種
+  offline_mode: 離線模式
+  online_mode: 在線模式
 cats:
   transport:
     display: 交通
-    keywords: 地鐵,捷運,mrt,計程車,飛機,機票,公車,uber,mrt,lrt,grab,的士,船票,火車,高鐵,輕軌,車票
+    keywords: '地鐵,捷運,mrt,計程車,飛機,機票,公車,uber,mrt,lrt,grab,的士,船票,火車,高鐵,輕軌,車票'
   lodging:
     display: 住宿
-    keywords: 飯店,酒店,民宿,住宿,青旅
+    keywords: '飯店,酒店,民宿,住宿,青旅'
   travel:
     display: 旅行
-    keywords: 旅行,門票,景點
+    keywords: '旅行,門票,景點'
   food:
     display: 飲食
-    keywords: 早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品
+    keywords: '早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品'
   transfer:
     display: 轉移
     keywords: 轉移
@@ -133,7 +136,7 @@ cats:
     keywords: 購物
   tips:
     display: 小費
-    keywords: tip,小費
+    keywords: 'tip,小費'
   other:
     display: 其他
 pronoun:
@@ -151,22 +154,24 @@ prompt:
   feedback_delivered: 您的意見回饋已經成功寄出，感謝您的支持！
 tips:
   already_joined_group: 你已經加入了此群組。
-  select_open_in_browser: 選擇 {0}
-  click_right_corner_icon: 請點選右上角 "{0}" 圖標
+  select_open_in_browser: '選擇 {0}'
+  click_right_corner_icon: '請點選右上角 "{0}" 圖標'
 acts:
-  insert_transaction: "{0} 添加了支出 {1}"
-  insert_group: "{0} 創建了群組"
-  insert_viewer: "{0} 加入了群組"
-  publish_group: "{0} 將群組轉換為在綫模式"
-  rename_group: "{0} 將群組更名為 {1}"
-  insert_member: "{0} 添加了成員: {1}"
-  remove_transaction: "{0} 刪除了支出 {1}"
+  insert_transaction: '{0} 添加了支出 {1}'
+  insert_group: '{0} 創建了群組'
+  insert_viewer: '{0} 加入了群組'
+  publish_group: '{0} 將群組轉換為在綫模式'
+  rename_group: '{0} 將群組更名為 {1}'
+  insert_member: '{0} 添加了成員: {1}'
+  remove_transaction: '{0} 刪除了支出 {1}'
 help:
   no_password_login:
     tips: 沒有使用賬號密碼的登入方式？
     title: 不使用賬號密碼登入
-    details: 我們使用一種稱爲 OAuth 的技術接入由 Google、Facebook 等平台提供的賬號驗證服務。通過 OAuth，我們<b>不會</b>獲得您的密碼等敏感信息。<br>同時，關閉賬號密碼登入可以進一步確保<b>不會有任何敏感信息儲存在我們的資料庫中</b>，以此更好地確保您的信息安全。
+    details: >-
+      我們使用一種稱爲 OAuth 的技術接入由 Google、Facebook 等平台提供的賬戶驗證服務。 通過
+      OAuth，我們<b>不會</b>獲得您的密碼等敏感信息。<br> 同時，這種方式可以減少您輸入密碼的次數，以更好地確保您的賬戶安全。
 feedback:
   contact_info: 聯絡方式
   describe: 請描述您的問題或建議。
-  github_hint: 或者您也可以在 {0} 上創建Issue
+  github_hint: '或者您也可以在 {0} 上創建Issue'

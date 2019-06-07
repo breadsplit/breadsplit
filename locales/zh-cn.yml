@@ -46,7 +46,7 @@ ui:
   star_on_github: Star on Github
   newtrans:
     expense_paid_by: 费用由谁支付？
-    xx_should_pay: 这次轮到 {0} 付款。
+    xx_should_pay: '这次轮到 {0} 付款。'
     how_much: 输入金额
     add_payer: 添加付款人
     more_details: 更多信息
@@ -59,6 +59,8 @@ ui:
   button_quick_add: 快速添加
   button_next: 下一步
   button_save: 保存
+  offline_mode: 离线模式
+  online_mode: 在线模式
 prompt:
   are_you_sure: 你确定吗？
 cats:
