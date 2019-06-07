@@ -22,20 +22,11 @@
 
     .tip {{$t('ui.splitting.mode_average_tip')}}
 
-    .participators
-
-      .participator(
-        v-for='pa in participators'
-      )
-        .icon-merge(@click='toggleWeight(pa)')
-          app-user-avatar.op-ani(
-            size='48' :id='pa.uid'
-            :class='{"op-25": !pa.weight}'
-          )
-          .append
-            v-scale-transition
-              v-avatar.elevation-1(v-show='pa.weight' size='22' color='primary')
-                v-icon(color='white' size='15') mdi-check
+    app-member-toggles(
+      :uids='participators.map(p=>p.uid)',
+      :selected='participators.filter(p=>p.weight).map(p=>p.uid)',
+      @select='uid=>toggleWeight(participators.find(p=>p.uid === uid))'
+    )
 
     i18n(path='ui.splitting.mode_average_details').tips
       b.primary--text {{realParticipators.length}}
@@ -330,13 +321,6 @@ export default class Splitting extends Vue {
       display block
       margin 0.5em
       font-size 1.4em
-
-    .participators
-      padding 1em 2em
-
-      .participator
-        padding 0.5em
-        display inline-block
 
   .currency
     opacity 0.4

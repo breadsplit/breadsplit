@@ -118,6 +118,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
       this.form.icon = 'account-group'
       this.form.color = swatches[Math.floor(Math.random() * swatches.length)]
     }
+    this.mode = this.options.mode
     this.step = 1
   }
 

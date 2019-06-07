@@ -4,8 +4,8 @@ v-select(
   @input='i=>$emit("input", i)'
   :class='{flat: mini}'
   :items='items'
-  :prepend-icon='!mini && "mdi-currency-usd"'
-  :label='!mini && $t("ui.currency")'
+  :prepend-icon='mini ? "" : "mdi-currency-usd"'
+  :label='mini ? "" : $t("ui.currency")'
   hide-details
 )
 </template>

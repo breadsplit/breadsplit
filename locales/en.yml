@@ -119,6 +119,7 @@ ui:
     add_payer: Add more payer
     for_whom: For whom?
     more_details: More details
+    select_who_paid: Select the person who paid the bill
   faq: FAQ
   currency: Currency
   offline_mode: Offline mode

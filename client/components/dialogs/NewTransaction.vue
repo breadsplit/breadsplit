@@ -9,9 +9,15 @@ v-card.new-transaction(v-rows='"auto max-content"')
         .subheader {{$t('ui.newtrans.xx_should_pay')}}
 
         div
-        .member-choices
-          template(v-for='m in members')
-            app-user-avatar(:id='m.uid' @click.native='setCreditor(m.uid)' :show-name='true')
+
+        .text-xs-center.mb-2
+          span {{$t('ui.newtrans.select_who_paid')}}
+          app-member-toggles(
+            :uids='members.map(m=>m.uid)',
+            :selected='form.creditors.filter(p=>p.weight).map(p=>p.uid)',
+            @select='uid=>setCreditor(uid)',
+            :fade='false'
+          )
 
     v-window-item.page(:value='2')
       app-splitting-page(
