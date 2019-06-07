@@ -30,6 +30,7 @@ export interface Weight {
   weight?: number
   fee?: number
   percent?: number
+  locked?: boolean
 }
 
 export interface Member {

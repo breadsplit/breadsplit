@@ -18,7 +18,7 @@
           span(v-show='tab==idx') {{mode.text}}
 
   //* ========== Average ========== *//
-  .mode-average(v-if='mode==="average"')
+  .mode-average(v-show='mode==="average"')
 
     .tip {{$t('ui.splitting.mode_average_tip')}}
 
@@ -37,7 +37,7 @@
     )
 
   //* ========== Amount ========== *//
-  .mode-amount(v-if='mode==="amount"')
+  .mode-amount(v-show='mode==="amount"')
     .participators
       .participator(
         v-for='pa in participators'
@@ -58,8 +58,6 @@
               flat icon small)
               v-icon(size='20') mdi-close
 
-          //span ({{pa.weight}})
-
         template(v-if='participators.length > 1')
           app-number-input.ma-0.pa-0(
             :ref='`fee_input_${pa.uid}`'
@@ -78,36 +76,31 @@
           span {{$t('ui.newtrans.add_payer')}}
 
   //* ========== Percent ========== *//
-  .mode-percent(v-if='mode==="percent"')
-    .participators
-      .participator(
-        v-for='pa in participators'
-        v-columns='"1fr 2fr"'
-      )
-        .user-info-section
-          app-user-avatar(size='38' :id='pa.uid')
-          span.user-name-text.mx-2
-            i18n(:path='userTextI18nPath')
-              b
-                app-user-info(:id='pa.uid')
-          v-expand-x-transition
-            v-btn.op-25.ma-0(
-              v-show='removable && focused===pa.uid'
-              @click='removeParticipator(pa.uid)'
-              flat icon small)
-              v-icon(size='20') mdi-close
+  .mode-percent(v-show='mode==="percent"')
+    .px-4.pb-2(v-columns='"auto 1fr max-content"')
+      template(v-for='pa in participators')
+        .user-info-section.text-xs-center.pt-2
+          app-user-avatar(size='38' :id='pa.uid' :show-name='true')
 
-          //span ({{pa.weight}})
+        v-slider.mt-0.px-3(
+          v-model='pa.percent'
+          @change='value => updatePercent(pa, value)'
+          always-dirty
+          :color='(pa.locked || pa.percent === 0) ? "primary" : "grey"'
+          :min='0'
+          :max='100'
+          thumb-label hide-details
+        )
 
-        div
-          v-slider.mt-0(
-            v-model='pa.percent'
-            @change='value => updatePercent(pa, value)'
-            :label='`${pa.percent}%`'
-            :min='0'
-            :max='100'
-            thumb-label hide-details
-          )
+        .text-xs-right(v-rows='"1fr min-content min-content 1fr"')
+          div
+          div
+            b(style='font-size:1.1em') {{pa.percent}}%
+            app-money-label.op-75(
+              :amount='trans.total_fee * pa.percent / 100'
+              :currency='trans.currency'
+              style='font-size:0.9em;margin-top: -5px;display: block;')
+          div
 
   //* ========== Weight ========== *//
   .mode-weights(v-if='mode==="weight"')
@@ -269,14 +262,31 @@ export default class Splitting extends Vue {
 
   updatePercent(participator: Weight, value: number) {
     value = Math.min(value, 100)
-    const others = this.participators.filter(p => p !== participator)
-    const fromTotal = others.map(p => p.percent || 0).reduce((a, b) => a + b, 0)
-    const toTotal = 100 - value
+    this.$set(participator, 'locked', true)
+    let unlocked = this.participators.filter(p => !p.locked)
+    if (unlocked.length === 0) {
+      unlocked = this.participators.filter(p => p !== participator)
+      unlocked.forEach(w => this.$set(w, 'locked', false))
+    }
+    const lockedTotal = this.participators
+      .filter(p => p !== participator && p.locked)
+      .map(p => p.percent || 0)
+      .reduce((a, b) => a + b, 0)
+    const fromTotal = unlocked
+      .map(p => p.percent || 0)
+      .reduce((a, b) => a + b, 0)
+    const toTotal = 100 - lockedTotal - value
+    if (toTotal < 0) {
+      this.participators
+        .filter(p => p !== participator)
+        .forEach(w => this.$set(w, 'locked', false))
+      return this.updatePercent(participator, value)
+    }
     const scale = toTotal / fromTotal
-    others.forEach((p) => {
+    unlocked.forEach((p) => {
       p.percent = (p.percent || 0) * scale
       if (isNaN(p.percent))
-        p.percent = toTotal / others.length
+        p.percent = toTotal / unlocked.length
     })
   }
 
@@ -365,6 +375,10 @@ export default class Splitting extends Vue {
 
         &.add
           cursor pointer
+
+    .v-slider, .v-slider input
+      max-height inherit
+      height 65px
 
   .mode-average
     text-align center

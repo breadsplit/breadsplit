@@ -32,8 +32,3 @@ export default class MoneyLabel extends Vue {
   }
 }
 </script>
-
-<style lang='stylus'>
-.money-label
-  font-size 0.95em
-</style>
