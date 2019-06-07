@@ -79,6 +79,9 @@ export default class SplittingPage extends Vue {
         this.openKeyboardForMainInput(this.$refs.total_fee_input)
       })
     }
+    else {
+      this.mode = 'average'
+    }
   }
 
   get showKeyboard() {

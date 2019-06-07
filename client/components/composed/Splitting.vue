@@ -79,7 +79,35 @@
 
   //* ========== Percent ========== *//
   .mode-percent(v-if='mode==="percent"')
-    p.mx-4.pax-my-3 {{$t('ui.wip')}}
+    .participators
+      .participator(
+        v-for='pa in participators'
+        v-columns='"1fr 2fr"'
+      )
+        .user-info-section
+          app-user-avatar(size='38' :id='pa.uid')
+          span.user-name-text.mx-2
+            i18n(:path='userTextI18nPath')
+              b
+                app-user-info(:id='pa.uid')
+          v-expand-x-transition
+            v-btn.op-25.ma-0(
+              v-show='removable && focused===pa.uid'
+              @click='removeParticipator(pa.uid)'
+              flat icon small)
+              v-icon(size='20') mdi-close
+
+          //span ({{pa.weight}})
+
+        div
+          v-slider.mt-0(
+            v-model='pa.percent'
+            @change='value => updatePercent(pa, value)'
+            :label='`${pa.percent}%`'
+            :min='0'
+            :max='100'
+            thumb-label hide-details
+          )
 
   //* ========== Weight ========== *//
   .mode-weights(v-if='mode==="weight"')
@@ -178,12 +206,27 @@ export default class Splitting extends Vue {
     return 'utils.bypass_1'
   }
 
+  @Watch('trans')
+  onTransitionChanged() {
+    this.initMode()
+  }
+
   @Watch('mode')
   onModeChanged() {
     this.$emit('mode-changed', this.mode)
     // close keyboard
     this.focused = null
     this.$emit('keyboard', null)
+    this.initMode()
+  }
+
+  initMode() {
+    if (this.mode === 'percent') {
+      const total = this.participators.map(p => p.weight || 0).reduce((a, b) => a + b, 0)
+      this.participators.forEach((p) => {
+        this.$set(p, 'percent', Math.round((p.weight || 0) / total * 100 || 0))
+      })
+    }
   }
 
   setParticipator(uid: string, weight = 1) {
@@ -222,6 +265,19 @@ export default class Splitting extends Vue {
     else {
       participator.weight = 1
     }
+  }
+
+  updatePercent(participator: Weight, value: number) {
+    value = Math.min(value, 100)
+    const others = this.participators.filter(p => p !== participator)
+    const fromTotal = others.map(p => p.percent || 0).reduce((a, b) => a + b, 0)
+    const toTotal = 100 - value
+    const scale = toTotal / fromTotal
+    others.forEach((p) => {
+      p.percent = (p.percent || 0) * scale
+      if (isNaN(p.percent))
+        p.percent = toTotal / others.length
+    })
   }
 
   getParticipatorClass(participator: Weight) {
@@ -290,7 +346,7 @@ export default class Splitting extends Vue {
       left 5px
       right 5px
 
-  .mode-amount
+  .mode-amount, .mode-percent
     .participators
       padding 0 1em
 
