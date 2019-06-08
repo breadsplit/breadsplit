@@ -122,6 +122,14 @@ ui:
   offline_mode: Offline mode
   online_mode: Online mode
   button_create_group: Create Group
+  button_refresh: Reload
+  button_go_home: Go Home
+  join:
+    group_not_found: Group Not Found
+    join_anonymous: Join as a new member
+    my_name_is: 'My name is:'
+    this_is_me: This is me
+    existing_users: Existing users
 pronoun:
   me: Me
   i: I

@@ -3,11 +3,15 @@ import { Store } from 'vuex'
 import VueRouter from 'vue-router'
 import nanoid from 'nanoid'
 import dayjs from 'dayjs'
+import * as firebase from 'firebase/app'
 
 import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
 import { IsThisId } from '~/core'
+
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
 import { DEBUG, BUILD_TARGET } from '~/../meta/env'
+
+firebase.initializeApp(FirebaseServerConfig)
 
 // eslint-disable-next-line no-console
 const log = (...args) => !DEBUG || console.log('FBP', ...args)
@@ -15,9 +19,10 @@ const log = (...args) => !DEBUG || console.log('FBP', ...args)
 export class FirebasePlugin {
   store: Store<RootState>
   router: VueRouter
-  firebase: any
   _unwatchCallback: (() => void) | null = null
   _unsubscribeCallback: (() => void) | null = null
+  _initilized = false
+  _initilizedCallbacks: Function[] = []
 
   constructor(store: Store<RootState>, router: VueRouter) {
     this.store = store
@@ -25,17 +30,17 @@ export class FirebasePlugin {
   }
 
   get auth() {
-    return this.firebase.auth()
+    return firebase.auth()
   }
   get db() {
-    return this.firebase.firestore()
+    return firebase.firestore()
   }
   get functions() {
-    return this.firebase.functions()
+    return firebase.functions()
   }
   get messaging() {
     if (this.messagingEnabled)
-      return this.firebase.messaging()
+      return firebase.messaging()
     else
       return null
   }
@@ -55,7 +60,6 @@ export class FirebasePlugin {
    * @memberof FirebasePlugin
    */
   async init() {
-    this.firebase = await import('firebase/app')
     await Promise.all([
       import('firebase/auth'),
       import('firebase/firestore'),
@@ -65,7 +69,6 @@ export class FirebasePlugin {
       await import('firebase/messaging')
 
     log(`🔥 Connecting to firebase server <${CurrentServerName}>`)
-    this.firebase.initializeApp(FirebaseServerConfig)
 
     this.auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -89,18 +92,37 @@ export class FirebasePlugin {
         this.store.commit('user/logout')
         this.store.commit('group/removeOnlineGroups')
       }
+      this.initilized()
     })
 
-    await this.auth.setPersistence(this.firebase.auth.Auth.Persistence.LOCAL)
+    await this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 
-    if (this.messagingEnabled) {
+    if (this.messagingEnabled && this.messaging) {
       await this.updateMessagingToken()
       this.installMessagingServiceWorker()
-    }
 
-    this.messaging.onMessage((data) => {
-      log('📢 Incoming Message:', data)
+      this.messaging.onMessage((data) => {
+        log('📢 Incoming Message:', data)
+      })
+    }
+  }
+
+  waitForInitilized() {
+    return new Promise((resolve) => {
+      if (this._initilized)
+        resolve()
+      else
+        this._initilizedCallbacks.push(resolve)
     })
+  }
+
+  private initilized() {
+    this._initilized = true
+    this._initilizedCallbacks.forEach((callback) => {
+      try { callback() }
+      catch {}
+    })
+    this._initilizedCallbacks = []
   }
 
   async signup(email: string, password: string) {
@@ -113,9 +135,9 @@ export class FirebasePlugin {
 
   async loginWith(providerName: 'google'|'facebook'|'github') {
     const providers = {
-      google: () => new this.firebase.auth.GoogleAuthProvider(),
-      facebook: () => new this.firebase.auth.FacebookAuthProvider(),
-      github: () => new this.firebase.auth.GithubAuthProvider(),
+      google: () => new firebase.auth.GoogleAuthProvider(),
+      facebook: () => new firebase.auth.FacebookAuthProvider(),
+      github: () => new firebase.auth.GithubAuthProvider(),
     }
 
     const provider = providers[providerName]()
@@ -127,7 +149,7 @@ export class FirebasePlugin {
         || (this.store.state.ua.os === 'ios' && this.store.state.ua.standalone)
       ) {
         await this.auth.signInWithRedirect(provider)
-        return this.firebase.auth().getRedirectResult()
+        return firebase.auth().getRedirectResult()
       }
 
       return await this.auth.signInWithPopup(provider)
@@ -164,6 +186,8 @@ export class FirebasePlugin {
 
   async requestNotificationPermission() {
     try {
+      if (!this.messaging)
+        return
       await this.messaging.requestPermission()
       return await this.updateMessagingToken()
     }
@@ -174,10 +198,10 @@ export class FirebasePlugin {
   }
 
   async updateMessagingToken() {
-    if (!this.messagingEnabled)
+    if (!this.messagingEnabled || !this.messaging)
       return null
 
-    const token: string = await this.messaging.getToken()
+    const token: string|null = await this.messaging.getToken()
     this.store.commit('setMessagingToken', token)
     if (token)
       log(`📢 Messaging enabled with token: ${token}`)
@@ -379,7 +403,7 @@ export class FirebasePlugin {
     }
   }
 
-  async groupInfo(id: string): Promise<ServerGroup|undefined> {
+  async groupInfo(id: string): Promise<ServerGroup|null> {
     try {
       const result = await this.db
         .collection('groups')
@@ -388,10 +412,11 @@ export class FirebasePlugin {
 
       if (result && result.data())
         return result.data() as ServerGroup
-      return undefined
+
+      return null
     }
     catch (e) {
-      return undefined
+      return null
     }
   }
 

@@ -42,7 +42,7 @@ export const getters: GetterTree<GroupState, RootState> = {
     const current = getters.current
     if (!current || !current.online)
       return undefined
-    return `${origin()}/#/join?id=${current.id}`
+    return `${origin()}/join?id=${current.id}`
   },
 
   currentId(state) {

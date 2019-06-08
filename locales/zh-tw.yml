@@ -115,6 +115,14 @@ ui:
   offline_mode: 離線模式
   online_mode: 綫上模式
   button_create_group: 創建群組
+  join:
+    my_name_is: '我的名字是:'
+    group_not_found: 沒有找到群組
+    join_anonymous: 新增成員
+    this_is_me: 這是我
+    existing_users: 已存在用戶
+  button_refresh: 重新整理
+  button_go_home: 返回App
 cats:
   transport:
     display: 交通

@@ -1,11 +1,10 @@
 <template lang='pug'>
 v-app(:dark='dark')
   app-global-style
+  app-global-components
 
   v-content.scrolling.height-100
     nuxt
-
-  app-global-components
 </template>
 
 <script lang='ts'>
