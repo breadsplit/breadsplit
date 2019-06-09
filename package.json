@@ -78,8 +78,8 @@
     "cy:run:ci": "cypress run --record",
     "cy:open": "cypress open",
     "cy:dev": "concurrently \"npm run dev\" \"npm run cy:open\"",
-    "docs:dev": "npx vuepress dev docs",
-    "docs:build": "npx vuepress build docs",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "test": "jest",
     "test:firebase": "jest --config=./firebase/functions/jest.config.js",
     "test:watch": "jest --watch",
@@ -169,7 +169,8 @@
     "stylus": "0.54.5",
     "stylus-loader": "3.0.2",
     "ts-jest": "24.0.2",
-    "vue-jest": "3.0.4"
+    "vue-jest": "3.0.4",
+    "vuepress": "1.0.0"
   },
   "optionalDependencies": {
     "cypress": "^3.3.1"

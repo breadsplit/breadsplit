@@ -1,22 +1,6 @@
 # 🗻 Roadmap
 
-[**Stage Progress**](https://github.com/breadsplit/breadsplit/projects/1)
-
-## 🚨 DEADLINE
-
-✅ *< Designing >*
-
-✅ Stage 1 Complete: **`2019/05/10`**
-
-*< Developmenting >*
-
-First Release: **`2019/06/01`**
-
-*< Production Workload Test >*
-
-Official Publish: **`2019/06/15`**
-
-*< Maintains >*
+[**Stage Progress**](https://github.com/breadsplit/breadsplit/projects/2)
 
 ## 👉 Stage 1 Prototyping & Basic Implementation
 
