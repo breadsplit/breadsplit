@@ -83,7 +83,7 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
         key: 'summary',
       }, {
         text: this.$t('ui.tabs.expenses'),
-        icon: 'wallet',
+        icon: 'script-text-outline',
         key: 'expenses',
         style: 'margin-right: 25px',
       }, {

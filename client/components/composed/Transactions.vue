@@ -1,17 +1,17 @@
 <template lang='pug'>
 v-card.transactions
-  v-subheader {{$t('ui.tabs.transactions')}}
-  v-list.pa-0(three-line)
+  v-subheader
+    v-icon.mr-1 mdi-script-text-outline
+    span {{$t('ui.tabs.transactions')}}
+
+  v-list.pa-0(two-line)
     template(v-for='(trans, index) in displayedTransactions')
       v-divider(v-if='index!=0')
       v-list-tile(:key='trans.id', avatar, @click='gotoTransaction(trans.id)')
-        v-list-tile-avatar.ma-2
-          app-category-icon.mx-2.my-1(:category='trans.category', :text='false', :size='48')
+        v-list-tile-avatar
+          app-category-icon.mx-2.my-1(:category='trans.category', :text='false', :size='38')
         v-list-tile-content
           v-list-tile-title {{trans.desc || $t('noun.expense')}}
-          v-list-tile-sub-title
-            i18n(path='ui.paid_by_xx')
-              b {{trans.creditor_names.join(', ')}}
           v-list-tile-sub-title.time-label {{dateFromNow(trans.timestamp)}}
         v-list-tile-action.pr-1(v-rows='"auto max-content"')
           app-money-label.text-xs-right(

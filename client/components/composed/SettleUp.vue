@@ -1,6 +1,10 @@
 <template lang='pug'>
 v-card.settle-up
-  v-subheader {{$t('ui.tabs.settle_up')}}
+  v-subheader
+    v-icon.mr-1 mdi-account-supervisor-circle
+    span {{$t('ui.tabs.settle_up')}}
+    v-spacer
+    v-icon.op-50(@click='shareSettleUpReport()') mdi-share
 
   // app-chart-settle-up-solutions(:solutions='solutions')
 
@@ -45,6 +49,10 @@ export default class SettleUpSolutions extends mixins(GroupMixin, NavigationMixi
       to: solution.to,
       amount: solution.amount,
     })
+  }
+
+  shareSettleUpReport() {
+    this.WIP()
   }
 }
 </script>

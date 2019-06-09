@@ -1,6 +1,9 @@
 <template lang='pug'>
 v-card.members
-  v-subheader {{$t('ui.tabs.members')}}
+  v-subheader
+    v-icon.mr-1 mdi-account-group
+    span {{$t('ui.tabs.members')}}
+
   v-list(two-line)
     template(v-for='(member, index) in members')
       v-list-tile(:key='member.uid', avatar, @click='')

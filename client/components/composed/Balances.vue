@@ -1,15 +1,20 @@
 <template lang='pug'>
 v-card.balances
-  v-subheader {{$t('ui.tabs.balances')}}
-  v-list.pa-0(two-line)
+  v-subheader
+    v-icon.mr-1 mdi-wallet
+    span {{$t('ui.tabs.balances')}}
+    v-spacer
+    //div(style='width:45px')
+      app-currency-select(mini)
+
+  v-list.pa-0
     template(v-for='(balance, index) in balances')
       v-divider(v-if='index!=0')
-      v-list-tile(:key='balance.uid', avatar, @click='gotoNewTransaction({from: balance.uid})')
-        v-list-tile-avatar.ma-1
-          app-user-avatar(:id='balance.uid')
+      v-list-tile(:key='balance.uid' avatar @click='gotoNewTransaction({from: balance.uid})')
+        v-list-tile-avatar
+          app-user-avatar(:id='balance.uid' size='38')
         v-list-tile-content
-          v-list-tile-title
-            app-user-info(:id='balance.uid')
+          app-user-info(:id='balance.uid')
         v-list-tile-action.pr-1
           v-list-tile-title
             app-money-label(

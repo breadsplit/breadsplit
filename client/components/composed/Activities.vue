@@ -1,6 +1,9 @@
 <template lang='pug'>
 v-card
-  v-subheader {{$t('ui.tabs.activities')}}
+  v-subheader
+    v-icon.mr-1 mdi-calendar-text
+    span {{$t('ui.tabs.activities')}}
+
   v-list.pa-0(two-line)
     template(v-for='(act, index) in displayed')
       v-divider(v-if='index!=0')

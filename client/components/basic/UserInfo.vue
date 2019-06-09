@@ -28,7 +28,7 @@ export default class UserInfoLabel extends mixins(UserInfoMixin) {
   get style() {
     const style = {}
     if (this.bold != null)
-      style['font-style'] = 'bold'
+      style['font-weight'] = 'bold'
     return style
   }
 }

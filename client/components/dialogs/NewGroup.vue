@@ -48,7 +48,7 @@ v-card.new-group(v-rows='" max-content auto max-content"')
                 v-divider(v-if='index !== 0')
                 v-list-tile.px-2(:key='member.uid', avatar)
                   v-list-tile-avatar
-                    app-user-avatar(:member='member' size='36')
+                    app-user-avatar(:member='member' size='38')
                   v-list-tile-content
                     v-list-tile-title
                       app-user-info(:member='member', field='name' :fallback='member.name')
