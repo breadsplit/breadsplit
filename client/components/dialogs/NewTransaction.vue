@@ -3,14 +3,14 @@ v-card.new-transaction(v-rows='"auto max-content"')
   app-close-button(@close='close')
 
   v-window.height-100(v-model='step', touchless)
-    v-window-item.page(:value='1')
-      .page-container.height-100(v-rows='"max-content max-content auto max-content"')
+    v-window-item.page.page-1(:value='1')
+      .page-container.height-100(v-rows='"max-content max-content auto max-content auto"')
         .header {{$t('ui.newtrans.expense_paid_by')}}
         .subheader {{$t('ui.newtrans.xx_should_pay')}}
 
         div
 
-        .text-xs-center.mb-2
+        .text-xs-center.mt-3
           span {{$t('ui.newtrans.select_who_paid')}}
           app-member-toggles(
             :uids='members.map(m=>m.uid)',
@@ -19,7 +19,9 @@ v-card.new-transaction(v-rows='"auto max-content"')
             :fade='false'
           )
 
-    v-window-item.page(:value='2')
+        div
+
+    v-window-item.page.page-2(:value='2')
       app-splitting-page(
         ref='splitting_creditors'
         :trans='form'
@@ -28,7 +30,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
         on='creditors'
       )
 
-    v-window-item.page(:value='3')
+    v-window-item.page.page-3(:value='3')
        app-splitting-page(
         ref='splitting_debtors'
         :trans='form'
@@ -37,7 +39,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
         on='debtors'
       )
 
-    v-window-item.page(:value='4')
+    v-window-item.page.page-4(:value='4')
       .page-container
         .header {{$t('ui.newtrans.more_details')}}
 
@@ -84,7 +86,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
         v-btn.button-quick-add(:disabled='!form.total_fee', color='primary', flat, @click='submit')
           | {{$t('ui.button_quick_add')}}
 
-      v-btn.button-save(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
+      v-btn.button-next(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
         | {{btnNextText}}
 
     app-date-picker(ref='date_picker')

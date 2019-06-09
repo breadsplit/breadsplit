@@ -2,7 +2,7 @@
 .member-toggles
   .member.op-animated(
     v-for='uid in uids'
-    :class='{"op-25": fade && !isSelected(uid)}'
+    :class='{"op-25": fade && !isSelected(uid), "selected": isSelected(uid)}'
   )
     .composed-icon(@click='toggle(uid)')
       app-user-avatar(size='48' :id='uid')

@@ -3,6 +3,7 @@ import { UserInfo, Member, UserMemberInfo } from '~/types'
 import { IsThisId } from '~/core'
 import { avatarProvider } from '~/utils/avatar_providers'
 import nanoid from 'nanoid'
+import { IdMe } from '~/../core'
 
 @Component
 export default class UserInfoMixin extends Vue {
@@ -35,6 +36,9 @@ export default class UserInfoMixin extends Vue {
       result.name = member.name
     }
 
+    if (!result.name && result.uid === IdMe)
+      result.name = this.$t('pronoun.me').toString()
+
     // set avatar url
     if (!result.avatar_url)
       result.avatar_url = this.getFallbackAvatar(uid)
@@ -42,13 +46,6 @@ export default class UserInfoMixin extends Vue {
   }
 
   getMember(uid: string): Member | undefined {
-    if (IsThisId.Me(uid)) {
-      return {
-        uid,
-        name: this.$t('pronoun.me').toString(),
-        role: 'owner',
-      }
-    }
     return this.$store.getters['group/memberById']({ uid })
   }
 

@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-select(
+v-select.currency-select(
   :value='value'
   @input='i=>$emit("input", i)'
   :class='{flat: mini}'

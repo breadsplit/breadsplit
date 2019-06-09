@@ -18,19 +18,27 @@ describe('Offline functions', () => {
     cy.contains('new group')
       .click()
 
-    cy.get('.new-group .layout > :nth-child(1) input')
+    cy.get('.new-group .group-name-input input')
       .type('GroupA')
 
-    cy.get('.new-group .layout > :nth-child(2) input')
-      .type('twd{enter}')
+    cy.get('.new-group .currency-select')
+      .should('contain', 'USD')
 
-    cy.get('.new-group .layout > :nth-child(3) input')
+    cy.get('.button-next')
+      .click()
+
+    cy.get('.member-name-input input')
       .type('UserA')
       .type('{enter}')
       .type('UserB')
       .type('{enter}{esc}')
 
-    cy.get('.new-group .layout > :nth-child(4) > :nth-child(1).v-btn')
+    cy.get('.members-list')
+      .should('contain', 'Me')
+      .should('contain', 'UserA')
+      .should('contain', 'UserB')
+
+    cy.get('.button-create')
       .click()
 
     cy.wait(500)
@@ -53,47 +61,44 @@ describe('Offline functions', () => {
     cy.get('.new-transaction-button')
       .click()
 
-    cy.get('.new-transaction .member-select')
+    cy.get('.new-transaction .member-toggles .selected.member')
+      .should('contain', 'Me')
+
+    cy.get('.button-next')
       .click()
 
-    cy.get('.v-menu__content .user-avatar')
-      .eq(1)
-      .click()
-
-    cy.get('.new-transaction .member-select')
-      .should('contain', 'UserB')
-
-    function clickNum(num: number) {
+    function clickNum(num: number, parent = '') {
       if (num === 0)
         num = 11
-      cy.get(`.soft-numpad > .numbers > :nth-child(${num})`)
+      cy.get(`${parent} .soft-numpad > .numbers > :nth-child(${num})`)
         .click()
     }
 
-    function input(num: number) {
+    function input(num: number, parent = '') {
       num.toString().split('').forEach((c) => {
         if (c === '.')
-          clickNum(10)
+          clickNum(10, parent)
         else
-          clickNum(+c)
+          clickNum(+c, parent)
       })
     }
 
-    cy.get('.new-transaction .member-select')
-
     const number = 1230.45
-    input(number)
+    input(number, '.page-2')
 
     cy.get('.number-input input')
       .should('have.value', number.toString())
 
-    cy.get('.button-next-step')
+    cy.get('.button-next')
+      .click()
+
+    cy.get('.button-next')
       .click()
 
     cy.get('.description-field input')
       .type('ExpenseA')
 
-    cy.get('.button-save')
+    cy.get('.button-next')
       .click()
 
     cy.get('.balances')

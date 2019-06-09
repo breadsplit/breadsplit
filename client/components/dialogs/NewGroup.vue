@@ -8,7 +8,7 @@ v-card.new-group(v-rows='" max-content auto max-content"')
       v-container.pa-4
         v-layout(column)
           v-flex
-            v-text-field(
+            v-text-field.group-name-input(
               v-model='form.name' :label='$t("ui.group_editing.group_name")'
               prepend-icon='mdi-group-open-variant' clearable :disabled='viewmode'
               autofocus
@@ -62,17 +62,18 @@ v-card.new-group(v-rows='" max-content auto max-content"')
     v-divider
     v-card-actions.pa-3
       template(v-if='step === 1 && !mode')
-        v-btn(@click='close(false)' flat) {{$t('ui.button_cancel')}}
+        v-btn.button-cancel(@click='close(false)' flat) {{$t('ui.button_cancel')}}
         v-spacer
-        v-btn(@click='step++' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')  {{$t('ui.button_next')}}
+        v-btn.button-next(@click='step++' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')  {{$t('ui.button_next')}}
 
       template(v-if='step === 2 && !mode')
-        v-btn(@click='step--' flat) {{$t('ui.button_back')}}
+        v-btn.button-back(@click='step--' flat) {{$t('ui.button_back')}}
         v-spacer
         template(v-if='search')
           v-btn(@click='addMember(search)' :color='color' depressed) {{$t('ui.group_editing.add_member_xx', [search])}}
+
         template(v-if='!search')
-          v-btn(@click='create()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')
+          v-btn.button-create(@click='create()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')
             v-icon.mr-1(size='20') mdi-check
             | {{$t('ui.button_create_group')}}
 
