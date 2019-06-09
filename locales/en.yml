@@ -130,6 +130,7 @@ ui:
     my_name_is: 'My name is:'
     this_is_me: This is me
     existing_users: Existing users
+  settle_up_solution: '{0} should return {2} to {1}'
 pronoun:
   me: Me
   i: I

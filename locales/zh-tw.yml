@@ -123,6 +123,7 @@ ui:
     existing_users: 已存在用戶
   button_refresh: 重新整理
   button_go_home: 返回App
+  settle_up_solution: '{0} 需要還給 {1} {2}'
 cats:
   transport:
     display: 交通

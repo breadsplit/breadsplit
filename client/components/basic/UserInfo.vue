@@ -1,5 +1,5 @@
 <template lang='pug'>
-span(v-if='value') {{value}}
+span(v-if='value' :style='style') {{value}}
 </template>
 
 <script lang='ts'>
@@ -13,6 +13,7 @@ export default class UserInfoLabel extends mixins(UserInfoMixin) {
   @Prop({ default: 'name' }) readonly field!: string
   @Prop(Object) readonly user?: UserInfo
   @Prop(Object) readonly member?: Member
+  @Prop(Boolean) readonly bold?: boolean
 
   get _user() {
     return this.getUser(this.id, this.member, this.user)
@@ -22,6 +23,13 @@ export default class UserInfoLabel extends mixins(UserInfoMixin) {
     if (this._user)
       return this._user[this.field]
     return ''
+  }
+
+  get style() {
+    const style = {}
+    if (this.bold != null)
+      style['font-style'] = 'bold'
+    return style
   }
 }
 </script>
