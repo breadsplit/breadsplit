@@ -6,48 +6,46 @@
 
       template(v-if='loading')
         v-progress-circular(indeterminate, size='80', color='grey lighten-2')
-        p.ma-4 {{$t('ui.loading_group_info')}}
+        p.ma-4 {{$t('ui.join.loading_group_info')}}
 
       template(v-else-if='!group')
         v-icon.ma-2(color='primary', size='100') mdi-emoticon-sad-outline
-        p(class='primary--text' color='primary' style='font-size: 1.4em') Group Not Found
+        p(class='primary--text' color='primary' style='font-size: 1.4em') {{$t('ui.join.group_not_found')}}
 
         v-btn.ma-2(color='teal lighten-1' dark @click='reload()')
           v-icon(size='20') mdi-autorenew
-          span.ma-2 Reload
+          span.ma-2 {{$t('ui.button_refresh')}}
         v-btn.ma-2(color='teal lighten-1' dark @click='gotoHome()')
           v-icon(size='20') mdi-home-variant
-          span.ma-2 Go Home
+          span.ma-2 {{$t('ui.button_go_home')}}
 
       div(v-else style='max-width:700px; margin: 0 auto;')
         p.ma-4(v-if='group' style='font-size: 1.4em')
-          i18n(path='ui.invited_to_join')
+          i18n(path='ui.join.invited_to_join')
             b.primary--text {{group.name}}
 
-        v-subheader 我的名字是
+        v-subheader {{$t('ui.join.my_name_is')}}
 
         v-list(two-line, style='background:transparent;')
           template(v-for='(member, index) in members')
             template(v-if='index!=0 && !isLocal(member.uid) && isLocal(members[index-1].uid)')
               br
-              v-subheader 以下為已存在用戶
+              v-subheader {{$t('ui.join.existing_users')}}
             v-list-tile(:key='member.uid', avatar)
               v-list-tile-avatar
                 app-user-avatar(:id='member.uid', size='40')
               v-list-tile-content
                 v-list-tile-title
-                  span(v-if='isLocal(member.uid)') {{member.name}}
-                  app-user-info(v-else :id='member.uid', field='name')
+                  app-user-info(:member='member', field='name')
+                  v-icon.ml-1(v-if='!isLocal(member.uid)' color='green lighten-1', size='20') mdi-check
               v-list-tile-action(v-if='isLocal(member.uid)')
-                v-btn(color='primary' dark :loading='joining' @click='join(member.uid)') 認領我
-              v-list-tile-action(v-else)
-                v-icon(color='green lighten-1', size='32') mdi-account-check
+                v-btn(color='primary' flat @click='join(member.uid)').px-3 {{$t('ui.join.this_is_me')}}
 
         v-btn(v-if='uid', @click='join()', color='primary', large, round).pl-0
           app-user-avatar(:id='uid', :size='44').mr-3
           span {{$t('ui.join_as_me', [me.name])}}
 
-        v-btn(v-else color='primary' dark :loading='joining' @click='join()') 我不在這ㄟ~
+        v-btn.px-4(v-else color='primary' round dark @click='join()') {{$t('ui.join.join_anonymous')}}
 
     app-login(ref='login')
 </template>
@@ -64,16 +62,18 @@ import Login from '~/components/dialogs/Login.vue'
   layout: 'base',
   watchQuery: true,
   async asyncData({ query }) {
-    return { id: query.id }
+    return {
+      id: query.id,
+    }
   },
   head() {
     return {
-      title: this.$t('ui.title_join_a_group'),
+      title: this.$t('ui.join.title'),
     }
   },
 })
 export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, NavigationMixin) {
-  serverGroup: ServerGroup | undefined = undefined
+  serverGroup: ServerGroup | null = null
   loading = true
   joining = false
   id: string | null = null
@@ -111,9 +111,9 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
       if (!await this.$refs.login.login())
         return
     }
-    this.$root.$apploading.open('Joining group...')
+    this.$apploading.open('Joining group...')
     await this.$fire.joinGroup(this.id, memberId)
-    this.$root.$apploading.close()
+    this.$apploading.close()
   }
 
   isLocal(id: string) {
@@ -124,13 +124,14 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
     this.loading = true
     if (this.$store.getters['group/all'].map(g => g.id).includes(this.id)) {
       this.$router.replace(`/group/${this.id}`)
-      this.$root.$snack(this.$t('tips.already_joined_group'))
+      this.$snack(this.$t('tips.already_joined_group'))
       return
     }
     if (!this.id) {
       this.loading = false
       return
     }
+    await this.$fire.waitForInitilized()
     this.serverGroup = await this.$fire.groupInfo(this.id)
     this.loading = false
   }

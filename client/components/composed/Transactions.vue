@@ -1,26 +1,28 @@
 <template lang='pug'>
 v-card.transactions
-  v-subheader {{$t('ui.tabs.transactions')}}
-  v-list.pa-0(three-line)
+  v-subheader
+    v-icon.mr-1 mdi-script-text-outline
+    span {{$t('ui.tabs.transactions')}}
+
+  v-list.pa-0(two-line)
     template(v-for='(trans, index) in displayedTransactions')
       v-divider(v-if='index!=0')
       v-list-tile(:key='trans.id', avatar, @click='gotoTransaction(trans.id)')
-        v-list-tile-avatar.ma-2
-          app-category-icon.mx-2.my-1(:category='trans.category', :text='false', :size='48')
+        v-list-tile-avatar
+          app-category-icon.mx-2.my-1(:category='trans.category', :text='false', :size='38')
         v-list-tile-content
           v-list-tile-title {{trans.desc || $t('noun.expense')}}
-          v-list-tile-sub-title
-            i18n(path='ui.paid_by_xx')
-              b {{trans.creditor_names.join(', ')}}
           v-list-tile-sub-title.time-label {{dateFromNow(trans.timestamp)}}
         v-list-tile-action.pr-1(v-rows='"auto max-content"')
-          app-money-label.text-xs-right(:amount='-trans.total_fee' :currency='trans.currency')
+          app-money-label.text-xs-right(
+            :amount='-trans.total_fee'
+            :currency='trans.currency'
+            color
+          )
           .creators-debtors
-            .creators
-              app-user-avatar(v-for='c in trans.creditor_ids' :id='c' :key='c' size='24')
+            app-avatars-horizontal-group(:ids='trans.creditor_ids' size='24' max-length='3')
             v-icon(size='20') mdi-arrow-right
-            .debtors
-              app-user-avatar(v-for='d in trans.debtor_ids' :id='d' :key='d' size='24')
+            app-avatars-horizontal-group(:ids='trans.debtor_ids' size='24' max-length='3')
 
     template(v-if='needShowMore')
       v-divider
@@ -95,19 +97,7 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
     opacity 0.8
 
 .creators-debtors
-  & > *
-    display inline-block
-    vertical-align middle
-
   .v-icon
     opacity 0.4
-
-  .user-avatar:not(:first-child)
-    margin-left -8px
-
-  .v-avatar
-    .theme--light & img
-      border 2px solid #fff
-    .theme--dark & img
-      border 2px solid #424242
+    vertical-align middle
 </style>

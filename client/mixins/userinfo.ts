@@ -3,24 +3,27 @@ import { UserInfo, Member, UserMemberInfo } from '~/types'
 import { IsThisId } from '~/core'
 import { avatarProvider } from '~/utils/avatar_providers'
 import nanoid from 'nanoid'
+import { IdMe } from '~/../core'
 
 @Component
 export default class UserInfoMixin extends Vue {
   @Getter('user/uid') uid: string | undefined
   @Getter('user/me') me: UserInfo | undefined
 
-  getUser(uid?: string, autoFetch: boolean = true): UserMemberInfo | undefined {
+  getUser(uid?: string, member?: Member, user?: UserInfo, autoFetch: boolean = true): UserMemberInfo | undefined {
+    uid = uid || (member && member.uid) || (user && user.uid) || undefined
     if (!uid)
       return undefined
-    const member = this.getMember(uid)
-    let user: UserInfo | undefined
-    if (IsThisId.Me(uid) && this.uid) {
-      user = this.me
-    }
-    else if (IsThisId.UID(uid)) {
-      user = this.$store.getters['user/user'](uid)
-      if (!user && autoFetch)
-        this.$fire.updateUserProfiles([uid])
+    member = member || this.getMember(uid)
+    if (!user) {
+      if (IsThisId.Me(uid) && this.uid) {
+        user = this.me
+      }
+      else if (IsThisId.UID(uid)) {
+        user = this.$store.getters['user/user'](uid)
+        if (!user && autoFetch)
+          this.$fire.updateUserProfiles([uid])
+      }
     }
     const result = Object.assign({}, member, user) as UserMemberInfo
 
@@ -33,6 +36,9 @@ export default class UserInfoMixin extends Vue {
       result.name = member.name
     }
 
+    if (!result.name && result.uid === IdMe)
+      result.name = this.$t('pronoun.me').toString()
+
     // set avatar url
     if (!result.avatar_url)
       result.avatar_url = this.getFallbackAvatar(uid)
@@ -40,13 +46,6 @@ export default class UserInfoMixin extends Vue {
   }
 
   getMember(uid: string): Member | undefined {
-    if (IsThisId.Me(uid)) {
-      return {
-        uid,
-        name: this.$t('pronoun.me').toString(),
-        role: 'owner',
-      }
-    }
     return this.$store.getters['group/memberById']({ uid })
   }
 

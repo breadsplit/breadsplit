@@ -1,9 +1,9 @@
 <template lang='pug'>
 v-card.settings
-  app-dialog-bar(@close='close()')
+  app-dialog-bar(@close='close()', attached)
     | {{$t('ui.settings')}}
 
-  v-container(ref='container', :class='{"px-0": isMobile}')
+  v-container.pt-0.pb-1(ref='container', :class='{"px-0": isMobile}')
     v-list(two-line, subheader)
       v-subheader {{$t('ui.general')}}
       v-divider
@@ -50,11 +50,11 @@ v-card.settings
       v-subheader {{$t('ui.misc')}}
       v-divider
 
-      v-list-tile(avatar, @click='WIP')
+      v-list-tile(avatar, @click='openDialog("faq")')
         v-list-tile-avatar
           v-icon mdi-help-circle-outline
         v-list-tile-content
-          v-list-tile-title {{$t('ui.help')}}
+          v-list-tile-title {{$t('ui.faq')}}
 
       v-list-tile(avatar, @click='$refs.feedback.open()')
         v-list-tile-avatar
@@ -62,7 +62,7 @@ v-card.settings
         v-list-tile-content
           v-list-tile-title {{$t('ui.feedback')}}
 
-      v-list-tile(avatar, @click='$root.$about.open')
+      v-list-tile(avatar, @click='openDialog("about")')
         v-list-tile-avatar
           v-icon mdi-information-outline
         v-list-tile-content
@@ -117,7 +117,7 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
   }
 
   async purgeData() {
-    if (await this.$root.$confirm(this.$t('prompt.are_you_sure'))) {
+    if (await this.$confirm(this.$t('prompt.are_you_sure'))) {
       await this.$fire.logout()
       this.$store.commit('purge')
       this.close()
@@ -133,7 +133,7 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
       const token = this.$store.state.messaging_token
       // @ts-ignore
       await this.$copyText(token, this.$refs.container)
-      this.$root.$snack('Messaging token copied')
+      this.$snack('Messaging token copied')
     }
   }
 }

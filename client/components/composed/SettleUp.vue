@@ -1,23 +1,29 @@
 <template lang='pug'>
 v-card.settle-up
-  v-subheader {{$t('ui.tabs.settle_up')}}
+  v-subheader
+    v-icon.mr-1 mdi-account-supervisor-circle
+    span {{$t('ui.tabs.settle_up')}}
+    v-spacer
+    v-icon.op-50(@click='shareSettleUpReport()') mdi-share
 
   // app-chart-settle-up-solutions(:solutions='solutions')
 
-  v-list.pa-0(two-line)
+  v-list.pa-0
     template(v-for='(solution, index) in solutions')
       v-divider(v-if='index!=0')
-      v-list-tile(:key='solution.uid', avatar, @click='settleUp(solution)')
-        v-list-tile-content(v-columns='"1fr 1fr 1fr"' style='align-items:center').py-2.px-0
-          div.text-xs-right.text-no-wrap
-            app-user-info.pa-3(v-if='!isMobile' :id='solution.from')
-            app-user-avatar(:id='solution.from')
-          div(v-rows='"1fr 1fr"').text-xs-center.px-3
-            app-money-label(:amount='solution.amount' :currency='solution.currency')
-            v-icon mdi-ray-start-arrow
-          div.text-no-wrap
-            app-user-avatar(:id='solution.to')
-            app-user-info.pa-3(v-if='!isMobile' :id='solution.to')
+      v-list-tile.relax-list-item(:key='solution.uid' @click='settleUp(solution)')
+        i18n.py-2.px-0(path='ui.settle_up_solution')
+          span.text-no-wrap
+            app-user-avatar.pa-1(:id='solution.from' size='24')
+            app-user-info.pa-1(:id='solution.from' bold)
+          span.text-no-wrap
+            app-user-avatar.pa-1(:id='solution.to' size='24')
+            app-user-info.pa-1(:id='solution.to' bold)
+          app-money-label(
+            :amount='solution.amount'
+            :currency='solution.currency'
+            color
+          )
 </template>
 
 <script lang='ts'>
@@ -43,6 +49,10 @@ export default class SettleUpSolutions extends mixins(GroupMixin, NavigationMixi
       to: solution.to,
       amount: solution.amount,
     })
+  }
+
+  shareSettleUpReport() {
+    this.WIP()
   }
 }
 </script>

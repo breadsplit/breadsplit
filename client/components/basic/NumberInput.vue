@@ -222,7 +222,7 @@ export default class NumberInput extends mixins(CommonMixin) {
     // TODO:AF more checks based on value
 
     if (!this.warned) {
-      this.$root.$snack('Using keyboard to input is an experimenting function.', { color: 'red' })
+      this.$snack('Using keyboard to input is an experimenting function.', { color: 'red' })
       this.warned = true
     }
 
@@ -275,6 +275,10 @@ export default class NumberInput extends mixins(CommonMixin) {
     input
       max-height inherit
       font-size 3em
+      margin-top 0
+
+    label
+      top -0.1em
 
   &.bold
     input

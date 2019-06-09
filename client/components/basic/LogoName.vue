@@ -1,16 +1,17 @@
 <template lang='pug'>
 .logo-name
-  img.logo(src='/img/png/favicon-194x194.png')
+  img.logo(src='/img/logo/favicon.png')
   .app-name(:style='{color:$vuetify.theme.primary}') {{$t('appname')}}
   .channel(v-text='channel')
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
+import { RELEASE_CHANNEL } from '~/../meta/env'
 
 @Component
 export default class DefaultLayout extends Vue {
-  channel: string = process.env.RELEASE_CHANNEL || ''
+  channel: string = RELEASE_CHANNEL
 }
 </script>
 

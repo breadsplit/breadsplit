@@ -9,6 +9,7 @@
     :trans='trans'
     :members='members'
     :on='on'
+    :mode.sync='mode'
     @keyboard='openKeyboard'
   )
 
@@ -32,8 +33,7 @@
       )
       div(v-rows='"auto 45px"')
         span
-        // TODO:AF recent and common currencies
-        app-currency-select.mt-0.pt-0(v-model='trans.currency')
+        app-currency-select.mt-0.pt-0(v-model='trans.currency' mini)
 
     .mt-3(v-else)
 
@@ -47,8 +47,9 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { Transaction, Member } from '~/types'
+import { Splitmode } from '~/core'
 import SoftNumpad from '../basic/SoftNumpad.vue'
 import NumberInput from '../basic/NumberInput.vue'
 import Splitting from './Splitting.vue'
@@ -56,6 +57,7 @@ import Splitting from './Splitting.vue'
 @Component
 export default class SplittingPage extends Vue {
   registeredInput: NumberInput | null = null
+  mode: Splitmode = 'average'
 
   @Prop(Object) readonly trans!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
@@ -66,6 +68,20 @@ export default class SplittingPage extends Vue {
   $refs!: {
     splitting: Splitting
     numpad: SoftNumpad
+    total_fee_input: NumberInput
+  }
+
+  @Watch('trans', { immediate: true })
+  onTransChanged() {
+    if (this.on === 'creditors') {
+      this.mode = 'amount'
+      this.$nextTick(() => {
+        this.openKeyboardForMainInput(this.$refs.total_fee_input)
+      })
+    }
+    else {
+      this.mode = 'average'
+    }
   }
 
   get showKeyboard() {

@@ -1,6 +1,5 @@
 <template lang='pug'>
 v-container
-  h2 This is a new label
   v-layout(column, justify-center, align-center)
     v-flex.text-xs-center(xs12, sm8, md6)
       template(v-for='(group, i) in groups')
@@ -11,14 +10,17 @@ v-container
     v-divider.my-3
 
     v-flex.text-xs-center(xs12, sm8, md6)
-      v-btn(@click='$root.$newgroup.open()', color='primary') {{$t('ui.button_new_group')}}
+      v-btn(@click='openDialog("newgroup")' round color='primary')
+        v-icon.mr-2 mdi-plus
+        span {{$t('ui.button_new_group')}}
 </template>
 
 <script lang='ts'>
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
+import { NavigationMixin } from '~/mixins'
 
 @Component
-export default class Homepage extends Vue {
+export default class Homepage extends mixins(NavigationMixin) {
   get groups() {
     return this.$store.getters['group/all']
   }

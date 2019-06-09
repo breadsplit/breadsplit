@@ -1,6 +1,9 @@
 <template lang='pug'>
 v-card
-  v-subheader {{$t('ui.tabs.activities')}}
+  v-subheader
+    v-icon.mr-1 mdi-calendar-text
+    span {{$t('ui.tabs.activities')}}
+
   v-list.pa-0(two-line)
     template(v-for='(act, index) in displayed')
       v-divider(v-if='index!=0')
@@ -71,8 +74,6 @@ export default class Activities extends mixins(GroupMixin, UserInfoMixin, Naviga
   onActivityClick(act: Activity) {
     if (act.entity === 'transaction' && act.entity_id)
       this.gotoTransaction(act.entity_id)
-    else
-      this.WIP()
   }
 }
 </script>

@@ -8,18 +8,25 @@ div
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
+import Snackbar from './Snackbar.vue'
+import Confirm from './Confirm.vue'
+import Prompt from './Prompt.vue'
+import LoadingDialog from './LoadingDialog.vue'
 
 @Component
-export default class GlobalStyle extends Vue {
+export default class GlobalComponents extends Vue {
+  $refs!: {
+    snack: Snackbar
+    confirm: Confirm
+    prompt: Prompt
+    loading: LoadingDialog
+  }
+
   mounted() {
-    // @ts-ignore
-    this.$root.$snack = this.$refs.snack.open
-    // @ts-ignore
-    this.$root.$confirm = this.$refs.confirm.open
-    // @ts-ignore
-    this.$root.$prompt = this.$refs.prompt.open
-    // @ts-ignore
-    this.$root.$apploading = this.$refs.loading
+    Vue.prototype.$snack = this.$refs.snack.open
+    Vue.prototype.$confirm = this.$refs.confirm.open
+    Vue.prototype.$prompt = this.$refs.prompt.open
+    Vue.prototype.$apploading = this.$refs.loading
   }
 }
 </script>

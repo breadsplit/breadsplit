@@ -1,22 +1,25 @@
 <template lang='pug'>
 .member-select
-  v-menu(v-model='menu' :nudge-width='100')
+  v-menu(v-model='menu' max-width='450px')
     template(v-slot:activator='{ on }')
       .vertical-aligned(v-on='on', v-ripple)
         slot
           app-user-avatar(:id='current.uid', inline, show-name)
           v-icon mdi-menu-down
 
-    v-card.pa-2
+    v-card.pa-2.text-xs-center
       template(v-for='member in members')
-        app-user-avatar.member-option.pa-3(:id='member.uid', show-name, v-ripple, @click.native='setValue(member.uid)')
+        app-user-avatar.member-option.pa-2(:id='member.uid', show-name, v-ripple, @click.native='setValue(member.uid)')
 </template>
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { Member } from '~/types'
+import UserAvatar from './UserAvatar.vue'
 
-@Component
+@Component({
+  components: { UserAvatar },
+})
 export default class MemberSelect extends Vue {
   menu = false
 

@@ -4,18 +4,9 @@
   br
   .buildinfo
     span Build {{buildtime}} - {{buildTimeFromNow}}
-    span(v-if='machine') /{{machine}}
-  .section
-    span Server: {{serverName}}
+  .buildinfo
+    span server <{{serverName}}>
   .my-2
-  //.line-divider
-
-  //.badge
-    v-icon mdi-code-tags
-  //template(v-for='(i, idx) in code')
-    .divider
-    .section
-      a(:href='i.href', target='_blank') {{i.name}}
 
   .newline
 
@@ -25,8 +16,10 @@
     span in Taiwan
   .copyright
     span Copyright © 2019 The BreadSplit Team
-  .privacy
-    a(@click='$refs.privacy.open()') {{$t('ui.privacy_policy')}}
+  .footer
+    a.homepage(:href='socials.homepage' target='__blank') {{$t('ui.homepage')}}
+    .divider
+    a.privacy(@click='$refs.privacy.open()') {{$t('ui.privacy_policy')}}
 
   app-dialog(ref='privacy' :route='true')
     app-privacy
@@ -35,17 +28,19 @@
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
+import socials from '~/../meta/socials'
+import { APP_VERSION, BUILD_TARGET, BUILD_TIME, RELEASE_CHANNEL, FIREBASE_SERVER } from '~/../meta/env'
 
 @Component
 export default class Credit extends Vue {
+  socials = socials
   code = []
   design = []
-  version = process.env.APP_VERSION
-  target = process.env.BUILD_TARGET
-  buildtime = process.env.BUILD_TIME
-  machine = process.env.BUILD_MACHINE
-  channel = process.env.RELEASE_CHANNEL
-  serverName = process.env.FIREBASE_SERVER
+  version = APP_VERSION
+  target = BUILD_TARGET
+  buildtime = BUILD_TIME
+  channel = RELEASE_CHANNEL
+  serverName = FIREBASE_SERVER
 
   get buildTimeFromNow() {
     return dayjs(this.buildtime).fromNow()
@@ -77,14 +72,15 @@ export default class Credit extends Vue {
     display inline
 
   .divider:after
-    content '•'
+    content '|'
     margin 0 7px
+    opacity 0.4
 
   .badge
     font-weight bold
 
   .newline
-    height 4px
+    height 8px
 
   .line-divider
     width 30px
@@ -100,13 +96,10 @@ export default class Credit extends Vue {
     transition 0.5s opacity ease-in-out
     opacity 0.5
 
-    &:not(:last-child)
-      margin-right 7px
-
     &:hover
       opacity 1
 
-  .privacy
+  .footer
     margin-top 0.5em
     font-size 0.9em
 </style>

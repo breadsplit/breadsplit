@@ -3,14 +3,14 @@ v-dialog(
   v-model='visible', @keydown.esc='close()'
   v-bind='$attrs', style='z-index:200',
   :transition='transition', :max-width='600'
-  :fullscreen='getfullscreen'
+  :fullscreen='isFullscreen'
 )
-  slot(v-if='!lazy || visible')
+  slot(v-if='loaded')
 </template>
 
 <script lang='ts'>
 import { Component, mixins, Watch, Prop } from 'nuxt-property-decorator'
-import CommonMixin from '~/mixins/common'
+import { CommonMixin, NavigationMixin } from '~/mixins'
 
 @Component({
   inheritAttrs: false,
@@ -30,17 +30,19 @@ import CommonMixin from '~/mixins/common'
     return { dialog }
   },
 })
-export default class Dialog extends mixins(CommonMixin) {
+export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   resolve: ((result) => void) | null = null
   reject: ((error) => void) | null = null
   options = {}
   visible = false
+  loaded = false
 
   @Prop({ default: false }) readonly route!: boolean
   @Prop({ default: 'dialog-bottom-transition' }) readonly transition!: boolean
   @Prop() readonly fullscreen: boolean | undefined
-  @Prop({ default: true }) readonly lazy!: boolean
+  @Prop(Boolean) readonly preload?: boolean
   @Prop({ default: true }) readonly autoReset!: boolean
+  @Prop(String) readonly watchOnQuery!: string
 
   get isOpened() {
     return !!this.visible
@@ -60,7 +62,18 @@ export default class Dialog extends mixins(CommonMixin) {
     }
   }
 
-  get getfullscreen() {
+  @Watch('$route.query', { deep: true, immediate: true })
+  onQueryChanged() {
+    if (this.watchOnQuery) {
+      if (this.$route.query.dialog === this.watchOnQuery)
+        this.open(this.$route.query)
+
+      else if (this.visible)
+        this.close()
+    }
+  }
+
+  get isFullscreen() {
     if (this.fullscreen != null)
       return this.fullscreen
     return this.isMobile
@@ -94,6 +107,8 @@ export default class Dialog extends mixins(CommonMixin) {
   }
 
   open(options = {}) {
+    if (!this.loaded)
+      this.loaded = true
     this.visible = true
     this.options = options
     this.$nextTick(() => {
@@ -113,6 +128,14 @@ export default class Dialog extends mixins(CommonMixin) {
       this.visible = false
     this.resolve = null
     this.reject = null
+
+    if (this.watchOnQuery && this.$route.query.dialog === this.watchOnQuery)
+      this.closeDialog()
+  }
+
+  mounted() {
+    if (this.preload && !this.loaded)
+      this.loaded = true
   }
 }
 </script>

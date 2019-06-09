@@ -2,13 +2,20 @@
 .category-select
   v-menu(v-model='menu' :max-width='400')
     template(v-slot:activator='{ on }')
-      .vertical-aligned(v-on='on', v-ripple)
-        app-category-icon.ma-1(:category='current.name', :inline='true', label)
-        v-icon mdi-menu-down
+      slot(:on='on')
 
     v-card.pa-2.category-options
       template(v-for='cat in categories')
-        app-category-icon.option.pa-2(:category='cat.name', label, v-ripple, @click.native='setValue(cat.name)')
+        app-action-with-text.option.pa-2(v-ripple @click.native='setValue(cat.name)')
+          app-category-icon(
+            slot='action'
+            :category='cat.name',
+            size='32'
+          )
+          app-category-label(
+            slot='text'
+            :category='cat.name'
+          )
 </template>
 
 <script lang='ts'>
@@ -22,11 +29,6 @@ export default class MemberSelect extends Vue {
   @Prop(String) readonly value!: string
   @Prop(Array) readonly categories!: Category[]
 
-  get current() {
-    const cat = this.categories.find(m => m.name === this.value)
-    return cat || {}
-  }
-
   setValue(value) {
     this.$emit('input', value)
   }
@@ -34,9 +36,6 @@ export default class MemberSelect extends Vue {
 </script>
 
 <style lang='stylus'>
-.category-select
-  display inline-block
-
 .category-options
   display grid
   grid-template-columns 1fr 1fr 1fr 1fr 1fr 1fr

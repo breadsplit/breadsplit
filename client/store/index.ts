@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { MutationTree, GetterTree } from 'vuex'
 import { RootState, Group } from '~/types'
+import { APP_VERSION } from '~/../meta/env'
 import { RootStateDefault } from './_defaults'
 export * from './_defaults'
 
@@ -33,10 +34,6 @@ export const mutations: MutationTree<RootState> = {
       Vue.set(state, key, defaults[key])
   },
 
-  setStarRate(state, value: string) {
-    state.user.me.starrate = value
-  },
-
   switchLocale(state, locale: string | null) {
     state.user_locale = locale
   },
@@ -66,7 +63,7 @@ export const mutations: MutationTree<RootState> = {
   init(state) {
     state.app = {
       init: true,
-      version: process.env.APP_VERSION || '',
+      version: APP_VERSION,
     }
   },
 }

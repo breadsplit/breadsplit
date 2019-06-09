@@ -20,7 +20,7 @@ app-dialog.login-dialog(ref='dialog' :route='true' width='350' :fullscreen='fals
           app-brand-button(brand='github_dark' @click='loginWith("github")' large width='250px')
             | {{$t('ui.signin_options.Github')}}
         v-flex(mx-auto my-1).mx-4.mt-2
-          app-help-link(help='no_password_login')
+          app-help-link(help='no_password_login' :tips='true')
 
   app-dialog(ref='privacy' :route='true')
     app-privacy

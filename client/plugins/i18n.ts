@@ -12,7 +12,6 @@ export default ({ app, store, route }: Context) => {
 
   Vue.use(VueI18n)
 
-  // @ts-ignore
   app.i18n = new VueI18n({
     locale: store.getters.locale,
     fallbackLocale: 'en',

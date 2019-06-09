@@ -14,6 +14,7 @@ export type TransformKeys =
   | 'remove_member'
   | 'modify_member'
   | 'insert_transaction'
+  | 'remove_transaction'
   | 'change_member_id'
   | 'new_activity'
 
@@ -98,6 +99,23 @@ export const Transforms: TransformFunctions<Group> = {
       by,
       timestamp,
       action: 'insert',
+      entity: 'transaction',
+      entity_id: transaction.id,
+      entity_name: transaction.desc,
+      entity_desc: `${transaction.currency} ${transaction.total_fee}`,
+    })
+    return snap
+  },
+
+  remove_transaction(snap, id: string, { by, timestamp } = {}) {
+    const transaction = snap.transactions.find(t => t.id === id)
+    if (!transaction)
+      return snap
+    snap.transactions.splice(snap.transactions.indexOf(transaction), 1)
+    snap.activities.push({
+      by,
+      timestamp,
+      action: 'remove',
       entity: 'transaction',
       entity_id: transaction.id,
       entity_name: transaction.desc,

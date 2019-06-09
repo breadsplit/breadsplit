@@ -30,6 +30,7 @@ export interface Weight {
   weight?: number
   fee?: number
   percent?: number
+  locked?: boolean
 }
 
 export interface Member {
@@ -47,7 +48,6 @@ export interface UserInfo {
   name: string
   avatar_url?: string
   lastupdate?: number
-  starrate?: string
 
   // client side only
   lastsync?: number
@@ -59,7 +59,6 @@ export interface UserMemberInfo extends Member, UserInfo {
 
 export interface Transaction {
   id: string
-  timestamp: number
   desc?: string
   category?: string
   currency: string
@@ -69,8 +68,11 @@ export interface Transaction {
   debtors: Weight[]
   creator: UID
   type: TransactionType
-  hashtags?: string[]
+  tags?: string[]
   note?: string
+  location?: string | object
+  timestamp: number
+  timezone?: string
 }
 
 export interface CurrencyRecord {
@@ -92,6 +94,7 @@ export interface CurrencyChangeRate {
 
 export interface Activity {
   timestamp: number
+  timezone?: string
   by: UID
   action: ActivityAction
   entity: Entity

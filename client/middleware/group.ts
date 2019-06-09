@@ -1,5 +1,6 @@
+import { Context } from '@nuxt/vue-app'
 
-export default function ({ store, route }) {
+export default function ({ store, route }: Context) {
   const result = /\/group\/([\w:-]*)?/.exec(route.path)
   if (result && result[1]) {
     const id = result[1]

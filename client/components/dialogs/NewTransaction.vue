@@ -3,16 +3,25 @@ v-card.new-transaction(v-rows='"auto max-content"')
   app-close-button(@close='close')
 
   v-window.height-100(v-model='step', touchless)
-    v-window-item.page(:value='1')
-      .page-container
+    v-window-item.page.page-1(:value='1')
+      .page-container.height-100(v-rows='"max-content max-content auto max-content auto"')
         .header {{$t('ui.newtrans.expense_paid_by')}}
         .subheader {{$t('ui.newtrans.xx_should_pay')}}
 
-        .member-choices
-          template(v-for='m in members')
-            app-user-avatar(:id='m.uid' @click.native='setCreditor(m.uid)' :show-name='true')
+        div
 
-    v-window-item.page(:value='2')
+        .text-xs-center.mt-3
+          span {{$t('ui.newtrans.select_who_paid')}}
+          app-member-toggles(
+            :uids='members.map(m=>m.uid)',
+            :selected='form.creditors.filter(p=>p.weight).map(p=>p.uid)',
+            @select='uid=>setCreditor(uid)',
+            :fade='false'
+          )
+
+        div
+
+    v-window-item.page.page-2(:value='2')
       app-splitting-page(
         ref='splitting_creditors'
         :trans='form'
@@ -21,42 +30,44 @@ v-card.new-transaction(v-rows='"auto max-content"')
         on='creditors'
       )
 
-    v-window-item.page(:value='3')
+    v-window-item.page.page-3(:value='3')
        app-splitting-page(
         ref='splitting_debtors'
         :trans='form'
         :members='members'
-        :title='$t("ui.newtrans.for_whom")'
+        :title='$t("ui.splitting.split_by")'
         on='debtors'
       )
 
-    v-window-item.page(:value='4')
+    v-window-item.page.page-4(:value='4')
       .page-container
         .header {{$t('ui.newtrans.more_details')}}
 
-        .mt-4(v-columns='"max-content auto"')
-          app-category-select.pl-3(
-            :value='form.category || categorySense',
-            @input='i=> form.category = i'
-            :categories='cats'
-          )
-          v-text-field.pr-3.description-field(
-            v-model='form.desc' label='Description' placeholder='Some expense...' solo required)
+        v-text-field.px-2.py-3.description-field(
+          v-model='form.desc'
+          label='Description'
+          placeholder='Some expense...'
+          solo required hide-details
+        )
 
-        v-divider
-        div(v-columns='"70px auto"' @click='pickDate()' v-ripple)
-          v-icon(color='primary') mdi-calendar
+        app-category-select.ml-2(@input='i=> form.category = i' :categories='categories')
+          template(v-slot='{on}' )
+            div(v-on='on' v-columns='"40px auto"' v-ripple)
+              app-category-icon(:category='form.category || categorySense')
+              v-subheader
+                app-category-label(:category='form.category || categorySense')
+
+        div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple)
+          v-icon(color='grey') mdi-calendar
           v-subheader {{dateDisplay}}
 
-        v-divider
-        div(v-columns='"70px auto"')
-          v-icon(color='primary') mdi-map-marker
-          v-subheader {{$t('ui.add_location')}}
+        div.ml-2(v-columns='"40px auto"')
+          v-icon(color='grey') mdi-map-marker
+          v-subheader {{$t('ui.newtrans.add_location')}}
 
-        v-divider
-        div(v-columns='"70px auto"')
-          v-icon(color='primary') mdi-history
-          v-subheader {{$t('ui.repeat_expense')}}
+        div.ml-2(v-columns='"40px auto"')
+          v-icon(color='grey') mdi-history
+          v-subheader {{$t('ui.newtrans.repeat_expense')}}
 
   div
     v-divider
@@ -75,7 +86,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
         v-btn.button-quick-add(:disabled='!form.total_fee', color='primary', flat, @click='submit')
           | {{$t('ui.button_quick_add')}}
 
-      v-btn.button-save(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
+      v-btn.button-next(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
         | {{btnNextText}}
 
     app-date-picker(ref='date_picker')
@@ -93,7 +104,7 @@ import SplittingPage from '../composed/SplittingPage.vue'
 @Component
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
-  cats = Categories
+  categories = Categories
   step = 1
   steps = 4
 
@@ -107,6 +118,8 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   reset() {
     this.form = TransactionDefault()
+    this.step = 1
+
     let me = IdMe
     if (this.uid && this.uid in this.group.members)
       me = this.uid
@@ -119,9 +132,18 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
         .toString()
         .split(',')
         .map(uid => ({ weight: 1, uid }))
+      // move to next step
+      this.step++
     }
     else {
       this.form.creditors.push({ weight: 1, uid: me })
+    }
+
+    if (this.options.amount) {
+      this.form.total_fee = +this.options.amount || 0
+      // move to next step
+      if (this.form.total_fee && this.step === 2)
+        this.step++
     }
 
     if (this.options.to) {
@@ -129,13 +151,13 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
         .toString()
         .split(',')
         .map(uid => ({ weight: 1, uid }))
+      // move to next step
+      if (this.step === 3)
+        this.step++
     }
     else {
       this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.uid || IdMe }))
     }
-
-    this.form.total_fee = +this.options.amount || 0
-    this.step = 1
   }
 
   get categoriesKeywords() {
@@ -159,6 +181,11 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   get dateDisplay() {
     return dateToRelative(this.form.timestamp, this.$t.bind(this))
+  }
+
+  cleanUp() {
+    this.$refs.splitting_creditors.$refs.splitting.cleanUp()
+    this.$refs.splitting_debtors.$refs.splitting.cleanUp()
   }
 
   setCreditor(uid: string) {
@@ -198,6 +225,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   }
 
   submit() {
+    this.cleanUp()
     const trans = Object.assign({},
       this.form, {
         category: this.form.category || this.categorySense,
@@ -215,18 +243,24 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 </script>
 
 <style lang='stylus'>
+bottom-bar-height = 69px
+
 .v-dialog--fullscreen
   .new-transaction
     height 100%
 
     .page
-      height 100%
+      height "calc(100vh - %s)" % bottom-bar-height
 
 .new-transaction
   overflow-x hidden
 
   .page
     min-height 400px
+    height 100%
+
+    & > .height-100
+      min-height 400px
 
   .page-container
     padding 1.5em 2em 0.5em 2em
@@ -238,7 +272,8 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
       font-size 1.3em
 
     .member-choices
-      padding 1.5em 0
+      text-align center
+      padding 2em 0
 
       .user-avatar
         padding 0.7em

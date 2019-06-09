@@ -2,103 +2,147 @@
 .splitting
 
   template(v-if='on === "debtors"')
-    v-tabs.mx-2(v-model='tab', v-if='showTabs', slider-color='transparent' grow)
-      v-tab(:class='tab == 0 ? "primary--text" : ""')
-        v-icon(style='color:inherit;transition:none;').mr-1 mdi-account-multiple
-        v-expand-x-transition
-          span(v-show='tab === 0') {{$t('ui.splitting.average')}}
+    i18n(path='ui.splitting.total').total-fee
+      app-money-label.mx-1.primary--text(
+        :amount='trans.total_fee'
+        :currency='trans.currency'
+      )
 
-      v-tab(:class='tab == 1 ? "primary--text" : ""')
-        v-icon(style='color:inherit;transition:none;').mr-1 mdi-currency-usd
-        v-expand-x-transition
-          span(v-show='tab === 1') {{$t('ui.splitting.amount')}}
-
-      v-tab(:class='tab == 2 ? "primary--text" : ""')
-        v-icon(style='color:inherit;transition:none;').mr-1 mdi-percent
-        v-expand-x-transition
-          span(v-show='tab === 2') {{$t('ui.splitting.percent')}}
-
-      v-tab(:class='tab == 3 ? "primary--text" : ""')
-        v-icon(style='color:inherit;transition:none;').mr-1 mdi-scale-balance
-        v-expand-x-transition
-          span(v-show='tab === 3') {{$t('ui.splitting.weight')}}
-
-    v-divider.mb-3
-
-  .participators(v-if='mode==="amount"')
-    .participator(
-      v-for='pa in participators'
-      v-columns='"auto auto max-content"'
-      :class='getParticipatorClass(pa)'
-      @click='focusInput(pa)'
+    v-tabs.mode-switcher(
+      v-model='tab' v-if='showTabs'
+      slider-color='transparent' grow
     )
-      .user-info-section
-        app-user-avatar(size='38' :id='pa.uid')
-        span.user-name-text.mx-2
-          i18n(:path='userTextI18nPath')
-            b
-              app-user-info(:id='pa.uid')
+      v-tab(v-for='(mode, idx) in modes' :key='mode.mode' :class='tab==idx ? "primary--text" : ""' :ripple='false')
+        v-icon(style='color:inherit;transition:none;').mr-1 {{mode.icon}}
         v-expand-x-transition
-          v-btn.op-25.ma-0(
-            v-show='removable && focused===pa.uid'
-            @click='removeParticipator(pa.uid)'
-            flat icon small)
-            v-icon(size='20') mdi-close
+          span(v-show='tab==idx') {{mode.text}}
 
-        //span ({{pa.weight}})
+  //* ========== Average ========== *//
+  .mode-average(v-show='mode==="average"')
 
-      template(v-if='participators.length > 1')
-        app-number-input.ma-0.pa-0(
-          :ref='`fee_input_${pa.uid}`'
-          :value='getFee(pa)'
-          placeholder='0'
-          @user-input='v=>setFee(pa,v)'
-          hide-details reverse flat hide-label
-          style='padding-top: 5px !important;'
+    .tip {{$t('ui.splitting.mode_average_tip')}}
+
+    app-member-toggles(
+      :uids='participators.map(p=>p.uid)',
+      :selected='participators.filter(p=>p.weight).map(p=>p.uid)',
+      @select='uid=>toggleWeight(participators.find(p=>p.uid === uid))'
+    )
+
+    i18n(path='ui.splitting.mode_average_details').tips
+      b.primary--text {{realParticipators.length}}
+
+    app-money-label.mx-1.primary--text.average-amount(
+      :amount='trans.total_fee / realParticipators.length'
+      :currency='trans.currency'
+    )
+
+  //* ========== Amount ========== *//
+  .mode-amount(v-show='mode==="amount"')
+    .participators
+      .participator(
+        v-for='pa in participators'
+        v-columns='"auto auto max-content"'
+        :class='getParticipatorClass(pa)'
+        @click='focusInput(pa)'
+      )
+        .user-info-section
+          app-user-avatar(size='38' :id='pa.uid')
+          span.user-name-text.mx-2
+            i18n(:path='userTextI18nPath')
+              b
+                app-user-info(:id='pa.uid')
+          v-expand-x-transition
+            v-btn.op-25.ma-0(
+              v-show='removable && focused===pa.uid'
+              @click='removeParticipator(pa.uid)'
+              flat icon small)
+              v-icon(size='20') mdi-close
+
+        template(v-if='participators.length > 1')
+          app-number-input.ma-0.pa-0(
+            :ref='`fee_input_${pa.uid}`'
+            :value='getFee(pa)'
+            placeholder='0'
+            @user-input='v=>setFee(pa,v)'
+            hide-details reverse flat hide-label
+            style='padding-top: 5px !important;'
+          )
+          .currency {{currency}}
+
+      .participator.add.px-1(v-if='candidates.length')
+        app-member-select(:members='candidates', @input='id=>addParticipator(id)')
+          v-btn(icon small).op-50
+            v-icon(size='24') mdi-plus
+          span {{$t('ui.newtrans.add_payer')}}
+
+  //* ========== Percent ========== *//
+  .mode-percent(v-show='mode==="percent"')
+    .px-4.pb-2(v-columns='"auto 1fr max-content"')
+      template(v-for='pa in participators')
+        .user-info-section.text-xs-center.pt-2
+          app-user-avatar(size='38' :id='pa.uid' :show-name='true')
+
+        v-slider.mt-0.px-3(
+          v-model='pa.percent'
+          @change='value => updatePercent(pa, value)'
+          always-dirty
+          :color='(pa.locked || pa.percent === 0) ? "primary" : "grey"'
+          :min='0'
+          :max='100'
+          thumb-label hide-details
         )
-        .currency {{currency}}
 
-    .participator.add.px-1(v-if='candidates.length')
-      app-member-select(:members='candidates', @input='id=>addParticipator(id)')
-        v-btn(icon small).op-50
-          v-icon(size='24') mdi-plus
-        span {{$t('ui.newtrans.add_payer')}}
+        .text-xs-right(v-rows='"1fr min-content min-content 1fr"')
+          div
+          div
+            b(style='font-size:1.1em') {{pa.percent}}%
+            app-money-label.op-50(
+              :amount='trans.total_fee * pa.percent / 100'
+              :currency='trans.currency'
+              style='font-size:0.9em;margin-top: -5px;display: block;')
+          div
+
+  //* ========== Weight ========== *//
+  .mode-weights(v-if='mode==="weight"')
+    p.mx-4.pax-my-3 {{$t('ui.wip')}}
 
 </template>
 
 <script lang='ts'>
 import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
-import { TransactionBalanceChanges, GCD } from '~/core'
+import { TransactionBalanceChanges, TransactionWeightsHelper, Splitmode } from '~/core'
 import { Transaction, Member, Weight } from '~/types'
 import NumberInput from '../basic/NumberInput.vue'
 
-type Splitmode = 'average' | 'amount' | 'percent' | 'weight'
-
 @Component
 export default class Splitting extends Vue {
-  tab = 0
-
   @Prop(Object) readonly trans!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
   @Prop({ default: true }) readonly showTabs!: boolean
   @Prop({ default: () => [] }) readonly members!: Member[]
+  @Prop({ default: 'average' }) readonly mode!: Splitmode
 
   focused: string|null = null
 
-  get mode(): Splitmode {
-    if (this.on === 'creditors')
-      return 'amount'
+  get modes() {
+    return [
+      { mode: 'average', icon: 'mdi-account-multiple', text: this.$t('ui.splitting.average') },
+      { mode: 'amount', icon: 'mdi-currency-usd', text: this.$t('ui.splitting.amount') },
+      { mode: 'percent', icon: 'mdi-percent', text: this.$t('ui.splitting.percent') },
+      { mode: 'weight', icon: 'mdi-scale-balance', text: this.$t('ui.splitting.weight') },
+    ]
+  }
 
-    switch (this.tab) {
-      case 0:
-        return 'average'
-      case 1:
-        return 'amount'
-      case 2:
-        return 'percent'
-      default:
-        return 'weight'
+  get tab() {
+    for (let i = 0; i < this.modes.length; i++) {
+      if (this.modes[i].mode === this.mode)
+        return i
     }
+    return 0
+  }
+
+  set tab(value) {
+    this.$emit('update:mode', this.modes[+value].mode)
   }
 
   get currency() {
@@ -106,7 +150,7 @@ export default class Splitting extends Vue {
   }
 
   get removable() {
-    return this.on === 'creditors'
+    return this.participators.length > 1 && this.on === 'creditors'
   }
 
   get balanceChanges() {
@@ -121,6 +165,10 @@ export default class Splitting extends Vue {
     this.trans[this.on] = value
   }
 
+  get realParticipators() {
+    return this.trans[this.on].filter(p => p.weight)
+  }
+
   get participatorIds() {
     return this.participators.map(c => c.uid)
   }
@@ -129,22 +177,20 @@ export default class Splitting extends Vue {
     return this.members.filter(m => m.uid != null && !this.participatorIds.includes(m.uid))
   }
 
+  get helper() {
+    return new TransactionWeightsHelper(this.trans, this.on)
+  }
+
   get flexibleWeights() {
-    return this.participators
-      .filter(c => c.fee == null)
-      .map(i => i.weight || 0)
-      .reduce((a, b) => a + b, 0)
+    return this.helper.flexibleWeights
   }
 
   get fixedFees() {
-    return this.participators
-      .filter(c => c.fee != null)
-      .map(i => i.fee || 0)
-      .reduce((a, b) => a + b, 0)
+    return this.helper.fixedFees
   }
 
   get flexibleFees() {
-    return this.trans.total_fee - this.fixedFees
+    return this.helper.flexibleFees
   }
 
   get userTextI18nPath() {
@@ -153,32 +199,27 @@ export default class Splitting extends Vue {
     return 'utils.bypass_1'
   }
 
+  @Watch('trans')
+  onTransitionChanged() {
+    this.initMode()
+  }
+
   @Watch('mode')
   onModeChanged() {
     this.$emit('mode-changed', this.mode)
     // close keyboard
     this.focused = null
     this.$emit('keyboard', null)
+    this.initMode()
   }
 
-  getRecord(uid: string) {
-    return this.trans[this.on]
-      .find(d => d.uid === uid)
-  }
-
-  getBalance(uid) {
-    return this.balanceChanges
-      .find(d => d.uid === uid)
-  }
-
-  getAmount(uid: string) {
-    const balance = this.getBalance(uid)
-    if (!balance)
-      return 0
-    if (this.on === 'debtors')
-      return -balance.debt
-    if (this.on === 'creditors')
-      return balance.credit
+  initMode() {
+    if (this.mode === 'percent') {
+      const total = this.participators.map(p => p.weight || 0).reduce((a, b) => a + b, 0)
+      this.participators.forEach((p) => {
+        this.$set(p, 'percent', Math.round((p.weight || 0) / total * 100 || 0))
+      })
+    }
   }
 
   setParticipator(uid: string, weight = 1) {
@@ -194,11 +235,7 @@ export default class Splitting extends Vue {
   }
 
   getFee(participator: Weight) {
-    if (participator.fee != null)
-      return participator.fee
-    if (!this.flexibleWeights)
-      return 0
-    return ((participator.weight || 0) / (this.flexibleWeights || 1)) * (this.flexibleFees)
+    return this.helper.getFee(participator)
   }
 
   setFee(participator: Weight, fee: number) {
@@ -212,12 +249,52 @@ export default class Splitting extends Vue {
     participator.weight = weight
   }
 
+  toggleWeight(participator: Weight) {
+    if (participator.weight) {
+      // should at leasest be one people left
+      if (this.realParticipators.length > 1)
+        participator.weight = 0
+    }
+    else {
+      participator.weight = 1
+    }
+  }
+
+  updatePercent(participator: Weight, value: number) {
+    value = Math.min(value, 100)
+    this.$set(participator, 'locked', true)
+    let unlocked = this.participators.filter(p => !p.locked)
+    if (unlocked.length === 0) {
+      unlocked = this.participators.filter(p => p !== participator)
+      unlocked.forEach(w => this.$set(w, 'locked', false))
+    }
+    const lockedTotal = this.participators
+      .filter(p => p !== participator && p.locked)
+      .map(p => p.percent || 0)
+      .reduce((a, b) => a + b, 0)
+    const fromTotal = unlocked
+      .map(p => p.percent || 0)
+      .reduce((a, b) => a + b, 0)
+    const toTotal = 100 - lockedTotal - value
+    if (toTotal < 0) {
+      this.participators
+        .filter(p => p !== participator)
+        .forEach(w => this.$set(w, 'locked', false))
+      return this.updatePercent(participator, value)
+    }
+    const scale = toTotal / fromTotal
+    unlocked.forEach((p) => {
+      p.percent = (p.percent || 0) * scale
+      if (isNaN(p.percent))
+        p.percent = toTotal / unlocked.length
+    })
+  }
+
   getParticipatorClass(participator: Weight) {
     if (this.participators.length <= 1)
-      return ['elevation-0']
+      return
     if (this.focused === participator.uid)
-      return ['raised', 'elevation-4']
-    return ['elevation-0']
+      return 'raised'
   }
 
   focusInput(participator: Weight) {
@@ -239,43 +316,84 @@ export default class Splitting extends Vue {
   }
 
   public gcd() {
-    const participators = this.participators.map(c => ({
-      uid: c.uid,
-      fee: this.getFee(c),
-    }))
-    const gcd = GCD(participators.map(c => c.fee))
-    this.participators.forEach((c) => {
-      const participator = participators.find(d => d.uid === c.uid)
-      if (participator && participator.fee != null)
-        c.weight = participator.fee / gcd
-    })
+    this.helper.gcd()
+  }
+
+  public cleanUp() {
+    this.helper.cleanUp(this.mode)
   }
 }
 </script>
 
 <style lang='stylus'>
-.v-tabs__item
-  white-space nowrap
-
 .splitting
-  .participators
-    padding 0 1em
+  overflow-y auto
 
-    .participator
-      padding 0.5em 1em
-      margin 0.2em 0
-      transition all .3s ease-in-out
+  .total-fee
+    font-size 1.1em
+    padding 1em 2em
+
+  .mode-switcher
+    margin 0.8em 1.8em
+
+    .v-tabs__item
+      white-space nowrap
+
+    .v-tabs__item--active
+      position relative !important
+      span
+        color var(--theme-primary)
+
+    .v-tabs__item--active:before
+      content ""
+      background var(--theme-primary)
+      opacity 0.13
       border-radius 5px
+      position absolute
+      top 5px
+      bottom 5px
+      left 5px
+      right 5px
 
-      & > *,
-      .user-info-section > *
-        vertical-align middle
+  .mode-amount, .mode-percent
+    .participators
+      padding 0 1em
 
-      .user-info-section
-        white-space nowrap
+      .participator
+        padding 0.5em 0.7em
+        margin 0.2em 0
+        transition all .3s ease-in-out
+        border-radius 8px
+        border 2px solid transparent
 
-      &.add
-        cursor pointer
+        &.raised
+          border-color var(--theme-primary)
+
+        & > *,
+        .user-info-section > *
+          vertical-align middle
+
+        .user-info-section
+          white-space nowrap
+
+        &.add
+          cursor pointer
+
+    .v-slider, .v-slider input
+      max-height inherit
+      height 65px
+
+  .mode-average
+    text-align center
+    padding 2em 1.5em
+
+    .tip
+      font-size 1.1em
+
+    .average-amount
+      display block
+      margin 0.5em
+      font-size 1.4em
 
   .currency
     opacity 0.4

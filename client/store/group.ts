@@ -42,7 +42,7 @@ export const getters: GetterTree<GroupState, RootState> = {
     const current = getters.current
     if (!current || !current.online)
       return undefined
-    return `${origin()}/#/join?id=${current.id}`
+    return `${origin()}/join?id=${current.id}`
   },
 
   currentId(state) {
@@ -146,6 +146,10 @@ export const actions: ActionTree<GroupState, RootState> = {
   newTranscation(context, { id, trans }) {
     trans = TransactionDefault(trans)
     NewOperation(context, id, 'insert_transaction', trans)
+  },
+
+  removeTranscation(context, { id, transid }) {
+    NewOperation(context, id, 'remove_transaction', transid)
   },
 
   // editTranscation(context, { id, transid, changes }) {

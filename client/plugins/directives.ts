@@ -23,9 +23,9 @@ Vue.directive('longpress', {
       }
     }
 
-    ['mousedown', 'touchstart'].forEach(e => el.addEventListener(e, start));
+    ['mousedown', 'touchstart'].forEach(e => el.addEventListener(e, start, { passive: true }));
 
-    ['click', 'mouseout', 'touchend', 'touchcancel'].forEach(e => el.addEventListener(e, cancel))
+    ['click', 'mouseout', 'touchend', 'touchcancel'].forEach(e => el.addEventListener(e, cancel, { passive: true }))
   },
 })
 

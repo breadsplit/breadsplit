@@ -22,15 +22,20 @@ const config: NuxtConfiguration = {
       { name: 'HandheldFriendly', content: 'true' },
 
       { property: 'og:title', content: fullname },
-      { property: 'og:image', content: '/img/png/favicon-194x194.png' },
+      { property: 'og:image', content: '/img/logo/favicon.png' },
       { property: 'og:description', content: pkg.description },
     ],
     link: [
-      { rel: 'apple-touch-icon', sizes: '180x180', href: '/img/png/apple-touch-icon.png', media: '(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)' },
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/img/png/favicon-32x32.png' },
-      { rel: 'icon', type: 'image/png', sizes: '194x194', href: '/img/png/favicon-194x194.png' },
-      { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/android-chrome-192x192.png' },
-      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/img/png/favicon-16x16.png' },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/img/logo/touch-icon.png',
+        media: '(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)',
+      },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/img/logo/favicon32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '194x194', href: '/img/logo/favicon.png' },
+      { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/img/logo/appicon192.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/img/logo/favicon16.png' },
       {
         async: true,
         rel: 'stylesheet',
@@ -54,12 +59,12 @@ const config: NuxtConfiguration = {
     background_color: theme.background,
     prefer_related_applications: false,
     icons: [{
-      src: '/img/png/android-chrome-192x192.png',
+      src: '/img/logo/appicon192.png',
       sizes: '192x192',
       type: 'image/png',
     },
     {
-      src: '/img/png/android-chrome-512x512.png',
+      src: '/img/logo/appicon512.png',
       sizes: '512x512',
       type: 'image/png',
     }],
@@ -71,7 +76,6 @@ const config: NuxtConfiguration = {
     BUILD_TARGET: process.env.BUILD_TARGET || '',
     RELEASE_CHANNEL,
     BUILD_TIME: new Date().toISOString(),
-    BUILD_MACHINE: process.env.BUILD_MACHINE || process.env.OSTYPE || '',
     APP_VERSION: pkg.version,
   },
 
@@ -85,7 +89,7 @@ const config: NuxtConfiguration = {
     /* The order of plugins is important */
 
     /* Request handling */
-    // '~/plugins/ua', // detect webview
+    // '~/plugins/ua', // FIXME:detect webview
 
     /* Data */
     '~/plugins/localstorage', // load store from localstorage
@@ -101,7 +105,7 @@ const config: NuxtConfiguration = {
 
   router: {
     middleware: [
-      'ua',
+      'ua', // FIXME: remove this, use plugins instead
       'group',
     ],
   },
@@ -118,20 +122,19 @@ const config: NuxtConfiguration = {
     extractCSS: !dev,
     publicPath: '/nuxt/',
     extend(config, ctx) {
-      if (ctx.isDev) {
-        if (ctx.isClient) {
-          // @ts-ignore
-          config.module.rules.push({
-            enforce: 'pre',
-            test: /\.(js|vue|ts)$/,
-            loader: 'eslint-loader',
-            exclude: /(node_modules)/,
-          })
-          config.devtool = 'eval-source-map'
-        }
-        else {
-          config.devtool = 'inline-source-map'
-        }
+      if (config.module) {
+        config.module.rules.push({
+          test: /\.ya?ml$/,
+          use: 'js-yaml-loader',
+        })
+      }
+      if (ctx.isDev && ctx.isClient && config.module) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue|ts)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/,
+        })
       }
     },
     babel: {
@@ -145,6 +148,7 @@ const config: NuxtConfiguration = {
       ],
     },
   },
+
   render: {
     bundleRenderer: {
       shouldPreload: (file, type) => {
@@ -154,6 +158,8 @@ const config: NuxtConfiguration = {
   },
 
   modules: [
+    '~/modules/messaging',
+    '~/modules/assets',
     '@nuxtjs/pwa',
     '@nuxtjs/google-gtag',
     '@nuxtjs/sentry',

@@ -1,80 +1,108 @@
 <template lang='pug'>
-v-card.new-group
-  app-dialog-bar(@close='close()' :color='color')
-    | {{title}}
+v-card.new-group(v-rows='" max-content auto max-content"')
+  app-dialog-bar(@close='close()' :color='color') {{title}}
 
-  v-window.height-100(v-model='step', touchless)
+  v-window.height-100.grid-fill-height(v-model='step', touchless, style='min-height:300px')
     // First page
     v-window-item(:value='1')
       v-container.pa-4
         v-layout(column)
           v-flex
-            v-text-field(
+            v-text-field.group-name-input(
               v-model='form.name' :label='$t("ui.group_editing.group_name")'
               prepend-icon='mdi-group-open-variant' clearable :disabled='viewmode'
               autofocus
             )
               template(slot='prepend')
-                app-icon-select(:icon.sync='icon' :color.sync='color', style='margin-top:-20px')
+                app-icon-select(:icon.sync='form.icon' :color.sync='form.color', style='margin-top:-20px')
 
           v-flex
-            v-autocomplete(
-              v-model='form.currencies[0]' :items='currency_list'
-              prepend-icon='mdi-currency-usd' label='Currency' :disabled='viewmode'
-            )
+            app-currency-select(v-model='form.currencies[0]')
+
+          v-flex.my-3
+            v-switch(v-model='online')
+              template(slot='label')
+                span(v-if='online') {{$t('ui.online_mode')}}
+                span(v-else) {{$t('ui.offline_mode')}}
+                app-help-link(help='online_mode')
 
     // Second page
     v-window-item(:value='2')
-      v-container.pa-4
-        v-layout(column)
-          v-flex
-            v-combobox(
-              v-model='members', :items='members_suggestions'
-              :search-input.sync='search', hide-selected
-              label='Members', multiple, persistent-hint
-              small-chips, deletable-chips, prepend-icon='mdi-account-multiple' clearable :disabled='viewmode' autofocus
-            )
-              template(v-slot:no-data='')
-                v-list-tile
+      .height-100(v-rows='"max-content auto"')
+        v-combobox.member-name-input.mx-3(
+          ref='member_name_input'
+          :items='members_suggestions'
+          @input='name=>addMember(name)'
+          :search-input.sync='search'
+          :disabled='viewmode'
+          :placeholder='$t("tips.member_name_input_placeholder")'
+          append-icon=''
+          solo hide-selected hide-details autofocus
+        )
+          template(v-slot:no-data='')
+
+        .scrolling.grid-fill-height
+          div
+            v-list.members-list(style='background: transparent')
+              template(v-for='(member, index) in members')
+                v-divider(v-if='index !== 0')
+                v-list-tile.px-2(:key='member.uid', avatar)
+                  v-list-tile-avatar
+                    app-user-avatar(:member='member' size='38')
                   v-list-tile-content
                     v-list-tile-title
-                      | No results matching&nbsp;
-                      strong {{ search }}
-                      | . Press
-                      kbd enter
-                      | to create a new one  div
+                      app-user-info(:member='member', field='name' :fallback='member.name')
+                    v-list-tile-sub-title(style='margin-top: -5px')
+                      app-user-info(:member='member', field='email')
+                  v-list-tile-action(v-if='member.uid !== me')
+                    v-btn(icon, flat, @click='removeMember(member.uid)')
+                      v-icon.op-75 mdi-close
+
+  div
     v-divider
     v-card-actions.pa-3
-      v-spacer
       template(v-if='step === 1 && !mode')
-        v-btn(@click='close(false)', depressed, color='grey') {{$t('ui.button_cancel')}}
-        v-btn(@click='step++', :color='color', :disabled='checkEmpty')  {{$t('ui.button_next')}}
+        v-btn.button-cancel(@click='close(false)' flat) {{$t('ui.button_cancel')}}
+        v-spacer
+        v-btn.button-next(@click='step++' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')  {{$t('ui.button_next')}}
+
       template(v-if='step === 2 && !mode')
-        v-btn(@click='step--', color='grey') {{$t('ui.button_back')}}
-        v-btn(@click='create()', :color='color', :disabled='checkEmpty') {{$t('ui.button_create')}}
+        v-btn.button-back(@click='step--' flat) {{$t('ui.button_back')}}
+        v-spacer
+        template(v-if='search')
+          v-btn(@click='addMember(search)' :color='color' depressed) {{$t('ui.group_editing.add_member_xx', [search])}}
+
+        template(v-if='!search')
+          v-btn.button-create(@click='create()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')
+            v-icon.mr-1(size='20') mdi-check
+            | {{$t('ui.button_create_group')}}
+
       template(v-if='mode')
-        v-btn(@click='close(false)', depressed, color='grey') {{$t('ui.button_cancel')}}
-        v-btn(@click='edit()', :color='color', :disabled='checkEmpty') {{$t('ui.button_confirm')}}
+        v-btn(@click='close(false)' flat) {{$t('ui.button_cancel')}}
+        v-spacer
+        v-btn(@click='edit()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty') {{$t('ui.button_confirm')}}
 </template>
 
 <script lang='ts'>
 import swatches from '~/../meta/swatches'
-import { getCommonCurrencyCodes, getLocaleCurrencies } from '~/../meta/currencies'
+import { getCommonCurrencyCodes } from '~/../meta/currencies'
 import { Component, Getter, mixins } from 'nuxt-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
 import { Group, UserInfo, GroupMetaChanges } from '~/types'
 import { IdMe, GroupDefault, defaultCurrency } from '~/core'
+import cloneDeep from 'lodash/cloneDeep'
+import { MemberDefault } from '../../../core'
 
 @Component
 export default class NewGroup extends mixins(DialogChildMixin) {
+  readonly me = IdMe
   form: Group = GroupDefault()
   search = ''
   step = 1
   mode = ''
-  icon = 'account-group'
-  color = swatches[Math.floor(Math.random() * swatches.length)]
-  members = []
+  // TODO:AF make it works
+  online = false
 
   @Getter('locale') locale!: string
   @Getter('group/current') current: Group | undefined
@@ -83,27 +111,35 @@ export default class NewGroup extends mixins(DialogChildMixin) {
 
   reset() {
     this.$set(this, 'form', GroupDefault())
+    // editing
     if (this.options.mode) {
-      if (this.current) {
-        this.form.name = this.current.name
-        this.form.currencies[0] = this.current.currencies[0]
-        this.icon = this.current.icon || ''
-        this.color = this.current.color || ''
-        this.mode = this.options.mode
-        // @ts-ignore
-        Object.values(this.current.members).forEach((m) => { this.members.push(m.name) })
-      }
+      if (this.current)
+        this.form = cloneDeep(this.current)
     }
+    // creating
     else {
       this.form.currencies[0] = this.codes[0] || defaultCurrency
+      this.form.members[IdMe] = MemberDefault({
+        uid: IdMe,
+      })
+      this.form.icon = 'account-group'
+      this.form.color = swatches[Math.floor(Math.random() * swatches.length)]
     }
+    this.mode = this.options.mode
+    this.step = 1
   }
 
   get title(): TranslateResult {
-    if (!this.mode) return this.$t('ui.group_editing.new_group')
-    else if (this.mode === 'edit') return this.$t('ui.menu.edit_group')
-    else if (this.mode === 'view') return this.$t('ui.menu.view_group')
-    else return this.$t('ui.group_editing.default_group_name')
+    if (this.step === 2)
+      return `${this.$t('ui.group_editing.add_members')}(${this.members.length})`
+    if (!this.mode)
+      return this.$t('ui.group_editing.new_group')
+    else if (this.mode === 'edit')
+      return this.$t('ui.menu.edit_group')
+    else if (this.mode === 'view')
+      return this.$t('ui.menu.view_group')
+    else
+      return this.$t('ui.group_editing.default_group_name')
   }
 
   get viewmode() {
@@ -114,15 +150,19 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     return getCommonCurrencyCodes(this.locale)
   }
 
-  get currency_list() {
-    return getLocaleCurrencies(this.locale, this.codes)
-      .map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
+  get members() {
+    return Object.values(this.form.members)
+  }
+
+  get color() {
+    return this.form.color
   }
 
   get members_suggestions() {
     // TODO: load suggestions from another group
     return []
   }
+
   get checkEmpty(): boolean {
     const hasEmpty = !(this.form.name && this.form.currencies[0])
     return hasEmpty || this.viewmode
@@ -133,25 +173,38 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   }
 
   create() {
-    const payload = {
-      name: this.form.name,
-      color: this.color,
-      icon: this.icon,
-      members: this.members.map((m) => { return { name: m } }),
-      currencies: this.form.currencies,
-    }
-    this.defaultMember(payload.members)
-    this.$store.dispatch('group/add', payload)
+    this.$store.dispatch('group/add', this.form)
     this.close()
     // Switch to new created group
     const id = this.$store.state.group.currentId
     this.$router.push(`/group/${id}`)
   }
+
+  addMember(name: string) {
+    if (name && !this.members.find(m => m.name === name)) {
+      const member = MemberDefault({
+        name,
+      })
+      // @ts-ignore
+      this.$set(this.form.members, member.uid, member)
+    }
+    setTimeout(() => {
+      this.search = ''
+      // @ts-ignore
+      this.$refs.member_name_input.focus()
+      // @ts-ignore
+      this.$refs.member_name_input.lazyValue = ''
+    }, 1)
+  }
+
+  removeMember(uid: string) {
+    this.$delete(this.form.members, uid)
+  }
+
   edit() {
+    // TODO: calulate changes
     const payload: GroupMetaChanges = {
       name: this.form.name,
-      color: this.color,
-      icon: this.icon,
       currencies: this.form.currencies,
     }
     this.$store.dispatch('group/modify', { changes: payload })

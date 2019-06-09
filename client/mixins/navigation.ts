@@ -1,13 +1,5 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 
-function QuerySerialize(obj) {
-  return Object.keys(obj).reduce((a: string[], k) => {
-    if (obj[k] != null)
-      a.push(`${k}=${encodeURIComponent(obj[k])}`)
-    return a
-  }, []).join('&')
-}
-
 @Component
 export default class NavigationMixin extends Vue {
   get navGroupId() {
@@ -22,12 +14,23 @@ export default class NavigationMixin extends Vue {
     this.$router.push(`/group/${id || this.navGroupId}`)
   }
 
-  gotoNewTransaction(options: Record<string, any> = { type: 'expense', uid: undefined }, groupid?: string) {
-    this.$router.push(`/group/${groupid || this.navGroupId}/new_trans?${QuerySerialize(options)}`)
+  gotoNewTransaction(options: Record<string, any> = { type: 'expense' }) {
+    this.openDialog('newtrans', options)
   }
 
-  gotoTransaction(transId: string, groupid?: string) {
-    this.$router.push(`/group/${groupid || this.navGroupId}/trans/${transId}`)
+  gotoTransaction(transid: string, groupid?: string) {
+    this.openDialog('transaction', { transid, groupid })
+  }
+
+  openDialog(name: string, options?: object) {
+    this.$router.push({
+      query: Object.assign({}, options, { dialog: name }),
+    })
+  }
+
+  closeDialog() {
+    // @ts-ignore
+    this.$router.replace({ query: null })
   }
 
   reload() {

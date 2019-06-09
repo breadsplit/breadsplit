@@ -82,6 +82,11 @@ dist
 
 # Service worker
 sw.*
+client/static/*.sw.js
+
+# Generated assets
+client/static/img/logo
+client/static/img/brands
 
 # Testing vue components
 test.vue

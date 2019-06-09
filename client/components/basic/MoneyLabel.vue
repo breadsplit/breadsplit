@@ -1,6 +1,5 @@
 <template lang='pug'>
-.money-label(:class='balanceColorClass')
-  span.fee.mr-1 {{formatted}}
+span.money-label(:class='balanceColorClass') {{formatted}}
 </template>
 
 <script lang='ts'>
@@ -11,7 +10,7 @@ import { numberToMoney } from '~/core'
 export default class MoneyLabel extends Vue {
   @Prop({ default: 0 }) readonly amount!: number
   @Prop(String) readonly currency?: string
-  @Prop({ default: true }) readonly color!: boolean
+  @Prop(Boolean) readonly color?: boolean
 
   get balanceColorClass() {
     if (!this.color)
@@ -33,8 +32,3 @@ export default class MoneyLabel extends Vue {
   }
 }
 </script>
-
-<style lang='stylus'>
-.money-label
-  font-size 0.95em
-</style>

@@ -68,4 +68,5 @@ export const TransactionDefault = (overrides?: Partial<Transaction>): Transactio
   total_fee: 0,
   service_fee_rate: 0,
   type: 'expenses',
+  timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 }, overrides)

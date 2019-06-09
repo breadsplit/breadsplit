@@ -1,9 +1,12 @@
-import en from './en.json'
-import zhcn from './zh-cn.json'
-import zhtw from './zh-tw.json'
-import fr from './fr.json'
-import ja from './ja.json'
-import de from './de.json'
+/* eslint-disable @typescript-eslint/no-var-requires */
+const en = require('./en.yml')
+const zhcn = require('./zh-cn.yml')
+const zhtw = require('./zh-tw.yml')
+const fr = require('./fr.yml')
+const ja = require('./ja.yml')
+const de = require('./de.yml')
+
+export const EN_MESSAGES = en
 
 export const Messages = {
   en,

@@ -29,7 +29,7 @@ v-app(:dark='dark')
       .drawer-list-bottom.pb-2
         v-divider.mb-2
         // New group item
-        v-list-tile(@click='newGroup()')
+        v-list-tile(@click='openNewGroupDialog()')
           v-list-tile-action
             v-icon mdi-plus
           v-list-tile-content
@@ -56,7 +56,7 @@ v-app(:dark='dark')
               v-icon(color='red', size='20') mdi-cloud-off-outline
 
         // Settings
-        v-list-tile(@click='settingPage()')
+        v-list-tile(@click='openSettings()')
           v-list-tile-action
             v-icon mdi-settings
           v-list-tile-content
@@ -93,29 +93,19 @@ v-app(:dark='dark')
     nuxt
 
   app-global-components
-
-  app-dialog(ref='newgroup' :route='true' persistent no-click-animation)
-    app-new-group
-
-  app-dialog(ref='newtrans' :lazy='false' persistent no-click-animation)
-    app-new-transaction
-
-  app-dialog(ref='settings' :route='true')
-    app-settings
+  app-global-dialogs
 
   app-login(ref='login')
 
-  app-dialog(ref='about' :route='true')
-    app-about-page
-
   app-dialog(ref='welcome', :fullscreen='false')
-    app-welcome-dialog
+    app-welcome
 </template>
 
 <script lang='ts'>
 import { setTimeout } from 'timers'
 import { Component, Getter, Mutation, mixins } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
+import { RELEASE_CHANNEL, DEBUG } from '~/../meta/env'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 import Dialog from '~/components/global/Dialog.vue'
 import head from './head'
@@ -130,7 +120,8 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   fixed = false
   miniVariant = false
   mobileBreakPoint = 700
-  channel: string = process.env.RELEASE_CHANNEL || ''
+  channel: string = RELEASE_CHANNEL
+  debug = DEBUG
 
   @Getter('group/all') groups!: Group[]
   @Getter('group/current') current: Group | undefined
@@ -143,15 +134,11 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   @Mutation('group/remove') removeGroup
 
   $refs!: {
-    settings: Dialog
-    newgroup: Dialog
     welcome: Dialog
   }
 
   // Computed
-  get debug() {
-    return process.env.NODE_ENV !== 'production'
-  }
+
   get title() {
     if (this.current)
       return this.current.name
@@ -171,17 +158,6 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
 
   // Methods
   mounted() {
-    // @ts-ignore
-    this.$root.$newgroup = this.$refs.newgroup
-    // @ts-ignore
-    this.$root.$newtrans = this.$refs.newtrans
-    // @ts-ignore
-    this.$root.$settings = this.$refs.settings
-    // @ts-ignore
-    this.$root.$about = this.$refs.about
-    // @ts-ignore
-    this.$root.$login = this.$refs.login
-
     if (!this.isMobile)
       this.drawer = true
 
@@ -194,19 +170,19 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
 
     switch (key) {
       case 'delete':
-        if (await this.$root.$confirm(`確定要刪除 ${group.name} ?`)) {
-          this.$root.$apploading.open('Deleting group')
+        if (await this.$confirm(`確定要刪除 ${group.name} ?`)) {
+          this.$apploading.open('Deleting group')
           if (this.current && this.current.online)
             await this.$fire.deleteGroup(groupid)
           this.removeGroup()
-          this.$root.$apploading.close()
+          this.$apploading.close()
           this.gotoHome()
         }
         break
 
       case 'transfer_online':
-        if (await this.$root.$confirm('Are you sure?')) {
-          this.$root.$apploading.open('Converting to Online group')
+        if (await this.$confirm('Are you sure?')) {
+          this.$apploading.open('Converting to Online group')
           try {
             await this.$fire.publishGroup(this.$store.state.group.currentId)
           }
@@ -215,7 +191,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
             console.error(e)
             // TODO:ERROR error handling
           }
-          this.$root.$apploading.close()
+          this.$apploading.close()
         }
 
         break
@@ -225,34 +201,34 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
         break
 
       case 'edit':
-        this.$refs.newgroup.open({ mode: 'edit' })
+        this.openDialog('newgroup', { mode: 'edit' })
         break
     }
   }
 
-  async newGroup() {
-    this.closeDrawer()
-    this.$refs.newgroup.open()
+  async openNewGroupDialog() {
+    this.tryCloseDrawer()
+    this.openDialog('newgroup')
   }
 
   async promptLogout() {
-    if (await this.$root.$confirm('Are you sure to logout?')) {
+    if (await this.$confirm('Are you sure to logout?')) {
       await this.$fire.logout()
       this.gotoHome()
     }
   }
 
-  async settingPage() {
-    this.closeDrawer()
-    this.$refs.settings.open()
+  async openSettings() {
+    this.tryCloseDrawer()
+    this.openDialog('settings')
   }
 
   goHome() {
-    this.closeDrawer()
+    this.tryCloseDrawer()
     this.gotoHome()
   }
 
-  closeDrawer() {
+  tryCloseDrawer() {
     if (this.isMobile)
       this.drawer = false
   }
@@ -265,7 +241,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   async copyShareLink() {
     if (this.currentShareLink)
       await this.$copyText(this.currentShareLink)
-    this.$root.$snack(this.$t('ui.share_link_copied', '').toString())
+    this.$snack(this.$t('ui.share_link_copied', '').toString())
   }
 
   isSync(id) {

@@ -50,6 +50,7 @@
     "dayjs",
     "devtool",
     "eval",
+    "favicon",
     "fullname",
     "groupid",
     "instanceof",
@@ -87,7 +88,7 @@
     "text",
     "typescript",
     "typescriptreact",
-    "yml",
+    "yaml",
     "vue",
   ],
 
@@ -97,7 +98,7 @@
   },
 
   // i18n
-  "vue-i18n-ally.sourceLanguage": "zh-TW",
+  "vue-i18n-ally.sourceLanguage": "en",
   "vue-i18n-ally.displayLanguage": "zh-TW",
   "vue-i18n-ally.localesPaths": "locales",
 }

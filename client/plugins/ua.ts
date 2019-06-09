@@ -5,7 +5,7 @@
 import { getWebviewType } from '~/utils/ua'
 import { Context } from '@nuxt/vue-app'
 
-export default ({ route, app }: Context) => {
+export default ({ route, app, redirect }: Context) => {
   const webview = getWebviewType()
   const path = route.fullPath.slice(2) // remove the leading '/#' in the path
   const blocked = path.startsWith('/webview_blocker')
@@ -20,14 +20,13 @@ export default ({ route, app }: Context) => {
 
   const queryString = path.slice(path.indexOf('?') || 0)
   const query = new URLSearchParams(queryString)
-  // @ts-ignore
-  const redirect = app.router.push
+  const _redirect = (app.router && app.router.push) || redirect
 
   // webview detected
   if (webview && !blocked)
-    redirect(`/webview_blocker?from=${path}`)
+    _redirect(`/webview_blocker?from=${path}`)
 
   // blocker resloved, redirect back to original page
   if (!webview && blocked)
-    redirect(query.get('from') || '/')
+    _redirect(query.get('from') || '/')
 }

@@ -33,6 +33,8 @@ export function getActivityDescription(
   switch (key) {
     case 'insert.transaction':
       return $t('acts.insert_transaction', [by, entity_name])
+    case 'remove.transaction':
+      return $t('acts.remove_transaction', [by, entity_name])
     case 'insert.group':
       return $t('acts.insert_group', [by])
     case 'publish.group':
