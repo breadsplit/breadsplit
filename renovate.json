@@ -5,5 +5,6 @@
   "automerge": true,
   "major": {
     "automerge": false
-  }
+  },
+  "automergeType": "branch"
 }
