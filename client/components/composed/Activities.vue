@@ -74,8 +74,6 @@ export default class Activities extends mixins(GroupMixin, UserInfoMixin, Naviga
   onActivityClick(act: Activity) {
     if (act.entity === 'transaction' && act.entity_id)
       this.gotoTransaction(act.entity_id)
-    else
-      this.WIP()
   }
 }
 </script>
