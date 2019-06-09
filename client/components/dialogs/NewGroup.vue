@@ -2,7 +2,7 @@
 v-card.new-group(v-rows='" max-content auto max-content"')
   app-dialog-bar(@close='close()' :color='color') {{title}}
 
-  v-window.height-100(v-model='step', touchless)
+  v-window.height-100.grid-fill-height(v-model='step', touchless, style='min-height:300px')
     // First page
     v-window-item(:value='1')
       v-container.pa-4
@@ -28,9 +28,8 @@ v-card.new-group(v-rows='" max-content auto max-content"')
 
     // Second page
     v-window-item(:value='2')
-      v-container.pa-4
-
-        v-combobox.member-name-input(
+      .height-100(v-rows='"max-content auto"')
+        v-combobox.member-name-input.mx-3(
           ref='member_name_input'
           :items='members_suggestions'
           @input='name=>addMember(name)'
@@ -42,20 +41,22 @@ v-card.new-group(v-rows='" max-content auto max-content"')
         )
           template(v-slot:no-data='')
 
-        v-list(two-line).members-list
-          template(v-for='(member, index) in members')
-            v-divider(v-if='index !== 0')
-            v-list-tile(:key='member.uid', avatar, @click='')
-              v-list-tile-avatar
-                app-user-avatar(:member='member')
-              v-list-tile-content
-                v-list-tile-title
-                  app-user-info(:member='member', field='name' :fallback='member.name')
-                v-list-tile-sub-title
-                  app-user-info(:member='member', field='email')
-              v-list-tile-action(v-if='member.uid !== me')
-                v-btn(icon, flat, @click='removeMember(member.uid)')
-                  v-icon mdi-close
+        .scrolling.grid-fill-height
+          div
+            v-list.members-list(style='background: transparent')
+              template(v-for='(member, index) in members')
+                v-divider(v-if='index !== 0')
+                v-list-tile.px-2(:key='member.uid', avatar)
+                  v-list-tile-avatar
+                    app-user-avatar(:member='member' size='36')
+                  v-list-tile-content
+                    v-list-tile-title
+                      app-user-info(:member='member', field='name' :fallback='member.name')
+                    v-list-tile-sub-title(style='margin-top: -5px')
+                      app-user-info(:member='member', field='email')
+                  v-list-tile-action(v-if='member.uid !== me')
+                    v-btn(icon, flat, @click='removeMember(member.uid)')
+                      v-icon.op-75 mdi-close
 
   div
     v-divider
@@ -129,7 +130,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
 
   get title(): TranslateResult {
     if (this.step === 2)
-      return this.$t('ui.group_editing.add_members')
+      return `${this.$t('ui.group_editing.add_members')}(${this.members.length})`
     if (!this.mode)
       return this.$t('ui.group_editing.new_group')
     else if (this.mode === 'edit')

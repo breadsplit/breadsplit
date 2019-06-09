@@ -39,3 +39,20 @@
   max-height 100%
   overflow-y hidden
 
+// fix from https://stackoverflow.com/questions/43352501/css-grid-content-to-use-free-space-but-scroll-when-bigger
+.grid-fill-height
+  position relative
+
+  & > *
+    position absolute
+    top 0
+    left 0
+    right 0
+    max-height 100%
+
+  &.v-window
+    .v-window__container
+      height 100%
+    .v-window-item
+      height 100%
+
