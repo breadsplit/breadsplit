@@ -139,9 +139,3 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   }
 }
 </script>
-
-<style lang='stylus'>
-.v-dialog--fullscreen
-  height 100vh
-  overflow-y hidden
-</style>
