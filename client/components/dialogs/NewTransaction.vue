@@ -63,11 +63,11 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
         div.ml-2(v-columns='"40px auto"')
           v-icon(color='grey') mdi-map-marker
-          v-subheader {{$t('ui.add_location')}}
+          v-subheader {{$t('ui.newtrans.add_location')}}
 
         div.ml-2(v-columns='"40px auto"')
           v-icon(color='grey') mdi-history
-          v-subheader {{$t('ui.repeat_expense')}}
+          v-subheader {{$t('ui.newtrans.repeat_expense')}}
 
   div
     v-divider

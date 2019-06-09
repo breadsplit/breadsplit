@@ -60,8 +60,6 @@ ui:
     Github: 使用 Github 登入
   misc: 其他
   button_join: 加入
-  invited_to_join: '您被邀請加入 {0} 小組'
-  loading_group_info: 正在加載群組信息...
   about: 關於我們
   become_a_patreon: 在 Patreon 上成為贊助者
   help: 使用幫助
@@ -76,9 +74,6 @@ ui:
   xx_paid_xx: '{0} 支付了 {1}'
   paid_by: 付款人
   paid_by_xx: '由 {0} 付款'
-  add_location: 添加位置
-  repeat_expense: 重複
-  title_join_a_group: 加入群組
   splitting:
     split_by: 分帳方式
     average: 均分制
@@ -106,6 +101,8 @@ ui:
     for_whom: 為了誰？
     more_details: 更多信息
     select_who_paid: 選擇付款人
+    repeat_expense: 重複
+    add_location: 添加位置
   total: 合計
   button_submit: 提交
   optional: （可選）
@@ -121,6 +118,9 @@ ui:
     join_anonymous: 新增成員
     this_is_me: 這是我
     existing_users: 已存在用戶
+    loading_group_info: 正在加載群組信息...
+    title: 加入群組
+    invited_to_join: '您被邀請加入 {0} 小組'
   button_refresh: 重新整理
   button_go_home: 返回App
   settle_up_solution: '{0} 需要還給 {1} {2}'

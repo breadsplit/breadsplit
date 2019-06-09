@@ -6,7 +6,7 @@
 
       template(v-if='loading')
         v-progress-circular(indeterminate, size='80', color='grey lighten-2')
-        p.ma-4 {{$t('ui.loading_group_info')}}
+        p.ma-4 {{$t('ui.join.loading_group_info')}}
 
       template(v-else-if='!group')
         v-icon.ma-2(color='primary', size='100') mdi-emoticon-sad-outline
@@ -21,7 +21,7 @@
 
       div(v-else style='max-width:700px; margin: 0 auto;')
         p.ma-4(v-if='group' style='font-size: 1.4em')
-          i18n(path='ui.invited_to_join')
+          i18n(path='ui.join.invited_to_join')
             b.primary--text {{group.name}}
 
         v-subheader {{$t('ui.join.my_name_is')}}
@@ -68,7 +68,7 @@ import Login from '~/components/dialogs/Login.vue'
   },
   head() {
     return {
-      title: this.$t('ui.title_join_a_group'),
+      title: this.$t('ui.join.title'),
     }
   },
 })

@@ -17,7 +17,6 @@ ui:
   advance: Advance
   reset: Reset
   homepage: Home
-  add_location: Add location
   become_a_patreon: Become a Patreon
   button_back: Back
   button_cancel: Cancel
@@ -41,10 +40,8 @@ ui:
   donate_on_paypal: One-time donation on PayPal
   feedback: Feedback
   help: Help
-  invited_to_join: 'You are invited to join group {0}'
   join_as_me: 'Join as {0}'
   join_group: 'Joining <b>{0}</b>'
-  loading_group_info: Loading group info...
   loading: Loading...
   misc: Misc.
   new_expense: New expense
@@ -52,12 +49,10 @@ ui:
   paid_by_xx: 'Paid by {0}'
   paid_by: Paid by
   privacy_policy: Privacy policy
-  repeat_expense: Repeat
   share_link_copied: Share link copied!
   share_link_to_invite: Share this link to invite friends
   star_on_github: Star on Github
   support_us: Support us
-  title_join_a_group: Join a group
   total: Total
   welcome_breadsplit: Welcome to BreadSplit!
   wip: "\U0001F6A7 Working in progress..."
@@ -117,6 +112,8 @@ ui:
     for_whom: For whom?
     more_details: More details
     select_who_paid: Select the person who paid the bill
+    repeat_expense: Repeat
+    add_location: Add location
   faq: FAQ
   currency: Currency
   offline_mode: Offline mode
@@ -130,6 +127,9 @@ ui:
     my_name_is: 'My name is:'
     this_is_me: This is me
     existing_users: Existing users
+    loading_group_info: Loading group info...
+    title: Join a group
+    invited_to_join: 'You are invited to join group {0}'
   settle_up_solution: '{0} should return {2} to {1}'
 pronoun:
   me: Me

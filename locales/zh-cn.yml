@@ -39,9 +39,9 @@ ui:
     how_much: 输入金额
     add_payer: 添加付款人
     more_details: 更多信息
+    repeat_expense: 重复
+    add_location: 添加位置
   total: 合计
-  add_location: 添加位置
-  repeat_expense: 重复
   button_cancel: 取消
   button_back: 返回
   button_quick_add: 快速添加
