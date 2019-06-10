@@ -70,7 +70,7 @@ v-card.new-group(v-rows='" max-content auto max-content"')
         v-btn.button-back(@click='step--' flat) {{$t('ui.button_back')}}
         v-spacer
         template(v-if='search')
-          v-btn(@click='addMember(search)' :color='color' depressed) {{$t('ui.group_editing.add_member_xx', [search])}}
+          v-btn(@click='addMember(search)' dark :color='color' depressed) {{$t('ui.group_editing.add_member_xx', [search])}}
 
         template(v-if='!search')
           v-btn.button-create(@click='create()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')
@@ -89,7 +89,7 @@ import { getCommonCurrencyCodes } from '~/../meta/currencies'
 import { Component, Getter, mixins } from 'nuxt-property-decorator'
 import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
-import { Group, UserInfo, GroupMetaChanges } from '~/types'
+import { Group, UserInfo } from '~/types'
 import { IdMe, GroupDefault, defaultCurrency } from '~/core'
 import cloneDeep from 'lodash/cloneDeep'
 import { MemberDefault } from '../../../core'
@@ -98,6 +98,7 @@ import { MemberDefault } from '../../../core'
 export default class NewGroup extends mixins(DialogChildMixin) {
   readonly me = IdMe
   form: Group = GroupDefault()
+  formOriginal: Group | null = null
   search = ''
   step = 1
   mode = ''
@@ -110,14 +111,15 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   @Getter('user/uid') uid: string | undefined
 
   reset() {
-    this.$set(this, 'form', GroupDefault())
+    this.formOriginal = null
     // editing
-    if (this.options.mode) {
-      if (this.current)
-        this.form = cloneDeep(this.current)
+    if (this.options.mode && this.current) {
+      this.formOriginal = Object.freeze(cloneDeep(this.current))
+      this.form = cloneDeep(this.current)
     }
     // creating
     else {
+      this.form = GroupDefault()
       this.form.currencies[0] = this.codes[0] || defaultCurrency
       this.form.members[IdMe] = MemberDefault({
         uid: IdMe,
@@ -202,12 +204,17 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   }
 
   edit() {
-    // TODO: calulate changes
-    const payload: GroupMetaChanges = {
-      name: this.form.name,
-      currencies: this.form.currencies,
+    if (!this.formOriginal)
+      return
+    // only following fields can be modified in this form
+    const picking = ['name', 'currencies', 'color', 'icon']
+    const changes: object = {}
+    for (const key of picking) {
+      if (this.form[key] !== this.formOriginal[key])
+        changes[key] = this.form[key]
     }
-    this.$store.dispatch('group/modify', { changes: payload })
+    if (Object.keys(changes).length)
+      this.$store.dispatch('group/modify', { changes })
     this.close()
   }
 }
