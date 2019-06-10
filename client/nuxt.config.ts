@@ -174,6 +174,7 @@ const config: NuxtConfiguration = {
   workbox: {
     offlineAnalytics: true,
     offline: true,
+    offlineStrategy: 'staleWhileRevalidate',
     runtimeCaching: [
       {
         urlPattern: 'https://cdnjs.cloudflare.com/.*',
