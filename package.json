@@ -131,7 +131,7 @@
     "@types/lodash": "4.14.134",
     "@types/nanoid": "2.0.0",
     "@types/webpack-env": "1.13.9",
-    "@typescript-eslint/eslint-plugin": "1.10.1",
+    "@typescript-eslint/eslint-plugin": "1.10.2",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.0.1",
