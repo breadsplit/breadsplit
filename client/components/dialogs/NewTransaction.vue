@@ -2,7 +2,7 @@
 v-card.new-transaction(v-rows='"auto max-content"')
   app-close-button(@close='close')
 
-  v-window.height-100(v-model='step', touchless)
+  v-window.height-100.grid-fill-height(v-model='step', touchless)
     v-window-item.page.page-1(:value='1')
       .page-container.height-100(v-rows='"max-content max-content auto max-content auto"')
         .header {{$t('ui.newtrans.expense_paid_by')}}
@@ -243,14 +243,9 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 </script>
 
 <style lang='stylus'>
-bottom-bar-height = 69px
-
 .v-dialog--fullscreen
   .new-transaction
     height 100%
-
-    .page
-      height "calc(100vh - %s)" % bottom-bar-height
 
 .new-transaction
   overflow-x hidden
