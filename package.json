@@ -170,7 +170,7 @@
     "stylus-loader": "3.0.2",
     "ts-jest": "24.0.2",
     "vue-jest": "3.0.4",
-    "vuepress": "1.0.0"
+    "vuepress": "1.0.1"
   },
   "optionalDependencies": {
     "cypress": "^3.3.1"
