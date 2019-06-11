@@ -4,44 +4,23 @@ v-card.transactions
     v-icon.mr-1 mdi-script-text-outline
     span {{$t('ui.tabs.transactions')}}
 
-  v-list.pa-0(two-line)
-    template(v-for='(trans, index) in displayedTransactions')
-      v-divider(v-if='index!=0')
-      v-list-tile(:key='trans.id', avatar, @click='gotoTransaction(trans.id)')
-        v-list-tile-avatar
-          app-category-icon.mx-2.my-1(:category='trans.category', :text='false', :size='38')
-        v-list-tile-content
-          v-list-tile-title {{trans.desc || $t('noun.expense')}}
-          v-list-tile-sub-title.time-label {{dateFromNow(trans.timestamp)}}
-        v-list-tile-action.pr-1(v-rows='"auto max-content"')
-          app-money-label.text-xs-right(
-            :amount='-trans.total_fee'
-            :currency='trans.currency'
-            color
-          )
-          .creators-debtors
-            app-avatars-horizontal-group(:ids='trans.creditor_ids' size='24' max-length='3')
-            v-icon(size='20') mdi-arrow-right
-            app-avatars-horizontal-group(:ids='trans.debtor_ids' size='24' max-length='3')
+  app-transactions-list(:transactions='displayedTransactions')
+    template(v-slot:append)
+      template(v-if='needShowMore')
+        v-divider
+        .text-xs-center
+          v-btn(flat small fluid color='primary' @click='collapsed=false') Show all
 
-    template(v-if='needShowMore')
-      v-divider
-      .text-xs-center
-        v-btn(flat small fluid color='primary' @click='collapsed=false') Show all
-
-    // TODO: remove false to enable if need
-    template(v-if='needCollapsed && false')
-      v-divider
-      .text-xs-center
-        v-btn(flat small fluid color='primary' @click='collapsed=true') Collapse
-
+      // TODO: remove false to enable if need
+      template(v-if='needCollapsed && false')
+        v-divider
+        .text-xs-center
+          v-btn(flat small fluid color='primary' @click='collapsed=true') Collapse
 </template>
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
 import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
-import { Transaction } from '~/types'
-import { dateFromNow } from '~/core'
 
 @Component
 export default class Transactions extends mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
@@ -51,7 +30,7 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
 
   get transactions() {
     return this.group.transactions
-      .map(t => this.parseTrans(t))
+      .map(i => i)
       .sort((a, b) => b.timestamp - a.timestamp)
   }
 
@@ -72,21 +51,6 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
   get needCollapsed() {
     return !this.collapsed && this.amount > this.max
   }
-
-  dateFromNow=dateFromNow
-
-  parseTrans(trans: Transaction) {
-    const creditor_ids = trans.creditors.filter(c => c.weight).map(c => c.uid)
-    const debtor_ids = trans.debtors.filter(c => c.weight).map(c => c.uid)
-    const creditor_names = creditor_ids.map(id => this.getUserName(id))
-
-    return {
-      ...trans,
-      creditor_ids,
-      debtor_ids,
-      creditor_names,
-    }
-  }
 }
 </script>
 
@@ -95,9 +59,4 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
   .time-label
     font-size 0.8em
     opacity 0.8
-
-.creators-debtors
-  .v-icon
-    opacity 0.4
-    vertical-align middle
 </style>

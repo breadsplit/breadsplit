@@ -12,7 +12,7 @@ v-card.settle-up
     template(v-for='(solution, index) in solutions')
       v-divider(v-if='index!=0')
       v-list-tile.relax-list-item(:key='solution.uid' @click='settleUp(solution)')
-        i18n.py-2.px-0(path='ui.settle_up_solution')
+        i18n(path='ui.settle_up_solution').py-2.px-0
           span.text-no-wrap
             app-user-avatar.pa-1(:id='solution.from' size='24')
             app-user-info.pa-1(:id='solution.from' bold)

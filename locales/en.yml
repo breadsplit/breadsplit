@@ -130,7 +130,7 @@ ui:
     loading_group_info: Loading group info...
     title: Join a group
     invited_to_join: 'You are invited to join group {0}'
-  settle_up_solution: '{0} should return {2} to {1}'
+  settle_up_solution: '{0} should pay {2} back to {1}'
 pronoun:
   me: Me
   i: I

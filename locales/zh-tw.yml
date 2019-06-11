@@ -123,7 +123,7 @@ ui:
     invited_to_join: '您被邀請加入 {0} 小組'
   button_refresh: 重新整理
   button_go_home: 返回App
-  settle_up_solution: '{0} 需要還給 {1} {2}'
+  settle_up_solution: '{0} 需要還 {2} 給 {1}'
 cats:
   transport:
     display: 交通
