@@ -12,7 +12,7 @@ import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import { Transaction } from '~/types'
 
 @Component
-export default class TransactionItem extends Vue {
+export default class TransactionsList extends Vue {
   @Prop(Array) readonly transactions!: Transaction[]
 }
 </script>
