@@ -1,14 +1,11 @@
-import { Dayjs } from 'dayjs'
 import dayjs from './dayjs_config'
 import { Translator, t } from './i18n'
-
-type Time = string | number | Dayjs | Date
 
 export function getTimezone() {
   return Intl.DateTimeFormat().resolvedOptions().timeZone
 }
 
-export function dateFromNow(time: Time) {
+export function dateFromNow(time: dayjs.ConfigType) {
   const d = dayjs(time)
   const now = dayjs()
   if (now.diff(d, 'day') >= 1)
@@ -16,7 +13,21 @@ export function dateFromNow(time: Time) {
   return d.fromNow()
 }
 
-export function dateToRelative(time: Time, $t: Translator = t, locale?: string) {
+export function getWeekOfYear(time: dayjs.ConfigType) {
+  const d = dayjs(time)
+
+  // ISO 8601 states that week 1 is the week
+  // with january 4th in it
+  const jan4 = d.set('month', 1).set('day', 4)
+
+  const start = jan4.startOf('week')
+
+  const now = d.startOf('week')
+
+  return now.diff(start, 'week')
+}
+
+export function dateToRelative(time: dayjs.ConfigType, $t: Translator = t, locale?: string) {
   const d = dayjs(time)
   const days = dayjs().diff(d, 'day')
   if (days === 0)
