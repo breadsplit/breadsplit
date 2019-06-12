@@ -18,5 +18,8 @@ declare module 'vue/types/vue' {
       open: (text: string) => void
       close: () => void
     }
+    readonly $currency: {
+      select: () => Promise<string|null>
+    }
   }
 }

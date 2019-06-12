@@ -1,16 +1,14 @@
 <template lang='pug'>
-span
-  v-select.currency-select(
-    v-bind='$attrs'
-    :value='value'
-    @input='onInput'
-    :class='{flat: mini}'
-    :items='items'
-    :prepend-icon='mini ? "" : "mdi-currency-usd"'
-    :label='mini ? "" : $t("ui.currency")'
-    hide-details
-  )
-  app-currency-select-dialog(ref='dialog')
+v-select.currency-select(
+  v-bind='$attrs'
+  :value='value'
+  @input='onInput'
+  :class='{flat: mini}'
+  :items='items'
+  :prepend-icon='mini ? "" : "mdi-currency-usd"'
+  :label='mini ? "" : $t("ui.currency")'
+  hide-details
+)
 </template>
 
 <script lang='ts'>
@@ -18,7 +16,6 @@ import { Component, Vue, Prop, Getter } from 'nuxt-property-decorator'
 import { getLocaleCurrencies, getCommonCurrencyCodes } from '~/../meta/currencies'
 import uniq from 'lodash/uniq'
 import concat from 'lodash/concat'
-import CurrencySelectDialog from './CurrencySelectDialog.vue'
 
 @Component({
   inheritAttrs: false,
@@ -30,10 +27,6 @@ export default class CurrencySelect extends Vue {
   @Getter('locale') locale!: string
 
   customCodes: string[] = []
-
-  $refs!: {
-    dialog: CurrencySelectDialog
-  }
 
   get codes() {
     // TODO: get recent locales based on group history
@@ -64,7 +57,7 @@ export default class CurrencySelect extends Vue {
       this.$emit('input', v)
     }
     else {
-      const result = await this.$refs.dialog.open()
+      const result = await this.$currency.select()
       if (result) {
         this.customCodes.unshift(result)
         this.$emit('input', result)
