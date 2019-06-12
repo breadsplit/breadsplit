@@ -7,7 +7,8 @@ v-list-tile.transaction-item(avatar, @click='navigate()')
     )
   v-list-tile-content
     v-list-tile-title {{desc}}
-    v-list-tile-sub-title.time-label {{datetime}}
+    v-list-tile-sub-title.sub-label {{datetime}}
+
   v-list-tile-action.pr-1(v-rows='"auto max-content"')
     app-money-label.text-xs-right(
       :amount='-transaction.total_fee'
@@ -54,10 +55,6 @@ export default class TransactionItem extends mixins(UserInfoMixin, NavigationMix
 
 <style lang='stylus'>
 .transaction-item
-  .time-label
-    font-size 0.8em
-    opacity 0.8
-
   .creators-debtors
     .v-icon
       opacity 0.4

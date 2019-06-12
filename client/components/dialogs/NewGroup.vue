@@ -52,7 +52,7 @@ v-card.new-group(v-rows='" max-content auto max-content"')
                   v-list-tile-content
                     v-list-tile-title
                       app-user-info(:member='member', field='name' :fallback='member.name')
-                    v-list-tile-sub-title(style='margin-top: -5px')
+                    v-list-tile-sub-title.sub-label(style='margin-top: -5px')
                       app-user-info(:member='member', field='email')
                   v-list-tile-action(v-if='member.uid !== me')
                     v-btn(icon, flat, @click='removeMember(member.uid)')
