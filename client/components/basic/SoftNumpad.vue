@@ -2,19 +2,19 @@
 v-card.soft-numpad(flat :class='classes')
   .numbers
     .button(v-for='i in 9' v-ripple @click='input(i)') {{i}}
-    .button(v-ripple @click='input(".")') .
+    .button(v-ripple @click='input(".")' :class='dotClass') .
     .button(v-ripple @click='input(0)') 0
     .button(v-ripple @click='backspace()' v-longpress='clear')
       v-icon mdi-backspace
 
   .operators
-    .button(v-ripple @click='input("-")')
+    .button(v-ripple @click='input("-")' :class='operatorClass')
       v-icon mdi-minus
-    .button(v-ripple @click='input("+")')
+    .button(v-ripple @click='input("+")' :class='operatorClass')
       v-icon mdi-plus
-    .button(v-ripple @click='input("*")')
+    .button(v-ripple @click='input("*")' :class='operatorClass')
       v-icon mdi-multiplication
-    .button(v-ripple @click='input("/")')
+    .button(v-ripple @click='input("/")' :class='operatorClass')
       v-icon mdi-division
     .button(v-if='dirty' v-ripple @click='calculate()')
       v-icon mdi-equal
@@ -29,7 +29,10 @@ import { Vue, Component, Prop } from 'nuxt-property-decorator'
 @Component
 export default class SoftNumpad extends Vue {
   @Prop(Boolean) readonly absolute?: boolean
-  @Prop(Boolean) readonly fixed?: ConstrainBoolean
+  @Prop(Boolean) readonly fixed?: boolean
+
+  rounded: boolean = false
+  disableOperators: boolean = false
 
   public dirty = false
 
@@ -37,6 +40,18 @@ export default class SoftNumpad extends Vue {
     return {
       absolute: this.absolute,
       fixed: this.fixed,
+    }
+  }
+
+  get operatorClass() {
+    return {
+      disabled: this.disableOperators,
+    }
+  }
+
+  get dotClass() {
+    return {
+      disabled: this.rounded,
     }
   }
 
@@ -98,6 +113,10 @@ export default class SoftNumpad extends Vue {
   .button
     position relative
     cursor pointer
+
+    &.disabled
+      opacity 0.5
+      pointer-events none
 
     .v-icon
       position absolute

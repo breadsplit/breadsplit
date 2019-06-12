@@ -43,14 +43,13 @@
         v-for='pa in participators'
         v-columns='"auto auto max-content"'
         :class='getParticipatorClass(pa)'
-        @click='focusInput(pa)'
+        @click='focusInput(pa, "amount")'
       )
         .user-info-section
           app-user-avatar(size='38' :id='pa.uid')
           span.user-name-text.mx-2
             i18n(:path='userTextI18nPath')
-              b
-                app-user-info(:id='pa.uid')
+              app-user-info(:id='pa.uid')
           v-expand-x-transition
             v-btn.op-25.ma-0(
               v-show='removable && focused===pa.uid'
@@ -60,7 +59,7 @@
 
         template(v-if='participators.length > 1')
           app-number-input.ma-0.pa-0(
-            :ref='`fee_input_${pa.uid}`'
+            :ref='`amount_input_${pa.uid}`'
             :value='getFee(pa)'
             placeholder='0'
             @user-input='v=>setFee(pa,v)'
@@ -103,8 +102,38 @@
           div
 
   //* ========== Weight ========== *//
-  .mode-weights(v-if='mode==="weight"')
-    p.mx-4.pax-my-3 {{$t('ui.wip')}}
+  .mode-weight(v-if='mode==="weight"')
+    .participators
+      .participator(
+        v-for='pa in participators'
+        v-columns='"max-content max-content auto max-content max-content"'
+        :class='getParticipatorClass(pa)'
+        @click='focusInput(pa, "weight")'
+      )
+        .user-info-section
+          app-user-avatar(size='38' :id='pa.uid')
+          app-user-info.user-name-text.mx-2(:id='pa.uid')
+
+        .mx-1(v-rows='"1fr max-content 1fr"')
+          div
+          app-money-label.op-50(
+            :amount='trans.total_fee * pa.percent / 100'
+            :currency='trans.currency'
+          )
+          div
+
+        div
+
+        app-number-input.ma-0.pa-0(
+          :ref='`weight_input_${pa.uid}`'
+          :value='pa.weight'
+          placeholder='0'
+          @user-input='v => pa.weight = v'
+          hide-details reverse flat hide-label
+          rounded disable-operators
+          style='padding-top: 5px !important;'
+        )
+        .currency / {{totalWeights}}
 
 </template>
 
@@ -197,6 +226,10 @@ export default class Splitting extends Vue {
     if (this.on === 'creditors')
       return 'ui.xx_paid_money'
     return 'utils.bypass_1'
+  }
+
+  get totalWeights() {
+    return this.helper.totalWeights
   }
 
   @Watch('trans')
@@ -297,9 +330,9 @@ export default class Splitting extends Vue {
       return 'raised'
   }
 
-  focusInput(participator: Weight) {
+  focusInput(participator: Weight, mode: string) {
     this.focused = participator.uid
-    const fee_input = this.$refs[`fee_input_${participator.uid}`] as NumberInput[]
+    const fee_input = this.$refs[`${mode}_input_${participator.uid}`] as NumberInput[]
     if (fee_input && fee_input[0])
       this.$emit('keyboard', fee_input[0])
   }
@@ -355,7 +388,7 @@ export default class Splitting extends Vue {
       left 5px
       right 5px
 
-  .mode-amount, .mode-percent
+  .mode-amount, .mode-percent, .mode-weight
     .participators
       padding 0 1em
 
@@ -399,5 +432,5 @@ export default class Splitting extends Vue {
     opacity 0.4
     font-size 0.8em
     padding-left 4px
-    margin-top 15px
+    margin-top 13px
 </style>

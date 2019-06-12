@@ -30,6 +30,9 @@ export default class NumberInput extends mixins(CommonMixin) {
   @Prop(Boolean) readonly bold?: boolean
   @Prop(Boolean) readonly main?: boolean
   @Prop(Boolean) readonly hideLabel?: boolean
+  // keyboard
+  @Prop(Boolean) readonly rounded?: boolean
+  @Prop(Boolean) readonly disableOperators?: boolean
   // if not true, value will be reset on every first input
   @Prop(Boolean) readonly sustained?: boolean
   // set class when actives
@@ -247,6 +250,8 @@ export default class NumberInput extends mixins(CommonMixin) {
     numpad.$on('backspace', this.backspace)
     numpad.$on('clear', this.clear)
     numpad.$on('calculate', this.calculate)
+    numpad.rounded = !!this.rounded
+    numpad.disableOperators = !!this.disableOperators
 
     this.numpad = numpad
     this.dirty = false

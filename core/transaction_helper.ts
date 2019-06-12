@@ -21,6 +21,12 @@ export class TransactionWeightsHelper {
     this.trans[this.on] = value
   }
 
+  get totalWeights() {
+    return this.participators
+      .map(i => i.weight || 0)
+      .reduce((a, b) => a + b, 0)
+  }
+
   get flexibleWeights() {
     return this.participators
       .filter(c => c.fee == null)

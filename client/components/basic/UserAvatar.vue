@@ -6,7 +6,7 @@ app-action-with-text.user-avatar(:class='{inline}')
         img(v-if='avatar_url' :src='avatar_url')
         v-icon(v-else) mdi-account
   span(slot='text', v-if='showName')
-    slot(name='text') {{getUserName(id)}}
+    slot(name='text') {{name}}
 </template>
 
 <script lang='ts'>
@@ -32,6 +32,12 @@ export default class Avatar extends mixins(UserInfoMixin) {
   get avatar_url() {
     if (this._user)
       return this._user.avatar_url
+    return ''
+  }
+
+  get name() {
+    if (this._user)
+      return this._user.name
     return ''
   }
 }
