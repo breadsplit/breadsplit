@@ -35,8 +35,6 @@
         span
         app-currency-select.mt-0.pt-0(v-model='trans.currency' mini)
 
-    .mt-3(v-else)
-
     v-expand-transition
       app-soft-numpad(
         ref='numpad'
