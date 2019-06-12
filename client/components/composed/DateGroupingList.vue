@@ -1,10 +1,13 @@
 <template lang='pug'>
-v-expansion-panel(v-model='value')
-  v-expansion-panel-content(v-for='([date, items], index) in groups')
+v-expansion-panel.date-grouping-list(v-model='value')
+  v-expansion-panel-content(v-for='([date, items], index) in groups' :expand-icon='expandIcon')
     template(v-slot:header)
       b.primary--text {{formatDate(date)}}
+      div
+      .append
+        slot(name='header-append' :date='date' :items='items' :index='index' :active='index === value')
 
-    slot(name='item' :date='date' :items='items' :index='index')
+    slot(name='item' :date='date' :items='items' :index='index' :active='index === value')
 </template>
 
 <script lang='ts'>
@@ -19,6 +22,7 @@ export default class ExpandableList extends Vue {
 
   @Prop(Array) readonly data?: {timestamp: number}[]
   @Prop({ default: 'month' }) readonly groupBy!: 'day' | 'month' | 'year'
+  @Prop(String) readonly expandIcon?: string
 
   get groups() {
     if (!this.data)
@@ -48,10 +52,13 @@ export default class ExpandableList extends Vue {
 </script>
 
 <style lang='stylus'>
-.transactions
-  .time-label
-    font-size 0.8em
-    opacity 0.8
+.date-grouping-list
+  .v-expansion-panel__header
+    display grid
+    grid-template-columns max-content auto max-content max-content
+
+    & > *
+      display inline-block
 
   .v-expansion-panel
     box-shadow none

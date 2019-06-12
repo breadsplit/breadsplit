@@ -10,7 +10,10 @@ v-card.transactions
       .text-xs-center
         v-btn(flat small fluid color='primary' @click='$emit("show-all")') Show all
 
-  app-date-grouping-list(v-else :data='transactions')
+  app-date-grouping-list(v-else :data='transactions' expand-icon='')
+    template(v-slot:header-append='{items, active, date}')
+      app-money-label(v-show='!active' :amount='-getTotalAmount(items)' :currency='currency' color)
+
     template(v-slot:item='{items, index, date}')
       app-transactions-list(:transactions='items' :key='date')
 </template>
@@ -18,6 +21,7 @@ v-card.transactions
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
 import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
+import { Transaction } from '../../types'
 
 @Component
 export default class Transactions extends mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
@@ -43,8 +47,17 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
     return this.transactions
   }
 
+  get currency() {
+    return this.group.currencies[0]
+  }
+
   get needShowMore() {
     return this.collapsed && this.amount > this.limit
+  }
+
+  getTotalAmount(trans: Transaction[]) {
+    // TODO: currency exchange
+    return trans.map(t => t.total_fee).reduce((a, b) => a + b, 0)
   }
 }
 </script>
