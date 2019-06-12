@@ -10,7 +10,7 @@ v-card.transactions
       .text-xs-center
         v-btn(flat small fluid color='primary' @click='$emit("show-all")') Show all
 
-  app-expandable-list(v-else :data='transactions')
+  app-date-grouping-list(v-else :data='transactions')
     template(v-slot:item='{items, index, date}')
       app-transactions-list(:transactions='items' :key='date')
 </template>
