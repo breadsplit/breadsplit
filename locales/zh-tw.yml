@@ -124,6 +124,8 @@ ui:
   button_refresh: 重新整理
   button_go_home: 返回App
   settle_up_solution: '{0} 需要還 {2} 給 {1}'
+  more_currency: 更多...
+  select_currency: 選擇貨幣
 cats:
   transport:
     display: 交通

@@ -131,6 +131,8 @@ ui:
     title: Join a group
     invited_to_join: 'You are invited to join group {0}'
   settle_up_solution: '{0} should pay {2} back to {1}'
+  more_currency: More...
+  select_currency: Select currency
 pronoun:
   me: Me
   i: I
