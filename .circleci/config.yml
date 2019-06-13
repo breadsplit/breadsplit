@@ -103,7 +103,7 @@ jobs:
 
       - run:
           name: Deploy to Firebase
-          command: cd ./firebase && npx firebase deploy --project=development --token=$FIREBASE_DEPLOY_TOKEN
+          command: cd ./firebase && npx firebase deploy --project=default --token=$FIREBASE_DEV_DEPLOY_TOKEN
 
 
 workflows:
