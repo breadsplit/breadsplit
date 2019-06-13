@@ -119,12 +119,15 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     }
     // creating
     else {
-      this.form = GroupDefault()
-      this.form.members[IdMe] = MemberDefault({
-        uid: IdMe,
-      })
-      this.form.icon = 'account-group'
-      this.form.color = swatches[Math.floor(Math.random() * swatches.length)]
+      this.$set(this, 'form', GroupDefault({
+        icon: 'account-group',
+        color: swatches[Math.floor(Math.random() * swatches.length)],
+        members: {
+          [IdMe]: MemberDefault({
+            uid: IdMe,
+          }),
+        },
+      }))
     }
 
     if (!this.form.main_currency)
@@ -132,6 +135,8 @@ export default class NewGroup extends mixins(DialogChildMixin) {
 
     this.mode = this.options.mode
     this.step = 1
+
+    console.log('RESET', this.form)
   }
 
   get title(): TranslateResult {

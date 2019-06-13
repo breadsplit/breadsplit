@@ -66,7 +66,7 @@ export const Transforms: TransformFunctions<Group> = {
     if (changes.icon)
       snap.icon = changes.icon
     if (changes.color)
-      snap.icon = changes.color
+      snap.color = changes.color
     return snap
   },
 
