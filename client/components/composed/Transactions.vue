@@ -33,6 +33,8 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
 
   get transactions() {
     return this.group.transactions
+      .map(i => i)
+      .sort((a, b) => b.timestamp - a.timestamp)
   }
 
   get amount() {
