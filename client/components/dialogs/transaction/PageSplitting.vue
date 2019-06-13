@@ -33,7 +33,7 @@
       )
       div(v-rows='"auto 45px"')
         span
-        app-currency-select.mt-0.pt-0(v-model='form.currency' mini)
+        app-currency-select.mt-0.pt-0(v-model='form.currency' mini :codes='currencies')
 
     v-expand-transition
       app-soft-numpad(
@@ -45,21 +45,21 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { Transaction, Member } from '~/types'
+import { mixins, Component, Prop, Watch } from 'nuxt-property-decorator'
+import { Transaction } from '~/types'
 import { Splitmode } from '~/core'
 import SoftNumpad from '~/components/basic/SoftNumpad.vue'
 import NumberInput from '~/components/basic/NumberInput.vue'
 import Splitting from '~/components/composed/Splitting.vue'
+import { GroupMixin } from '~/mixins'
 
 @Component
-export default class PageSplitting extends Vue {
+export default class PageSplitting extends mixins(GroupMixin) {
   registeredInput: NumberInput | null = null
   mode: Splitmode = 'average'
 
   @Prop(Object) readonly form!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
-  @Prop({ default: () => [] }) readonly members!: Member[]
   @Prop({ default: '' }) readonly title!: string
   @Prop({ default: '' }) readonly subtitle!: string
 

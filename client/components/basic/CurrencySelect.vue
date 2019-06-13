@@ -14,8 +14,6 @@ v-select.currency-select(
 <script lang='ts'>
 import { Component, Vue, Prop, Getter } from 'nuxt-property-decorator'
 import { getLocaleCurrencies, getCommonCurrencyCodes } from '~/../meta/currencies'
-import uniq from 'lodash/uniq'
-import concat from 'lodash/concat'
 
 @Component({
   inheritAttrs: false,
@@ -23,20 +21,15 @@ import concat from 'lodash/concat'
 export default class CurrencySelect extends Vue {
   @Prop(String) readonly value!: string
   @Prop(Boolean) readonly mini?: boolean
+  @Prop({ default: () => [] }) readonly codes!: string[]
+  @Prop({ default: 4 }) readonly limit!: number
 
   @Getter('locale') locale!: string
 
-  customCodes: string[] = []
-
-  get codes() {
-    // TODO: get recent locales based on group history
-    const common = getCommonCurrencyCodes(this.locale)
-    const codes = uniq(concat(this.customCodes, common))
-    return codes.slice(0, 4)
-  }
-
-  get currencies() {
-    return getLocaleCurrencies(this.locale, this.codes)
+  private get currencies() {
+    const set = new Set([this.value, ...this.codes, ...getCommonCurrencyCodes(this.locale)])
+    const codes = Array.from(set).splice(0, this.limit)
+    return getLocaleCurrencies(this.locale, codes)
   }
 
   get items() {
@@ -58,13 +51,10 @@ export default class CurrencySelect extends Vue {
     }
     else {
       const result = await this.$currency.select()
-      if (result) {
-        this.customCodes.unshift(result)
+      if (result)
         this.$emit('input', result)
-      }
-      else {
+      else
         this.$emit('input', this.codes[0])
-      }
     }
   }
 }
