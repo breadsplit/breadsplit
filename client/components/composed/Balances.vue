@@ -18,8 +18,8 @@ v-card.balances
         v-list-tile-action.pr-1
           v-list-tile-title
             app-money-label(
-              :amount='balance.balance[group.currencies[0]]'
-              :currency='group.currencies[0]'
+              :amount='balance.balance[group.main_currency]'
+              :currency='group.main_currency'
               color
             )
 </template>

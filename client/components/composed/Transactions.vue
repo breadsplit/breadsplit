@@ -10,7 +10,7 @@ v-card.transactions
       .text-xs-center
         v-btn(flat small fluid color='primary' @click='$emit("show-all")') Show all
 
-  app-date-grouping-list(v-else :data='transactions' expand-icon='')
+  app-date-grouping-list(v-else :data='group.transactions' expand-icon='')
     template(v-slot:header-append='{items, active, date}')
       app-money-label(v-show='!active' :amount='-getTotalAmount(items)' :currency='currency' color)
 
@@ -33,8 +33,6 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
 
   get transactions() {
     return this.group.transactions
-      .map(i => i)
-      .sort((a, b) => b.timestamp - a.timestamp)
   }
 
   get amount() {
@@ -48,7 +46,7 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
   }
 
   get currency() {
-    return this.group.currencies[0]
+    return this.group.main_currency
   }
 
   get needShowMore() {

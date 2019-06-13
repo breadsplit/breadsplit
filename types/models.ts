@@ -129,7 +129,7 @@ export interface Group {
 
   // Records
   members: Record<UID, Member>
-  currencies: string[]
+  main_currency: string
   currency_records: CurrencyRecord[]
   transactions: Transaction[]
   activities: Activity[]

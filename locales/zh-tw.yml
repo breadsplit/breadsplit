@@ -176,6 +176,7 @@ acts:
   rename_group: '{0} 將群組更名為 {1}'
   insert_member: '{0} 添加了成員: {1}'
   remove_transaction: '{0} 刪除了支出 {1}'
+  change_group_currency: '{0} 將貨幣更改為 {1}'
 help:
   no_password_login:
     tips: 沒有使用賬號密碼的登入方式？

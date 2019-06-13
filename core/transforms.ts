@@ -36,7 +36,7 @@ export const Transforms: TransformFunctions<Group> = {
     if (!changes)
       return snap
     changes = Object.assign({}, changes)
-    if (changes.name) {
+    if (changes.name && snap.name !== changes.name) {
       snap.name = changes.name
       snap.activities.push({
         by,
@@ -51,7 +51,22 @@ export const Transforms: TransformFunctions<Group> = {
       Object.assign(snap.options, changes.options)
       delete changes.options
     }
-    Object.assign(snap, changes)
+    if (changes.main_currency && snap.main_currency !== changes.main_currency) {
+      snap.main_currency = changes.main_currency
+      snap.activities.push({
+        by,
+        timestamp,
+        action: 'update',
+        entity: 'group',
+        update_fields: 'currency',
+        entity_name: changes.main_currency,
+      })
+      // TODO: update transactions
+    }
+    if (changes.icon)
+      snap.icon = changes.icon
+    if (changes.color)
+      snap.icon = changes.color
     return snap
   },
 

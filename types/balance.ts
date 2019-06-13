@@ -4,7 +4,7 @@ export interface GroupMetaChanges {
   name?: string
   icon?: string
   color?: string
-  currencies?: string[]
+  main_currency?: string
   options?: Partial<GroupOptions>
 }
 

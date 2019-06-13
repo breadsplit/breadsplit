@@ -90,7 +90,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
       me = this.uid
     this.form.type = this.options.type || 'expense'
     this.form.creator = me
-    this.form.currency = this.group.currencies[0] || defaultCurrency
+    this.form.currency = this.group.main_currency || defaultCurrency
 
     if (this.options.from) {
       this.form.creditors = this.options.from

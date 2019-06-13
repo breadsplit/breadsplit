@@ -29,6 +29,8 @@ export function getActivityDescription(
   switch (key_field) {
     case 'update.group.name':
       return $t('acts.rename_group', [by, entity_name])
+    case 'update.group.currency':
+      return $t('acts.change_group_currency', [by, entity_name])
   }
   switch (key) {
     case 'insert.transaction':

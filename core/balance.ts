@@ -61,12 +61,20 @@ export function TransactionBalanceChanges(trans: Transaction): TransactionBalanc
   return changes
 }
 
+export function GroupCurrency(group: Group) {
+  const set = new Set([group.main_currency])
+  for (const trans of group.transactions)
+    set.add(trans.currency)
+  return Array.from(set)
+}
+
 export function GroupBalances(group: Group): Balance[] {
-  const main_currency = group.currencies[0] || defaultCurrency
+  const main_currency = group.main_currency || defaultCurrency
+  const currencies = GroupCurrency(group)
   let balances = Object.values(group.members)
     .map((m): Balance => {
       const balance: Record<string, number> = { }
-      group.currencies.forEach((currency) => {
+      currencies.forEach((currency) => {
         balance[currency] = 0
       })
       return {
@@ -112,7 +120,7 @@ export function SettleUp(balances: Balance[], group: Group): Solution[] {
     uid: b.uid,
     balance: b.main_balance,
   }))
-  const currency = group.currencies[0] || defaultCurrency
+  const currency = group.main_currency || defaultCurrency
   const solutions: Solution[] = []
 
   function sort() {

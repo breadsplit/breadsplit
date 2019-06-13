@@ -17,7 +17,7 @@ v-card.new-group(v-rows='" max-content auto max-content"')
                 app-icon-select(:icon.sync='form.icon' :color.sync='form.color', style='margin-top:-20px')
 
           v-flex
-            app-currency-select(v-model='form.currencies[0]')
+            app-currency-select(v-model='form.main_currency')
 
           v-flex.my-3
             v-switch(v-model='online')
@@ -120,13 +120,16 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     // creating
     else {
       this.form = GroupDefault()
-      this.form.currencies[0] = this.codes[0] || defaultCurrency
       this.form.members[IdMe] = MemberDefault({
         uid: IdMe,
       })
       this.form.icon = 'account-group'
       this.form.color = swatches[Math.floor(Math.random() * swatches.length)]
     }
+
+    if (!this.form.main_currency)
+      this.form.main_currency = this.codes[0] || defaultCurrency
+
     this.mode = this.options.mode
     this.step = 1
   }
@@ -166,7 +169,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   }
 
   get checkEmpty(): boolean {
-    const hasEmpty = !(this.form.name && this.form.currencies[0])
+    const hasEmpty = !(this.form.name && this.form.main_currency)
     return hasEmpty || this.viewmode
   }
 
@@ -207,7 +210,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     if (!this.formOriginal)
       return
     // only following fields can be modified in this form
-    const picking = ['name', 'currencies', 'color', 'icon']
+    const picking = ['name', 'main_currency', 'color', 'icon']
     const changes: object = {}
     for (const key of picking) {
       if (this.form[key] !== this.formOriginal[key])
