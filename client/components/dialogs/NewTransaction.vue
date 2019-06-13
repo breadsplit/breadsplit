@@ -126,8 +126,8 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   }
 
   cleanUp() {
-    this.$refs.splitting_creditors.$refs.splitting.cleanUp()
-    this.$refs.splitting_debtors.$refs.splitting.cleanUp()
+    this.$refs.splitting_creditors.$refs.splitting.cleanUp(true)
+    this.$refs.splitting_debtors.$refs.splitting.cleanUp(true)
   }
 
   next() {

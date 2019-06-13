@@ -91,8 +91,7 @@ export default class PageSplitting extends Vue {
   }
 
   openKeyboardForMainInput(e) {
-    this.$refs.splitting.gcd()
-    this.$refs.splitting.clear()
+    this.$refs.splitting.cleanUp(false)
     this.$refs.splitting.focused = null
     this.openKeyboard(e)
   }
@@ -108,8 +107,7 @@ export default class PageSplitting extends Vue {
   }
 
   public finishUp() {
-    this.$refs.splitting.gcd()
-    this.$refs.splitting.clear()
+    this.$refs.splitting.cleanUp(false)
     this.$refs.splitting.focused = null
     this.closeKeyboard()
   }

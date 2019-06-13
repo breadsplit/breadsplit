@@ -53,7 +53,7 @@ export class TransactionWeightsHelper {
     return ((participator.weight || 0) / (this.flexibleWeights || 1)) * (this.flexibleFees)
   }
 
-  gcd() {
+  gcdAmount() {
     if (this.participators.length === 1) {
       this.participators[0].weight = 1
       return
@@ -62,11 +62,22 @@ export class TransactionWeightsHelper {
       uid: c.uid,
       fee: this.getFee(c),
     }))
-    const gcd = GCD(participators.map(c => c.fee))
+    const gcd = GCD(participators.map(c => c.fee).filter(i => i))
     this.participators.forEach((c) => {
       const participator = participators.find(d => d.uid === c.uid)
       if (participator && participator.fee != null)
         c.weight = participator.fee / gcd
+    })
+  }
+
+  gcdWeight() {
+    if (this.participators.length === 1) {
+      this.participators[0].weight = 1
+      return
+    }
+    const gcd = GCD(this.participators.map(c => c.weight || 0).filter(i => i))
+    this.participators.forEach((c) => {
+      c.weight = (c.weight || 0) / gcd
     })
   }
 
@@ -80,10 +91,13 @@ export class TransactionWeightsHelper {
       this.participators.forEach((c) => {
         c.weight = c.percent || c.weight || 0
       })
-      this.gcd()
+      this.gcdWeight()
     }
-    else {
-      this.gcd()
+    else if (mode === 'weight') {
+      this.gcdWeight()
+    }
+    else if (mode === 'amount') {
+      this.gcdAmount()
     }
 
     this.participators.forEach((c) => {

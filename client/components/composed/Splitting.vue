@@ -117,7 +117,7 @@
         .mx-1(v-rows='"1fr max-content 1fr"')
           div
           app-money-label.op-50(
-            :amount='trans.total_fee * pa.percent / 100'
+            :amount='trans.total_fee * pa.weight / totalWeights'
             :currency='trans.currency'
           )
           div
@@ -347,12 +347,8 @@ export default class Splitting extends Vue {
     })
   }
 
-  public gcd() {
-    this.helper.gcd()
-  }
-
-  public cleanUp() {
-    this.helper.cleanUp(this.mode)
+  public cleanUp(removeZero: boolean) {
+    this.helper.cleanUp(this.mode, removeZero)
   }
 }
 </script>
