@@ -106,7 +106,7 @@
     .participators
       .participator(
         v-for='pa in participators'
-        v-columns='"max-content max-content auto max-content max-content"'
+        v-columns='"max-content max-content auto max-content"'
         :class='getParticipatorClass(pa)'
         @click='focusInput(pa, "weight")'
       )
@@ -122,17 +122,16 @@
           )
           div
 
-        div
-
-        app-number-input.ma-0.pa-0(
-          :ref='`weight_input_${pa.uid}`'
-          :value='pa.weight'
-          placeholder='0'
-          @user-input='v => pa.weight = v'
-          hide-details reverse flat hide-label
-          rounded disable-operators
-          style='padding-top: 5px !important;'
-        )
+        .grid-fill-width-right
+          app-number-input.ma-0.pa-0(
+            :ref='`weight_input_${pa.uid}`'
+            :value='pa.weight'
+            placeholder='0'
+            @user-input='v => pa.weight = v'
+            hide-details reverse flat hide-label
+            rounded disable-operators
+            style='padding-top: 5px !important;'
+          )
         .currency / {{totalWeights}}
 
 </template>

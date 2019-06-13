@@ -4,70 +4,32 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
   v-window.grid-fill-height(v-model='step' touchless style='min-height:600px')
     v-window-item.page.page-1(:value='1')
-      .page-container.height-100(v-rows='"max-content max-content auto max-content auto"')
-        .header {{$t('ui.newtrans.expense_paid_by')}}
-        .subheader {{$t('ui.newtrans.xx_should_pay')}}
-
-        div
-
-        .text-xs-center.mt-3
-          span {{$t('ui.newtrans.select_who_paid')}}
-          app-member-toggles(
-            :uids='members.map(m=>m.uid)',
-            :selected='form.creditors.filter(p=>p.weight).map(p=>p.uid)',
-            @select='uid=>setCreditor(uid)',
-            :fade='false'
-          )
-
-        div
+      page-creditors(
+        :form='form'
+        :members='members'
+        @next='next'
+      )
 
     v-window-item.page.page-2(:value='2')
-      app-splitting-page(
+      page-splitting(
         ref='splitting_creditors'
-        :trans='form'
+        :form='form'
         :members='members'
         :title='$t("ui.newtrans.how_much")'
         on='creditors'
       )
 
     v-window-item.page.page-3(:value='3')
-       app-splitting-page(
+       page-splitting(
         ref='splitting_debtors'
-        :trans='form'
+        :form='form'
         :members='members'
         :title='$t("ui.splitting.split_by")'
         on='debtors'
       )
 
     v-window-item.page.page-4(:value='4')
-      .page-container
-        .header {{$t('ui.newtrans.more_details')}}
-
-        v-text-field.px-2.py-3.description-field(
-          v-model='form.desc'
-          label='Description'
-          placeholder='Some expense...'
-          solo required hide-details
-        )
-
-        app-category-select.ml-2(@input='i=> form.category = i' :categories='categories')
-          template(v-slot='{on}' )
-            div(v-on='on' v-columns='"40px auto"' v-ripple)
-              app-category-icon(:category='form.category || categorySense')
-              v-subheader
-                app-category-label(:category='form.category || categorySense')
-
-        div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple)
-          v-icon(color='grey') mdi-calendar
-          v-subheader {{dateDisplay}}
-
-        div.ml-2(v-columns='"40px auto"')
-          v-icon(color='grey') mdi-map-marker
-          v-subheader {{$t('ui.newtrans.add_location')}}
-
-        div.ml-2(v-columns='"40px auto"')
-          v-icon(color='grey') mdi-history
-          v-subheader {{$t('ui.newtrans.repeat_expense')}}
+      page-details(:form='form', @next='next')
 
   div
     v-divider
@@ -89,29 +51,32 @@ v-card.new-transaction(v-rows='"auto max-content"')
       v-btn.button-next(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
         | {{btnNextText}}
 
-    app-date-picker(ref='date_picker')
 </template>
 
 <script lang='ts'>
 import { Component, mixins, Getter, Watch } from 'nuxt-property-decorator'
-import Categories, { CategoryKeys } from '~/../meta/categories'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
-import { TransactionDefault, dateToRelative, IdMe, defaultCurrency } from '~/core'
-import DatePicker from '../basic/DatePicker.vue'
-import SplittingPage from '../composed/SplittingPage.vue'
+import { TransactionDefault, IdMe, defaultCurrency } from '~/core'
+import PageCreditors from './transaction/PageCreditors.vue'
+import PageDetails from './transaction/PageDetails.vue'
+import PageSplitting from './transaction/PageSplitting.vue'
 
-@Component
+@Component({
+  components: {
+    PageCreditors,
+    PageDetails,
+    PageSplitting,
+  },
+})
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
-  categories = Categories
   step = 1
   steps = 4
 
   $refs!: {
-    date_picker: DatePicker
-    splitting_creditors: SplittingPage
-    splitting_debtors: SplittingPage
+    splitting_creditors: PageSplitting
+    splitting_debtors: PageSplitting
   }
 
   @Getter('user/uid') uid: string | undefined
@@ -160,37 +125,9 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     }
   }
 
-  get categoriesKeywords() {
-    const keys: {key: string; value: string}[] = []
-    CategoryKeys.map((c) => {
-      const keywords = this.$t(`cats.${c}.keywords`, '').toString()
-      for (const key of keywords.split(',').map(i => i.trim()).filter(i => i))
-        keys.push({ key, value: c })
-      return keywords
-    })
-    return keys
-  }
-
-  get categorySense() {
-    const category = this.categoriesKeywords
-      .find(({ key, value }) => {
-        return (this.form.desc || '').toLowerCase().includes(key)
-      })
-    return (category && category.value) || null
-  }
-
-  get dateDisplay() {
-    return dateToRelative(this.form.timestamp, this.$t.bind(this))
-  }
-
   cleanUp() {
     this.$refs.splitting_creditors.$refs.splitting.cleanUp()
     this.$refs.splitting_debtors.$refs.splitting.cleanUp()
-  }
-
-  setCreditor(uid: string) {
-    this.form.creditors = [{ weight: 1, uid }]
-    this.next()
   }
 
   next() {
@@ -226,18 +163,9 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   submit() {
     this.cleanUp()
-    const trans = Object.assign({},
-      this.form, {
-        category: this.form.category || this.categorySense,
-      })
+    const trans = this.form
     this.$store.dispatch('group/newTranscation', { id: this.group.id, trans })
     this.close()
-  }
-
-  async pickDate() {
-    const date: number | null = await this.$refs.date_picker.open(this.form.timestamp)
-    if (date)
-      this.form.timestamp = date
   }
 }
 </script>

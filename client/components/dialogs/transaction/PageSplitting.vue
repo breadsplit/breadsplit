@@ -6,7 +6,7 @@
 
   app-splitting(
     ref='splitting'
-    :trans='trans'
+    :trans='form'
     :members='members'
     :on='on'
     :mode.sync='mode'
@@ -24,8 +24,8 @@
         .my-3.ml-2 {{$t('ui.total')}}
       app-number-input(
         ref='total_fee_input'
-        :value='trans.total_fee'
-        @user-input='v=>trans.total_fee=v'
+        :value='form.total_fee'
+        @user-input='v=>form.total_fee=v'
         @focus='openKeyboardForMainInput'
         placeholder='0'
         reverse outline autofocus
@@ -33,7 +33,7 @@
       )
       div(v-rows='"auto 45px"')
         span
-        app-currency-select.mt-0.pt-0(v-model='trans.currency' mini)
+        app-currency-select.mt-0.pt-0(v-model='form.currency' mini)
 
     v-expand-transition
       app-soft-numpad(
@@ -48,16 +48,16 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { Transaction, Member } from '~/types'
 import { Splitmode } from '~/core'
-import SoftNumpad from '../basic/SoftNumpad.vue'
-import NumberInput from '../basic/NumberInput.vue'
-import Splitting from './Splitting.vue'
+import SoftNumpad from '~/components/basic/SoftNumpad.vue'
+import NumberInput from '~/components/basic/NumberInput.vue'
+import Splitting from '~/components/composed/Splitting.vue'
 
 @Component
-export default class SplittingPage extends Vue {
+export default class PageSplitting extends Vue {
   registeredInput: NumberInput | null = null
   mode: Splitmode = 'average'
 
-  @Prop(Object) readonly trans!: Transaction
+  @Prop(Object) readonly form!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
   @Prop({ default: () => [] }) readonly members!: Member[]
   @Prop({ default: '' }) readonly title!: string
@@ -69,8 +69,8 @@ export default class SplittingPage extends Vue {
     total_fee_input: NumberInput
   }
 
-  @Watch('trans', { immediate: true })
-  onTransChanged() {
+  @Watch('form', { immediate: true })
+  onFormChanged() {
     if (this.on === 'creditors') {
       this.mode = 'amount'
       this.$nextTick(() => {
