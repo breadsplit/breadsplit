@@ -4,8 +4,7 @@ v-card.balances
     v-icon.mr-1 mdi-wallet
     span {{$t('ui.tabs.balances')}}
     v-spacer
-    //div(style='width:45px')
-      app-currency-select(mini)
+    app-display-currency-switch
 
   v-list.pa-0
     template(v-for='(balance, index) in balances')

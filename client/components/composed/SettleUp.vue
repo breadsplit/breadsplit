@@ -4,7 +4,8 @@ v-card.settle-up
     v-icon.mr-1 mdi-account-supervisor-circle
     span {{$t('ui.tabs.settle_up')}}
     v-spacer
-    v-icon.op-50(@click='shareSettleUpReport()') mdi-share
+    app-display-currency-switch
+    v-icon.op-50.ml-2(@click='shareSettleUpReport()') mdi-share
 
   // app-chart-settle-up-solutions(:solutions='solutions')
 

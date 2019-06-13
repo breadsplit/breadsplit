@@ -135,8 +135,6 @@ export default class NewGroup extends mixins(DialogChildMixin) {
 
     this.mode = this.options.mode
     this.step = 1
-
-    console.log('RESET', this.form)
   }
 
   get title(): TranslateResult {
