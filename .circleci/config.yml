@@ -74,6 +74,37 @@ jobs:
           name: Deploy to Firebase
           command: cd ./firebase && npx firebase deploy --project=production --token=$FIREBASE_DEPLOY_TOKEN
 
+  firebase_deploy_dev:
+    docker:
+      - image: circleci/node:10
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: Install dependencies
+          command: npm i
+
+      - save_cache:
+          paths:
+            - node_modules
+
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Install functions dependencies
+          command: cd ./firebase/functions && npm ci
+
+      - run:
+          name: Deploy to Firebase
+          command: cd ./firebase && npx firebase deploy --project=development --token=$FIREBASE_DEPLOY_TOKEN
+
 
 workflows:
   version: 2
@@ -106,3 +137,10 @@ workflows:
           filters:
             branches:
               only: app
+
+      - firebase_deploy_dev:
+          requires:
+            - unit_test
+          filters:
+            branches:
+              only: dev
