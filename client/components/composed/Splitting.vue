@@ -96,7 +96,7 @@
           div
             b(style='font-size:1.1em') {{pa.percent}}%
             app-money-label.op-50(
-              :amount='trans.total_fee * pa.percent / 100'
+              :amount='getFee(pa)'
               :currency='trans.currency'
               style='font-size:0.9em;margin-top: -5px;display: block;')
           div
@@ -117,7 +117,7 @@
         .mx-1(v-rows='"1fr max-content 1fr"')
           div
           app-money-label.op-50(
-            :amount='trans.total_fee * pa.weight / totalWeights'
+            :amount='getFee(pa)'
             :currency='trans.currency'
           )
           div
@@ -267,7 +267,7 @@ export default class Splitting extends Vue {
   }
 
   getFee(participator: Weight) {
-    return this.helper.getFee(participator)
+    return this.helper.getFee(participator, this.mode)
   }
 
   setFee(participator: Weight, fee: number) {

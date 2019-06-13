@@ -1,3 +1,4 @@
+import { sumBy } from 'lodash'
 import { Transaction, Weight } from '../types'
 import { GCD } from '.'
 
@@ -45,12 +46,24 @@ export class TransactionWeightsHelper {
     return this.trans.total_fee - this.fixedFees
   }
 
-  getFee(participator: Weight) {
-    if (participator.fee != null)
-      return participator.fee
-    if (!this.flexibleWeights)
-      return 0
-    return ((participator.weight || 0) / (this.flexibleWeights || 1)) * (this.flexibleFees)
+  getFee(participator: Weight, mode: Splitmode) {
+    if (mode === 'amount') {
+      if (participator.fee != null)
+        return participator.fee
+      if (!this.flexibleWeights)
+        return 0
+      return ((participator.weight || 0) / (this.flexibleWeights || 1)) * (this.flexibleFees)
+    }
+    if (mode === 'percent') {
+      const totalPercents = sumBy(this.participators, p => p.percent || 0)
+      return this.trans.total_fee * (participator.percent || 0) / totalPercents
+    }
+    if (mode === 'average') {
+      const total = sumBy(this.participators, p => p.weight ? 1 : 0)
+      return participator.weight ? this.trans.total_fee / total : 0
+    }
+    const totalWeights = sumBy(this.participators, p => p.weight || 0)
+    return this.trans.total_fee * (participator.weight || 0) / totalWeights
   }
 
   gcdAmount() {
@@ -60,7 +73,7 @@ export class TransactionWeightsHelper {
     }
     const participators = this.participators.map(c => ({
       uid: c.uid,
-      fee: this.getFee(c),
+      fee: this.getFee(c, 'amount'),
     }))
     const gcd = GCD(participators.map(c => c.fee).filter(i => i))
     this.participators.forEach((c) => {
