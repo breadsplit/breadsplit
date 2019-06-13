@@ -28,7 +28,7 @@ v-card.settle-up
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
-import { GroupBalances, SettleUp } from '~/core'
+import { GroupBalances, GetSettleUpSolutions } from '~/core'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 import { Solution } from '~/types'
 
@@ -39,7 +39,7 @@ export default class SettleUpSolutions extends mixins(GroupMixin, NavigationMixi
   }
 
   get solutions() {
-    return SettleUp(this.balances, this.group)
+    return GetSettleUpSolutions(this.balances, this.group)
   }
 
   settleUp(solution: Solution) {
