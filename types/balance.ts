@@ -1,3 +1,4 @@
+import Fraction from 'fraction.js'
 import { GroupOptions } from '.'
 
 export interface GroupMetaChanges {
@@ -20,15 +21,15 @@ export interface TransactionBalance {
   uid: string
   credit_weight: number
   debt_weight: number
-  credit: number
-  debt: number
-  balance: number
+  credit: Fraction
+  debt: Fraction
+  balance: Fraction
 }
 
 export interface Balance {
   uid: string
-  balance: Record<string, number>
-  main_balance: number
+  balance: Record<string, Fraction>
+  main_balance: Fraction
   main_currency: string
   removed?: boolean
 }
@@ -36,6 +37,6 @@ export interface Balance {
 export interface Solution {
   from: string
   to: string
-  amount: number
+  amount: Fraction
   currency: string
 }

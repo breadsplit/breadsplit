@@ -98,6 +98,7 @@
     "dayjs": "1.8.14",
     "express": "4.17.1",
     "firebase": "6.1.1",
+    "fraction.js": "^4.0.12",
     "jdenticon": "2.1.1",
     "json-stable-stringify": "1.0.1",
     "lodash": "4.17.11",
