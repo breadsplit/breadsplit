@@ -57,6 +57,14 @@ export interface UserMemberInfo extends Member, UserInfo {
   original_name?: string
 }
 
+export interface TransactionExchangeRecord {
+  from: string
+  to: string
+  rate: string
+  source: 'manual' | 'system'
+  date?: string
+}
+
 export interface Transaction {
   id: string
   desc?: string
@@ -70,6 +78,7 @@ export interface Transaction {
   type: TransactionType
   tags?: string[]
   note?: string
+  exchanges?: TransactionExchangeRecord[]
   location?: string | object
   timestamp: number
   timezone?: string

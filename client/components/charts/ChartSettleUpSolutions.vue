@@ -49,7 +49,7 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
     return this.solutions.map(s => ({
       target: s.to,
       source: s.from,
-      value: s.amount,
+      value: +s.amount,
     }))
   }
 

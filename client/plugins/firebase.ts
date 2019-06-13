@@ -236,12 +236,13 @@ export class FirebasePlugin {
       .set(data)
   }
 
-  async getExchangeRate(date?: dayjs.ConfigType, fallback_days = 5): Promise<ExchangeRecord|undefined> {
-    const d = dayjs(date)
+  async getExchangeRates(date?: dayjs.ConfigType, fallback_days = 5): Promise<ExchangeRecord|undefined> {
+    const d = dayjs(date).subtract(1, 'day')
     date = d.format('YYYY-MM-DD')
     const cache = this.store.state.cache.exchange_rates[date]
     if (cache)
       return cache
+    log(`💱 Requesting exchange rate information on date: ${date}`)
     try {
       const record = await this.functions.httpsCallable('getExchangeRate')({ date })
       if (record.data) {
@@ -252,7 +253,14 @@ export class FirebasePlugin {
     catch {}
     if (fallback_days <= 0)
       return undefined
-    return await this.getExchangeRate(d.subtract(1, 'day'), fallback_days - 1)
+    return await this.getExchangeRates(d.subtract(1, 'day'), fallback_days - 1)
+  }
+
+  async getExchangeRateOn(from: string, to: string, date?: dayjs.ConfigType, fallback_days?: number) {
+    const record = await this.getExchangeRates(date, fallback_days)
+    if (!record)
+      return
+    return record.rates[to.toUpperCase()] / record.rates[from.toUpperCase()]
   }
 
   subscribe() {
