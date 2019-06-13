@@ -116,6 +116,7 @@ export class TransactionWeightsHelper {
     this.participators.forEach((c) => {
       delete c.fee
       delete c.percent
+      delete c.locked
     })
 
     if (removeZero)

@@ -294,31 +294,37 @@ export default class Splitting extends Vue {
 
   updatePercent(participator: Weight, value: number) {
     value = Math.min(value, 100)
+    // lock current one
     this.$set(participator, 'locked', true)
-    let unlocked = this.participators.filter(p => !p.locked)
-    if (unlocked.length === 0) {
-      unlocked = this.participators.filter(p => p !== participator)
-      unlocked.forEach(w => this.$set(w, 'locked', false))
+    let unlocks = this.participators.filter(p => !p.locked)
+    if (unlocks.length === 0) {
+      unlocks = this.participators.filter(p => p !== participator)
+      unlocks.forEach(w => this.$set(w, 'locked', false))
     }
     const lockedTotal = this.participators
       .filter(p => p !== participator && p.locked)
       .map(p => p.percent || 0)
       .reduce((a, b) => a + b, 0)
-    const fromTotal = unlocked
+    const fromTotal = unlocks
       .map(p => p.percent || 0)
       .reduce((a, b) => a + b, 0)
     const toTotal = 100 - lockedTotal - value
+
     if (toTotal < 0) {
+      // overflow the 100 percent, unlock all others
       this.participators
         .filter(p => p !== participator)
         .forEach(w => this.$set(w, 'locked', false))
+      // and recalculate this update
       return this.updatePercent(participator, value)
     }
+
+    // scale all the unlocked percents
     const scale = toTotal / fromTotal
-    unlocked.forEach((p) => {
+    unlocks.forEach((p) => {
       p.percent = (p.percent || 0) * scale
       if (isNaN(p.percent))
-        p.percent = toTotal / unlocked.length
+        p.percent = toTotal / unlocks.length
     })
   }
 
