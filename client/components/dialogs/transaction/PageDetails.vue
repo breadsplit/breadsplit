@@ -1,6 +1,13 @@
 <template lang='pug'>
-.page-container
+.page-container.height-100
   .header {{$t('ui.newtrans.details')}}
+
+  v-card.pa-3.ma-2
+    app-receipt-list(:items='receipt_items' :currency='form.currency')
+      template(v-slot:item='{ item }')
+        div
+          app-user-avatar.py-1.px-2(:id='item.value' size='24')
+          app-user-info(:id='item.value')
 
   v-text-field.px-2.py-3.description-field(
     v-model='form.desc'
@@ -38,7 +45,7 @@ import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import Categories from '~/../meta/categories'
 import { Transaction } from '~/types'
 import DatePicker from '~/components/basic/DatePicker.vue'
-import { dateToRelative } from '~/core'
+import { dateToRelative, TransactionWeightsHelper } from '~/core'
 import ExchangeRateInput from './ExchangeRateInput.vue'
 import { GroupMixin } from '~/mixins'
 
@@ -65,6 +72,14 @@ export default class PageDetails extends mixins(GroupMixin) {
     const date = await this.$refs.date_picker.open(this.form.timestamp)
     if (date)
       this.form.timestamp = date
+  }
+
+  get receipt_items() {
+    const creditors = new TransactionWeightsHelper(this.form, 'creditors')
+    const debtors = new TransactionWeightsHelper(this.form, 'debtors')
+    const positive = creditors.participators.map(p => ({ amount: creditors.getFee(p, 'weight'), value: p.uid }))
+    const negative = debtors.participators.map(p => ({ amount: -debtors.getFee(p, 'weight'), value: p.uid }))
+    return [...positive, null, ...negative]
   }
 }
 </script>
