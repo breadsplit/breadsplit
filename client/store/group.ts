@@ -7,7 +7,7 @@ import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
 import { GroupState, RootState, Group, ServerGroup, Operation, ClientGroup, ExchangeRecord } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe } from '~/core'
 import { GroupStateDefault } from '~/store'
-import { GroupBalances, GetSettleUpSolutions } from '@/core'
+import { GroupBalances, GetSettleUpSolutions, FallbackExchangeRate } from '@/core'
 import { DEBUG } from '~/../meta/env'
 
 // eslint-disable-next-line no-console
@@ -208,7 +208,7 @@ export const actions: ActionTree<GroupState, RootState> = {
   cacheBalances({ state, commit, rootState }, { group, exchange_record }: { group: Group; exchange_record?: ExchangeRecord }) {
     if (!exchange_record) {
       const keys = Object.keys(rootState.cache.exchange_rates).sort()
-      exchange_record = rootState.cache.exchange_rates[keys[keys.length - 1]]
+      exchange_record = rootState.cache.exchange_rates[keys[keys.length - 1]] || FallbackExchangeRate
     }
     log(`🐱‍👤 Caching balances ${group.id} [${exchange_record.date}]`)
     const display_currency = oc(state.configs[group.id]).display_currency(undefined)

@@ -7,7 +7,7 @@ import concat from 'lodash/concat'
 import Fraction from 'fraction.js'
 import { Transaction, Group, TransactionBalance, Balance, Solution, ExchangeRecord } from '../types'
 import { defaultCurrency } from './defaults'
-import { FallbackExchangeRate } from '~/core'
+import { FallbackExchangeRate } from '.'
 
 export function GCD(arr: number[]) {
   // Use spread syntax to get minimum of array

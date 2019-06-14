@@ -30,17 +30,17 @@ describe('transaction balances', () => {
     const member1 = balances[0]
     expect(member1.uid).toEqual('1')
     expect(member1.credit_weight).toEqual(1)
-    expect(member1.credit).toEqual(300)
-    expect(member1.debt).toEqual(100)
-    expect(member1.balance).toEqual(300 - 100)
+    expect(member1.credit.equals(300)).toBeTruthy()
+    expect(member1.debt.equals(100)).toBeTruthy()
+    expect(member1.balance.equals(300 - 100)).toBeTruthy()
   })
 
   test('member 2', () => {
     const member2 = balances[1]
     expect(member2.uid).toEqual('2')
     expect(member2.credit_weight).toEqual(0)
-    expect(member2.credit).toEqual(0)
-    expect(member2.debt).toEqual(200)
-    expect(member2.balance).toEqual(-200)
+    expect(member2.credit.equals(0)).toBeTruthy()
+    expect(member2.debt.equals(200)).toBeTruthy()
+    expect(member2.balance.equals(-200)).toBeTruthy()
   })
 })
