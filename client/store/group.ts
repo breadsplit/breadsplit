@@ -134,6 +134,7 @@ export const actions: ActionTree<GroupState, RootState> = {
       entity: 'group',
     })
     context.commit('add', group)
+    context.dispatch('cacheGroup', group.id)
   },
 
   modify(context, { id, changes }) {
@@ -249,14 +250,14 @@ export const actions: ActionTree<GroupState, RootState> = {
 export const mutations: MutationTree<GroupState> = {
 
   setCache(state, { field, key, value }) {
-    state.cache[field][key] = value
+    Vue.set(state.cache[field], key, value)
   },
 
   setConfigs(state, { id, field, value }) {
     if (!state.configs[id])
-      state.configs[id] = { display_currency: value }
+      Vue.set(state.configs, id, { display_currency: value })
     else
-      state.configs[id][field] = value
+      Vue.set(state.configs[id], field, value)
   },
 
   switch(state, id: string | null) {

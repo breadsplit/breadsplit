@@ -2,7 +2,7 @@
 v-menu(offset-y left v-if='currencies.length > 1')
   template(v-slot:activator='{ on }')
     .vertical-aligned(v-on='on')
-      span.pr-1.op-75 {{display_currency}}
+      span.pr-1.op-75(v-if='display_currency !== group.main_currency') {{display_currency}}
       v-icon.op-50 mdi-swap-horizontal-bold
   v-list
     v-list-tile(v-for='(item, index) in currencies', :key='item', @click='changeDisplayingCurrency(item)')
