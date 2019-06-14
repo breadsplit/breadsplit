@@ -165,6 +165,14 @@ export const actions: ActionTree<GroupState, RootState> = {
     NewOperation(context, id, 'change_member_id', { from, to })
   },
 
+  changeDisplayCurrency({ state, commit, dispatch }, { id, display_currency }) {
+    const group = state.cache.groups[id]
+    if (!group)
+      return
+    commit('setConfigs', { id, field: 'display_currency', value: display_currency })
+    dispatch('cacheBalances', { group })
+  },
+
   // Caches
   cacheInit({ state, dispatch }) {
     for (const id of Object.keys(state.groups)) {
@@ -199,8 +207,22 @@ export const actions: ActionTree<GroupState, RootState> = {
     const balances = GroupBalances(group, display_currency, exchange_record)
     const solutions = GetSettleUpSolutions(balances, group)
 
-    commit('setCache', { field: 'balances', key: group.id, value: Object.freeze(balances) })
-    commit('setCache', { field: 'solutions', key: group.id, value: Object.freeze(solutions) })
+    commit('setCache', {
+      field: 'balances',
+      key: group.id,
+      value: Object.freeze(balances.map(b => ({
+        ...b,
+        balance: +b.balance,
+      }))),
+    })
+    commit('setCache', {
+      field: 'solutions',
+      key: group.id,
+      value: Object.freeze(solutions.map(s => ({
+        ...s,
+        amount: +s.amount,
+      }))),
+    })
   },
 
   // Firebase
@@ -221,6 +243,10 @@ export const mutations: MutationTree<GroupState> = {
 
   setCache(state, { field, key, value }) {
     state.cache[field][key] = value
+  },
+
+  setConfigs(state, { id, field, value }) {
+    state.configs[id][field] = value
   },
 
   switch(state, id: string | null) {
