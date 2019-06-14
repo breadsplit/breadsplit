@@ -49,6 +49,12 @@ export const getters: GetterTree<GroupState, RootState> = {
     return `${origin()}/join?id=${current.id}`
   },
 
+  currentDisplayCurrency(state) {
+    if (!state.currentId)
+      return undefined
+    return oc(state.configs[state.currentId]).display_currency()
+  },
+
   currentId(state) {
     return state.currentId
   },
@@ -166,6 +172,7 @@ export const actions: ActionTree<GroupState, RootState> = {
   },
 
   changeDisplayCurrency({ state, commit, dispatch }, { id, display_currency }) {
+    id = id || state.currentId
     const group = state.cache.groups[id]
     if (!group)
       return
@@ -246,7 +253,10 @@ export const mutations: MutationTree<GroupState> = {
   },
 
   setConfigs(state, { id, field, value }) {
-    state.configs[id][field] = value
+    if (!state.configs[id])
+      state.configs[id] = { display_currency: value }
+    else
+      state.configs[id][field] = value
   },
 
   switch(state, id: string | null) {
@@ -267,6 +277,7 @@ export const mutations: MutationTree<GroupState> = {
     Vue.delete(state.cache.groups, id)
     Vue.delete(state.cache.balances, id)
     Vue.delete(state.cache.solutions, id)
+    Vue.delete(state.configs, id)
   },
 
   newOperation(state, { id, name, data, meta }) {
