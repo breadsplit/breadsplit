@@ -60,7 +60,7 @@ export interface UserMemberInfo extends Member, UserInfo {
 export interface TransactionExchangeRecord {
   from: string
   to: string
-  rate: string
+  rate: number
   source: 'manual' | 'system'
   date?: string
 }

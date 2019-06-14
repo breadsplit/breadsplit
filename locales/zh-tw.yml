@@ -99,10 +99,10 @@ ui:
     xx_should_pay: '這次輪到 {0} 付款。'
     add_payer: 添加付款人
     for_whom: 為了誰？
-    more_details: 更多信息
     select_who_paid: 選擇付款人
     repeat_expense: 重複
     add_location: 添加位置
+    details: 明細
   total: 合計
   button_submit: 提交
   optional: （可選）

@@ -110,10 +110,11 @@ ui:
     xx_should_pay: 'by the way, {0} should pay this time.'
     add_payer: Add more payer
     for_whom: For whom?
-    more_details: More details
     select_who_paid: Select the person who paid the bill
     repeat_expense: Repeat
     add_location: Add location
+    details: Details
+    description: Description
   faq: FAQ
   currency: Currency
   offline_mode: Offline mode

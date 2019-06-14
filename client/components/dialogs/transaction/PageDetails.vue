@@ -1,10 +1,10 @@
 <template lang='pug'>
 .page-container
-  .header {{$t('ui.newtrans.more_details')}}
+  .header {{$t('ui.newtrans.details')}}
 
   v-text-field.px-2.py-3.description-field(
     v-model='form.desc'
-    label='Description'
+    label='$t("ui.newtrans.description")'
     placeholder='Some expense...'
     solo required hide-details
   )
@@ -28,10 +28,7 @@
     v-icon(color='grey') mdi-history
     v-subheader {{$t('ui.newtrans.repeat_expense')}}
 
-  div.ml-2(v-columns='"40px auto"' v-if='isDifferentCurrency')
-    v-icon(color='grey') mdi-swap-horizontal-bold
-    v-subheader
-      exchange-rate-input(:form='form')
+  exchange-rate-input(ref='exchange' :form='form')
 
   app-date-picker(ref='date_picker')
 </template>
@@ -57,10 +54,7 @@ export default class PageDetails extends mixins(GroupMixin) {
 
   $refs!: {
     date_picker: DatePicker
-  }
-
-  next() {
-    this.$emit('next')
+    exchange: ExchangeRateInput
   }
 
   get dateDisplay() {
@@ -71,10 +65,6 @@ export default class PageDetails extends mixins(GroupMixin) {
     const date = await this.$refs.date_picker.open(this.form.timestamp)
     if (date)
       this.form.timestamp = date
-  }
-
-  get isDifferentCurrency() {
-    return this.form.currency !== this.group.main_currency
   }
 }
 </script>

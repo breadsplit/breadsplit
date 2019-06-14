@@ -38,9 +38,9 @@ ui:
     xx_should_pay: '这次轮到 {0} 付款。'
     how_much: 输入金额
     add_payer: 添加付款人
-    more_details: 更多信息
     repeat_expense: 重复
     add_location: 添加位置
+    details: ''
   total: 合计
   button_cancel: 取消
   button_back: 返回

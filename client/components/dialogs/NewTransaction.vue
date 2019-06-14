@@ -29,7 +29,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
       )
 
     v-window-item.page.page-4(:value='4')
-      page-details(:form='form', @next='next')
+      page-details(ref='details' :form='form', @next='next')
 
   div
     v-divider
@@ -77,6 +77,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   $refs!: {
     splitting_creditors: PageSplitting
     splitting_debtors: PageSplitting
+    details: PageDetails
   }
 
   @Getter('user/uid') uid: string | undefined
@@ -128,6 +129,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   cleanUp() {
     this.$refs.splitting_creditors.$refs.splitting.cleanUp(true)
     this.$refs.splitting_debtors.$refs.splitting.cleanUp(true)
+    this.$refs.details.$refs.exchange.save()
   }
 
   next() {
