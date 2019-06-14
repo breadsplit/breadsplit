@@ -6,11 +6,10 @@ import dayjs from 'dayjs'
 import * as firebase from 'firebase/app'
 
 import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
-import { IsThisId, getExchangeRateOn } from '~/core'
+import { IsThisId, getExchangeRateOn, FallbackExchangeRate } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
 import { DEBUG, BUILD_TARGET } from '~/../meta/env'
-import { FallbackExchangeRate } from '@/core'
 
 firebase.initializeApp(FirebaseServerConfig)
 
@@ -22,8 +21,8 @@ export class FirebasePlugin {
   router: VueRouter
   _unwatchCallback: (() => void) | null = null
   _unsubscribeCallback: (() => void) | null = null
-  _initilized = false
-  _initilizedCallbacks: Function[] = []
+  _initialized = false
+  _initializedCallbacks: Function[] = []
 
   constructor(store: Store<RootState>, router: VueRouter) {
     this.store = store
@@ -91,9 +90,9 @@ export class FirebasePlugin {
         this.unsubscribe()
         this.unwatchStore()
         this.store.commit('user/logout')
-        this.store.commit('group/removeOnlineGroups')
+        this.store.dispatch('group/removeOnlineGroups')
       }
-      this.initilized()
+      this.initialized()
     })
 
     await this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
@@ -108,22 +107,22 @@ export class FirebasePlugin {
     }
   }
 
-  waitForInitilized() {
+  waitForInitialized() {
     return new Promise((resolve) => {
-      if (this._initilized)
+      if (this._initialized)
         resolve()
       else
-        this._initilizedCallbacks.push(resolve)
+        this._initializedCallbacks.push(resolve)
     })
   }
 
-  private initilized() {
-    this._initilized = true
-    this._initilizedCallbacks.forEach((callback) => {
+  private initialized() {
+    this._initialized = true
+    this._initializedCallbacks.forEach((callback) => {
       try { callback() }
       catch {}
     })
-    this._initilizedCallbacks = []
+    this._initializedCallbacks = []
   }
 
   async signup(email: string, password: string) {
@@ -280,7 +279,7 @@ export class FirebasePlugin {
           const data = change.doc.data() as ServerGroup
           log(`🌠 Incoming change <${change.type}>`, data.id, data)
           if (change.type === 'modified' || change.type === 'added') {
-            this.store.commit('group/onServerUpdate', {
+            this.store.dispatch('group/onServerUpdate', {
               data,
               timestamp: +new Date(),
             })
@@ -316,7 +315,7 @@ export class FirebasePlugin {
       .doc(id)
       .get()
 
-    this.store.commit('group/onServerUpdate', {
+    this.store.dispatch('group/onServerUpdate', {
       data: doc.data(),
       timestamp: +new Date(),
     })

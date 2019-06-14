@@ -131,7 +131,7 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
       this.loading = false
       return
     }
-    await this.$fire.waitForInitilized()
+    await this.$fire.waitForInitialized()
     this.serverGroup = await this.$fire.groupInfo(this.id)
     this.loading = false
   }

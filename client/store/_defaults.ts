@@ -7,6 +7,12 @@ export const GroupStateDefault = (overrides?: Partial<GroupState>): GroupState =
   groups: {},
   currentId: null,
   unreads: {},
+  cache: {
+    groups: {},
+    balances: {},
+    solutions: {},
+  },
+  configs: {},
 }, overrides)
 
 export const UserStateDefault = (overrides?: Partial<UserState>): UserState => merge({

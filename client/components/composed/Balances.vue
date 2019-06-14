@@ -24,14 +24,12 @@ v-card.balances
 </template>
 
 <script lang='ts'>
-import { Component, mixins } from 'nuxt-property-decorator'
-import { GroupBalances } from '~/core'
-import { GroupMixin, NavigationMixin } from '~/mixins'
+import { Component, mixins, Getter } from 'nuxt-property-decorator'
+import { NavigationMixin } from '~/mixins'
+import { Balance } from '~/types'
 
 @Component
-export default class Balances extends mixins(GroupMixin, NavigationMixin) {
-  get balances() {
-    return GroupBalances(this.group)
-  }
+export default class Balances extends mixins(NavigationMixin) {
+  @Getter('group/currentBalances') readonly balances!: Balance[]
 }
 </script>

@@ -28,20 +28,13 @@ v-card.settle-up
 </template>
 
 <script lang='ts'>
-import { Component, mixins } from 'nuxt-property-decorator'
-import { GroupBalances, GetSettleUpSolutions } from '~/core'
-import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
+import { Component, mixins, Getter } from 'nuxt-property-decorator'
+import { CommonMixin, NavigationMixin } from '~/mixins'
 import { Solution } from '~/types'
 
 @Component
-export default class SettleUpSolutions extends mixins(GroupMixin, NavigationMixin, CommonMixin) {
-  get balances() {
-    return GroupBalances(this.group)
-  }
-
-  get solutions() {
-    return GetSettleUpSolutions(this.balances, this.group)
-  }
+export default class SettleUpSolutions extends mixins(NavigationMixin, CommonMixin) {
+  @Getter('group/currentSolutions') readonly solutions!: Solution[]
 
   settleUp(solution: Solution) {
     this.gotoNewTransaction({

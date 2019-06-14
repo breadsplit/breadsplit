@@ -2,12 +2,16 @@ import Vue from 'vue'
 import includes from 'lodash/includes'
 import orderBy from 'lodash/orderBy'
 import union from 'lodash/union'
-import mapValues from 'lodash/mapValues'
 import { oc } from 'ts-optchain'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
-import { GroupState, RootState, Group, ServerGroup, Operation, ClientGroup } from '~/types'
+import { GroupState, RootState, Group, ServerGroup, Operation, ClientGroup, ExchangeRecord } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe } from '~/core'
 import { GroupStateDefault } from '~/store'
+import { GroupBalances, GetSettleUpSolutions } from '@/core'
+import { DEBUG } from '~/../meta/env'
+
+// eslint-disable-next-line no-console
+const log = (...args) => !DEBUG || console.log('VUX', ...args)
 
 const OperationCache = new BasicCache<Group>()
 const Transformer = EvalTransforms<Group>(Transforms, { cacheObject: OperationCache })
@@ -20,22 +24,22 @@ export const state = GroupStateDefault
 
 export const getters: GetterTree<GroupState, RootState> = {
 
-  evaluatedGroups(state) {
-    return mapValues(state.groups, (group) => {
-      if (!group)
-        return undefined
-      const { base, operations } = group
-      if (!base)
-        return undefined
-      const result = Transformer(base, operations)
-      return Object.freeze(result)
-    })
-  },
-
-  current(state, getters) {
+  current(state) {
     if (!state.currentId)
       return undefined
-    return getters.evaluatedGroups[state.currentId]
+    return state.cache.groups[state.currentId]
+  },
+
+  currentBalances(state) {
+    if (!state.currentId)
+      return undefined
+    return state.cache.balances[state.currentId]
+  },
+
+  currentSolutions(state) {
+    if (!state.currentId)
+      return undefined
+    return state.cache.solutions[state.currentId]
   },
 
   currentShareLink(state, getters) {
@@ -49,26 +53,26 @@ export const getters: GetterTree<GroupState, RootState> = {
     return state.currentId
   },
 
-  all(state, getters) {
+  all(state) {
     return orderBy(Object.values(state.groups), ['lastchanged'], ['desc'])
-      .map(group => getters.evaluatedGroups[group.id])
+      .map(group => state.cache.groups[group.id])
   },
 
-  id: (state, getters) => (id: string) => {
-    return getters.evaluatedGroups[id]
+  id: state => (id: string) => {
+    return state.cache.groups[id]
   },
 
-  memberById: (state, getters) => ({ groupId, uid }) => {
+  memberById: state => ({ groupId, uid }) => {
     groupId = groupId || state.currentId
-    const group = getters.evaluatedGroups[groupId]
+    const group = state.cache.groups[groupId]
     if (!group)
       return null
     return group.members[uid]
   },
 
-  activeMembersOf: (state, getters) => (groupid?: string) => {
+  activeMembersOf: state => (groupid?: string) => {
     groupid = groupid || state.currentId || ''
-    const group = getters.evaluatedGroups[groupid] as Group
+    const group = state.cache.groups[groupid] as Group
     if (!group)
       return []
     return Object.values(group.members).filter(m => !m.removed)
@@ -110,6 +114,7 @@ function NewOperation(
     timestamp: +new Date(),
   }
   context.commit('newOperation', { id: groupid, name, data, meta })
+  context.dispatch('cacheGroup', groupid)
 }
 
 export const actions: ActionTree<GroupState, RootState> = {
@@ -159,9 +164,64 @@ export const actions: ActionTree<GroupState, RootState> = {
   changeMemberId(context, { id, from, to }) {
     NewOperation(context, id, 'change_member_id', { from, to })
   },
+
+  // Caches
+  cacheInit({ state, dispatch }) {
+    for (const id of Object.keys(state.groups)) {
+      if (!state.cache.groups[id])
+        dispatch('cacheGroup', id)
+    }
+  },
+
+  cacheGroup({ state, commit, dispatch }, id?: string|null) {
+    id = id || state.currentId
+    if (!id)
+      return
+    const clientGroup = state.groups[id]
+    if (!clientGroup)
+      return
+    const { base, operations } = clientGroup
+    if (!base)
+      return
+    log(`🐱‍👤 Caching group ${id}`)
+    const group = Transformer(base, operations)
+    commit('setCache', { field: 'groups', key: id, value: Object.freeze(group) })
+    dispatch('cacheBalances', { group })
+  },
+
+  cacheBalances({ state, commit, rootState }, { group, exchange_record }: { group: Group; exchange_record?: ExchangeRecord }) {
+    if (!exchange_record) {
+      const keys = Object.keys(rootState.cache.exchange_rates).sort()
+      exchange_record = rootState.cache.exchange_rates[keys[keys.length - 1]]
+    }
+    log(`🐱‍👤 Caching balances ${group.id} [${exchange_record.date}]`)
+    const display_currency = oc(state.configs[group.id]).display_currency(undefined)
+    const balances = GroupBalances(group, display_currency, exchange_record)
+    const solutions = GetSettleUpSolutions(balances, group)
+
+    commit('setCache', { field: 'balances', key: group.id, value: Object.freeze(balances) })
+    commit('setCache', { field: 'solutions', key: group.id, value: Object.freeze(solutions) })
+  },
+
+  // Firebase
+  onServerUpdate({ dispatch, commit }, { data, timestamp }) {
+    commit('onServerUpdate', { data, timestamp })
+    dispatch('cacheGroup', data.id)
+  },
+
+  removeOnlineGroups({ state, commit }) {
+    for (const id of Object.keys(state.groups)) {
+      if (state.groups[id].online)
+        commit('remove', id)
+    }
+  },
 }
 
 export const mutations: MutationTree<GroupState> = {
+
+  setCache(state, { field, key, value }) {
+    state.cache[field][key] = value
+  },
 
   switch(state, id: string | null) {
     state.currentId = id
@@ -175,15 +235,12 @@ export const mutations: MutationTree<GroupState> = {
 
   remove(state, id) {
     id = id || state.currentId
-    state.currentId = null
+    if (state.currentId === id)
+      state.currentId = null
     Vue.delete(state.groups, id)
-  },
-
-  removeOnlineGroups(state) {
-    for (const id of Object.keys(state.groups)) {
-      if (state.groups[id].online)
-        Vue.delete(state.groups, id)
-    }
+    Vue.delete(state.cache.groups, id)
+    Vue.delete(state.cache.balances, id)
+    Vue.delete(state.cache.solutions, id)
   },
 
   newOperation(state, { id, name, data, meta }) {

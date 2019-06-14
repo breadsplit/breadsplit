@@ -80,7 +80,7 @@ export function applyExchangeRate(from: string, to: string, exchange_record: Exc
   return value.mul(rate)
 }
 
-export function GroupBalances(group: Group, display?: string, exchange_record = FallbackExchangeRate): Balance[] {
+export function GroupBalances(group: Group, display?: string | null, exchange_record = FallbackExchangeRate): Balance[] {
   const main_currency = group.main_currency || defaultCurrency
   const display_currency = display || main_currency
 

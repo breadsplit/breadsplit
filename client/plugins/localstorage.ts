@@ -25,6 +25,7 @@ export default ({ store }: Context) => {
       return true
     },
   })(store)
+  store.dispatch('group/cacheInit')
   window.addEventListener('storage', (e) => {
     if (e.key !== StoreKey)
       return
