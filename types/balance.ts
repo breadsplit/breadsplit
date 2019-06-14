@@ -28,9 +28,8 @@ export interface TransactionBalance {
 
 export interface Balance {
   uid: string
-  balance: Record<string, Fraction>
-  main_balance: Fraction
-  main_currency: string
+  balance: Fraction
+  currency: string
   removed?: boolean
 }
 

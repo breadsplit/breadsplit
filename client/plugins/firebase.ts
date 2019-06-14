@@ -6,10 +6,11 @@ import dayjs from 'dayjs'
 import * as firebase from 'firebase/app'
 
 import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
-import { IsThisId } from '~/core'
+import { IsThisId, getExchangeRateOn } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
 import { DEBUG, BUILD_TARGET } from '~/../meta/env'
+import { FallbackExchangeRate } from '@/core'
 
 firebase.initializeApp(FirebaseServerConfig)
 
@@ -236,7 +237,7 @@ export class FirebasePlugin {
       .set(data)
   }
 
-  async getExchangeRates(date?: dayjs.ConfigType, fallback_days = 5): Promise<ExchangeRecord|undefined> {
+  async getExchangeRates(date?: dayjs.ConfigType, fallback_days = 5): Promise<ExchangeRecord> {
     let d = dayjs(date)
     if (d.isAfter(dayjs()))
       d = dayjs()
@@ -255,16 +256,13 @@ export class FirebasePlugin {
     }
     catch {}
     if (fallback_days <= 0)
-      return undefined
+      return FallbackExchangeRate
     return await this.getExchangeRates(d.subtract(1, 'day'), fallback_days - 1)
   }
 
   async getExchangeRateOn(from: string, to: string, date?: dayjs.ConfigType, fallback_days?: number) {
     const record = await this.getExchangeRates(date, fallback_days)
-    if (!record)
-      return
-    const rate = record.rates[to.toUpperCase()] / record.rates[from.toUpperCase()]
-    return { rate, date: record.date }
+    return getExchangeRateOn(from, to, record)
   }
 
   subscribe() {

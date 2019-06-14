@@ -15,10 +15,10 @@ v-card.balances
         v-list-tile-content
           app-user-info(:id='balance.uid')
         v-list-tile-action.pr-1
-          v-list-tile-title
+          v-list-tile-title.text-xs-right
             app-money-label(
-              :amount='balance.balance[group.main_currency]'
-              :currency='group.main_currency'
+              :amount='balance.balance'
+              :currency='balance.currency'
               color
             )
 </template>

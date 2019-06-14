@@ -1,5 +1,5 @@
 <template lang='pug'>
-div.ml-2(v-columns='"40px auto"' v-if='form !== to' v-ripple @click='changeExchangeRate()')
+div.ml-2(v-columns='"40px auto"' v-if='from !== to' v-ripple @click='changeExchangeRate()')
   v-icon(color='grey') mdi-swap-horizontal-bold
   v-subheader
     div
@@ -65,6 +65,8 @@ export default class ExchangeRateInput extends mixins(GroupMixin) {
   }
 
   save() {
+    if (this.from === this.to)
+      return
     if (!this.info && !this.override)
       return
     if (!this.form.exchanges)

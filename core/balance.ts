@@ -5,8 +5,9 @@ import map from 'lodash/map'
 import uniq from 'lodash/uniq'
 import concat from 'lodash/concat'
 import Fraction from 'fraction.js'
-import { Transaction, Group, TransactionBalance, Balance, Solution } from '../types'
+import { Transaction, Group, TransactionBalance, Balance, Solution, ExchangeRecord } from '../types'
 import { defaultCurrency } from './defaults'
+import { FallbackExchangeRate } from '~/core'
 
 export function GCD(arr: number[]) {
   // Use spread syntax to get minimum of array
@@ -69,46 +70,63 @@ export function GroupCurrency(group: Group) {
   return Array.from(set)
 }
 
-export function GroupBalances(group: Group): Balance[] {
+export function getExchangeRateOn(from: string, to: string, exchange_record: ExchangeRecord) {
+  const rate = exchange_record.rates[to.toUpperCase()] / exchange_record.rates[from.toUpperCase()]
+  return { rate, date: exchange_record.date }
+}
+
+export function applyExchangeRate(from: string, to: string, exchange_record: ExchangeRecord, value: Fraction) {
+  const { rate } = getExchangeRateOn(from, to, exchange_record)
+  return value.mul(rate)
+}
+
+export function GroupBalances(group: Group, display?: string, exchange_record = FallbackExchangeRate): Balance[] {
   const main_currency = group.main_currency || defaultCurrency
-  const currencies = GroupCurrency(group)
+  const display_currency = display || main_currency
+
+  // init
   let balances = Object.values(group.members)
     .map((m): Balance => {
-      const balance: Record<string, Fraction> = { }
-      currencies.forEach((currency) => {
-        balance[currency] = new Fraction(0)
-      })
       return {
         uid: m.uid as string,
-        balance,
-        main_balance: new Fraction(0),
-        main_currency,
+        balance: new Fraction(0),
+        currency: display_currency,
         removed: m.removed,
       }
     })
+
   group.transactions.forEach((t) => {
     const currency = t.currency
     const changes = TransactionBalanceChanges(t)
     changes.forEach((c) => {
-      const info = find(balances, { uid: c.uid })
-      if (!info)
+      const balance = find(balances, { uid: c.uid })
+      if (!balance)
         throw new Error(`Member with id:"${c.uid}" is not found.`)
-      if (!info.balance.hasOwnProperty(currency))
-        info.balance[currency] = new Fraction(0)
 
-      info.balance[currency] = info.balance[currency].add(c.balance)
+      let value = c.balance
+      if (currency !== display_currency) {
+        // use transaction defined exchange info if it's avaliable
+        let record = (t.exchanges || []).find(e => e.from === currency && e.to === display_currency)
+        if (record) {
+          value = c.balance.mul(record.rate)
+        }
+        else {
+          record = (t.exchanges || []).find(e => e.from === currency && e.to === main_currency)
+          if (record)
+            value = applyExchangeRate(main_currency, display_currency, exchange_record, c.balance.mul(record.rate))
+          else
+            value = applyExchangeRate(currency, display_currency, exchange_record, c.balance)
+        }
+      }
+      balance.balance = balance.balance.add(value)
     })
   })
-  balances.forEach((b) => {
-    // TODO:AF curency change
-    b.main_balance = b.balance[main_currency]
-  })
   // remove the "Removed members" when theire balance equal to 0
-  balances = balances.filter(b => !b.removed || !b.main_balance.equals(0))
+  balances = balances.filter(b => !b.removed || !b.balance.equals(0))
   // sort by the balance
   balances.sort((a, b) => {
     if (a.removed === b.removed)
-      return +a.main_balance.sub(b.main_balance)
+      return a.balance.compare(b.balance)
     if (a.removed)
       return 1
     return -1
@@ -119,7 +137,7 @@ export function GroupBalances(group: Group): Balance[] {
 export function GetSettleUpSolutions(balances: Balance[], group: Group): Solution[] {
   let remaining = balances.map(b => ({
     uid: b.uid,
-    balance: b.main_balance,
+    balance: b.balance,
   }))
   const currency = group.main_currency || defaultCurrency
   const solutions: Solution[] = []
