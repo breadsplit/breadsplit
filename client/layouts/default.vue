@@ -21,13 +21,13 @@ v-app(:dark='dark')
           v-list-tile-content
             v-list-tile-title(v-text='group.name')
           v-list-tile-action(v-if='group.online')
-            template(v-if='isSync(group.id)')
+            template(v-if="$store.getters['group/unreadsOf'](group.id) != 0")
+              v-avatar(size='25', color='red' dark)
+                v-list-tile-title.ma-2(v-text="$store.getters['group/unreadsOf'](group.id)" style='color: white;')
+            template(v-else-if='isSync(group.id)')
               v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
             template(v-else)
               v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
-          v-list-tile-action
-            v-avatar(size='25', color='red' dark)
-              p.ma-2(style='color: white;') 9+
 
       .drawer-list-bottom.pb-2
         v-divider.mb-2
