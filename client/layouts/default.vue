@@ -25,6 +25,9 @@ v-app(:dark='dark')
               v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
             template(v-else)
               v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
+          v-list-tile-action
+            v-avatar(size='25', color='red' dark)
+              p.ma-2(style='color: white;') 9+
 
       .drawer-list-bottom.pb-2
         v-divider.mb-2
