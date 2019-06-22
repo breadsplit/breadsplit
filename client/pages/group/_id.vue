@@ -66,6 +66,7 @@ import { Component, mixins, Watch } from 'nuxt-property-decorator'
     if (!store.getters['group/current'])
       // @ts-ignore
       return error({ icon: 'account-alert-outline', statusCode: 'Group not found', message: 'It seems to be a local group' })
+    store.commit('group/clearUnreads', params.id)
     return { params }
   },
 })
