@@ -325,7 +325,8 @@ export const mutations: MutationTree<GroupState> = {
     const currentActivitiesCount = oc(clientGroup).base.activities.length(0)
     const newActivitiesCount = Math.max(currentActivitiesCount - activitiesCount, 0)
 
-    Vue.set(state.unreads, group.id, (state.unreads[group.id] || 0) + newActivitiesCount)
+    if (group.id !== state.currentId)
+      Vue.set(state.unreads, group.id, (state.unreads[group.id] || 0) + newActivitiesCount)
   },
 
   clearUnreads(state, id) {
