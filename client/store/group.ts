@@ -324,7 +324,10 @@ export const mutations: MutationTree<GroupState> = {
 
     const currentActivitiesCount = oc(clientGroup).base.activities.length(0)
 
-    state.unreads[group.id] = Math.max(currentActivitiesCount - activitiesCount, 0)
+    if (!state.unreads[group.id])
+      state.unreads[group.id] = 0
+
+    state.unreads[group.id] += Math.max(currentActivitiesCount - activitiesCount, 0)
   },
 
   clearUnreads(state, id) {
