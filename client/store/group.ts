@@ -323,15 +323,13 @@ export const mutations: MutationTree<GroupState> = {
     clientGroup.lastsync = timestamp
 
     const currentActivitiesCount = oc(clientGroup).base.activities.length(0)
+    const newActivitiesCount = Math.max(currentActivitiesCount - activitiesCount, 0)
 
-    if (!state.unreads[group.id])
-      state.unreads[group.id] = 0
-
-    state.unreads[group.id] += Math.max(currentActivitiesCount - activitiesCount, 0)
+    Vue.set(state.unreads, group.id, (state.unreads[group.id] || 0) + newActivitiesCount)
   },
 
   clearUnreads(state, id) {
-    state.unreads[id] = 0
+    Vue.set(state.unreads, id, 0)
   },
 
   syncOperations(state, { id, operations }) {
