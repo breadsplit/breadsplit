@@ -20,7 +20,7 @@ v-card.welcome-dialog
 
   v-card-actions.pt-0.pb-3.px-3
     v-spacer
-    v-btn(color='primary' flat @click.native='openDialog("about")') {{$t('ui.button_more_about_us')}}
+    v-btn(color='primary' text @click.native='openDialog("about")') {{$t('ui.button_more_about_us')}}
     v-btn(color='primary darken-1' @click.native='close()') {{$t('ui.button_ok')}}
 
 </template>

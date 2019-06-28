@@ -115,8 +115,7 @@
     "vue-class-component": "7.1.0",
     "vue-clipboard2": "0.3.0",
     "vue-i18n": "8.11.2",
-    "vuetify": "1.5.14",
-    "vuetify-loader": "1.2.2",
+    "vuetify": "^2.0.0-beta.4",
     "vuex": "3.1.1",
     "vuex-persistedstate": "2.5.4"
   },
@@ -124,6 +123,8 @@
     "@cypress/webpack-preprocessor": "4.1.0",
     "@nuxt/typescript": "2.8.1",
     "@nuxtjs/eslint-config": "0.0.1",
+    "@nuxtjs/eslint-module": "^0.2.0",
+    "@nuxtjs/vuetify": "^1.0.0-beta.4",
     "@types/blueimp-md5": "2.7.0",
     "@types/d3": "5.7.2",
     "@types/fs-extra": "7.0.0",

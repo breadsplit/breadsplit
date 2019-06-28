@@ -12,18 +12,18 @@ v-app(:dark='dark')
         v-divider
 
       div(style='overflow-y:auto')
-        v-list-tile(
+        v-list-item(
           v-for='(group, i) in groups'
           :key='i', :to='`/group/${group.id}`'
           router, exact)
-          v-list-tile-action
+          v-list-item-action
             v-icon mdi-{{ group.icon }}
-          v-list-tile-content
-            v-list-tile-title(v-text='group.name')
-          v-list-tile-action(v-if='group.online')
+          v-list-item-content
+            v-list-item-title(v-text='group.name')
+          v-list-item-action(v-if='group.online')
             template(v-if="$store.getters['group/unreadsOf'](group.id) != 0")
               v-avatar(size='25', color='red' dark)
-                v-list-tile-title.ma-2(v-text="$store.getters['group/unreadsOf'](group.id)" style='color: white;')
+                v-list-item-title.ma-2(v-text="$store.getters['group/unreadsOf'](group.id)" style='color: white;')
             template(v-else-if='isSync(group.id)')
               v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
             template(v-else)
@@ -32,60 +32,60 @@ v-app(:dark='dark')
       .drawer-list-bottom.pb-2
         v-divider.mb-2
         // New group item
-        v-list-tile(@click='openNewGroupDialog()')
-          v-list-tile-action
+        v-list-item(@click='openNewGroupDialog()')
+          v-list-item-action
             v-icon mdi-plus
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.group_editing.new_group')}}
+          v-list-item-content
+            v-list-item-title {{$t('ui.group_editing.new_group')}}
 
         // Sign in
         template(v-if='user.anonymous')
-          v-list-tile(@click='$refs.login.open()')
-            v-list-tile-action
+          v-list-item(@click='$refs.login.open()')
+            v-list-item-action
               v-avatar(size='36', color='#00000020', style='margin: -6px;')
                 v-icon mdi-account
-            v-list-tile-content
-              v-list-tile-title {{$t('ui.sign_in')}}
+            v-list-item-content
+              v-list-item-title {{$t('ui.sign_in')}}
 
         // User profile
         template(v-else)
-          v-list-tile(@click='promptLogout()')
-            v-list-tile-action
+          v-list-item(@click='promptLogout()')
+            v-list-item-action
               v-avatar(size='36', color='#00000020', style='margin: -6px;')
                 img(:src='user.avatar_url')
-            v-list-tile-content
-              v-list-tile-title {{ user.name || user.email }}
-            v-list-tile-action(v-if='!userIsOnline')
+            v-list-item-content
+              v-list-item-title {{ user.name || user.email }}
+            v-list-item-action(v-if='!userIsOnline')
               v-icon(color='red', size='20') mdi-cloud-off-outline
 
         // Settings
-        v-list-tile(@click='openSettings()')
-          v-list-tile-action
+        v-list-item(@click='openSettings()')
+          v-list-item-action
             v-icon mdi-settings
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.settings')}}
+          v-list-item-content
+            v-list-item-title {{$t('ui.settings')}}
 
-  v-toolbar.app-toolbar(
-    :clipped-left='clipped' app flat color='transparent' height='60'
+  v-app-bar.app-toolbar(
+    :clipped-left='clipped' flat color='transparent' height='60'
     ).primary--text
-    v-btn(icon, flat, @click='drawer = !drawer')
+    v-btn(icon,  text, @click='drawer = !drawer')
       v-icon(color='primary') mdi-menu
     v-toolbar-title(v-text='title')
     v-spacer
     v-toolbar-items
       template(v-if='current')
         template(v-if='isSync()')
-          v-btn(icon, flat).syncing-icon
+          v-btn(icon,  text).syncing-icon
             v-icon(color='primary') mdi-cloud-sync
         template(v-if='currentShareLink')
-          v-btn(icon, flat, @click='copyShareLink()')
+          v-btn(icon,  text, @click='copyShareLink()')
             v-icon.op-50 mdi-share-variant
         v-menu(offset-y='')
-          v-btn(icon, flat, slot='activator')
+          v-btn(icon,  text, slot='activator')
             v-icon.op-50 mdi-dots-vertical
           v-list
-            v-list-tile(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
-              v-list-tile-title {{ $t(item.title) }}
+            v-list-item(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
+              v-list-item-title {{ $t(item.title) }}
 
       // User profile
       template(v-if='!user.anonymous')

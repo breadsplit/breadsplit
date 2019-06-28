@@ -2,12 +2,12 @@
 v-list.pa-0
   template(v-for='(act, index) in activities')
     v-divider(v-if='index!=0')
-    v-list-tile(:key='act.id', avatar, @click='onActivityClick(act)')
-      v-list-tile-avatar
+    v-list-item(:key='act.id', avatar, @click='onActivityClick(act)')
+      v-list-item-avatar
         app-user-avatar(:id='act.by' size='38')
-      v-list-tile-content
-        v-list-tile-title(v-html='activityDescription(act)')
-        v-list-tile-sub-title.sub-label {{$dt(act.timestamp).fromNow()}}
+      v-list-item-content
+        v-list-item-title(v-html='activityDescription(act)')
+        v-list-item-sub-title.sub-label {{$dt(act.timestamp).fromNow()}}
 </template>
 
 <script lang='ts'>

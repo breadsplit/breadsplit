@@ -54,7 +54,7 @@
             v-btn.op-25.ma-0(
               v-show='removable && focused===pa.uid'
               @click='removeParticipator(pa.uid)'
-              flat icon small)
+              text icon small)
               v-icon(size='20') mdi-close
 
         template(v-if='participators.length > 1')

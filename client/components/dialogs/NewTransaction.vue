@@ -35,17 +35,17 @@ v-card.new-transaction(v-rows='"auto max-content"')
     v-divider
     v-card-actions.pa-3
       template(v-if='step === 1')
-        v-btn.button-cancel(flat, @click='close')
+        v-btn.button-cancel(text, @click='close')
           | {{$t('ui.button_cancel')}}
 
       template(v-else)
-        v-btn.button-back(flat, @click='step--')
+        v-btn.button-back(text, @click='step--')
           | {{$t('ui.button_back')}}
 
       v-spacer
 
       template(v-if='step >= 2')
-        v-btn.button-quick-add(:disabled='!form.total_fee', color='primary', flat, @click='submit')
+        v-btn.button-quick-add(:disabled='!form.total_fee', color='primary', text, @click='submit')
           | {{$t('ui.button_quick_add')}}
 
       v-btn.button-next(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')

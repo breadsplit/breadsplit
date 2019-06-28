@@ -14,7 +14,7 @@
 
       template(v-else)
         template(v-for='c in swatches')
-          v-btn(flat icon @click='setColor(c)' :style='c===color?selectedStyle:null').ma-1
+          v-btn(text icon @click='setColor(c)' :style='c===color?selectedStyle:null').ma-1
             v-icon(:color='c') mdi-checkbox-blank-circle
 </template>
 

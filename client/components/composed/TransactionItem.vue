@@ -1,15 +1,15 @@
 <template lang='pug'>
-v-list-tile.transaction-item(avatar, @click='navigate()')
-  v-list-tile-avatar
+v-list-item.transaction-item(@click='navigate()')
+  v-list-item-avatar
     app-category-icon.mx-2.my-1(
       :category='transaction.category'
       :text='false', :size='38'
     )
-  v-list-tile-content
-    v-list-tile-title {{desc}}
-    v-list-tile-sub-title.sub-label {{datetime}}
+  v-list-item-content
+    v-list-item-title {{desc}}
+    v-list-item-sub-title.sub-label {{datetime}}
 
-  v-list-tile-action.pr-1.text-xs-right(v-rows='"auto max-content"')
+  v-list-item-action.pr-1.text-xs-right(v-rows='"auto max-content"')
     app-money-label(
       :amount='-transaction.total_fee'
       :currency='transaction.currency'

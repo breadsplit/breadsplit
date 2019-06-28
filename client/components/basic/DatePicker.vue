@@ -2,8 +2,8 @@
 v-dialog(v-model='dialog', :return-value.sync='date', persistent, lazy, full-width, width='290px')
   v-date-picker(v-model='date', scrollable)
     v-spacer
-    v-btn(flat, color='primary', @click='close') {{$t('ui.button_cancel')}}
-    v-btn(flat, color='primary', @click='save') {{$t('ui.button_ok')}}
+    v-btn(text, color='primary', @click='close') {{$t('ui.button_cancel')}}
+    v-btn(text, color='primary', @click='save') {{$t('ui.button_ok')}}
 </template>
 
 <script lang='ts'>

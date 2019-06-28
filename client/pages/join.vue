@@ -31,15 +31,15 @@
             template(v-if='index!=0 && !isLocal(member.uid) && isLocal(members[index-1].uid)')
               br
               v-subheader {{$t('ui.join.existing_users')}}
-            v-list-tile(:key='member.uid', avatar)
-              v-list-tile-avatar
+            v-list-item(:key='member.uid')
+              v-list-item-avatar
                 app-user-avatar(:id='member.uid', size='40')
-              v-list-tile-content
-                v-list-tile-title
+              v-list-item-content
+                v-list-item-title
                   app-user-info(:member='member', field='name')
                   v-icon.ml-1(v-if='!isLocal(member.uid)' color='green lighten-1', size='20') mdi-check
-              v-list-tile-action(v-if='isLocal(member.uid)')
-                v-btn(color='primary' flat @click='join(member.uid)').px-3 {{$t('ui.join.this_is_me')}}
+              v-list-item-action(v-if='isLocal(member.uid)')
+                v-btn(color='primary' text @click='join(member.uid)').px-3 {{$t('ui.join.this_is_me')}}
 
         v-btn(v-if='uid', @click='join()', color='primary', large, round).pl-0
           app-user-avatar(:id='uid', :size='44').mr-3

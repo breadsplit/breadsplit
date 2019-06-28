@@ -17,7 +17,7 @@ v-container
         b {{$t('tips.open_in_browser_general')}}
 
   .text-xs-center(style='margin-top: 150px')
-    v-btn(color='primary', flat, @click='ingore()') {{$t('ui.continue_anyway')}}
+    v-btn(color='primary', text, @click='ingore()') {{$t('ui.continue_anyway')}}
 
   // TODO:WRITING: more details instructions
 </template>

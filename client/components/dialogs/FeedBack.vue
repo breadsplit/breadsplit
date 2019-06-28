@@ -15,7 +15,7 @@ v-card.feedback
       autofocus box clearable
       persistent-hint :hint='issueHint')
 
-    v-btn(block flat @click='upload()' :disabled='!hasMeaningfulContent') {{$t('ui.button_send')}}
+    v-btn(block text @click='upload()' :disabled='!hasMeaningfulContent') {{$t('ui.button_send')}}
 
 </template>
 

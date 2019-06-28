@@ -1,5 +1,4 @@
 import NuxtConfiguration from '@nuxt/config'
-import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 import pkg from '../package.json'
 import theme from '../meta/theme'
 
@@ -56,7 +55,7 @@ const config: NuxtConfiguration = {
     orientation: 'portrait-primary',
     start_url: '/',
     theme_color: '#666',
-    background_color: theme.background,
+    background_color: theme.light.background,
     prefer_related_applications: false,
     icons: [{
       src: '/img/logo/appicon192.png',
@@ -98,7 +97,6 @@ const config: NuxtConfiguration = {
     /* Plugins and Components */
     '~/plugins/packages', // 3-rd party dependencies
     '~/plugins/firebase',
-    '~/plugins/vuetify',
     '~/plugins/directives',
     '~/plugins/components', // register components
   ],
@@ -111,13 +109,6 @@ const config: NuxtConfiguration = {
   },
 
   build: {
-    transpile: ['vuetify/lib'],
-    plugins: [new VuetifyLoaderPlugin()],
-    loaders: {
-      stylus: {
-        import: ['~vuetify/src/stylus/settings/_variables.styl'],
-      },
-    },
     splitChunks: {},
     extractCSS: !dev,
     publicPath: '/nuxt/',
@@ -126,14 +117,6 @@ const config: NuxtConfiguration = {
         config.module.rules.push({
           test: /\.ya?ml$/,
           use: 'js-yaml-loader',
-        })
-      }
-      if (ctx.isDev && ctx.isClient && config.module) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue|ts)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/,
         })
       }
     },
@@ -164,6 +147,20 @@ const config: NuxtConfiguration = {
     '@nuxtjs/google-gtag',
     '@nuxtjs/sentry',
   ],
+
+  devModules: [
+    ['@nuxtjs/eslint-module', { cache: true }],
+    '@nuxtjs/vuetify',
+  ],
+
+  vuetify: {
+    theme: {
+      themes: theme,
+    },
+    icons: {
+      iconfont: 'mdi',
+    },
+  },
 
   'google-gtag': {
     id: process.env.GOOGLE_GTAG_ID,

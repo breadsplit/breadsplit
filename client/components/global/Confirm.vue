@@ -6,8 +6,8 @@ v-dialog(v-model='dialog', :max-width='options.width', @keydown.esc='cancel', v-
     v-card-text(v-show='!!message') {{ message }}
     v-card-actions.pt-0
       v-spacer
-      v-btn(color='grey', flat='flat', @click.native='cancel') {{$t('ui.button_no')}}
-      v-btn(color='primary darken-1', flat='flat', @click.native='agree') {{$t('ui.button_yes')}}
+      v-btn(color='grey', text, @click.native='cancel') {{$t('ui.button_no')}}
+      v-btn(color='primary darken-1', text, @click.native='agree') {{$t('ui.button_yes')}}
 </template>
 
 <script lang='ts'>

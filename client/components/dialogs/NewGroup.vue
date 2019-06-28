@@ -46,28 +46,28 @@ v-card.new-group(v-rows='" max-content auto max-content"')
             v-list.members-list(style='background: transparent')
               template(v-for='(member, index) in members')
                 v-divider(v-if='index !== 0')
-                v-list-tile.px-2(:key='member.uid', avatar)
-                  v-list-tile-avatar
+                v-list-item.px-2(:key='member.uid')
+                  v-list-item-avatar
                     app-user-avatar(:member='member' size='38')
-                  v-list-tile-content
-                    v-list-tile-title
+                  v-list-item-content
+                    v-list-item-title
                       app-user-info(:member='member', field='name' :fallback='member.name')
-                    v-list-tile-sub-title.sub-label(style='margin-top: -5px')
+                    v-list-item-sub-title.sub-label(style='margin-top: -5px')
                       app-user-info(:member='member', field='email')
-                  v-list-tile-action(v-if='member.uid !== me')
-                    v-btn(icon, flat, @click='removeMember(member.uid)')
+                  v-list-item-action(v-if='member.uid !== me')
+                    v-btn(icon text @click='removeMember(member.uid)')
                       v-icon.op-75 mdi-close
 
   div
     v-divider
     v-card-actions.pa-3
       template(v-if='step === 1 && !mode')
-        v-btn.button-cancel(@click='close(false)' flat) {{$t('ui.button_cancel')}}
+        v-btn.button-cancel(@click='close(false)' text) {{$t('ui.button_cancel')}}
         v-spacer
         v-btn.button-next(@click='step++' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')  {{$t('ui.button_next')}}
 
       template(v-if='step === 2 && !mode')
-        v-btn.button-back(@click='step--' flat) {{$t('ui.button_back')}}
+        v-btn.button-back(@click='step--' text) {{$t('ui.button_back')}}
         v-spacer
         template(v-if='search')
           v-btn(@click='addMember(search)' dark :color='color' depressed) {{$t('ui.group_editing.add_member_xx', [search])}}
@@ -78,7 +78,7 @@ v-card.new-group(v-rows='" max-content auto max-content"')
             | {{$t('ui.button_create_group')}}
 
       template(v-if='mode')
-        v-btn(@click='close(false)' flat) {{$t('ui.button_cancel')}}
+        v-btn(@click='close(false)' text) {{$t('ui.button_cancel')}}
         v-spacer
         v-btn(@click='edit()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty') {{$t('ui.button_confirm')}}
 </template>
