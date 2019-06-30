@@ -185,7 +185,7 @@ acts:
   insert_viewer: '{0} joined the group'
   publish_group: '{0} changed group to online mode'
   rename_group: '{0} changed group name to {1}'
-  insert_member: '{0} added a member: {1}'
+  insert_member: '{0} added a member {1}'
   remove_transaction: '{0} deleted an expense {1}'
   change_group_currency: '{0} changed main currency to {1}'
 help:
