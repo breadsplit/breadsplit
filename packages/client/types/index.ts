@@ -1,4 +1,4 @@
-export * from '@/types'
+export * from '../../types'
 export * from './store'
 
 export interface SnackOptions {

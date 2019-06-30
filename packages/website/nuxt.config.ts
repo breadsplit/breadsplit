@@ -1,6 +1,6 @@
 import NuxtConfiguration from '@nuxt/config'
 import theme from '../meta/theme'
-import pkg from '../package.json'
+import pkg from '../../package.json'
 
 const debug = process.env.NODE_ENV !== 'production'
 

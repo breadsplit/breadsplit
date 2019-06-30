@@ -2,7 +2,7 @@
 
 [build]
   base = ""
-  publish = "client/dist/"
+  publish = "packages/client/dist/"
   command = "npm run generate"
 
 [build.environment]
@@ -22,7 +22,7 @@
 # "website" branch
 [context.website]
   base = ""
-  publish = "website/dist"
+  publish = "packages/website/dist"
   command = "npm run web:generate"
 
 [context.website.environment]
@@ -32,7 +32,7 @@
 # "docs" branch
 [context.docs]
   base = ""
-  publish = "docs/.vuepress/dist/"
+  publish = "packages/docs/.vuepress/dist/"
   command = "npm run docs:build"
 
 [context.docs.environment]
