@@ -62,12 +62,12 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .transactions
   .time-label
-    font-size 0.8em
-    opacity 0.8
+    font-size: 0.8em
+    opacity: 0.8
 
   .v-expansion-panels
-    box-shadow none
+    box-shadow: none
 </style>

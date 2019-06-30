@@ -37,21 +37,21 @@ export default class UserToggles extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .member-toggles
-  padding 1em 2em
+  padding: 1em 2em
 
   .composed-icon
-    position relative
-    display inline-block
+    position: relative
+    display: inline-block
 
     .append
-      position absolute
-      bottom -2px
-      right -8px
+      position: absolute
+      bottom: -2px
+      right: -8px
 
   .member
-    padding 0 0.5em
-    display inline-block
-    cursor pointer
+    padding: 0 0.5em
+    display: inline-block
+    cursor: pointer
 </style>

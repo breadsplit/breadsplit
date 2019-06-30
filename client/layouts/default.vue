@@ -259,23 +259,23 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .app-toolbar
   .v-toolbar__content
-    padding-right 2px
+    padding-right: 2px
 
 .v-navigation-drawer
   .v-list__tile
-    height 52px
+    height: 52px
 
   &:not(.v-navigation-drawer--mini-variant)
     .v-list
-      padding 10px 0
+      padding: 10px 0
 
     .v-list__tile
-      padding 6px 24px
+      padding: 6px 24px
 
 .avatar-in-toolbar
-  margin 12px
-  cursor pointer
+  margin: 12px
+  cursor: pointer
 </style>

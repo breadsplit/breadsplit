@@ -269,29 +269,29 @@ export default class NumberInput extends mixins(CommonMixin) {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .number-input
   &.main
     label
-      font-size 1.8em
-      height inherit
-      line-height inherit
+      font-size: 1.8em
+      height: inherit
+      line-height: inherit
 
     input
-      max-height inherit
-      font-size 3em
-      margin-top 0
+      max-height: inherit
+      font-size: 3em
+      margin-top: 0
 
     label
-      top -0.1em
+      top: -0.1em
 
   &.bold
     input
-      font-weight bold
+      font-weight: bold
 
 .number-input--active
   .v-input__slot:before
-    border-color var(--theme-primary) !important
+    border-color: var(--theme-primary) !important
   input
-    color var(--theme-primary) !important
+    color: var(--theme-primary) !important
 </style>

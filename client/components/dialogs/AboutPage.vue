@@ -38,14 +38,14 @@ export default class AboutPage extends mixins(DialogChildMixin) {
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang='sass' scoped>
 .about-page
-  font-size 0.95em
+  font-size: 0.95em
 
   p
-    text-align left
-    padding 0 2em
+    text-align: left
+    padding: 0 2em
   .support-us
-    font-size 1.1em
-    font-weight bold
+    font-size: 1.1em
+    font-weight: bold
 </style>

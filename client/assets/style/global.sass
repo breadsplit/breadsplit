@@ -1,0 +1,23 @@
+body, html, #app, #__nuxt, #__layout, .v-dialog--fullscreen, .fullscreen
+  height: 100%
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  overflow: hidden !important
+  user-select: none
+
+::-webkit-scrollbar
+  width: 3px
+
+::-webkit-scrollbar-track
+  background: rgba(0,0,0,0.05)
+
+::-webkit-scrollbar-thumb
+  background: rgba(0,0,0,0.1)
+
+
+@media only screen and (min-width: 1904px)
+  .container
+    max-width: 1185px

@@ -17,9 +17,9 @@ export default class extends Vue {
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang='sass' scoped>
 h1
-  font-size 3em
+  font-size: 3em
 p
-  font-size 1.3em
+  font-size: 1.3em
 </style>

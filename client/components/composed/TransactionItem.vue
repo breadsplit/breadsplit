@@ -53,10 +53,10 @@ export default class TransactionItem extends mixins(UserInfoMixin, NavigationMix
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .transaction-item
   .creators-debtors
     .v-icon
-      opacity 0.4
-      vertical-align middle
+      opacity: 0.4
+      vertical-align: middle
 </style>

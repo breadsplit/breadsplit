@@ -34,11 +34,11 @@ export default class MemberSelect extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .category-options
-  display grid
-  grid-template-columns 1fr 1fr 1fr 1fr 1fr 1fr
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
 
   & > .option
-    cursor pointer
+    cursor: pointer
 </style>

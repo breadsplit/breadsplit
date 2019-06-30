@@ -51,15 +51,15 @@ export default class DateGroupingList extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .date-grouping-list
   .v-expansion-panels__header
-    display grid
-    grid-template-columns max-content auto max-content max-content
+    display: grid
+    grid-template-columns: max-content auto max-content max-content
 
     & > *
-      display inline-block
+      display: inline-block
 
   .v-expansion-panels
-    box-shadow none
+    box-shadow: none
 </style>

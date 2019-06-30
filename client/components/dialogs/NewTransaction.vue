@@ -172,35 +172,35 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .v-dialog--fullscreen
   .new-transaction
-    height 100%
+    height: 100%
 
 .new-transaction
-  overflow-x hidden
+  overflow-x: hidden
 
   .page
-    min-height 400px
-    height 100%
+    min-height: 400px
+    height: 100%
 
     & > .height-100
-      min-height 400px
+      min-height: 400px
 
   .page-container
-    padding 1.5em 2em 0.5em 2em
+    padding: 1.5em 2em 0.5em 2em
 
     .header
-      font-size 2.5em
+      font-size: 2.5em
 
     .subheader
-      font-size 1.3em
+      font-size: 1.3em
 
     .member-choices
-      text-align center
-      padding 2em 0
+      text-align: center
+      padding: 2em 0
 
       .user-avatar
-        padding 0.7em
-        cursor pointer
+        padding: 0.7em
+        cursor: pointer
 </style>

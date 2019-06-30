@@ -6,25 +6,25 @@
     slot(name='text')
 </template>
 
-<style lang='stylus'>
+<style lang='sass'>
 .action-with-text
-  text-align center
-  display inline-block
+  text-align: center
+  display: inline-block
 
   &:not(.inline)
     & > *
-      display block
+      display: block
 
     & > .text
-      font-size 0.9em
+      font-size: 0.9em
 
   &.inline
     & > *
-      display inline-block
-      vertical-align middle
+      display: inline-block
+      vertical-align: middle
 
     & > .text
-      font-size 1.1em
-      margin-left 10px
-      font-weight bold
+      font-size: 1.1em
+      margin-left: 10px
+      font-weight: bold
 </style>

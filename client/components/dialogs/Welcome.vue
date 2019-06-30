@@ -34,10 +34,10 @@ export default class WelcomeDialog extends mixins(DialogChildMixin, NavigationMi
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .welcome-dialog
   .signature
-    font-style italic
-    opacity 0.7
-    margin-top  -1em
+    font-style: italic
+    opacity: 0.7
+    margin-top: -1em
 </style>

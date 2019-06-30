@@ -139,8 +139,8 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .settings
   .v-list, .v-list *
-    transition 0.3s background cubic-bezier(0.25, 0.8, 0.5, 1)
+    transition: 0.3s background cubic-bezier(0.25, 0.8, 0.5, 1)
 </style>

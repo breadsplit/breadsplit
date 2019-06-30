@@ -37,9 +37,9 @@ export default class FAQ extends mixins(DialogChildMixin) {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .faq
   .v-expansion-panels__container--active
     .v-expansion-panels__header
-      font-weight bold
+      font-weight: bold
 </style>

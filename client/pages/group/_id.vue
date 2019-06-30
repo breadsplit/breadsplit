@@ -138,7 +138,7 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .v-bottom-navigation
-  border-top 1px solid rgba(125,125,125,0.3)
+  border-top: 1px solid rgba(125,125,125,0.3)
 </style>

@@ -1,6 +1,5 @@
-
 import NuxtConfiguration from '@nuxt/config'
-import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
+import theme from '../meta/theme'
 import pkg from '../package.json'
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -36,38 +35,34 @@ const config: NuxtConfiguration = {
 
   loading: { color: '#3B8070' },
 
-  css: [
-    '~/assets/css/app.styl',
-  ],
-
   build: {
-    transpile: ['vuetify/lib'],
-    plugins: [new VuetifyLoaderPlugin()],
-    loaders: {
-      stylus: {
-        import: ['~vuetify/src/stylus/settings/_variables.styl'],
-      },
-    },
     extractCSS: !debug,
-    extend(config, ctx) {
-      if (ctx.isDev && ctx.isClient && config.module) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue|ts)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/,
-        })
-      }
-    },
   },
-
-  plugins: [
-    '~/plugins/vuetify',
-  ],
 
   modules: [
     '@nuxtjs/google-gtag',
   ],
+
+  devModules: [
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/vuetify',
+  ],
+
+  vuetify: {
+    theme: {
+      themes: theme,
+    },
+    icons: {
+      iconfont: 'mdi',
+    },
+    customVariables: [
+      '~/assets/style/app.sass',
+    ],
+    defaultAssets: {
+      font: false,
+      icons: false,
+    },
+  },
 
   'google-gtag': {
     id: process.env.GOOGLE_GTAG_ID,

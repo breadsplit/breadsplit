@@ -86,9 +86,9 @@ export default class Login extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .login
   .privacy-continue
-    font-size 0.85em
-    opacity 0.8
+    font-size: 0.85em
+    opacity: 0.8
 </style>

@@ -361,79 +361,79 @@ export default class Splitting extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .splitting
-  overflow-y auto
+  overflow-y: auto
 
   .total-fee
-    font-size 1.1em
-    padding 1em 2em
+    font-size: 1.1em
+    padding: 1em 2em
 
   .mode-switcher
-    margin 0.8em 1.8em
+    margin: 0.8em 1.8em
 
     .v-tabs__item
-      white-space nowrap
+      white-space: nowrap
 
     .v-tabs__item--active
-      position relative !important
+      position: relative !important
       span
-        color var(--theme-primary)
+        color: var(--theme-primary)
 
     .v-tabs__item--active:before
-      content ""
-      background var(--theme-primary)
-      opacity 0.13
-      border-radius 5px
-      position absolute
-      top 5px
-      bottom 5px
-      left 5px
-      right 5px
+      content: ""
+      background: var(--theme-primary)
+      opacity: 0.13
+      border-radius: 5px
+      position: absolute
+      top: 5px
+      bottom: 5px
+      left: 5px
+      right: 5px
 
   .mode-amount, .mode-percent, .mode-weight
     .participators
-      padding 0 1em
+      padding: 0 1em
 
       .participator
-        padding 0.5em 0.7em
-        margin 0.2em 0
-        transition all .3s ease-in-out
-        border-radius 8px
-        border 2px solid transparent
+        padding: 0.5em 0.7em
+        margin: 0.2em 0
+        transition: all .3s ease-in-out
+        border-radius: 8px
+        border: 2px solid transparent
 
         &.raised
-          border-color var(--theme-primary)
+          border-color: var(--theme-primary)
 
         & > *,
         .user-info-section > *
-          vertical-align middle
+          vertical-align: middle
 
         .user-info-section
-          white-space nowrap
+          white-space: nowrap
 
         &.add
-          cursor pointer
+          cursor: pointer
 
     .v-slider, .v-slider input
-      max-height inherit
-      height 65px
+      max-height: inherit
+      height: 65px
 
   .mode-average
-    text-align center
-    padding 2em 1.5em
+    text-align: center
+    padding: 2em 1.5em
 
     .tip
-      font-size 1.1em
+      font-size: 1.1em
 
     .average-amount
-      display block
-      margin 0.5em
-      font-size 1.4em
+      display: block
+      margin: 0.5em
+      font-size: 1.4em
 
   .currency
-    opacity 0.4
-    font-size 0.8em
-    padding-left 4px
-    margin-top 13px
+    opacity: 0.4
+    font-size: 0.8em
+    padding-left: 4px
+    margin-top: 13px
 </style>

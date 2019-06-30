@@ -19,46 +19,46 @@ export default class DefaultLayout extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .logo-name
-  padding 12px
-  text-align center
+  padding: 12px
+  text-align: center
 
   .logo
-    height 40px
+    height: 40px
 
   .logo, .app-name
-    display inline-block
-    vertical-align middle
+    display: inline-block
+    vertical-align: middle
 
   .app-name
-    font-size 1.3em
-    line-height 1em
-    font-weight bold
-    padding 0.3em 0.2em 0 0.3em
+    font-size: 1.3em
+    line-height: 1em
+    font-weight: bold
+    padding: 0.3em 0.2em 0 0.3em
 
   .channel
-    display inline-block
-    font-size 0.7em
-    color rgba(125,125,125,0.3)
-    font-weight normal
-    text-transform uppercase
+    display: inline-block
+    font-size: 0.7em
+    color: rgba(125,125,125,0.3)
+    font-weight: normal
+    text-transform: uppercase
 
   &.clickable
-    cursor pointer
+    cursor: pointer
 
   &.large
-    font-size 2em
+    font-size: 2em
     .app-name
-      font-weight normal
+      font-weight: normal
 
     .logo
-      height 80px
+      height: 80px
 
 .theme--dark .channel
-  color rgba(255,255,255,0.3)
+  color: rgba(255,255,255,0.3)
 
 .theme--light .channel
-  color rgba(0,0,0,0.2)
+  color: rgba(0,0,0,0.2)
 
 </style>

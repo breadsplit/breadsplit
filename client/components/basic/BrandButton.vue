@@ -44,14 +44,14 @@ export default class BrandButton extends Vue {
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang='sass' scoped>
 .v-btn
-  padding 0
-  text-transform none
+  padding: 0
+  text-transform: none
 .brand-icon
-  position absolute
-  left 15px
+  position: absolute
+  left: 15px
 .brand-text
-  padding-left 30px
-  margin 0 20px
+  padding-left: 30px
+  margin: 0 20px
 </style>

@@ -80,10 +80,6 @@ const config: NuxtConfiguration = {
 
   loading: { color: '#fff' },
 
-  css: [
-    '~/assets/style/app.styl',
-  ],
-
   plugins: [
     /* The order of plugins is important */
 
@@ -149,7 +145,9 @@ const config: NuxtConfiguration = {
   ],
 
   devModules: [
-    ['@nuxtjs/eslint-module', { cache: true }],
+    ['@nuxtjs/eslint-module', {
+      cache: true,
+    }],
     '@nuxtjs/vuetify',
   ],
 
@@ -159,6 +157,13 @@ const config: NuxtConfiguration = {
     },
     icons: {
       iconfont: 'mdi',
+    },
+    customVariables: [
+      '~/assets/style/app.sass',
+    ],
+    defaultAssets: {
+      font: false,
+      icons: false,
     },
   },
 

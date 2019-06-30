@@ -77,63 +77,63 @@ export default class SoftNumpad extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .soft-numpad
-  width 100%
-  display grid
-  grid-template-columns 80fr 20fr
-  text-align center
-  user-select none
+  width: 100%
+  display: grid
+  grid-template-columns: 80fr 20fr
+  text-align: center
+  user-select: none
 
   &.absolute
-    position absolute
-    bottom 0
-    left 0
-    right 0
+    position: absolute
+    bottom: 0
+    left: 0
+    right: 0
 
   &.fixed
-    position fixed
-    bottom 0
-    left 0
-    right 0
+    position: fixed
+    bottom: 0
+    left: 0
+    right: 0
 
   .numbers
-    display grid
-    grid-template-columns 1fr 1fr 1fr
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr
 
     .button
-      height 65px
-      line-height 65px
-      font-size 1.8em
+      height: 65px
+      line-height: 65px
+      font-size: 1.8em
 
   .operators
-    display grid
-    grid-template-rows 1fr 1fr 1fr 1fr 1fr
+    display: grid
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr
 
   .button
-    position relative
-    cursor pointer
+    position: relative
+    cursor: pointer
 
     &.disabled
-      opacity 0.5
-      pointer-events none
+      opacity: 0.5
+      pointer-events: none
 
     .v-icon
-      position absolute
-      top 50%
-      left 50%
-      transform translateY(-50%) translateX(-50%)
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translateY(-50%) translateX(-50%)
 
   &.theme--light
-    background #f5f5f5
+    background: #f5f5f5
 
     .operators
-      background #eee
+      background: #eee
 
   &.theme--dark
-    background #303030
+    background: #303030
 
     .operators
-      background #282828
+      background: #282828
 
 </style>

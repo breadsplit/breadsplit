@@ -26,17 +26,17 @@ export default class Transactions extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .avatars-horizontal-group
-  display inline-block
-  vertical-align middle
+  display: inline-block
+  vertical-align: middle
 
   .user-avatar:not(:first-child)
-    margin-left -8px
+    margin-left: -8px
 
   .v-avatar
     .theme--light & img
-      border 2px solid #fff
+      border: 2px solid #fff
     .theme--dark & img
-      border 2px solid #424242
+      border: 2px solid #424242
 </style>

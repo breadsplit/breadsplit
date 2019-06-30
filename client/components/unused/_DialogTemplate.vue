@@ -22,6 +22,3 @@ export default class TEMPLATE extends Vue {
   }
 }
 </script>
-
-<style lang='stylus'>
-</style>
