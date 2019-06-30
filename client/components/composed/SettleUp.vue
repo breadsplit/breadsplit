@@ -11,7 +11,6 @@ v-card.settle-up
 
   v-list.pa-0
     template(v-for='(solution, index) in solutions')
-      v-divider(v-if='index!=0')
       v-list-item.relax-list-item(:key='solution.uid' @click='settleUp(solution)')
         i18n(path='ui.settle_up_solution').py-2.px-0
           span.text-no-wrap

@@ -1,13 +1,15 @@
 <template lang='pug'>
 v-expansion-panels.date-grouping-list(v-model='value')
   v-expansion-panel(v-for='([date, items], index) in groups' :key='date' :expand-icon='expandIcon')
-    template(v-slot:header)
-      b.primary--text {{formatDate(date)}}
-      div
-      .append
-        slot(name='header-append' :date='date' :items='items' :index='index' :active='index === value')
+    v-expansion-panel-header
+      .content
+        b.primary--text {{formatDate(date)}}
+        div
+        .append
+          slot(name='header-append' :date='date' :items='items' :index='index' :active='index === value')
 
-    slot(name='item' :date='date' :items='items' :index='index' :active='index === value')
+    v-expansion-panel-content
+      slot(name='item' :date='date' :items='items' :index='index' :active='index === value')
 </template>
 
 <script lang='ts'>
@@ -53,13 +55,13 @@ export default class DateGroupingList extends Vue {
 
 <style lang='sass'>
 .date-grouping-list
-  .v-expansion-panels__header
+  .v-expansion-panel-header > .content
     display: grid
     grid-template-columns: max-content auto max-content max-content
 
     & > *
       display: inline-block
 
-  .v-expansion-panels
+  .v-expansion-panel::before
     box-shadow: none
 </style>

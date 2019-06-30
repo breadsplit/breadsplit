@@ -1,7 +1,6 @@
 <template lang='pug'>
 v-list.pa-0
   template(v-for='(act, index) in activities')
-    v-divider(v-if='index!=0')
     v-list-item(:key='act.id', @click='onActivityClick(act)')
       v-list-item-avatar
         app-user-avatar(:id='act.by' size='38')

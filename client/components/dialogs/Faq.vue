@@ -2,12 +2,12 @@
 v-card.faq
   app-dialog-bar(@close='close()' attached) {{$t('ui.faq')}}
 
-  v-expansion-panels
+  v-expansion-panels(accordion)
     v-expansion-panel(v-for='(item,i) in list', :key='i')
-      template(v-slot:header)
+      v-expansion-panel-header
         div {{item.title}}
-      v-card
-        v-card-text.px-4.pt-1(v-html='item.details || wipText')
+      v-expansion-panel-content
+        .pa-0(v-html='item.details || wipText')
 </template>
 
 <script lang='ts'>
@@ -39,7 +39,8 @@ export default class FAQ extends mixins(DialogChildMixin) {
 
 <style lang='sass'>
 .faq
-  .v-expansion-panels__container--active
-    .v-expansion-panels__header
-      font-weight: bold
+  .v-expansion-panel-header
+    font-weight: bold
+  .v-expansion-panel-content
+    font-size: 0.9em
 </style>

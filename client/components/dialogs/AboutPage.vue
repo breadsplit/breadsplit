@@ -30,10 +30,10 @@ v-card.about-page
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
 import socials from '~/../meta/socials'
-import { DialogChildMixin } from '~/mixins'
+import { DialogChildMixin, CommonMixin } from '~/mixins'
 
 @Component
-export default class AboutPage extends mixins(DialogChildMixin) {
+export default class AboutPage extends mixins(DialogChildMixin, CommonMixin) {
   socials = socials
 }
 </script>

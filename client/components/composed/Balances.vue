@@ -8,7 +8,6 @@ v-card.balances
 
   v-list.pa-0
     template(v-for='(balance, index) in balances')
-      v-divider(v-if='index!=0')
       v-list-item(:key='balance.uid' @click='gotoNewTransaction({from: balance.uid})')
         v-list-item-avatar
           app-user-avatar(:id='balance.uid' size='38')
