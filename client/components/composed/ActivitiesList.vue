@@ -1,27 +1,53 @@
 <template lang='pug'>
-v-list.pa-0
-  template(v-for='(act, index) in activities')
-    v-list-item(:key='act.id', @click='onActivityClick(act)')
+v-list.pa-0.activities-list
+  template(v-for='([act, prev], index) in parsed')
+    v-list-item.relax-list-item(:key='act.id' v-on='on(act)' :class='{head: act.by !== prev.by}')
       v-list-item-avatar
-        app-user-avatar(:id='act.by' size='38')
+        app-user-avatar(v-if='act.by !== prev.by' :id='act.by' size='34')
       v-list-item-content
+        v-list-item-subtitle.timestamp(v-if='act.by !== prev.by || d(act.timestamp) !== d(prev.timestamp)' color='primary') {{d(act.timestamp)}}
         v-list-item-title(v-html='activityDescription(act)')
-        v-list-item-subtitle.sub-label {{$dt(act.timestamp).fromNow()}}
 </template>
 
 <script lang='ts'>
 import { Component, Prop, mixins, Getter } from 'nuxt-property-decorator'
 import { Activity } from '~/types'
-import { getActivityDescription } from '~/core'
-import { NavigationMixin, UserInfoMixin } from '~/mixins'
+import { getActivityDescription, dateFromNow } from '~/core'
+import { NavigationMixin, UserInfoMixin, CommonMixin } from '~/mixins'
 
 @Component
-export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixin) {
+export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixin, CommonMixin) {
   @Prop(Array) readonly activities!: Activity[]
   @Getter('locale') locale!: string
 
+  get parsed() {
+    return this.activities.map((act, idx) => {
+      const prev = this.activities[idx - 1] || {}
+      return [act, prev]
+    })
+  }
+
+  d(ts) {
+    return dateFromNow(ts, this.currentLocale)
+  }
+
   activityDescription(act: Activity) {
-    return getActivityDescription(this.$t.bind(this), act, this.locale, id => this.getUserName(id))
+    return getActivityDescription(this.$t.bind(this), act, this.locale, id => '')
+  }
+
+  on(act: Activity) {
+    if (!this.clickable(act))
+      return {}
+    return {
+      click: () => this.onActivityClick(act),
+    }
+  }
+
+  clickable(act: Activity) {
+    // TODO: support more
+    if (act.entity === 'transaction' && act.entity_id)
+      return true
+    return false
   }
 
   onActivityClick(act: Activity) {
@@ -30,3 +56,16 @@ export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixi
   }
 }
 </script>
+
+<style lang='sass'>
+.activities-list
+  .v-list-item, .v-list-item__avatar
+    min-height: 0 !important
+    height: initial !important
+  .head
+    margin-top: 10px
+  .timestamp
+    color: var(--theme-primary) !important
+  .v-list-item__content
+    padding: 0.4em 0
+</style>

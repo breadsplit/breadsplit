@@ -23,12 +23,12 @@ v-list-item.transaction-item(@click='navigate()')
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
-import { UserInfoMixin, NavigationMixin } from '~/mixins'
+import { UserInfoMixin, NavigationMixin, CommonMixin } from '~/mixins'
 import { Transaction } from '~/types'
 import { dateFromNow } from '~/core'
 
 @Component
-export default class TransactionItem extends mixins(UserInfoMixin, NavigationMixin) {
+export default class TransactionItem extends mixins(UserInfoMixin, NavigationMixin, CommonMixin) {
   @Prop(Object) readonly transaction!: Transaction
 
   get creditor_ids() {
@@ -40,7 +40,7 @@ export default class TransactionItem extends mixins(UserInfoMixin, NavigationMix
   }
 
   get datetime() {
-    return dateFromNow(this.transaction.timestamp)
+    return dateFromNow(this.transaction.timestamp, this.currentLocale)
   }
 
   get desc() {

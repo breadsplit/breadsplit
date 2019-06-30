@@ -91,9 +91,6 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
   localeItems = localeItems
   languageSelecting = false
 
-  get currentLocale() {
-    return this.$i18n.locale || 'en'
-  }
   get currentLocaleDisplay() {
     const locale = localeItems.find(l => l.value === this.currentLocale)
     if (locale && locale.text)

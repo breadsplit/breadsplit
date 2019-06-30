@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-expansion-panels.date-grouping-list(v-model='value')
+v-expansion-panels.date-grouping-list(v-model='value' accordion)
   v-expansion-panel(v-for='([date, items], index) in groups' :key='date' :expand-icon='expandIcon')
     v-expansion-panel-header
       .content
@@ -29,7 +29,7 @@ export default class DateGroupingList extends Vue {
   get groups() {
     if (!this.data)
       return []
-    const entries = Object.entries(groupBy(this.data, t =>
+    const entries = Object.entries(groupBy(this.data.filter(i => i.timestamp), t =>
       dayjs(t.timestamp).startOf(this.groupBy)
     ))
     entries.sort((a, b) => +dayjs(b[0]) - +dayjs(a[0]))
