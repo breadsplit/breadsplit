@@ -1,5 +1,5 @@
 import union from 'lodash/union'
-import { capitalizeEachWords } from '../core/formatters'
+import { capitalizeEachWords } from '../utils/formatters'
 
 export interface Currency {
   cc: string

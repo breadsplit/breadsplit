@@ -16,7 +16,7 @@ v-expansion-panels.date-grouping-list(v-model='value' accordion)
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import groupBy from 'lodash/groupBy'
 import dayjs from 'dayjs'
-import { dateToRelative } from '~/core'
+import { dateToRelative } from '~/../utils/formatters'
 
 @Component
 export default class DateGroupingList extends Vue {

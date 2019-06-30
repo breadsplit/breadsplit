@@ -12,7 +12,8 @@ v-list.pa-0.activities-list
 <script lang='ts'>
 import { Component, Prop, mixins, Getter } from 'nuxt-property-decorator'
 import { Activity } from '~/types'
-import { getActivityDescription, dateFromNow } from '~/core'
+import { getActivityDescription } from '~/core'
+import { dateFromNow } from '~/../utils/formatters'
 import { NavigationMixin, UserInfoMixin, CommonMixin } from '~/mixins'
 
 @Component

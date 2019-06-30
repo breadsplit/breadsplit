@@ -1,4 +1,4 @@
-import dayjs from './dayjs_config'
+import dayjs from '../core/dayjs_config'
 import { Translator, t } from './i18n'
 
 export function getTimezone() {

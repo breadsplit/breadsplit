@@ -4,7 +4,7 @@ span.money-label(:class='balanceColorClass') {{formatted}}
 
 <script lang='ts'>
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import { numberToMoney } from '~/core'
+import { numberToMoney } from '~/../utils/formatters'
 
 @Component
 export default class MoneyLabel extends Vue {

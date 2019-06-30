@@ -25,7 +25,7 @@ v-list-item.transaction-item(@click='navigate()')
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
 import { UserInfoMixin, NavigationMixin, CommonMixin } from '~/mixins'
 import { Transaction } from '~/types'
-import { dateFromNow } from '~/core'
+import { dateFromNow } from '~/../utils/formatters'
 
 @Component
 export default class TransactionItem extends mixins(UserInfoMixin, NavigationMixin, CommonMixin) {
