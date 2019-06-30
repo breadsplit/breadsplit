@@ -1,4 +1,4 @@
-import { MemberDefault, GroupDefault, TransactionDefault, IsThisId } from '~/core'
+import { MemberDefault, GroupDefault, TransactionDefault, IsThisId } from '../../../packages/core'
 
 describe('models initialization', () => {
   test('member', () => {

@@ -1,5 +1,5 @@
-import { getters } from '~/store/group'
-import { RootStateDefault, GroupStateDefault } from '~/store'
+import { getters } from '../../../packages/client/store/group'
+import { RootStateDefault, GroupStateDefault } from '../../../packages/client/store'
 
 describe('group state getters', () => {
   it('current', () => {

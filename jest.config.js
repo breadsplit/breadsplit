@@ -12,7 +12,7 @@ module.exports = {
     'yaml',
   ],
   testMatch: [
-    '**/packages/client/**/?(*.)+(spec|test).[jt]s?(x)',
+    '**/test/unit/**/?(*.)+(spec|test).[jt]s?(x)',
   ],
   transform: {
     '^.+\\.ts$': 'ts-jest',
@@ -29,9 +29,4 @@ module.exports = {
     '!<rootDir>/packages/client/utils/**/id_helper.ts',
   ],
   coverageDirectory: './coverage/',
-  globals: {
-    'ts-jest': {
-      tsConfig: './packages/client/tsconfig.json',
-    },
-  },
 }

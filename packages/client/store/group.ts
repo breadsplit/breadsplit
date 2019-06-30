@@ -6,8 +6,8 @@ import { oc } from 'ts-optchain'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
 import { GroupState, RootState, Group, ServerGroup, Operation, ClientGroup, ExchangeRecord } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe, GroupBalances, GetSettleUpSolutions, FallbackExchangeRate } from '~/core'
-import { GroupStateDefault } from '~/store'
 import { DEBUG } from '~/../meta/env'
+import { GroupStateDefault } from '.'
 
 // eslint-disable-next-line no-console
 const log = (...args) => !DEBUG || console.log('VUX', ...args)

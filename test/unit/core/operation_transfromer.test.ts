@@ -1,5 +1,5 @@
-import { EvalTransforms, ProcessOperation, ProcessOperations, BasicCache } from '~/core'
-import { TransformFunctions, SnapshotCache, TransOperation, TransOperationOption } from '~/types'
+import { EvalTransforms, ProcessOperation, ProcessOperations, BasicCache } from '../../../packages/core'
+import { TransformFunctions, SnapshotCache, TransOperation, TransOperationOption } from '../../../packages/types'
 
 let transformCount = 0
 

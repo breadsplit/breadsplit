@@ -1,4 +1,4 @@
-import { TransactionDefault, TransactionBalanceChanges } from '~/../core'
+import { TransactionDefault, TransactionBalanceChanges } from '../../../packages/core'
 
 describe('transaction balances', () => {
   const trans = TransactionDefault({

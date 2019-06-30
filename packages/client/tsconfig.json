@@ -1,33 +1,9 @@
 {
+  "extends": "../../tsconfig.base",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "noImplicitAny": false,
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "strict": true,
-    "strictFunctionTypes": false,
-    "target": "esnext",
-    "lib": [
-      "esnext",
-      "esnext.asynciterable",
-      "dom"
-    ],
+    "baseUrl": "..",
     "paths": {
-      "~/*": ["./*"],
-    },
-    "types": [
-      "@nuxt/vue-app",
-      "@types/node",
-      "@types/jest",
-      "@types/webpack-env",
-      "vuetify"
-    ],
-    "plugins": [
-      { "transform": "ts-optchain/transform" },
-    ],
+      "~/*": ["./client/*"],
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { mutations, getters, RootStateDefault } from '~/store'
+import { mutations, getters, RootStateDefault } from '../../../packages/client/store'
 
 describe('root state mutations', () => {
   it('switchLocale', () => {
