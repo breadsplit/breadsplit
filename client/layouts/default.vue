@@ -12,10 +12,10 @@ v-app(:dark='dark')
         v-divider
 
       div(style='overflow-y:auto')
-        v-list-item(
-          v-for='(group, i) in groups'
-          :key='i', :to='`/group/${group.id}`'
-          router, exact)
+        v-list-item.pl-4(
+          v-for='(group, i) in groups' :key='i'
+          :to='`/group/${group.id}`' router exact
+        )
           v-list-item-action
             v-icon mdi-{{ group.icon }}
           v-list-item-content
@@ -33,7 +33,7 @@ v-app(:dark='dark')
         v-divider.mb-2
 
         // New group item
-        v-list-item(@click='openNewGroupDialog()')
+        v-list-item.pl-4(@click='openNewGroupDialog()')
           v-list-item-action
             v-icon mdi-plus
           v-list-item-content
@@ -41,7 +41,7 @@ v-app(:dark='dark')
 
         // Sign in
         template(v-if='user.anonymous')
-          v-list-item(@click='$refs.login.open()')
+          v-list-item.pl-4(@click='$refs.login.open()')
             v-list-item-action
               v-avatar(size='36', color='#00000020', style='margin: -6px;')
                 v-icon mdi-account
@@ -50,7 +50,7 @@ v-app(:dark='dark')
 
         // User profile
         template(v-else)
-          v-list-item(@click='promptLogout()')
+          v-list-item.pl-4(@click='promptLogout()')
             v-list-item-action
               v-avatar(size='36' color='#00000020' style='margin: -6px;')
                 img(:src='user.avatar_url')
@@ -60,7 +60,7 @@ v-app(:dark='dark')
               v-icon(color='red' size='20') mdi-cloud-off-outline
 
         // Settings
-        v-list-item(@click='openSettings()')
+        v-list-item.pl-4(@click='openSettings()')
           v-list-item-action
             v-icon mdi-settings
           v-list-item-content

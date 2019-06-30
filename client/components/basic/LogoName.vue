@@ -1,7 +1,7 @@
 <template lang='pug'>
 .logo-name
   img.logo(src='/img/logo/favicon.png')
-  .app-name(:style='{color:$vuetify.theme.primary}') {{$t('appname')}}
+  .app-name(:style='{color:primary}') {{$t('appname')}}
   .channel(v-text='channel')
 </template>
 
@@ -12,6 +12,10 @@ import { RELEASE_CHANNEL } from '~/../meta/env'
 @Component
 export default class DefaultLayout extends Vue {
   channel: string = RELEASE_CHANNEL
+
+  get primary() {
+    return this.$vuetify.theme.currentTheme.primary
+  }
 }
 </script>
 

@@ -7,7 +7,7 @@ v-card.settings
     v-list(two-line, subheader)
       v-subheader {{$t('ui.general')}}
       v-divider
-      v-list-item(avatar, @click='darkMode=!darkMode')
+      v-list-item(@click='darkMode=!darkMode')
         v-list-item-avatar
           v-icon {{ darkMode ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
         v-list-item-content
@@ -15,14 +15,14 @@ v-card.settings
           v-list-item-subtitle {{ darkMode ? $t('ui.setting_options.enabled') : $t('ui.setting_options.disabled') }}
         v-list-item-action
           v-switch(color='primary', :input-value='darkMode')
-      v-list-item(avatar, @click='languageSelecting=true')
+      v-list-item(@click='languageSelecting=true')
         v-list-item-avatar
           v-icon mdi-web
         v-list-item-content
           v-list-item-title {{$t('ui.language')}}
           v-list-item-subtitle {{currentLocaleDisplay}}
 
-      v-list-item(avatar, @click='notificationButton()')
+      v-list-item(@click='notificationButton()')
         template(v-if='!notificationEnabled')
           v-list-item-avatar
             v-icon mdi-bell-off-outline
@@ -39,7 +39,7 @@ v-card.settings
     v-list(two-line, subheader)
       v-subheader {{$t('ui.advance')}}
       v-divider
-      v-list-item(avatar, @click='purgeData')
+      v-list-item(@click='purgeData')
         v-list-item-avatar
           v-icon mdi-alert-box
         v-list-item-content
@@ -50,19 +50,19 @@ v-card.settings
       v-subheader {{$t('ui.misc')}}
       v-divider
 
-      v-list-item(avatar, @click='openDialog("faq")')
+      v-list-item(@click='openDialog("faq")')
         v-list-item-avatar
           v-icon mdi-help-circle-outline
         v-list-item-content
           v-list-item-title {{$t('ui.faq')}}
 
-      v-list-item(avatar, @click='$refs.feedback.open()')
+      v-list-item(@click='$refs.feedback.open()')
         v-list-item-avatar
           v-icon mdi-message-alert-outline
         v-list-item-content
           v-list-item-title {{$t('ui.feedback')}}
 
-      v-list-item(avatar, @click='openDialog("about")')
+      v-list-item(@click='openDialog("about")')
         v-list-item-avatar
           v-icon mdi-information-outline
         v-list-item-content
@@ -70,7 +70,7 @@ v-card.settings
 
   v-bottom-sheet(v-model='languageSelecting')
     v-list.pl-3.pt-3.pb-3
-      v-list-item.pa-1(v-for='locale in localeItems', :key='locale.value', avatar, @click='switchLocale(locale.value)')
+      v-list-item.pa-1(v-for='locale in localeItems', :key='locale.value', @click='switchLocale(locale.value)')
         v-list-item-title {{ locale.text }}
         v-list-item-action(v-if='locale.value === currentLocale')
           v-icon mdi-check

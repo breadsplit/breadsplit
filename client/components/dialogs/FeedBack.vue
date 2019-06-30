@@ -6,16 +6,18 @@ v-card.feedback
     v-text-field(
       :label='$t("feedback.contact_info") + $t("ui.optional")'
       v-model='feedbackInfo.email'
-      clearable auto-grow box)
+      clearable auto-grow filled)
 
     v-textarea(
       :label='$t("feedback.describe")'
       v-model='feedbackInfo.content'
       :counter='closeToMaxLength ? maxlength : null'
-      autofocus box clearable
+      autofocus filled clearable
       persistent-hint :hint='issueHint')
 
-    v-btn(block text @click='upload()' :disabled='!hasMeaningfulContent') {{$t('ui.button_send')}}
+    .mt-3
+
+    v-btn(block @click='upload()' :disabled='!hasMeaningfulContent') {{$t('ui.button_send')}}
 
 </template>
 
