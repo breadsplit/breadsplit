@@ -1,52 +1,47 @@
 <template lang='pug'>
-v-dialog(v-model='dialog', :max-width='options.width', @keydown.esc='cancel', v-bind:style='{ zIndex: options.zIndex }')
-  v-card
-    v-toolbar(v-if='title', dark, :color='options.color', dense, flat)
-      v-toolbar-title.white--text {{ title }}
+app-promise-dialog(ref='dialog' :max-width='options.width')
+  v-toolbar(dark :color='options.color' dense)
+    v-toolbar-title.white--text {{ title }}
+  v-card(tile)
     v-card-text(v-show='!!message') {{ message }}
-    v-card-actions.pt-0
+    v-card-actions
       v-spacer
-      v-btn(color='grey', text, @click.native='cancel') {{$t('ui.button_no')}}
-      v-btn(color='primary darken-1', text, @click.native='agree') {{$t('ui.button_yes')}}
+      v-btn(color='grey' text @click='cancel()') 取消
+      v-btn(color='primary darken-1' text @click='agree()') 确定
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Vue, Component } from 'nuxt-property-decorator'
+import PromiseDialog from './PromiseDialog.vue'
 
 @Component
 export default class Confirm extends Vue {
-  dialog = false
-  resolve: ((result?) => void) | null = null
-  reject: ((error) => void) | null = null
-  message = null
-  title = null
+  message = ''
+  title = ''
+
   options = {
     color: 'primary',
-    width: 290,
-    zIndex: 200,
+    width: 350,
   }
 
-  open(message, title, options) {
-    this.dialog = true
+  $refs!: {
+    dialog: PromiseDialog
+  }
+
+  async open(title, message = '', options = {}) {
     this.title = title
     this.message = message
     this.options = Object.assign(this.options, options)
-    return new Promise((resolve, reject) => {
-      this.resolve = resolve
-      this.reject = reject
-    })
+
+    return await this.$refs.dialog.open(false)
   }
 
   agree() {
-    if (this.resolve)
-      this.resolve(true)
-    this.dialog = false
+    this.$refs.dialog.close(true)
   }
 
   cancel() {
-    if (this.resolve)
-      this.resolve(false)
-    this.dialog = false
+    this.$refs.dialog.close(false)
   }
 }
 </script>

@@ -1,11 +1,11 @@
 <template lang="pug">
 v-navigation-drawer(
   v-model='internalDrawer' :mini-variant='miniVariant'
-  fixed app :mobile-break-point='mobileBreakPoint'
+  fixed app :mobile-break-point='mobileBreakPoint' width='320'
 )
   .height-100(v-rows='"max-content auto max-content"')
     div
-      //app-logo-name.clickable(v-ripple, @click.native='goHome()')
+      app-logo-name.clickable.py-4(v-if='isMobile' v-ripple @click.native='goHome()')
       v-divider
 
     div(style='overflow-y:auto')

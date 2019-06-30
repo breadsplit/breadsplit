@@ -2,8 +2,8 @@
 v-app(:dark='dark')
   app-global-style
 
-  app-nav-drawer(:drawer='drawer')
-  app-nav-bar(:drawer='drawer')
+  app-nav-drawer(:drawer.sync='drawer')
+  app-nav-bar(:drawer.sync='drawer')
 
   v-content
     nuxt
