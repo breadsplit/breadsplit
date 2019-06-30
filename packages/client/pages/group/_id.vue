@@ -36,6 +36,7 @@
     :fixed='isMobile'
     :horizontal='!isMobile'
     :shift='isMobile'
+    :grow='isMobile'
     color='primary'
   )
     template(v-for='item in tabItems')

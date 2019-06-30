@@ -64,4 +64,7 @@ export default class DateGroupingList extends Vue {
 
   .v-expansion-panel::before
     box-shadow: none
+
+  .v-expansion-panel-content__wrap
+    padding: 0
 </style>
