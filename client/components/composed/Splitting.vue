@@ -68,11 +68,11 @@
           )
           .currency {{currency}}
 
-      .participator.add.px-1(v-if='candidates.length')
+      .participator.add.px-2.mx-1(v-if='candidates.length')
         app-member-select(:members='candidates', @input='id=>addParticipator(id)')
           v-btn(icon small).op-50
             v-icon(size='24') mdi-plus
-          span {{$t('ui.newtrans.add_payer')}}
+          span.ml-1 {{$t('ui.newtrans.add_payer')}}
 
   //* ========== Percent ========== *//
   .mode-percent(v-show='mode==="percent"')
@@ -86,6 +86,8 @@
           @change='value => updatePercent(pa, value)'
           always-dirty
           :color='(pa.locked || pa.percent === 0) ? "primary" : "grey"'
+          :thumb-color='(pa.locked || pa.percent === 0) ? "primary" : "grey"'
+          :track-color='(pa.locked || pa.percent === 0) ? "primary lighten-3" : "grey lighten-2"'
           :min='0'
           :max='100'
           thumb-label hide-details

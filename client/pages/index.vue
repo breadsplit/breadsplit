@@ -10,7 +10,7 @@ v-container
     v-divider.my-3
 
     v-flex.text-xs-center(xs12, sm8, md6)
-      v-btn(@click='openDialog("newgroup")' round color='primary')
+      v-btn(@click='openDialog("newgroup")' rounded color='primary')
         v-icon.mr-2 mdi-plus
         span {{$t('ui.button_new_group')}}
 </template>

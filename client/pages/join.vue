@@ -41,11 +41,11 @@
               v-list-item-action(v-if='isLocal(member.uid)')
                 v-btn(color='primary' text @click='join(member.uid)').px-3 {{$t('ui.join.this_is_me')}}
 
-        v-btn(v-if='uid', @click='join()', color='primary', large, round).pl-0
+        v-btn(v-if='uid' @click='join()' color='primary' large rounded).pl-0
           app-user-avatar(:id='uid', :size='44').mr-3
           span {{$t('ui.join_as_me', [me.name])}}
 
-        v-btn.px-4(v-else color='primary' round dark @click='join()') {{$t('ui.join.join_anonymous')}}
+        v-btn.px-4(v-else color='primary' rounded dark @click='join()') {{$t('ui.join.join_anonymous')}}
 
     app-login(ref='login')
 </template>

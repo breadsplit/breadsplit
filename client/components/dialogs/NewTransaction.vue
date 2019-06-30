@@ -2,7 +2,7 @@
 v-card.new-transaction(v-rows='"auto max-content"')
   app-close-button(@close='close')
 
-  v-window.grid-fill-height(v-model='step' touchless style='min-height:600px')
+  v-window.grid-fill-height(v-model='step' touchless style='min-height:550px')
     v-window-item.page.page-1(:value='1')
       page-creditors(
         :form='form'
@@ -35,20 +35,20 @@ v-card.new-transaction(v-rows='"auto max-content"')
     v-divider
     v-card-actions.pa-3
       template(v-if='step === 1')
-        v-btn.button-cancel(text, @click='close')
+        v-btn.button-cancel.px-4(text, @click='close')
           | {{$t('ui.button_cancel')}}
 
       template(v-else)
-        v-btn.button-back(text, @click='step--')
+        v-btn.button-back.px-4(text, @click='step--')
           | {{$t('ui.button_back')}}
 
       v-spacer
 
       template(v-if='step >= 2')
-        v-btn.button-quick-add(:disabled='!form.total_fee', color='primary', text, @click='submit')
+        v-btn.button-quick-add.px-4(:disabled='!form.total_fee', color='primary', text, @click='submit')
           | {{$t('ui.button_quick_add')}}
 
-      v-btn.button-next(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
+      v-btn.button-next.px-4(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
         | {{btnNextText}}
 
 </template>

@@ -3,7 +3,7 @@ v-card.settings
   app-dialog-bar(@close='close()', attached)
     | {{$t('ui.settings')}}
 
-  v-container.pt-0.pb-1(ref='container', :class='{"px-0": isMobile}')
+  v-container.pt-0.pb-1(ref='container', :class='{"px-0": isMobile, "px-3": !isMobile}')
     v-list(two-line, subheader)
       v-subheader {{$t('ui.general')}}
       v-divider
@@ -12,7 +12,7 @@ v-card.settings
           v-icon {{ darkMode ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
         v-list-item-content
           v-list-item-title {{$t('ui.setting_options.dark_mode')}}
-          v-list-item-sub-title {{ darkMode ? $t('ui.setting_options.enabled') : $t('ui.setting_options.disabled') }}
+          v-list-item-subtitle {{ darkMode ? $t('ui.setting_options.enabled') : $t('ui.setting_options.disabled') }}
         v-list-item-action
           v-switch(color='primary', :input-value='darkMode')
       v-list-item(avatar, @click='languageSelecting=true')
@@ -20,7 +20,7 @@ v-card.settings
           v-icon mdi-web
         v-list-item-content
           v-list-item-title {{$t('ui.language')}}
-          v-list-item-sub-title {{currentLocaleDisplay}}
+          v-list-item-subtitle {{currentLocaleDisplay}}
 
       v-list-item(avatar, @click='notificationButton()')
         template(v-if='!notificationEnabled')
@@ -28,13 +28,13 @@ v-card.settings
             v-icon mdi-bell-off-outline
           v-list-item-content
             v-list-item-title {{$t('ui.setting_options.notification')}}
-            v-list-item-sub-title {{$t('ui.setting_options.notification_disabled')}}
+            v-list-item-subtitle {{$t('ui.setting_options.notification_disabled')}}
         template(v-else)
           v-list-item-avatar
             v-icon mdi-bell-ring
           v-list-item-content
             v-list-item-title {{$t('ui.setting_options.notification')}}
-            v-list-item-sub-title {{$t('ui.setting_options.notification_enabled')}}
+            v-list-item-subtitle {{$t('ui.setting_options.notification_enabled')}}
 
     v-list(two-line, subheader)
       v-subheader {{$t('ui.advance')}}
@@ -44,7 +44,7 @@ v-card.settings
           v-icon mdi-alert-box
         v-list-item-content
           v-list-item-title {{$t('ui.setting_options.reset')}}
-          v-list-item-sub-title {{$t('ui.setting_options.clear_all_data')}}
+          v-list-item-subtitle {{$t('ui.setting_options.clear_all_data')}}
 
     v-list(two-line, subheader)
       v-subheader {{$t('ui.misc')}}

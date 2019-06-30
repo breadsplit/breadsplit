@@ -7,7 +7,7 @@ v-list-item.transaction-item(@click='navigate()')
     )
   v-list-item-content
     v-list-item-title {{desc}}
-    v-list-item-sub-title.sub-label {{datetime}}
+    v-list-item-subtitle.sub-label {{datetime}}
 
   v-list-item-action.pr-1.text-xs-right(v-rows='"auto max-content"')
     app-money-label(

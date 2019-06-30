@@ -3,8 +3,8 @@ v-app(:dark='dark')
   app-global-style
 
   v-navigation-drawer(
-    v-model='drawer', :mini-variant='miniVariant'
-    :clipped='clipped', fixed, app, :mobile-break-point='mobileBreakPoint'
+    v-model='drawer' :mini-variant='miniVariant'
+    fixed app :mobile-break-point='mobileBreakPoint'
   )
     .height-100(v-rows='"max-content auto max-content"')
       div
@@ -31,6 +31,7 @@ v-app(:dark='dark')
 
       .drawer-list-bottom.pb-2
         v-divider.mb-2
+
         // New group item
         v-list-item(@click='openNewGroupDialog()')
           v-list-item-action
@@ -51,12 +52,12 @@ v-app(:dark='dark')
         template(v-else)
           v-list-item(@click='promptLogout()')
             v-list-item-action
-              v-avatar(size='36', color='#00000020', style='margin: -6px;')
+              v-avatar(size='36' color='#00000020' style='margin: -6px;')
                 img(:src='user.avatar_url')
             v-list-item-content
               v-list-item-title {{ user.name || user.email }}
             v-list-item-action(v-if='!userIsOnline')
-              v-icon(color='red', size='20') mdi-cloud-off-outline
+              v-icon(color='red' size='20') mdi-cloud-off-outline
 
         // Settings
         v-list-item(@click='openSettings()')
@@ -65,31 +66,30 @@ v-app(:dark='dark')
           v-list-item-content
             v-list-item-title {{$t('ui.settings')}}
 
-  v-app-bar.app-toolbar(
-    :clipped-left='clipped' flat color='transparent' height='60'
-    ).primary--text
-    v-btn(icon,  text, @click='drawer = !drawer')
+  v-app-bar.app-toolbar(app flat color='transparent' height='60').primary--text
+    v-btn(icon text @click='drawer = !drawer')
       v-icon(color='primary') mdi-menu
     v-toolbar-title(v-text='title')
     v-spacer
     v-toolbar-items
       template(v-if='current')
         template(v-if='isSync()')
-          v-btn(icon,  text).syncing-icon
+          v-btn(icon text).syncing-icon
             v-icon(color='primary') mdi-cloud-sync
         template(v-if='currentShareLink')
-          v-btn(icon,  text, @click='copyShareLink()')
+          v-btn(icon text @click='copyShareLink()')
             v-icon.op-50 mdi-share-variant
-        v-menu(offset-y='')
-          v-btn(icon,  text, slot='activator')
-            v-icon.op-50 mdi-dots-vertical
+        v-menu(offset-y)
+          template(v-slot:activator='{ on }')
+            v-btn(icon text v-on='on')
+              v-icon.op-50 mdi-dots-vertical
           v-list
-            v-list-item(v-for='(item, index) in group_menu', :key='index', @click='onGroupMenu(item.key)')
+            v-list-item(v-for='(item, index) in group_menu' :key='index' @click='onGroupMenu(item.key)')
               v-list-item-title {{ $t(item.title) }}
 
       // User profile
       template(v-if='!user.anonymous')
-        v-avatar(size='36', @click='promptLogout()', color='#00000020').avatar-in-toolbar
+        v-avatar(size='36' @click='promptLogout()' color='#00000020').avatar-in-toolbar
           img(:src='user.avatar_url')
 
   v-content
@@ -118,7 +118,6 @@ import head from './head'
 })
 export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
   // Data
-  clipped = false
   drawer = false
   fixed = false
   miniVariant = false

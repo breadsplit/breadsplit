@@ -12,12 +12,13 @@ v-card.members
         v-list-item-content
           v-list-item-title
             app-user-info(:id='member.uid', field='name')
-          v-list-item-sub-title
+          v-list-item-subtitle
             app-user-info(:id='member.uid', field='email')
         v-list-item-action(v-if='memberMenu(member).length')
           v-menu
-            v-btn(icon text slot='activator')
-              v-icon mdi-dots-vertical
+            template(v-slot:activator='{ on }')
+              v-btn(icon text v-on='on')
+                v-icon mdi-dots-vertical
             v-list
               template(v-for='item in memberMenu(member)')
                 v-list-item(@click='item.handler')
