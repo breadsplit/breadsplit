@@ -1,21 +1,20 @@
 <template lang='pug'>
-.category-select
-  v-menu(v-model='menu' :max-width='400')
-    template(v-slot:activator='{ on }')
-      slot(:on='on')
+v-menu.category-select(v-model='menu' :max-width='400')
+  template(v-slot:activator='{ on }')
+    slot(:on='on')
 
-    v-card.pa-2.category-options
-      template(v-for='cat in categories')
-        app-action-with-text.option.pa-2(v-ripple @click.native='setValue(cat.name)')
-          app-category-icon(
-            slot='action'
-            :category='cat.name',
-            size='32'
-          )
-          app-category-label(
-            slot='text'
-            :category='cat.name'
-          )
+  v-card.pa-2.category-options
+    template(v-for='cat in categories')
+      app-action-with-text.option.pa-2(v-ripple @click.native='setValue(cat.name)')
+        app-category-icon(
+          slot='action'
+          :category='cat.name',
+          size='32'
+        )
+        app-category-label(
+          slot='text'
+          :category='cat.name'
+        )
 </template>
 
 <script lang='ts'>
@@ -35,11 +34,11 @@ export default class MemberSelect extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .category-options
-  display grid
-  grid-template-columns 1fr 1fr 1fr 1fr 1fr 1fr
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
 
   & > .option
-    cursor pointer
+    cursor: pointer
 </style>

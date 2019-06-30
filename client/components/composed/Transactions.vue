@@ -8,7 +8,7 @@ v-card.transactions
     template(v-slot:append v-if='needShowMore')
       v-divider
       .text-xs-center
-        v-btn(flat small fluid color='primary' @click='$emit("show-all")') Show all
+        v-btn(text small fluid color='primary' @click='$emit("show-all")') Show all
 
   app-date-grouping-list(v-else :data='group.transactions' expand-icon='')
     template(v-slot:header-append='{items, active, date}')
@@ -62,12 +62,9 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .transactions
   .time-label
-    font-size 0.8em
-    opacity 0.8
-
-  .v-expansion-panel
-    box-shadow none
+    font-size: 0.8em
+    opacity: 0.8
 </style>

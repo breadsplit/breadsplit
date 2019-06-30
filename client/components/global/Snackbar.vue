@@ -10,7 +10,7 @@ v-snackbar(
 )
   span(v-html='message')
   template(v-for='button in options.buttons')
-    v-btn(:color='options.buttonColor', flat, @click='button.handler') {{button.text}}
+    v-btn(:color='options.buttonColor', text, @click='button.handler') {{button.text}}
 </template>
 
 <script lang='ts'>

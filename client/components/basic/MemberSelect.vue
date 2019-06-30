@@ -37,10 +37,10 @@ export default class MemberSelect extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .member-select
-  display inline-block
+  display: inline-block
 
 .member-option
-  cursor pointer
+  cursor: pointer
 </style>

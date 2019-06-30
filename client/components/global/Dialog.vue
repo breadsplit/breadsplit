@@ -48,10 +48,10 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
     return !!this.visible
   }
 
-  @Watch('dialog')
+  @Watch('visible')
   onDialogChanged() {
     if (!this.visible)
-      this.$emit('exit')
+      this.close()
   }
 
   @Watch('$route.path')

@@ -27,15 +27,15 @@ export default class ErrorLayout extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .nuxt-error
   .error-icon
-    opacity 0.4
+    opacity: 0.4
   .error-code
-    font-size 2em
-    max-width 300px
+    font-size: 2em
+    max-width: 300px
   .error-desc
-    font-size 1.2em
-    opacity 0.8
-    max-width 300px
+    font-size: 1.2em
+    opacity: 0.8
+    max-width: 300px
 </style>

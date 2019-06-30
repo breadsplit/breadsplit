@@ -20,7 +20,7 @@ v-card.welcome-dialog
 
   v-card-actions.pt-0.pb-3.px-3
     v-spacer
-    v-btn(color='primary' flat @click.native='openDialog("about")') {{$t('ui.button_more_about_us')}}
+    v-btn(color='primary' text @click.native='openDialog("about")') {{$t('ui.button_more_about_us')}}
     v-btn(color='primary darken-1' @click.native='close()') {{$t('ui.button_ok')}}
 
 </template>
@@ -34,10 +34,10 @@ export default class WelcomeDialog extends mixins(DialogChildMixin, NavigationMi
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .welcome-dialog
   .signature
-    font-style italic
-    opacity 0.7
-    margin-top  -1em
+    font-style: italic
+    opacity: 0.7
+    margin-top: -1em
 </style>

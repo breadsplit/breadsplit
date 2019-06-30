@@ -190,21 +190,21 @@ export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 svg.chart-settle-up-solutions
-  user-select none
+  user-select: none
 
   .name-tag
-    transform translate(0, 40px)
-    font-size 1em
-    fill #333
+    transform: translate(0, 40px)
+    font-size: 1em
+    fill: #333
 
     .theme--dark &
-      fill #fff
+      fill: #fff
 
   .avatar
-    stroke #fff
+    stroke: #fff
 
     .theme--dark &
-      stroke #555
+      stroke: #555
 </style>

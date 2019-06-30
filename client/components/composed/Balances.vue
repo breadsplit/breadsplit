@@ -8,14 +8,13 @@ v-card.balances
 
   v-list.pa-0
     template(v-for='(balance, index) in balances')
-      v-divider(v-if='index!=0')
-      v-list-tile(:key='balance.uid' avatar @click='gotoNewTransaction({from: balance.uid})')
-        v-list-tile-avatar
+      v-list-item(:key='balance.uid' @click='gotoNewTransaction({from: balance.uid})')
+        v-list-item-avatar
           app-user-avatar(:id='balance.uid' size='38')
-        v-list-tile-content
+        v-list-item-content
           app-user-info(:id='balance.uid')
-        v-list-tile-action.pr-1
-          v-list-tile-title.text-xs-right
+        v-list-item-action.pr-1
+          v-list-item-title.text-xs-right
             app-money-label(
               :amount='balance.balance'
               :currency='balance.currency'

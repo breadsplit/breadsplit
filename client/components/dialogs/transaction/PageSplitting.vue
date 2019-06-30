@@ -30,7 +30,7 @@
         placeholder='0'
         reverse outline autofocus
         required hide-details flat main
-      )
+      ).pr-2
       div(v-rows='"auto 45px"')
         span
         app-currency-select.mt-0.pt-0(v-model='form.currency' mini :codes='currencies')

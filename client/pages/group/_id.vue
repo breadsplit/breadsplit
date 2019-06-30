@@ -30,17 +30,27 @@
 
     div(style='height:15px')
 
-  v-bottom-nav(:active.sync='tab_id', :value='true', :absolute='!isMobile', :fixed='isMobile')
+  v-bottom-navigation(
+    v-model='tab_id'
+    :absolute='!isMobile'
+    :fixed='isMobile'
+    :horizontal='!isMobile'
+    :shift='isMobile'
+    color='primary'
+  )
     template(v-for='item in tabItems')
       v-btn(
-        color='primary' flat :style='item.style'
-        :value='item.key', :disabled='item.disabled')
+        :style='item.style'
+        :value='item.key'
+        :disabled='item.disabled'
+      )
         span {{item.text}}
         v-icon mdi-{{item.icon}}
 
   v-fab-transition
     v-btn.new-transaction-button(
       fab color='primary'
+      x-large
       :style='fabStyle'
       @click='gotoNewTransaction()'
     )
@@ -128,7 +138,7 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
 }
 </script>
 
-<style lang='stylus'>
-.v-bottom-nav
-  border-top 1px solid rgba(125,125,125,0.3)
+<style lang='sass'>
+.v-bottom-navigation
+  border-top: 1px solid rgba(125,125,125,0.3)
 </style>

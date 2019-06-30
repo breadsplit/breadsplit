@@ -14,7 +14,7 @@ div
       v-btn(icon @click='close(false)')
         v-icon(:color='color') mdi-close
 
-  .placeholder(v-if='fixed || absolute', :style='{height:placeholderHeight}')
+  //.placeholder(v-if='fixed || absolute', :style='{height:placeholderHeight}')
 </template>
 
 <script lang='ts'>

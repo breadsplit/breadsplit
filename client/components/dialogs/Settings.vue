@@ -3,76 +3,76 @@ v-card.settings
   app-dialog-bar(@close='close()', attached)
     | {{$t('ui.settings')}}
 
-  v-container.pt-0.pb-1(ref='container', :class='{"px-0": isMobile}')
+  v-container.pt-0.pb-1(ref='container', :class='{"px-0": isMobile, "px-3": !isMobile}')
     v-list(two-line, subheader)
       v-subheader {{$t('ui.general')}}
       v-divider
-      v-list-tile(avatar, @click='darkMode=!darkMode')
-        v-list-tile-avatar
+      v-list-item(@click='darkMode=!darkMode')
+        v-list-item-avatar
           v-icon {{ darkMode ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.setting_options.dark_mode')}}
-          v-list-tile-sub-title {{ darkMode ? $t('ui.setting_options.enabled') : $t('ui.setting_options.disabled') }}
-        v-list-tile-action
+        v-list-item-content
+          v-list-item-title {{$t('ui.setting_options.dark_mode')}}
+          v-list-item-subtitle {{ darkMode ? $t('ui.setting_options.enabled') : $t('ui.setting_options.disabled') }}
+        v-list-item-action
           v-switch(color='primary', :input-value='darkMode')
-      v-list-tile(avatar, @click='languageSelecting=true')
-        v-list-tile-avatar
+      v-list-item(@click='languageSelecting=true')
+        v-list-item-avatar
           v-icon mdi-web
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.language')}}
-          v-list-tile-sub-title {{currentLocaleDisplay}}
+        v-list-item-content
+          v-list-item-title {{$t('ui.language')}}
+          v-list-item-subtitle {{currentLocaleDisplay}}
 
-      v-list-tile(avatar, @click='notificationButton()')
+      v-list-item(@click='notificationButton()')
         template(v-if='!notificationEnabled')
-          v-list-tile-avatar
+          v-list-item-avatar
             v-icon mdi-bell-off-outline
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.setting_options.notification')}}
-            v-list-tile-sub-title {{$t('ui.setting_options.notification_disabled')}}
+          v-list-item-content
+            v-list-item-title {{$t('ui.setting_options.notification')}}
+            v-list-item-subtitle {{$t('ui.setting_options.notification_disabled')}}
         template(v-else)
-          v-list-tile-avatar
+          v-list-item-avatar
             v-icon mdi-bell-ring
-          v-list-tile-content
-            v-list-tile-title {{$t('ui.setting_options.notification')}}
-            v-list-tile-sub-title {{$t('ui.setting_options.notification_enabled')}}
+          v-list-item-content
+            v-list-item-title {{$t('ui.setting_options.notification')}}
+            v-list-item-subtitle {{$t('ui.setting_options.notification_enabled')}}
 
     v-list(two-line, subheader)
       v-subheader {{$t('ui.advance')}}
       v-divider
-      v-list-tile(avatar, @click='purgeData')
-        v-list-tile-avatar
+      v-list-item(@click='purgeData')
+        v-list-item-avatar
           v-icon mdi-alert-box
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.setting_options.reset')}}
-          v-list-tile-sub-title {{$t('ui.setting_options.clear_all_data')}}
+        v-list-item-content
+          v-list-item-title {{$t('ui.setting_options.reset')}}
+          v-list-item-subtitle {{$t('ui.setting_options.clear_all_data')}}
 
     v-list(two-line, subheader)
       v-subheader {{$t('ui.misc')}}
       v-divider
 
-      v-list-tile(avatar, @click='openDialog("faq")')
-        v-list-tile-avatar
+      v-list-item(@click='openDialog("faq")')
+        v-list-item-avatar
           v-icon mdi-help-circle-outline
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.faq')}}
+        v-list-item-content
+          v-list-item-title {{$t('ui.faq')}}
 
-      v-list-tile(avatar, @click='$refs.feedback.open()')
-        v-list-tile-avatar
+      v-list-item(@click='$refs.feedback.open()')
+        v-list-item-avatar
           v-icon mdi-message-alert-outline
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.feedback')}}
+        v-list-item-content
+          v-list-item-title {{$t('ui.feedback')}}
 
-      v-list-tile(avatar, @click='openDialog("about")')
-        v-list-tile-avatar
+      v-list-item(@click='openDialog("about")')
+        v-list-item-avatar
           v-icon mdi-information-outline
-        v-list-tile-content
-          v-list-tile-title {{$t('ui.about')}}
+        v-list-item-content
+          v-list-item-title {{$t('ui.about')}}
 
   v-bottom-sheet(v-model='languageSelecting')
     v-list.pl-3.pt-3.pb-3
-      v-list-tile.pa-1(v-for='locale in localeItems', :key='locale.value', avatar, @click='switchLocale(locale.value)')
-        v-list-tile-title {{ locale.text }}
-        v-list-tile-action(v-if='locale.value === currentLocale')
+      v-list-item.pa-1(v-for='locale in localeItems', :key='locale.value', @click='switchLocale(locale.value)')
+        v-list-item-title {{ locale.text }}
+        v-list-item-action(v-if='locale.value === currentLocale')
           v-icon mdi-check
 
   app-dialog(ref='feedback' :route='true')
@@ -91,9 +91,6 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
   localeItems = localeItems
   languageSelecting = false
 
-  get currentLocale() {
-    return this.$i18n.locale || 'en'
-  }
   get currentLocaleDisplay() {
     const locale = localeItems.find(l => l.value === this.currentLocale)
     if (locale && locale.text)
@@ -139,8 +136,8 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .settings
   .v-list, .v-list *
-    transition 0.3s background cubic-bezier(0.25, 0.8, 0.5, 1)
+    transition: 0.3s background cubic-bezier(0.25, 0.8, 0.5, 1)
 </style>

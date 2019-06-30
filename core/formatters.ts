@@ -5,11 +5,13 @@ export function getTimezone() {
   return Intl.DateTimeFormat().resolvedOptions().timeZone
 }
 
-export function dateFromNow(time: dayjs.ConfigType) {
+export function dateFromNow(time: dayjs.ConfigType, locale: string) {
   const d = dayjs(time)
   const now = dayjs()
+  if (now.diff(d, 'year') >= 1)
+    return d.toDate().toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'long' })
   if (now.diff(d, 'day') >= 1)
-    return d.format('ll')
+    return d.toDate().toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' })
   return d.fromNow()
 }
 

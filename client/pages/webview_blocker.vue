@@ -17,7 +17,7 @@ v-container
         b {{$t('tips.open_in_browser_general')}}
 
   .text-xs-center(style='margin-top: 150px')
-    v-btn(color='primary', flat, @click='ingore()') {{$t('ui.continue_anyway')}}
+    v-btn(color='primary', text, @click='ingore()') {{$t('ui.continue_anyway')}}
 
   // TODO:WRITING: more details instructions
 </template>
@@ -38,24 +38,24 @@ export default class WebviewBlocked extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="sass" scoped>
 .header
-  font-size 1.5em
+  font-size: 1.5em
   & > *
-    vertical-align middle
+    vertical-align: middle
 
 .subheader
-  font-size 1.1em
+  font-size: 1.1em
 
 .arrow
-  position absolute
-  top 10px
-  right 10px
-  width 80px
+  position: absolute
+  top: 10px
+  right: 10px
+  width: 80px
 
 .text
-  position absolute
-  text-align right
-  top 40px
-  right 100px
+  position: absolute
+  text-align: right
+  top: 40px
+  right: 100px
 </style>

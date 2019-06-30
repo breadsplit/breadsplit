@@ -1,15 +1,15 @@
 <template lang='pug'>
-v-list-tile.transaction-item(avatar, @click='navigate()')
-  v-list-tile-avatar
+v-list-item.transaction-item(@click='navigate()')
+  v-list-item-avatar
     app-category-icon.mx-2.my-1(
       :category='transaction.category'
       :text='false', :size='38'
     )
-  v-list-tile-content
-    v-list-tile-title {{desc}}
-    v-list-tile-sub-title.sub-label {{datetime}}
+  v-list-item-content
+    v-list-item-title {{desc}}
+    v-list-item-subtitle.sub-label {{datetime}}
 
-  v-list-tile-action.pr-1.text-xs-right(v-rows='"auto max-content"')
+  v-list-item-action.pr-1.text-xs-right(v-rows='"auto max-content"')
     app-money-label(
       :amount='-transaction.total_fee'
       :currency='transaction.currency'
@@ -23,12 +23,12 @@ v-list-tile.transaction-item(avatar, @click='navigate()')
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
-import { UserInfoMixin, NavigationMixin } from '~/mixins'
+import { UserInfoMixin, NavigationMixin, CommonMixin } from '~/mixins'
 import { Transaction } from '~/types'
 import { dateFromNow } from '~/core'
 
 @Component
-export default class TransactionItem extends mixins(UserInfoMixin, NavigationMixin) {
+export default class TransactionItem extends mixins(UserInfoMixin, NavigationMixin, CommonMixin) {
   @Prop(Object) readonly transaction!: Transaction
 
   get creditor_ids() {
@@ -40,7 +40,7 @@ export default class TransactionItem extends mixins(UserInfoMixin, NavigationMix
   }
 
   get datetime() {
-    return dateFromNow(this.transaction.timestamp)
+    return dateFromNow(this.transaction.timestamp, this.currentLocale)
   }
 
   get desc() {
@@ -53,10 +53,10 @@ export default class TransactionItem extends mixins(UserInfoMixin, NavigationMix
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .transaction-item
   .creators-debtors
     .v-icon
-      opacity 0.4
-      vertical-align middle
+      opacity: 0.4
+      vertical-align: middle
 </style>

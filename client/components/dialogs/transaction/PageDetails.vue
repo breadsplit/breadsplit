@@ -9,16 +9,16 @@
           app-user-avatar.py-1.px-2(:id='item.value' size='24')
           app-user-info(:id='item.value')
 
-  v-text-field.px-2.py-3.description-field(
+  v-text-field.px-2.pt-3.description-field(
     v-model='form.desc'
     label='$t("ui.newtrans.description")'
     placeholder='Some expense...'
     solo required hide-details
   )
 
-  app-category-select.ml-2(@input='i=> form.category = i' :categories='categories')
+  app-category-select(@input='i=> form.category = i' :categories='categories')
     template(v-slot='{on}' )
-      div(v-on='on' v-columns='"40px auto"' v-ripple)
+      div.ml-2(v-on='on' v-columns='"40px auto"' v-ripple)
         app-category-icon(:category='form.category')
         v-subheader
           app-category-label(:category='form.category')
@@ -35,8 +35,9 @@
     v-icon(color='grey') mdi-history
     v-subheader {{$t('ui.newtrans.repeat_expense')}}
 
-  exchange-rate-input(ref='exchange' :form='form')
+  .mt-2
 
+  exchange-rate-input(ref='exchange' :form='form')
   app-date-picker(ref='date_picker')
 </template>
 

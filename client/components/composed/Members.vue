@@ -6,23 +6,23 @@ v-card.members
 
   v-list(two-line)
     template(v-for='(member, index) in members')
-      v-list-tile(:key='member.uid', avatar, @click='')
-        v-list-tile-avatar
+      v-list-item(:key='member.uid' @click='')
+        v-list-item-avatar
           app-user-avatar(:id='member.uid')
-        v-list-tile-content
-          v-list-tile-title
+        v-list-item-content
+          v-list-item-title
             app-user-info(:id='member.uid', field='name')
-          v-list-tile-sub-title
+          v-list-item-subtitle
             app-user-info(:id='member.uid', field='email')
-        v-list-tile-action(v-if='memberMenu(member).length')
+        v-list-item-action(v-if='memberMenu(member).length')
           v-menu
-            v-btn(icon, flat, slot='activator')
-              v-icon mdi-dots-vertical
+            template(v-slot:activator='{ on }')
+              v-btn(icon text v-on='on')
+                v-icon mdi-dots-vertical
             v-list
               template(v-for='item in memberMenu(member)')
-                v-list-tile(@click='item.handler')
-                  v-list-tile-title {{$t(item.title, member)}}
-      v-divider
+                v-list-item(@click='item.handler')
+                  v-list-item-title {{$t(item.title, member)}}
     .px-3.pt-3.py-2
       v-btn(@click='promptNewMember()', dark, color='grey darken-2')
         v-icon.mr-2 mdi-account-plus

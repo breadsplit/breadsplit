@@ -53,6 +53,7 @@
     "favicon",
     "fullname",
     "groupid",
+    "iframe",
     "instanceof",
     "localstorage",
     "memberid",

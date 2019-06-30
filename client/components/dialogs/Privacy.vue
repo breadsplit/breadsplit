@@ -16,21 +16,21 @@ export default class PrivacyPage extends mixins(CommonMixin, DialogChildMixin) {
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang='sass' scoped>
 .privacy-page
-  overflow hidden
-  height 100%
+  overflow: hidden
+  height: 100%
 
   .iframe-wrapper
-    overflow auto
-    -webkit-overflow-scrolling touch
+    overflow: auto
+    -webkit-overflow-scrolling: touch
 
   iframe
-    width 100%
-    min-height 600px
-    height 100%
-    border none
+    width: 100%
+    min-height: 600px
+    height: 100%
+    border: none
     &.mobile
-      height 100vh
+      height: 100vh
 
 </style>

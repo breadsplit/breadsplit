@@ -2,7 +2,7 @@
 v-card.new-transaction(v-rows='"auto max-content"')
   app-close-button(@close='close')
 
-  v-window.grid-fill-height(v-model='step' touchless style='min-height:600px')
+  v-window.grid-fill-height(v-model='step' touchless style='min-height:550px')
     v-window-item.page.page-1(:value='1')
       page-creditors(
         :form='form'
@@ -35,20 +35,20 @@ v-card.new-transaction(v-rows='"auto max-content"')
     v-divider
     v-card-actions.pa-3
       template(v-if='step === 1')
-        v-btn.button-cancel(flat, @click='close')
+        v-btn.button-cancel.px-4(text, @click='close')
           | {{$t('ui.button_cancel')}}
 
       template(v-else)
-        v-btn.button-back(flat, @click='step--')
+        v-btn.button-back.px-4(text, @click='step--')
           | {{$t('ui.button_back')}}
 
       v-spacer
 
       template(v-if='step >= 2')
-        v-btn.button-quick-add(:disabled='!form.total_fee', color='primary', flat, @click='submit')
+        v-btn.button-quick-add.px-4(:disabled='!form.total_fee', color='primary', text, @click='submit')
           | {{$t('ui.button_quick_add')}}
 
-      v-btn.button-next(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
+      v-btn.button-next.px-4(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
         | {{btnNextText}}
 
 </template>
@@ -172,35 +172,35 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .v-dialog--fullscreen
   .new-transaction
-    height 100%
+    height: 100%
 
 .new-transaction
-  overflow-x hidden
+  overflow-x: hidden
 
   .page
-    min-height 400px
-    height 100%
+    min-height: 400px
+    height: 100%
 
     & > .height-100
-      min-height 400px
+      min-height: 400px
 
   .page-container
-    padding 1.5em 2em 0.5em 2em
+    padding: 1.5em 2em 0.5em 2em
 
     .header
-      font-size 2.5em
+      font-size: 2.5em
 
     .subheader
-      font-size 1.3em
+      font-size: 1.3em
 
     .member-choices
-      text-align center
-      padding 2em 0
+      text-align: center
+      padding: 2em 0
 
       .user-avatar
-        padding 0.7em
-        cursor pointer
+        padding: 0.7em
+        cursor: pointer
 </style>

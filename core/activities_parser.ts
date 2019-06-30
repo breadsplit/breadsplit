@@ -16,8 +16,6 @@ export function getActivityDescription(
   else if (getUserName != null)
     name = getUserName(act.by)
 
-  name = name || $t('pronoun.anonymous')
-
   const key = `${act.action}.${act.entity}`
   const key_field = `${act.action}.${act.entity}.${act.update_fields}`
   let by = name

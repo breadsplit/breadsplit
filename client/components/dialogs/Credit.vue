@@ -48,58 +48,58 @@ export default class Credit extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .credit
-  text-align center
-  padding-top 30px
-  padding-bottom 20px
-  opacity 0.7
+  text-align: center
+  padding-top: 30px
+  padding-bottom: 20px
+  opacity: 0.7
 
   .buildinfo
-    font-size 0.85em
-    opacity 0.5
+    font-size: 0.85em
+    opacity: 0.5
 
   .copyright
-    font-size 0.85em
-    opacity 0.7
+    font-size: 0.85em
+    opacity: 0.7
 
   .v-icon
-    vertical-align bottom
-    margin 0 3px
-    font-size 1.5em
+    vertical-align: bottom
+    margin: 0 3px
+    font-size: 1.5em
 
   .section, .divider, .badge
-    display inline
+    display: inline
 
   .divider:after
-    content '|'
-    margin 0 7px
-    opacity 0.4
+    content: '|'
+    margin: 0 7px
+    opacity: 0.4
 
   .badge
-    font-weight bold
+    font-weight: bold
 
   .newline
-    height 8px
+    height: 8px
 
   .line-divider
-    width 30px
-    height 1px
-    display inline-block
-    background rgb(125,125,125)
-    opacity 0.8
-    margin 16px
+    width: 30px
+    height: 1px
+    display: inline-block
+    background: rgb(125,125,125)
+    opacity: 0.8
+    margin: 16px
 
   a
-    text-decoration none
-    color inherit
-    transition 0.5s opacity ease-in-out
-    opacity 0.5
+    text-decoration: none
+    color: inherit
+    transition: 0.5s opacity ease-in-out
+    opacity: 0.5
 
     &:hover
-      opacity 1
+      opacity: 1
 
   .footer
-    margin-top 0.5em
-    font-size 0.9em
+    margin-top: 0.5em
+    font-size: 0.9em
 </style>

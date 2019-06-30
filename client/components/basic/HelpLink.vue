@@ -29,16 +29,16 @@ export default class HelpLink extends Vue {
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang='sass' scoped>
 .help-link
-  font-size 0.85em
-  opacity 0.6
-  font-style italic
-  display inline-block
-  cursor pointer
-  transition .3s opacity ease-in-out
+  font-size: 0.85em
+  opacity: 0.6
+  font-style: italic
+  display: inline-block
+  cursor: pointer
+  transition: .3s opacity ease-in-out
   &:hover
-    opacity 0.9
+    opacity: 0.9
   & > *
-    vertical-align middle
+    vertical-align: middle
 </style>

@@ -2,7 +2,7 @@
 .icon-select
   v-menu(v-model='menu' :max-width='280' :close-on-content-click='false')
     template(v-slot:activator='{ on }')
-      v-btn(:color='color' icon v-on='on' large)
+      v-btn(icon v-on='on' large :style='{background: `${color} !important`}')
         v-icon(color='white') mdi-{{icon}}
 
     v-card.pa-2
@@ -14,7 +14,7 @@
 
       template(v-else)
         template(v-for='c in swatches')
-          v-btn(flat icon @click='setColor(c)' :style='c===color?selectedStyle:null').ma-1
+          v-btn(text icon @click='setColor(c)' :style='c===color?selectedStyle:null').ma-1
             v-icon(:color='c') mdi-checkbox-blank-circle
 </template>
 

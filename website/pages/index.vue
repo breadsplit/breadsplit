@@ -4,7 +4,7 @@ section.ma-4
   p.grey--text.text--darken-3 This page is working in progress. You may want to check out our app first 👇
 
   v-btn(:href='socials.app' color='primary') Go to app
-  v-btn(:href='socials.dev' color='grey' flat) Dev version
+  v-btn(:href='socials.dev' color='grey' text) Dev version
 </template>
 
 <script lang='ts'>
@@ -17,9 +17,9 @@ export default class extends Vue {
 }
 </script>
 
-<style lang='stylus' scoped>
+<style lang='sass' scoped>
 h1
-  font-size 3em
+  font-size: 3em
 p
-  font-size 1.3em
+  font-size: 1.3em
 </style>

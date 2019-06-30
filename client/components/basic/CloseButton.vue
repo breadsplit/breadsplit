@@ -3,10 +3,10 @@ v-btn.close-button(icon @click='$emit("close")')
   v-icon(color='primary') mdi-close
 </template>
 
-<style lang="stylus" scoped>
+<style lang="sass" scoped>
 .close-button
-  position absolute
-  top 10px
-  right 10px
-  z-index 2
+  position: absolute
+  top: 10px
+  right: 10px
+  z-index: 2
 </style>

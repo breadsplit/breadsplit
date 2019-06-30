@@ -1,25 +1,28 @@
 <template lang='pug'>
-app-dialog.login-dialog(ref='dialog' :route='true' width='350' :fullscreen='false')
+app-dialog.login-dialog(ref='dialog' :route='true' width='330' :fullscreen='false')
   v-card.login.pa-1
     v-container.mb-2
       v-layout(column)
-        v-flex(mx-auto)
-          v-card-text {{$t('ui.signin_options.tip')}}
-
         v-flex
-          .pt-3.pb-1.text-xs-center.privacy-continue
-            i18n(path='ui.continue_and_accept')
-              a(@click='$refs.privacy.open()') {{$t('ui.privacy_policy')}}
-        v-flex(mx-auto my-1)
+          v-card-title {{$t('ui.signin_options.tip')}}
+
+        .my-2
+
+        v-flex.mx-auto.my-2
           app-brand-button(brand='google' @click='loginWith("google")' large width='250px')
             | {{$t('ui.signin_options.Google')}}
-        v-flex(mx-auto my-1)
+        v-flex.mx-auto.my-2
           app-brand-button(brand='facebook' @click='loginWith("facebook")' large width='250px')
             | {{$t('ui.signin_options.Facebook')}}
-        v-flex(mx-auto my-1)
+        v-flex.mx-auto.my-2
           app-brand-button(brand='github_dark' @click='loginWith("github")' large width='250px')
             | {{$t('ui.signin_options.Github')}}
-        v-flex(mx-auto my-1).mx-4.mt-2
+
+        v-flex.mt-3.text-xs-center.privacy-continue
+          i18n(path='ui.continue_and_accept')
+            a(@click='$refs.privacy.open()') {{$t('ui.privacy_policy')}}
+
+        //v-flex.mx-auto.my-1.mx-4
           app-help-link(help='no_password_login' :tips='true')
 
   app-dialog(ref='privacy' :route='true')
@@ -83,9 +86,9 @@ export default class Login extends Vue {
 }
 </script>
 
-<style lang='stylus'>
+<style lang='sass'>
 .login
   .privacy-continue
-    font-size 0.95em
-    opacity 0.8
+    font-size: 0.85em
+    opacity: 0.8
 </style>

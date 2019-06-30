@@ -15,9 +15,9 @@ app-dialog(ref='dialog' width='350')
       v-list.members-list(style='background: transparent;')
         template(v-for='({text, value}, index) in result')
           v-divider(v-if='index !== 0')
-          v-list-tile.px-2(:key='value' @click='select(value)')
-            v-list-tile-content
-              v-list-tile-title {{text}}
+          v-list-item.px-2(:key='value' @click='select(value)')
+            v-list-item-content
+              v-list-item-title {{text}}
 </template>
 
 <script lang='ts'>

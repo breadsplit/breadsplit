@@ -6,7 +6,7 @@
 
     // languages
     "dotjoshjohnson.xml",
-    "sysoev.language-stylus",
+    "robinbentley.sass-indented",
 
     // lint/formatting
     "dbaeumer.vscode-eslint",
