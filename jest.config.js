@@ -1,7 +1,6 @@
 module.exports = {
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/$1',
-    '^~/(.*)$': '<rootDir>/client/$1',
+    '^~/(.*)$': '<rootDir>/packages/client/$1',
     '^vue$': 'vue/dist/vue.common.js',
   },
   moduleFileExtensions: [
@@ -13,7 +12,7 @@ module.exports = {
     'yaml',
   ],
   testMatch: [
-    '**/client/**/?(*.)+(spec|test).[jt]s?(x)',
+    '**/packages/client/**/?(*.)+(spec|test).[jt]s?(x)',
   ],
   transform: {
     '^.+\\.ts$': 'ts-jest',
@@ -22,17 +21,17 @@ module.exports = {
   },
   collectCoverage: true,
   collectCoverageFrom: [
-    '<rootDir>/client/utils/**/*.ts',
-    '<rootDir>/client/store/**/*.ts',
-    '<rootDir>/core/**/*.ts',
-    '!<rootDir>/client/utils/**/avatarProvider.ts',
-    '!<rootDir>/client/utils/**/core.ts',
-    '!<rootDir>/client/utils/**/id_helper.ts',
+    '<rootDir>/packages/client/utils/**/*.ts',
+    '<rootDir>/packages/client/store/**/*.ts',
+    '<rootDir>/packages/core/**/*.ts',
+    '!<rootDir>/packages/client/utils/**/avatarProvider.ts',
+    '!<rootDir>/packages/client/utils/**/core.ts',
+    '!<rootDir>/packages/client/utils/**/id_helper.ts',
   ],
   coverageDirectory: './coverage/',
   globals: {
     'ts-jest': {
-      tsConfig: './client/tsconfig.json',
+      tsConfig: './packages/client/tsconfig.json',
     },
   },
 }

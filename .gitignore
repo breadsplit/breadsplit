@@ -92,14 +92,9 @@ client/static/img/brands
 test.vue
 *.test.vue
 
-# Cordova
-cordova/platforms
-cordova/plugins
-cordova/www
-cordova/ul_web_hooks
-
 # Firebase Compiled JavaScript files
 .firebase
+firebase-functions/lib
 firebase/functions/lib
 firebase/www
 
