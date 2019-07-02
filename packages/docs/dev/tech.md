@@ -10,7 +10,7 @@ Languages
   - [ts-optchain](https://github.com/rimeto/ts-optchain) (Support for optional chaining)
 - [Pug.js](https://pugjs.org/api/getting-started.html) *formerly Jade* (HTML Preprocessor)
   - [HTML to Pug](https://html2jade.org/) (Converting tool)
-- [Stylus](http://stylus-lang.com/) (CSS Preprocessor)
+- [Sass](https://sass-lang.com/guide) (CSS Preprocessor)
 
 Frameworks
 
@@ -36,6 +36,7 @@ Visualization
   - [D3.js Graph Gallery](https://www.d3-graph-gallery.com/)
 
 CI/CD
+
 - [CircleCI](https://circleci.com/) (Testing CI)
 - [Netlify](https://www.netlify.com/) (Web build and deploy)
 
