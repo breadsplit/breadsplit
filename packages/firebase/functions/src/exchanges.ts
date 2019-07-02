@@ -1,7 +1,7 @@
 import axios from 'axios'
 import dayjs, { Dayjs } from 'dayjs'
 import { config } from 'firebase-functions'
-import { ExchangeRecord } from '../../../types'
+import { ExchangeRecord } from './types'
 
 // firebase functions:config:set fixer.token="xxx"
 
