@@ -15,9 +15,9 @@
   "main": "lib/index.js",
   "dependencies": {
     "axios": "0.19.0",
-    "dayjs": "1.8.14",
+    "dayjs": "1.8.15",
     "firebase-admin": "8.2.0",
-    "firebase-functions": "3.0.2",
+    "firebase-functions": "3.1.0",
     "fraction.js": "^4.0.12",
     "js-cache": "1.0.3",
     "json-stable-stringify": "1.0.1",
@@ -26,10 +26,10 @@
     "rusha": "0.8.13"
   },
   "devDependencies": {
-    "firebase-tools": "7.0.2",
-    "typescript": "3.5.2",
-    "webpack": "4.35.2",
-    "webpack-cli": "3.3.5",
+    "firebase-tools": "7.1.0",
+    "typescript": "3.5.3",
+    "webpack": "4.35.3",
+    "webpack-cli": "3.3.6",
     "webpack-node-externals": "1.7.2"
   },
   "version": "0.4.0"
