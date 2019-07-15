@@ -101,7 +101,7 @@
     "fraction.js": "^4.0.12",
     "jdenticon": "2.1.1",
     "json-stable-stringify": "1.0.1",
-    "lodash": "4.17.11",
+    "lodash": "4.17.13",
     "nanoid": "2.0.3",
     "nuxt": "2.8.1",
     "nuxt-property-decorator": "2.3.0",
