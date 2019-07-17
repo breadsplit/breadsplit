@@ -14,13 +14,13 @@ export default class Transactions extends Vue {
   @Prop({ default: -1 }) readonly maxLength!: number
   @Prop(String) readonly size!: number|string
 
-  get memberIds() {
+  get memberIds () {
     if (this.overflow)
       return this.ids.slice(0, this.maxLength)
     return this.ids
   }
 
-  get overflow() {
+  get overflow () {
     return Math.max(0, this.ids.length - this.maxLength)
   }
 }

@@ -61,11 +61,11 @@
 </template>
 
 <script lang='ts'>
-import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 import { Component, mixins, Watch } from 'nuxt-property-decorator'
+import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 
 @Component({
-  head() {
+  head () {
     return {
       meta: [
         { name: 'theme-color', content: this.$store.getters.primary },
@@ -73,7 +73,7 @@ import { Component, mixins, Watch } from 'nuxt-property-decorator'
       title: (this.$store.getters['group/current'] || {}).name,
     }
   },
-  async asyncData({ params, store, error }) {
+  async asyncData ({ params, store, error }) {
     if (!store.getters['group/current'])
       // @ts-ignore
       return error({ icon: 'account-alert-outline', statusCode: 'Group not found', message: 'It seems to be a local group' })
@@ -87,7 +87,7 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
   tab_id: string|null = 'summary'
 
   // Computed
-  get tabItems() {
+  get tabItems () {
     return [
       {
         text: this.$t('ui.tabs.summary'),
@@ -109,10 +109,10 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
         key: 'members',
       }]
   }
-  get speedDialShow() {
+  get speedDialShow () {
     return this.tab_index === 0
   }
-  get fabStyle() {
+  get fabStyle () {
     const style = {
       right: '50%',
       bottom: '12px',
@@ -127,12 +127,12 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
 
   // Watches
   @Watch('tab_index')
-  onTabIndexChanged() {
+  onTabIndexChanged () {
     this.tab_id = (this.tabItems[this.tab_index] || {}).key || null
   }
 
   @Watch('tab_id')
-  onTabIdChanged() {
+  onTabIdChanged () {
     const tab = this.tabItems.find(t => t.key === this.tab_id)
     this.tab_index = tab ? this.tabItems.indexOf(tab) : -1
   }

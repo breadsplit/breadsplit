@@ -55,12 +55,12 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
 <script lang='ts'>
 import { Component, mixins, Getter, Watch } from 'nuxt-property-decorator'
-import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
-import { Transaction, Weight } from '~/types'
-import { TransactionDefault, IdMe, defaultCurrency } from '~/core'
 import PageCreditors from './transaction/PageCreditors.vue'
 import PageDetails from './transaction/PageDetails.vue'
 import PageSplitting from './transaction/PageSplitting.vue'
+import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
+import { Transaction, Weight } from '~/types'
+import { TransactionDefault, IdMe, defaultCurrency } from '~/core'
 
 @Component({
   components: {
@@ -82,7 +82,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   @Getter('user/uid') uid: string | undefined
 
-  reset() {
+  reset () {
     this.form = TransactionDefault()
     this.step = 1
 
@@ -126,25 +126,25 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     }
   }
 
-  cleanUp() {
+  cleanUp () {
     this.$refs.splitting_creditors.$refs.splitting.cleanUp(true)
     this.$refs.splitting_debtors.$refs.splitting.cleanUp(true)
     this.$refs.details.$refs.exchange.save()
   }
 
-  next() {
+  next () {
     this.step++
   }
 
   @Watch('step')
-  onStepChanged(value, oldvalue) {
+  onStepChanged (value, oldvalue) {
     if (oldvalue === 2)
       this.$refs.splitting_creditors.finishUp()
     if (oldvalue === 3)
       this.$refs.splitting_debtors.finishUp()
   }
 
-  btnNext() {
+  btnNext () {
     if (this.btnNextDisabled)
       return
     if (this.step !== this.steps)
@@ -152,18 +152,18 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     this.submit()
   }
 
-  get btnNextText() {
+  get btnNextText () {
     if (this.step === this.steps)
       return this.$t('ui.button_save')
 
     return this.$t('ui.button_next')
   }
 
-  get btnNextDisabled() {
+  get btnNextDisabled () {
     return this.step === 2 && !this.form.total_fee
   }
 
-  submit() {
+  submit () {
     this.cleanUp()
     const trans = this.form
     this.$store.dispatch('group/newTranscation', { id: this.group.id, trans })

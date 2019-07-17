@@ -5,8 +5,8 @@ v-layout.nuxt-error.my-5.py-3(column, justify-center, align-center)
 </template>
 
 <script lang='ts'>
-import * as ErrorPages from '~/components/error'
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import * as ErrorPages from '~/components/error'
 
 @Component({
   layout: 'default',
@@ -15,13 +15,13 @@ export default class ErrorLayout extends Vue {
   @Prop({ default: () => ({}) }) readonly error: any
   @Prop({ default: () => ({}) }) readonly payload: any
 
-  get parsedError() {
+  get parsedError () {
     if (this.error.type)
       return this.error
     else
       return { error: this.error, type: 'common' }
   }
-  get errorPage() {
+  get errorPage () {
     return ErrorPages[this.parsedError.type] || ErrorPages.DefaultErrorPages
   }
 }

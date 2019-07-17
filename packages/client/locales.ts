@@ -2,22 +2,22 @@ import { AvaliableLocales, Messages } from '../locales'
 
 export { AvaliableLocales, Messages }
 
-export function getBrowserLanguage(): string {
+export function getBrowserLanguage (): string {
   // @ts-ignore
   return window.navigator.language || window.navigator.userLanguage || ''
 }
 
-export function acceptLanguage(raw?: string) {
+export function acceptLanguage (raw?: string) {
   if (!raw)
     raw = getBrowserLanguage()
   const fullcode = raw.trim().toLowerCase()
   const avaliable = AvaliableLocales.map(l => l.code)
 
-  if (avaliable.indexOf(fullcode) > -1)
+  if (avaliable.includes(fullcode))
     return fullcode
 
   const halfcode = (fullcode.split('-')[0] || '').split('_')[0] || ''
-  if (avaliable.indexOf(halfcode) > -1)
+  if (avaliable.includes(halfcode))
     return halfcode
 
   for (const code of avaliable) {

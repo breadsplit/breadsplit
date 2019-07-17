@@ -6,24 +6,24 @@ import { SnapshotCache, TransOperation, TransformFunctions, OpschainOption, Tran
 
 export class BasicCache<S> implements SnapshotCache<S> {
   _cache: {[key: string]: S}
-  constructor(cache: {[key: string]: S} = {}) {
+  constructor (cache: {[key: string]: S} = {}) {
     this._cache = cache
   }
-  get(key: string): S {
+  get (key: string): S {
     return this._cache[key]
   }
-  set(key: string, snap: S): void {
+  set (key: string, snap: S): void {
     this._cache[key] = snap
   }
 }
 
-function basicHashFunction(object: any): string {
+function basicHashFunction (object: any): string {
   const hash = rusha.createHash()
   hash.update(stringify(object))
   return hash.digest('hex')
 }
 
-export function TreeHash(
+export function TreeHash (
   operations: TransOperation[],
   baseHash: string,
   operationIndex: number,
@@ -38,7 +38,7 @@ export function TreeHash(
   })
 }
 
-export function EvalTransforms<S>(
+export function EvalTransforms<S> (
   transforms: TransformFunctions<S>,
   options?: OpschainOption<S>
 ) {
@@ -86,7 +86,7 @@ export function EvalTransforms<S>(
   }
 }
 
-export function ProcessOperations(operations: TransOperationOption[], hashFunction = basicHashFunction): TransOperation[] {
+export function ProcessOperations (operations: TransOperationOption[], hashFunction = basicHashFunction): TransOperation[] {
   return operations.map((operation) => {
     if (typeof operation === 'string') {
       return {
@@ -107,6 +107,6 @@ export function ProcessOperations(operations: TransOperationOption[], hashFuncti
   })
 }
 
-export function ProcessOperation(operation: TransOperationOption, hashFunction = basicHashFunction): TransOperation {
+export function ProcessOperation (operation: TransOperationOption, hashFunction = basicHashFunction): TransOperation {
   return ProcessOperations([operation], hashFunction)[0]
 }

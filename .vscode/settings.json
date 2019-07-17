@@ -102,4 +102,6 @@
   "vue-i18n-ally.sourceLanguage": "en",
   "vue-i18n-ally.displayLanguage": "zh-TW",
   "vue-i18n-ally.localesPaths": "packages/locales",
+  "vue-i18n-ally.keystyle": "nested",
+  "vue-i18n-ally.sortKeys": true
 }

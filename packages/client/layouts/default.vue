@@ -17,12 +17,12 @@ v-app(:dark='dark')
 
 <script lang='ts'>
 import { Component, Getter, mixins } from 'nuxt-property-decorator'
+import head from './head'
 import { Group } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 import Dialog from '~/components/global/Dialog.vue'
 import AppNavDrawer from '~/components/app/NavDrawer.vue'
 import AppNavBar from '~/components/app/NavBar.vue'
-import head from './head'
 
 @Component({
   head,
@@ -42,14 +42,14 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   }
 
   // Methods
-  mounted() {
+  mounted () {
     if (!this.isMobile)
       this.drawer = true
 
     setTimeout(() => this.checkFirstStart(), 1000)
   }
 
-  async checkFirstStart() {
+  async checkFirstStart () {
     if (!this.$store.state.app.init) {
       this.$store.commit('init')
       await this.$refs.welcome.open()

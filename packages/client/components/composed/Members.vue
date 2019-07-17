@@ -43,14 +43,14 @@ export default class Members extends Vue {
 
   @Prop({ default: () => ([]) }) readonly members!: Member[]
 
-  get uid() {
+  get uid () {
     return this.$store.getters['user/uid']
   }
-  get me() {
+  get me () {
     return this.$store.getters['user/me']
   }
 
-  memberMenu(member) {
+  memberMenu (member) {
     const items: {title: string; handler: () => void}[] = []
 
     if (IsThisId.LocalMember(member.uid)) {
@@ -66,31 +66,31 @@ export default class Members extends Vue {
     return items
   }
 
-  joinTheGroup() {
+  joinTheGroup () {
     this.newMember({ member: { id: this.uid, name: this.me.name } })
   }
 
-  thisIsMe(member) {
+  thisIsMe (member) {
     this.$store.dispatch('group/changeMemberId', { from: member.uid, to: this.uid })
   }
 
-  isLocalMember(id) {
+  isLocalMember (id) {
     return IsThisId.LocalMember(id)
   }
 
-  async promptNewMember() {
+  async promptNewMember () {
     const name = await this.$prompt('Name')
     if (name)
       await this.newMember({ member: { name } })
   }
 
-  async promptRenameMember(member) {
+  async promptRenameMember (member) {
     const name = await this.$prompt('Name', member.name)
     if (name)
       await this.editMember({ memberid: member.uid, changes: { name } })
   }
 
-  async promptRemoveMember(member) {
+  async promptRemoveMember (member) {
     if (await this.$confirm('Sure?'))
       await this.removeMember({ memberid: member.uid })
   }

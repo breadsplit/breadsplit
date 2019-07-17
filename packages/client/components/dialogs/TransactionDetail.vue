@@ -12,15 +12,15 @@ import { DialogChildMixin, GroupMixin } from '~/mixins'
 
 @Component
 export default class Members extends mixins(GroupMixin, DialogChildMixin) {
-  get transid(): string {
+  get transid (): string {
     return this.options.transid || ''
   }
 
-  get transaction() {
+  get transaction () {
     return this.group.transactions.find(t => t.id === this.transid)
   }
 
-  removeTranscation() {
+  removeTranscation () {
     this.$store.dispatch('group/removeTranscation', { transid: this.transid })
     this.close()
   }

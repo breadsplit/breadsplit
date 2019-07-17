@@ -25,17 +25,17 @@ export default class Avatar extends mixins(UserInfoMixin) {
   @Prop(Object) readonly user?: UserInfo
   @Prop(Object) readonly member?: Member
 
-  get _user() {
+  get _user () {
     return this.getUser(this.id, this.member, this.user)
   }
 
-  get avatar_url() {
+  get avatar_url () {
     if (this._user)
       return this._user.avatar_url
     return ''
   }
 
-  get name() {
+  get name () {
     if (this._user)
       return this._user.name
     return ''

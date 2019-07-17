@@ -34,28 +34,28 @@ export default class IconSelect extends Vue {
   @Prop([String, Array]) readonly icons: string | string[] | undefined
 
   @Watch('menu')
-  onMenuChanged() {
+  onMenuChanged () {
     if (!this.menu)
       this.stage = 0
   }
 
-  get iconset() {
+  get iconset () {
     if (typeof this.icons === 'string')
       return Iconsets[this.icons] || []
     return this.icons || Iconsets.group
   }
 
-  get selectedStyle() {
+  get selectedStyle () {
     return {
       background: 'rgba(128, 128, 128, 0.2)',
     }
   }
 
-  setIcon(value) {
+  setIcon (value) {
     this.stage = 1
     this.$emit('update:icon', value)
   }
-  setColor(value) {
+  setColor (value) {
     this.stage = 0
     this.menu = false
     this.$emit('update:color', value)

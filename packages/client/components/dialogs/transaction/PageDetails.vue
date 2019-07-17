@@ -43,12 +43,12 @@
 
 <script lang='ts'>
 import { Component, Prop, mixins } from 'nuxt-property-decorator'
+import ExchangeRateInput from './ExchangeRateInput.vue'
 import Categories from '~/../meta/categories'
 import { Transaction } from '~/types'
 import DatePicker from '~/components/basic/DatePicker.vue'
 import { TransactionWeightsHelper } from '~/core'
 import { dateToRelative } from '~/../utils/formatters'
-import ExchangeRateInput from './ExchangeRateInput.vue'
 import { GroupMixin } from '~/mixins'
 
 @Component({
@@ -66,17 +66,17 @@ export default class PageDetails extends mixins(GroupMixin) {
     exchange: ExchangeRateInput
   }
 
-  get dateDisplay() {
+  get dateDisplay () {
     return dateToRelative(this.form.timestamp, this.$t.bind(this))
   }
 
-  async pickDate() {
+  async pickDate () {
     const date = await this.$refs.date_picker.open(this.form.timestamp)
     if (date)
       this.form.timestamp = date
   }
 
-  get receipt_items() {
+  get receipt_items () {
     const creditors = new TransactionWeightsHelper(this.form, 'creditors')
     const debtors = new TransactionWeightsHelper(this.form, 'debtors')
     const positive = creditors.participators.map(p => ({ amount: creditors.getFee(p, 'weight'), value: p.uid }))

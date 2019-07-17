@@ -5,14 +5,14 @@ import { Vue, Component, Inject } from 'nuxt-property-decorator'
 export default class DialogChildMixin extends Vue {
   @Inject() readonly dialog!: any
 
-  get options() {
+  get options () {
     return this.dialog.options as any || {}
   }
-  get visible() {
+  get visible () {
     return this.dialog.visible as boolean
   }
 
-  close(result?) {
+  close (result?) {
     this.$emit('close', result)
     try {
       // @ts-ignore

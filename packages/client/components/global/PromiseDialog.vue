@@ -15,7 +15,7 @@ export default class PromiseDialog extends Vue {
 
   @Prop(Boolean) readonly lazy
 
-  open<T=any>(defaultValue?: T): Promise<T> {
+  open<T=any> (defaultValue?: T): Promise<T> {
     this.dialog = true
 
     return new Promise((resolve) => {
@@ -23,7 +23,7 @@ export default class PromiseDialog extends Vue {
     })
   }
 
-  close<T=any>(payload?: T) {
+  close<T=any> (payload?: T) {
     if (this.resolve)
       this.resolve(payload)
     this.dialog = false

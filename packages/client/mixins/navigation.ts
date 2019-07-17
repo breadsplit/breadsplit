@@ -2,38 +2,38 @@ import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
 export default class NavigationMixin extends Vue {
-  get navGroupId() {
+  get navGroupId () {
     return this.$store.getters['group/currentId']
   }
 
-  gotoHome() {
+  gotoHome () {
     this.$router.push('/')
   }
 
-  gotoGroup(id?: string) {
+  gotoGroup (id?: string) {
     this.$router.push(`/group/${id || this.navGroupId}`)
   }
 
-  gotoNewTransaction(options: Record<string, any> = { type: 'expense' }) {
+  gotoNewTransaction (options: Record<string, any> = { type: 'expense' }) {
     this.openDialog('newtrans', options)
   }
 
-  gotoTransaction(transid: string, groupid?: string) {
+  gotoTransaction (transid: string, groupid?: string) {
     this.openDialog('transaction', { transid, groupid })
   }
 
-  openDialog(name: string, options?: object) {
+  openDialog (name: string, options?: object) {
     this.$router.push({
       query: Object.assign({}, options, { dialog: name }),
     })
   }
 
-  closeDialog() {
+  closeDialog () {
     // @ts-ignore
     this.$router.replace({ query: null })
   }
 
-  reload() {
+  reload () {
     location.reload()
   }
 }

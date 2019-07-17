@@ -1,7 +1,7 @@
 import { Activity } from '../types'
 import { Translator } from '../utils/i18n'
 
-export function getActivityDescription(
+export function getActivityDescription (
   t: Translator,
   act: Activity,
   locale: string,

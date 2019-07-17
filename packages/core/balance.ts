@@ -9,7 +9,7 @@ import { Transaction, Group, TransactionBalance, Balance, Solution, ExchangeReco
 import { defaultCurrency } from './defaults'
 import { FallbackExchangeRate } from '.'
 
-export function GCD(arr: number[]) {
+export function GCD (arr: number[]) {
   // Use spread syntax to get minimum of array
   const lowest = Math.min(...arr)
 
@@ -30,15 +30,15 @@ export function GCD(arr: number[]) {
   return 1
 }
 
-export function CreditorWeights(trans: Transaction): number {
+export function CreditorWeights (trans: Transaction): number {
   return sumBy(trans.creditors, c => c.weight || 0)
 }
 
-export function DebtorWeights(trans: Transaction): number {
+export function DebtorWeights (trans: Transaction): number {
   return sumBy(trans.debtors, d => d.weight || 0)
 }
 
-export function TransactionBalanceChanges(trans: Transaction): TransactionBalance[] {
+export function TransactionBalanceChanges (trans: Transaction): TransactionBalance[] {
   const fee = trans.total_fee
   const creditorWeights = CreditorWeights(trans)
   const debtorWeights = DebtorWeights(trans)
@@ -63,24 +63,24 @@ export function TransactionBalanceChanges(trans: Transaction): TransactionBalanc
   return changes
 }
 
-export function GroupCurrency(group: Group) {
+export function GroupCurrency (group: Group) {
   const set = new Set([group.main_currency])
   for (const trans of group.transactions)
     set.add(trans.currency)
   return Array.from(set)
 }
 
-export function getExchangeRateOn(from: string, to: string, exchange_record: ExchangeRecord) {
+export function getExchangeRateOn (from: string, to: string, exchange_record: ExchangeRecord) {
   const rate = exchange_record.rates[to.toUpperCase()] / exchange_record.rates[from.toUpperCase()]
   return { rate, date: exchange_record.date }
 }
 
-export function applyExchangeRate(from: string, to: string, exchange_record: ExchangeRecord, value: Fraction) {
+export function applyExchangeRate (from: string, to: string, exchange_record: ExchangeRecord, value: Fraction) {
   const { rate } = getExchangeRateOn(from, to, exchange_record)
   return value.mul(rate)
 }
 
-export function GroupBalances(group: Group, display?: string | null, exchange_record = FallbackExchangeRate): Balance[] {
+export function GroupBalances (group: Group, display?: string | null, exchange_record = FallbackExchangeRate): Balance[] {
   const main_currency = group.main_currency || defaultCurrency
   const display_currency = display || main_currency
 
@@ -134,7 +134,7 @@ export function GroupBalances(group: Group, display?: string | null, exchange_re
   return balances
 }
 
-export function GetSettleUpSolutions(balances: Balance[], group: Group): Solution[] {
+export function GetSettleUpSolutions (balances: Balance[], group: Group): Solution[] {
   let remaining = balances.map(b => ({
     uid: b.uid,
     balance: b.balance,
@@ -142,7 +142,7 @@ export function GetSettleUpSolutions(balances: Balance[], group: Group): Solutio
   const currency = group.main_currency || defaultCurrency
   const solutions: Solution[] = []
 
-  function sort() {
+  function sort () {
     remaining = remaining
       .filter(i => +i.balance.abs() > 0.001)
       .sort((a, b) => +a.balance.sub(b.balance))

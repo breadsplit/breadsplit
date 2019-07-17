@@ -2,8 +2,8 @@
 // details:
 // https://github.com/nuxt/nuxt.js/issues/4491
 
-import { getWebviewType } from '~/utils/ua'
 import { Context } from '@nuxt/vue-app'
+import { getWebviewType } from '~/utils/ua'
 
 export default ({ route, app, redirect }: Context) => {
   const webview = getWebviewType()

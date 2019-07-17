@@ -32,15 +32,15 @@ export default class DialogBar extends mixins(CommonMixin) {
   @Prop(Boolean) readonly attached?: boolean
   @Prop(String) readonly height?: string
 
-  close(flag?: boolean) {
+  close (flag?: boolean) {
     this.$emit('close', flag)
   }
 
-  get fixed() {
+  get fixed () {
     return this.isMobile && this.attached
   }
 
-  get placeholderHeight() {
+  get placeholderHeight () {
     if (this.height != null)
       return this.height
     return this.isMobile
@@ -48,7 +48,7 @@ export default class DialogBar extends mixins(CommonMixin) {
       : '64px'
   }
 
-  get closeOnRight() {
+  get closeOnRight () {
     return !this.isMobile && ['windows', 'linux'].includes(this.$store.state.ua.os)
   }
 }

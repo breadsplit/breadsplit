@@ -9,7 +9,7 @@ const GroupsRef = (id: string) => admin.firestore().collection('groups').doc(id)
 const MessageTokensRef = (id: string) => admin.firestore().collection('messaging_tokens').doc(id)
 const UserInfoRef = (id: string) => admin.firestore().collection('users').doc(id)
 
-export async function GetMessagingTokens(uids: string[]) {
+export async function GetMessagingTokens (uids: string[]) {
   const tasks = uids.map(async (uid) => {
     const tokenDoc = await MessageTokensRef(uid).get()
     if (!tokenDoc.exists)
@@ -25,7 +25,7 @@ export async function GetMessagingTokens(uids: string[]) {
   return _.flatten(await Promise.all(tasks)).filter(t => t.enabled)
 }
 
-export async function GetUserInfos(uids: string[]) {
+export async function GetUserInfos (uids: string[]) {
   const tasks = uids.map(async (uid) => {
     const doc = await UserInfoRef(uid).get()
     if (!doc.exists)
@@ -45,7 +45,7 @@ export async function GetUserInfos(uids: string[]) {
   return info
 }
 
-export async function PushGroupOperationsNotification(
+export async function PushGroupOperationsNotification (
   groupid: string,
   operations: Operation[],
   excludesIds: string[]

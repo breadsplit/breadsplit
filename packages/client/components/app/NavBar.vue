@@ -44,21 +44,21 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   @Mutation('group/remove') removeGroup
 
   @Prop(Boolean) readonly drawer!: boolean
-  get internalDrawer() {
+  get internalDrawer () {
     return this.drawer
   }
-  set internalDrawer(value: boolean) {
+  set internalDrawer (value: boolean) {
     this.$emit('update:drawer', value)
   }
 
-  get title() {
+  get title () {
     if (this.current)
       return this.current.name
     else
       return this.$t('appname')
   }
 
-  get group_menu() {
+  get group_menu () {
     const menu: ({title: string; key: string})[] = []
 
     menu.push({ title: 'ui.menu.edit_group', key: 'edit' })
@@ -69,7 +69,7 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
     return menu
   }
 
-  async onGroupMenu(key) {
+  async onGroupMenu (key) {
     const groupid = this.$store.state.group.currentId
     const group = this.$store.state.group.groups[groupid].base
 
@@ -111,19 +111,19 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
     }
   }
 
-  async promptLogout() {
+  async promptLogout () {
     if (await this.$confirm('Are you sure to logout?')) {
       await this.$fire.logout()
       this.gotoHome()
     }
   }
 
-  async syncCurrentGroup() {
+  async syncCurrentGroup () {
     if (this.current)
       await this.$fire.manualSync(this.current.id)
   }
 
-  async copyShareLink() {
+  async copyShareLink () {
     if (this.currentShareLink)
       await this.$copyText(this.currentShareLink)
     this.$snack(this.$t('ui.share_link_copied', '').toString())

@@ -70,7 +70,7 @@ export default class PageSplitting extends mixins(GroupMixin) {
   }
 
   @Watch('form', { immediate: true })
-  onFormChanged() {
+  onFormChanged () {
     if (this.on === 'creditors') {
       this.mode = 'amount'
       this.$nextTick(() => {
@@ -82,21 +82,21 @@ export default class PageSplitting extends mixins(GroupMixin) {
     }
   }
 
-  get showKeyboard() {
+  get showKeyboard () {
     return !!this.registeredInput
   }
 
-  closeKeyboard() {
+  closeKeyboard () {
     this.registeredInput = null
   }
 
-  openKeyboardForMainInput(e) {
+  openKeyboardForMainInput (e) {
     this.$refs.splitting.cleanUp(false)
     this.$refs.splitting.focused = null
     this.openKeyboard(e)
   }
 
-  openKeyboard(e: NumberInput | null) {
+  openKeyboard (e: NumberInput | null) {
     if (this.registeredInput) {
       this.registeredInput.calculate()
       this.registeredInput.deregisterKeyboard()
@@ -106,7 +106,7 @@ export default class PageSplitting extends mixins(GroupMixin) {
     this.registeredInput = e
   }
 
-  public finishUp() {
+  public finishUp () {
     this.$refs.splitting.cleanUp(false)
     this.$refs.splitting.focused = null
     this.closeKeyboard()

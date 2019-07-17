@@ -1,7 +1,7 @@
 import get from 'lodash/get'
 import { Messages } from '../locales'
 
-export function getValue(key: string, locale: string, fallback = 'en') {
+export function getValue (key: string, locale: string, fallback = 'en') {
   let value = get(Messages, `${locale}.${key}`) || ''
 
   if (!value)
@@ -10,7 +10,7 @@ export function getValue(key: string, locale: string, fallback = 'en') {
   return value.toString()
 }
 
-function format(str: string, args: any[]) {
+function format (str: string, args: any[]) {
   return str.replace(/{(\d+)}/g, (match, number) => {
     return typeof args[number] !== 'undefined'
       ? args[number].toString()
@@ -18,7 +18,7 @@ function format(str: string, args: any[]) {
   })
 };
 
-export function t(key: string, locale: string = 'en', values?: any[], fallback = 'en') {
+export function t (key: string, locale: string = 'en', values?: any[], fallback = 'en') {
   const value = getValue(key, locale, fallback)
   return format(value, values || [])
 }

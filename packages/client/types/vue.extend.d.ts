@@ -1,7 +1,7 @@
-import { FirebasePlugin } from '~/plugins/firebase'
-import { SnackOptions } from '~/types'
 import { TranslateResult } from 'vue-i18n'
 import dayjs from 'dayjs'
+import { FirebasePlugin } from '~/plugins/firebase'
+import { SnackOptions } from '~/types'
 
 declare module 'vue/types/vue' {
   interface Vue {

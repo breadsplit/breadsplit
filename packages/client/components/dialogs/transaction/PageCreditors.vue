@@ -26,12 +26,12 @@ export default class PageCreditors extends Vue {
   @Prop(Object) readonly form!: Transaction
   @Prop({ default: () => [] }) readonly members!: Member[]
 
-  setCreditor(uid: string) {
+  setCreditor (uid: string) {
     this.form.creditors = [{ weight: 1, uid }]
     this.next()
   }
 
-  next() {
+  next () {
     this.$emit('next')
   }
 }

@@ -18,7 +18,7 @@ const ExchangeRef = (id: string) => db.collection('exchanges').doc(id)
 
 const f = functions.https.onCall
 
-function recalculateGroupOperations(t: FirebaseFirestore.Transaction, groupid: string, ops: Operation[]) {
+function recalculateGroupOperations (t: FirebaseFirestore.Transaction, groupid: string, ops: Operation[]) {
   const present = Eval(ops)
 
   t.update(OperationsRef(groupid), 'operations', omitDeep(ops))

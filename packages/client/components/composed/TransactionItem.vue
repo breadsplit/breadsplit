@@ -31,23 +31,23 @@ import { dateFromNow } from '~/../utils/formatters'
 export default class TransactionItem extends mixins(UserInfoMixin, NavigationMixin, CommonMixin) {
   @Prop(Object) readonly transaction!: Transaction
 
-  get creditor_ids() {
+  get creditor_ids () {
     return this.transaction.creditors.filter(c => c.weight).map(c => c.uid)
   }
 
-  get debtor_ids() {
+  get debtor_ids () {
     return this.transaction.debtors.filter(c => c.weight).map(c => c.uid)
   }
 
-  get datetime() {
+  get datetime () {
     return dateFromNow(this.transaction.timestamp, this.currentLocale)
   }
 
-  get desc() {
+  get desc () {
     return this.transaction.desc || this.$t('noun.expense')
   }
 
-  navigate() {
+  navigate () {
     this.gotoTransaction(this.transaction.id)
   }
 }

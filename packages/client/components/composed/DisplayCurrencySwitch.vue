@@ -17,7 +17,7 @@ import { GroupMixin } from '~/mixins'
 export default class Balances extends mixins(GroupMixin) {
   @Getter('group/currentDisplayCurrency') readonly display_currency!: string
 
-  changeDisplayingCurrency(currency: string) {
+  changeDisplayingCurrency (currency: string) {
     this.$store.dispatch('group/changeDisplayCurrency', { display_currency: currency })
   }
 }

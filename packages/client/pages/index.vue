@@ -21,11 +21,11 @@ import { NavigationMixin } from '~/mixins'
 
 @Component
 export default class Homepage extends mixins(NavigationMixin) {
-  get groups() {
+  get groups () {
     return this.$store.getters['group/all']
   }
 
-  groupCssVars(group) {
+  groupCssVars (group) {
     return {
       '--group-color': group.color,
     }

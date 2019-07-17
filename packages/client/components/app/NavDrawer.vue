@@ -88,34 +88,34 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin, Grou
   }
 
   @Prop(Boolean) readonly drawer!: boolean
-  get internalDrawer() {
+  get internalDrawer () {
     return this.drawer
   }
-  set internalDrawer(value: boolean) {
+  set internalDrawer (value: boolean) {
     this.$emit('update:drawer', value)
   }
 
-  mounted() {
+  mounted () {
     if (!this.isMobile)
       this.internalDrawer = true
   }
 
-  async openNewGroupDialog() {
+  async openNewGroupDialog () {
     this.tryCloseDrawer()
     this.openDialog('newgroup')
   }
 
-  tryCloseDrawer() {
+  tryCloseDrawer () {
     if (this.isMobile)
       this.internalDrawer = false
   }
 
-  async openSettings() {
+  async openSettings () {
     this.tryCloseDrawer()
     this.openDialog('settings')
   }
 
-  goHome() {
+  goHome () {
     this.tryCloseDrawer()
     this.gotoHome()
   }

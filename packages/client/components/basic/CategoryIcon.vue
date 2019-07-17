@@ -3,8 +3,8 @@ v-icon(:size='size', :color='color') mdi-{{icon}}
 </template>
 
 <script lang='ts'>
-import Categories from '~/../meta/categories'
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import Categories from '~/../meta/categories'
 
 @Component
 export default class CategoryIcon extends Vue {
@@ -12,15 +12,15 @@ export default class CategoryIcon extends Vue {
   @Prop() readonly size?: string
   @Prop({ default: 'other' }) readonly fallback!: string
 
-  get icon() {
+  get icon () {
     const cat = this.category || this.fallback
     return (Categories.find(c => c.name === cat) || { icon: '' }).icon
   }
-  get color() {
+  get color () {
     const cat = this.category || this.fallback
     return (Categories.find(c => c.name === cat) || { color: '' }).color
   }
-  get colorStyle() {
+  get colorStyle () {
     return {
       color: this.color,
     }

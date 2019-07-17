@@ -108,7 +108,7 @@ const config: NuxtConfiguration = {
     splitChunks: {},
     extractCSS: !dev,
     publicPath: '/nuxt/',
-    extend(config, ctx) {
+    extend (config, ctx) {
       if (config.module) {
         config.module.rules.push({
           test: /\.ya?ml$/,

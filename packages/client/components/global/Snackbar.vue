@@ -28,7 +28,7 @@ export default class Snackbar extends mixins(CommonMixin) {
   message = ''
   options = this.defaultOption
 
-  get defaultOption(): SnackOptions {
+  get defaultOption (): SnackOptions {
     return {
       color: '',
       buttonColor: 'primary',
@@ -37,7 +37,7 @@ export default class Snackbar extends mixins(CommonMixin) {
     }
   }
 
-  open(message: string, options?: SnackOptions) {
+  open (message: string, options?: SnackOptions) {
     const open = () => {
       this.message = message
       this.options = Object.assign({}, this.defaultOption, options)

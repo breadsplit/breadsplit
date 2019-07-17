@@ -83,15 +83,15 @@ v-card.new-group(v-rows='"max-content auto max-content"')
 </template>
 
 <script lang='ts'>
-import swatches from '~/../meta/swatches'
-import { getCommonCurrencyCodes } from '~/../meta/currencies'
 import { Component, Getter, mixins } from 'nuxt-property-decorator'
-import { DialogChildMixin } from '~/mixins'
 import { TranslateResult } from 'vue-i18n'
-import { Group, UserInfo } from '~/types'
-import { IdMe, GroupDefault, defaultCurrency } from '~/core'
 import cloneDeep from 'lodash/cloneDeep'
 import { MemberDefault } from '../../../core'
+import swatches from '~/../meta/swatches'
+import { getCommonCurrencyCodes } from '~/../meta/currencies'
+import { DialogChildMixin } from '~/mixins'
+import { Group, UserInfo } from '~/types'
+import { IdMe, GroupDefault, defaultCurrency } from '~/core'
 
 @Component
 export default class NewGroup extends mixins(DialogChildMixin) {
@@ -109,7 +109,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
   @Getter('user/me') user!: UserInfo
   @Getter('user/uid') uid: string | undefined
 
-  reset() {
+  reset () {
     this.formOriginal = null
     // editing
     if (this.options.mode && this.current) {
@@ -136,7 +136,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     this.step = 1
   }
 
-  get title(): TranslateResult {
+  get title (): TranslateResult {
     if (this.step === 2)
       return `${this.$t('ui.group_editing.add_members')}(${this.members.length})`
     if (!this.mode)
@@ -149,37 +149,37 @@ export default class NewGroup extends mixins(DialogChildMixin) {
       return this.$t('ui.group_editing.default_group_name')
   }
 
-  get viewmode() {
+  get viewmode () {
     return this.mode === 'view'
   }
 
-  get codes() {
+  get codes () {
     return getCommonCurrencyCodes(this.locale)
   }
 
-  get members() {
+  get members () {
     return Object.values(this.form.members)
   }
 
-  get color() {
+  get color () {
     return this.form.color
   }
 
-  get members_suggestions() {
+  get members_suggestions () {
     // TODO: load suggestions from another group
     return []
   }
 
-  get checkEmpty(): boolean {
+  get checkEmpty (): boolean {
     const hasEmpty = !(this.form.name && this.form.main_currency)
     return hasEmpty || this.viewmode
   }
 
-  defaultMember(m) {
+  defaultMember (m) {
     m.push({ uid: IdMe })
   }
 
-  create() {
+  create () {
     this.$store.dispatch('group/add', this.form)
     this.close()
     // Switch to new created group
@@ -187,7 +187,7 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     this.$router.push(`/group/${id}`)
   }
 
-  addMember(name: string) {
+  addMember (name: string) {
     if (name && !this.members.find(m => m.name === name)) {
       const member = MemberDefault({
         name,
@@ -204,11 +204,11 @@ export default class NewGroup extends mixins(DialogChildMixin) {
     }, 1)
   }
 
-  removeMember(uid: string) {
+  removeMember (uid: string) {
     this.$delete(this.form.members, uid)
   }
 
-  edit() {
+  edit () {
     if (!this.formOriginal)
       return
     // only following fields can be modified in this form

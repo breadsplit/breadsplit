@@ -7,7 +7,7 @@ export default class GroupMixin extends Vue {
   @Getter('group/current') group!: Group
   @Getter('group/activeMembers') members!: Member[]
 
-  get currencies() {
+  get currencies () {
     return GroupCurrency(this.group)
   }
 }

@@ -25,7 +25,7 @@ export default class GlobalComponents extends Vue {
     currency: CurrencySelectDialog
   }
 
-  mounted() {
+  mounted () {
     Vue.prototype.$snack = this.$refs.snack.open
     Vue.prototype.$confirm = this.$refs.confirm.open
     Vue.prototype.$prompt = this.$refs.prompt.open

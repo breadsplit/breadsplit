@@ -25,11 +25,11 @@ interface HelpDetail {
 export default class FAQ extends mixins(DialogChildMixin) {
   keys = Object.keys(EN_MESSAGES.help)
 
-  get wipText() {
+  get wipText () {
     return this.$t('ui.wip')
   }
 
-  get list() {
+  get list () {
     return this.keys.map((key) => {
       return this.$t(`help.${key}`) as object as HelpDetail
     })

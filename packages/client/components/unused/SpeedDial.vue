@@ -31,7 +31,7 @@ export default class SpeedDial extends Vue {
   @Prop({ default: () => ([]) }) readonly items!: {key: string; color?: string; text: string}[]
 
   @Watch('fab')
-  onFabChanged() {
+  onFabChanged () {
     this.tooltips = false
     this.tooltipsDisabled = false
     if (this.fab) {
@@ -44,11 +44,11 @@ export default class SpeedDial extends Vue {
   }
 
   @Watch('value', { immediate: true })
-  onValueChanged() {
+  onValueChanged () {
     this.fab = this.value
   }
 
-  itemClick(item) {
+  itemClick (item) {
     this.$emit('item-click', item.key)
   }
 }

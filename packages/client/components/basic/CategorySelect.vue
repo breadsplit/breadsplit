@@ -28,7 +28,7 @@ export default class MemberSelect extends Vue {
   @Prop(String) readonly value!: string
   @Prop(Array) readonly categories!: Category[]
 
-  setValue(value) {
+  setValue (value) {
     this.$emit('input', value)
   }
 }

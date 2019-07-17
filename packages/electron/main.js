@@ -14,7 +14,7 @@ appServer.get('*', (req, res) => {
   res.sendFile(path.join(dist, 'index.html'))
 })
 
-function start() {
+function start () {
   let win = null
 
   const newWin = () => {

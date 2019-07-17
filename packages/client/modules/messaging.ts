@@ -2,14 +2,14 @@ import { writeFileSync, readFileSync } from 'fs'
 import path from 'path'
 import { NuxtModuleContext } from './type'
 
-function render(template: string, object: object) {
+function render (template: string, object: object) {
   let a = template
   for (const key of Object.keys(object))
     a = a.replace(new RegExp(`\\{{${key}\\}}`, 'g'), object[key])
   return a
 }
 
-async function build(context: NuxtModuleContext, moduleOptions: any) {
+async function build (context: NuxtModuleContext, moduleOptions: any) {
   const srcDir = context.options.srcDir || ''
   const templatePath = path.resolve(srcDir, 'modules', 'firebase-messaging.template.sw.js')
   const outputPath = path.resolve(srcDir, 'static', 'firebase-messaging.sw.js')

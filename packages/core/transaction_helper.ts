@@ -9,44 +9,44 @@ export class TransactionWeightsHelper {
   public trans: Transaction
   public on: WeightsField
 
-  constructor(trans: Transaction, on: WeightsField) {
+  constructor (trans: Transaction, on: WeightsField) {
     this.trans = trans
     this.on = on
   }
 
-  get participators() {
+  get participators () {
     return this.trans[this.on]
   }
 
-  set participators(value: Weight[]) {
+  set participators (value: Weight[]) {
     this.trans[this.on] = value
   }
 
-  get totalWeights() {
+  get totalWeights () {
     return this.participators
       .map(i => i.weight || 0)
       .reduce((a, b) => a + b, 0)
   }
 
-  get flexibleWeights() {
+  get flexibleWeights () {
     return this.participators
       .filter(c => c.fee == null)
       .map(i => i.weight || 0)
       .reduce((a, b) => a + b, 0)
   }
 
-  get fixedFees() {
+  get fixedFees () {
     return this.participators
       .filter(c => c.fee != null)
       .map(i => i.fee || 0)
       .reduce((a, b) => a + b, 0)
   }
 
-  get flexibleFees() {
+  get flexibleFees () {
     return this.trans.total_fee - this.fixedFees
   }
 
-  getFee(participator: Weight, mode: Splitmode) {
+  getFee (participator: Weight, mode: Splitmode) {
     if (mode === 'amount') {
       if (participator.fee != null)
         return participator.fee
@@ -66,7 +66,7 @@ export class TransactionWeightsHelper {
     return this.trans.total_fee * (participator.weight || 0) / totalWeights
   }
 
-  gcdAmount() {
+  gcdAmount () {
     if (this.participators.length === 1) {
       this.participators[0].weight = 1
       return
@@ -83,7 +83,7 @@ export class TransactionWeightsHelper {
     })
   }
 
-  gcdWeight() {
+  gcdWeight () {
     if (this.participators.length === 1) {
       this.participators[0].weight = 1
       return
@@ -94,7 +94,7 @@ export class TransactionWeightsHelper {
     })
   }
 
-  cleanUp(mode: Splitmode, removeZero = true) {
+  cleanUp (mode: Splitmode, removeZero = true) {
     if (mode === 'average') {
       this.participators.forEach((c) => {
         c.weight = c.weight ? 1 : 0

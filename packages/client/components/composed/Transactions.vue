@@ -20,8 +20,8 @@ v-card.transactions
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
-import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 import { Transaction } from '../../types'
+import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 
 @Component
 export default class Transactions extends mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
@@ -31,31 +31,31 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
   @Prop({ default: 3 }) readonly limit!: number
   @Prop(Boolean) readonly flat?: boolean
 
-  get transactions() {
+  get transactions () {
     return this.group.transactions
       .map(i => i)
       .sort((a, b) => b.timestamp - a.timestamp)
   }
 
-  get amount() {
+  get amount () {
     return this.transactions.length
   }
 
-  get limitted() {
+  get limitted () {
     if (this.collapsed)
       return this.transactions.slice(0, this.limit)
     return this.transactions
   }
 
-  get currency() {
+  get currency () {
     return this.group.main_currency
   }
 
-  get needShowMore() {
+  get needShowMore () {
     return this.collapsed && this.amount > this.limit
   }
 
-  getTotalAmount(trans: Transaction[]) {
+  getTotalAmount (trans: Transaction[]) {
     // TODO: currency exchange
     return trans.map(t => t.total_fee).reduce((a, b) => a + b, 0)
   }

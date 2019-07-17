@@ -14,8 +14,8 @@
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { Member } from '~/types'
 import UserAvatar from './UserAvatar.vue'
+import { Member } from '~/types'
 
 @Component({
   components: { UserAvatar },
@@ -26,12 +26,12 @@ export default class MemberSelect extends Vue {
   @Prop(String) readonly value!: string
   @Prop(Array) readonly members!: Member[]
 
-  get current() {
+  get current () {
     const member = this.members.find(m => m.uid === this.value)
     return member || {}
   }
 
-  setValue(value) {
+  setValue (value) {
     this.$emit('input', value)
   }
 }

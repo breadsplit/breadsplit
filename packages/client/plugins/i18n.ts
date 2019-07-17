@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import { Messages } from '~/locales'
 import { Context } from '@nuxt/vue-app'
+import { Messages } from '~/locales'
 
 export default ({ app, store, route }: Context) => {
   // inject our i18n instance into the app root to be used in middleware

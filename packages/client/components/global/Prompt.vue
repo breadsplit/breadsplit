@@ -33,7 +33,7 @@ export default class Prompt extends Vue {
     zIndex: 200,
   }
 
-  open(message, val, title, options) {
+  open (message, val, title, options) {
     this.dialog = true
     this.title = title
     this.message = message
@@ -45,13 +45,13 @@ export default class Prompt extends Vue {
     })
   }
 
-  agree() {
+  agree () {
     if (this.resolve)
       this.resolve(this.val)
     this.dialog = false
   }
 
-  cancel() {
+  cancel () {
     if (this.resolve)
       this.resolve(false)
     this.dialog = false

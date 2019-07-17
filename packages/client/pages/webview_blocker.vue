@@ -29,7 +29,7 @@ import { Component, Vue } from 'nuxt-property-decorator'
   layout: 'base',
 })
 export default class WebviewBlocked extends Vue {
-  ingore() {
+  ingore () {
     const path = this.$route.fullPath.slice(2)
     const queryString = path.slice(path.indexOf('?') || 0)
     const query = new URLSearchParams(queryString)

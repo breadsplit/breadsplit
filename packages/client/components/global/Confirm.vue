@@ -28,7 +28,7 @@ export default class Confirm extends Vue {
     dialog: PromiseDialog
   }
 
-  async open(title, message = '', options = {}) {
+  async open (title, message = '', options = {}) {
     this.title = title
     this.message = message
     this.options = Object.assign(this.options, options)
@@ -36,11 +36,11 @@ export default class Confirm extends Vue {
     return await this.$refs.dialog.open(false)
   }
 
-  agree() {
+  agree () {
     this.$refs.dialog.close(true)
   }
 
-  cancel() {
+  cancel () {
     this.$refs.dialog.close(false)
   }
 }

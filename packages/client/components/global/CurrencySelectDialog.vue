@@ -22,16 +22,16 @@ app-dialog(ref='dialog' width='350')
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
-import { currencies } from '~/../meta/currencies'
 import Dialog from '../global/Dialog.vue'
+import { currencies } from '~/../meta/currencies'
 
 @Component
 export default class CurrencySelectDialog extends Vue {
-  get items() {
+  get items () {
     return currencies.map(c => ({ text: `${c.cc} - ${c.name} (${c.symbol})`, value: c.cc }))
   }
 
-  get result() {
+  get result () {
     if (!this.search)
       return this.items
     const regex = new RegExp(`${this.search}`, 'gi')
@@ -46,7 +46,7 @@ export default class CurrencySelectDialog extends Vue {
     dialog: Dialog
   }
 
-  open() {
+  open () {
     this.search = ''
     return new Promise<string|undefined>((resolve, reject) => {
       this.resolve = resolve
@@ -55,21 +55,21 @@ export default class CurrencySelectDialog extends Vue {
     })
   }
 
-  select(cc: string) {
+  select (cc: string) {
     if (this.resolve)
       this.resolve(cc)
     this.resolve = null
     this.$refs.dialog.close()
   }
 
-  close() {
+  close () {
     if (this.resolve)
       this.resolve()
     this.resolve = null
     this.$refs.dialog.close()
   }
 
-  enter() {
+  enter () {
     if (this.result.length === 1)
       this.select(this.result[0].value)
   }

@@ -42,7 +42,7 @@ export default class Credit extends Vue {
   channel = RELEASE_CHANNEL
   serverName = FIREBASE_SERVER
 
-  get buildTimeFromNow() {
+  get buildTimeFromNow () {
     return dayjs(this.buildtime).fromNow()
   }
 }

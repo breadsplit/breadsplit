@@ -1,11 +1,11 @@
 import dayjs from '../core/dayjs_config'
 import { Translator, t } from './i18n'
 
-export function getTimezone() {
+export function getTimezone () {
   return Intl.DateTimeFormat().resolvedOptions().timeZone
 }
 
-export function dateFromNow(time: dayjs.ConfigType, locale: string) {
+export function dateFromNow (time: dayjs.ConfigType, locale: string) {
   const d = dayjs(time)
   const now = dayjs()
   if (now.diff(d, 'year') >= 1)
@@ -15,7 +15,7 @@ export function dateFromNow(time: dayjs.ConfigType, locale: string) {
   return d.fromNow()
 }
 
-export function getWeekOfYear(time: dayjs.ConfigType) {
+export function getWeekOfYear (time: dayjs.ConfigType) {
   const d = dayjs(time)
 
   // ISO 8601 states that week 1 is the week
@@ -29,7 +29,7 @@ export function getWeekOfYear(time: dayjs.ConfigType) {
   return now.diff(start, 'week')
 }
 
-export function dateToRelative(time: dayjs.ConfigType, $t: Translator = t, locale?: string) {
+export function dateToRelative (time: dayjs.ConfigType, $t: Translator = t, locale?: string) {
   const d = dayjs(time)
   const days = dayjs().diff(d, 'day')
   if (days === 0)
@@ -41,7 +41,7 @@ export function dateToRelative(time: dayjs.ConfigType, $t: Translator = t, local
   return d.format('ll')
 }
 
-export function numberToMoney(value: number, locale: string = 'en', currency?: string, digits = 2) {
+export function numberToMoney (value: number, locale: string = 'en', currency?: string, digits = 2) {
   const formatter = new Intl.NumberFormat(locale, {
     style: currency ? 'currency' : undefined,
     currency,
@@ -51,10 +51,10 @@ export function numberToMoney(value: number, locale: string = 'en', currency?: s
   return formatter.format(value)
 }
 
-export function capitalize(s: string) {
+export function capitalize (s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-export function capitalizeEachWords(s: string, delimiter = ' ') {
+export function capitalizeEachWords (s: string, delimiter = ' ') {
   return s.split(delimiter).map(w => capitalize(w)).join(delimiter)
 }

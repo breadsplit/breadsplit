@@ -37,21 +37,21 @@ export default class FeedBack extends mixins(DialogChildMixin) {
     content: '',
   }
 
-  get issueHint() {
+  get issueHint () {
     return this.$t('feedback.github_hint', [`<a href="${socials.github} target="_blank">Github</a>`])
   }
 
-  get hasMeaningfulContent() {
+  get hasMeaningfulContent () {
     const content = this.feedbackInfo.content || ''
     return content.trim().length > 5 && content.length <= this.maxlength
   }
 
-  get closeToMaxLength() {
+  get closeToMaxLength () {
     const content = this.feedbackInfo.content || ''
     return content.length / this.maxlength >= 0.9
   }
 
-  async upload() {
+  async upload () {
     this.$apploading.open(this.$t('prompt.sending').toString())
     await this.$fire.sendFeedback(this.feedbackInfo)
     this.$apploading.close()
@@ -59,7 +59,7 @@ export default class FeedBack extends mixins(DialogChildMixin) {
     this.close()
   }
 
-  get online() {
+  get online () {
     return this.$store.getters['user/online']
   }
 }

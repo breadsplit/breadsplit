@@ -15,7 +15,7 @@ export default class DefaultErrorPage extends Vue {
   @Prop({ default: () => ({}) }) readonly error: any
   @Prop({ default: () => ({}) }) readonly payload: any
 
-  reload() {
+  reload () {
     window.location.reload()
   }
 }

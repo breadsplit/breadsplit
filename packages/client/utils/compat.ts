@@ -1,5 +1,5 @@
 // check if the browser is compatible
-export function isCompat() {
+export function isCompat () {
   try {
     if (!Intl)
       return false

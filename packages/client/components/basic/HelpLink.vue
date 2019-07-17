@@ -23,7 +23,7 @@ export default class HelpLink extends Vue {
   @Prop(String) readonly help?: string
   @Prop(Boolean) readonly tips?: boolean
 
-  onClick() {
+  onClick () {
     this.dialog = true
   }
 }

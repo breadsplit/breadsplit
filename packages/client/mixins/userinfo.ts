@@ -1,8 +1,8 @@
 import { Vue, Component, Getter } from 'nuxt-property-decorator'
+import nanoid from 'nanoid'
 import { UserInfo, Member, UserMemberInfo } from '~/types'
 import { IsThisId } from '~/core'
 import { avatarProvider } from '~/utils/avatar_providers'
-import nanoid from 'nanoid'
 import { IdMe } from '~/../core'
 
 @Component
@@ -10,7 +10,7 @@ export default class UserInfoMixin extends Vue {
   @Getter('user/uid') uid: string | undefined
   @Getter('user/me') me: UserInfo | undefined
 
-  getUser(uid?: string, member?: Member, user?: UserInfo, autoFetch: boolean = true): UserMemberInfo | undefined {
+  getUser (uid?: string, member?: Member, user?: UserInfo, autoFetch: boolean = true): UserMemberInfo | undefined {
     uid = uid || (member && member.uid) || (user && user.uid) || undefined
     if (!uid)
       return undefined
@@ -45,23 +45,23 @@ export default class UserInfoMixin extends Vue {
     return result
   }
 
-  getMember(uid: string): Member | undefined {
+  getMember (uid: string): Member | undefined {
     return this.$store.getters['group/memberById']({ uid })
   }
 
-  getAvatarUrl(uid: string) {
+  getAvatarUrl (uid: string) {
     const user = this.getUser(uid)
     if (user && 'avatar_url' in user)
       return user.avatar_url
     return this.getFallbackAvatar(uid)
   }
 
-  getFallbackAvatar(uid: string) {
+  getFallbackAvatar (uid: string) {
     const dark = this.$store.getters.dark
     return avatarProvider(uid || nanoid(), dark) as string
   }
 
-  getUserName(uid: string, pronoun = true) {
+  getUserName (uid: string, pronoun = true) {
     if (pronoun && (uid === this.uid || IsThisId.Me(uid)))
       return this.$t('pronoun.i').toString()
 

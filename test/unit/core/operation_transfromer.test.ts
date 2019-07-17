@@ -9,7 +9,7 @@ class OperationChain<S> {
   transforms: TransformFunctions<S>
   cache: SnapshotCache<S>
 
-  constructor(baseSnapshot: S, transforms: TransformFunctions<S>, operations: TransOperationOption[] = []) {
+  constructor (baseSnapshot: S, transforms: TransformFunctions<S>, operations: TransOperationOption[] = []) {
     this.base = Object.freeze(baseSnapshot)
     this.transforms = transforms
     this.operations = []
@@ -17,16 +17,16 @@ class OperationChain<S> {
     this.cache = new BasicCache<S>()
   }
 
-  insertOperation(operation: TransOperationOption) {
+  insertOperation (operation: TransOperationOption) {
     this.insertOperations([operation])
   }
 
-  insertOperations(operations: TransOperationOption[]) {
+  insertOperations (operations: TransOperationOption[]) {
     const processed = ProcessOperations(operations)
     this.operations = this.operations.concat(processed).sort((a, b) => a.timestamp - b.timestamp)
   }
 
-  eval(cache = true) {
+  eval (cache = true) {
     return EvalTransforms(
       this.transforms, {
         cacheObject: cache ? this.cache : undefined,
@@ -42,23 +42,23 @@ interface Snap {
 }
 
 const transforms: TransformFunctions<Snap> = {
-  upper(snap) {
+  upper (snap) {
     transformCount += 1
     snap.name = snap.name.toUpperCase()
     return snap
   },
-  lower(snap) {
+  lower (snap) {
     transformCount += 1
     snap.name = snap.name.toLowerCase()
     return snap
   },
-  slice(snap, args) {
+  slice (snap, args) {
     transformCount += 1
     const arg = args as number[]
     snap.name = snap.name.slice(...arg)
     return snap
   },
-  prepend(snap, data) {
+  prepend (snap, data) {
     transformCount += 1
     snap.name = data + snap.name
     return snap

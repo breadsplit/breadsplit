@@ -7,12 +7,12 @@ export const state = UserStateDefault
 
 export const mutations: MutationTree<UserState> = {
 
-  login(state, info) {
+  login (state, info) {
     state.me = info
     state.online = true
   },
 
-  logout(state) {
+  logout (state) {
     state.online = false
     state.me = {
       uid: null,
@@ -21,26 +21,26 @@ export const mutations: MutationTree<UserState> = {
     }
   },
 
-  profileUpdate(state, { uid, user }) {
+  profileUpdate (state, { uid, user }) {
     Vue.set(state.users, uid, user)
   },
 }
 
 export const getters: GetterTree<UserState, RootState> = {
 
-  me(state) {
+  me (state) {
     return state.me
   },
 
-  uid(state) {
+  uid (state) {
     return state.me.uid
   },
 
-  name(state) {
+  name (state) {
     return state.me.name
   },
 
-  online(state) {
+  online (state) {
     return state.online
   },
 

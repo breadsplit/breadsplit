@@ -19,7 +19,7 @@ export type TransformKeys =
   | 'new_activity'
 
 export const Transforms: TransformFunctions<Group> = {
-  init(snap, data, { by, timestamp } = {}) {
+  init (snap, data, { by, timestamp } = {}) {
     snap = Object.assign(snap || {}, cloneDeep(data))
     if (!snap.activities)
       snap.activities = []
@@ -32,7 +32,7 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  modify_meta(snap, changes?: GroupMetaChanges, { by, timestamp } = {}) {
+  modify_meta (snap, changes?: GroupMetaChanges, { by, timestamp } = {}) {
     if (!changes)
       return snap
     changes = Object.assign({}, changes)
@@ -70,7 +70,7 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  insert_member(snap, member?: Member, { by, timestamp } = {}) {
+  insert_member (snap, member?: Member, { by, timestamp } = {}) {
     if (!member)
       return snap
     if (!member.uid)
@@ -87,7 +87,7 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  remove_member(snap, uid?: string) {
+  remove_member (snap, uid?: string) {
     if (!uid)
       return snap
     if (!snap.members[uid])
@@ -96,7 +96,7 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  modify_member(snap, data) {
+  modify_member (snap, data) {
     if (!data)
       return snap
     const { id, changes } = data
@@ -106,7 +106,7 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  insert_transaction(snap, transaction?: Transaction, { by, timestamp } = {}) {
+  insert_transaction (snap, transaction?: Transaction, { by, timestamp } = {}) {
     if (!transaction)
       return snap
     snap.transactions.push(transaction)
@@ -122,7 +122,7 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  remove_transaction(snap, id: string, { by, timestamp } = {}) {
+  remove_transaction (snap, id: string, { by, timestamp } = {}) {
     const transaction = snap.transactions.find(t => t.id === id)
     if (!transaction)
       return snap
@@ -139,7 +139,7 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  change_member_id(snap, data) {
+  change_member_id (snap, data) {
     if (!data)
       return snap
     const { from, to } = data
@@ -157,7 +157,7 @@ export const Transforms: TransformFunctions<Group> = {
     snap.members[to] = member
 
     // utils function
-    function replacer(object: any, field: string) {
+    function replacer (object: any, field: string) {
       if (object[field] === from)
         object[field] = to
     }
@@ -174,7 +174,7 @@ export const Transforms: TransformFunctions<Group> = {
     return snap
   },
 
-  new_activity(snap, data) {
+  new_activity (snap, data) {
     snap.activities.push(data)
     return snap
   },

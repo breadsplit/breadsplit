@@ -67,14 +67,14 @@ describe('Offline functions', () => {
     cy.get('.button-next')
       .click()
 
-    function clickNum(num: number, parent = '') {
+    function clickNum (num: number, parent = '') {
       if (num === 0)
         num = 11
       cy.get(`${parent} .soft-numpad > .numbers > :nth-child(${num})`)
         .click()
     }
 
-    function input(num: number, parent = '') {
+    function input (num: number, parent = '') {
       num.toString().split('').forEach((c) => {
         if (c === '.')
           clickNum(10, parent)

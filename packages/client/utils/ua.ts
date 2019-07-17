@@ -5,7 +5,7 @@
   https://developer.chrome.com/multidevice/user-agent
 */
 
-export function getUserAgent() {
+export function getUserAgent () {
   return navigator.userAgent || navigator.vendor || ''
 }
 
@@ -17,7 +17,7 @@ const UA = (userAgent?: string) => {
     ua = userAgent.toLocaleLowerCase()
 
   return {
-    oneOf(...condictions: string[]) {
+    oneOf (...condictions: string[]) {
       for (const cond of condictions) {
         if (ua.includes(cond))
           return true
@@ -30,7 +30,7 @@ const UA = (userAgent?: string) => {
 export type WebviewType = 'wechat' | 'alipay' | 'line' | 'facebook' | 'instagram' | 'pinterest' | 'twitter' | 'webview' | undefined
 export type OSType = 'android' | 'windows' | 'linux' | 'ios' | 'macos' | 'other'
 
-export function getWebviewType(userAgent?: string): WebviewType {
+export function getWebviewType (userAgent?: string): WebviewType {
   const ua = UA(userAgent)
 
   if (ua.oneOf('micromessenger'))
@@ -60,7 +60,7 @@ export function getWebviewType(userAgent?: string): WebviewType {
   return undefined
 }
 
-export function getOSType(userAgent?: string): OSType {
+export function getOSType (userAgent?: string): OSType {
   const ua = UA(userAgent)
 
   if (ua.oneOf('android'))
@@ -81,7 +81,7 @@ export function getOSType(userAgent?: string): OSType {
   return 'other'
 }
 
-export function isStandalone(): boolean {
+export function isStandalone (): boolean {
   try {
     // @ts-ignore
     return window.navigator.standalone === true // iOS

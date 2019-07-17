@@ -25,15 +25,15 @@ export default class BrandButton extends Vue {
   @Prop(String) readonly brand!: string
   @Prop(String) readonly width!: string | number
 
-  get color() {
+  get color () {
     return BrandColors[this.brand] || '#fff'
   }
 
-  get dark() {
+  get dark () {
     return isDark(this.color)
   }
 
-  get style() {
+  get style () {
     let width = this.width
     if (typeof width === 'number')
       width = `${width}px`

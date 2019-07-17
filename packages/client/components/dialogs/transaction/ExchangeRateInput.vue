@@ -12,9 +12,9 @@ div.ml-2(v-columns='"40px auto"' v-if='from !== to' v-ripple @click='changeExcha
 
 <script lang='ts'>
 import { Component, Prop, mixins, Watch } from 'nuxt-property-decorator'
+import { oc } from 'ts-optchain'
 import { Transaction } from '~/types'
 import { GroupMixin } from '~/mixins'
-import { oc } from 'ts-optchain'
 
 @Component
 export default class ExchangeRateInput extends mixins(GroupMixin) {
@@ -23,48 +23,48 @@ export default class ExchangeRateInput extends mixins(GroupMixin) {
   info: {rate: number; date: string}|null = null
   override: number|null = null
 
-  get from() {
+  get from () {
     return this.form.currency
   }
 
-  get to() {
+  get to () {
     return this.group.main_currency
   }
 
-  get fromFee() {
+  get fromFee () {
     return this.form.total_fee
   }
 
-  get rate(): number {
+  get rate (): number {
     return this.override || oc(this).info.rate(1)
   }
 
-  get toFee() {
+  get toFee () {
     return this.fromFee * this.rate
   }
 
-  async update() {
+  async update () {
     this.info = await this.$fire.getExchangeRateOn(this.from, this.to, this.form.timestamp) || null
   }
 
   @Watch('from')
   @Watch('to')
   @Watch('form', { immediate: true })
-  onCurrencyChanged() {
+  onCurrencyChanged () {
     this.info = null
     this.update()
   }
 
   @Watch('form.timestamp')
-  onTimestampChanged() {
+  onTimestampChanged () {
     this.update()
   }
 
-  changeExchangeRate() {
+  changeExchangeRate () {
     // TODO:
   }
 
-  save() {
+  save () {
     if (this.from === this.to)
       return
     if (!this.info && !this.override)

@@ -21,22 +21,22 @@ export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixi
   @Prop(Array) readonly activities!: Activity[]
   @Getter('locale') locale!: string
 
-  get parsed() {
+  get parsed () {
     return this.activities.map((act, idx) => {
       const prev = this.activities[idx - 1] || {}
       return [act, prev]
     })
   }
 
-  d(ts) {
+  d (ts) {
     return dateFromNow(ts, this.currentLocale)
   }
 
-  activityDescription(act: Activity) {
+  activityDescription (act: Activity) {
     return getActivityDescription(this.$t.bind(this), act, this.locale, id => '')
   }
 
-  on(act: Activity) {
+  on (act: Activity) {
     if (!this.clickable(act))
       return {}
     return {
@@ -44,14 +44,14 @@ export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixi
     }
   }
 
-  clickable(act: Activity) {
+  clickable (act: Activity) {
     // TODO: support more
     if (act.entity === 'transaction' && act.entity_id)
       return true
     return false
   }
 
-  onActivityClick(act: Activity) {
+  onActivityClick (act: Activity) {
     if (act.entity === 'transaction' && act.entity_id)
       this.gotoTransaction(act.entity_id)
   }

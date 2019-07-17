@@ -1,23 +1,23 @@
 import Vue from 'vue'
 import { MutationTree, GetterTree } from 'vuex'
+import { RootStateDefault } from './_defaults'
 import { RootState, Group } from '~/types'
 import { APP_VERSION } from '~/../meta/env'
-import { RootStateDefault } from './_defaults'
 export * from './_defaults'
 
 export const state = RootStateDefault
 
 export const getters: GetterTree<RootState, RootState> = {
 
-  locale(state) {
+  locale (state) {
     return state.user_locale || state.browser_locale || 'en'
   },
 
-  dark(state) {
+  dark (state) {
     return state.options.dark
   },
 
-  primary(state, getters) {
+  primary (state, getters) {
     const current: Group | null = getters['group/current']
     let color = 'primary'
     if (current && current.color)
@@ -28,29 +28,29 @@ export const getters: GetterTree<RootState, RootState> = {
 
 export const mutations: MutationTree<RootState> = {
 
-  purge(state) {
+  purge (state) {
     const defaults = RootStateDefault()
     for (const key of Object.keys(defaults))
       Vue.set(state, key, defaults[key])
   },
 
-  switchLocale(state, locale: string | null) {
+  switchLocale (state, locale: string | null) {
     state.user_locale = locale
   },
 
-  browserLocale(state, locale) {
+  browserLocale (state, locale) {
     state.browser_locale = locale
   },
 
-  dark(state, value) {
+  dark (state, value) {
     state.options.dark = !!value
   },
 
-  setMessagingToken(state, value) {
+  setMessagingToken (state, value) {
     state.messaging_token = value
   },
 
-  localstorageLoad(state, data: RootState) {
+  localstorageLoad (state, data: RootState) {
     const group = data.group
     delete data.group
     Object.assign(state, data)
@@ -60,7 +60,7 @@ export const mutations: MutationTree<RootState> = {
     Object.assign(state.group, group)
   },
 
-  init(state) {
+  init (state) {
     state.app = {
       init: true,
       version: APP_VERSION,

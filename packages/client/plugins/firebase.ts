@@ -24,33 +24,33 @@ export class FirebasePlugin {
   _initialized = false
   _initializedCallbacks: Function[] = []
 
-  constructor(store: Store<RootState>, router: VueRouter) {
+  constructor (store: Store<RootState>, router: VueRouter) {
     this.store = store
     this.router = router
   }
 
-  get auth() {
+  get auth () {
     return firebase.auth()
   }
-  get db() {
+  get db () {
     return firebase.firestore()
   }
-  get functions() {
+  get functions () {
     return firebase.functions()
   }
-  get messaging() {
+  get messaging () {
     if (this.messagingEnabled)
       return firebase.messaging()
     else
       return null
   }
-  get me(): UserInfo | undefined {
+  get me (): UserInfo | undefined {
     return this.store.getters['user/me']
   }
-  get uid(): string | undefined {
+  get uid (): string | undefined {
     return this.store.getters['user/uid']
   }
-  get messagingEnabled() {
+  get messagingEnabled () {
     return this.store.state.ua.os !== 'ios'
   }
 
@@ -59,7 +59,7 @@ export class FirebasePlugin {
    *
    * @memberof FirebasePlugin
    */
-  async init() {
+  async init () {
     await Promise.all([
       import('firebase/auth'),
       import('firebase/firestore'),
@@ -107,7 +107,7 @@ export class FirebasePlugin {
     }
   }
 
-  waitForInitialized() {
+  waitForInitialized () {
     return new Promise((resolve) => {
       if (this._initialized)
         resolve()
@@ -116,7 +116,7 @@ export class FirebasePlugin {
     })
   }
 
-  private initialized() {
+  private initialized () {
     this._initialized = true
     this._initializedCallbacks.forEach((callback) => {
       try { callback() }
@@ -125,15 +125,15 @@ export class FirebasePlugin {
     this._initializedCallbacks = []
   }
 
-  async signup(email: string, password: string) {
+  async signup (email: string, password: string) {
     return await this.auth.createUserWithEmailAndPassword(email, password)
   }
 
-  async loginWithEmail(email: string, password: string) {
+  async loginWithEmail (email: string, password: string) {
     return await this.auth.signInWithEmailAndPassword(email, password)
   }
 
-  async loginWith(providerName: 'google'|'facebook'|'github') {
+  async loginWith (providerName: 'google'|'facebook'|'github') {
     const providers = {
       google: () => new firebase.auth.GoogleAuthProvider(),
       facebook: () => new firebase.auth.FacebookAuthProvider(),
@@ -159,11 +159,11 @@ export class FirebasePlugin {
     }
   }
 
-  async logout() {
+  async logout () {
     await this.auth.signOut()
   }
 
-  async publishGroup(id: string) {
+  async publishGroup (id: string) {
     const group = this.store.getters['group/id'](id) as Group
 
     const result = await this.functions.httpsCallable('publishGroup')({ group })
@@ -176,7 +176,7 @@ export class FirebasePlugin {
     }
   }
 
-  async deleteGroup(id: string) {
+  async deleteGroup (id: string) {
     // if it's online group, invoke server function
     if (this.store.getters['group/id'](id).online)
       await this.functions.httpsCallable('removeGroup')(id)
@@ -184,7 +184,7 @@ export class FirebasePlugin {
       this.store.commit('group/remove', id)
   }
 
-  async requestNotificationPermission() {
+  async requestNotificationPermission () {
     try {
       if (!this.messaging)
         return
@@ -197,7 +197,7 @@ export class FirebasePlugin {
     }
   }
 
-  async updateMessagingToken() {
+  async updateMessagingToken () {
     if (!this.messagingEnabled || !this.messaging)
       return null
 
@@ -223,7 +223,7 @@ export class FirebasePlugin {
     return token
   }
 
-  async sendFeedback(feedback: FeedbackOptions) {
+  async sendFeedback (feedback: FeedbackOptions) {
     const uid = this.uid || null
     const data: Feedback = {
       ...feedback,
@@ -236,7 +236,7 @@ export class FirebasePlugin {
       .set(data)
   }
 
-  async getExchangeRates(date?: dayjs.ConfigType, fallback_days = 5): Promise<ExchangeRecord> {
+  async getExchangeRates (date?: dayjs.ConfigType, fallback_days = 5): Promise<ExchangeRecord> {
     let d = dayjs(date)
     if (d.isAfter(dayjs()))
       d = dayjs()
@@ -259,12 +259,12 @@ export class FirebasePlugin {
     return await this.getExchangeRates(d.subtract(1, 'day'), fallback_days - 1)
   }
 
-  async getExchangeRateOn(from: string, to: string, date?: dayjs.ConfigType, fallback_days?: number) {
+  async getExchangeRateOn (from: string, to: string, date?: dayjs.ConfigType, fallback_days?: number) {
     const record = await this.getExchangeRates(date, fallback_days)
     return getExchangeRateOn(from, to, record)
   }
 
-  subscribe() {
+  subscribe () {
     this.unsubscribe()
     this._unsubscribeCallback = this.db
       .collection('groups')
@@ -294,22 +294,22 @@ export class FirebasePlugin {
     log('📻 Firebase subscribed')
   }
 
-  unsubscribe() {
+  unsubscribe () {
     if (this._unsubscribeCallback) {
       log('🔕 Firebase unsubscribed')
       this._unsubscribeCallback()
     }
   }
 
-  async joinGroup(id: string, localmemberId?: string) {
-    if (this.store.getters['group/all'].map(g => g.id).indexOf(id) === -1) {
+  async joinGroup (id: string, localmemberId?: string) {
+    if (!this.store.getters['group/all'].map(g => g.id).includes(id)) {
       await this.functions.httpsCallable('joinGroup')({ id, join_as: localmemberId })
       await this.manualSync(id)
     }
     this.router.push(`/group/${id}`)
   }
 
-  async manualSync(id: string) {
+  async manualSync (id: string) {
     const doc = await this.db
       .collection('groups')
       .doc(id)
@@ -329,7 +329,7 @@ export class FirebasePlugin {
    * @returns
    * @memberof FirebasePlugin
    */
-  async uploadProfileAndLogin(profile?: UserInfo, force?: boolean) {
+  async uploadProfileAndLogin (profile?: UserInfo, force?: boolean) {
     const me = profile || this.me
     const uid = me && me.uid
     const lastupdate = (this.me && this.me.lastupdate) || 0
@@ -371,7 +371,7 @@ export class FirebasePlugin {
     }
   }
 
-  async downloadProfile(uid: string) {
+  async downloadProfile (uid: string) {
     if (IsThisId.LocalMember(uid))
       return
     if (IsThisId.Me(uid))
@@ -397,7 +397,7 @@ export class FirebasePlugin {
     }
   }
 
-  async updateUserProfiles(uids: string[], threshold_hours = 24) {
+  async updateUserProfiles (uids: string[], threshold_hours = 24) {
     const now = +new Date()
     for (const uid of uids) {
       // skip profile updates for user self
@@ -412,7 +412,7 @@ export class FirebasePlugin {
     }
   }
 
-  async groupInfo(id: string): Promise<ServerGroup|null> {
+  async groupInfo (id: string): Promise<ServerGroup|null> {
     try {
       const result = await this.db
         .collection('groups')
@@ -429,7 +429,7 @@ export class FirebasePlugin {
     }
   }
 
-  uploadLocalChanges(groups?: ClientGroup[]) {
+  uploadLocalChanges (groups?: ClientGroup[]) {
     if (!groups)
       groups = Object.values(this.store.state.group.groups)
     return Promise.all(
@@ -453,7 +453,7 @@ export class FirebasePlugin {
       }))
   }
 
-  watchStoreChanges() {
+  watchStoreChanges () {
     this.store.commit('group/resetSyncingStates')
 
     this._unwatchCallback = this.store.watch(
@@ -469,14 +469,14 @@ export class FirebasePlugin {
     log('📻 Store watched')
   }
 
-  unwatchStore() {
+  unwatchStore () {
     if (this._unwatchCallback) {
       log('🔕 Store unwatched')
       this._unwatchCallback()
     }
   }
 
-  async installMessagingServiceWorker() {
+  async installMessagingServiceWorker () {
     if ('serviceWorker' in navigator) {
       try {
         await navigator.serviceWorker.register('/firebase-messaging-sw.js', { scope: '/' })

@@ -7,7 +7,7 @@ const transformCache = new JsCache()
 const transformCacheTTL = 10 * 24 * 60 * 60 * 1000 // 10 days
 
 // warpper functions
-export function ProcessServerOperations(operations: TransOperationOption[], uid: string, server_timestamp?: number): Operation[] {
+export function ProcessServerOperations (operations: TransOperationOption[], uid: string, server_timestamp?: number): Operation[] {
   return ProcessOperations(operations).map((o): Operation => {
     return {
       ...o,
@@ -26,11 +26,11 @@ const _eval = EvalTransforms<Group>(Transforms, {
   },
 })
 
-export function Eval(operations: Operation[]): Group {
+export function Eval (operations: Operation[]): Group {
   const base: Group = GroupDefault()
   return _eval(base, operations)
 }
 
-export function omitDeep(data: any) {
+export function omitDeep (data: any) {
   return JSON.parse(JSON.stringify(data))
 }
