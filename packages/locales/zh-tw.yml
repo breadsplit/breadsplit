@@ -58,7 +58,9 @@ noun:
 prompt:
   are_you_sure: 你確定嗎？
   feedback_delivered: 您的意見回饋已經成功寄出，感謝您的支持！
+  invite_friends: 邀請好友
   sending: 發送中...
+  share_message: 點擊加入 $1
 pronoun:
   anonymous: 匿名
   i: 我
@@ -163,6 +165,7 @@ ui:
     reset: 重置
   settings: 設定
   settle_up_solution: '{0} 需要還 {2} 給 {1}'
+  share_link_copied: 分享鏈接已復制！
   sign_in: 登錄
   signin_options:
     Facebook: 使用臉書登入

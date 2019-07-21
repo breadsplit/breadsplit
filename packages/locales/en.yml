@@ -70,7 +70,9 @@ noun:
 prompt:
   are_you_sure: Are you sure?
   feedback_delivered: Your feedback is delivered. Thank you ❤
+  invite_friends: Invite friends
   sending: Sending...
+  share_message: Click to join $1
 pronoun:
   anonymous: Anonymous
   i: I

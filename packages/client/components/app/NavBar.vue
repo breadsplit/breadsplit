@@ -31,6 +31,7 @@ v-app-bar.app-toolbar(app flat color='transparent' height='60').primary--text
 import { Component, Getter, mixins, Mutation, Prop } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
+import { Share } from '~/utils/share'
 
 @Component
 export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
@@ -126,20 +127,14 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   }
 
   async copyShareLink () {
-    if (this.currentShareLink) {
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            url: this.currentShareLink,
-          })
-        }
-        catch (e) {}
-      }
-      else {
-        await this.$copyText(this.currentShareLink)
-        this.$snack(this.$t('ui.share_link_copied', '').toString())
-      }
-    }
+    if (!this.currentShareLink)
+      return
+    await Share(
+      this,
+      this.$t('prompt.invite_friends').toString(),
+      this.$t('prompt.share_message', [this.group.name]).toString(),
+      this.currentShareLink,
+    )
   }
 }
 </script>
