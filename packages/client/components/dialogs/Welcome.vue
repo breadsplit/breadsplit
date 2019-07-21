@@ -16,7 +16,7 @@ v-card.welcome-dialog
 
     p Enjoy!
 
-    p.text-xs-right.signature.mb-1 The BreadSplit Team
+    p.text-right.signature.mb-1 The BreadSplit Team
 
   v-card-actions.pt-0.pb-3.px-3
     v-spacer

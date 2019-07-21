@@ -93,7 +93,7 @@
           thumb-label hide-details
         )
 
-        .text-xs-right(v-rows='"1fr min-content min-content 1fr"')
+        .text-right(v-rows='"1fr min-content min-content 1fr"')
           div
           div
             b(style='font-size:1.1em') {{pa.percent}}%

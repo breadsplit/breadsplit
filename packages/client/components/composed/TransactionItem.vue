@@ -9,7 +9,7 @@ v-list-item.transaction-item(@click='navigate()')
     v-list-item-title {{desc}}
     v-list-item-subtitle.sub-label {{datetime}}
 
-  v-list-item-action.pr-1.text-xs-right(v-rows='"auto max-content"')
+  v-list-item-action.pr-1.text-right(v-rows='"auto max-content"')
     app-money-label(
       :amount='-transaction.total_fee'
       :currency='transaction.currency'

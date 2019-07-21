@@ -7,7 +7,7 @@
     template(v-else)
       slot(name='item' :item='item' :index='index')
         div {{item.desc}}
-      .text-xs-right(style='margin: auto 0')
+      .text-right(style='margin: auto 0')
         app-money-label(:amount='item.amount' :currency='item.currency || currency' color)
 </template>
 

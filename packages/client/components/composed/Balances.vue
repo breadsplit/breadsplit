@@ -14,7 +14,7 @@ v-card.balances
         v-list-item-content
           app-user-info(:id='balance.uid')
         v-list-item-action.pr-1
-          v-list-item-title.text-xs-right
+          v-list-item-title.text-right
             app-money-label(
               :amount='balance.balance'
               :currency='balance.currency'
