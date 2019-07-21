@@ -27,13 +27,10 @@ v-card.new-transaction(v-rows='"auto max-content"')
   div
     v-divider
     v-card-actions.pa-3
-      template(v-if='step === 0')
-        v-btn.button-cancel.px-4(text, @click='close')
-          | {{$t('ui.button_cancel')}}
-
-      template(v-else)
-        v-btn.button-back.px-4(text, @click='step--')
-          | {{$t('ui.button_back')}}
+      v-stepper(v-model.number='step' :vertical='false')
+        v-stepper-step(step='0' editable) {{$t("ui.newtrans.how_much")}}
+        v-stepper-step(step='1' editable) {{$t("ui.splitting.split_by")}}
+        v-stepper-step(step='2' editable) {{$t("ui.newtrans.details")}}
 
       v-spacer
 
@@ -213,6 +210,12 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
     & > .height-100
       min-height: 400px
+
+  .v-stepper
+    box-shadow: none
+    .v-stepper__step
+      padding: 5px
+      display: inline-flex
 
   .page-container
     padding: 1.5em 2em 0.5em 2em
