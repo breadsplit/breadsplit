@@ -44,9 +44,11 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   @Mutation('group/remove') removeGroup
 
   @Prop(Boolean) readonly drawer!: boolean
+
   get internalDrawer () {
     return this.drawer
   }
+
   set internalDrawer (value: boolean) {
     this.$emit('update:drawer', value)
   }
@@ -124,9 +126,20 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   }
 
   async copyShareLink () {
-    if (this.currentShareLink)
-      await this.$copyText(this.currentShareLink)
-    this.$snack(this.$t('ui.share_link_copied', '').toString())
+    if (this.currentShareLink) {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            url: this.currentShareLink,
+          })
+        }
+        catch (e) {}
+      }
+      else {
+        await this.$copyText(this.currentShareLink)
+        this.$snack(this.$t('ui.share_link_copied', '').toString())
+      }
+    }
   }
 }
 </script>
