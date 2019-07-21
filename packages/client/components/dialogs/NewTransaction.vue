@@ -3,14 +3,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
   app-close-button(@close='close')
 
   v-window.grid-fill-height(v-model='step' touchless style='min-height:550px')
-    v-window-item.page.page-1(:value='1')
-      page-creditors(
-        :form='form'
-        :members='members'
-        @next='next'
-      )
-
-    v-window-item.page.page-2(:value='2')
+    v-window-item.page
       page-splitting(
         ref='splitting_creditors'
         :form='form'
@@ -19,7 +12,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
         on='creditors'
       )
 
-    v-window-item.page.page-3(:value='3')
+    v-window-item.page
        page-splitting(
         ref='splitting_debtors'
         :form='form'
@@ -28,13 +21,13 @@ v-card.new-transaction(v-rows='"auto max-content"')
         on='debtors'
       )
 
-    v-window-item.page.page-4(:value='4')
+    v-window-item.page
       page-details(ref='details' :form='form', @next='next')
 
   div
     v-divider
     v-card-actions.pa-3
-      template(v-if='step === 1')
+      template(v-if='step === 0')
         v-btn.button-cancel.px-4(text, @click='close')
           | {{$t('ui.button_cancel')}}
 
@@ -44,9 +37,9 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
       v-spacer
 
-      template(v-if='step >= 2')
+      template(v-if='step >= 1')
         v-btn.button-quick-add.px-4(:disabled='!form.total_fee', color='primary', text, @click='submit')
-          | {{$t('ui.button_quick_add')}}
+          | {{$t('ui.button_finish')}}
 
       v-btn.button-next.px-4(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
         | {{btnNextText}}
@@ -62,6 +55,10 @@ import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, IdMe, defaultCurrency } from '~/core'
 
+const STEP_INPUT = 0
+const STEP_SPLIT = 1
+const STEP_DETAIL = 2
+
 @Component({
   components: {
     PageCreditors,
@@ -71,8 +68,7 @@ import { TransactionDefault, IdMe, defaultCurrency } from '~/core'
 })
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
-  step = 1
-  steps = 4
+  step = STEP_INPUT
 
   $refs!: {
     splitting_creditors: PageSplitting
@@ -84,7 +80,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   reset () {
     this.form = TransactionDefault()
-    this.step = 1
+    this.step = STEP_INPUT
 
     let me = IdMe
     if (this.uid && this.uid in this.group.members)
@@ -98,8 +94,6 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
         .toString()
         .split(',')
         .map(uid => ({ weight: 1, uid }))
-      // move to next step
-      this.step++
     }
     else {
       this.form.creditors.push({ weight: 1, uid: me })
@@ -108,8 +102,8 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     if (this.options.amount) {
       this.form.total_fee = +this.options.amount || 0
       // move to next step
-      if (this.form.total_fee && this.step === 2)
-        this.step++
+      if (this.form.total_fee && this.step === STEP_INPUT)
+        this.step = STEP_SPLIT
     }
 
     if (this.options.to) {
@@ -118,8 +112,8 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
         .split(',')
         .map(uid => ({ weight: 1, uid }))
       // move to next step
-      if (this.step === 3)
-        this.step++
+      if (this.step === STEP_SPLIT)
+        this.step = STEP_DETAIL
     }
     else {
       this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.uid || IdMe }))
@@ -147,20 +141,20 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   btnNext () {
     if (this.btnNextDisabled)
       return
-    if (this.step !== this.steps)
+    if (this.step !== STEP_DETAIL)
       return this.next()
     this.submit()
   }
 
   get btnNextText () {
-    if (this.step === this.steps)
+    if (this.step === STEP_DETAIL)
       return this.$t('ui.button_save')
 
     return this.$t('ui.button_next')
   }
 
   get btnNextDisabled () {
-    return this.step === 2 && !this.form.total_fee
+    return this.step === STEP_INPUT && !this.form.total_fee
   }
 
   submit () {

@@ -1,190 +1,190 @@
-code: zh-tw
-iso: zh-TW
-language_name: 繁體中文
-translators: offical
+acts:
+  change_group_currency: '{0} 將貨幣更改為 {1}'
+  insert_group: '{0} 創建了群組'
+  insert_member: '{0} 添加了成員: {1}'
+  insert_transaction: '{0} 添加了支出 {1}'
+  insert_viewer: '{0} 加入了群組'
+  publish_group: '{0} 將群組轉換為在綫模式'
+  remove_transaction: '{0} 刪除了支出 {1}'
+  rename_group: '{0} 將群組更名為 {1}'
 appname: 分帳吐司
 appname_dev: 分帳吐司 Dev
-css:
-  font_of_locale: '"微軟正黑體", "Microsoft JhengHei"'
-ui:
-  language: 語言
-  settings: 設定
-  sign_in: 登錄
-  general: 一般
-  advance: 進階
-  homepage: 首頁
-  button_new_group: 新增群組
-  button_new_member: 添加成員
-  button_join_group: 加入群組
-  button_create: 創建
-  button_ok: 好的
-  button_confirm: 確認
-  button_cancel: 取消
-  join_as_me: '以 {0} 加入'
-  group_editing:
-    new_group: 新建群組
-    enter_group_name: 請輸入群組名稱
-    default_group_name: 未命名群組
-    group_name: 群組名稱
-    add_members: 添加成員
-    add_member_xx: '添加成員 "{0}"'
-  tabs:
-    expenses: 支出
-    members: 成員
-    summary: 總覽
-    activities: 記錄
-    transactions: 交易記錄
-    balances: 債務情況
-    settle_up: 算清債務
-  menu:
-    edit_group: 編輯群組
-    view_group: 檢視群組
-    make_group_online: 轉換為綫上模式
-    remove_group: 刪除群組
-    rename_member: 重命名
-    member_is_me: 這是我
-    remove_member: '將 {name} 從群組中移除'
-  setting_options:
-    enabled: 開啓
-    disabled: 關閉
-    notification: 通知
-    reset: 重置
-    dark_mode: 深色模式
-    notification_enabled: 通知已啟用
-    notification_disabled: 通知已禁用
-    clear_all_data: 清除所有數據
-  signin_options:
-    tip: 登入您的帳戶，以啟用備份與同步功能
-    Google: 使用 Google 登入
-    Facebook: 使用臉書登入
-    Github: 使用 Github 登入
-  misc: 其他
-  button_join: 加入
-  about: 關於我們
-  become_a_patreon: 在 Patreon 上成為贊助者
-  help: 使用幫助
-  button_save: 儲存
-  button_next: 下一步
-  button_quick_add: 快速添加
-  button_back: 返回
-  feedback: 意見回饋
-  wip: "\U0001F6A7 功能開發中，敬請期待…"
-  new_expense: 新的支出
-  xx_paid_money: '{0} 支付了'
-  xx_paid_xx: '{0} 支付了 {1}'
-  paid_by: 付款人
-  paid_by_xx: '由 {0} 付款'
-  splitting:
-    split_by: 分帳方式
-    average: 均分制
-    amount: 按金額
-    percent: 按趴數
-    weight: 按權重
-    mode_average_tip: 選擇參與這筆支出的人
-    mode_average_details: '{0} 人參與分帳，平均每個人花費'
-    total: '支出金額: {0}'
-  support_us: 支持我們
-  welcome_breadsplit: 歡迎使用分帳吐司!
-  button_more_about_us: 更多關於我們
-  button_yes: 是
-  button_no: 否
-  donate_on_paypal: PayPal 一次性贊助
-  star_on_github: Star on Github
-  continue_and_accept: '繼續使用即表示您同意我們的{0}'
-  privacy_policy: 隱私政策
-  continue_anyway: 仍然繼續
-  newtrans:
-    how_much: 付款金額
-    expense_paid_by: 由誰支付？
-    xx_should_pay: '這次輪到 {0} 付款。'
-    add_payer: 添加付款人
-    for_whom: 為了誰？
-    select_who_paid: 選擇付款人
-    repeat_expense: 重複
-    add_location: 添加位置
-    details: 明細
-  total: 合計
-  button_submit: 提交
-  optional: （可選）
-  button_send: 發送
-  faq: 常見問題
-  currency: 幣種
-  offline_mode: 離線模式
-  online_mode: 綫上模式
-  button_create_group: 創建群組
-  join:
-    my_name_is: '我的名字是:'
-    group_not_found: 沒有找到群組
-    join_anonymous: 新增成員
-    this_is_me: 這是我
-    existing_users: 已存在用戶
-    loading_group_info: 正在加載群組信息...
-    title: 加入群組
-    invited_to_join: '您被邀請加入 {0} 小組'
-  button_refresh: 重新整理
-  button_go_home: 返回App
-  settle_up_solution: '{0} 需要還 {2} 給 {1}'
-  more_currency: 更多...
-  select_currency: 選擇貨幣
 cats:
-  transport:
-    display: 交通
-    keywords: '地鐵,捷運,mrt,計程車,飛機,機票,公車,uber,mrt,lrt,grab,的士,船票,火車,高鐵,輕軌,車票'
-  lodging:
-    display: 住宿
-    keywords: '飯店,酒店,民宿,住宿,青旅'
-  travel:
-    display: 旅行
-    keywords: '旅行,門票,景點'
   food:
     display: 飲食
     keywords: '早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品'
-  transfer:
-    display: 轉移
-    keywords: 轉移
+  lodging:
+    display: 住宿
+    keywords: '飯店,酒店,民宿,住宿,青旅'
+  other:
+    display: 其他
   shopping:
     display: 購物
     keywords: 購物
   tips:
     display: 小費
     keywords: 'tip,小費'
-  other:
-    display: 其他
-pronoun:
-  me: 我
-  i: 我
-  anonymous: 匿名
-noun:
-  today: 今天
-  yesterday: 昨天
-  tomorrow: 明天
-  expense: 支出
-prompt:
-  are_you_sure: 你確定嗎？
-  sending: 發送中...
-  feedback_delivered: 您的意見回饋已經成功寄出，感謝您的支持！
-tips:
-  already_joined_group: 你已經加入了此群組。
-  select_open_in_browser: '選擇 {0}'
-  click_right_corner_icon: '請點選右上角 "{0}" 圖標'
-  member_name_input_placeholder: 輸入成員昵稱
-acts:
-  insert_transaction: '{0} 添加了支出 {1}'
-  insert_group: '{0} 創建了群組'
-  insert_viewer: '{0} 加入了群組'
-  publish_group: '{0} 將群組轉換為在綫模式'
-  rename_group: '{0} 將群組更名為 {1}'
-  insert_member: '{0} 添加了成員: {1}'
-  remove_transaction: '{0} 刪除了支出 {1}'
-  change_group_currency: '{0} 將貨幣更改為 {1}'
-help:
-  no_password_login:
-    tips: 沒有使用賬號密碼的登入方式？
-    title: 不使用賬號密碼登入
-    details: >-
-      我們使用一種稱爲 OAuth 的技術接入由 Google、Facebook 等平台提供的賬戶驗證服務。 通過
-      OAuth，我們<b>不會</b>獲得您的密碼等敏感信息。<br> 同時，這種方式可以減少您輸入密碼的次數，以更好地確保您的賬戶安全。
+  transfer:
+    display: 轉移
+    keywords: 轉移
+  transport:
+    display: 交通
+    keywords: '地鐵,捷運,mrt,計程車,飛機,機票,公車,uber,mrt,lrt,grab,的士,船票,火車,高鐵,輕軌,車票'
+  travel:
+    display: 旅行
+    keywords: '旅行,門票,景點'
+code: zh-tw
+css:
+  font_of_locale: '"微軟正黑體", "Microsoft JhengHei"'
 feedback:
   contact_info: 聯絡方式
   describe: 請描述您的問題或建議。
   github_hint: '或者您也可以在 {0} 上創建Issue'
+help:
+  no_password_login:
+    details: >-
+      我們使用一種稱爲 OAuth 的技術接入由 Google、Facebook 等平台提供的賬戶驗證服務。 通過
+      OAuth，我們<b>不會</b>獲得您的密碼等敏感信息。<br> 同時，這種方式可以減少您輸入密碼的次數，以更好地確保您的賬戶安全。
+    tips: 沒有使用賬號密碼的登入方式？
+    title: 不使用賬號密碼登入
+iso: zh-TW
+language_name: 繁體中文
+noun:
+  expense: 支出
+  today: 今天
+  tomorrow: 明天
+  yesterday: 昨天
+prompt:
+  are_you_sure: 你確定嗎？
+  feedback_delivered: 您的意見回饋已經成功寄出，感謝您的支持！
+  sending: 發送中...
+pronoun:
+  anonymous: 匿名
+  i: 我
+  me: 我
+tips:
+  already_joined_group: 你已經加入了此群組。
+  click_right_corner_icon: '請點選右上角 "{0}" 圖標'
+  member_name_input_placeholder: 輸入成員昵稱
+  select_open_in_browser: '選擇 {0}'
+translators: offical
+ui:
+  about: 關於我們
+  advance: 進階
+  become_a_patreon: 在 Patreon 上成為贊助者
+  button_back: 返回
+  button_cancel: 取消
+  button_confirm: 確認
+  button_create: 創建
+  button_create_group: 創建群組
+  button_finish: 完成
+  button_go_home: 返回App
+  button_join: 加入
+  button_join_group: 加入群組
+  button_more_about_us: 更多關於我們
+  button_new_group: 新增群組
+  button_new_member: 添加成員
+  button_next: 下一步
+  button_no: 否
+  button_ok: 好的
+  button_refresh: 重新整理
+  button_save: 儲存
+  button_send: 發送
+  button_submit: 提交
+  button_yes: 是
+  continue_and_accept: '繼續使用即表示您同意我們的{0}'
+  continue_anyway: 仍然繼續
+  currency: 幣種
+  donate_on_paypal: PayPal 一次性贊助
+  faq: 常見問題
+  feedback: 意見回饋
+  general: 一般
+  group_editing:
+    add_member_xx: '添加成員 "{0}"'
+    add_members: 添加成員
+    default_group_name: 未命名群組
+    enter_group_name: 請輸入群組名稱
+    group_name: 群組名稱
+    new_group: 新建群組
+  help: 使用幫助
+  homepage: 首頁
+  join:
+    existing_users: 已存在用戶
+    group_not_found: 沒有找到群組
+    invited_to_join: '您被邀請加入 {0} 小組'
+    join_anonymous: 新增成員
+    loading_group_info: 正在加載群組信息...
+    my_name_is: '我的名字是:'
+    this_is_me: 這是我
+    title: 加入群組
+  join_as_me: '以 {0} 加入'
+  language: 語言
+  menu:
+    edit_group: 編輯群組
+    make_group_online: 轉換為綫上模式
+    member_is_me: 這是我
+    remove_group: 刪除群組
+    remove_member: '將 {name} 從群組中移除'
+    rename_member: 重命名
+    view_group: 檢視群組
+  misc: 其他
+  more_currency: 更多...
+  new_expense: 新的支出
+  newtrans:
+    add_location: 添加位置
+    add_payer: 添加付款人
+    details: 明細
+    expense_paid_by: 由誰支付？
+    for_whom: 為了誰？
+    how_much: 付款金額
+    repeat_expense: 重複
+    select_who_paid: 選擇付款人
+    xx_should_pay: '這次輪到 {0} 付款。'
+  offline_mode: 離線模式
+  online_mode: 綫上模式
+  optional: （可選）
+  paid_by: 付款人
+  paid_by_xx: '由 {0} 付款'
+  privacy_policy: 隱私政策
+  select_currency: 選擇貨幣
+  setting_options:
+    clear_all_data: 清除所有數據
+    dark_mode: 深色模式
+    disabled: 關閉
+    enabled: 開啓
+    notification: 通知
+    notification_disabled: 通知已禁用
+    notification_enabled: 通知已啟用
+    reset: 重置
+  settings: 設定
+  settle_up_solution: '{0} 需要還 {2} 給 {1}'
+  sign_in: 登錄
+  signin_options:
+    Facebook: 使用臉書登入
+    Github: 使用 Github 登入
+    Google: 使用 Google 登入
+    tip: 登入您的帳戶，以啟用備份與同步功能
+  splitting:
+    amount: 按金額
+    average: 均分制
+    mode_average_details: '{0} 人參與分帳，平均每個人花費'
+    mode_average_tip: 選擇參與這筆支出的人
+    percent: 按趴數
+    split_by: 分帳方式
+    total: '支出金額: {0}'
+    weight: 按權重
+  star_on_github: Star on Github
+  support_us: 支持我們
+  tabs:
+    activities: 記錄
+    balances: 債務情況
+    expenses: 支出
+    members: 成員
+    settle_up: 算清債務
+    summary: 總覽
+    transactions: 交易記錄
+  total: 合計
+  welcome_breadsplit: 歡迎使用分帳吐司!
+  wip: "\U0001F6A7 功能開發中，敬請期待…"
+  xx_paid_money: '{0} 支付了'
+  xx_paid_xx: '{0} 支付了 {1}'

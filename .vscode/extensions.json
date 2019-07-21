@@ -12,7 +12,6 @@
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
     "davidanson.vscode-markdownlint",
-    "esbenp.prettier-vscode",
     "streetsidesoftware.code-spell-checker",
   ]
 }

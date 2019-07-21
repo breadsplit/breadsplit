@@ -46,10 +46,11 @@
         @click='focusInput(pa, "amount")'
       )
         .user-info-section
-          app-user-avatar(size='38' :id='pa.uid')
-          span.user-name-text.mx-2
-            i18n(:path='userTextI18nPath')
-              app-user-info(:id='pa.uid')
+          app-member-select(:members='[...candidates, pa]', @input='id=>changeParticipator(pa.uid, id)')
+            app-user-avatar(size='38' :id='pa.uid')
+            span.user-name-text.mx-2
+              i18n(:path='userTextI18nPath')
+                app-user-info(:id='pa.uid')
           v-expand-x-transition
             v-btn.op-25.ma-0(
               v-show='removable && focused===pa.uid'
@@ -262,6 +263,12 @@ export default class Splitting extends Vue {
 
   addParticipator (uid: string, weight = 1) {
     this.participators.push({ weight, uid })
+  }
+
+  changeParticipator (from: string, to: string) {
+    const pa = this.participators.find(p => p.uid === from)
+    if (pa)
+      pa.uid = to
   }
 
   removeParticipator (uid: string) {

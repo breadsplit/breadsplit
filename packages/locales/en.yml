@@ -1,212 +1,213 @@
-code: en
-iso: en-US
-language_name: English
-translators: offical
+acts:
+  change_group_currency: '{0} changed main currency to {1}'
+  insert_group: '{0} created the group'
+  insert_member: '{0} added a member {1}'
+  insert_transaction: '{0} added an expense {1}'
+  insert_viewer: '{0} joined the group'
+  publish_group: '{0} changed group to online mode'
+  remove_transaction: '{0} deleted an expense {1}'
+  rename_group: '{0} changed group name to {1}'
 appname: BreadSplit
 appname_dev: BreadSplit Dev
-utils:
-  bypass_1: '{0}'
-css:
-  font_of_locale: ''
-ui:
-  language: Language
-  settings: Settings
-  sign_in: Sign in
-  about: About us
-  general: General
-  advance: Advance
-  reset: Reset
-  homepage: Home
-  become_a_patreon: Become a Patreon
-  button_back: Back
-  button_cancel: Cancel
-  button_confirm: Confirm
-  button_create: Create
-  button_join_group: Join the group
-  button_join: Join
-  button_more_about_us: More about us
-  button_new_group: Create a new group
-  button_new_member: Add a member
-  button_next: Next
-  button_no: 'No'
-  button_ok: OK
-  button_quick_add: Quick Add
-  button_save: Save
-  button_send: Send
-  button_submit: Submit
-  button_yes: 'Yes'
-  continue_and_accept: 'By continue, you accept our {0}'
-  continue_anyway: Continue anyway
-  donate_on_paypal: One-time donation on PayPal
-  feedback: Feedback
-  help: Help
-  join_as_me: 'Join as {0}'
-  join_group: 'Joining <b>{0}</b>'
-  loading: Loading...
-  misc: Misc.
-  new_expense: New expense
-  optional: (Optional)
-  paid_by_xx: 'Paid by {0}'
-  paid_by: Paid by
-  privacy_policy: Privacy policy
-  share_link_copied: Share link copied!
-  share_link_to_invite: Share this link to invite friends
-  star_on_github: Star on Github
-  support_us: Support us
-  total: Total
-  welcome_breadsplit: Welcome to BreadSplit!
-  wip: "\U0001F6A7 Working in progress..."
-  xx_paid_money: '{0} paid'
-  xx_paid_xx: '{0} paid {1}'
-  group_editing:
-    new_group: New group
-    group_name: Group's name
-    enter_group_name: Enter group's name
-    default_group_name: Untitled Group
-    add_members: Add members
-    add_member_xx: 'Add "{0}"'
-  tabs:
-    settle_up: Settle Up
-    expenses: Expenses
-    members: Members
-    summary: Summary
-    activities: Activities
-    transactions: Transactions
-    balances: Balances
-  menu:
-    edit_group: Edit group
-    view_group: View group
-    make_group_online: Make this group online
-    remove_group: Remove group
-    rename_member: Rename
-    member_is_me: This is me
-    remove_member: 'Remove {name} from group'
-  setting_options:
-    enabled: Enabled
-    dark_mode: Dark mode
-    disabled: Disabled
-    notification: Notification
-    reset: Reset
-    notification_enabled: Notifications are enabled
-    notification_disabled: Notifications are disabled
-    clear_all_data: Clear all Data
-  signin_options:
-    tip: Sign in to activate Backup & Sync
-    Google: Sign in with Google
-    Facebook: Sign in with Facebook
-    Github: Sign in with Github
-  splitting:
-    split_by: Split by
-    average: Equally
-    amount: Amount
-    percent: Percent
-    weight: Weights
-    mode_average_tip: Select those who spent with this expense
-    mode_average_details: 'Splitting with {0} people, each of them spent'
-    total: 'Total expense: {0}'
-  newtrans:
-    how_much: How much?
-    expense_paid_by: Expense paid by?
-    xx_should_pay: 'by the way, {0} should pay this time.'
-    add_payer: Add more payer
-    for_whom: For whom?
-    select_who_paid: Select the person who paid the bill
-    repeat_expense: Repeat
-    add_location: Add location
-    details: Details
-    description: Description
-  faq: FAQ
-  currency: Currency
-  offline_mode: Offline mode
-  online_mode: Online mode
-  button_create_group: Create Group
-  button_refresh: Reload
-  button_go_home: Go Home
-  join:
-    group_not_found: Group Not Found
-    join_anonymous: Join as a new member
-    my_name_is: 'My name is:'
-    this_is_me: This is me
-    existing_users: Existing users
-    loading_group_info: Loading group info...
-    title: Join a group
-    invited_to_join: 'You are invited to join group {0}'
-  settle_up_solution: '{0} should pay {2} back to {1}'
-  more_currency: More...
-  select_currency: Select currency
-  search_currency: Search currency...
-pronoun:
-  me: Me
-  i: I
-  anonymous: Anonymous
-noun:
-  today: Today
-  yesterday: Yesterday
-  tomorrow: Tomorrow
-  expense: Expense
-prompt:
-  are_you_sure: Are you sure?
-  sending: Sending...
-  feedback_delivered: Your feedback is delivered. Thank you ❤
 cats:
-  transport:
-    display: Transport
-    keywords: 'uber,grab,transport,mrt,lrt,bus,taxi,ship,airplane,flight,car'
-  lodging:
-    display: Lodging
-    keywords: hotel
-  travel:
-    display: Travel
-    keywords: ''
   food:
     display: Food
     keywords: 'food,drink,meal,breakfast,lunch,dinner'
-  transfer:
-    display: Transfer
+  lodging:
+    display: Lodging
     keywords: hotel
+  other:
+    display: Other
+    keywords: ''
   shopping:
     display: Shopping
     keywords: shopping
   tips:
     display: Tips
     keywords: 'tip,tips'
-  other:
-    display: Other
+  transfer:
+    display: Transfer
+    keywords: hotel
+  transport:
+    display: Transport
+    keywords: 'uber,grab,transport,mrt,lrt,bus,taxi,ship,airplane,flight,car'
+  travel:
+    display: Travel
     keywords: ''
-tips:
-  already_joined_group: You have already joined this group.
-  click_right_corner_icon: 'Please click the "{0}" icon'
-  select_open_in_browser: 'Then select {0}'
-  open_in_browser_general: Open in browser
-  member_name_input_placeholder: Enter member's name
-acts:
-  insert_transaction: '{0} added an expense {1}'
-  insert_group: '{0} created the group'
-  insert_viewer: '{0} joined the group'
-  publish_group: '{0} changed group to online mode'
-  rename_group: '{0} changed group name to {1}'
-  insert_member: '{0} added a member {1}'
-  remove_transaction: '{0} deleted an expense {1}'
-  change_group_currency: '{0} changed main currency to {1}'
+code: en
+css:
+  font_of_locale: ''
+feedback:
+  contact_info: Contact Info
+  describe: Describe your issue or sugesstions.
+  github_hint: 'Or you can create an issue on our {0}'
 help:
   no_password_login:
-    tips: No login with email and password?
     details: ''
+    tips: No login with email and password?
     title: ''
+  online_mode:
+    details: >-
+      Online mode provides functions like sharing and collaborating.<br> Offline
+      mode change be switch to online any time you want, while online mode can
+      not switch back to offline mode.<br> Note: You have to login to use online
+      mode.
+    title: Online mode
   splitting_intro:
     details: ''
     title: What is Splitting?
   support:
     details: ''
     title: How can I support this project?
-  online_mode:
-    title: Online mode
-    details: >-
-      Online mode provides functions like sharing and collaborating.<br> Offline
-      mode change be switch to online any time you want, while online mode can
-      not switch back to offline mode.<br> Note: You have to login to use online
-      mode.
-feedback:
-  contact_info: Contact Info
-  describe: Describe your issue or sugesstions.
-  github_hint: 'Or you can create an issue on our {0}'
+iso: en-US
+language_name: English
+noun:
+  expense: Expense
+  today: Today
+  tomorrow: Tomorrow
+  yesterday: Yesterday
+prompt:
+  are_you_sure: Are you sure?
+  feedback_delivered: Your feedback is delivered. Thank you ❤
+  sending: Sending...
+pronoun:
+  anonymous: Anonymous
+  i: I
+  me: Me
+tips:
+  already_joined_group: You have already joined this group.
+  click_right_corner_icon: 'Please click the "{0}" icon'
+  member_name_input_placeholder: Enter member's name
+  open_in_browser_general: Open in browser
+  select_open_in_browser: 'Then select {0}'
+translators: offical
+ui:
+  about: About us
+  advance: Advance
+  become_a_patreon: Become a Patreon
+  button_back: Back
+  button_cancel: Cancel
+  button_confirm: Confirm
+  button_create: Create
+  button_create_group: Create Group
+  button_finish: Finish
+  button_go_home: Go Home
+  button_join: Join
+  button_join_group: Join the group
+  button_more_about_us: More about us
+  button_new_group: Create a new group
+  button_new_member: Add a member
+  button_next: Next
+  button_no: 'No'
+  button_ok: OK
+  button_refresh: Reload
+  button_save: Save
+  button_send: Send
+  button_submit: Submit
+  button_yes: 'Yes'
+  continue_and_accept: 'By continue, you accept our {0}'
+  continue_anyway: Continue anyway
+  currency: Currency
+  donate_on_paypal: One-time donation on PayPal
+  faq: FAQ
+  feedback: Feedback
+  general: General
+  group_editing:
+    add_member_xx: 'Add "{0}"'
+    add_members: Add members
+    default_group_name: Untitled Group
+    enter_group_name: Enter group's name
+    group_name: Group's name
+    new_group: New group
+  help: Help
+  homepage: Home
+  join:
+    existing_users: Existing users
+    group_not_found: Group Not Found
+    invited_to_join: 'You are invited to join group {0}'
+    join_anonymous: Join as a new member
+    loading_group_info: Loading group info...
+    my_name_is: 'My name is:'
+    this_is_me: This is me
+    title: Join a group
+  join_as_me: 'Join as {0}'
+  join_group: 'Joining <b>{0}</b>'
+  language: Language
+  loading: Loading...
+  menu:
+    edit_group: Edit group
+    make_group_online: Make this group online
+    member_is_me: This is me
+    remove_group: Remove group
+    remove_member: 'Remove {name} from group'
+    rename_member: Rename
+    view_group: View group
+  misc: Misc.
+  more_currency: More...
+  new_expense: New expense
+  newtrans:
+    add_location: Add location
+    add_payer: Add more payer
+    description: Description
+    details: Details
+    expense_paid_by: Expense paid by?
+    for_whom: For whom?
+    how_much: How much?
+    repeat_expense: Repeat
+    select_who_paid: Select the person who paid the bill
+    xx_should_pay: 'by the way, {0} should pay this time.'
+  offline_mode: Offline mode
+  online_mode: Online mode
+  optional: (Optional)
+  paid_by: Paid by
+  paid_by_xx: 'Paid by {0}'
+  privacy_policy: Privacy policy
+  reset: Reset
+  search_currency: Search currency...
+  select_currency: Select currency
+  setting_options:
+    clear_all_data: Clear all Data
+    dark_mode: Dark mode
+    disabled: Disabled
+    enabled: Enabled
+    notification: Notification
+    notification_disabled: Notifications are disabled
+    notification_enabled: Notifications are enabled
+    reset: Reset
+  settings: Settings
+  settle_up_solution: '{0} should pay {2} back to {1}'
+  share_link_copied: Share link copied!
+  share_link_to_invite: Share this link to invite friends
+  show-all: Show all
+  sign_in: Sign in
+  signin_options:
+    Facebook: Sign in with Facebook
+    Github: Sign in with Github
+    Google: Sign in with Google
+    tip: Sign in to activate Backup & Sync
+  splitting:
+    amount: Amount
+    average: Equally
+    mode_average_details: 'Splitting with {0} people, each of them spent'
+    mode_average_tip: Select those who spent with this expense
+    percent: Percent
+    split_by: Split by
+    total: 'Total expense: {0}'
+    weight: Weights
+  star_on_github: Star on Github
+  support_us: Support us
+  tabs:
+    activities: Activities
+    balances: Balances
+    expenses: Expenses
+    members: Members
+    settle_up: Settle Up
+    summary: Summary
+    transactions: Transactions
+  total: Total
+  welcome_breadsplit: Welcome to BreadSplit!
+  wip: "\U0001F6A7 Working in progress..."
+  xx_paid_money: '{0} paid'
+  xx_paid_xx: '{0} paid {1}'
+utils:
+  bypass_1: '{0}'

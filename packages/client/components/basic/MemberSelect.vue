@@ -2,7 +2,7 @@
 .member-select
   v-menu(v-model='menu' max-width='450px')
     template(v-slot:activator='{ on }')
-      .vertical-aligned(v-on='on', v-ripple)
+      .vertical-aligned(v-on='on')
         slot
           app-user-avatar(:id='current.uid', inline, show-name)
           v-icon mdi-menu-down
@@ -43,4 +43,7 @@ export default class MemberSelect extends Vue {
 
 .member-option
   cursor: pointer
+
+.v-menu--inline
+  display: block
 </style>
