@@ -2,8 +2,8 @@
 .receipt-list(v-columns='"auto max-content"')
   template(v-for='(item, index) of items')
     template(v-if='!item')
-      v-divider
-      v-divider
+      v-divider.my-1
+      v-divider.my-1
     template(v-else)
       slot(name='item' :item='item' :index='index')
         div {{item.desc}}

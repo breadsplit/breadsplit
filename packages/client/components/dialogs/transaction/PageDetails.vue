@@ -31,7 +31,7 @@
     v-icon(color='grey') mdi-map-marker
     v-subheader {{$t('ui.newtrans.add_location')}}
 
-  div.ml-2(v-columns='"40px auto"')
+  // div.ml-2(v-columns='"40px auto"')
     v-icon(color='grey') mdi-history
     v-subheader {{$t('ui.newtrans.repeat_expense')}}
 
@@ -79,8 +79,12 @@ export default class PageDetails extends mixins(GroupMixin) {
   get receipt_items () {
     const creditors = new TransactionWeightsHelper(this.form, 'creditors')
     const debtors = new TransactionWeightsHelper(this.form, 'debtors')
-    const positive = creditors.participators.map(p => ({ amount: creditors.getFee(p, 'weight'), value: p.uid }))
-    const negative = debtors.participators.map(p => ({ amount: -debtors.getFee(p, 'weight'), value: p.uid }))
+    const positive = creditors.participators
+      .map(p => ({ amount: creditors.getFee(p, 'weight'), value: p.uid }))
+      .filter(i => i.amount)
+    const negative = debtors.participators
+      .map(p => ({ amount: -debtors.getFee(p, 'weight'), value: p.uid }))
+      .filter(i => i.amount)
     return [...positive, null, ...negative]
   }
 }
