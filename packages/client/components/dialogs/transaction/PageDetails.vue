@@ -9,19 +9,26 @@
           app-user-avatar.py-1.px-2(:id='item.value' size='24')
           app-user-info(:id='item.value')
 
-  v-text-field.px-2.pt-3.description-field(
+  template(v-for='cat in categories')
+    app-action-with-text.option.pa-2.px-3(v-ripple @click.native='form.category = cat.name')
+      app-category-icon(
+        slot='action'
+        :active='form.category === cat.name '
+        :category='cat.name',
+        size='32'
+      )
+      app-category-label(
+        slot='text'
+        :active='form.category === cat.name '
+        :category='cat.name'
+      )
+
+  v-text-field.px-2.pt-1.pb-1.description-field(
     v-model='form.desc'
     label='$t("ui.newtrans.description")'
     placeholder='Some expense...'
     solo required hide-details
   )
-
-  app-category-select(@input='i=> form.category = i' :categories='categories')
-    template(v-slot='{on}' )
-      div.ml-2(v-on='on' v-columns='"40px auto"' v-ripple)
-        app-category-icon(:category='form.category')
-        v-subheader
-          app-category-label(:category='form.category')
 
   div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple)
     v-icon(color='grey') mdi-calendar

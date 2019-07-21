@@ -43,7 +43,7 @@ const DefaultCategories: Category[] = [
   {
     name: 'other',
     icon: 'cash-usd',
-    color: '#9e9589',
+    color: '#a0bf28',
   },
 ]
 

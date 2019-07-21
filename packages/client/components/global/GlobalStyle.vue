@@ -3,6 +3,7 @@ style.
   :root {
     --app-font: {{localeFont}};
     --theme-primary: {{primaryColor}};
+    --theme-inactive: {{theme.inactive}};
   }
   .primary {
     background-color: {{primaryColor}} !important;
@@ -27,6 +28,10 @@ export default class GlobalStyle extends Vue {
 
   get primaryColor () {
     return this.$store.getters.primary
+  }
+
+  get theme () {
+    return this.$vuetify.theme.currentTheme
   }
 }
 </script>

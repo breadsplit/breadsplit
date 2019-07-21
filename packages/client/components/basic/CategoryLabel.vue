@@ -10,6 +10,7 @@ import Categories from '~/../meta/categories'
 export default class CategoryIcon extends Vue {
   @Prop({ default: '' }) readonly category!: string
   @Prop({ default: 'other' }) readonly fallback!: string
+  @Prop({ default: true }) readonly active!: boolean
 
   get display () {
     const cat = this.category || this.fallback
@@ -21,7 +22,7 @@ export default class CategoryIcon extends Vue {
   }
   get colorStyle () {
     return {
-      color: this.color,
+      color: this.active ? this.color : 'var(--theme-inactive)',
     }
   }
 }
