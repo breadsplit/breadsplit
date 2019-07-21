@@ -37,7 +37,7 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
       v-spacer
 
-      template(v-if='step >= 1')
+      template(v-if='step != 2')
         v-btn.button-quick-add.px-4(:disabled='!form.total_fee', color='primary', text, @click='submit')
           | {{$t('ui.button_finish')}}
 

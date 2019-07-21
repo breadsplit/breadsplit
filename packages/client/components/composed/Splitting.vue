@@ -19,7 +19,6 @@
 
   //* ========== Average ========== *//
   .mode-average(v-show='mode==="average"')
-
     .tip {{$t('ui.splitting.mode_average_tip')}}
 
     app-member-toggles(
@@ -377,22 +376,32 @@ export default class Splitting extends Vue {
     padding: 1em 2em
 
   .mode-switcher
+    width: unset
     margin: 0.8em 1.8em
 
-    .v-tabs__item
+    .v-tab
+      flex: 0 1 auto
+      min-width: 30px
+      padding: 0 24px
       white-space: nowrap
 
-    .v-tabs__item--active
+    .v-tab--active
       position: relative !important
       span
         color: var(--theme-primary)
 
-    .v-tabs__item--active:before
+    .v-tab:before
       content: ""
+      position: absolute
+      border-radius: 5px
+      top: 1px
+      bottom: 1px
+      left: 1px
+      right: 1px
+
+    .v-tab--active:before
       background: var(--theme-primary)
       opacity: 0.13
-      border-radius: 5px
-      position: absolute
       top: 5px
       bottom: 5px
       left: 5px
