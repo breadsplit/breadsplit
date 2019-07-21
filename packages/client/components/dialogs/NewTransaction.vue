@@ -48,6 +48,8 @@ v-card.new-transaction(v-rows='"auto max-content"')
 
 <script lang='ts'>
 import { Component, mixins, Getter, Watch } from 'nuxt-property-decorator'
+import cloneDeep from 'lodash/cloneDeep'
+import { oc } from 'ts-optchain'
 import PageCreditors from './transaction/PageCreditors.vue'
 import PageDetails from './transaction/PageDetails.vue'
 import PageSplitting from './transaction/PageSplitting.vue'
@@ -59,6 +61,8 @@ const STEP_INPUT = 0
 const STEP_SPLIT = 1
 const STEP_DETAIL = 2
 
+type Mode = 'create' | 'edit'
+
 @Component({
   components: {
     PageCreditors,
@@ -69,6 +73,7 @@ const STEP_DETAIL = 2
 export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
   step = STEP_INPUT
+  mode: Mode = 'create'
 
   $refs!: {
     splitting_creditors: PageSplitting
@@ -79,8 +84,24 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   @Getter('user/uid') uid: string | undefined
 
   reset () {
+    if (this.options.transid) {
+      const trans = this.group.transactions.find(i => i.id === this.options.transid)
+      if (trans)
+        return this.edit(trans)
+    }
+    this.create()
+  }
+
+  edit (trans: Transaction) {
+    this.form = cloneDeep(trans)
+    this.step = STEP_DETAIL
+    this.mode = 'edit'
+  }
+
+  create () {
     this.form = TransactionDefault()
     this.step = STEP_INPUT
+    this.mode = 'create'
 
     let me = IdMe
     if (this.uid && this.uid in this.group.members)
@@ -88,6 +109,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     this.form.type = this.options.type || 'expense'
     this.form.creator = me
     this.form.currency = this.group.main_currency || defaultCurrency
+    this.form.category = this.options.category
 
     if (this.options.from) {
       this.form.creditors = this.options.from
@@ -121,9 +143,9 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   }
 
   cleanUp () {
-    this.$refs.splitting_creditors.$refs.splitting.cleanUp(true)
-    this.$refs.splitting_debtors.$refs.splitting.cleanUp(true)
-    this.$refs.details.$refs.exchange.save()
+    oc(this).$refs.splitting_creditors.$refs.splitting.cleanUp(() => '')(true)
+    oc(this).$refs.splitting_debtors.$refs.splitting.cleanUp(() => '')(true)
+    oc(this).$refs.details.$refs.exchange.save(() => '')()
   }
 
   next () {
@@ -160,7 +182,10 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   submit () {
     this.cleanUp()
     const trans = this.form
-    this.$store.dispatch('group/newTranscation', { id: this.group.id, trans })
+    if (this.mode === 'create')
+      this.$store.dispatch('group/newTransaction', { id: this.group.id, trans })
+    else if (this.mode === 'edit')
+      this.$store.dispatch('group/editTransaction', { id: this.group.id, trans })
     this.close()
   }
 }

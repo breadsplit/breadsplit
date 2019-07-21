@@ -2,7 +2,7 @@
 v-card
   app-dialog-bar(@close='close()') Transaction Detail
 
-  v-btn(color='primary', @click='removeTranscation') Delete
+  v-btn(color='primary', @click='removeTransaction') Delete
   pre.pa-4 {{transaction}}
 </template>
 
@@ -20,8 +20,8 @@ export default class Members extends mixins(GroupMixin, DialogChildMixin) {
     return this.group.transactions.find(t => t.id === this.transid)
   }
 
-  removeTranscation () {
-    this.$store.dispatch('group/removeTranscation', { transid: this.transid })
+  removeTransaction () {
+    this.$store.dispatch('group/removeTransaction', { transid: this.transid })
     this.close()
   }
 }
