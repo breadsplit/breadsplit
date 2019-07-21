@@ -6,8 +6,8 @@ acts:
   insert_viewer: '{0} 加入了群組'
   publish_group: '{0} 將群組轉換為在綫模式'
   remove_transaction: '{0} 刪除了支出 {1}'
-  update_transaction: '{0} 修改了支出 {1}'
   rename_group: '{0} 將群組更名為 {1}'
+  update_transaction: '{0} 修改了支出 {1}'
 appname: 分帳吐司
 appname_dev: 分帳吐司 Dev
 cats:
@@ -74,6 +74,7 @@ ui:
   advance: 進階
   become_a_patreon: 在 Patreon 上成為贊助者
   button_back: 返回
+  button_calculate: 計算
   button_cancel: 取消
   button_confirm: 確認
   button_create: 創建
@@ -134,10 +135,13 @@ ui:
   newtrans:
     add_location: 添加位置
     add_payer: 添加付款人
+    description: 描述
     details: 明細
+    details_short: 明細
     expense_paid_by: 由誰支付？
     for_whom: 為了誰？
     how_much: 付款金額
+    how_much_short: 金額
     repeat_expense: 重複
     select_who_paid: 選擇付款人
     xx_should_pay: '這次輪到 {0} 付款。'
@@ -172,6 +176,7 @@ ui:
     mode_average_tip: 選擇參與這筆支出的人
     percent: 按趴數
     split_by: 分帳方式
+    split_by_short: 分帳
     total: '支出金額: {0}'
     weight: 按權重
   star_on_github: Star on Github

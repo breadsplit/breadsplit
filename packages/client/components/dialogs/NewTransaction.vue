@@ -27,10 +27,14 @@ v-card.new-transaction(v-rows='"auto max-content"')
   div
     v-divider
     v-card-actions.pa-3
-      v-stepper(v-model.number='step' :vertical='false')
-        v-stepper-step(step='0' editable) {{$t("ui.newtrans.how_much")}}
-        v-stepper-step(step='1' editable) {{$t("ui.splitting.split_by")}}
-        v-stepper-step(step='2' editable) {{$t("ui.newtrans.details")}}
+      v-breadcrumbs(:items='stepItems', large)
+        template(v-slot:divider='')
+          v-icon mdi-chevron-right
+        template(v-slot:item='{ item }')
+          v-breadcrumbs-item(
+            @click.native='step = item.href'
+            :class='{ active: step === item.href }'
+          ) {{item.text}}
 
       v-spacer
 
@@ -149,6 +153,24 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     this.step++
   }
 
+  get stepItems () {
+    return [{
+      text: this.$t('ui.newtrans.how_much_short'),
+      disabled: false,
+      href: 0,
+    },
+    {
+      text: this.$t('ui.splitting.split_by_short'),
+      disabled: false,
+      href: 1,
+    },
+    {
+      text: this.$t('ui.newtrans.details_short'),
+      disabled: false,
+      href: 2,
+    }]
+  }
+
   @Watch('step')
   onStepChanged (value, oldvalue) {
     if (oldvalue === 2)
@@ -160,13 +182,25 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   btnNext () {
     if (this.btnNextDisabled)
       return
+    if (this.step === STEP_INPUT && this.uncalculated)
+      return this.calc()
     if (this.step !== STEP_DETAIL)
       return this.next()
     this.submit()
   }
 
+  calc () {
+    oc(this).$refs.splitting_creditors.$refs.numpad.calculate()
+  }
+
+  // TODO: update
+  uncalculated = false
+
   get btnNextText () {
-    if (this.step === STEP_DETAIL) {
+    if (this.step === STEP_INPUT && this.uncalculated) {
+      return this.$t('ui.button_calculate')
+    }
+    else if (this.step === STEP_DETAIL) {
       if (this.mode === 'create')
         return this.$t('ui.button_create')
       else
@@ -211,11 +245,19 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     & > .height-100
       min-height: 400px
 
-  .v-stepper
-    box-shadow: none
-    .v-stepper__step
-      padding: 5px
-      display: inline-flex
+  .v-breadcrumbs
+    padding: 2px 0 0 5px
+
+    .v-breadcrumbs__divider
+      padding: 0
+
+    li
+      padding: 5px 8px
+      opacity: 0.6
+
+      &.active
+        color: var(--theme-primary)
+        opacity: 1
 
   .page-container
     padding: 1.5em 2em 0.5em 2em

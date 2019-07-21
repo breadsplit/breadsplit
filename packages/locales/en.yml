@@ -6,8 +6,8 @@ acts:
   insert_viewer: '{0} joined the group'
   publish_group: '{0} changed group to online mode'
   remove_transaction: '{0} deleted an expense {1}'
-  update_transaction: '{0} modified an expense {1}'
   rename_group: '{0} changed group name to {1}'
+  update_transaction: '{0} modified an expense {1}'
 appname: BreadSplit
 appname_dev: BreadSplit Dev
 cats:
@@ -151,9 +151,11 @@ ui:
     add_payer: Add more payer
     description: Description
     details: Details
+    details_short: Details
     expense_paid_by: Expense paid by?
     for_whom: For whom?
     how_much: How much?
+    how_much_short: Fee
     repeat_expense: Repeat
     select_who_paid: Select the person who paid the bill
     xx_should_pay: 'by the way, {0} should pay this time.'
@@ -193,6 +195,7 @@ ui:
     mode_average_tip: Select those who spent with this expense
     percent: Percent
     split_by: Split by
+    split_by_short: Split
     total: 'Total expense: {0}'
     weight: Weights
   star_on_github: Star on Github
