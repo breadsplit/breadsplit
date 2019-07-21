@@ -10,7 +10,7 @@ export default {
     error: colors.deepOrange.accent4,
     success: colors.green,
     background: '#FFEBCF',
-    inactive: 'rgba(0,0,0,0.4)',
+    inactive: '#00000015',
   },
   dark: {
     primary: '#BF814B',
@@ -21,6 +21,6 @@ export default {
     error: colors.deepOrange.accent4,
     success: colors.green,
     background: '#FFEBCF',
-    inactive: 'rgba(0,0,0,0.4)',
+    inactive: '#00000015',
   },
 }

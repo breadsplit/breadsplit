@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-icon(:size='size', :style='colorStyle') mdi-{{icon}}
+v-icon(:size='size' :style='colorStyle') mdi-{{icon}}
 </template>
 
 <script lang='ts'>

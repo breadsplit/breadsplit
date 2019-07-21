@@ -5,7 +5,7 @@
 
   div
 
-  .text-xs-center.mt-3
+  .text-center.mt-3
     span {{$t('ui.newtrans.select_who_paid')}}
     app-member-toggles(
       :uids='members.map(m=>m.uid)',

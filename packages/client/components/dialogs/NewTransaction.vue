@@ -169,8 +169,12 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   }
 
   get btnNextText () {
-    if (this.step === STEP_DETAIL)
-      return this.$t('ui.button_save')
+    if (this.step === STEP_DETAIL) {
+      if (this.mode === 'create')
+        return this.$t('ui.button_create')
+      else
+        return this.$t('ui.button_save')
+    }
 
     return this.$t('ui.button_next')
   }
@@ -180,12 +184,16 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   }
 
   submit () {
-    this.cleanUp()
     const trans = this.form
     if (this.mode === 'create')
       this.$store.dispatch('group/newTransaction', { id: this.group.id, trans })
     else if (this.mode === 'edit')
       this.$store.dispatch('group/editTransaction', { id: this.group.id, trans })
+    this.close()
+  }
+
+  remove () {
+    this.$store.dispatch('group/removeTransaction', { id: this.group.id, transid: this.form.id })
     this.close()
   }
 }

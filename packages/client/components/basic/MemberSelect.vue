@@ -7,7 +7,7 @@
           app-user-avatar(:id='current.uid', inline, show-name)
           v-icon mdi-menu-down
 
-    v-card.pa-2.text-xs-center
+    v-card.pa-2.text-center
       template(v-for='member in members')
         app-user-avatar.member-option.pa-2(:id='member.uid', show-name, v-ripple, @click.native='setValue(member.uid)')
 </template>

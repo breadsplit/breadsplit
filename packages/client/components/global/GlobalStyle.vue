@@ -5,11 +5,11 @@ style.
     --theme-primary: {{primaryColor}};
     --theme-inactive: {{theme.inactive}};
   }
-  .primary {
+  .v-application .primary {
     background-color: {{primaryColor}} !important;
     border-color: {{primaryColor}} !important;
   }
-  .primary--text {
+  .v-application .primary--text {
     color: {{primaryColor}} !important;
     caret-color: {{primaryColor}} !important;
   }

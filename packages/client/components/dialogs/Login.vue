@@ -18,7 +18,7 @@ app-dialog.login-dialog(ref='dialog' :route='true' width='330' :fullscreen='fals
           app-brand-button(brand='github_dark' @click='loginWith("github")' large width='250px')
             | {{$t('ui.signin_options.Github')}}
 
-        v-flex.mt-3.text-xs-center.privacy-continue
+        v-flex.mt-3.text-center.privacy-continue
           i18n(path='ui.continue_and_accept')
             a(@click='$refs.privacy.open()') {{$t('ui.privacy_policy')}}
 

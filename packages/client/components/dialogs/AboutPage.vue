@@ -2,7 +2,7 @@
 v-card.about-page
   app-dialog-bar(@close='close()' attached absolute height='30px')
 
-  v-container.text-xs-center(:class='{"pt-0": isMobile, "pt-4": !isMobile}')
+  v-container.text-center(:class='{"pt-0": isMobile, "pt-4": !isMobile}')
     app-logo-name.large
 
     .pa-2

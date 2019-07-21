@@ -1,7 +1,7 @@
 <template lang='pug'>
 v-container
   v-layout(column, justify-center, align-center)
-    v-flex.text-xs-center(xs12, sm8, md6)
+    v-flex.text-center(xs12, sm8, md6)
       template(v-for='(group, i) in groups')
         nuxt-link.group-entry(v-ripple, :to='`/group/${group.id}`', :style='groupCssVars(group)')
           v-icon mdi-{{ group.icon }}
@@ -9,7 +9,7 @@ v-container
 
     v-divider.my-3
 
-    v-flex.text-xs-center(xs12, sm8, md6)
+    v-flex.text-center(xs12, sm8, md6)
       v-btn(@click='openDialog("newgroup")' rounded color='primary')
         v-icon.mr-2 mdi-plus
         span {{$t('ui.button_new_group')}}

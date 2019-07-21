@@ -6,7 +6,7 @@ v-card.py-2
 
   v-card-text.px-4(v-html="$t(`help.${help}.details`)")
 
-  .pa-2.text-xs-center
+  .pa-2.text-center
     v-btn(color='primary' @click='close') {{$t('ui.button_ok')}}
 </template>
 

@@ -2,7 +2,7 @@
 v-card.feedback
   app-dialog-bar(@close='close()') {{$t('ui.feedback')}}
 
-  v-container.text-xs-center
+  v-container.text-center
     v-text-field(
       :label='$t("feedback.contact_info") + $t("ui.optional")'
       v-model='feedbackInfo.email'

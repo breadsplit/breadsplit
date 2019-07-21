@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-layout.nuxt-error.my-5.py-3(column, justify-center, align-center)
-  v-flex.text-xs-center(xs12, sm8, md6)
+  v-flex.text-center(xs12, sm8, md6)
     component(:is='errorPage' :error='parsedError.error', :payload='parsedError.payload')
 </template>
 

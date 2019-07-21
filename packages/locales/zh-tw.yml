@@ -6,6 +6,7 @@ acts:
   insert_viewer: '{0} 加入了群組'
   publish_group: '{0} 將群組轉換為在綫模式'
   remove_transaction: '{0} 刪除了支出 {1}'
+  update_transaction: '{0} 修改了支出 {1}'
   rename_group: '{0} 將群組更名為 {1}'
 appname: 分帳吐司
 appname_dev: 分帳吐司 Dev

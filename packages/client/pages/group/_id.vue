@@ -51,7 +51,6 @@
   v-fab-transition
     v-btn.new-transaction-button(
       fab color='primary'
-      x-large
       :style='fabStyle'
       @click='gotoNewTransaction()'
     )

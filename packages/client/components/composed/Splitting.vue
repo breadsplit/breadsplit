@@ -79,7 +79,7 @@
   .mode-percent(v-show='mode==="percent"')
     .px-4.pb-2(v-columns='"auto 1fr max-content"')
       template(v-for='pa in participators')
-        .user-info-section.text-xs-center.pt-2
+        .user-info-section.text-center.pt-2
           app-user-avatar(size='38' :id='pa.uid' :show-name='true')
 
         v-slider.mt-0.px-3(

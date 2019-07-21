@@ -1,8 +1,8 @@
 <template lang='pug'>
 div
   v-icon.error-icon(size='64') mdi-{{error.icon || 'alert-circle-outline'}}
-  .error-code.text-xs-center {{error.statusCode}}
-  .error-desc.text-xs-center {{error.message}}
+  .error-code.text-center {{error.statusCode}}
+  .error-desc.text-center {{error.message}}
   v-btn.error-return(text, color='primary', to='/', nuxt) Home
   v-btn.error-return(text, color='primary', @click='reload()') Reload
 </template>

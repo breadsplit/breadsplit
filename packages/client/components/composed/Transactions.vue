@@ -7,7 +7,7 @@ v-card.transactions
   app-transactions-list(v-if='flat' :transactions='limitted')
     template(v-slot:append v-if='needShowMore')
       v-divider
-      .text-xs-center
+      .text-center
         v-btn(text small fluid color='primary' @click='$emit("show-all")') {{$t('ui.show-all')}}
 
   app-date-grouping-list(v-else :data='group.transactions' expand-icon='')

@@ -6,6 +6,7 @@ acts:
   insert_viewer: '{0} joined the group'
   publish_group: '{0} changed group to online mode'
   remove_transaction: '{0} deleted an expense {1}'
+  update_transaction: '{0} modified an expense {1}'
   rename_group: '{0} changed group name to {1}'
 appname: BreadSplit
 appname_dev: BreadSplit Dev

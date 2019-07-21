@@ -1,7 +1,7 @@
 <template lang='pug'>
 .scroll-page.height-100.join-page
   v-container
-    .text-xs-center
+    .text-center
       app-logo-name(:class='{large:!isMobile}')
 
       template(v-if='loading')

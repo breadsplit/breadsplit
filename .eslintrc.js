@@ -11,6 +11,7 @@ module.exports = {
     'cypress',
     'jest',
     'chai-friendly',
+    'vuetify',
   ],
   extends: [
     '@antfu/eslint-config-vue',
