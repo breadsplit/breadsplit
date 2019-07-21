@@ -18,6 +18,9 @@
     v-tab-item(key='1').scroll-page
       v-container(:class='{"pa-0": isMobile}')
 
+        .text-center
+          chart-expense-summary(:expenses='group.transactions')
+
         app-transactions
 
     v-tab-item(key='2').scroll-page
@@ -62,8 +65,12 @@
 <script lang='ts'>
 import { Component, mixins, Watch } from 'nuxt-property-decorator'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
+import ChartExpenseSummary from '~/components/charts/ChartExpenseSummary.vue'
 
 @Component({
+  components: {
+    ChartExpenseSummary,
+  },
   head () {
     return {
       meta: [

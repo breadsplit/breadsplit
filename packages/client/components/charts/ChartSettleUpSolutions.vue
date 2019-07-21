@@ -10,7 +10,7 @@ svg.chart-settle-up-solutions(
 <script lang='ts'>
 import union from 'lodash/union'
 import * as d3 from 'd3'
-import { Component, Prop, Mixins } from 'vue-property-decorator'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import { IdMe } from '~/core'
 import { UserInfoMixin } from '~/mixins'
 import { UserMemberInfo, Solution } from '~/types'
@@ -22,7 +22,7 @@ interface Link extends d3.SimulationLinkDatum<Node>{
 }
 
 @Component
-export default class ChartSettleUpSolutions extends Mixins(UserInfoMixin) {
+export default class ChartSettleUpSolutions extends mixins(UserInfoMixin) {
   @Prop(Array) readonly solutions!: Solution[]
   @Prop({ default: 800 }) readonly width!: number
   @Prop({ default: 600 }) readonly height!: number
