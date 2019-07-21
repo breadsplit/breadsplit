@@ -16,7 +16,7 @@ v-app(:dark='dark')
 </template>
 
 <script lang='ts'>
-import { Component, Getter, mixins } from 'nuxt-property-decorator'
+import { Component, Getter, mixins, Watch } from 'nuxt-property-decorator'
 import head from './head'
 import { Group } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
@@ -47,6 +47,11 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
       this.drawer = true
 
     setTimeout(() => this.checkFirstStart(), 1000)
+  }
+
+  @Watch('dark', { immediate: true })
+  onThemeChanged () {
+    this.$vuetify.theme.dark = this.dark
   }
 
   async checkFirstStart () {

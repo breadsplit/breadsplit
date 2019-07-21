@@ -5,11 +5,11 @@ v-container
       template(v-for='(group, i) in groups')
         nuxt-link.group-entry(v-ripple, :to='`/group/${group.id}`', :style='groupCssVars(group)')
           v-icon mdi-{{ group.icon }}
-          .groupname.text-truncate(v-text='group.name')
+          .groupname(v-text='group.name')
 
     v-divider.my-3
 
-    v-flex.text-center(xs12, sm8, md6)
+    v-flex.text-left(xs12, sm8, md6)
       v-btn(@click='openDialog("newgroup")' rounded color='primary')
         v-icon.mr-2 mdi-plus
         span {{$t('ui.button_new_group')}}
@@ -38,11 +38,11 @@ export default class Homepage extends mixins(NavigationMixin) {
   --group-color: #000
   --group-padding: 15px
 
-  width: 100px
-  height: 100px
+  width: 140px
+  height: 85px
   margin: 5px
   display: inline-block
-  border-radius: 5px
+  border-radius: 8px
   position: relative
   border: 1px solid rgba(0,0,0,0.1)
   box-shadow: 1px 1px 5px 0px rgba(50, 50, 50, 0.1)
@@ -64,6 +64,10 @@ export default class Homepage extends mixins(NavigationMixin) {
     bottom: var(--group-padding)
     color: var(--group-color)
     line-height: 1em
+    white-space: nowrap
+    text-align: left
+    text-overflow: ellipsis
+    overflow: hidden
 
   .v-icon
     position: absolute
