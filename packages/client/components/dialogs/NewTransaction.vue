@@ -27,12 +27,13 @@ v-card.new-transaction(v-rows='"auto max-content"')
   div
     v-divider
     v-card-actions.pa-3
-      v-breadcrumbs(:items='stepItems', large)
+      v-breadcrumbs(:items='stepItems' large)
         template(v-slot:divider='')
           v-icon mdi-chevron-right
         template(v-slot:item='{ item }')
           v-breadcrumbs-item(
             @click.native='step = item.href'
+            :disabled='btnNextDisabled'
             :class='{ active: step === item.href }'
           ) {{item.text}}
 

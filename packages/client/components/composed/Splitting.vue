@@ -72,7 +72,7 @@
         app-member-select(:members='candidates', @input='id=>addParticipator(id)')
           v-btn(icon small).op-50
             v-icon(size='24') mdi-plus
-          span.ml-1 {{$t('ui.newtrans.add_payer')}}
+          span.ml-1.op-50 {{$t('ui.newtrans.add_payer')}}
 
   //* ========== Percent ========== *//
   .mode-percent(v-show='mode==="percent"')
