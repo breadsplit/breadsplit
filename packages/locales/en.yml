@@ -187,6 +187,11 @@ ui:
     reset: Reset
   settings: Settings
   settle_up_solution: '{0} should pay {2} back to {1}'
+  share:
+    join_via_link: Join via link
+    join_via_link_disabled: Joining this group via link is disabled
+    join_via_link_enabled: Anyone with the link can join this group
+    share_link: Share link
   share_link_copied: Share link copied!
   share_link_to_invite: Share this link to invite friends
   show-all: Show all

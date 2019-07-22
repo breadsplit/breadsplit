@@ -14,7 +14,7 @@
     )
       v-tab(v-for='(mode, idx) in modes' :key='mode.mode' :class='tab==idx ? "primary--text" : ""' :ripple='false')
         v-icon(style='color:inherit;transition:none;').mr-1 {{mode.icon}}
-        v-expand-x-transition
+        v-slide-x-transition
           span(v-show='tab==idx') {{mode.text}}
 
   //* ========== Average ========== *//
@@ -50,7 +50,7 @@
             span.user-name-text.mx-2
               i18n(:path='userTextI18nPath')
                 app-user-info(:id='pa.uid')
-          v-expand-x-transition
+          v-slide-x-transition
             v-btn.op-25.ma-0(
               v-show='removable && focused===pa.uid'
               @click='removeParticipator(pa.uid)'

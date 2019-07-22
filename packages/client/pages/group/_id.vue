@@ -22,10 +22,13 @@
 
     v-tab-item(key='2').scroll-page
       v-container(:class='{"pa-0": isMobile}')
+
         app-activities
 
     v-tab-item(key='3').scroll-page
       v-container(:class='{"pa-0": isMobile}')
+
+        app-sharing
         app-members(:members='members')
 
     div(style='height:15px')

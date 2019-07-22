@@ -58,6 +58,12 @@ export const getters: GetterTree<GroupState, RootState> = {
     return state.currentId
   },
 
+  currentClientGroup (state) {
+    if (!state.currentId)
+      return undefined
+    return state.groups[state.currentId]
+  },
+
   all (state) {
     return orderBy(Object.values(state.groups), ['lastchanged'], ['desc'])
       .map(group => state.cache.groups[group.id])

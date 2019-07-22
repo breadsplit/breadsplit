@@ -162,7 +162,7 @@ export interface ClientGroup {
   // Options
   lastchanged: number
   favorite?: boolean
-  open: boolean
+  public: boolean
 }
 
 export interface TokenRecord {

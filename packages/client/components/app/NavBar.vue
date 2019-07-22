@@ -10,9 +10,6 @@ v-app-bar.app-toolbar(app flat color='transparent' height='60').primary--text
       template(v-if='isSyncing()')
         v-btn(icon text).syncing-icon
           v-icon(color='primary') mdi-cloud-sync
-      template(v-if='currentShareLink')
-        v-btn(icon text @click='copyShareLink()')
-          v-icon.op-50 mdi-share-variant
       v-menu(offset-y)
         template(v-slot:activator='{ on }')
           v-btn(icon text v-on='on')
@@ -31,12 +28,10 @@ v-app-bar.app-toolbar(app flat color='transparent' height='60').primary--text
 import { Component, Getter, mixins, Mutation, Prop } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
-import { Share } from '~/utils/share'
 
 @Component
 export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
   @Getter('group/current') current: Group | undefined
-  @Getter('group/currentShareLink') currentShareLink: string | undefined
   @Getter('user/me') user!: UserInfo
   @Getter('user/uid') uid: string | undefined
 
@@ -124,17 +119,6 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   async syncCurrentGroup () {
     if (this.current)
       await this.$fire.manualSync(this.current.id)
-  }
-
-  async copyShareLink () {
-    if (!this.currentShareLink)
-      return
-    await Share(
-      this,
-      this.$t('prompt.invite_friends').toString(),
-      this.$t('prompt.share_message', [this.group.name]).toString(),
-      this.currentShareLink,
-    )
   }
 }
 </script>
