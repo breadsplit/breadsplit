@@ -16,10 +16,10 @@ import { Transaction } from '~/types'
   },
 })
 export default class ChartExpenseSummary extends Vue {
-  @Prop() readonly expenses!: Transaction[]
+  @Prop() readonly trans!: Transaction[]
 
   get value () {
-    return entries(groupBy(this.expenses, i => i.category || 'other'))
+    return entries(groupBy(this.trans, i => i.category || 'other'))
       .map(([name, values]) => {
         const category = DefaultCategories.find(i => i.name === name) || { color: undefined }
         return {

@@ -18,10 +18,7 @@
     v-tab-item(key='1').scroll-page
       v-container(:class='{"pa-0": isMobile}')
 
-        .text-center
-          chart-expense-summary(:expenses='group.transactions')
-
-        app-transactions
+        app-transactions(chart)
 
     v-tab-item(key='2').scroll-page
       v-container(:class='{"pa-0": isMobile}')

@@ -261,7 +261,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
         opacity: 1
 
   .page-container
-    padding: 1.5em 1.5em 0.5em 1.5em
+    padding: 1em 1.5em 0.5em 1.5em
 
     .header
       font-size: 2.5em

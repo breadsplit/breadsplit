@@ -147,4 +147,7 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
 .avatar-in-toolbar
   margin: 12px
   cursor: pointer
+
+.v-tabs-items
+  background-color: transparent !important
 </style>

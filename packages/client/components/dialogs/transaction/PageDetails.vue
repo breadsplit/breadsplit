@@ -1,40 +1,39 @@
 <template lang='pug'>
-.page-container.height-100.pb-0(v-rows='"max-content auto"')
+.page-container.height-100.pb-0.overflow-y-auto(v-rows='"max-content auto"')
   .header {{$t('ui.newtrans.details')}}
 
-  .overflow-y-auto
-    app-category-select(v-model='form.category')
+  app-category-select(v-model='form.category')
 
-    v-text-field.px-2.pt-1.pb-1.description-field(
-      v-model='form.desc'
-      label='$t("ui.newtrans.description")'
-      placeholder='Some expense...'
-      solo required hide-details
-    )
+  v-text-field.px-2.pt-1.pb-1.description-field(
+    v-model='form.desc'
+    label='$t("ui.newtrans.description")'
+    placeholder='Some expense...'
+    solo required hide-details
+  )
 
-    div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple)
-      v-icon(color='grey') mdi-calendar
-      v-subheader {{dateDisplay}}
+  div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple)
+    v-icon(color='grey') mdi-calendar
+    v-subheader {{dateDisplay}}
 
-    div.ml-2(v-columns='"40px auto"')
-      v-icon(color='grey') mdi-map-marker
-      v-subheader {{$t('ui.newtrans.add_location')}}
+  div.ml-2(v-columns='"40px auto"')
+    v-icon(color='grey') mdi-map-marker
+    v-subheader {{$t('ui.newtrans.add_location')}}
 
-    // div.ml-2(v-columns='"40px auto"')
-      v-icon(color='grey') mdi-history
-      v-subheader {{$t('ui.newtrans.repeat_expense')}}
+  // div.ml-2(v-columns='"40px auto"')
+    v-icon(color='grey') mdi-history
+    v-subheader {{$t('ui.newtrans.repeat_expense')}}
 
-    v-divider.mb-7.mt-3
-    .ma-2
-      app-receipt-list(:items='receipt_items' :currency='form.currency')
-        template(v-slot:item='{ item }')
-          div
-            app-user-avatar.py-1.px-2(:id='item.value' size='24')
-            app-user-info(:id='item.value')
-    .mt-2
+  v-divider.mb-7.mt-3
+  .ma-2
+    app-receipt-list(:items='receipt_items' :currency='form.currency')
+      template(v-slot:item='{ item }')
+        div
+          app-user-avatar.py-1.px-2(:id='item.value' size='24')
+          app-user-info(:id='item.value')
+  .mt-2
 
-    exchange-rate-input(ref='exchange' :form='form')
-    app-date-picker(ref='date_picker')
+  exchange-rate-input(ref='exchange' :form='form')
+  app-date-picker(ref='date_picker')
 </template>
 
 <script lang='ts'>

@@ -1,35 +1,45 @@
 <template lang='pug'>
-v-card.transactions
-  v-subheader
-    v-icon.mr-1 mdi-script-text-outline
-    span {{$t('ui.tabs.transactions')}}
+.transactions
+  .text-center(v-if='chart')
+    chart-expense-summary(:trans='filteredTransactions')
 
-  app-transactions-list(v-if='flat' :transactions='limitted')
-    template(v-slot:append v-if='needShowMore')
-      v-divider
-      .text-center
-        v-btn(text small fluid color='primary' @click='$emit("show-all")') {{$t('ui.show-all')}}
+  v-card
+    v-subheader
+      v-icon.mr-1 mdi-script-text-outline
+      span {{$t('ui.tabs.transactions')}}
 
-  app-date-grouping-list(v-else :data='group.transactions' expand-icon='')
-    template(v-slot:header-append='{items, active, date}')
-      app-money-label(v-show='!active' :amount='-getTotalAmount(items)' :currency='currency' color)
+    app-transactions-list(v-if='flat' :transactions='limitted')
+      template(v-slot:append v-if='needShowMore')
+        v-divider
+        .text-center.pa-2
+          v-btn(text small fluid color='primary' @click='$emit("show-all")') {{$t('ui.show-all')}}
 
-    template(v-slot:item='{items, index, date}')
-      app-transactions-list(:transactions='items' :key='date')
+    app-date-grouping-list(v-else :data='group.transactions' expand-icon='')
+      template(v-slot:header-append='{items, active, date}')
+        app-money-label(v-show='!active' :amount='-getTotalAmount(items)' :currency='currency' color)
+
+      template(v-slot:item='{items, index, date}')
+        app-transactions-list(:transactions='items' :key='date')
 </template>
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
 import { Transaction } from '../../types'
+import ChartExpenseSummary from '../charts/ChartExpenseSummary.vue'
 import { GroupMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 
-@Component
+@Component({
+  components: {
+    ChartExpenseSummary,
+  },
+})
 export default class Transactions extends mixins(GroupMixin, UserInfoMixin, NavigationMixin) {
   collapsed = true
   groupBy: 'day' | 'month' | 'year' = 'month'
 
   @Prop({ default: 3 }) readonly limit!: number
   @Prop(Boolean) readonly flat?: boolean
+  @Prop(Boolean) readonly chart?: boolean
 
   get transactions () {
     return this.group.transactions
@@ -53,6 +63,11 @@ export default class Transactions extends mixins(GroupMixin, UserInfoMixin, Navi
 
   get needShowMore () {
     return this.collapsed && this.amount > this.limit
+  }
+
+  get filteredTransactions () {
+    // TODO:
+    return this.group.transactions
   }
 
   getTotalAmount (trans: Transaction[]) {
