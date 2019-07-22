@@ -4,7 +4,7 @@ export interface ServerGroup {
   id: string
   viewers: UID[]
   owner: string
-  open: boolean
+  public: boolean
 
   present: Group
   operations: string[]

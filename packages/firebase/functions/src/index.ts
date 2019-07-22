@@ -73,7 +73,7 @@ export const publishGroup = f(async ({ group }: { group: Group }, context) => {
     owner: user_uid,
     viewers: [user_uid],
     operations: initOperations.map(i => i.hash),
-    open: true,
+    public: true,
   }
 
   const batch = db.batch()
@@ -147,6 +147,20 @@ export const joinGroup = f(async ({ id, join_as }, context) => {
 
     recalculateGroupOperations(t, id, ops.operations)
   })
+})
+
+export const setGroupOpenness = f(async ({ id, value }, context) => {
+  if (!context.auth || !context.auth.uid)
+    throw new Error('auth_required')
+
+  const doc = await GroupsRef(id).get()
+
+  const group = doc.data() as ServerGroup
+  if (!group)
+    throw new Error('group_not_exists')
+
+  group.public = value
+  return group.public
 })
 
 export const removeGroup = f(async (id, context) => {

@@ -9,7 +9,7 @@ v-card.sharing.pa-4.mb-2
     v-switch.mt-3.mb-n3.mouse-pass(:value='public' color='primary')
 
   v-slide-y-reverse-transition
-    v-btn.mt-2(color='primary' block large depressed v-show='public' @click='copyShareLink')
+    v-btn.mt-2(color='primary' block depressed v-show='public' @click='copyShareLink')
       v-icon.mr-3 mdi-share
       span {{$t('ui.share.share_link')}}
 </template>
