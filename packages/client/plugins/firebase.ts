@@ -197,6 +197,17 @@ export class FirebasePlugin {
     }
   }
 
+  async setGroupOpenness (id: string, value: boolean) {
+    const group = this.store.getters['group/clientGroupById'](id) as ClientGroup
+    if (!group || !group.online)
+      return false
+    if (group.public !== value) {
+      const { data } = await this.functions.httpsCallable('setGroupOpenness')({ id, value })
+      return data
+    }
+    return group.public || false
+  }
+
   async updateMessagingToken () {
     if (!this.messagingEnabled || !this.messaging)
       return null

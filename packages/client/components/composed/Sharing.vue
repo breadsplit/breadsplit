@@ -6,7 +6,7 @@ v-card.sharing.pa-4.mb-2
         div {{$t('ui.share.join_via_link')}}
         .op-50(v-if='public') {{$t('ui.share.join_via_link_enabled')}}
         .op-50(v-else) {{$t('ui.share.join_via_link_disabled')}}
-    v-switch.mt-3.mb-n3.mouse-pass(:value='public' color='primary')
+    v-switch.mt-3.mb-n3.mouse-pass(:value='public' :loading='loading' color='primary')
 
   v-slide-y-reverse-transition
     v-btn.mt-2(color='primary' block depressed v-show='public' @click='copyShareLink')
@@ -25,10 +25,11 @@ export default class Sharing extends mixins(GroupMixin) {
   @Getter('group/currentShareLink') currentShareLink: string | undefined
   @Getter('group/currentClientGroup') clientGroup: ClientGroup | undefined
 
-  public = false
-  // get public () {
-  //  return this.clientGroup && this.clientGroup.public
-  // }
+  loading = false
+
+  get public () {
+    return this.clientGroup && this.clientGroup.public
+  }
 
   async copyShareLink () {
     if (!this.currentShareLink)
@@ -42,11 +43,21 @@ export default class Sharing extends mixins(GroupMixin) {
   }
 
   toggle () {
-    this.public = !this.public
+    if (!this.loading)
+      this.update(!this.public)
   }
 
-  update (value) {
-    // TODO:
+  async update (value) {
+    this.loading = true
+    try {
+      await this.$fire.setGroupOpenness(this.group.id, value)
+    }
+    catch (e) {
+      console.log(e)
+    }
+    finally {
+      this.loading = false
+    }
   }
 }
 </script>

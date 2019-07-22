@@ -96,7 +96,7 @@ export const joinGroup = f(async ({ id, join_as }, context) => {
     const group = (await t.get(GroupsRef(id))).data() as ServerGroup
     const ops = (await t.get(OperationsRef(id))).data() as ServerOperations
 
-    if (!group || !ops)
+    if (!group || !ops || !group.public)
       throw new Error('group_not_exists')
 
     // skip if user already inside the group
@@ -159,8 +159,9 @@ export const setGroupOpenness = f(async ({ id, value }, context) => {
   if (!group)
     throw new Error('group_not_exists')
 
-  group.public = value
-  return group.public
+  await GroupsRef(id).update('public', value)
+
+  return value
 })
 
 export const removeGroup = f(async (id, context) => {

@@ -69,6 +69,10 @@ export const getters: GetterTree<GroupState, RootState> = {
       .map(group => state.cache.groups[group.id])
   },
 
+  clientGroupById: state => (id: string) => {
+    return state.groups[id]
+  },
+
   id: state => (id: string) => {
     return state.cache.groups[id]
   },
