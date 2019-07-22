@@ -11,9 +11,15 @@ acts:
 appname: BreadSplit
 appname_dev: BreadSplit Dev
 cats:
+  entertainment:
+    display: Entertain
+    keywords: ''
   food:
     display: Food
     keywords: 'food,drink,meal,breakfast,lunch,dinner'
+  home:
+    display: Home
+    keywords: ''
   lodging:
     display: Lodging
     keywords: hotel

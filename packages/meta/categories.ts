@@ -4,48 +4,73 @@ export interface Category {
   color: string
 }
 
+const colors = [
+  'rgb(68, 120, 178)',
+  'rgb(75, 160, 177)',
+  'rgb(114, 195, 167)',
+  'rgb(160, 217, 163)',
+  'rgb(204, 234, 159)',
+  'rgb(254, 232, 154)',
+  'rgb(253, 202, 121)',
+  'rgb(251, 163, 94)',
+  'rgb(243, 120, 76)',
+  'rgb(225, 82, 74)',
+  'rgb(196, 44, 74)',
+  'rgb(158, 1, 66)',
+]
+
 const DefaultCategories: Category[] = [
   {
     name: 'transport',
     icon: 'subway-variant',
-    color: '#2196F3',
+    color: '',
   },
   {
     name: 'lodging',
     icon: 'hotel',
-    color: '#e55f54',
+    color: '',
   },
   {
     name: 'travel',
     icon: 'beach',
-    color: '#62b26c',
-  },
-  {
-    name: 'food',
-    icon: 'food',
-    color: '#d39523',
+    color: '',
   },
   {
     name: 'shopping',
     icon: 'shopping',
-    color: '#af44a1',
+    color: '',
+  },
+  {
+    name: 'entertainment',
+    icon: 'cards-playing-outline',
+    color: '',
+  },
+  {
+    name: 'home',
+    icon: 'home',
+    color: '',
+  },
+  {
+    name: 'food',
+    icon: 'food',
+    color: '',
   },
   {
     name: 'tips',
     icon: 'coin',
-    color: '#308270',
+    color: '',
   },
   {
     name: 'transfer',
     icon: 'bank-transfer',
-    color: '#774231',
+    color: '',
   },
   {
     name: 'other',
-    icon: 'cash-usd',
-    color: '#a0bf28',
+    icon: 'wallet-outline',
+    color: '',
   },
-]
+].map((cat, i) => ({ ...cat, color: colors[i] }))
 
 export default DefaultCategories
 

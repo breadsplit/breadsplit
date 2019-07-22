@@ -11,9 +11,13 @@ acts:
 appname: 分帳吐司
 appname_dev: 分帳吐司 Dev
 cats:
+  entertainment:
+    display: 娛樂
   food:
     display: 飲食
     keywords: '早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品'
+  home:
+    display: 家庭
   lodging:
     display: 住宿
     keywords: '飯店,酒店,民宿,住宿,青旅'

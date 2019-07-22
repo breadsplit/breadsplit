@@ -1,32 +1,22 @@
 <template lang='pug'>
-v-menu.category-select(v-model='menu' :max-width='400')
-  template(v-slot:activator='{ on }')
-    slot(:on='on')
-
-  v-card.pa-2.category-options
-    template(v-for='cat in categories')
-      app-action-with-text.option.pa-2(v-ripple @click.native='setValue(cat.name)')
-        app-category-icon(
-          slot='action'
-          :category='cat.name',
-          size='32'
-        )
-        app-category-label(
-          slot='text'
-          :category='cat.name'
-        )
+.category-select.pa-2
+  template(v-for='cat in categories')
+    .item.py-3.pa-2(@click='setValue(cat.name)'
+      :class='{ active: value === cat.name, notactive: value !== cat.name }'
+      :style='{ "--color": cat.color }'
+    )
+      v-icon mdi-{{cat.icon}}
+      .label {{$t(`cats.${cat.name}.display`)}}
 </template>
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { Category } from '~/../meta/categories'
+import DefaultCategories, { Category } from '~/../meta/categories'
 
 @Component
 export default class MemberSelect extends Vue {
-  menu = false
-
   @Prop(String) readonly value!: string
-  @Prop(Array) readonly categories!: Category[]
+  @Prop({ default: () => DefaultCategories }) readonly categories!: Category[]
 
   setValue (value) {
     this.$emit('input', value)
@@ -35,10 +25,44 @@ export default class MemberSelect extends Vue {
 </script>
 
 <style lang='sass'>
-.category-options
+.category-select
   display: grid
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr
 
-  & > .option
+  .item
     cursor: pointer
+    text-align: center
+    position: relative
+    border-radius: 5px
+    --color: grey
+
+    .v-icon
+      font-size: 1.9em
+      color: var(--color)
+      transition: color 0.2s ease-in-out
+
+    .label
+      font-size: 0.8em
+      margin-top: 1px
+      color: var(--color)
+      transition: color 0.2s ease-in-out
+      line-height: 1em
+
+    &:after
+      content: ''
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      background: var(--color)
+      opacity: 0
+      border-radius: 5px
+      transition: opacity 0.2s ease-in-out
+
+    &.active:after
+      opacity: 0.15
+
+    &.notactive
+      --color: rgba(125, 125, 125, 0.4) !important
 </style>
