@@ -331,6 +331,7 @@ export const mutations: MutationTree<GroupState> = {
     clientGroup.base = Object.freeze(group.present)
     clientGroup.operations = unsyncedOperations
     clientGroup.lastsync = timestamp
+    clientGroup.public = group.public
 
     const currentActivitiesCount = oc(clientGroup).base.activities.length(0)
     const newActivitiesCount = Math.max(currentActivitiesCount - activitiesCount, 0)

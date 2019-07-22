@@ -155,8 +155,7 @@ export const setGroupOpenness = f(async ({ id, value }, context) => {
 
   const doc = await GroupsRef(id).get()
 
-  const group = doc.data() as ServerGroup
-  if (!group)
+  if (!doc.exists)
     throw new Error('group_not_exists')
 
   await GroupsRef(id).update('public', value)
