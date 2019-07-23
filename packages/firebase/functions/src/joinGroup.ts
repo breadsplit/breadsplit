@@ -1,3 +1,4 @@
+import { oc } from 'ts-optchain'
 import { f, db, GroupsRef, OperationsRef, recalculateGroupOperations } from './_helpers'
 import { ServerGroup, ServerOperations, TransOperationOption } from './utils/types'
 import { IsThisId, MemberDefault } from './utils/core'
@@ -13,7 +14,7 @@ export const joinGroup = f(async ({ id, join_as }, context) => {
     const group = (await t.get(GroupsRef(id))).data() as ServerGroup
     const ops = (await t.get(OperationsRef(id))).data() as ServerOperations
 
-    if (!group || !ops || !group.public)
+    if (!group || !ops || !oc(group).options.public(false))
       throw new Error('group_not_exists')
 
     // skip if user already inside the group

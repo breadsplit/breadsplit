@@ -34,18 +34,18 @@
             v-list-item(:key='member.uid')
               v-list-item-avatar
                 app-user-avatar(:id='member.uid', size='40')
-              v-list-item-content
+              v-list-item-content.text-left
                 v-list-item-title
                   app-user-info(:member='member', field='name')
-                  v-icon.ml-1(v-if='!isLocal(member.uid)' color='green lighten-1', size='20') mdi-check
-              v-list-item-action(v-if='isLocal(member.uid)')
-                v-btn(color='primary' text @click='join(member.uid)').px-3 {{$t('ui.join.this_is_me')}}
+              v-list-item-action()
+                v-btn(v-if='isLocal(member.uid)' color='primary' @click='join(member.uid)').px-3 {{$t('ui.join.this_is_me')}}
+                v-icon.ml-1(v-else color='green lighten-1', size='24') mdi-check
 
         v-btn(v-if='uid' @click='join()' color='primary' large rounded).pl-0
           app-user-avatar(:id='uid', :size='44').mr-3
           span {{$t('ui.join_as_me', [me.name])}}
 
-        v-btn.px-4(v-else color='primary' rounded dark @click='join()') {{$t('ui.join.join_anonymous')}}
+        v-btn.px-4.ma-3(v-else color='primary' rounded dark @click='join()') {{$t('ui.join.join_anonymous')}}
 
     app-login(ref='login')
 </template>
