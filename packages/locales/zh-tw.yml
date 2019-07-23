@@ -12,6 +12,8 @@ acts:
 appname: 分帳吐司
 appname_dev: 分帳吐司 Dev
 cats:
+  drinks:
+    display: 飲料
   entertainment:
     display: 娛樂
   food:
@@ -27,6 +29,8 @@ cats:
   shopping:
     display: 購物
     keywords: 購物
+  tickets:
+    display: 門票
   tips:
     display: 小費
     keywords: 'tip,小費'
@@ -39,6 +43,10 @@ cats:
   travel:
     display: 旅行
     keywords: '旅行,門票,景點'
+  unknown:
+    display: 未知分類
+  utilities:
+    display: 水電
 code: zh-tw
 css:
   font_of_locale: '"微軟正黑體", "Microsoft JhengHei"'

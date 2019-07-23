@@ -23,16 +23,15 @@
     v-icon(color='grey') mdi-history
     v-subheader {{$t('ui.newtrans.repeat_expense')}}
 
-  v-divider.mb-7.mt-3
-  .ma-2
+  exchange-rate-input(ref='exchange' :form='form')
+
+  v-card.ma-2.pa-3.mb-7
     app-receipt-list(:items='receipt_items' :currency='form.currency')
       template(v-slot:item='{ item }')
         div
           app-user-avatar.py-1.px-2(:id='item.value' size='24')
           app-user-info(:id='item.value')
-  .mt-2
 
-  exchange-rate-input(ref='exchange' :form='form')
   app-date-picker(ref='date_picker')
 </template>
 

@@ -32,10 +32,16 @@ export default class ChartSummaryPie extends Vue {
   arc: any
   pie: any
 
-  async mounted () {
+  mounted () {
+    this.drawChart()
+  }
+
+  init () {
     const margin = this.margin
     const chartWidth = this.width - (margin * 2)
     const chartHeight = this.height - (margin * 2)
+
+    this.svg.selectAll('*').remove()
 
     this.chartLayer = this.svg
       .append('g')
@@ -54,17 +60,15 @@ export default class ChartSummaryPie extends Vue {
         'transform',
         `translate(${chartWidth / 2}, ${chartHeight / 2})`
       )
-
-    this.drawChart()
   }
 
   @Watch('value', { deep: true })
   drawChart () {
+    this.init()
+
     const data = this.value
     const total = this.value.map(v => v.value).reduce((a, b) => a + b, 0)
     const threshold = 0.08
-
-    console.log('redraw', total)
 
     const color = d3.scaleOrdinal()
       .domain(data.map(d => d.name))
@@ -73,7 +77,7 @@ export default class ChartSummaryPie extends Vue {
     const arcs = d3.pie()
       .sort(null)
       // @ts-ignore
-      .value((d) => { return d.value })(data)
+      .value(d => d.value)(data)
 
     const block = this.pie.selectAll('.arc')
       .data(arcs)
@@ -87,16 +91,26 @@ export default class ChartSummaryPie extends Vue {
 
     newBlock.append('path')
       .attr('d', this.arc)
-      .attr('id', (d, i) => { return `arc-${i}` })
+      .attr('id', (d) => { return `arc-${d.data.id}` })
       // @ts-ignore
       .attr('fill', d => d.data.color || color(d.data.name))
+      /* .transition()
+      .delay((d, i) => i * 500)
+      .duration(500)
+      .attrTween('d', (d) => {
+        const i = d3.interpolate(d.startAngle + 0.1, d.endAngle)
+        return (t) => {
+          d.endAngle = i(t)
+          return this.arc(d)
+        }
+      }) */
 
     newBlock.append('text')
       .attr('dx', 10)
       .attr('dy', -5)
       .append('textPath')
       .attr('fill', d => d.data.color || color(d.data.name))
-      .attr('xlink:href', (d, i) => { return `#arc-${i}` })
+      .attr('xlink:href', (d) => { return `#arc-${d.data.id}` })
       .text((d) => {
         if ((d.data.value / total) < threshold)
           return ''
@@ -107,7 +121,7 @@ export default class ChartSummaryPie extends Vue {
       .attr('dx', 10)
       .attr('dy', 20)
       .append('textPath')
-      .attr('xlink:href', (d, i) => { return `#arc-${i}` })
+      .attr('xlink:href', (d) => { return `#arc-${d.data.id}` })
       .attr('fill', 'white')
       .attr('style', 'opacity: 0.8')
       .text((d) => {
