@@ -64,6 +64,8 @@ export default class ChartSummaryPie extends Vue {
     const total = this.value.map(v => v.value).reduce((a, b) => a + b, 0)
     const threshold = 0.08
 
+    console.log('redraw', total)
+
     const color = d3.scaleOrdinal()
       .domain(data.map(d => d.name))
       .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), data.length).reverse())

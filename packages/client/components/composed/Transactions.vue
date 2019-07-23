@@ -1,10 +1,12 @@
 <template lang='pug'>
 .transactions
   .text-center(v-if='chart')
-    app-date-range-select(:from.sync='from' :to.sync='to' unit='month')
+    v-checkbox(v-model='onlyMe' :label='$t("ui.transactions.involved")')
+    app-date-range-select(:from.sync='from' :to.sync='to' :unit='unit')
     chart-expense-summary(
       :class='{ "op-10": !filteredTransactions.length }'
-      :trans='filteredTransactions'
+      :transactions='filteredTransactions'
+      :involved='involved'
       :group='group'
     )
 
@@ -13,13 +15,15 @@
       .pa-4
         v-subheader {{$t('ui.no_expenses_in_range')}}
     template(v-else)
-      app-transactions-list(:transactions='filteredTransactions')
+      app-transactions-list(:transactions='filteredTransactions' :involved='involved')
 </template>
 
 <script lang='ts'>
-import { Component, mixins, Prop } from 'nuxt-property-decorator'
+import { Component, mixins, Prop, Getter } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
 import ChartExpenseSummary from '../charts/ChartExpenseSummary.vue'
+import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
+import { IdMe } from '~/core'
 import { Transaction } from '~/types'
 import { GroupMixin } from '~/mixins'
 
@@ -30,7 +34,10 @@ import { GroupMixin } from '~/mixins'
 })
 export default class Transactions extends mixins(GroupMixin) {
   collapsed = true
-  groupBy: 'day' | 'month' | 'year' = 'month'
+  unit: DateRangeUnit = 'month'
+  onlyMe = true
+
+  @Getter('user/uid') uid: string | undefined
 
   @Prop({ default: 3 }) readonly limit!: number
   @Prop(Boolean) readonly flat?: boolean
@@ -47,6 +54,16 @@ export default class Transactions extends mixins(GroupMixin) {
 
   get amount () {
     return this.transactions.length
+  }
+
+  get involved () {
+    if (this.onlyMe) {
+      if (this.group.online)
+        return this.uid
+      else
+        return IdMe
+    }
+    return undefined
   }
 
   get filteredTransactions () {

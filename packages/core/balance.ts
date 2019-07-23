@@ -80,12 +80,34 @@ export function applyExchangeRate (from: string, to: string, exchange_record: Ex
   return value.mul(rate)
 }
 
+export function ExchangeInTransaction (transaction: Transaction, value: Fraction, main_currency: string, display_currency?: string | null, exchange_record = FallbackExchangeRate) {
+  const currency = transaction.currency
+  main_currency = main_currency || defaultCurrency
+  display_currency = display_currency || main_currency
+
+  if (currency !== display_currency) {
+    // use transaction defined exchange info if it's avaliable
+    let record = (transaction.exchanges || []).find(e => e.from === currency && e.to === display_currency)
+    if (record) {
+      return value.mul(record.rate)
+    }
+    else {
+      record = (transaction.exchanges || []).find(e => e.from === currency && e.to === main_currency)
+      if (record)
+        return applyExchangeRate(main_currency, display_currency, exchange_record, value.mul(record.rate))
+      else
+        return applyExchangeRate(currency, display_currency, exchange_record, value)
+    }
+  }
+  return value
+}
+
 export function GroupBalances (group: Group, display?: string | null, exchange_record = FallbackExchangeRate): Balance[] {
   const main_currency = group.main_currency || defaultCurrency
   const display_currency = display || main_currency
 
   // init
-  let balances = Object.values(group.members)
+  let memberBalances = Object.values(group.members)
     .map((m): Balance => {
       return {
         uid: m.uid as string,
@@ -96,42 +118,28 @@ export function GroupBalances (group: Group, display?: string | null, exchange_r
     })
 
   group.transactions.forEach((t) => {
-    const currency = t.currency
     const changes = TransactionBalanceChanges(t)
     changes.forEach((c) => {
-      const balance = find(balances, { uid: c.uid })
-      if (!balance)
+      const member = find(memberBalances, { uid: c.uid })
+      if (!member)
         throw new Error(`Member with id:"${c.uid}" is not found.`)
 
-      let value = c.balance
-      if (currency !== display_currency) {
-        // use transaction defined exchange info if it's avaliable
-        let record = (t.exchanges || []).find(e => e.from === currency && e.to === display_currency)
-        if (record) {
-          value = c.balance.mul(record.rate)
-        }
-        else {
-          record = (t.exchanges || []).find(e => e.from === currency && e.to === main_currency)
-          if (record)
-            value = applyExchangeRate(main_currency, display_currency, exchange_record, c.balance.mul(record.rate))
-          else
-            value = applyExchangeRate(currency, display_currency, exchange_record, c.balance)
-        }
-      }
-      balance.balance = balance.balance.add(value)
+      member.balance = member.balance.add(ExchangeInTransaction(t, c.balance, group.main_currency, display_currency, exchange_record))
     })
   })
+
   // remove the "Removed members" when theire balance equal to 0
-  balances = balances.filter(b => !b.removed || !b.balance.equals(0))
+  memberBalances = memberBalances.filter(b => !b.removed || !b.balance.equals(0))
+
   // sort by the balance
-  balances.sort((a, b) => {
+  memberBalances.sort((a, b) => {
     if (a.removed === b.removed)
       return a.balance.compare(b.balance)
     if (a.removed)
       return 1
     return -1
   })
-  return balances
+  return memberBalances
 }
 
 export function GetSettleUpSolutions (balances: Balance[], group: Group): Solution[] {

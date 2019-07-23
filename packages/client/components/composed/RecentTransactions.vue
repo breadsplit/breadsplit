@@ -12,7 +12,7 @@
       template(v-slot:append v-if='needShowMore')
         v-divider
         .text-center.pa-2
-          v-btn(text small fluid color='primary' @click='$emit("show-all")') {{$t('ui.show-all')}}
+          v-btn(text small fluid color='primary' @click='$emit("show-all")') {{$t('ui.show_all')}}
 </template>
 
 <script lang='ts'>

@@ -229,7 +229,7 @@ ui:
     share_link: Share link
   share_link_copied: Share link copied!
   share_link_to_invite: Share this link to invite friends
-  show-all: Show all
+  show_all: Show all
   sign_in: Sign in
   signin_options:
     Facebook: Sign in with Facebook
@@ -257,6 +257,10 @@ ui:
     summary: Summary
     transactions: Transactions
   total: Total
+  transactions:
+    involved: Involved
+    involved_negative: '{0} had owed'
+    involved_positive: '{0} had paid'
   welcome_breadsplit: Welcome to BreadSplit!
   wip: "\U0001F6A7 Working in progress..."
   xx_paid_money: '{0} paid'

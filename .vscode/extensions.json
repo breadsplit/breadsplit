@@ -5,7 +5,6 @@
     "antfu.vue-i18n-ally",
 
     // languages
-    "robinbentley.sass-indented",
 
     // lint/formatting
     "dbaeumer.vscode-eslint",
