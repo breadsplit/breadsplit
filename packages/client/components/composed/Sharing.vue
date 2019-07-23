@@ -16,6 +16,7 @@ v-card.sharing.pa-4.mb-2
 
 <script lang='ts'>
 import { Component, mixins, Getter } from 'nuxt-property-decorator'
+import { oc } from 'ts-optchain'
 import { ClientGroup } from '~/types'
 import GroupMixin from '~/mixins/group'
 import { Share } from '~/utils/share'
@@ -28,7 +29,7 @@ export default class Sharing extends mixins(GroupMixin) {
   loading = false
 
   get public () {
-    return this.clientGroup && this.clientGroup.public
+    return oc(this).clientGroup.options.public(false)
   }
 
   async copyShareLink () {
@@ -47,10 +48,10 @@ export default class Sharing extends mixins(GroupMixin) {
       this.update(!this.public)
   }
 
-  async update (value) {
+  async update (value: boolean) {
     this.loading = true
     try {
-      await this.$fire.setGroupOpenness(this.group.id, value)
+      await this.$fire.changeGroupOptions(this.group.id, { public: value })
     }
     catch (e) {
       console.log(e)

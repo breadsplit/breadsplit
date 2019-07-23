@@ -5,6 +5,7 @@ import nanoid from 'nanoid'
 import dayjs from 'dayjs'
 import * as firebase from 'firebase/app'
 
+import { SharedGroupOptions } from '../../types/models'
 import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
 import { IsThisId, getExchangeRateOn, FallbackExchangeRate } from '~/core'
 
@@ -197,15 +198,11 @@ export class FirebasePlugin {
     }
   }
 
-  async setGroupOpenness (id: string, value: boolean) {
+  async changeGroupOptions (id: string, changes: Partial<SharedGroupOptions>) {
     const group = this.store.getters['group/clientGroupById'](id) as ClientGroup
     if (!group || !group.online)
-      return false
-    if (group.public !== value) {
-      const { data } = await this.functions.httpsCallable('setGroupOpenness')({ id, value })
-      return data
-    }
-    return group.public || false
+      return
+    await this.functions.httpsCallable('changeGroupOptions')({ id, changes })
   }
 
   async updateMessagingToken () {

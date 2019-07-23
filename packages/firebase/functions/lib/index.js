@@ -86,6 +86,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "../../../node_modules/ts-optchain/dist/proxy/index.js":
+/*!*************************************************************************!*\
+  !*** C:/GitHub/breadsplit/node_modules/ts-optchain/dist/proxy/index.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n/**\n * Copyright (C) 2019-present, Rimeto, LLC.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n */\nObject.defineProperty(exports, \"__esModule\", { value: true });\n/**\n * Proxy based implementation of optional chaining w/ default values.\n */\nfunction oc(data) {\n    return new Proxy((function (defaultValue) { return (data == null ? defaultValue : data); }), {\n        get: function (target, key) {\n            var obj = target();\n            return oc(typeof obj === 'object' ? obj[key] : undefined);\n        },\n    });\n}\nexports.oc = oc;\n\n\n//# sourceURL=webpack:///C:/GitHub/breadsplit/node_modules/ts-optchain/dist/proxy/index.js?");
+
+/***/ }),
+
 /***/ "../../core/activities_parser.ts":
 /*!***************************************************************!*\
   !*** C:/GitHub/breadsplit/packages/core/activities_parser.ts ***!
@@ -130,7 +142,7 @@ eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod)
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst merge_1 = __importDefault(__webpack_require__(/*! lodash/merge */ \"lodash/merge\"));\r\nconst mapValues_1 = __importDefault(__webpack_require__(/*! lodash/mapValues */ \"lodash/mapValues\"));\r\nconst id_helper_1 = __webpack_require__(/*! ./id_helper */ \"../../core/id_helper.ts\");\r\nexports.defaultCurrency = 'USD';\r\nexports.MemberDefault = (overrides) => merge_1.default({\r\n    uid: id_helper_1.GenerateId.LocalMember(),\r\n    name: '',\r\n    role: 'collaborator',\r\n}, overrides);\r\nexports.GroupDefault = (overrides) => {\r\n    const group = merge_1.default({\r\n        id: id_helper_1.GenerateId.LocalGroup(),\r\n        name: '',\r\n        options: {\r\n            multiple_currencies: true,\r\n        },\r\n        timestamp: +new Date(),\r\n        budgets: [],\r\n        members: {},\r\n        currencies: [],\r\n        currency_records: [],\r\n        transactions: [],\r\n        activities: [],\r\n        online: false,\r\n    }, overrides);\r\n    if (Array.isArray(group.members)) {\r\n        const members = {};\r\n        group.members.forEach((m) => {\r\n            const member = exports.MemberDefault(m);\r\n            members[member.uid] = member;\r\n        });\r\n        group.members = members;\r\n    }\r\n    else {\r\n        group.members = mapValues_1.default(group.members, m => exports.MemberDefault(m));\r\n    }\r\n    return group;\r\n};\r\nexports.ClientGroupDefault = (overrides) => {\r\n    const group = exports.GroupDefault(overrides);\r\n    return {\r\n        id: group.id,\r\n        base: group,\r\n        operations: [],\r\n        syncingOperations: [],\r\n        lastchanged: +new Date(),\r\n        public: true,\r\n    };\r\n};\r\nexports.TransactionDefault = (overrides) => merge_1.default({\r\n    id: id_helper_1.GenerateId.Transaction(),\r\n    timestamp: +new Date(),\r\n    creditors: [],\r\n    debtors: [],\r\n    currency: exports.defaultCurrency,\r\n    creator: '',\r\n    category: '',\r\n    total_fee: 0,\r\n    service_fee_rate: 0,\r\n    type: 'expenses',\r\n    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,\r\n}, overrides);\r\n\n\n//# sourceURL=webpack:///C:/GitHub/breadsplit/packages/core/defaults.ts?");
+eval("\r\nvar __importDefault = (this && this.__importDefault) || function (mod) {\r\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\r\n};\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst merge_1 = __importDefault(__webpack_require__(/*! lodash/merge */ \"lodash/merge\"));\r\nconst mapValues_1 = __importDefault(__webpack_require__(/*! lodash/mapValues */ \"lodash/mapValues\"));\r\nconst id_helper_1 = __webpack_require__(/*! ./id_helper */ \"../../core/id_helper.ts\");\r\nexports.defaultCurrency = 'USD';\r\nexports.MemberDefault = (overrides) => merge_1.default({\r\n    uid: id_helper_1.GenerateId.LocalMember(),\r\n    name: '',\r\n    role: 'collaborator',\r\n}, overrides);\r\nexports.GroupDefault = (overrides) => {\r\n    const group = merge_1.default({\r\n        id: id_helper_1.GenerateId.LocalGroup(),\r\n        name: '',\r\n        options: {\r\n            multiple_currencies: true,\r\n        },\r\n        timestamp: +new Date(),\r\n        budgets: [],\r\n        members: {},\r\n        currencies: [],\r\n        currency_records: [],\r\n        transactions: [],\r\n        activities: [],\r\n        online: false,\r\n    }, overrides);\r\n    if (Array.isArray(group.members)) {\r\n        const members = {};\r\n        group.members.forEach((m) => {\r\n            const member = exports.MemberDefault(m);\r\n            members[member.uid] = member;\r\n        });\r\n        group.members = members;\r\n    }\r\n    else {\r\n        group.members = mapValues_1.default(group.members, m => exports.MemberDefault(m));\r\n    }\r\n    return group;\r\n};\r\nexports.SharedGroupOptionsDefault = (overrides) => merge_1.default({\r\n    public: true,\r\n}, overrides);\r\nexports.ClientGroupDefault = (overrides) => {\r\n    const group = exports.GroupDefault(overrides);\r\n    return {\r\n        id: group.id,\r\n        base: group,\r\n        operations: [],\r\n        syncingOperations: [],\r\n        lastchanged: +new Date(),\r\n        options: exports.SharedGroupOptionsDefault(),\r\n    };\r\n};\r\nexports.TransactionDefault = (overrides) => merge_1.default({\r\n    id: id_helper_1.GenerateId.Transaction(),\r\n    timestamp: +new Date(),\r\n    creditors: [],\r\n    debtors: [],\r\n    currency: exports.defaultCurrency,\r\n    creator: '',\r\n    category: '',\r\n    total_fee: 0,\r\n    service_fee_rate: 0,\r\n    type: 'expenses',\r\n    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,\r\n}, overrides);\r\n\n\n//# sourceURL=webpack:///C:/GitHub/breadsplit/packages/core/defaults.ts?");
 
 /***/ }),
 
@@ -332,6 +344,18 @@ eval("\r\nvar __importStar = (this && this.__importStar) || function (mod) {\r\n
 
 /***/ }),
 
+/***/ "./src/changeGroupOptions.ts":
+/*!***********************************!*\
+  !*** ./src/changeGroupOptions.ts ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst ts_optchain_1 = __webpack_require__(/*! ts-optchain */ \"../../../node_modules/ts-optchain/dist/proxy/index.js\");\r\nconst _helpers_1 = __webpack_require__(/*! ./_helpers */ \"./src/_helpers.ts\");\r\nexports.changeGroupOptions = _helpers_1.f(async ({ id, changes }, context) => {\r\n    if (!context.auth || !context.auth.uid)\r\n        throw new Error('auth_required');\r\n    const doc = await _helpers_1.GroupsRef(id).get();\r\n    if (!doc.exists)\r\n        throw new Error('group_not_exists');\r\n    const originalOptions = ts_optchain_1.oc(doc.data()).options({});\r\n    await _helpers_1.GroupsRef(id).update('options', Object.assign({}, originalOptions, changes));\r\n});\r\n\n\n//# sourceURL=webpack:///./src/changeGroupOptions.ts?");
+
+/***/ }),
+
 /***/ "./src/getExchangeRate.ts":
 /*!********************************!*\
   !*** ./src/getExchangeRate.ts ***!
@@ -364,7 +388,7 @@ eval("\r\nvar __importStar = (this && this.__importStar) || function (mod) {\r\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nfunction __export(m) {\r\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\r\n}\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n__webpack_require__(/*! ./init */ \"./src/init.ts\");\r\n__export(__webpack_require__(/*! ./getExchangeRate */ \"./src/getExchangeRate.ts\"));\r\n__export(__webpack_require__(/*! ./groupsCount */ \"./src/groupsCount.ts\"));\r\n__export(__webpack_require__(/*! ./joinGroup */ \"./src/joinGroup.ts\"));\r\n__export(__webpack_require__(/*! ./publishGroup */ \"./src/publishGroup.ts\"));\r\n__export(__webpack_require__(/*! ./removeGroup */ \"./src/removeGroup.ts\"));\r\n__export(__webpack_require__(/*! ./setGroupOpenness */ \"./src/setGroupOpenness.ts\"));\r\n__export(__webpack_require__(/*! ./uploadOperations */ \"./src/uploadOperations.ts\"));\r\n\n\n//# sourceURL=webpack:///./src/index.ts?");
+eval("\r\nfunction __export(m) {\r\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\r\n}\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\n__webpack_require__(/*! ./init */ \"./src/init.ts\");\r\n__export(__webpack_require__(/*! ./getExchangeRate */ \"./src/getExchangeRate.ts\"));\r\n__export(__webpack_require__(/*! ./groupsCount */ \"./src/groupsCount.ts\"));\r\n__export(__webpack_require__(/*! ./joinGroup */ \"./src/joinGroup.ts\"));\r\n__export(__webpack_require__(/*! ./publishGroup */ \"./src/publishGroup.ts\"));\r\n__export(__webpack_require__(/*! ./removeGroup */ \"./src/removeGroup.ts\"));\r\n__export(__webpack_require__(/*! ./changeGroupOptions */ \"./src/changeGroupOptions.ts\"));\r\n__export(__webpack_require__(/*! ./uploadOperations */ \"./src/uploadOperations.ts\"));\r\n\n\n//# sourceURL=webpack:///./src/index.ts?");
 
 /***/ }),
 
@@ -400,7 +424,7 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nco
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst _helpers_1 = __webpack_require__(/*! ./_helpers */ \"./src/_helpers.ts\");\r\nconst opschain_1 = __webpack_require__(/*! ./utils/opschain */ \"./src/utils/opschain.ts\");\r\nconst core_1 = __webpack_require__(/*! ./utils/core */ \"./src/utils/core.ts\");\r\nexports.publishGroup = _helpers_1.f(async ({ group }, context) => {\r\n    if (!context.auth || !context.auth.uid)\r\n        throw new Error('auth_required');\r\n    const user_uid = context.auth.uid;\r\n    const id = core_1.GenerateId.OnlineGroup();\r\n    group.id = id;\r\n    group.online = true;\r\n    group.activities = (group.activities || [])\r\n        .map((act) => {\r\n        if (!act.by || act.by === 'me')\r\n            act.by = user_uid;\r\n        return act;\r\n    });\r\n    const initOperations = opschain_1.ProcessServerOperations([{\r\n            name: 'init',\r\n            data: group,\r\n            meta: {\r\n                by: user_uid,\r\n                timestamp: +new Date(),\r\n            },\r\n        }, {\r\n            name: 'change_member_id',\r\n            data: {\r\n                from: 'me',\r\n                to: user_uid,\r\n            },\r\n        }], user_uid);\r\n    const serverGroup = {\r\n        id,\r\n        present: opschain_1.Eval(initOperations),\r\n        owner: user_uid,\r\n        viewers: [user_uid],\r\n        operations: initOperations.map(i => i.hash),\r\n        public: true,\r\n    };\r\n    const batch = _helpers_1.db.batch();\r\n    batch.set(_helpers_1.GroupsRef(id), opschain_1.omitDeep(serverGroup));\r\n    batch.set(_helpers_1.OperationsRef(id), opschain_1.omitDeep({ operations: initOperations }));\r\n    await batch.commit();\r\n    return { id };\r\n});\r\n\n\n//# sourceURL=webpack:///./src/publishGroup.ts?");
+eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst _helpers_1 = __webpack_require__(/*! ./_helpers */ \"./src/_helpers.ts\");\r\nconst opschain_1 = __webpack_require__(/*! ./utils/opschain */ \"./src/utils/opschain.ts\");\r\nconst core_1 = __webpack_require__(/*! ./utils/core */ \"./src/utils/core.ts\");\r\nexports.publishGroup = _helpers_1.f(async ({ group }, context) => {\r\n    if (!context.auth || !context.auth.uid)\r\n        throw new Error('auth_required');\r\n    const user_uid = context.auth.uid;\r\n    const id = core_1.GenerateId.OnlineGroup();\r\n    group.id = id;\r\n    group.online = true;\r\n    group.activities = (group.activities || [])\r\n        .map((act) => {\r\n        if (!act.by || act.by === 'me')\r\n            act.by = user_uid;\r\n        return act;\r\n    });\r\n    const initOperations = opschain_1.ProcessServerOperations([{\r\n            name: 'init',\r\n            data: group,\r\n            meta: {\r\n                by: user_uid,\r\n                timestamp: +new Date(),\r\n            },\r\n        }, {\r\n            name: 'change_member_id',\r\n            data: {\r\n                from: 'me',\r\n                to: user_uid,\r\n            },\r\n        }], user_uid);\r\n    const serverGroup = {\r\n        id,\r\n        present: opschain_1.Eval(initOperations),\r\n        owner: user_uid,\r\n        viewers: [user_uid],\r\n        operations: initOperations.map(i => i.hash),\r\n        options: core_1.SharedGroupOptionsDefault(),\r\n    };\r\n    const batch = _helpers_1.db.batch();\r\n    batch.set(_helpers_1.GroupsRef(id), opschain_1.omitDeep(serverGroup));\r\n    batch.set(_helpers_1.OperationsRef(id), opschain_1.omitDeep({ operations: initOperations }));\r\n    await batch.commit();\r\n    return { id };\r\n});\r\n\n\n//# sourceURL=webpack:///./src/publishGroup.ts?");
 
 /***/ }),
 
@@ -413,18 +437,6 @@ eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nco
 
 "use strict";
 eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst _helpers_1 = __webpack_require__(/*! ./_helpers */ \"./src/_helpers.ts\");\r\nexports.removeGroup = _helpers_1.f(async (id, context) => {\r\n    if (!context.auth || !context.auth.uid)\r\n        throw new Error('auth_required');\r\n    const doc = await _helpers_1.GroupsRef(id).get();\r\n    const group = doc.data();\r\n    if (!group)\r\n        throw new Error('group_not_exists');\r\n    // TODO: verify user permission\r\n    // TODO: flag to remove, not actually deleted\r\n    await _helpers_1.GroupsRef(id).delete();\r\n    await _helpers_1.OperationsRef(id).delete();\r\n    return true;\r\n});\r\n\n\n//# sourceURL=webpack:///./src/removeGroup.ts?");
-
-/***/ }),
-
-/***/ "./src/setGroupOpenness.ts":
-/*!*********************************!*\
-  !*** ./src/setGroupOpenness.ts ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\r\nObject.defineProperty(exports, \"__esModule\", { value: true });\r\nconst _helpers_1 = __webpack_require__(/*! ./_helpers */ \"./src/_helpers.ts\");\r\nexports.setGroupOpenness = _helpers_1.f(async ({ id, value }, context) => {\r\n    if (!context.auth || !context.auth.uid)\r\n        throw new Error('auth_required');\r\n    const doc = await _helpers_1.GroupsRef(id).get();\r\n    if (!doc.exists)\r\n        throw new Error('group_not_exists');\r\n    await _helpers_1.GroupsRef(id).update('public', value);\r\n    return value;\r\n});\r\n\n\n//# sourceURL=webpack:///./src/setGroupOpenness.ts?");
 
 /***/ }),
 

@@ -126,6 +126,10 @@ export interface Budget {
   currency: string
 }
 
+export interface SharedGroupOptions {
+  public: boolean
+}
+
 export interface Group {
   // Basic
   id: string
@@ -162,7 +166,7 @@ export interface ClientGroup {
   // Options
   lastchanged: number
   favorite?: boolean
-  public: boolean
+  options: SharedGroupOptions
 }
 
 export interface TokenRecord {

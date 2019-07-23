@@ -1,7 +1,7 @@
 import { f, db, GroupsRef, OperationsRef } from './_helpers'
 import { ProcessServerOperations, Eval, omitDeep } from './utils/opschain'
 import { Group, ServerGroup } from './utils/types'
-import { GenerateId } from './utils/core'
+import { GenerateId, SharedGroupOptionsDefault } from './utils/core'
 
 export const publishGroup = f(async ({ group }: { group: Group }, context) => {
   if (!context.auth || !context.auth.uid)
@@ -40,7 +40,7 @@ export const publishGroup = f(async ({ group }: { group: Group }, context) => {
     owner: user_uid,
     viewers: [user_uid],
     operations: initOperations.map(i => i.hash),
-    public: true,
+    options: SharedGroupOptionsDefault(),
   }
 
   const batch = db.batch()
