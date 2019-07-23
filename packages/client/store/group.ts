@@ -6,7 +6,7 @@ import { oc } from 'ts-optchain'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
 import { GroupStateDefault } from '.'
 import { GroupState, RootState, Group, ServerGroup, Operation, ClientGroup, ExchangeRecord } from '~/types'
-import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe, GroupBalances, GetSettleUpSolutions, FallbackExchangeRate } from '~/core'
+import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe, GroupBalances, GetSettleUpSolutions, FallbackExchangeRate, CategoryDefault } from '~/core'
 import { DEBUG } from '~/../meta/env'
 
 // eslint-disable-next-line no-console
@@ -150,6 +150,7 @@ export const actions: ActionTree<GroupState, RootState> = {
     NewOperation(context, id, 'modify_meta', changes)
   },
 
+  // Members
   addMember (context, { id, member }) {
     member = MemberDefault(member)
     NewOperation(context, id, 'insert_member', member)
@@ -161,6 +162,10 @@ export const actions: ActionTree<GroupState, RootState> = {
 
   editMember (context, { id, memberid, changes }) {
     NewOperation(context, id, 'modify_member', { id: memberid, changes })
+  },
+
+  changeMemberId (context, { id, from, to }) {
+    NewOperation(context, id, 'change_member_id', { from, to })
   },
 
   // Transactions
@@ -178,10 +183,21 @@ export const actions: ActionTree<GroupState, RootState> = {
     NewOperation(context, id, 'remove_transaction', transid)
   },
 
-  changeMemberId (context, { id, from, to }) {
-    NewOperation(context, id, 'change_member_id', { from, to })
+  // Category
+  newCategory (context, { id, category }) {
+    category = CategoryDefault(category)
+    NewOperation(context, id, 'insert_category', category)
   },
 
+  editCategory (context, { id, categoryid, changes }) {
+    NewOperation(context, id, 'modify_category', { id: categoryid, changes })
+  },
+
+  removeCategory (context, { id, categoryid }) {
+    NewOperation(context, id, 'remove_category', categoryid)
+  },
+
+  // Meta
   changeDisplayCurrency ({ state, commit, dispatch }, { id, display_currency }) {
     id = id || state.currentId
     const group = state.cache.groups[id]

@@ -24,6 +24,7 @@ export type Entity =
   | 'group'
   | 'transaction'
   | 'currency_record'
+  | 'category'
 
 export interface Weight {
   uid: UID
@@ -38,6 +39,7 @@ export interface Category {
   icon: string
   color: string
   text: string
+  removed?: boolean
 }
 
 export interface Member {
@@ -118,6 +120,8 @@ export interface Activity {
   entity_id?: string
   entity_name?: string
   entity_desc?: string
+  entity_color?: string
+  entity_icon?: string
   meta?: any
 }
 

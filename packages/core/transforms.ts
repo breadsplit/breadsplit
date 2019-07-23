@@ -5,7 +5,9 @@ If you made any modification,
 Please DO DEPLOY firebase functions before merge into master.
 */
 import cloneDeep from 'lodash/cloneDeep'
-import { TransformFunctions, Group, Member, Transaction, GroupMetaChanges } from '../types'
+import { TransformFunctions, Group, Member, Transaction, GroupMetaChanges, Category } from '../types'
+import { CategoryPresets } from '../meta/categories'
+import { IsThisId } from './id_helper'
 
 export type TransformKeys =
   | 'init'
@@ -16,6 +18,9 @@ export type TransformKeys =
   | 'insert_transaction'
   | 'modify_transaction'
   | 'remove_transaction'
+  | 'insert_category'
+  | 'modify_category'
+  | 'remove_category'
   | 'change_member_id'
   | 'new_activity'
 
@@ -155,6 +160,59 @@ export const Transforms: TransformFunctions<Group> = {
       entity_name: transaction.desc,
       entity_desc: `${transaction.currency} ${transaction.total_fee}`,
     })
+    return snap
+  },
+
+  insert_category (snap, category: Category | string, { by, timestamp } = {}) {
+    if (!snap.categories)
+      snap.categories = CategoryPresets.default
+
+    snap.categories.push(category)
+    if (typeof category !== 'string') {
+      snap.activities.push({
+        by,
+        timestamp,
+        action: 'insert',
+        entity: 'category',
+        entity_id: category.id,
+        entity_name: category.text,
+        entity_color: category.color,
+      })
+    }
+    return snap
+  },
+
+  modify_category (snap, { id, changes }: { id: string; changes: Partial<Category> }, { by, timestamp } = {}) {
+    if (!snap.categories)
+      return snap
+    if (!IsThisId.Category(id))
+      return snap
+
+    const category = snap.categories.find(c => typeof c !== 'string' && c.id === id) as Category
+    if (!category)
+      return snap
+
+    delete changes.id
+    Object.assign(category, changes)
+
+    return snap
+  },
+
+  remove_category (snap, id: string, { by, timestamp } = {}) {
+    if (!snap.categories)
+      return snap
+
+    // built in
+    if (!IsThisId.Category(id)) {
+      snap.categories = snap.categories.filter(c => c !== id)
+    }
+    // custom
+    else {
+      const category = snap.categories.find(c => typeof c !== 'string' && c.id === id) as Category
+      if (category)
+        category.removed = true
+    }
+
     return snap
   },
 

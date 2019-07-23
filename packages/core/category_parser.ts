@@ -10,14 +10,18 @@ export function ParserCategory (cat: Category | string, group: Group, vm: Vue): 
   let name = cat || 'other'
 
   let category
+
   if (IsThisId.Category(name))
     category = (group.categories || []).find(i => typeof i !== 'string' && i.id === name)
   else
     category = BuiltInCategories[name]
+
+  // fallback
   if (!category) {
     name = 'unknown'
     category = BuiltInCategories.unknown
   }
+
   return {
     id: name,
     color: category.color,

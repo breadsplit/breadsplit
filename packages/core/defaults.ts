@@ -1,6 +1,7 @@
 import merge from 'lodash/merge'
 import mapValues from 'lodash/mapValues'
 import { Member, Group, Transaction, ClientGroup, SharedGroupOptions } from '../types'
+import { Category } from '../types/models'
 import { GenerateId } from './id_helper'
 
 export const defaultCurrency = 'USD'
@@ -60,6 +61,13 @@ export const ClientGroupDefault = (overrides?: Partial<ClientGroup>): ClientGrou
     options: SharedGroupOptionsDefault(),
   }
 }
+
+export const CategoryDefault = (overrides?: Partial<Category>): Category => merge({
+  id: GenerateId.Category(),
+  text: '?',
+  icon: 'help-circle-outline',
+  color: '#555',
+}, overrides)
 
 export const TransactionDefault = (overrides?: Partial<Transaction>): Transaction => merge({
   id: GenerateId.Transaction(),
