@@ -75,7 +75,7 @@ tips:
   click_right_corner_icon: '請點選右上角 "{0}" 圖標'
   member_name_input_placeholder: 輸入成員昵稱
   select_open_in_browser: '選擇 {0}'
-translators: offical
+translators: official
 ui:
   about: 關於我們
   advance: 進階
@@ -152,6 +152,7 @@ ui:
     repeat_expense: 重複
     select_who_paid: 選擇付款人
     xx_should_pay: '這次輪到 {0} 付款。'
+  no_expenses_in_range: 在這個時段内沒有費用支出
   offline_mode: 離線模式
   online_mode: 綫上模式
   optional: （可選）

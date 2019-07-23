@@ -7,7 +7,7 @@
 
         .pa-2
 
-        app-transactions(:limit='3', flat, @show-all='tab_index=1')
+        app-recent-transactions(:limit='3' @show-all='tab_index=1')
 
         .pa-2
 

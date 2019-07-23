@@ -57,6 +57,27 @@ cats:
 code: en
 css:
   font_of_locale: ''
+date_range:
+  day:
+    formatter: LL
+    last: Yesterday
+    next: Tomorrow
+    this: Today
+  month:
+    formatter: MMMM
+    last: ''
+    next: ''
+    this: ''
+  week:
+    formatter: LL
+    last: Last Week
+    next: Next Week
+    this: This Week
+  year:
+    formatter: YYYY
+    last: ''
+    next: ''
+    this: ''
 feedback:
   contact_info: Contact Info
   describe: Describe your issue or sugesstions.
@@ -102,7 +123,7 @@ tips:
   member_name_input_placeholder: Enter member's name
   open_in_browser_general: Open in browser
   select_open_in_browser: 'Then select {0}'
-translators: offical
+translators: official
 ui:
   about: About us
   advance: Advance
@@ -180,6 +201,7 @@ ui:
     repeat_expense: Repeat
     select_who_paid: Select the person who paid the bill
     xx_should_pay: 'by the way, {0} should pay this time.'
+  no_expenses_in_range: No expenses in this range
   offline_mode: Offline mode
   online_mode: Online mode
   optional: (Optional)
