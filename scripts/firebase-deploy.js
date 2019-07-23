@@ -2,4 +2,4 @@
 const shelljs = require('shelljs')
 
 shelljs.cd('./packages/firebase')
-shelljs.exec('firebase deploy')
+shelljs.exec('firebase deploy --project=default')
