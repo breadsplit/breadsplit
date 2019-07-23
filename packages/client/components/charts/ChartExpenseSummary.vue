@@ -6,9 +6,9 @@ chart-summary-pie(:value='value', style='max-width:350px;')
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import groupBy from 'lodash/groupBy'
 import entries from 'lodash/entries'
-import DefaultCategories from '../../../meta/categories'
 import ChartSummaryPie from './ChartSummaryPie.vue'
-import { Transaction } from '~/types'
+import { ParserCategory } from '~/core'
+import { Transaction, Group } from '~/types'
 
 @Component({
   components: {
@@ -17,13 +17,14 @@ import { Transaction } from '~/types'
 })
 export default class ChartExpenseSummary extends Vue {
   @Prop() readonly trans!: Transaction[]
+  @Prop() readonly group!: Group
 
   get value () {
     return entries(groupBy(this.trans, i => i.category || 'other'))
-      .map(([name, values]) => {
-        const category = DefaultCategories.find(i => i.name === name) || { color: undefined }
+      .map(([id, values]) => {
+        const category = ParserCategory(id, this.group, this)
         return {
-          name: this.$t(`cats.${name}.display`),
+          name: category.text,
           color: category.color,
           // TODO: apply filter
           value: values.map(v => v.total_fee).reduce((a, b) => a + b, 0),

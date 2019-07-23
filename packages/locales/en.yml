@@ -41,6 +41,18 @@ cats:
   travel:
     display: Travel
     keywords: ''
+  unknown:
+    display: Unknown
+    keywords: ''
+  drinks:
+    display: Drinks
+    keywords: ''
+  tickets:
+    display: Tickets
+    keywords: ''
+  utilities:
+    display: Utilities
+    keywords: ''
 code: en
 css:
   font_of_locale: ''

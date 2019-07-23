@@ -33,6 +33,13 @@ export interface Weight {
   locked?: boolean
 }
 
+export interface Category {
+  id: string
+  icon: string
+  color: string
+  text: string
+}
+
 export interface Member {
   uid: UID | null
   name: string
@@ -139,6 +146,8 @@ export interface Group {
   options: GroupOptions
   timestamp: number
   budgets: Budget[]
+
+  categories?: (Category | string)[]
 
   // Records
   members: Record<UID, Member>

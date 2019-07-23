@@ -3,7 +3,9 @@ v-list-item.transaction-item(@click='navigate()')
   v-list-item-avatar
     app-category-icon.mx-2.my-1(
       :category='transaction.category'
-      :text='false', :size='38'
+      :text='false'
+      :size='38'
+      :group='group'
     )
   v-list-item-content
     v-list-item-title {{desc}}
@@ -23,12 +25,12 @@ v-list-item.transaction-item(@click='navigate()')
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
-import { UserInfoMixin, NavigationMixin, CommonMixin } from '~/mixins'
+import { UserInfoMixin, NavigationMixin, CommonMixin, GroupMixin } from '~/mixins'
 import { Transaction } from '~/types'
 import { dateFromNow } from '~/../utils/formatters'
 
 @Component
-export default class TransactionItem extends mixins(UserInfoMixin, NavigationMixin, CommonMixin) {
+export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, NavigationMixin, CommonMixin) {
   @Prop(Object) readonly transaction!: Transaction
 
   get creditor_ids () {

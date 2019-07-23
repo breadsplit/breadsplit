@@ -1,28 +1,25 @@
 <template lang='pug'>
-span(:style='colorStyle') {{display}}
+span(:style='colorStyle') {{cat.display}}
 </template>
 
 <script lang='ts'>
 import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import Categories from '~/../meta/categories'
+import { ParserCategory } from '~/core'
+import { Category, Group } from '~/types'
 
 @Component
 export default class CategoryIcon extends Vue {
-  @Prop({ default: '' }) readonly category!: string
+  @Prop({ default: '' }) readonly category!: string | Category
   @Prop({ default: 'other' }) readonly fallback!: string
-  @Prop({ default: true }) readonly active!: boolean
+  @Prop() readonly group!: Group
 
-  get display () {
-    const cat = this.category || this.fallback
-    return this.$t(`cats.${cat}.display`)
+  get cat () {
+    return ParserCategory(this.category, this.group, this)
   }
-  get color () {
-    const cat = this.category || this.fallback
-    return (Categories.find(c => c.name === cat) || { color: '' }).color
-  }
+
   get colorStyle () {
     return {
-      color: this.active ? this.color : 'var(--theme-inactive)',
+      color: this.cat.color,
     }
   }
 }

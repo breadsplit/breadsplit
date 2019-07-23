@@ -1,8 +1,4 @@
-export interface Category {
-  name: string
-  icon: string
-  color: string
-}
+import { Dictionary } from 'vuex'
 
 const colors = [
   'rgb(68, 120, 178)',
@@ -19,59 +15,101 @@ const colors = [
   'rgb(158, 1, 66)',
 ]
 
-const DefaultCategories: Category[] = [
-  {
-    name: 'transport',
+export const BuiltInCategories = {
+  transport: {
     icon: 'subway-variant',
     color: '',
   },
-  {
-    name: 'lodging',
+  lodging: {
     icon: 'hotel',
     color: '',
   },
-  {
-    name: 'travel',
+  travel: {
     icon: 'beach',
     color: '',
   },
-  {
-    name: 'shopping',
+  shopping: {
     icon: 'shopping',
     color: '',
   },
-  {
-    name: 'entertainment',
+  entertainment: {
     icon: 'cards-playing-outline',
     color: '',
   },
-  {
-    name: 'home',
-    icon: 'home',
+  utilities: {
+    icon: 'home-assistant',
     color: '',
   },
-  {
-    name: 'food',
+  food: {
     icon: 'food',
     color: '',
   },
-  {
-    name: 'tips',
+  drinks: {
+    icon: 'beer',
+    color: '',
+  },
+  tickets: {
+    icon: 'ticket',
+    color: '',
+  },
+  tips: {
     icon: 'coin',
     color: '',
   },
-  {
-    name: 'transfer',
-    icon: 'bank-transfer',
-    color: '',
-  },
-  {
-    name: 'other',
+  other: {
     icon: 'wallet-outline',
     color: '',
   },
-].map((cat, i) => ({ ...cat, color: colors[i] }))
+  transfer: {
+    icon: 'bank-transfer',
+    color: '',
+  },
+  unknown: {
+    icon: 'help-box',
+    color: '',
+  },
+}
 
-export default DefaultCategories
+Object.values(BuiltInCategories).map((v, i) => v.color = colors[i])
 
-export const CategoryKeys = DefaultCategories.map(c => c.name)
+export const CategoryPresets: Dictionary<(keyof typeof BuiltInCategories)[]> = {
+  default: [
+    'transport',
+    'lodging',
+    'travel',
+    'shopping',
+    'entertainment',
+    'utilities',
+    'food',
+    'drinks',
+    'tickets',
+    'tips',
+    'transfer',
+    'other',
+  ],
+  travel: [
+    'transport',
+    'lodging',
+    'travel',
+    'shopping',
+    'entertainment',
+    'food',
+    'drinks',
+    'tickets',
+    'tips',
+    'transfer',
+    'other',
+  ],
+  house: [
+    'transport',
+    'lodging',
+    'travel',
+    'shopping',
+    'entertainment',
+    'food',
+    'drinks',
+    'utilities',
+    'transfer',
+    'other',
+  ],
+}

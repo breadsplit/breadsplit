@@ -1,25 +1,30 @@
 <template lang='pug'>
 .category-select.pa-2
   template(v-for='cat in categories')
-    .item.py-3.pa-2(@click='setValue(cat.name)'
-      :class='{ active: value === cat.name, notactive: value !== cat.name }'
+    .item.py-3.pa-2(@click='setValue(cat.id)'
+      :class='{ active: value === cat.id, notactive: value !== cat.id }'
       :style='{ "--color": cat.color }'
     )
-      v-icon mdi-{{cat.icon}}
-      .label {{$t(`cats.${cat.name}.display`)}}
+      v-icon mdi-{{ cat.icon }}
+      .label {{ cat.text }}
 </template>
 
 <script lang='ts'>
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import DefaultCategories, { Category } from '~/../meta/categories'
+import { GetCategoriesOfGroup } from '../../../core/category_parser'
+import { Group } from '~/types'
 
 @Component
-export default class MemberSelect extends Vue {
+export default class CategorySelect extends Vue {
   @Prop(String) readonly value!: string
-  @Prop({ default: () => DefaultCategories }) readonly categories!: Category[]
+  @Prop() readonly group!: Group
 
   setValue (value) {
     this.$emit('input', value)
+  }
+
+  get categories () {
+    return GetCategoriesOfGroup(this.group, this)
   }
 }
 </script>

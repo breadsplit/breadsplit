@@ -1,29 +1,25 @@
 <template lang='pug'>
-v-icon(:size='size' :style='colorStyle') mdi-{{icon}}
+v-icon(:size='size' :style='colorStyle') mdi-{{cat.icon}}
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import Categories from '~/../meta/categories'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { ParserCategory } from '~/core'
+import { Group } from '~/types'
 
 @Component
 export default class CategoryIcon extends Vue {
   @Prop({ default: '' }) readonly category!: string
   @Prop() readonly size?: string
-  @Prop({ default: 'other' }) readonly fallback!: string
-  @Prop({ default: true }) readonly active!: boolean
+  @Prop() readonly group!: Group
 
-  get icon () {
-    const cat = this.category || this.fallback
-    return (Categories.find(c => c.name === cat) || { icon: '' }).icon
+  get cat () {
+    return ParserCategory(this.category, this.group, this)
   }
-  get color () {
-    const cat = this.category || this.fallback
-    return (Categories.find(c => c.name === cat) || { color: '' }).color
-  }
+
   get colorStyle () {
     return {
-      color: this.active ? this.color : 'var(--theme-inactive)',
+      color: this.cat.color,
     }
   }
 }
