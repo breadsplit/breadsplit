@@ -37,6 +37,8 @@ export function getActivityDescription (
       return $t('acts.remove_transaction', [by, entity_name])
     case 'update.transaction':
       return $t('acts.update_transaction', [by, entity_name])
+    case 'insert.category':
+      return $t('acts.insert_category', [by, entity_name])
     case 'insert.group':
       return $t('acts.insert_group', [by])
     case 'publish.group':

@@ -26,12 +26,12 @@ export function ParserCategory (cat: Category | string, group: Group, vm: Vue): 
     id: name,
     color: category.color,
     icon: category.icon,
-    text: vm.$t(`cats.${name}.display`).toString(),
+    text: category.text || vm.$t(`cats.${name}.display`).toString(),
   }
 }
 
 export function GetCategoriesOfGroup (group: Group, vm: Vue): Category[] {
   const categories = group.categories || CategoryPresets.default
 
-  return categories.map(c => ParserCategory(c, group, vm))
+  return categories.map(c => ParserCategory(c, group, vm)).filter(c => !c.removed)
 }

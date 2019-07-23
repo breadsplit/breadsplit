@@ -1,5 +1,6 @@
 acts:
   change_group_currency: '{0} 將貨幣更改為 {1}'
+  insert_category: '{0} 創建了新分類 {1}'
   insert_group: '{0} 創建了群組'
   insert_member: '{0} 添加了成員: {1}'
   insert_transaction: '{0} 添加了支出 {1}'
@@ -169,6 +170,11 @@ ui:
     reset: 重置
   settings: 設定
   settle_up_solution: '{0} 需要還 {2} 給 {1}'
+  share:
+    join_via_link: 通過鏈接加入
+    join_via_link_disabled: 已禁用
+    join_via_link_enabled: 任何人擁有該鏈接都可以加入此群組
+    share_link: 分享鏈接
   share_link_copied: 分享鏈接已復制！
   sign_in: 登錄
   signin_options:

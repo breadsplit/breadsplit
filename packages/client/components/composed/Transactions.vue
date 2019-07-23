@@ -1,7 +1,7 @@
 <template lang='pug'>
 .transactions
   .text-center(v-if='chart')
-    chart-expense-summary(:trans='filteredTransactions')
+    chart-expense-summary(:trans='filteredTransactions' :group='group')
 
   v-card
     v-subheader

@@ -1,5 +1,5 @@
 <template lang='pug'>
-chart-summary-pie(:value='value', style='max-width:350px;')
+chart-summary-pie(:value='value' style='max-width:350px;')
 </template>
 
 <script lang='ts'>

@@ -1,5 +1,6 @@
 acts:
   change_group_currency: '{0} changed main currency to {1}'
+  insert_category: '{0} created a new category {1}'
   insert_group: '{0} created the group'
   insert_member: '{0} added a member {1}'
   insert_transaction: '{0} added an expense {1}'
@@ -11,6 +12,9 @@ acts:
 appname: BreadSplit
 appname_dev: BreadSplit Dev
 cats:
+  drinks:
+    display: Drinks
+    keywords: ''
   entertainment:
     display: Entertain
     keywords: ''
@@ -29,6 +33,9 @@ cats:
   shopping:
     display: Shopping
     keywords: shopping
+  tickets:
+    display: Tickets
+    keywords: ''
   tips:
     display: Tips
     keywords: 'tip,tips'
@@ -43,12 +50,6 @@ cats:
     keywords: ''
   unknown:
     display: Unknown
-    keywords: ''
-  drinks:
-    display: Drinks
-    keywords: ''
-  tickets:
-    display: Tickets
     keywords: ''
   utilities:
     display: Utilities
