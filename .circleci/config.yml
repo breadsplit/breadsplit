@@ -72,7 +72,7 @@ jobs:
 
       - run:
           name: Deploy to Firebase
-          command: cd ./packages/firebase && npx firebase deploy --project=production --token=$FIREBASE_DEPLOY_TOKEN --yes
+          command: cd ./packages/firebase && npx firebase deploy --project=production --token=$FIREBASE_DEPLOY_TOKEN --force
 
   firebase_deploy_dev:
     docker:
@@ -103,7 +103,7 @@ jobs:
 
       - run:
           name: Deploy to Firebase
-          command: cd ./packages/firebase && npx firebase deploy --project=default --token=$FIREBASE_DEV_DEPLOY_TOKEN --yes
+          command: cd ./packages/firebase && npx firebase deploy --project=default --token=$FIREBASE_DEV_DEPLOY_TOKEN --force
 
 
 workflows:
