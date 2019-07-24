@@ -53,6 +53,8 @@ code: zh-tw
 css:
   font_of_locale: '"微軟正黑體", "Microsoft JhengHei"'
 date_range:
+  all:
+    full_display: 全部
   week:
     formatter: '第 {0} 週'
 feedback:

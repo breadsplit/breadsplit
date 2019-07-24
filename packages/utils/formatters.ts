@@ -20,9 +20,9 @@ export function getWeekOfYear (time: dayjs.ConfigType) {
 
   // ISO 8601 states that week 1 is the week
   // with january 4th in it
-  const jan4 = d.set('month', 1).set('day', 4)
+  // const jan4 = d.set('month', 1).set('day', 4)
 
-  const start = jan4.startOf('week')
+  const start = d.startOf('year').startOf('week')
 
   const now = d.startOf('week')
 

@@ -33,11 +33,11 @@ cats:
   shopping:
     display: Shopping
     keywords: shopping
-  tickets:
-    display: Tickets
-    keywords: ''
   snacks:
     display: Snacks
+    keywords: ''
+  tickets:
+    display: Tickets
     keywords: ''
   tips:
     display: Tips
@@ -61,32 +61,35 @@ code: en
 css:
   font_of_locale: ''
 date_range:
+  all:
+    display: All
+    full_display: All the time
+  custom:
+    display: Custom
   day:
-    display: 'Day'
+    display: Day
     formatter: LL
     last: Yesterday
     next: Tomorrow
     this: Today
   month:
-    display: 'Month'
+    display: Month
     formatter: MMMM
     last: ''
     next: ''
     this: ''
   week:
-    display: 'Week'
-    formatter: Week {0}
+    display: Week
+    formatter: 'Week {0}'
     last: Last Week
     next: Next Week
     this: This Week
   year:
-    display: 'Year'
+    display: Year
     formatter: YYYY
     last: ''
     next: ''
     this: ''
-  all:
-    display: 'All'
 feedback:
   contact_info: Contact Info
   describe: Describe your issue or sugesstions.

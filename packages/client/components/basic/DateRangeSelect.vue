@@ -1,10 +1,10 @@
 <template lang='pug'>
 .data-range-select
-  h2
-    v-btn(@click='previous' icon small v-if='unit !== "custom"')
+  h1.pb-2
+    v-btn(@click='previous' icon small v-if='unit !== "custom" && unit !== "all"')
       v-icon mdi-chevron-left
     span.px-3 {{display}}
-    v-btn(@click='next' icon small v-if='unit !== "custom"')
+    v-btn(@click='next' icon small v-if='unit !== "custom" && unit !== "all"')
       v-icon mdi-chevron-right
 
   v-btn-toggle(v-model='internal_unit' rounded mandatory )
@@ -13,7 +13,7 @@
     v-btn(small) {{$t('date_range.month.display')}}
     v-btn(small) {{$t('date_range.year.display')}}
     v-btn(small) {{$t('date_range.all.display')}}
-
+    v-btn(small) {{$t('date_range.custom.display')}}
 </template>
 
 <script lang='ts'>
@@ -22,13 +22,17 @@ import dayjs from 'dayjs'
 import { getWeekOfYear } from '~/../utils/formatters'
 import { GroupMixin } from '~/mixins'
 
-export type DateRangeUnit = 'month' | 'week' | 'year' | 'day' | 'custom'
+export type DateRangeUnit = 'month' | 'week' | 'year' | 'day' | 'custom' | 'all'
+
+const MAX_DATE = 8640000000000000
+const MIN_DATE = -8640000000000000
 
 const units = [
   'day',
   'week',
   'month',
   'year',
+  'all',
   'custom',
 ]
 
@@ -49,26 +53,34 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
   }
 
   get dateFrom () {
+    if (this.unit === 'all')
+      return dayjs(MIN_DATE)
     if (this.unit === 'custom')
       return dayjs(this.from).startOf('day')
     return dayjs(this.from).startOf(this.unit)
   }
 
   get dateTo () {
+    if (this.unit === 'all')
+      return dayjs(MAX_DATE)
     if (this.unit === 'custom')
       return dayjs(this.internal_to || this.dateFrom).startOf('day')
     return this.dateFrom.add(1, this.unit)
   }
 
   get datePrevious () {
-    if (this.unit === 'custom')
-      return dayjs(this.internal_to || this.dateFrom).startOf('day')
+    if (this.unit === 'all' || this.unit === 'custom')
+      return this.dateFrom
     return this.dateFrom.subtract(1, this.unit)
   }
 
   get display () {
+    if (this.unit === 'all')
+      return this.$t('date_range.all.full_display')
+
     if (this.unit === 'custom')
       return `${this.dateFrom.format('ll')} - ${this.dateTo.format('ll')}`
+
     const today = dayjs().startOf(this.unit)
     const diff = this.dateFrom.diff(today, this.unit)
     if (diff === -1 && this.$t(`date_range.${this.unit}.last`))
@@ -79,7 +91,7 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
       return this.$t(`date_range.${this.unit}.next`)
 
     if (this.unit === 'week')
-      return this.$t('date_range.week.formatter', [getWeekOfYear(this.dateFrom)])
+      return `${this.$t('date_range.week.formatter', [getWeekOfYear(this.dateFrom)])} (${this.dateFrom.format('ll')} - ${this.dateTo.format('ll')})`
 
     return this.dateFrom.format((this.$t(`date_range.${this.unit}.formatter`) || '').toString())
   }
@@ -102,10 +114,14 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
   }
 
   @Watch('from', { immediate: true })
-  @Watch('unit', { immediate: true })
   onFromChanged (newVal, oldVal) {
     if (newVal !== oldVal)
       this.update()
+  }
+
+  @Watch('unit')
+  onUnitChanged () {
+    this.$emit('update:from', +new Date())
   }
 }
 </script>
