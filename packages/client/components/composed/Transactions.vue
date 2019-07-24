@@ -1,7 +1,6 @@
 <template lang='pug'>
 .transactions
   .text-center(v-if='chart')
-    v-checkbox(v-model='onlyMe' :label='$t("ui.transactions.involved")')
     app-date-range-select(:from.sync='from' :to.sync='to' :unit.sync='unit')
     chart-expense-summary(
       v-if='filteredTransactions.length'
@@ -10,6 +9,7 @@
       :group='group'
     )
 
+  v-checkbox(v-model='onlyMe' :label='$t("ui.transactions.involved")')
   v-card.mt-2
     template(v-if='!filteredTransactions.length')
       .pa-4

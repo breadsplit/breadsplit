@@ -125,3 +125,19 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
   }
 }
 </script>
+
+<style lang="sass">
+.data-range-select
+  .v-item-group
+    .v-btn
+      min-width: 0
+      padding: 0 10px
+      margin-right: -1px
+      &:first-child
+        padding-left: 14px
+      &:last-child
+        padding-right: 14px
+        margin-right: 0
+      .v-btn__content
+        line-height: inherit
+</style>

@@ -54,9 +54,19 @@ css:
   font_of_locale: '"微軟正黑體", "Microsoft JhengHei"'
 date_range:
   all:
+    display: 全部
     full_display: 全部
+  custom:
+    display: 自定
+  day:
+    display: 日
+  month:
+    display: 月
   week:
+    display: 週
     formatter: '第 {0} 週'
+  year:
+    display: 年
 feedback:
   contact_info: 聯絡方式
   describe: 請描述您的問題或建議。
