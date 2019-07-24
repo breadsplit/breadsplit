@@ -173,6 +173,7 @@ ui:
     default_group_name: Untitled Group
     enter_group_name: Enter group's name
     group_name: Group's name
+    group_name_placeholder: Enter group name...
     new_group: New group
   help: Help
   homepage: Home

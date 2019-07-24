@@ -19,10 +19,7 @@
   .footer
     a.homepage(:href='socials.homepage' target='__blank') {{$t('ui.homepage')}}
     .divider
-    a.privacy(@click='$refs.privacy.open()') {{$t('ui.privacy_policy')}}
-
-  app-dialog(ref='privacy' :route='true')
-    app-privacy
+    a.privacy(:href='socials.privacy' target='__blank') {{$t('ui.privacy_policy')}}
 </template>
 
 <script lang='ts'>

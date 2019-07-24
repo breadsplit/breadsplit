@@ -2,8 +2,7 @@
 .icon-select
   v-menu(v-model='menu' :max-width='280' :close-on-content-click='false')
     template(v-slot:activator='{ on }')
-      v-btn(icon v-on='on' large :style='{background: `${color} !important`}')
-        v-icon(color='white') mdi-{{icon}}
+      slot(:on='on')
 
     v-card.pa-2
 
@@ -24,7 +23,7 @@ import Iconsets from '~/../meta/iconsets'
 import swatches from '~/../meta/swatches'
 
 @Component
-export default class IconSelect extends Vue {
+export default class IconColorSelect extends Vue {
   menu = false
   swatches = swatches
   stage = 0

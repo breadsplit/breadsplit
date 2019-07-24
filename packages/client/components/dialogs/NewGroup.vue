@@ -1,21 +1,32 @@
 <template lang='pug'>
-v-card.new-group(v-rows='"max-content auto max-content"')
-  app-dialog-bar(@close='close()' :color='color') {{title}}
+v-card.new-group(v-rows='"max-content max-content auto max-content"')
+  app-composed-toolbar(height='130' dark :color='form.color')
+    v-btn(icon @click='close()')
+      v-icon mdi-close
+    v-toolbar-title {{title}}
+    v-spacer
+    template(v-slot:content='')
+      .px-6.py-4
+        v-text-field.group-name-input.flat.pl-12(
+          v-model='form.name'
+          :label='$t("ui.group_editing.group_name")'
+          :placeholder='$t("ui.group_editing.group_name_placeholder")'
+          :disabled='viewmode'
+          :readonly='step !== 1'
+          autofocus
+        )
 
-  v-window.height-100.grid-fill-height(v-model='step', touchless, style='min-height:300px')
+  v-scale-transition
+    app-icon-color-select(:icon.sync='form.icon' :color.sync='form.color' v-show='step === 1')
+      template(v-slot='{ on }')
+        v-btn(fab v-on='on' style='position: absolute; right: 20px; margin-top: -25px;')
+          v-icon(:color='form.color') mdi-{{form.icon}}
+
+  v-window.height-100.grid-fill-height(v-model='step' touchless style='min-height:300px')
     // First page
     v-window-item(:value='1')
       v-container.pa-4
-        v-layout(column)
-          v-flex
-            v-text-field.group-name-input(
-              v-model='form.name' :label='$t("ui.group_editing.group_name")'
-              prepend-icon='mdi-group-open-variant' clearable :disabled='viewmode'
-              autofocus
-            )
-              template(slot='prepend')
-                app-icon-select(:icon.sync='form.icon' :color.sync='form.color', style='margin-top:-20px')
-
+        v-layout(column).pl-4.pr-4.pt-4
           v-flex
             app-currency-select(v-model='form.main_currency')
 
@@ -28,8 +39,8 @@ v-card.new-group(v-rows='"max-content auto max-content"')
 
     // Second page
     v-window-item(:value='2')
-      .height-100(v-rows='"max-content auto"')
-        v-combobox.member-name-input.mx-3(
+      .height-100.mt-n3(v-rows='"max-content auto"')
+        v-combobox.member-name-input.mx-4(
           ref='member_name_input'
           :items='members_suggestions'
           @input='name=>addMember(name)'

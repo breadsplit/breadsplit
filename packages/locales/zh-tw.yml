@@ -140,6 +140,7 @@ ui:
     default_group_name: 未命名群組
     enter_group_name: 請輸入群組名稱
     group_name: 群組名稱
+    group_name_placeholder: 輸入群組名稱...
     new_group: 新建群組
   help: 使用幫助
   homepage: 首頁
