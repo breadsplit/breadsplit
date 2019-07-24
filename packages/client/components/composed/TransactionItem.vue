@@ -12,8 +12,11 @@ v-list-item.transaction-item(@click='navigate()' v-show='!involved || involvedFe
     v-list-item-subtitle.sub-label {{datetime}}
 
   v-list-item-action.pr-1.text-right(v-if='involved' v-rows='"auto max-content"')
-    .involved-note(v-if='involvedFee >= 0') {{$t('ui.transactions.involved_positive', [getUserName(involved)])}}
-    .involved-note(v-else) {{$t('ui.transactions.involved_negative', [getUserName(involved)])}}
+    template(v-if='involveMode === "debt"')
+      .involved-note(v-if='involvedFee >= 0') {{$t('ui.transactions.involved_positive', [getUserName(involved)])}}
+      .involved-note(v-else) {{$t('ui.transactions.involved_negative', [getUserName(involved)])}}
+    template(v-else)
+      .involved-note {{$t('ui.transactions.involved_expensed', [getUserName(involved)])}}
     app-money-label(
       :amount='involvedFee'
       :currency='transaction.currency'
@@ -43,6 +46,7 @@ import { TransactionBalanceChanges } from '~/core'
 export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, NavigationMixin, CommonMixin) {
   @Prop(Object) readonly transaction!: Transaction
   @Prop(String) readonly involved?: string
+  @Prop({ default: 'debt' }) readonly involveMode!: 'debt' | 'expense'
 
   get creditor_ids () {
     return this.transaction.creditors.filter(c => c.weight).map(c => c.uid)
@@ -61,7 +65,10 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
   get involvedFee () {
     if (!this.involvedBalance)
       return 0
-    return +this.involvedBalance.balance || 0
+    if (this.involveMode === 'debt')
+      return +this.involvedBalance.balance || 0
+    else
+      return +this.involvedBalance.debt || 0
   }
 
   get datetime () {

@@ -257,6 +257,7 @@ ui:
   total: 合計
   transactions:
     involved: 與我相關
+    involved_expensed: '{0}花費了'
     involved_negative: '{0}負債了'
     involved_positive: '{0}支付了'
   welcome_breadsplit: 歡迎使用分帳吐司!

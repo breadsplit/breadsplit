@@ -25,7 +25,7 @@
               v-divider(v-if='index!=0')
               app-expenses-report-item(:item='item' :total='totalAmount' :index='index' @selected='i=>categoryFilter=i')
         v-tab-item
-          app-transactions-list(:transactions='filteredTransactions' :involved='involved')
+          app-transactions-list(:transactions='filteredTransactions' :involved='involved' involveMode='expense')
 </template>
 
 <script lang='ts'>
