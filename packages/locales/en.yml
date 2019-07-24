@@ -30,6 +30,9 @@ cats:
   other:
     display: Other
     keywords: ''
+  groceries:
+    display: Groceries
+    keywords: ''
   shopping:
     display: Shopping
     keywords: shopping
@@ -92,7 +95,7 @@ date_range:
     this: ''
 feedback:
   contact_info: Contact Info
-  describe: Describe your issue or sugesstions.
+  describe: Describe your issue or suggestions.
   github_hint: 'Or you can create an issue on our {0}'
 help:
   no_password_login:

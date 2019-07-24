@@ -24,8 +24,8 @@ export const BuiltInCategories = {
     icon: 'hotel',
     color: '',
   },
-  travel: {
-    icon: 'beach',
+  groceries: {
+    icon: 'cart',
     color: '',
   },
   shopping: {
@@ -41,7 +41,7 @@ export const BuiltInCategories = {
     color: '',
   },
   food: {
-    icon: 'rice',
+    icon: 'silverware-fork-knife',
     color: '',
   },
   drinks: {
@@ -80,7 +80,7 @@ export const CategoryPresets: Dictionary<(keyof typeof BuiltInCategories)[]> = {
   default: [
     'transport',
     'lodging',
-    'travel',
+    'groceries',
     'shopping',
     'entertainment',
     'utilities',
@@ -95,7 +95,7 @@ export const CategoryPresets: Dictionary<(keyof typeof BuiltInCategories)[]> = {
   travel: [
     'transport',
     'lodging',
-    'travel',
+    'groceries',
     'shopping',
     'entertainment',
     'food',
@@ -109,7 +109,7 @@ export const CategoryPresets: Dictionary<(keyof typeof BuiltInCategories)[]> = {
   house: [
     'transport',
     'lodging',
-    'travel',
+    'groceries',
     'shopping',
     'entertainment',
     'food',

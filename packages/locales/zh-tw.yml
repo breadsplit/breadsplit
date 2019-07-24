@@ -19,6 +19,8 @@ cats:
   food:
     display: 正餐
     keywords: '早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品'
+  groceries:
+    display: 雜貨
   home:
     display: 家庭
   lodging:
