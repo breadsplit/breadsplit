@@ -21,6 +21,9 @@ cats:
   food:
     display: Food
     keywords: 'food,drink,meal,breakfast,lunch,dinner'
+  groceries:
+    display: Groceries
+    keywords: ''
   home:
     display: Home
     keywords: ''
@@ -29,9 +32,6 @@ cats:
     keywords: hotel
   other:
     display: Other
-    keywords: ''
-  groceries:
-    display: Groceries
     keywords: ''
   shopping:
     display: Shopping
@@ -115,6 +115,18 @@ help:
   support:
     details: ''
     title: How can I support this project?
+icons:
+  animals: Animals
+  clothes: Clothes
+  drinks: Drinks
+  electronic: Electronics
+  food: Food
+  home: Home & Fit
+  money: Financial
+  social: Social
+  things: Other things
+  transports: Transportations
+  entertainment: Entertainment
 iso: en-US
 language_name: English
 noun:
@@ -163,6 +175,7 @@ ui:
   button_send: Send
   button_submit: Submit
   button_yes: 'Yes'
+  colors: Colors
   continue_and_accept: 'By continue, you accept our {0}'
   continue_anyway: Continue anyway
   currency: Currency
@@ -180,6 +193,7 @@ ui:
     new_group: New group
   help: Help
   homepage: Home
+  icons: Icons
   join:
     existing_users: Existing users
     group_not_found: Group Not Found

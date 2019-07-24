@@ -5,7 +5,6 @@ export default {
     'mdi-silverware',
     'mdi-silverware-variant',
     'mdi-muffin',
-    'mdi-food',
     'mdi-food-apple',
     'mdi-food-croissant',
     'mdi-food-fork-drink',
@@ -92,7 +91,6 @@ export default {
     'mdi-fish',
     'mdi-cat',
     'mdi-tortoise',
-    'mdi-penguin',
     'mdi-cow',
     'mdi-bat',
     'mdi-rabbit',
@@ -112,7 +110,7 @@ export default {
     'mdi-hanger',
     'mdi-tumble-dryer',
   ],
-  tech: [
+  electronic: [
     'mdi-cellphone',
     'mdi-monitor',
     'mdi-phone-classic',
@@ -165,7 +163,6 @@ export default {
     'mdi-home-assistant',
     'mdi-home',
     'mdi-home-automation',
-    'mdi-home-analytics',
     'mdi-home-city',
     'mdi-home-city-outline',
     'mdi-bed-empty',

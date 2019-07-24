@@ -80,6 +80,18 @@ help:
       OAuth，我們<b>不會</b>獲得您的密碼等敏感信息。<br> 同時，這種方式可以減少您輸入密碼的次數，以更好地確保您的賬戶安全。
     tips: 沒有使用賬號密碼的登入方式？
     title: 不使用賬號密碼登入
+icons:
+  animals: 動物
+  clothes: 衣服
+  drinks: 飲料
+  electronic: 電子產品
+  entertainment: 娛樂
+  food: 餐飲
+  home: 家居與健身
+  money: 金融
+  social: 社會
+  things: 物品
+  transports: 交通
 iso: zh-TW
 language_name: 繁體中文
 noun:
@@ -129,6 +141,7 @@ ui:
   button_send: 發送
   button_submit: 提交
   button_yes: 是
+  colors: 顏色
   continue_and_accept: '繼續使用即表示您同意我們的{0}'
   continue_anyway: 仍然繼續
   currency: 幣種
@@ -146,6 +159,7 @@ ui:
     new_group: 新建群組
   help: 使用幫助
   homepage: 首頁
+  icons: 圖標
   join:
     existing_users: 已存在用戶
     group_not_found: 沒有找到群組

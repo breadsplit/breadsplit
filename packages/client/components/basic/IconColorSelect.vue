@@ -1,20 +1,23 @@
 <template lang='pug'>
 .icon-select
-  v-menu(v-model='menu' :max-width='280' :close-on-content-click='false')
+  v-menu(v-model='menu' :width='280' :close-on-content-click='false')
     template(v-slot:activator='{ on }')
       slot(:on='on')
 
-    v-card.pa-2
+    v-card
+      div(v-rows='"max-content auto"' style='height: 400px; width: 280px; overflow: hidden;')
+        v-tabs(v-model='tab' background-color='transparent' grow)
+          v-tab {{$t('ui.icons')}}
+          v-tab {{$t('ui.colors')}}
 
-      template(v-if='stage === 0')
-        template(v-for='i in iconset')
-          v-btn(icon @click='setIcon(i)' :style='i===icon?selectedStyle:null').ma-1
-            v-icon(:color='color') mdi-{{i}}
+        v-tabs-items.grid-fill-height.scrolling(v-model='tab')
+          v-tab-item.pa-2
+            app-icon-select(:icon='icon' @update:icon='i=>setIcon(i)')
 
-      template(v-else)
-        template(v-for='c in swatches')
-          v-btn(text icon @click='setColor(c)' :style='c===color?selectedStyle:null').ma-1
-            v-icon(:color='c') mdi-checkbox-blank-circle
+          v-tab-item.pa-2
+            template(v-for='c in swatches')
+              v-btn(text icon @click='setColor(c)' :style='c===color?selectedStyle:null').ma-1
+                v-icon(:color='c') mdi-checkbox-blank-circle
 </template>
 
 <script lang='ts'>
@@ -26,7 +29,7 @@ import swatches from '~/../meta/swatches'
 export default class IconColorSelect extends Vue {
   menu = false
   swatches = swatches
-  stage = 0
+  tab = 0
 
   @Prop(String) readonly icon!: string
   @Prop({ default: 'primary' }) readonly color!: string
@@ -35,7 +38,7 @@ export default class IconColorSelect extends Vue {
   @Watch('menu')
   onMenuChanged () {
     if (!this.menu)
-      this.stage = 0
+      this.tab = 0
   }
 
   get iconset () {
@@ -51,11 +54,11 @@ export default class IconColorSelect extends Vue {
   }
 
   setIcon (value) {
-    this.stage = 1
+    this.tab = 1
     this.$emit('update:icon', value)
   }
   setColor (value) {
-    this.stage = 0
+    this.tab = 0
     this.menu = false
     this.$emit('update:color', value)
   }
