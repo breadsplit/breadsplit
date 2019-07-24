@@ -206,7 +206,7 @@ ui:
   paid_by_xx: '由 {0} 付款'
   privacy_policy: 隱私政策
   report:
-    mode_category: 分類明細
+    mode_category: 分類統計
     mode_expenses: 消費明細
   reset: 重置
   select_currency: 選擇貨幣

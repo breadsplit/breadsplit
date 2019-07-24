@@ -14,7 +14,7 @@
     template(v-if='!filteredTransactions.length')
       .pa-4
         v-subheader {{$t('ui.no_expenses_in_range')}}
-    template
+    template(v-else)
       v-tabs(v-model='tab')
         v-tab {{$t('ui.report.mode_category')}}
         v-tab {{$t('ui.report.mode_expenses')}}
