@@ -1,19 +1,36 @@
 <template lang='pug'>
 .data-range-select
   h2
-    v-btn(@click='previous' icon small)
+    v-btn(@click='previous' icon small v-if='unit !== "custom"')
       v-icon mdi-chevron-left
     span.px-3 {{display}}
-    v-btn(@click='next' icon small)
+    v-btn(@click='next' icon small v-if='unit !== "custom"')
       v-icon mdi-chevron-right
+
+  v-btn-toggle(v-model='internal_unit' rounded mandatory )
+    v-btn(small) {{$t('date_range.day.display')}}
+    v-btn(small) {{$t('date_range.week.display')}}
+    v-btn(small) {{$t('date_range.month.display')}}
+    v-btn(small) {{$t('date_range.year.display')}}
+    v-btn(small) {{$t('date_range.all.display')}}
+
 </template>
 
 <script lang='ts'>
 import { Component, mixins, Prop, Watch } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
+import { getWeekOfYear } from '~/../utils/formatters'
 import { GroupMixin } from '~/mixins'
 
 export type DateRangeUnit = 'month' | 'week' | 'year' | 'day' | 'custom'
+
+const units = [
+  'day',
+  'week',
+  'month',
+  'year',
+  'custom',
+]
 
 @Component
 export default class DateRangeSelect extends mixins(GroupMixin) {
@@ -22,6 +39,14 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
   @Prop(Number) readonly to?: number
 
   internal_to: Date|null = null
+
+  get internal_unit () {
+    return units.indexOf(this.unit)
+  }
+
+  set internal_unit (v: number) {
+    this.$emit('update:unit', units[v])
+  }
 
   get dateFrom () {
     if (this.unit === 'custom')
@@ -53,7 +78,14 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
     if (diff === 1 && this.$t(`date_range.${this.unit}.next`))
       return this.$t(`date_range.${this.unit}.next`)
 
+    if (this.unit === 'week')
+      return this.$t('date_range.week.formatter', [getWeekOfYear(this.dateFrom)])
+
     return this.dateFrom.format((this.$t(`date_range.${this.unit}.formatter`) || '').toString())
+  }
+
+  changeUnit (unit: string) {
+    this.$emit('update:unit', unit)
   }
 
   next () {
@@ -70,6 +102,7 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
   }
 
   @Watch('from', { immediate: true })
+  @Watch('unit', { immediate: true })
   onFromChanged (newVal, oldVal) {
     if (newVal !== oldVal)
       this.update()

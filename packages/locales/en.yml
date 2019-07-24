@@ -62,25 +62,31 @@ css:
   font_of_locale: ''
 date_range:
   day:
+    display: 'Day'
     formatter: LL
     last: Yesterday
     next: Tomorrow
     this: Today
   month:
+    display: 'Month'
     formatter: MMMM
     last: ''
     next: ''
     this: ''
   week:
-    formatter: LL
+    display: 'Week'
+    formatter: Week {0}
     last: Last Week
     next: Next Week
     this: This Week
   year:
+    display: 'Year'
     formatter: YYYY
     last: ''
     next: ''
     this: ''
+  all:
+    display: 'All'
 feedback:
   contact_info: Contact Info
   describe: Describe your issue or sugesstions.

@@ -2,9 +2,9 @@
 .transactions
   .text-center(v-if='chart')
     v-checkbox(v-model='onlyMe' :label='$t("ui.transactions.involved")')
-    app-date-range-select(:from.sync='from' :to.sync='to' :unit='unit')
+    app-date-range-select(:from.sync='from' :to.sync='to' :unit.sync='unit')
     chart-expense-summary(
-      :class='{ "op-10": !filteredTransactions.length }'
+      v-if='filteredTransactions.length'
       :transactions='filteredTransactions'
       :involved='involved'
       :group='group'
