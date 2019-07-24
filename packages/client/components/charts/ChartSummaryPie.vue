@@ -10,7 +10,7 @@ svg.chart-summary-pie(
 <script lang='ts'>
 import * as d3 from 'd3'
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
-import { numberToMoney } from '../../../utils'
+import { numberToMoney } from '~/../utils'
 
 @Component
 export default class ChartSummaryPie extends Vue {

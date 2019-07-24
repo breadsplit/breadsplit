@@ -1,8 +1,5 @@
 <template lang='pug'>
 .recent-transactions
-  .text-center(v-if='chart')
-    chart-expense-summary(:trans='filteredTransactions' :group='group')
-
   v-card
     v-subheader
       v-icon.mr-1 mdi-script-text-outline
@@ -17,20 +14,13 @@
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
-import ChartExpenseSummary from '../charts/ChartExpenseSummary.vue'
 import { GroupMixin, NavigationMixin } from '~/mixins'
 
-@Component({
-  components: {
-    ChartExpenseSummary,
-  },
-})
+@Component
 export default class RecentTransactions extends mixins(GroupMixin, NavigationMixin) {
   collapsed = true
 
   @Prop({ default: 3 }) readonly limit!: number
-  @Prop(Boolean) readonly flat?: boolean
-  @Prop(Boolean) readonly chart?: boolean
 
   get transactions () {
     return this.group.transactions

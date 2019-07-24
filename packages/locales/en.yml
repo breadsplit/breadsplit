@@ -120,13 +120,13 @@ icons:
   clothes: Clothes
   drinks: Drinks
   electronic: Electronics
+  entertainment: Entertainment
   food: Food
   home: Home & Fit
   money: Financial
   social: Social
   things: Other things
   transports: Transportations
-  entertainment: Entertainment
 iso: en-US
 language_name: English
 noun:
@@ -238,6 +238,9 @@ ui:
   paid_by: Paid by
   paid_by_xx: 'Paid by {0}'
   privacy_policy: Privacy policy
+  report:
+    mode_category: Category
+    mode_expenses: Expenses
   reset: Reset
   search_currency: Search currency...
   select_currency: Select currency
