@@ -33,7 +33,7 @@ export const BuiltInCategories = {
     color: '',
   },
   entertainment: {
-    icon: 'cards-playing-outline',
+    icon: 'chess-knight',
     color: '',
   },
   utilities: {
@@ -41,11 +41,15 @@ export const BuiltInCategories = {
     color: '',
   },
   food: {
-    icon: 'food',
+    icon: 'rice',
     color: '',
   },
   drinks: {
     icon: 'beer',
+    color: '',
+  },
+  snacks: {
+    icon: 'food-croissant',
     color: '',
   },
   tickets: {
@@ -62,11 +66,11 @@ export const BuiltInCategories = {
   },
   transfer: {
     icon: 'bank-transfer',
-    color: '',
+    color: '#4f4929',
   },
   unknown: {
     icon: 'help-box',
-    color: '',
+    color: '#555',
   },
 }
 
@@ -82,6 +86,7 @@ export const CategoryPresets: Dictionary<(keyof typeof BuiltInCategories)[]> = {
     'utilities',
     'food',
     'drinks',
+    'snacks',
     'tickets',
     'tips',
     'transfer',
@@ -95,6 +100,7 @@ export const CategoryPresets: Dictionary<(keyof typeof BuiltInCategories)[]> = {
     'entertainment',
     'food',
     'drinks',
+    'snacks',
     'tickets',
     'tips',
     'transfer',

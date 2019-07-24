@@ -36,6 +36,9 @@ cats:
   tickets:
     display: Tickets
     keywords: ''
+  snacks:
+    display: Snacks
+    keywords: ''
   tips:
     display: Tips
     keywords: 'tip,tips'

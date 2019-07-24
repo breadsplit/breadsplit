@@ -17,7 +17,7 @@ cats:
   entertainment:
     display: 娛樂
   food:
-    display: 飲食
+    display: 正餐
     keywords: '早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品'
   home:
     display: 家庭
@@ -29,6 +29,8 @@ cats:
   shopping:
     display: 購物
     keywords: 購物
+  snacks:
+    display: 點心
   tickets:
     display: 門票
   tips:

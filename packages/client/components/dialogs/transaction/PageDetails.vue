@@ -1,5 +1,5 @@
 <template lang='pug'>
-.page-container.height-100.pb-0.overflow-y-auto(v-rows='"max-content auto"')
+.page-container.height-100.pb-0.overflow-y-auto
   .header {{$t('ui.newtrans.details')}}
 
   app-category-select(v-model='form.category' :group='group')
