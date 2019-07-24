@@ -2,8 +2,8 @@
 v-list-item.expenses-report-item(@click='$emit("selected", item.id)')
   .rank {{index+1}}
 
-  v-list-item-avatar.pr-4
-    app-category-icon.mx-2.my-1(
+  v-list-item-avatar.px-2(style='width:inherit')
+    app-category-icon(
       :category='item.id'
       :text='false'
       :size='38'
@@ -42,6 +42,5 @@ export default class ExpensesReportItem extends mixins(GroupMixin) {
 <style lang='sass'>
 .expenses-report-item
   .rank
-    padding: 0 1.5em 0 0
     opacity: 0.5
 </style>
