@@ -1,5 +1,8 @@
 <template lang='pug'>
-v-list-item.expenses-report-item(@click='$emit("selected", item.id)')
+v-list-item.expenses-report-item(
+  @click='$emit("selected", item.id)'
+  :style='{"--color": item.color, "--percent": `${percent}%`}'
+)
   .rank {{index+1}}
 
   v-list-item-avatar.px-2(style='width:inherit')
@@ -34,13 +37,26 @@ export default class ExpensesReportItem extends mixins(GroupMixin) {
   @Prop(Number) readonly total!: number
 
   get percent () {
-    return (+this.item.value.div(this.total).mul(100)).toFixed(2)
+    return +(+this.item.value.div(this.total).mul(100)).toFixed(2)
   }
 }
 </script>
 
 <style lang='sass'>
 .expenses-report-item
+  --color: #000
+  --precent: 0%
   .rank
     opacity: 0.5
+
+  &:after
+    content: ''
+    position: absolute
+    left: 0
+    bottom: 0
+    height: 3px
+    width: var(--percent)
+    background: var(--color)
+    opacity: 0.6
+    border-radius: 5px
 </style>

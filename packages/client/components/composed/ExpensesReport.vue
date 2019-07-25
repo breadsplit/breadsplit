@@ -37,7 +37,7 @@
         v-subheader {{$t('ui.no_expenses_in_range')}}
     template(v-else)
       v-list-item
-        .primary--text 合計
+        .primary--text {{$t('ui.total')}}
         v-spacer
         app-money-label(
           :amount='-filteredTotalAmount'
