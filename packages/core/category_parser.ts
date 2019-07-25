@@ -3,7 +3,7 @@ import { Category, Group } from '../types'
 import { BuiltInCategories, CategoryPresets } from '../meta/categories'
 import { IsThisId } from './id_helper'
 
-export function ParserCategory (cat: Category | string, group: Group, vm: Vue): Category {
+export function ParserCategory (cat: Category | string | undefined, group: Group, vm: Vue): Category {
   if (cat && typeof cat !== 'string')
     return cat
 

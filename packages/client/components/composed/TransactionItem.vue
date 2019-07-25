@@ -8,7 +8,7 @@ v-list-item.transaction-item(@click='navigate()' v-show='!involved || involvedFe
       :group='group'
     )
   v-list-item-content
-    v-list-item-title {{desc}}
+    v-list-item-title(:class='{"no-desc": !hasDesc}') {{desc}}
     v-list-item-subtitle.sub-label {{datetime}}
 
   v-list-item-action.pr-1.text-right(v-if='involved' v-rows='"auto max-content"')
@@ -37,6 +37,7 @@ v-list-item.transaction-item(@click='navigate()' v-show='!involved || involvedFe
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
+import { ParserCategory } from '../../../core/category_parser'
 import { UserInfoMixin, NavigationMixin, CommonMixin, GroupMixin } from '~/mixins'
 import { Transaction } from '~/types'
 import { dateFromNow } from '~/../utils/formatters'
@@ -75,8 +76,16 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
     return dateFromNow(this.transaction.timestamp, this.currentLocale)
   }
 
+  get category () {
+    return ParserCategory(this.transaction.category, this.group, this)
+  }
+
+  get hasDesc () {
+    return !!this.transaction.desc
+  }
+
   get desc () {
-    return this.transaction.desc || this.$t('noun.expense')
+    return this.transaction.desc || this.category.text || this.$t('noun.expense')
   }
 
   navigate () {
@@ -95,4 +104,11 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
   .involved-note
     opacity: 0.7
     font-size: 0.9em
+
+  .sub-label
+    opacity: 0.6
+    font-size: 0.9em
+
+  .no-desc
+    opacity: 0.6
 </style>
