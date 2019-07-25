@@ -222,8 +222,10 @@ ui:
     add_location: Add location
     add_payer: Add more payer
     description: Description
+    description_placeholder: Enter the description...
     details: Details
     details_short: Details
+    enter_the_cost: Enter the group cost of this expense
     expense_paid_by: Expense paid by?
     for_whom: For whom?
     how_much: How much?

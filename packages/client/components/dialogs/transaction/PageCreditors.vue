@@ -1,8 +1,5 @@
 <template lang='pug'>
-.page-container.height-100(v-rows='"max-content max-content auto max-content auto"')
-  .header {{$t('ui.newtrans.expense_paid_by')}}
-  .subheader {{$t('ui.newtrans.xx_should_pay')}}
-
+.page-container.height-100(v-rows='"auto max-content auto"')
   div
 
   .text-center.mt-3

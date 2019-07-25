@@ -1,15 +1,15 @@
 <template lang='pug'>
 .page-container.height-100.pb-0.overflow-y-auto
-  .header {{$t('ui.newtrans.details')}}
 
-  app-category-select(v-model='form.category' :group='group')
-
-  v-text-field.px-2.pt-1.pb-1.description-field(
+  v-text-field.mb-2.description-field(
     v-model='form.desc'
-    label='$t("ui.newtrans.description")'
-    placeholder='Some expense...'
+    :placeholder='$t("ui.newtrans.description_placeholder")'
     solo required hide-details
   )
+
+  app-category-select.mx-n3(v-model='form.category' :group='group')
+
+  v-divider.my-3
 
   div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple)
     v-icon(color='grey') mdi-calendar
@@ -25,7 +25,7 @@
 
   exchange-rate-input(ref='exchange' :form='form')
 
-  v-card.ma-2.pa-3.mb-7
+  //v-card.ma-2.pa-3.mb-7
     app-receipt-list(:items='receipt_items' :currency='form.currency')
       template(v-slot:item='{ item }')
         div

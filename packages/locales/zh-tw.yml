@@ -189,6 +189,7 @@ ui:
     add_location: 添加位置
     add_payer: 添加付款人
     description: 描述
+    description_placeholder: 請輸入支出摘要...
     details: 明細
     details_short: 明細
     expense_paid_by: 由誰支付？

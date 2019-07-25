@@ -1,6 +1,22 @@
 <template lang='pug'>
-v-card.new-transaction(v-rows='"auto max-content"')
-  app-close-button(@close='close')
+v-card.new-transaction(v-rows='"max-content auto max-content"')
+  app-composed-toolbar(height='90' dark color='primary')
+    v-btn(icon @click='close()')
+      v-icon mdi-close
+    v-toolbar-title {{title}}
+    v-spacer
+    template(v-slot:content)
+      div(style='margin-left: 72px; margin-top: -10px')
+        .sub-toolbar-title
+          template(v-if='step === 0')
+            span {{$t('ui.newtrans.enter_the_cost')}}
+          template(v-else)
+            i18n(path='ui.splitting.total').total-fee
+              b
+                app-money-label.mx-1(
+                  :amount='form.total_fee'
+                  :currency='form.currency'
+                )
 
   v-window.grid-fill-height(v-model='step' touchless style='min-height:550px')
     v-window-item.page
@@ -8,7 +24,6 @@ v-card.new-transaction(v-rows='"auto max-content"')
         ref='splitting_creditors'
         :form='form'
         :members='members'
-        :title='$t("ui.newtrans.how_much")'
         on='creditors'
       )
 
@@ -17,7 +32,6 @@ v-card.new-transaction(v-rows='"auto max-content"')
         ref='splitting_debtors'
         :form='form'
         :members='members'
-        :title='$t("ui.splitting.split_by")'
         on='debtors'
       )
 
@@ -144,6 +158,14 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     }
   }
 
+  get title () {
+    if (this.step === STEP_INPUT)
+      return this.$t('ui.newtrans.how_much')
+    if (this.step === STEP_SPLIT)
+      return this.$t('ui.splitting.split_by')
+    return this.$t('ui.newtrans.details')
+  }
+
   cleanUp () {
     oc(this).$refs.splitting_creditors.$refs.splitting.cleanUp(() => '')(true)
     oc(this).$refs.splitting_debtors.$refs.splitting.cleanUp(() => '')(true)
@@ -242,6 +264,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
   .page
     min-height: 400px
     height: 100%
+    padding-top: 16px
 
     & > .height-100
       min-height: 400px
@@ -260,14 +283,12 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
         color: var(--theme-primary)
         opacity: 1
 
+  .sub-toolbar-title
+    font-size: 0.95em
+    opacity: 0.9
+
   .page-container
     padding: 1em 1.5em 0.5em 1.5em
-
-    .header
-      font-size: 2.5em
-
-    .subheader
-      font-size: 1.3em
 
     .member-choices
       text-align: center

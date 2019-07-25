@@ -1,9 +1,5 @@
 <template lang='pug'>
-.height-100(v-rows='"max-content auto max-content"')
-  .page-container
-    .header {{title}}
-    .subheader(v-if='subtitle') {{subtitle}}
-
+.height-100(v-rows='"auto max-content"')
   app-splitting(
     ref='splitting'
     :trans='form'
@@ -60,8 +56,6 @@ export default class PageSplitting extends mixins(GroupMixin) {
 
   @Prop(Object) readonly form!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
-  @Prop({ default: '' }) readonly title!: string
-  @Prop({ default: '' }) readonly subtitle!: string
 
   $refs!: {
     splitting: Splitting

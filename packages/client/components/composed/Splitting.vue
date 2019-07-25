@@ -2,12 +2,6 @@
 .splitting
 
   template(v-if='on === "debtors"')
-    i18n(path='ui.splitting.total').total-fee
-      app-money-label.mx-1.primary--text(
-        :amount='trans.total_fee'
-        :currency='trans.currency'
-      )
-
     v-tabs.mode-switcher(
       v-model='tab' v-if='showTabs'
       slider-color='transparent' grow
