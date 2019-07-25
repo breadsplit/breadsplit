@@ -136,6 +136,8 @@ noun:
   yesterday: Yesterday
 prompt:
   are_you_sure: Are you sure?
+  confirm_transaction_removal: Are you sure to delete this expense? This operation can not be undone.
+  confirm_transaction_removal_title: Delete expense
   feedback_delivered: Your feedback is delivered. Thank you ❤
   invite_friends: Invite friends
   sending: Sending...

@@ -15,7 +15,7 @@ declare module 'vue/types/vue' {
     readonly $dt: typeof dayjs
 
     // global ui components
-    readonly $confirm: (text: string|TranslateResult, title?: string, options?: object) => Promise<boolean>
+    readonly $confirm: (title: string|TranslateResult, text?: string|TranslateResult, options?: object) => Promise<boolean>
     readonly $prompt: (text: string|TranslateResult, value?: string, title?: string, options?: object) => Promise<boolean>
     readonly $snack: (text: string|TranslateResult, options?: SnackOptions) => void
     readonly $apploading: {

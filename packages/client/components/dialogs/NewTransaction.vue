@@ -5,6 +5,9 @@ v-card.new-transaction(v-rows='"max-content auto max-content"')
       v-icon mdi-close
     v-toolbar-title {{title}}
     v-spacer
+    v-btn.mr-n2(icon @click='promptRemove()' v-if='mode==="edit"')
+      v-icon mdi-delete
+
     template(v-slot:content)
       div(style='margin-left: 72px; margin-top: -10px')
         .sub-toolbar-title
@@ -244,6 +247,15 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
     else if (this.mode === 'edit')
       this.$store.dispatch('group/editTransaction', { id: this.group.id, trans })
     this.close()
+  }
+
+  async promptRemove () {
+    const result = await this.$root.$confirm(
+      this.$t('prompt.confirm_transaction_removal_title'),
+      this.$t('prompt.confirm_transaction_removal'),
+    )
+    if (result)
+      this.remove()
   }
 
   remove () {

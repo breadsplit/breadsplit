@@ -104,6 +104,8 @@ noun:
   yesterday: 昨天
 prompt:
   are_you_sure: 你確定嗎？
+  confirm_transaction_removal: 您確定要刪除此費用嗎？此操作無法復原。
+  confirm_transaction_removal_title: 刪除費用
   feedback_delivered: 您的意見回饋已經成功寄出，感謝您的支持！
   invite_friends: 邀請好友
   sending: 發送中...
