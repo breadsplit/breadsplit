@@ -62,6 +62,10 @@ export default class ChartSummaryPie extends Vue {
       )
   }
 
+  onGraphClicked (e) {
+    this.$emit('click:id', e.data.id)
+  }
+
   @Watch('value', { deep: true })
   drawChart () {
     const data = this.value
@@ -97,6 +101,7 @@ export default class ChartSummaryPie extends Vue {
       .attr('id', (d) => { return `arc-${d.data.id}` })
       // @ts-ignore
       .attr('fill', d => d.data.color || color(d.data.name))
+      .on('click', e => this.onGraphClicked(e))
       /* .transition()
       .delay((d, i) => i * 500)
       .duration(500)

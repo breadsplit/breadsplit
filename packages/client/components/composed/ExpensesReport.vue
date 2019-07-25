@@ -7,6 +7,7 @@
         chart-summary-pie(
           :value='expenseSummary'
           :style='{ width: chartWidth }'
+          @click:id='i=>categoryFilter=i'
         )
 
   v-card.mt-2.pa-2
