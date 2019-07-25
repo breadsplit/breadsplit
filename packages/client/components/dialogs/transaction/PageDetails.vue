@@ -3,7 +3,7 @@
 
   v-text-field.mb-2.description-field(
     v-model='form.desc'
-    :placeholder='$t("ui.newtrans.description_placeholder")'
+    :placeholder='$t("ui.transactions.description_placeholder")'
     solo required hide-details
   )
 
@@ -17,11 +17,11 @@
 
   div.ml-2(v-columns='"40px auto"')
     v-icon(color='grey') mdi-map-marker
-    v-subheader {{$t('ui.newtrans.add_location')}}
+    v-subheader {{$t('ui.transactions.add_location')}}
 
   // div.ml-2(v-columns='"40px auto"')
     v-icon(color='grey') mdi-history
-    v-subheader {{$t('ui.newtrans.repeat_expense')}}
+    v-subheader {{$t('ui.transactions.repeat_expense')}}
 
   exchange-rate-input(ref='exchange' :form='form')
 

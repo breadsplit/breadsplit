@@ -17,7 +17,7 @@ ui:
     clear_all_data: Effacer toutes les données
   tabs: {}
   help: Aide
-  newtrans: {}
+  transactions: {}
   splitting: {}
 acts: {}
 noun: {}

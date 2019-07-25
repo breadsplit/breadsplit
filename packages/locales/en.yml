@@ -220,21 +220,6 @@ ui:
   misc: Misc.
   more_currency: More...
   new_expense: New expense
-  newtrans:
-    add_location: Add location
-    add_payer: Add more payer
-    description: Description
-    description_placeholder: Enter the description...
-    details: Details
-    details_short: Details
-    enter_the_cost: Enter the group cost of this expense
-    expense_paid_by: Expense paid by?
-    for_whom: For whom?
-    how_much: How much?
-    how_much_short: Fee
-    repeat_expense: Repeat
-    select_who_paid: Select the person who paid the bill
-    xx_should_pay: 'by the way, {0} should pay this time.'
   no_expenses_in_range: No expenses in this range
   offline_mode: Offline mode
   online_mode: Online mode
@@ -299,6 +284,20 @@ ui:
     involved_expensed: '{0} had expensed'
     involved_negative: '{0} had owed'
     involved_positive: '{0} had paid'
+    add_location: Add location
+    add_payer: Add more payer
+    description: Description
+    description_placeholder: Enter the description...
+    details: Details
+    details_short: Details
+    enter_the_cost: Enter the group cost of this expense
+    expense_paid_by: Expense paid by?
+    for_whom: For whom?
+    how_much: How much?
+    how_much_short: Fee
+    repeat_expense: Repeat
+    select_who_paid: Select the person who paid the bill
+    xx_should_pay: 'by the way, {0} should pay this time.'
   welcome_breadsplit: Welcome to BreadSplit!
   wip: "\U0001F6A7 Working in progress..."
   xx_paid_money: '{0} paid'

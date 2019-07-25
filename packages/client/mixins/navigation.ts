@@ -15,11 +15,11 @@ export default class NavigationMixin extends Vue {
   }
 
   gotoNewTransaction (options: Record<string, any> = { type: 'expense' }) {
-    this.openDialog('newtrans', options)
+    this.openDialog('trans', options)
   }
 
   gotoTransaction (transid: string, groupid?: string) {
-    this.openDialog('newtrans', { transid, groupid })
+    this.openDialog('trans', { transid, groupid })
   }
 
   openDialog (name: string, options?: object) {

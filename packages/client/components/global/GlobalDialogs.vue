@@ -7,21 +7,15 @@ div
     app-new-group
 
   app-dialog(
-    watch-on-query='newtrans'
+    watch-on-query='trans'
     persistent no-click-animation
   )
-    app-new-transaction
+    app-form-transaction
 
   app-dialog(
     watch-on-query='settings'
   )
     app-settings
-
-  app-dialog(
-    watch-on-query='transaction'
-    persistent no-click-animation
-  )
-    app-transaction-detail
 
   app-dialog(
     watch-on-query='about'

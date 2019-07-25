@@ -3,7 +3,7 @@
   div
 
   .text-center.mt-3
-    span {{$t('ui.newtrans.select_who_paid')}}
+    span {{$t('ui.transactions.select_who_paid')}}
     app-member-toggles(
       :uids='members.map(m=>m.uid)',
       :selected='form.creditors.filter(p=>p.weight).map(p=>p.uid)',

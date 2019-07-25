@@ -187,20 +187,6 @@ ui:
   misc: 其他
   more_currency: 更多...
   new_expense: 新的支出
-  newtrans:
-    add_location: 添加位置
-    add_payer: 添加付款人
-    description: 描述
-    description_placeholder: 請輸入支出摘要...
-    details: 明細
-    details_short: 明細
-    expense_paid_by: 由誰支付？
-    for_whom: 為了誰？
-    how_much: 付款金額
-    how_much_short: 金額
-    repeat_expense: 重複
-    select_who_paid: 選擇付款人
-    xx_should_pay: '這次輪到 {0} 付款。'
   no_expenses_in_range: 在這個時段内沒有費用支出
   offline_mode: 離線模式
   online_mode: 綫上模式
@@ -259,10 +245,24 @@ ui:
     transactions: 交易記錄
   total: 合計
   transactions:
+    add_location: 添加位置
+    add_payer: 添加付款人
+    description: 描述
+    description_placeholder: 請輸入支出摘要...
+    details: 明細
+    details_short: 明細
+    enter_the_cost: 請輸入群組消費金額
+    expense_paid_by: 由誰支付？
+    for_whom: 為了誰？
+    how_much: 付款金額
+    how_much_short: 金額
     involved: 與我相關
     involved_expensed: '{0}花費了'
     involved_negative: '{0}負債了'
     involved_positive: '{0}支付了'
+    repeat_expense: 重複
+    select_who_paid: 選擇付款人
+    xx_should_pay: '這次輪到 {0} 付款。'
   welcome_breadsplit: 歡迎使用分帳吐司!
   wip: "\U0001F6A7 功能開發中，敬請期待…"
   xx_paid_money: '{0} 支付了'

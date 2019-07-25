@@ -48,7 +48,7 @@ ui:
     new_group: 新建小组
   homepage: 首页
   language: 显示语言
-  newtrans:
+  transactions:
     add_location: 添加位置
     add_payer: 添加付款人
     details: ''

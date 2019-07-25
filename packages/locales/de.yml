@@ -6,5 +6,5 @@ appname: BreadSplit
 appname_dev: BreadSplit Dev
 ui:
   splitting: {}
-  newtrans: {}
+  transactions: {}
 acts: {}

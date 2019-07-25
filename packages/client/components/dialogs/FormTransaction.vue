@@ -1,6 +1,6 @@
 <template lang='pug'>
-v-card.new-transaction(v-rows='"max-content auto max-content"')
-  app-composed-toolbar(height='90' dark color='primary')
+v-card.form-transaction(v-rows='"max-content auto max-content"')
+  app-composed-toolbar(height='85' dark color='primary')
     v-btn(icon @click='close()')
       v-icon mdi-close
     v-toolbar-title {{title}}
@@ -12,7 +12,7 @@ v-card.new-transaction(v-rows='"max-content auto max-content"')
       div(style='margin-left: 72px; margin-top: -10px')
         .sub-toolbar-title
           template(v-if='step === 0')
-            span {{$t('ui.newtrans.enter_the_cost')}}
+            span {{$t('ui.transactions.enter_the_cost')}}
           template(v-else)
             i18n(path='ui.splitting.total').total-fee
               b
@@ -89,7 +89,7 @@ type Mode = 'create' | 'edit'
     PageSplitting,
   },
 })
-export default class NewTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
+export default class FormTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
   step = STEP_INPUT
   mode: Mode = 'create'
@@ -163,10 +163,10 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   get title () {
     if (this.step === STEP_INPUT)
-      return this.$t('ui.newtrans.how_much')
+      return this.$t('ui.transactions.how_much')
     if (this.step === STEP_SPLIT)
       return this.$t('ui.splitting.split_by')
-    return this.$t('ui.newtrans.details')
+    return this.$t('ui.transactions.details')
   }
 
   cleanUp () {
@@ -181,7 +181,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
   get stepItems () {
     return [{
-      text: this.$t('ui.newtrans.how_much_short'),
+      text: this.$t('ui.transactions.how_much_short'),
       disabled: false,
       href: 0,
     },
@@ -191,7 +191,7 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
       href: 1,
     },
     {
-      text: this.$t('ui.newtrans.details_short'),
+      text: this.$t('ui.transactions.details_short'),
       disabled: false,
       href: 2,
     }]
@@ -267,10 +267,10 @@ export default class NewTransaction extends mixins(GroupMixin, CommonMixin, Dial
 
 <style lang='sass'>
 .v-dialog--fullscreen
-  .new-transaction
+  .form-transaction
     height: 100%
 
-.new-transaction
+.form-transaction
   overflow-x: hidden
 
   .page
