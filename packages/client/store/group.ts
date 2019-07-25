@@ -51,7 +51,7 @@ export const getters: GetterTree<GroupState, RootState> = {
   currentDisplayCurrency (state) {
     if (!state.currentId)
       return undefined
-    return oc(state.configs[state.currentId]).display_currency()
+    return oc(state.configs[state.currentId]).display_currency() || oc(state.cache.groups[state.currentId]).main_currency()
   },
 
   currentId (state) {

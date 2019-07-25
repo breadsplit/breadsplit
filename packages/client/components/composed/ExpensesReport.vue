@@ -10,6 +10,8 @@
           @click:id='i=>categoryFilter=i'
         )
 
+  .pt-3
+
   v-card.mt-2.pa-2
     .filter
       .header {{$t('ui.show_expenses_of')}}
@@ -34,6 +36,15 @@
       .pa-4
         v-subheader {{$t('ui.no_expenses_in_range')}}
     template(v-else)
+      v-list-item
+        .primary--text 合計
+        v-spacer
+        app-money-label(
+          :amount='-filteredTotalAmount'
+          :currency='displayCurrency'
+          color
+        )
+      v-divider
       v-tabs(v-model='tab' v-if='!categoryFilter')
         v-tab {{$t('ui.report.mode_category')}}
         v-tab {{$t('ui.report.mode_expenses')}}
@@ -51,6 +62,7 @@
 import { Component, mixins, Getter } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
 import Fraction from 'fraction.js'
+import { oc } from 'ts-optchain'
 import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
 import ChartSummaryPie from '../charts/ChartSummaryPie.vue'
 import { ParserCategory } from '../../../core/category_parser'
@@ -76,6 +88,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
   unit: DateRangeUnit = 'month'
 
   @Getter('user/uid') uid: string | undefined
+  @Getter('group/currentDisplayCurrency') readonly displayCurrency!: string
 
   get transactions () {
     return this.group.transactions
@@ -120,8 +133,21 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
     return +this.expenseSummary.map(e => e.value).reduce((a, b) => a.add(b), new Fraction(0))
   }
 
+  get filteredTotalAmount () {
+    if (this.categoryFilter)
+      return +oc(this.expenseSummary.find(e => e.id === this.categoryFilter)).value(new Fraction(0))
+    return this.totalAmount
+  }
+
   get expenseSummary () {
-    return ReportExpensesByCategories(this, this.filteredTransactions, this.group, this.ignoredCategories, this.involved)
+    return ReportExpensesByCategories(
+      this,
+      this.filteredTransactions,
+      this.group,
+      this.ignoredCategories,
+      this.involved,
+      this.displayCurrency
+    )
   }
 
   get categoryFilter () {

@@ -2,7 +2,7 @@
 v-menu(offset-y left v-if='currencies.length > 1')
   template(v-slot:activator='{ on }')
     .vertical-aligned(v-on='on')
-      span.pr-1.op-75(v-if='display_currency !== group.main_currency') {{display_currency}}
+      span.pr-1.op-75(v-if='displayCurrency !== group.main_currency') {{displayCurrency}}
       v-icon.op-50 mdi-swap-horizontal-bold
   v-list
     v-list-item(v-for='(item, index) in currencies', :key='item', @click='changeDisplayingCurrency(item)')
@@ -15,10 +15,10 @@ import { GroupMixin } from '~/mixins'
 
 @Component
 export default class Balances extends mixins(GroupMixin) {
-  @Getter('group/currentDisplayCurrency') readonly display_currency!: string
+  @Getter('group/currentDisplayCurrency') readonly displayCurrency!: string
 
   changeDisplayingCurrency (currency: string) {
-    this.$store.dispatch('group/changeDisplayCurrency', { display_currency: currency })
+    this.$store.dispatch('group/changeDisplayCurrency', { displayCurrency: currency })
   }
 }
 </script>
