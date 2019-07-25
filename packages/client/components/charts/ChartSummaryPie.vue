@@ -64,9 +64,12 @@ export default class ChartSummaryPie extends Vue {
 
   @Watch('value', { deep: true })
   drawChart () {
+    const data = this.value
+    if (!data.length)
+      return
+
     this.init()
 
-    const data = this.value
     const total = this.value.map(v => v.value).reduce((a, b) => a + b, 0)
     const threshold = 0.08
 

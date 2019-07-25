@@ -2,11 +2,13 @@
 .expenses-report
   .text-center
     app-date-range-select(:from.sync='from' :to.sync='to' :unit.sync='unit')
-    chart-summary-pie(
-      v-if='filteredTransactions.length'
-      :value='expenseSummary'
-      :style='{ width: chartWidth }'
-    )
+    v-expand-transition
+      div(v-show='filteredTransactions.length')
+        chart-summary-pie(
+
+          :value='expenseSummary'
+          :style='{ width: chartWidth }'
+        )
 
   v-checkbox(v-model='onlyMe' :label='$t("ui.transactions.involved")')
 
