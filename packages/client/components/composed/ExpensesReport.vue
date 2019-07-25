@@ -3,21 +3,25 @@
   .text-center
     app-date-range-select(:from.sync='from' :to.sync='to' :unit.sync='unit')
     v-expand-transition
-      div(v-show='filteredTransactions.length')
+      div(v-show='filteredTransactions.length && !categoryFilter')
         chart-summary-pie(
-
           :value='expenseSummary'
           :style='{ width: chartWidth }'
         )
 
-  v-checkbox(v-model='onlyMe' :label='$t("ui.transactions.involved")')
+  v-card.mt-2.pa-2
+    v-checkbox(v-model='onlyMe' :label='$t("ui.transactions.involved")')
+    template(v-if='categoryFilter')
+      v-chip(close @click:close='categoryFilter = null')
+        v-icon(left :color='categoryFilterInfo.color') mdi-{{categoryFilterInfo.icon}}
+        | {{categoryFilterInfo.text}}
 
   v-card.mt-2
     template(v-if='!filteredTransactions.length')
       .pa-4
         v-subheader {{$t('ui.no_expenses_in_range')}}
     template(v-else)
-      v-tabs(v-model='tab')
+      v-tabs(v-model='tab' v-if='!categoryFilter')
         v-tab {{$t('ui.report.mode_category')}}
         v-tab {{$t('ui.report.mode_expenses')}}
       v-tabs-items(v-model='tab')
@@ -36,6 +40,7 @@ import dayjs from 'dayjs'
 import Fraction from 'fraction.js'
 import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
 import ChartSummaryPie from '../charts/ChartSummaryPie.vue'
+import { ParserCategory } from '../../../core/category_parser'
 import { IdMe, ReportExpensesByCategories } from '~/core'
 import { GroupMixin, CommonMixin } from '~/mixins'
 
@@ -81,8 +86,13 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
   get filteredTransactions () {
     const from = +dayjs(this.from)
     const to = +dayjs(this.to)
-    return this.transactions
+    let filtered = this.transactions
       .filter(t => t.timestamp >= from && t.timestamp < to)
+    if (this.categoryFilter)
+      filtered = filtered.filter(t => t.category === this.categoryFilter)
+    else
+      filtered = filtered.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
+    return filtered
   }
 
   get chartWidth () {
@@ -105,10 +115,17 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
   }
 
   set categoryFilter (value) {
-    // this.internalCategoryFilter = value
-    // if (value && this.mode === 'category')
-    //  this.mode = 'expense'
-    // TODO:wip category filter
+    this.internalCategoryFilter = value
+    if (value && this.mode === 'category') {
+      this.mode = 'expense'
+      this.tab = 1
+    }
+  }
+
+  get categoryFilterInfo () {
+    if (!this.categoryFilter)
+      return
+    return ParserCategory(this.categoryFilter, this.group, this)
   }
 }
 </script>
