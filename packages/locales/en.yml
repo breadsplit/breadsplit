@@ -69,6 +69,7 @@ date_range:
     full_display: All the time
   custom:
     display: Custom
+    full_display: Custom
   day:
     display: Day
     formatter: LL

@@ -60,6 +60,7 @@ date_range:
     full_display: 全部
   custom:
     display: 自定
+    full_display: 自定义
   day:
     display: 日
   month:
