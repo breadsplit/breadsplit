@@ -130,7 +130,10 @@ icons:
 iso: en-US
 language_name: English
 noun:
+  category: Category
   expense: Expense
+  group: Group
+  others: Others...
   today: Today
   tomorrow: Tomorrow
   yesterday: Yesterday
@@ -252,6 +255,7 @@ ui:
   share_link_copied: Share link copied!
   share_link_to_invite: Share this link to invite friends
   show_all: Show all
+  show_expenses_of: Show expenses of
   sign_in: Sign in
   signin_options:
     Facebook: Sign in with Facebook
@@ -280,10 +284,6 @@ ui:
     transactions: Transactions
   total: Total
   transactions:
-    involved: Involved
-    involved_expensed: '{0} had expensed'
-    involved_negative: '{0} had owed'
-    involved_positive: '{0} had paid'
     add_location: Add location
     add_payer: Add more payer
     description: Description
@@ -295,6 +295,10 @@ ui:
     for_whom: For whom?
     how_much: How much?
     how_much_short: Fee
+    involved: Involved
+    involved_expensed: '{0} had expensed'
+    involved_negative: '{0} had owed'
+    involved_positive: '{0} had paid'
     repeat_expense: Repeat
     select_who_paid: Select the person who paid the bill
     xx_should_pay: 'by the way, {0} should pay this time.'

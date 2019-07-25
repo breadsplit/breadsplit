@@ -116,3 +116,14 @@
 
 .v-dialog--fullscreen > .v-card
   border-radius: 0
+
+
+.v-chip.colorful
+  --color: #000
+  color: var(--color)
+  background-color: transparent !important
+  &:before
+    color: var(--color)
+    opacity: 0.12
+  i.v-chip__close
+    opacity: 0.4

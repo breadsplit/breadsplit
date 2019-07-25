@@ -98,7 +98,10 @@ icons:
 iso: zh-TW
 language_name: 繁體中文
 noun:
+  category: 分類
   expense: 支出
+  group: 群組
+  others: 其他人...
   today: 今天
   tomorrow: 明天
   yesterday: 昨天
@@ -217,6 +220,7 @@ ui:
     share_link: 分享鏈接
   share_link_copied: 分享鏈接已復制！
   show_all: 顯示所有
+  show_expenses_of: 參與者
   sign_in: 登錄
   signin_options:
     Facebook: 使用臉書登入

@@ -10,10 +10,22 @@
         )
 
   v-card.mt-2.pa-2
-    v-checkbox(v-model='onlyMe' :label='$t("ui.transactions.involved")')
-    template(v-if='categoryFilter')
-      v-chip(close @click:close='categoryFilter = null')
-        v-icon(left :color='categoryFilterInfo.color') mdi-{{categoryFilterInfo.icon}}
+    .filter
+      .header {{$t('ui.show_expenses_of')}}
+      v-chip-group.chips(v-model='involvedIndex' column mandatory active-class='primary--text')
+        v-chip.pr-5
+          v-icon.ml-1(left) mdi-account-group
+          | {{$t('noun.group')}}
+        v-chip {{$t('pronoun.me')}}
+        v-chip(disabled) {{$t('noun.others')}}
+
+    .filter(v-if='categoryFilter')
+      .header {{$t('noun.category')}}
+      v-chip.chips.colorful(close
+        :style='{"--color": categoryFilterInfo.color}'
+        @click:close='categoryFilter = null'
+      )
+        v-icon.ml-1(left :color='categoryFilterInfo.color') mdi-{{categoryFilterInfo.icon}}
         | {{categoryFilterInfo.text}}
 
   v-card.mt-2
@@ -41,7 +53,7 @@ import Fraction from 'fraction.js'
 import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
 import ChartSummaryPie from '../charts/ChartSummaryPie.vue'
 import { ParserCategory } from '../../../core/category_parser'
-import { IdMe, ReportExpensesByCategories } from '~/core'
+import { ReportExpensesByCategories, IdMe } from '~/core'
 import { GroupMixin, CommonMixin } from '~/mixins'
 
 @Component({
@@ -50,10 +62,11 @@ import { GroupMixin, CommonMixin } from '~/mixins'
   },
 })
 export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
+  private internalCategoryFilter: string | null = null
+  private involvedIndex = 0
+
   mode: 'category' | 'expense' = 'category'
-  onlyMe = true
   ignoredCategories = ['transfer']
-  internalCategoryFilter: string | null = null
 
   tab = 0
 
@@ -74,7 +87,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
   }
 
   get involved () {
-    if (this.onlyMe) {
+    if (this.involvedIndex === 1) {
       if (this.group.online)
         return this.uid
       else
@@ -129,3 +142,16 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
   }
 }
 </script>
+
+<style lang="sass">
+.expenses-report
+  .filter
+    .header
+      margin: 5px 15px
+      opacity: 0.6
+      display: inline-block
+      vertical-align: middle
+    .chips
+      display: inline-block
+      vertical-align: middle
+</style>
