@@ -8,19 +8,22 @@ v-navigation-drawer(
       app-logo-name.clickable.py-4(v-if='isMobile' v-ripple @click.native='goHome()')
       v-divider
 
-    div(style='overflow-y:auto')
-      v-list-item.pl-4(
-        v-for='(group, i) in groups' :key='i'
-        :to='`/group/${group.id}`' router exact
+    v-list(shaped).scrolling
+      v-list-item.pl-4.mr-2(
+        v-for='(group, i) in groups'
+        :key='i'
+        :to='`/group/${group.id}`'
+        color='primary'
+        router exact
       )
         v-list-item-action
           v-icon mdi-{{ group.icon }}
         v-list-item-content
           v-list-item-title(v-text='group.name')
         v-list-item-action(v-if='group.online')
-          template(v-if="$store.getters['group/unreadsOf'](group.id) != 0")
+          template(v-if='unreadsOf(group.id)')
             v-avatar(size='25', color='red' dark)
-              v-list-item-title.ma-2(v-text="$store.getters['group/unreadsOf'](group.id)" style='color: white;')
+              v-list-item-title.ma-2(v-text='unreadsOf(group.id)' style='color: white;')
           template(v-else-if='isSyncing(group.id)')
             v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
           template(v-else)
@@ -81,6 +84,7 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin, Grou
   @Getter('group/all') groups!: Group[]
   @Getter('user/online') userIsOnline!: boolean
 
+  @Getter('group/unreadsOf') unreadsOf!: (id: string) => number
   @Getter('group/isSyncing') isSyncing!: (id: string) => boolean
 
   $refs!: {
