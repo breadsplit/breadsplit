@@ -227,6 +227,7 @@ ui:
     remove_member: 'Remove {name} from group'
     rename_member: Rename
     view_group: View group
+    edit_categories: Edit categories
   misc: Misc.
   more_currency: More...
   new_expense: New expense

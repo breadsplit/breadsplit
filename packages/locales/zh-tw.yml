@@ -190,6 +190,7 @@ ui:
   join_as_me: '以 {0} 加入'
   language: 語言
   menu:
+    edit_categories: 編輯分類
     edit_group: 編輯群組
     make_group_online: 轉換為綫上模式
     member_is_me: 這是我

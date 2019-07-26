@@ -1,6 +1,6 @@
 
 <template lang="pug">
-v-toolbar(:style='{ height: `${height}px` }' v-bind='$attrs')
+v-toolbar(:style='style' v-bind='$attrs')
   slot
   .composed-toolbar-content
     slot(name='content')
@@ -13,7 +13,17 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
   inheritAttrs: false,
 })
 export default class ComposedToolbar extends Vue {
-  @Prop({ default: 200 }) height!: number
+  @Prop({ default: 'inherit' }) height!: number | string
+
+  get style () {
+    let height = this.height
+    if (!isNaN(+height))
+      height = `${height}px`
+
+    return {
+      height,
+    }
+  }
 }
 </script>
 
