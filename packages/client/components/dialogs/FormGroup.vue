@@ -97,12 +97,11 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
 import { Component, Getter, mixins } from 'nuxt-property-decorator'
 import { TranslateResult } from 'vue-i18n'
 import cloneDeep from 'lodash/cloneDeep'
-import { MemberDefault } from '../../../core'
-import swatches from '~/../meta/swatches'
+import { MemberDefault, IdMe, GroupDefault, defaultCurrency } from '~/core'
+import swatches, { BaseIndex } from '~/../meta/swatches'
 import { getCommonCurrencyCodes } from '~/../meta/currencies'
 import { DialogChildMixin } from '~/mixins'
 import { Group, UserInfo } from '~/types'
-import { IdMe, GroupDefault, defaultCurrency } from '~/core'
 
 @Component
 export default class FormGroup extends mixins(DialogChildMixin) {
@@ -131,7 +130,7 @@ export default class FormGroup extends mixins(DialogChildMixin) {
     else {
       this.$set(this, 'form', GroupDefault({
         icon: 'account-group',
-        color: swatches[Math.floor(Math.random() * swatches.length)],
+        color: swatches[Math.floor(Math.random() * swatches.length)][BaseIndex],
         members: {
           [IdMe]: MemberDefault({
             uid: IdMe,

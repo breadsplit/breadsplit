@@ -19,20 +19,19 @@
             )
 
           v-tab-item.pa-2
-            template(v-for='c in swatches')
-              v-btn(text icon @click='setColor(c)' :style='c===color?selectedStyle:null').ma-1
-                v-icon(:color='c') mdi-checkbox-blank-circle
+            app-color-select(
+              :color='color'
+              @update:color='c=>setColor(c)'
+              @done='close()'
+            )
 </template>
 
 <script lang='ts'>
 import { Vue, Component, Prop, Watch } from 'nuxt-property-decorator'
-import Iconsets from '~/../meta/iconsets'
-import swatches from '~/../meta/swatches'
 
 @Component
 export default class IconColorSelect extends Vue {
   menu = false
-  swatches = swatches
   tab = 0
 
   @Prop(String) readonly icon!: string
@@ -45,26 +44,18 @@ export default class IconColorSelect extends Vue {
       this.tab = 0
   }
 
-  get iconset () {
-    if (typeof this.icons === 'string')
-      return Iconsets[this.icons] || []
-    return this.icons || Iconsets.group
-  }
-
-  get selectedStyle () {
-    return {
-      background: 'rgba(128, 128, 128, 0.2)',
-    }
-  }
-
   setIcon (value) {
     this.tab = 1
     this.$emit('update:icon', value)
   }
+
   setColor (value) {
+    this.$emit('update:color', value)
+  }
+
+  close () {
     this.tab = 0
     this.menu = false
-    this.$emit('update:color', value)
   }
 }
 </script>

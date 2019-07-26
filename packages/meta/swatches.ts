@@ -1,20 +1,45 @@
-export default [
-  '#FF5722',
-  '#F44336',
-  '#E91E63',
-  '#E91E63',
-  '#c9268d',
-  '#9341ab',
-  '#3F51B5',
-  '#2196F3',
-  '#03A9F4',
-  '#00BCD4',
-  '#009688',
-  '#4CAF50',
-  '#8BC34A',
-  '#CDDC39',
-  '#FBC02D',
-  '#FF9800',
-  '#a98274',
-  '#9E9E9E',
+import MaterialColors from 'vuetify/lib/util/colors'
+
+const mains: (keyof typeof MaterialColors)[] = [
+  'red',
+  'pink',
+  'purple',
+  'deepPurple',
+  'indigo',
+  'blue',
+  'lightBlue',
+  'cyan',
+  'teal',
+  'green',
+  'lightGreen',
+  'lime',
+  'yellow',
+  'amber',
+  'orange',
+  'deepOrange',
+  'brown',
+  'blueGrey',
+  'grey',
 ]
+
+const variations = [
+  // 'lighten5',
+  // 'lighten4',
+  // 'lighten3',
+  'lighten2',
+  'lighten1',
+  'base',
+  'darken1',
+  'darken2',
+  'darken3',
+  'darken4',
+]
+
+export const BaseIndex = 2
+
+const colors: string[][] = mains
+  .map(name => variations
+    .map(v => MaterialColors[name][v])
+  )
+
+export default colors
