@@ -4,25 +4,26 @@ v-card.members
     v-icon.mr-1 mdi-account-group
     span {{$t('ui.tabs.members')}}
 
-  v-list(two-line)
+  v-list
     template(v-for='(member, index) in members')
-      v-list-item(:key='member.uid' @click='')
+      v-list-item.pr-2(:key='member.uid' @click='')
         v-list-item-avatar
-          app-user-avatar(:id='member.uid')
+          app-user-avatar(:id='member.uid' size='38')
         v-list-item-content
           v-list-item-title
             app-user-info(:id='member.uid', field='name')
           v-list-item-subtitle
             app-user-info(:id='member.uid', field='email')
-        v-list-item-action(v-if='memberMenu(member).length')
-          v-menu
-            template(v-slot:activator='{ on }')
-              v-btn(icon text v-on='on')
-                v-icon mdi-dots-vertical
-            v-list
-              template(v-for='item in memberMenu(member)')
-                v-list-item(@click='item.handler')
-                  v-list-item-title {{$t(item.title, member)}}
+
+        v-menu(v-if='memberMenu(member).length')
+          template(v-slot:activator='{ on }')
+            v-btn(icon text small v-on='on')
+              v-icon mdi-dots-vertical
+          v-list
+            template(v-for='item in memberMenu(member)')
+              v-list-item(@click='item.handler')
+                v-list-item-title {{$t(item.title, member)}}
+
     .px-5.pt-3.py-2
       v-btn.px-5(@click='promptNewMember()', dark, color='grey darken-2')
         v-icon.mr-2 mdi-account-plus
