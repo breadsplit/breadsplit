@@ -10,15 +10,15 @@
           v-tab {{$t('ui.icons')}}
           v-tab {{$t('ui.colors')}}
 
-        v-tabs-items.grid-fill-height.scrolling(v-model='tab')
-          v-tab-item.pa-2
+        v-tabs-items.grid-fill-height(v-model='tab')
+          v-tab-item.pa-2.scrolling
             app-icon-select(
               :icon='icon'
               :selected-color='color'
               @update:icon='i=>setIcon(i)'
             )
 
-          v-tab-item.pa-2
+          v-tab-item.pa-2.scrolling
             app-color-select(
               :color='color'
               @update:color='c=>setColor(c)'
