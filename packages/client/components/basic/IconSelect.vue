@@ -9,7 +9,7 @@
 
 <script lang='ts'>
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import Iconsets from '~/../meta/icons'
+import icons from '~/../meta/icons'
 
 @Component
 export default class IconSelect extends Vue {
@@ -18,7 +18,7 @@ export default class IconSelect extends Vue {
   @Prop({ default: 'primary' }) readonly selectedColor!: string
 
   get iconset () {
-    return Object.entries(Iconsets).map(([name, icons]) => {
+    return Object.entries(icons).map(([name, icons]) => {
       return {
         name,
         icons: icons.map(i => i.slice(4)),
