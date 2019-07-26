@@ -2,6 +2,154 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/breadsplit/breadsplit/compare/v0.5.0...v0.6.0) (2019-07-26)
+
+
+### ⚗ Tests
+
+* **e2e:** fix for the new layout ([15144c0](https://github.com/breadsplit/breadsplit/commit/15144c0))
+* **unit:** add yaml transform ([bfc522a](https://github.com/breadsplit/breadsplit/commit/bfc522a))
+
+
+### ⚡ Features
+
+* add new firebase function ([3c4c066](https://github.com/breadsplit/breadsplit/commit/3c4c066))
+* api for custom category ([cadd2b3](https://github.com/breadsplit/breadsplit/commit/cadd2b3))
+* category rank ([9bce7e1](https://github.com/breadsplit/breadsplit/commit/9bce7e1))
+* currency history ([f264319](https://github.com/breadsplit/breadsplit/commit/f264319))
+* currency select dialog, and i am coding in the sky ✈ ([68bc7ef](https://github.com/breadsplit/breadsplit/commit/68bc7ef))
+* date range select ([2298bad](https://github.com/breadsplit/breadsplit/commit/2298bad))
+* display category name for trans having no desc set ([7a92be8](https://github.com/breadsplit/breadsplit/commit/7a92be8))
+* display currency switch, close [#91](https://github.com/breadsplit/breadsplit/issues/91) ([e87ed15](https://github.com/breadsplit/breadsplit/commit/e87ed15))
+* displaying exchange rate ([0cca432](https://github.com/breadsplit/breadsplit/commit/0cca432))
+* edit trans ([9144349](https://github.com/breadsplit/breadsplit/commit/9144349))
+* grouped activities, [#78](https://github.com/breadsplit/breadsplit/issues/78) ([3f90381](https://github.com/breadsplit/breadsplit/commit/3f90381))
+* icon select ([cbdc050](https://github.com/breadsplit/breadsplit/commit/cbdc050))
+* involved ([b9a13c2](https://github.com/breadsplit/breadsplit/commit/b9a13c2))
+* keep split mode in transaction ([62ea560](https://github.com/breadsplit/breadsplit/commit/62ea560))
+* multiple currencies supported ([b6b10a2](https://github.com/breadsplit/breadsplit/commit/b6b10a2))
+* receipt list ([43a060e](https://github.com/breadsplit/breadsplit/commit/43a060e))
+* remove button for new trans ([e6871ad](https://github.com/breadsplit/breadsplit/commit/e6871ad))
+* save exchange rate ([2693911](https://github.com/breadsplit/breadsplit/commit/2693911))
+* save time zone, close [#97](https://github.com/breadsplit/breadsplit/issues/97) ([33f89f3](https://github.com/breadsplit/breadsplit/commit/33f89f3))
+* search for currency, close [#95](https://github.com/breadsplit/breadsplit/issues/95) ([64ef2a4](https://github.com/breadsplit/breadsplit/commit/64ef2a4))
+* split by weights, close [#34](https://github.com/breadsplit/breadsplit/issues/34) ([b6ab55a](https://github.com/breadsplit/breadsplit/commit/b6ab55a))
+* sub colors ([cdecd4c](https://github.com/breadsplit/breadsplit/commit/cdecd4c))
+* **ui:** redesign new trans ([197e726](https://github.com/breadsplit/breadsplit/commit/197e726))
+* summary chart ([886b9a7](https://github.com/breadsplit/breadsplit/commit/886b9a7))
+* sumup for trans, close [#78](https://github.com/breadsplit/breadsplit/issues/78) ([0f0b104](https://github.com/breadsplit/breadsplit/commit/0f0b104))
+* trans group by month ([e4fc52f](https://github.com/breadsplit/breadsplit/commit/e4fc52f))
+* use fraction.js, close [#121](https://github.com/breadsplit/breadsplit/issues/121) ([78ec618](https://github.com/breadsplit/breadsplit/commit/78ec618))
+* web sync api, close [#88](https://github.com/breadsplit/breadsplit/issues/88) ([8f98f6b](https://github.com/breadsplit/breadsplit/commit/8f98f6b))
+* website refer link ([d4de65e](https://github.com/breadsplit/breadsplit/commit/d4de65e))
+
+
+### 🌍 Internationalization
+
+* messages ([b5e642e](https://github.com/breadsplit/breadsplit/commit/b5e642e))
+* refactor ([18d412f](https://github.com/breadsplit/breadsplit/commit/18d412f))
+
+
+### 🐞 Bug Fixes
+
+* **deps:** update all non-major dependencies ([#131](https://github.com/breadsplit/breadsplit/issues/131)) ([cbb9501](https://github.com/breadsplit/breadsplit/commit/cbb9501))
+* **deps:** update all non-major dependencies ([#144](https://github.com/breadsplit/breadsplit/issues/144)) ([b000ef3](https://github.com/breadsplit/breadsplit/commit/b000ef3))
+* **deps:** update dependency @nuxtjs/pwa to v3.0.0-beta.16 ([241bb32](https://github.com/breadsplit/breadsplit/commit/241bb32))
+* expansion-panel ([fcfa966](https://github.com/breadsplit/breadsplit/commit/fcfa966))
+* **deps:** update dependency electron-serve to ^0.3.0 ([#102](https://github.com/breadsplit/breadsplit/issues/102)) ([bc21927](https://github.com/breadsplit/breadsplit/commit/bc21927))
+* activities action ([4113031](https://github.com/breadsplit/breadsplit/commit/4113031))
+* add condition to show unread activities ([ea5f2ee](https://github.com/breadsplit/breadsplit/commit/ea5f2ee))
+* cache for newly created group ([969ce3b](https://github.com/breadsplit/breadsplit/commit/969ce3b))
+* categories ([429cdd6](https://github.com/breadsplit/breadsplit/commit/429cdd6))
+* circle ci ([7aea4e7](https://github.com/breadsplit/breadsplit/commit/7aea4e7))
+* circle ci ([c47bd8f](https://github.com/breadsplit/breadsplit/commit/c47bd8f))
+* clean up locked ([f055a4b](https://github.com/breadsplit/breadsplit/commit/f055a4b))
+* click group to refresh unread activities ([a32aae0](https://github.com/breadsplit/breadsplit/commit/a32aae0))
+* dark theme ([0eb4894](https://github.com/breadsplit/breadsplit/commit/0eb4894))
+* date range select ([541f20d](https://github.com/breadsplit/breadsplit/commit/541f20d))
+* date range unit select style ([104499c](https://github.com/breadsplit/breadsplit/commit/104499c))
+* dialog close hook ([1a74698](https://github.com/breadsplit/breadsplit/commit/1a74698))
+* do not update counter on current group ([5894bc9](https://github.com/breadsplit/breadsplit/commit/5894bc9))
+* edit form will now only updates changed fields, [#28](https://github.com/breadsplit/breadsplit/issues/28) ([3c55f7d](https://github.com/breadsplit/breadsplit/commit/3c55f7d))
+* fraction store ([f8a57bc](https://github.com/breadsplit/breadsplit/commit/f8a57bc))
+* gcd ([bf161c1](https://github.com/breadsplit/breadsplit/commit/bf161c1))
+* group icon/color editing ([012fa5a](https://github.com/breadsplit/breadsplit/commit/012fa5a))
+* icon select scrolling ([2021e89](https://github.com/breadsplit/breadsplit/commit/2021e89))
+* improve unreads counter reactive ([78dcb25](https://github.com/breadsplit/breadsplit/commit/78dcb25))
+* join limit ([4e7daa6](https://github.com/breadsplit/breadsplit/commit/4e7daa6))
+* joining page ([885c617](https://github.com/breadsplit/breadsplit/commit/885c617))
+* list height ([2e652dc](https://github.com/breadsplit/breadsplit/commit/2e652dc))
+* max-height problem for newtrans ([1808530](https://github.com/breadsplit/breadsplit/commit/1808530))
+* monorepo ([488a17f](https://github.com/breadsplit/breadsplit/commit/488a17f))
+* new trans dialog height on desktop ([9049cde](https://github.com/breadsplit/breadsplit/commit/9049cde))
+* scrolling member list in NewGroup, close [#120](https://github.com/breadsplit/breadsplit/issues/120) ([6ad7968](https://github.com/breadsplit/breadsplit/commit/6ad7968))
+* sharing toggle ([e7a27ce](https://github.com/breadsplit/breadsplit/commit/e7a27ce))
+* split tabs overflow ([18e137c](https://github.com/breadsplit/breadsplit/commit/18e137c))
+* text align right ([862add4](https://github.com/breadsplit/breadsplit/commit/862add4))
+* toggle group openness ([8f1e72a](https://github.com/breadsplit/breadsplit/commit/8f1e72a))
+* trans item involved display ([5c08ae4](https://github.com/breadsplit/breadsplit/commit/5c08ae4))
+* trans sorting ([c81a56d](https://github.com/breadsplit/breadsplit/commit/c81a56d))
+* try to fix 100vh on mobile, [#118](https://github.com/breadsplit/breadsplit/issues/118) ([d7784f0](https://github.com/breadsplit/breadsplit/commit/d7784f0))
+* type error ([d003273](https://github.com/breadsplit/breadsplit/commit/d003273))
+* unreads counter ([314e73e](https://github.com/breadsplit/breadsplit/commit/314e73e))
+* **deps:** update dependency firebase to v6.1.1 ([b8bd939](https://github.com/breadsplit/breadsplit/commit/b8bd939))
+* **deps:** update dependency lodash to v4.17.13 [security] ([#138](https://github.com/breadsplit/breadsplit/issues/138)) ([7d493c9](https://github.com/breadsplit/breadsplit/commit/7d493c9))
+* **deps:** update dependency nuxt-property-decorator to v2.3.0 ([34c6fee](https://github.com/breadsplit/breadsplit/commit/34c6fee))
+* workaround for chart update ([3a04b5f](https://github.com/breadsplit/breadsplit/commit/3a04b5f))
+* **firebase:** functions build ([56c70ee](https://github.com/breadsplit/breadsplit/commit/56c70ee))
+* **ui:** date range select ([637e20d](https://github.com/breadsplit/breadsplit/commit/637e20d))
+* **ui:** details page ([5e4e4c5](https://github.com/breadsplit/breadsplit/commit/5e4e4c5))
+* **ui:** drawer list ([34c2762](https://github.com/breadsplit/breadsplit/commit/34c2762))
+* **ui:** new group ([25cd15a](https://github.com/breadsplit/breadsplit/commit/25cd15a))
+
+
+### 📚 Documentations
+
+* update ([c7377c2](https://github.com/breadsplit/breadsplit/commit/c7377c2))
+* update fire structure ([b503d0b](https://github.com/breadsplit/breadsplit/commit/b503d0b))
+
+
+### 📱 User interface
+
+* stepper ([58e60cc](https://github.com/breadsplit/breadsplit/commit/58e60cc))
+* **fix:** new trans now navigate to current step ([3b1e83e](https://github.com/breadsplit/breadsplit/commit/3b1e83e))
+* add promise dialog ([db1ccc5](https://github.com/breadsplit/breadsplit/commit/db1ccc5))
+* better category select ([38df7c5](https://github.com/breadsplit/breadsplit/commit/38df7c5))
+* bread steppers ([3451c61](https://github.com/breadsplit/breadsplit/commit/3451c61))
+* category filter ([b00d08b](https://github.com/breadsplit/breadsplit/commit/b00d08b))
+* category filter chips ([b8bf2da](https://github.com/breadsplit/breadsplit/commit/b8bf2da))
+* chart animation ([16e0d8d](https://github.com/breadsplit/breadsplit/commit/16e0d8d))
+* clickable chart ([5c3bc7f](https://github.com/breadsplit/breadsplit/commit/5c3bc7f))
+* date range select ([0013f12](https://github.com/breadsplit/breadsplit/commit/0013f12))
+* date range sub ([6123347](https://github.com/breadsplit/breadsplit/commit/6123347))
+* details tweaks ([35b6cc6](https://github.com/breadsplit/breadsplit/commit/35b6cc6))
+* entry for categories edit ([87ee7a9](https://github.com/breadsplit/breadsplit/commit/87ee7a9))
+* expnese total sum up ([70a1002](https://github.com/breadsplit/breadsplit/commit/70a1002))
+* fix ([481b2ff](https://github.com/breadsplit/breadsplit/commit/481b2ff))
+* fix ([12e6544](https://github.com/breadsplit/breadsplit/commit/12e6544))
+* fix icon color select fab ([5e175e5](https://github.com/breadsplit/breadsplit/commit/5e175e5))
+* flat cats select ([257ea83](https://github.com/breadsplit/breadsplit/commit/257ea83))
+* improve ux ([b892464](https://github.com/breadsplit/breadsplit/commit/b892464))
+* improved ([f002173](https://github.com/breadsplit/breadsplit/commit/f002173))
+* member toggles ([6ddff1a](https://github.com/breadsplit/breadsplit/commit/6ddff1a))
+* members section for new group ([2accf23](https://github.com/breadsplit/breadsplit/commit/2accf23))
+* members size ([c15fbfa](https://github.com/breadsplit/breadsplit/commit/c15fbfa))
+* name label for member toggles ([ff7de50](https://github.com/breadsplit/breadsplit/commit/ff7de50))
+* new activities list ([70466ba](https://github.com/breadsplit/breadsplit/commit/70466ba))
+* optimize cats select ([9ad9c5d](https://github.com/breadsplit/breadsplit/commit/9ad9c5d))
+* optimize new trans ([7eaa61e](https://github.com/breadsplit/breadsplit/commit/7eaa61e))
+* percent splitting ([4f937c4](https://github.com/breadsplit/breadsplit/commit/4f937c4))
+* progress bar for expense category ([1304dd1](https://github.com/breadsplit/breadsplit/commit/1304dd1))
+* receipt list ([8b35a15](https://github.com/breadsplit/breadsplit/commit/8b35a15))
+* redesign settle up, close [#119](https://github.com/breadsplit/breadsplit/issues/119) ([28ecd06](https://github.com/breadsplit/breadsplit/commit/28ecd06))
+* sharing section ([b9fed73](https://github.com/breadsplit/breadsplit/commit/b9fed73))
+* split by percent ([d9e2689](https://github.com/breadsplit/breadsplit/commit/d9e2689))
+* tweak ([a7e6e18](https://github.com/breadsplit/breadsplit/commit/a7e6e18))
+* ui improve ([34fbed0](https://github.com/breadsplit/breadsplit/commit/34fbed0))
+* update new group ([c1ed03d](https://github.com/breadsplit/breadsplit/commit/c1ed03d))
+
+
+
 ## 0.5.0 (2019-06-04)
 
 ### ⚡ Features
