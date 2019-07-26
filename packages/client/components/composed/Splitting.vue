@@ -134,9 +134,10 @@
 
 <script lang='ts'>
 import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
+import { TranslateResult } from 'vue-i18n'
 import NumberInput from '../basic/NumberInput.vue'
-import { TransactionBalanceChanges, TransactionWeightsHelper, Splitmode } from '~/core'
-import { Transaction, Member, Weight } from '~/types'
+import { TransactionBalanceChanges, TransactionWeightsHelper } from '~/core'
+import { Transaction, Member, Weight, Splitmode } from '~/types'
 
 @Component
 export default class Splitting extends Vue {
@@ -144,17 +145,30 @@ export default class Splitting extends Vue {
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
   @Prop({ default: true }) readonly showTabs!: boolean
   @Prop({ default: () => [] }) readonly members!: Member[]
-  @Prop({ default: 'average' }) readonly mode!: Splitmode
 
   focused: string|null = null
 
-  get modes () {
+  get modes (): {mode: Splitmode; icon: string; text: TranslateResult}[] {
     return [
       { mode: 'average', icon: 'mdi-account-multiple', text: this.$t('ui.splitting.average') },
       { mode: 'amount', icon: 'mdi-currency-usd', text: this.$t('ui.splitting.amount') },
       { mode: 'percent', icon: 'mdi-percent', text: this.$t('ui.splitting.percent') },
       { mode: 'weight', icon: 'mdi-scale-balance', text: this.$t('ui.splitting.weight') },
     ]
+  }
+
+  get mode () {
+    if (this.on === 'creditors')
+      return this.trans.splitmode_creditors
+    else
+      return this.trans.splitmode
+  }
+
+  set mode (v) {
+    if (this.on === 'creditors')
+      this.trans.splitmode_creditors = v
+    else
+      this.trans.splitmode = v
   }
 
   get tab () {
@@ -166,7 +180,7 @@ export default class Splitting extends Vue {
   }
 
   set tab (value) {
-    this.$emit('update:mode', this.modes[+value].mode)
+    this.mode = this.modes[+value].mode
   }
 
   get currency () {

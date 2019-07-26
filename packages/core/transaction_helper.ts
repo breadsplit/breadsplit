@@ -1,9 +1,8 @@
 import { sumBy } from 'lodash'
-import { Transaction, Weight } from '../types'
+import { Transaction, Weight, Splitmode } from '../types'
 import { GCD } from '.'
 
 export type WeightsField = 'debtors' | 'creditors'
-export type Splitmode = 'average' | 'amount' | 'percent' | 'weight'
 
 export class TransactionWeightsHelper {
   public trans: Transaction

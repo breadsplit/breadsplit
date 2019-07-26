@@ -79,6 +79,8 @@ export const TransactionDefault = (overrides?: Partial<Transaction>): Transactio
   category: '',
   total_fee: 0,
   service_fee_rate: 0,
+  splitmode: 'average',
+  splitmode_creditors: 'amount',
   type: 'expenses',
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 }, overrides)

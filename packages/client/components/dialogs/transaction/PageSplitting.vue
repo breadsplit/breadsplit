@@ -5,7 +5,6 @@
     :trans='form'
     :members='members'
     :on='on'
-    :mode.sync='mode'
     @keyboard='openKeyboard'
   )
 
@@ -43,7 +42,6 @@
 <script lang='ts'>
 import { mixins, Component, Prop, Watch } from 'nuxt-property-decorator'
 import { Transaction } from '~/types'
-import { Splitmode } from '~/core'
 import SoftNumpad from '~/components/basic/SoftNumpad.vue'
 import NumberInput from '~/components/basic/NumberInput.vue'
 import Splitting from '~/components/composed/Splitting.vue'
@@ -52,7 +50,6 @@ import { GroupMixin } from '~/mixins'
 @Component
 export default class PageSplitting extends mixins(GroupMixin) {
   registeredInput: NumberInput | null = null
-  mode: Splitmode = 'average'
 
   @Prop(Object) readonly form!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
@@ -66,13 +63,9 @@ export default class PageSplitting extends mixins(GroupMixin) {
   @Watch('form', { immediate: true })
   onFormChanged () {
     if (this.on === 'creditors') {
-      this.mode = 'amount'
       this.$nextTick(() => {
         this.openKeyboardForMainInput(this.$refs.total_fee_input)
       })
-    }
-    else {
-      this.mode = 'average'
     }
   }
 

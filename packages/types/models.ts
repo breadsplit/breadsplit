@@ -1,5 +1,7 @@
 import { TransOperation } from './operation_transformer'
 
+export type Splitmode = 'average' | 'amount' | 'percent' | 'weight'
+
 export type UID = string
 
 export type MemberRoles =
@@ -83,6 +85,8 @@ export interface Transaction {
   service_fee_rate?: number
   creditors: Weight[]
   debtors: Weight[]
+  splitmode: Splitmode
+  splitmode_creditors: Splitmode
   creator: UID
   type: TransactionType
   tags?: string[]
