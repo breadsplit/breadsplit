@@ -29,7 +29,7 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
       v-container.pa-4.mt-3
         v-layout(column).pl-4.pr-4.pt-4
           v-flex
-            app-currency-select(v-model='form.main_currency')
+            app-currency-select.flat(v-model='form.main_currency')
 
           v-flex.my-3
             v-switch(v-model='online')

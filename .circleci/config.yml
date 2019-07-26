@@ -126,8 +126,8 @@ workflows:
           filters:
             branches:
               only:
-                - app
-                - master
+                # - app
+                # - master
                 - e2e
 
       # auto deploy to firebase only on production server
