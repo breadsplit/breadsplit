@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card.new-group(v-rows='"max-content max-content auto max-content"')
+v-card.form-group(v-rows='"max-content max-content auto max-content"')
   app-composed-toolbar.mb-n3(height='130' dark :color='form.color')
     v-btn(icon @click='close()')
       v-icon mdi-close
@@ -105,7 +105,7 @@ import { Group, UserInfo } from '~/types'
 import { IdMe, GroupDefault, defaultCurrency } from '~/core'
 
 @Component
-export default class NewGroup extends mixins(DialogChildMixin) {
+export default class FormGroup extends mixins(DialogChildMixin) {
   readonly me = IdMe
   form: Group = GroupDefault()
   formOriginal: Group | null = null

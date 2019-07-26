@@ -22,6 +22,18 @@ export default class NavigationMixin extends Vue {
     this.openDialog('trans', { transid, groupid })
   }
 
+  gotoNewGroup (options: Record<string, any> = {}) {
+    this.openDialog('group', options)
+  }
+
+  gotoNewCategory (options: Record<string, any> = {}) {
+    this.openDialog('category', options)
+  }
+
+  gotoCategories (options: Record<string, any> = {}) {
+    this.openDialog('categories', options)
+  }
+
   openDialog (name: string, options?: object) {
     this.$router.push({
       query: Object.assign({}, options, { dialog: name }),

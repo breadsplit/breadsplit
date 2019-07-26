@@ -106,7 +106,7 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin, Grou
 
   async openNewGroupDialog () {
     this.tryCloseDrawer()
-    this.openDialog('newgroup')
+    this.gotoNewGroup()
   }
 
   tryCloseDrawer () {

@@ -104,7 +104,7 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
         break
 
       case 'edit':
-        this.openDialog('newgroup', { mode: 'edit' })
+        this.gotoNewGroup({ mode: 'edit' })
         break
     }
   }
