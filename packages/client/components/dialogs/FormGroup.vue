@@ -12,20 +12,20 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
           :label='$t("ui.group_editing.group_name")'
           :placeholder='$t("ui.group_editing.group_name_placeholder")'
           :disabled='viewmode'
-          :readonly='step !== 1'
+          :readonly='step !== 0'
           autofocus
         )
 
   div
     v-scale-transition
-      app-icon-color-select(:icon.sync='form.icon' :color.sync='form.color' v-show='step === 1')
+      app-icon-color-select(:icon.sync='form.icon' :color.sync='form.color' v-show='step === 0')
         template(v-slot='{ on }')
-          v-btn(fab v-on='on' style='position: absolute; right: 20px; margin-top: -18px;')
+          v-btn(fab v-on='on' style='position: absolute; right: 20px; margin-top: -18px; z-index: 20;')
             v-icon(:color='form.color') mdi-{{form.icon}}
 
   v-window.height-100.grid-fill-height(v-model='step' touchless style='min-height:300px')
     // First page
-    v-window-item(:value='1')
+    v-window-item
       v-container.pa-4.mt-3
         v-layout(column).pl-4.pr-4.pt-4
           v-flex
@@ -39,7 +39,7 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
                 app-help-link(help='online_mode')
 
     // Second page
-    v-window-item(:value='2')
+    v-window-item
       .height-100(v-rows='"max-content auto"')
         v-combobox.member-name-input.mx-4(
           ref='member_name_input'
@@ -71,12 +71,12 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
   div
     v-divider
     v-card-actions.pa-3
-      template(v-if='step === 1 && !mode')
+      template(v-if='step === 0 && !mode')
         v-btn.px-4.button-cancel(@click='close(false)' text) {{$t('ui.button_cancel')}}
         v-spacer
         v-btn.px-4.button-next(@click='step++' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty')  {{$t('ui.button_next')}}
 
-      template(v-if='step === 2 && !mode')
+      template(v-if='step === 1 && !mode')
         v-btn.px-4.button-back(@click='step--' text) {{$t('ui.button_back')}}
         v-spacer
         template(v-if='search')
@@ -110,7 +110,7 @@ export default class FormGroup extends mixins(DialogChildMixin) {
   form: Group = GroupDefault()
   formOriginal: Group | null = null
   search = ''
-  step = 1
+  step = 0
   mode = ''
   // TODO:AF make it works
   online = false
@@ -144,11 +144,11 @@ export default class FormGroup extends mixins(DialogChildMixin) {
       this.form.main_currency = this.codes[0] || defaultCurrency
 
     this.mode = this.options.mode
-    this.step = 1
+    this.step = 0
   }
 
   get title (): TranslateResult {
-    if (this.step === 2)
+    if (this.step === 1)
       return `${this.$t('ui.group_editing.add_members')}(${this.members.length})`
     if (!this.mode)
       return this.$t('ui.group_editing.new_group')

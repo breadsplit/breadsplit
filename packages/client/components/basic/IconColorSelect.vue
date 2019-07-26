@@ -6,13 +6,17 @@
 
     v-card
       div(v-rows='"max-content auto"' style='height: 400px; width: 280px; overflow: hidden;')
-        v-tabs(v-model='tab' background-color='transparent' grow)
+        v-tabs(v-model='tab' background-color='transparent' :color='color' grow)
           v-tab {{$t('ui.icons')}}
           v-tab {{$t('ui.colors')}}
 
         v-tabs-items.grid-fill-height.scrolling(v-model='tab')
           v-tab-item.pa-2
-            app-icon-select(:icon='icon' @update:icon='i=>setIcon(i)')
+            app-icon-select(
+              :icon='icon'
+              :selected-color='color'
+              @update:icon='i=>setIcon(i)'
+            )
 
           v-tab-item.pa-2
             template(v-for='c in swatches')
