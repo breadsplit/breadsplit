@@ -47,7 +47,8 @@
       v-divider
       v-tabs(v-model='tab' v-if='!categoryFilter')
         v-tab {{$t('ui.report.mode_category')}}
-        v-tab {{$t('ui.report.mode_expenses')}}
+        v-tab {{$t('ui.report.mode_expenses')}} ({{filteredTransactions.length}})
+      v-divider
       v-tabs-items(v-model='tab' :touchless='categoryFilter')
         v-tab-item
           v-list.pa-0(two-line)
@@ -61,7 +62,7 @@
     .text-center.py-2
       v-btn(text @click='categoryFilter = null' color='grey') {{$t('ui.clear_filter')}}
 
-  .mb-4
+  .mb-8
 </template>
 
 <script lang='ts'>

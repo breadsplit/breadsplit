@@ -63,6 +63,9 @@ date_range:
     full_display: 自定义
   day:
     display: 日
+    last: 昨天
+    next: 明天
+    this: 今天
   month:
     display: 月
   week:
