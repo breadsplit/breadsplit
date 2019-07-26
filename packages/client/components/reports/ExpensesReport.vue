@@ -72,7 +72,6 @@ import Fraction from 'fraction.js'
 import { oc } from 'ts-optchain'
 import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
 import ChartSummaryPie from '../charts/ChartSummaryPie.vue'
-import { ParserCategory } from '../../../core/category_parser'
 import { ReportExpensesByCategories, IdMe } from '~/core'
 import { GroupMixin, CommonMixin } from '~/mixins'
 
@@ -173,7 +172,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
   get categoryFilterInfo () {
     if (!this.categoryFilter)
       return
-    return ParserCategory(this.categoryFilter, this.group, this)
+    return this.parseCategory(this.categoryFilter)
   }
 }
 </script>

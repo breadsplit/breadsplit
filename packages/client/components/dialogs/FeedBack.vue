@@ -12,12 +12,17 @@ v-card.feedback
       :label='$t("feedback.describe")'
       v-model='feedbackInfo.content'
       :counter='closeToMaxLength ? maxlength : null'
-      autofocus filled clearable
-      persistent-hint :hint='issueHint')
+      autofocus filled hide-details
+      persistent-hint)
+
+    .text-left.pa-3.op-75(style='font-size:0.95em')
+      i18n(path='feedback.github_hint' tag='span')
+        a(:href='socials.github' target='_blank').primary--text Github
 
     .mt-3
 
-    v-btn(block @click='upload()' :disabled='!hasMeaningfulContent') {{$t('ui.button_send')}}
+    .text-center
+      v-btn.px-8(@click='upload()' :disabled='!hasMeaningfulContent' color='primary') {{$t('ui.button_send')}}
 
 </template>
 
@@ -35,10 +40,6 @@ export default class FeedBack extends mixins(DialogChildMixin) {
   feedbackInfo: FeedbackOptions = {
     email: this.$store.getters['user/me'].email || '',
     content: '',
-  }
-
-  get issueHint () {
-    return this.$t('feedback.github_hint', [`<a href="${socials.github} target="_blank">Github</a>`])
   }
 
   get hasMeaningfulContent () {

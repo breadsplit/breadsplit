@@ -79,7 +79,7 @@ date_range:
 feedback:
   contact_info: 聯絡方式
   describe: 請描述您的問題或建議。
-  github_hint: '或者您也可以在 {0} 上創建Issue'
+  github_hint: '您也可以在 {0} 上創建 Issue'
 help:
   no_password_login:
     details: >-

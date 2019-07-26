@@ -24,5 +24,5 @@ CategoryIcon.vue
 ```pug
 // Component references in another components
 div
-  app-category-icon(icon='mdi-airplane')
+  app-brand-icon(brand='github')
 ```

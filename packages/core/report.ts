@@ -8,6 +8,7 @@ export interface ExpensesByCategoriesItem {
   id: string
   name: string
   color: string
+  icon: string
   value: Fraction
   currency: string
 }
@@ -26,6 +27,7 @@ export function ReportExpensesByCategories (vm: Vue, transactions: Transaction[]
       const category = ParserCategory(categoryid, group, vm)
       records[categoryid] = {
         id: categoryid,
+        icon: category.icon,
         name: category.text,
         color: category.color,
         value: new Fraction(0),

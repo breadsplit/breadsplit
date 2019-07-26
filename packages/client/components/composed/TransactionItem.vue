@@ -1,12 +1,10 @@
 <template lang='pug'>
 v-list-item.transaction-item(@click='navigate()' v-show='!involved || involvedFee !== 0')
   v-list-item-avatar
-    app-category-icon.mx-2.my-1(
-      :category='transaction.category'
-      :text='false'
+    v-icon.mx-2.my-1(
+      :color='category.color'
       :size='38'
-      :group='group'
-    )
+    ) mdi-{{category.icon}}
   v-list-item-content
     v-list-item-title(:class='{"no-desc": !hasDesc}') {{desc}}
     v-list-item-subtitle.sub-label {{datetime}}
@@ -37,7 +35,6 @@ v-list-item.transaction-item(@click='navigate()' v-show='!involved || involvedFe
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
-import { ParserCategory } from '../../../core/category_parser'
 import { UserInfoMixin, NavigationMixin, CommonMixin, GroupMixin } from '~/mixins'
 import { Transaction } from '~/types'
 import { dateFromNow } from '~/../utils/formatters'
@@ -77,7 +74,7 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
   }
 
   get category () {
-    return ParserCategory(this.transaction.category, this.group, this)
+    return this.parseCategory(this.transaction.category)
   }
 
   get hasDesc () {

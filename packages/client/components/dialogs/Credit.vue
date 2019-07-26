@@ -1,29 +1,30 @@
 <template lang='pug'>
 .credit
-  .section v{{version}} {{channel}} {{target}}
-  br
+  .section v{{version}}
+    span(v-if='!simple') {{' '}}{{channel}} {{target}}
   .buildinfo
-    span Build {{buildtime}} - {{buildTimeFromNow}}
-  .buildinfo
+    span(v-if='!simple') Build {{buildtime}} -{{' '}}
+    span {{buildTimeFromNow}}
+  .buildinfo(v-if='!simple')
     span server <{{serverName}}>
   .my-2
 
-  .newline
+  .newline(v-if='!simple')
 
-  .section
+  .section(v-if='!simple')
     span Made with
     v-icon.heart(color='#ff4057') mdi-heart
     span in Taiwan
   .copyright
-    span Copyright © 2019 The BreadSplit Team
-  .footer
+    span Copyright © 2019 BreadSplit Team
+  .footer(v-if='!simple')
     a.homepage(:href='socials.homepage' target='__blank') {{$t('ui.homepage')}}
     .divider
     a.privacy(:href='socials.privacy' target='__blank') {{$t('ui.privacy_policy')}}
 </template>
 
 <script lang='ts'>
-import { Component, Vue } from 'nuxt-property-decorator'
+import { Component, Vue, Prop } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
 import socials from '~/../meta/socials'
 import { APP_VERSION, BUILD_TARGET, BUILD_TIME, RELEASE_CHANNEL, FIREBASE_SERVER } from '~/../meta/env'
@@ -38,6 +39,8 @@ export default class Credit extends Vue {
   buildtime = BUILD_TIME
   channel = RELEASE_CHANNEL
   serverName = FIREBASE_SERVER
+
+  @Prop({ default: false }) simple?: boolean
 
   get buildTimeFromNow () {
     return dayjs(this.buildtime).fromNow()

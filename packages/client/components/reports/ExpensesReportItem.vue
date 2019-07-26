@@ -6,12 +6,10 @@ v-list-item.expenses-report-item(
   .rank {{index+1}}
 
   v-list-item-avatar.px-2(style='width:inherit')
-    app-category-icon(
-      :category='item.id'
-      :text='false'
+    v-icon(
+      :color='item.color'
       :size='38'
-      :group='group'
-    )
+    ) mdi-{{item.icon}}
 
   v-list-item-content
     v-list-item-title {{item.name}}

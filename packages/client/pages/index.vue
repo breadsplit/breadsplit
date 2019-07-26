@@ -13,6 +13,9 @@ v-container
       v-btn(@click='gotoNewGroup' rounded color='primary')
         v-icon.mr-2 mdi-plus
         span {{$t('ui.button_new_group')}}
+
+    .my-12
+    app-credit.op-25(simple='true')
 </template>
 
 <script lang='ts'>
