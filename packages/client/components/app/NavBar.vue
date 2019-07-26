@@ -68,15 +68,15 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   }
 
   async onGroupMenu (key) {
-    const groupid = this.$store.state.group.currentId
-    const group = this.$store.state.group.groups[groupid].base
-
     switch (key) {
       case 'delete':
-        if (await this.$confirm(`確定要刪除 ${group.name} ?`)) {
-          this.$apploading.open('Deleting group')
+        if (await this.$confirm(
+          this.$t('prompt.confirm_group_removal_title', [this.group.name]),
+          this.$t('prompt.confirm_group_removal')
+        )) {
+          this.$apploading.open(this.$t('loading.deleting_group'))
           if (this.current && this.current.online)
-            await this.$fire.deleteGroup(groupid)
+            await this.$fire.deleteGroup(this.group.id)
           this.removeGroup()
           this.$apploading.close()
           this.gotoHome()
@@ -84,10 +84,10 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
         break
 
       case 'transfer_online':
-        if (await this.$confirm('Are you sure?')) {
-          this.$apploading.open('Converting to Online group')
+        if (await this.$confirm(this.$t('prompt.are_you_sure'))) {
+          this.$apploading.open(this.$t('loading.coverting_online'))
           try {
-            await this.$fire.publishGroup(this.$store.state.group.currentId)
+            await this.$fire.publishGroup(this.group.id)
           }
           catch (e) {
             // eslint-disable-next-line

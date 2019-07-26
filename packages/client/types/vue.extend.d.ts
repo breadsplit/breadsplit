@@ -19,7 +19,7 @@ declare module 'vue/types/vue' {
     readonly $prompt: (text: string|TranslateResult, value?: string, title?: string, options?: object) => Promise<boolean>
     readonly $snack: (text: string|TranslateResult, options?: SnackOptions) => void
     readonly $apploading: {
-      open: (text: string) => void
+      open: (text: string|TranslateResult) => void
       close: () => void
     }
     readonly $currency: {

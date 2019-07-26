@@ -130,6 +130,9 @@ icons:
   transports: Transportations
 iso: en-US
 language_name: English
+loading:
+  coverting_online: Converting to Online group...
+  deleting_group: Deleting group...
 noun:
   category: Category
   expense: Expense
@@ -140,8 +143,10 @@ noun:
   yesterday: Yesterday
 prompt:
   are_you_sure: Are you sure?
+  confirm_group_removal: Are you sure to delete this group? This operation can not be undone.
+  confirm_group_removal_title: 'Deleting group "{0}"'
   confirm_transaction_removal: Are you sure to delete this expense? This operation can not be undone.
-  confirm_transaction_removal_title: Delete expense
+  confirm_transaction_removal_title: Deleting expense
   feedback_delivered: Your feedback is delivered. Thank you ❤
   invite_friends: Invite friends
   sending: Sending...
