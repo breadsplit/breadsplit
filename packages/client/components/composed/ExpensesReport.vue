@@ -2,6 +2,7 @@
 .expenses-report
   .text-center
     app-date-range-select(:from.sync='from' :to.sync='to' :unit.sync='unit')
+    .pb-3
     v-expand-transition
       div(v-show='filteredTransactions.length && !categoryFilter')
         chart-summary-pie(
@@ -9,8 +10,6 @@
           :style='{ width: chartWidth }'
           @click:id='i=>categoryFilter=i'
         )
-
-  .pt-3
 
   v-card.mt-2.pa-2
     .filter
@@ -48,7 +47,7 @@
       v-tabs(v-model='tab' v-if='!categoryFilter')
         v-tab {{$t('ui.report.mode_category')}}
         v-tab {{$t('ui.report.mode_expenses')}}
-      v-tabs-items(v-model='tab')
+      v-tabs-items(v-model='tab' :touchless='categoryFilter')
         v-tab-item
           v-list.pa-0(two-line)
             template(v-for='(item, index) in expenseSummary')
@@ -56,6 +55,12 @@
               app-expenses-report-item(:item='item' :total='totalAmount' :index='index' @selected='i=>categoryFilter=i')
         v-tab-item
           app-transactions-list(:transactions='filteredTransactions' :involved='involved' involveMode='expense')
+
+  template(v-if='categoryFilter')
+    .text-center.py-2
+      v-btn(text @click='categoryFilter = null' color='grey') {{$t('ui.clear_filter')}}
+
+  .mb-4
 </template>
 
 <script lang='ts'>
@@ -78,7 +83,6 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
   private internalCategoryFilter: string | null = null
   private involvedIndex = 0
 
-  mode: 'category' | 'expense' = 'category'
   ignoredCategories = ['transfer']
 
   tab = 0
@@ -115,10 +119,12 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
     const to = +dayjs(this.to)
     let filtered = this.transactions
       .filter(t => t.timestamp >= from && t.timestamp < to)
+
     if (this.categoryFilter)
-      filtered = filtered.filter(t => t.category === this.categoryFilter)
+      filtered = filtered.filter(t => (t.category || 'other') === this.categoryFilter)
     else
       filtered = filtered.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
+
     return filtered
   }
 
@@ -156,10 +162,10 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
 
   set categoryFilter (value) {
     this.internalCategoryFilter = value
-    if (value && this.mode === 'category') {
-      this.mode = 'expense'
+    if (value)
       this.tab = 1
-    }
+    else
+      this.tab = 0
   }
 
   get categoryFilterInfo () {

@@ -181,6 +181,7 @@ ui:
   button_send: Send
   button_submit: Submit
   button_yes: 'Yes'
+  clear_filter: Clear Filter
   colors: Colors
   continue_and_accept: 'By continue, you accept our {0}'
   continue_anyway: Continue anyway

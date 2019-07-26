@@ -98,7 +98,7 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
     return this.dateFrom.format((this.$t(`date_range.${this.unit}.formatter`) || '').toString())
   }
 
-  get subdisplay() {
+  get subdisplay () {
     if (this.unit === 'week' || this.unit === 'custom')
       return `${this.dateFrom.format('ll')} - ${this.dateTo.format('ll')}`
   }
