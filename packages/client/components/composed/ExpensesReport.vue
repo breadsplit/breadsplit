@@ -36,6 +36,7 @@
         v-subheader {{$t('ui.no_expenses_in_range')}}
     template(v-else)
       v-list-item
+        v-icon(color='primary').mr-2 mdi-equal-box
         .primary--text {{$t('ui.total')}}
         v-spacer
         app-money-label(

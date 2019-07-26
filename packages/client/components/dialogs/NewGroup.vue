@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-card.new-group(v-rows='"max-content max-content auto max-content"')
-  app-composed-toolbar(height='130' dark :color='form.color')
+  app-composed-toolbar.mb-n3(height='130' dark :color='form.color')
     v-btn(icon @click='close()')
       v-icon mdi-close
     v-toolbar-title {{title}}
@@ -16,16 +16,17 @@ v-card.new-group(v-rows='"max-content max-content auto max-content"')
           autofocus
         )
 
-  v-scale-transition
-    app-icon-color-select(:icon.sync='form.icon' :color.sync='form.color' v-show='step === 1')
-      template(v-slot='{ on }')
-        v-btn(fab v-on='on' style='position: absolute; right: 20px; margin-top: -25px;')
-          v-icon(:color='form.color') mdi-{{form.icon}}
+  div
+    v-scale-transition
+      app-icon-color-select(:icon.sync='form.icon' :color.sync='form.color' v-show='step === 1')
+        template(v-slot='{ on }')
+          v-btn(fab v-on='on' style='position: absolute; right: 20px; margin-top: -18px;')
+            v-icon(:color='form.color') mdi-{{form.icon}}
 
   v-window.height-100.grid-fill-height(v-model='step' touchless style='min-height:300px')
     // First page
     v-window-item(:value='1')
-      v-container.pa-4
+      v-container.pa-4.mt-3
         v-layout(column).pl-4.pr-4.pt-4
           v-flex
             app-currency-select(v-model='form.main_currency')
@@ -39,7 +40,7 @@ v-card.new-group(v-rows='"max-content max-content auto max-content"')
 
     // Second page
     v-window-item(:value='2')
-      .height-100.mt-n3(v-rows='"max-content auto"')
+      .height-100(v-rows='"max-content auto"')
         v-combobox.member-name-input.mx-4(
           ref='member_name_input'
           :items='members_suggestions'
@@ -64,9 +65,8 @@ v-card.new-group(v-rows='"max-content max-content auto max-content"')
                       app-user-info(:member='member', field='name' :fallback='member.name')
                     v-list-item-subtitle.sub-label(style='margin-top: -5px')
                       app-user-info(:member='member', field='email')
-                  v-list-item-action(v-if='member.uid !== me')
-                    v-btn(icon text @click='removeMember(member.uid)')
-                      v-icon.op-75 mdi-close
+                  v-list-item-icon(v-if='member.uid !== me' @click='removeMember(member.uid)')
+                    v-icon.op-75 mdi-close
 
   div
     v-divider
