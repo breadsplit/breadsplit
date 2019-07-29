@@ -1,12 +1,14 @@
 <template lang='pug'>
 v-card.form-transaction(v-rows='"max-content auto max-content"')
   app-composed-toolbar(height='85' dark color='primary')
-    v-btn(icon @click='close()')
+    v-btn(icon @click='close')
       v-icon mdi-close
     v-toolbar-title {{title}}
     v-spacer
-    v-btn.mr-n2(icon @click='promptRemove()' v-if='mode==="edit"')
+    v-btn(icon @click='promptRemove' v-if='mode==="edit"')
       v-icon mdi-delete
+    v-btn.mr-n2(icon @click='submit' :disabled='!form.total_fee')
+      v-icon mdi-check
 
     template(v-slot:content)
       div(style='margin-left: 72px; margin-top: -10px')
