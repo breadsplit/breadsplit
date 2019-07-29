@@ -116,6 +116,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     this.$set(this, 'form', cloneDeep(trans))
     this.step = STEP_DETAIL
     this.mode = 'edit'
+    this.fulfillDebtors()
   }
 
   create () {
@@ -173,6 +174,14 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   cleanUp () {
     TransactionHelper.from(this.form).cleanUp()
     oc(this).$refs.details.$refs.exchange.save(() => '')()
+  }
+
+  fulfillDebtors () {
+    const debtorIds = this.form.debtors.map(d => d.uid)
+    this.form.debtors.push(
+      ...this.members.filter(m => m.uid && !debtorIds.includes(m.uid))
+        .map(m => ({ weight: 0, percent: 0, uid: m.uid || IdMe }))
+    )
   }
 
   next () {
