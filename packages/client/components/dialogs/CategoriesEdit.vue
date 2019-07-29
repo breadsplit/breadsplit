@@ -6,8 +6,12 @@ v-card.categories-edit(v-rows='"max-content max-content auto max-content"')
     v-toolbar-title Categories
     v-spacer
 
-  v-list
-    span TODO:
+  app-category-item(
+    v-for='cat in categories'
+    @click='setValue(cat.id)'
+    :key='cat.id'
+    :category='cat'
+  )
 </template>
 
 <script lang='ts'>

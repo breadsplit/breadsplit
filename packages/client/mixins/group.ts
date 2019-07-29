@@ -1,6 +1,6 @@
 import { Vue, Component, Getter } from 'nuxt-property-decorator'
 import { Group, Member } from '~/types'
-import { GroupCurrency, ParserCategory } from '~/core'
+import { GroupCurrency, ParserCategory, GetCategoriesOfGroup } from '~/core'
 
 @Component
 export default class GroupMixin extends Vue {
@@ -13,5 +13,9 @@ export default class GroupMixin extends Vue {
 
   parseCategory (category: string = 'other') {
     return ParserCategory(category, this.group, this)
+  }
+
+  get categories () {
+    return GetCategoriesOfGroup(this.group, this)
   }
 }

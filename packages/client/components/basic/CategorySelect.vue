@@ -10,22 +10,18 @@
 </template>
 
 <script lang='ts'>
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
-import { GetCategoriesOfGroup } from '../../../core/category_parser'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import { Group } from '~/types'
+import { GroupMixin } from '~/mixins'
 
 @Component
-export default class CategorySelect extends Vue {
+export default class CategorySelect extends mixins(GroupMixin) {
   @Prop(String) readonly value!: string
   @Prop() readonly group!: Group
   @Prop({ default: 5 }) readonly columns!: number
 
   setValue (value) {
     this.$emit('input', value)
-  }
-
-  get categories () {
-    return GetCategoriesOfGroup(this.group, this)
   }
 }
 </script>
