@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import { Category, Group } from '../types'
 import { BuiltInCategories, CategoryPresets } from '../meta/categories'
-import { IsThisId } from './id_helper'
 
 export function ParserCategory (cat: Category | string | undefined, group: Group, vm: Vue): Category {
   if (cat && typeof cat !== 'string')
@@ -11,9 +10,10 @@ export function ParserCategory (cat: Category | string | undefined, group: Group
 
   let category
 
-  if (IsThisId.Category(name))
-    category = (group.categories || []).find(i => typeof i !== 'string' && i.id === name)
-  else
+  category = (group.categories || []).find(i => typeof i !== 'string' && i.id === name)
+
+  if (!category)
+    // @ts-ignore
     category = BuiltInCategories[name]
 
   // fallback

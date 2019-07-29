@@ -203,6 +203,7 @@ export const Transforms: TransformFunctions<Group> = {
       return snap
 
     const category = snap.categories.find(c => typeof c !== 'string' && c.id === id) as Category
+
     if (!category)
       return snap
 
