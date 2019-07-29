@@ -21,7 +21,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
                   :currency='form.currency'
                 )
 
-  v-window.grid-fill-height(v-model='step' touchless style='min-height:550px')
+  v-window.grid-fill-height.form(v-model='step' touchless)
     v-window-item.page
       page-splitting(
         ref='splitting_creditors'
@@ -266,10 +266,6 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
 </script>
 
 <style lang='sass'>
-.v-dialog--fullscreen
-  .form-transaction
-    height: 100%
-
 .form-transaction
   overflow-x: hidden
 
@@ -309,4 +305,13 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       .user-avatar
         padding: 0.7em
         cursor: pointer
+
+  .form
+    min-height: 550px
+
+.v-dialog--fullscreen
+  .form-transaction
+    height: 100%
+    .form
+      min-height: 0
 </style>
