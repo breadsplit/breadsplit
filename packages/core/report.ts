@@ -2,8 +2,7 @@ import Fraction from 'fraction.js'
 import Vue from 'vue'
 import sortBy from 'lodash/sortBy'
 import { Transaction, Group } from '../types'
-import { ParserCategory, ExchangeInTransaction } from '.'
-import { TransactionHelper } from '~/core'
+import { ParserCategory, ExchangeInTransaction, TransactionHelper } from '.'
 
 export interface ExpensesByCategoriesItem {
   id: string
