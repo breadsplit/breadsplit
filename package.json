@@ -126,7 +126,7 @@
     "@cypress/webpack-preprocessor": "4.1.0",
     "@nuxt/typescript": "2.8.1",
     "@nuxtjs/eslint-config": "1.0.1",
-    "@nuxtjs/eslint-module": "^0.2.1",
+    "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/vuetify": "^1.0.0",
     "@types/blueimp-md5": "2.7.0",
     "@types/d3": "5.7.2",
