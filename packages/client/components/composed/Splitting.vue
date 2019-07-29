@@ -136,7 +136,8 @@
 import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
 import { TranslateResult } from 'vue-i18n'
 import NumberInput from '../basic/NumberInput.vue'
-import { TransactionBalanceChanges, TransactionWeightsHelper } from '~/core'
+import { TransactionHelper } from '../../../core'
+import { TransactionWeightsHelper } from '~/core'
 import { Transaction, Member, Weight, Splitmode } from '~/types'
 
 @Component
@@ -148,7 +149,7 @@ export default class Splitting extends Vue {
 
   focused: string|null = null
 
-  get modes (): {mode: Splitmode; icon: string; text: TranslateResult}[] {
+  get modes (): { mode: Splitmode; icon: string; text: TranslateResult }[] {
     return [
       { mode: 'average', icon: 'mdi-account-multiple', text: this.$t('ui.splitting.average') },
       { mode: 'amount', icon: 'mdi-currency-usd', text: this.$t('ui.splitting.amount') },
@@ -192,7 +193,7 @@ export default class Splitting extends Vue {
   }
 
   get balanceChanges () {
-    return TransactionBalanceChanges(this.trans)
+    return TransactionHelper.from(this.trans).balanceChanges
   }
 
   get participators () {
@@ -283,7 +284,7 @@ export default class Splitting extends Vue {
   }
 
   getFee (participator: Weight) {
-    return this.helper.getFee(participator, this.mode)
+    return this.helper.getFee(participator)
   }
 
   setFee (participator: Weight, fee: number) {
@@ -370,7 +371,7 @@ export default class Splitting extends Vue {
   }
 
   public cleanUp (removeZero: boolean) {
-    this.helper.cleanUp(this.mode, removeZero)
+    this.helper.cleanUp(removeZero)
   }
 }
 </script>

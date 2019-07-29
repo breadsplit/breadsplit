@@ -1,4 +1,5 @@
-import { TransactionDefault, TransactionBalanceChanges } from '../../../packages/core'
+import { TransactionDefault } from '../../../packages/core'
+import { TransactionHelper } from '../../../packages/core/transaction_helper'
 
 describe('transaction balances', () => {
   const trans = TransactionDefault({
@@ -18,7 +19,7 @@ describe('transaction balances', () => {
       weight: 1,
     }],
   })
-  const balances = TransactionBalanceChanges(trans)
+  const balances = TransactionHelper.from(trans).balanceChanges
 
   test('balances order', () => {
     expect(balances).toHaveLength(2)

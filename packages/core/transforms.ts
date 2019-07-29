@@ -172,8 +172,6 @@ export const Transforms: TransformFunctions<Group> = {
     // In case there are some conflict by other users
     const missedCategories = (snap.categories || []).filter(t => typeof t !== 'string' && !categoriesIds.includes(t.id))
 
-    console.log(categories, missedCategories)
-
     snap.categories = [...categories, ...missedCategories]
 
     return snap

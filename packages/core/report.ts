@@ -2,7 +2,8 @@ import Fraction from 'fraction.js'
 import Vue from 'vue'
 import sortBy from 'lodash/sortBy'
 import { Transaction, Group } from '../types'
-import { ParserCategory, TransactionBalanceChanges, ExchangeInTransaction } from '.'
+import { ParserCategory, ExchangeInTransaction } from '.'
+import { TransactionHelper } from '~/core'
 
 export interface ExpensesByCategoriesItem {
   id: string
@@ -37,7 +38,7 @@ export function ReportExpensesByCategories (vm: Vue, transactions: Transaction[]
 
     let value = new Fraction(transaction.total_fee)
     if (involvedId) {
-      const balance = TransactionBalanceChanges(transaction).find(i => i.uid === involvedId)
+      const balance = TransactionHelper.from(transaction).balanceChangesOf(involvedId)
       if (!balance)
         value = new Fraction(0)
       else

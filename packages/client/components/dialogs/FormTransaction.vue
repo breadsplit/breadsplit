@@ -69,6 +69,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
 import { Component, mixins, Getter, Watch } from 'nuxt-property-decorator'
 import cloneDeep from 'lodash/cloneDeep'
 import { oc } from 'ts-optchain'
+import { TransactionHelper } from '../../../core'
 import PageCreditors from './transaction/PageCreditors.vue'
 import PageDetails from './transaction/PageDetails.vue'
 import PageSplitting from './transaction/PageSplitting.vue'
@@ -112,13 +113,13 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   edit (trans: Transaction) {
-    this.form = cloneDeep(trans)
+    this.$set(this, 'form', cloneDeep(trans))
     this.step = STEP_DETAIL
     this.mode = 'edit'
   }
 
   create () {
-    this.form = TransactionDefault()
+    this.$set(this, 'form', TransactionDefault())
     this.step = STEP_INPUT
     this.mode = 'create'
 
@@ -170,8 +171,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   cleanUp () {
-    oc(this).$refs.splitting_creditors.$refs.splitting.cleanUp(() => '')(true)
-    oc(this).$refs.splitting_debtors.$refs.splitting.cleanUp(() => '')(true)
+    TransactionHelper.from(this.form).cleanUp()
     oc(this).$refs.details.$refs.exchange.save(() => '')()
   }
 
@@ -241,6 +241,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   submit () {
+    this.cleanUp()
     const trans = this.form
     if (this.mode === 'create')
       this.$store.dispatch('group/newTransaction', { id: this.group.id, trans })

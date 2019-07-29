@@ -1,67 +1,8 @@
-import sumBy from 'lodash/sumBy'
-import merge from 'lodash/merge'
 import find from 'lodash/find'
-import map from 'lodash/map'
-import uniq from 'lodash/uniq'
-import concat from 'lodash/concat'
 import Fraction from 'fraction.js'
-import { Transaction, Group, TransactionBalance, Balance, Solution, ExchangeRecord } from '../types'
+import { Transaction, Group, Balance, Solution, ExchangeRecord } from '../types'
 import { defaultCurrency } from './defaults'
-import { FallbackExchangeRate } from '.'
-
-export function GCD (arr: number[]) {
-  // Use spread syntax to get minimum of array
-  const lowest = Math.min(...arr)
-
-  for (let factor = lowest; factor > 1; factor--) {
-    let isCommonDivisor = true
-
-    for (let j = 0; j < arr.length; j++) {
-      if (arr[j] % factor !== 0) {
-        isCommonDivisor = false
-        break
-      }
-    }
-
-    if (isCommonDivisor)
-      return factor
-  }
-
-  return 1
-}
-
-export function CreditorWeights (trans: Transaction): number {
-  return sumBy(trans.creditors, c => c.weight || 0)
-}
-
-export function DebtorWeights (trans: Transaction): number {
-  return sumBy(trans.debtors, d => d.weight || 0)
-}
-
-export function TransactionBalanceChanges (trans: Transaction): TransactionBalance[] {
-  const fee = trans.total_fee
-  const creditorWeights = CreditorWeights(trans)
-  const debtorWeights = DebtorWeights(trans)
-  const involvedIds = uniq(concat(map(trans.creditors, 'uid'), map(trans.debtors, 'uid')))
-
-  const changes = involvedIds.map((uid): TransactionBalance => {
-    const credit_weight = merge({ weight: 0 }, find(trans.creditors, { uid })).weight
-    const debt_weight = merge({ weight: 0 }, find(trans.debtors, { uid })).weight
-    const credit = new Fraction(fee).mul(credit_weight).div(creditorWeights)
-    const debt = new Fraction(fee).mul(debt_weight).div(debtorWeights)
-    const balance = credit.sub(debt)
-    return {
-      uid,
-      credit_weight,
-      debt_weight,
-      credit,
-      debt,
-      balance,
-    }
-  })
-
-  return changes
-}
+import { FallbackExchangeRate, TransactionHelper } from '.'
 
 export function GroupCurrency (group: Group) {
   const set = new Set([group.main_currency])
@@ -118,7 +59,7 @@ export function GroupBalances (group: Group, display?: string | null, exchange_r
     })
 
   group.transactions.forEach((t) => {
-    const changes = TransactionBalanceChanges(t)
+    const changes = TransactionHelper.from(t).balanceChanges
     changes.forEach((c) => {
       const member = find(memberBalances, { uid: c.uid })
       if (!member)

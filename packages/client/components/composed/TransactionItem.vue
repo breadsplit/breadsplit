@@ -35,10 +35,10 @@ v-list-item.transaction-item(@click='navigate()' v-show='!involved || involvedFe
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
+import { TransactionHelper } from '../../../core'
 import { UserInfoMixin, NavigationMixin, CommonMixin, GroupMixin } from '~/mixins'
 import { Transaction } from '~/types'
 import { dateFromNow } from '~/../utils/formatters'
-import { TransactionBalanceChanges } from '~/core'
 
 @Component
 export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, NavigationMixin, CommonMixin) {
@@ -57,7 +57,7 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
   get involvedBalance () {
     if (!this.involved)
       return
-    return TransactionBalanceChanges(this.transaction).find(i => i.uid === this.involved)
+    return TransactionHelper.from(this.transaction).balanceChangesOf(this.involved)
   }
 
   get involvedFee () {

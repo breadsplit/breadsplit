@@ -71,10 +71,10 @@ export default class PageDetails extends mixins(GroupMixin) {
     const creditors = new TransactionWeightsHelper(this.form, 'creditors')
     const debtors = new TransactionWeightsHelper(this.form, 'debtors')
     const positive = creditors.participators
-      .map(p => ({ amount: creditors.getFee(p, 'weight'), value: p.uid }))
+      .map(p => ({ amount: creditors.getFee(p), value: p.uid }))
       .filter(i => i.amount)
     const negative = debtors.participators
-      .map(p => ({ amount: -debtors.getFee(p, 'weight'), value: p.uid }))
+      .map(p => ({ amount: -debtors.getFee(p), value: p.uid }))
       .filter(i => i.amount)
     return [...positive, null, ...negative]
   }
