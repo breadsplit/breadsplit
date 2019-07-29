@@ -197,6 +197,10 @@ export const actions: ActionTree<GroupState, RootState> = {
     NewOperation(context, id, 'remove_category', categoryid)
   },
 
+  reorderCategories (context, { id, categories }) {
+    NewOperation(context, id, 'reorder_categories', categories)
+  },
+
   // Meta
   changeDisplayCurrency ({ state, commit, dispatch }, { id, display_currency }) {
     id = id || state.currentId

@@ -1,7 +1,7 @@
 <template lang='pug'>
 .category-item.pa-2(
   @click='e=>$emit("click", e)'
-  :class='{ active: active, notactive: !active }'
+  :class='{ active: active, notactive: !active, color }'
   :style='{ "--color": category.color }'
 )
   v-icon mdi-{{ category.icon }}
@@ -17,6 +17,7 @@ export default class CategoryItem extends Vue {
   @Prop(Object) readonly category!: Category
   @Prop(Boolean) readonly active?: boolean
   @Prop(Boolean) readonly hideLabel?: boolean
+  @Prop(Boolean) readonly color?: boolean
 }
 </script>
 
@@ -55,6 +56,6 @@ export default class CategoryItem extends Vue {
   &.active:after
     opacity: 0.15
 
-  &.notactive
+  &.notactive:not(.color)
     --color: rgba(125, 125, 125, 0.4) !important
 </style>

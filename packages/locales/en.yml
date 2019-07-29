@@ -186,6 +186,7 @@ ui:
   button_send: Send
   button_submit: Submit
   button_yes: 'Yes'
+  categories: Categories
   clear_filter: Clear Filter
   colors: Colors
   continue_and_accept: 'By continue, you accept our {0}'
@@ -220,6 +221,7 @@ ui:
   language: Language
   loading: Loading...
   menu:
+    edit_categories: Edit categories
     edit_group: Edit group
     make_group_online: Make this group online
     member_is_me: This is me
@@ -227,7 +229,6 @@ ui:
     remove_member: 'Remove {name} from group'
     rename_member: Rename
     view_group: View group
-    edit_categories: Edit categories
   misc: Misc.
   more_currency: More...
   new_expense: New expense

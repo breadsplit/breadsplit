@@ -7,7 +7,7 @@
     solo required hide-details
   )
 
-  app-category-select.mx-n3(v-model='form.category' :group='group')
+  app-category-select.mx-n3(v-model='form.category')
 
   v-divider.my-3
 
@@ -25,7 +25,7 @@
 
   exchange-rate-input(ref='exchange' :form='form')
 
-  //v-card.ma-2.pa-3.mb-7
+  v-card.ma-2.pa-3.mb-7
     app-receipt-list(:items='receipt_items' :currency='form.currency')
       template(v-slot:item='{ item }')
         div

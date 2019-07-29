@@ -21,6 +21,7 @@ export type TransformKeys =
   | 'insert_category'
   | 'modify_category'
   | 'remove_category'
+  | 'reorder_categories'
   | 'change_member_id'
   | 'new_activity'
 
@@ -160,6 +161,21 @@ export const Transforms: TransformFunctions<Group> = {
       entity_name: transaction.desc,
       entity_desc: `${transaction.currency} ${transaction.total_fee}`,
     })
+    return snap
+  },
+
+  reorder_categories (snap, categories: (Category | string)[], { by, timestamp } = {}) {
+    if (!categories)
+      return snap
+    const categoriesIds = categories.map(t => typeof t !== 'string' && t.id).filter(i => i) as string[]
+
+    // In case there are some conflict by other users
+    const missedCategories = (snap.categories || []).filter(t => typeof t !== 'string' && !categoriesIds.includes(t.id))
+
+    console.log(categories, missedCategories)
+
+    snap.categories = [...categories, ...missedCategories]
+
     return snap
   },
 

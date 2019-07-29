@@ -158,6 +158,7 @@ ui:
   button_send: 發送
   button_submit: 提交
   button_yes: 是
+  categories: 類別
   clear_filter: 清除篩選
   colors: 顏色
   continue_and_accept: '繼續使用即表示您同意我們的{0}'
