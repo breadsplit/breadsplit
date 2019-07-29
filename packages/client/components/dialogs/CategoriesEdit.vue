@@ -1,12 +1,14 @@
 <template lang='pug'>
-v-card.categories-edit(v-rows='"max-content max-content auto max-content"')
+v-card.categories-edit
   app-composed-toolbar.mb-n3(dark color='primary')
     v-btn(icon @click='close()')
       v-icon mdi-close
-    v-toolbar-title {{$t('ui.categories')}}
+    v-toolbar-title {{$t('ui.category_editing.title')}}
     v-spacer
+    v-btn(icon @click='submit()')
+      v-icon mdi-check
 
-  draggable.my-6(
+  draggable.py-6.mt-2(
     v-model='form'
     v-bind='dragOptions'
     @start='onStart'
@@ -14,21 +16,30 @@ v-card.categories-edit(v-rows='"max-content max-content auto max-content"')
   )
     transition-group.pa-3(type='transition', v-columns='`repeat(${columns}, 1fr)`')
       app-category-item(
-        @click='onClick'
+        @click='edit(cat)'
         v-for='cat in form'
-        :key='cat'
+        :key='JSON.stringify(cat)'
         :category='parseCategory(cat)'
         :class='{"op-0": dragging === cat}'
         color
       )
 
-  v-btn(@click='submit', large) Submit
+  .text-center
+    span.op-50 {{$t('ui.category_editing.tips')}}
+
+  .py-3
+
+  v-btn(fab color='primary' @click='add' absolute right bottom style='bottom: 18px')
+    v-icon mdi-plus
+
+  app-form-category(ref='dialog')
 </template>
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
 import draggable from 'vuedraggable'
 import cloneDeep from 'lodash/cloneDeep'
+import FormCategory from './FormCategory.vue'
 import { CommonMixin, GroupMixin, DialogChildMixin } from '~/mixins'
 import { Category } from '~/types'
 import { CategoryPresets } from '~/../meta/categories'
@@ -51,8 +62,13 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
     ghostClass: 'ghost',
   }
 
+  $refs!: {
+    dialog: FormCategory
+  }
+
   init () {
     this.form = cloneDeep(this.group.categories || CategoryPresets.default)
+      .filter(c => typeof c === 'string' || !c.removed)
   }
 
   mounted () {
@@ -74,8 +90,21 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
     this.dragging = null
   }
 
-  onClick (e) {
-    console.log(e)
+  async edit (cat: string | Category) {
+    if (typeof cat === 'string') {
+      this.WIP() // TODO:
+    }
+    else {
+      const category = await this.$refs.dialog.open(cat)
+      if (category)
+        this.init()
+    }
+  }
+
+  async add () {
+    const category = await this.$refs.dialog.open()
+    if (category)
+      this.form.push(category)
   }
 }
 </script>

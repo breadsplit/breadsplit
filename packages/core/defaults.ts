@@ -64,7 +64,7 @@ export const ClientGroupDefault = (overrides?: Partial<ClientGroup>): ClientGrou
 
 export const CategoryDefault = (overrides?: Partial<Category>): Category => merge({
   id: GenerateId.Category(),
-  text: '?',
+  text: '',
   icon: 'help-circle-outline',
   color: '#555',
 }, overrides)

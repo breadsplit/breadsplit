@@ -158,7 +158,13 @@ ui:
   button_send: 發送
   button_submit: 提交
   button_yes: 是
-  categories: 類別
+  category_editing:
+    category_name: 分類名稱
+    category_name_placeholder: 請輸入類別名稱...
+    create: 新增分類
+    edit: 編輯分類
+    tips: 拖動以重新排序，點擊即可進行編輯
+    title: 分類管理
   clear_filter: 清除篩選
   colors: 顏色
   continue_and_accept: '繼續使用即表示您同意我們的{0}'

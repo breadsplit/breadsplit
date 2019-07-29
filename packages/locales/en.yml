@@ -186,7 +186,13 @@ ui:
   button_send: Send
   button_submit: Submit
   button_yes: 'Yes'
-  categories: Categories
+  category_editing:
+    category_name: Category name
+    category_name_placeholder: Enter category name
+    create: New Category
+    edit: Edit Category
+    tips: 'Drag to reorder, tap to edit'
+    title: Manage Categories
   clear_filter: Clear Filter
   colors: Colors
   continue_and_accept: 'By continue, you accept our {0}'
