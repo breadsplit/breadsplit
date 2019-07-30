@@ -4,7 +4,7 @@
     app-date-range-select(:from.sync='from' :to.sync='to' :unit.sync='unit')
     .pb-3
     v-expand-transition
-      div(v-show='filteredTransactions.length && !categoryFilter')
+      div(v-show='!categoryFilter')
         chart-summary-pie(
           :value='expenseSummary'
           :style='{ width: chartWidth }'
