@@ -11,6 +11,13 @@ svg.chart-summary-pie(
 import * as d3 from 'd3'
 import { Component, Prop, Vue, Watch } from 'nuxt-property-decorator'
 
+export interface Item {
+  id: string
+  label: string
+  color: string
+  value: number
+}
+
 @Component
 export default class ChartSummaryPie extends Vue {
   @Prop({ default: 400 }) readonly width!: number
@@ -19,21 +26,20 @@ export default class ChartSummaryPie extends Vue {
   @Prop({ default: 40 }) readonly margin!: number
   @Prop({ default: 1000 }) readonly duration!: number
   @Prop({ default: false }) readonly label!: boolean
-  @Prop({ default: () => [] }) readonly value!: {name: string; value: number; color?: string}[]
+  @Prop({ default: () => [] }) readonly value!: Item[]
 
   get radius () {
     return Math.min(this.width, this.height) / 2 - this.margin
   }
 
-  svg: any
-  pie: any
-  arc: any
-  outerArc: any
-  _current: any
+  svg!: d3.Selection<SVGElement, {}, null, undefined>
+  pie!: d3.Pie<any, Item>
+  arc!: d3.Arc<any, d3.PieArcDatum<Item>>
+  outerArc!: d3.Arc<any, d3.PieArcDatum<Item>>
 
   mounted () {
     this.init()
-    this.update()
+    this.update(this.value)
   }
 
   init () {
@@ -51,92 +57,83 @@ export default class ChartSummaryPie extends Vue {
     const height = this.height
     const radius = Math.min(width, height) / 2
 
-    this.pie = d3.pie()
+    this.pie = d3.pie<Item>()
       .sort(null)
-      .value((d: any) => {
-        return d.value
-      })
+      .value(d => d.value)
 
-    this.arc = d3.arc()
+    this.arc = d3.arc<any, d3.PieArcDatum<Item>>()
       .outerRadius(radius * 0.8)
       .innerRadius(radius * 0.4)
 
-    this.outerArc = d3.arc()
+    this.outerArc = d3.arc<any, d3.PieArcDatum<Item>>()
       .innerRadius(radius * 0.9)
       .outerRadius(radius * 0.9)
 
     svg.attr('transform', `translate(${width / 2},${height / 2})`)
   }
 
-  mergeWithFirstEqualZero (first, second) {
+  mergeWithFirstEqualZero (first: Item[], second: Item[]): Item[] {
     const secondSet = d3.set()
-    second.forEach((d) => { secondSet.add(d.id) })
+    second.forEach(d => secondSet.add(d.id))
 
     const onlyFirst = first
-      .filter((d) => { return !secondSet.has(d.id) })
-      .map((d) => { return { ...d, value: 0 } })
+      .filter(d => !secondSet.has(d.id))
+      .map(d => ({ ...d, value: 0 }))
 
-    return d3.merge([second, onlyFirst])
-      .sort((a: any, b: any) => {
-        return d3.ascending(a.value, b.value)
-      })
+    return d3.merge<Item>([second, onlyFirst])
+      .sort((a, b) => d3.ascending(a.value, b.value))
   }
 
   @Watch('value', { deep: true })
-  update () {
-    this.change(this.value)
+  update (newValue: Item[], oldValue: Item[] = []) {
+    this.change(newValue, oldValue)
   }
 
-  change (data: any[]) {
+  change (data: Item[], oldData: Item[]) {
     const duration = this.duration
     const svg = this.svg
     const vm = this
     const key = d => d.data.id
 
-    data = [{ id: 'none', color: '#ccc', value: data.length ? 0 : 1 }, ...data]
+    data = [{ id: 'none', color: '#ccc', value: data.length ? 0 : 1, label: '' }, ...data]
 
-    let data0 = svg
-      .select('.slices')
-      .selectAll('path.slice')
-      .data()
-      .map(d => d.data)
+    if (oldData.length === 0)
+      oldData = data
 
-    if (data0.length === 0)
-      data0 = data
+    const was = this.mergeWithFirstEqualZero(data, oldData)
+    const is = this.mergeWithFirstEqualZero(oldData, data)
 
-    const was = this.mergeWithFirstEqualZero(data, data0)
-    const is = this.mergeWithFirstEqualZero(data0, data)
+    const wasDatum = this.pie(was)
+    const isDatum = this.pie(is)
 
     /* ------- SLICE ARCS ------- */
 
     let slice = svg.select('.slices')
       .selectAll('path.slice')
-      .data(this.pie(was), key)
+      .data(wasDatum, key)
 
     slice.enter()
       .insert('path')
       .attr('class', 'slice')
       .style('fill', d => d.data.color)
-      .each(function (d) {
+      /* .each(function (d) {
         // @ts-ignore
         this._current = d
-      })
+      }) */
 
     slice = svg.select('.slices')
       .selectAll('path.slice')
-      .data(this.pie(is), key)
+      .data(isDatum, key)
 
     slice
       .transition()
       .duration(duration)
-      .attrTween('d', function (d) {
-        // @ts-ignore
-        const interpolate = d3.interpolate(this._current, d)
-        // @ts-ignore
-        const _this = this
-        return function (t) {
-          _this._current = interpolate(t)
-          return vm.arc(_this._current)
+      .attrTween('d', (d, i) => {
+        let current = wasDatum[i]
+        const interpolate = d3.interpolate(current, d)
+        return (t) => {
+          current = interpolate(t)
+          return this.arc(current) || ''
         }
       })
 
@@ -164,7 +161,7 @@ export default class ChartSummaryPie extends Vue {
       .append('text')
       .attr('dy', '.35em')
       .style('opacity', 0)
-      .text(d => d.data.name)
+      .text(d => d.data.label)
       .each(function (d) {
         // @ts-ignore
         this._current = d
@@ -190,6 +187,7 @@ export default class ChartSummaryPie extends Vue {
         const _this = this
         return function (t) {
           const d2 = interpolate(t)
+          // @ts-ignore
           _this._current = d2
           const pos = vm.outerArc.centroid(d2)
           pos[0] = vm.radius * (midAngle(d2) < Math.PI ? 1 : -1)
@@ -238,6 +236,7 @@ export default class ChartSummaryPie extends Vue {
       .style('opacity', (d) => {
         return d.data.value === 0 ? 0 : 0.5
       })
+      // @ts-ignore
       .attrTween('points', function (d) {
         // @ts-ignore
         this._current = this._current
@@ -247,6 +246,7 @@ export default class ChartSummaryPie extends Vue {
         const _this = this
         return function (t) {
           const d2 = interpolate(t)
+          // @ts-ignore
           _this._current = d2
           const pos = vm.outerArc.centroid(d2)
           pos[0] = vm.radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1)
