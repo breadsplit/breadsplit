@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-list.activities-list.pb-4.pl-2.pt-0
+v-list.activities-list.pb-4.pl-2.pt-0(flat)
   template(v-for='([act, prev], index) in parsed')
     v-list-item.relax-list-item(:key='act.id' v-on='on(act)' :class='{head: act.by !== prev.by}')
       v-list-item-avatar
@@ -66,6 +66,7 @@ export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixi
   .head
     margin-top: 10px
   .timestamp
+    padding-top: 5px
     color: var(--theme-primary) !important
   .v-list-item__content
     padding: 0.4em 0

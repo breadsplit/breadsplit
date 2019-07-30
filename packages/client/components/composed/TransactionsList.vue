@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-list.transactions-list.pa-0(two-line)
+v-list.transactions-list.pa-0(two-line flat)
   template(v-for='(transaction, index) in transactions')
     v-divider(v-if='index!=0')
     app-transaction-item(

@@ -1,6 +1,7 @@
 <template lang='pug'>
 v-list-item.expenses-report-item(
   @click='$emit("selected", item.id)'
+  :ripple='false'
   :style='{"--color": item.color, "--percent": `${percent}%`}'
 )
   .rank {{index+1}}

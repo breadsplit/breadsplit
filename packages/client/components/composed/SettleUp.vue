@@ -9,7 +9,7 @@ v-card.settle-up
 
   // app-chart-settle-up-solutions(:solutions='solutions')
 
-  v-list.pa-0
+  v-list.pa-0(flat)
     template(v-for='(solution, index) in solutions')
       v-list-item.relax-list-item(:key='solution.uid' @click='settleUp(solution)')
         i18n(path='ui.settle_up_solution').py-2.px-0

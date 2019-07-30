@@ -1,5 +1,9 @@
 <template lang='pug'>
-v-list-item.transaction-item(@click='navigate()' v-show='!involved || involvedFee !== 0')
+v-list-item.transaction-item(
+  @click='navigate()'
+  :ripple='false'
+  v-show='!involved || involvedFee !== 0'
+)
   v-list-item-avatar
     v-icon.mx-2.my-1(
       :color='category.color'
@@ -29,12 +33,14 @@ v-list-item.transaction-item(@click='navigate()' v-show='!involved || involvedFe
     )
     .creators-debtors
       app-avatars-horizontal-group(:ids='creditor_ids' size='24' max-length='3')
-      v-icon(size='20') mdi-arrow-right
-      app-avatars-horizontal-group(:ids='debtor_ids' size='24' max-length='3')
+      template(v-if='involved_ids.length > 1')
+        v-icon(size='20') mdi-arrow-right
+        app-avatars-horizontal-group(:ids='debtor_ids' size='24' max-length='3')
 </template>
 
 <script lang='ts'>
 import { Component, mixins, Prop } from 'nuxt-property-decorator'
+import uniq from 'lodash/uniq'
 import { TransactionHelper } from '../../../core'
 import { UserInfoMixin, NavigationMixin, CommonMixin, GroupMixin } from '~/mixins'
 import { Transaction } from '~/types'
@@ -52,6 +58,10 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
 
   get debtor_ids () {
     return this.transaction.debtors.filter(c => c.weight).map(c => c.uid)
+  }
+
+  get involved_ids () {
+    return uniq([...this.creditor_ids, ...this.debtor_ids])
   }
 
   get involvedBalance () {

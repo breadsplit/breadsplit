@@ -48,10 +48,10 @@
       v-tabs(v-model='tab' v-if='!categoryFilter')
         v-tab {{$t('ui.report.mode_category')}}
         v-tab {{$t('ui.report.mode_expenses')}} ({{filteredTransactions.length}})
-      v-divider
+        v-divider
       v-tabs-items(v-model='tab' :touchless='categoryFilter')
         v-tab-item
-          v-list.pa-0(two-line)
+          v-list.pa-0(two-line flat)
             template(v-for='(item, index) in expenseSummary')
               v-divider(v-if='index!=0')
               app-expenses-report-item(:item='item' :total='totalAmount' :index='index' @selected='i=>categoryFilter=i')

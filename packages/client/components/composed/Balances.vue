@@ -6,7 +6,7 @@ v-card.balances
     v-spacer
     app-display-currency-switch
 
-  v-list.pa-0
+  v-list.pa-0(flat)
     template(v-for='(balance, index) in balances')
       v-list-item(:key='balance.uid' @click='gotoNewTransaction({from: balance.uid})')
         v-list-item-avatar
