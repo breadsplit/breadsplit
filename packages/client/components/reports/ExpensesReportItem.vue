@@ -13,7 +13,7 @@ v-list-item.expenses-report-item(
     ) mdi-{{item.icon}}
 
   v-list-item-content
-    v-list-item-title {{item.name}}
+    v-list-item-title {{item.label}}
     v-list-item-subtitle.sub-label {{percent}}%
 
   v-list-item-action.pr-1.text-right

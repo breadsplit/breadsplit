@@ -45,9 +45,10 @@
           color
         )
       v-divider
-      v-tabs(v-model='tab' v-if='!categoryFilter')
-        v-tab {{$t('ui.report.mode_category')}}
-        v-tab {{$t('ui.report.mode_expenses')}} ({{filteredTransactions.length}})
+      template(v-if='!categoryFilter')
+        v-tabs(v-model='tab')
+          v-tab {{$t('ui.report.mode_category')}}
+          v-tab {{$t('ui.report.mode_expenses')}} ({{filteredTransactions.length}})
         v-divider
       v-tabs-items(v-model='tab' :touchless='categoryFilter')
         v-tab-item

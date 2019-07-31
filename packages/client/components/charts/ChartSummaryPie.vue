@@ -256,7 +256,4 @@ svg.chart-summary-pie
     stroke: rgba(0,0,0,0.4)
     stroke-width: 2px
     fill: none
-
-  tspan.money
-    font-size: 0.9em
 </style>
