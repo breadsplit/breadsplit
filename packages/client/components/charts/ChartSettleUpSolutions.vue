@@ -1,3 +1,7 @@
+<!-- References
+http://bl.ocks.org/rkirsling/5001347
+<-->
+
 <template lang='pug'>
 svg.chart-settle-up-solutions(
   :width='fixed?width:undefined'

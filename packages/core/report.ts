@@ -6,7 +6,7 @@ import { ParserCategory, ExchangeInTransaction, TransactionHelper } from '.'
 
 export interface ExpensesByCategoriesItem {
   id: string
-  name: string
+  label: string
   color: string
   icon: string
   value: Fraction
@@ -28,7 +28,7 @@ export function ReportExpensesByCategories (vm: Vue, transactions: Transaction[]
       records[categoryid] = {
         id: categoryid,
         icon: category.icon,
-        name: category.text,
+        label: category.text,
         color: category.color,
         value: new Fraction(0),
         currency: display_currency,
