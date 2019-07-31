@@ -8,21 +8,45 @@ v-card.categories-edit
     v-btn(icon @click='submit()')
       v-icon mdi-check
 
-  draggable.py-6.mt-2(
+  .mt-8
+
+  v-subheader.ml-3 {{$t('ui.category_editing.enabled')}}
+
+  draggable(
     v-model='form'
     v-bind='dragOptions'
-    @start='onStart'
+    @start='e=>onStart(e, "form")'
     @end='onEnd'
   )
-    transition-group.pa-3(type='transition', v-columns='`repeat(${columns}, 1fr)`')
-      app-category-item(
-        @click='edit(cat)'
+    transition-group.px-3(type='transition', v-columns='`repeat(${columns}, 1fr)`')
+      app-category-item.py-4(
+        @click.native='edit(cat)'
         v-for='cat in form'
         :key='JSON.stringify(cat)'
         :category='parseCategory(cat)'
-        :class='{"op-0": dragging === cat}'
+        :class='{"op-0": isDragging(cat)}'
         color
       )
+
+  v-subheader.ml-3 {{$t('ui.category_editing.hidden')}}
+
+  draggable(
+    v-model='archived'
+    v-bind='dragOptions'
+    @start='e=>onStart(e, "archived")'
+    @end='onEnd'
+  )
+    transition-group.px-3(type='transition', v-columns='`repeat(${columns}, 1fr)`')
+      app-category-item.py-4(
+        @click.native='edit(cat)'
+        v-for='cat in archived'
+        :key='JSON.stringify(cat)'
+        :category='parseCategory(cat)'
+        :class='{"op-0": isDragging(cat)}'
+        color
+      )
+
+  .py-4
 
   .text-center
     span.op-50 {{$t('ui.category_editing.tips')}}
@@ -38,11 +62,10 @@ v-card.categories-edit
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
 import draggable from 'vuedraggable'
-import cloneDeep from 'lodash/cloneDeep'
 import FormCategory from './FormCategory.vue'
 import { CommonMixin, GroupMixin, DialogChildMixin } from '~/mixins'
 import { Category } from '~/types'
-import { CategoryPresets } from '~/../meta/categories'
+import { CategoryPresets, BuiltInCategoriesKeys } from '~/../meta/categories'
 
 @Component({
   components: {
@@ -51,6 +74,7 @@ import { CategoryPresets } from '~/../meta/categories'
 })
 export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin, GroupMixin) {
   form: (string | Category)[] = []
+  archived: (string | Category)[] = []
   columns = 5
 
   drag = false
@@ -66,9 +90,24 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
     dialog: FormCategory
   }
 
+  get rawCategories () {
+    return this.group.categories || CategoryPresets.default
+  }
+
+  get selectedBuiltinCategories () {
+    return this.rawCategories.filter(i => typeof i === 'string') as string[]
+  }
+
+  get unSelectedBuiltinCategories () {
+    return BuiltInCategoriesKeys.filter(i => !this.selectedBuiltinCategories.includes(i))
+  }
+
   init () {
-    this.form = cloneDeep(this.group.categories || CategoryPresets.default)
-      .filter(c => typeof c === 'string' || !c.removed)
+    this.form = this.rawCategories.filter(c => typeof c === 'string' || !c.removed)
+    this.archived = [
+      ...this.unSelectedBuiltinCategories,
+      ...this.rawCategories.filter(c => typeof c !== 'string' && c.removed),
+    ]
   }
 
   mounted () {
@@ -76,13 +115,27 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
   }
 
   submit () {
-    this.$store.dispatch('group/reorderCategories', { categories: this.form })
+    this.$store.dispatch('group/reorderCategories', { categories: this.form, archived: this.archived })
     this.close()
   }
 
-  onStart (e) {
+  isDragging (cat: string|Category) {
+    if (!this.dragging)
+      return false
+    if (cat === this.dragging)
+      return true
+    if (typeof this.dragging !== 'string' && typeof cat !== 'string')
+      return this.dragging.id === cat.id
+    return false
+  }
+
+  onStart (e, source) {
+    console.log(e)
     this.drag = true
-    this.dragging = this.form[e.oldIndex]
+    if (source === 'form')
+      this.dragging = this.form[e.oldIndex]
+    else
+      this.dragging = this.archived[e.oldIndex]
   }
 
   onEnd (e) {
@@ -92,7 +145,7 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
 
   async edit (cat: string | Category) {
     if (typeof cat === 'string') {
-      this.WIP() // TODO:
+      // this.WIP() // TODO:
     }
     else {
       const category = await this.$refs.dialog.open(cat)

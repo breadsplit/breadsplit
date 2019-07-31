@@ -197,7 +197,7 @@ export const actions: ActionTree<GroupState, RootState> = {
     NewOperation(context, id, 'remove_category', categoryid)
   },
 
-  reorderCategories (context, { id, categories }) {
+  reorderCategories (context, { id, categories, archived = [] }) {
     NewOperation(context, id, 'reorder_categories', categories)
   },
 

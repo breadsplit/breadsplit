@@ -172,7 +172,10 @@ export const Transforms: TransformFunctions<Group> = {
     // In case there are some conflict by other users
     const missedCategories = (snap.categories || []).filter(t => typeof t !== 'string' && !categoriesIds.includes(t.id))
 
-    snap.categories = [...categories, ...missedCategories]
+    snap.categories = [
+      ...categories.map(cat => (typeof cat === 'string') ? cat : { ...cat, removed: false }),
+      ...missedCategories.map(cat => (typeof cat === 'string') ? cat : { ...cat, removed: true }),
+    ]
 
     return snap
   },

@@ -76,6 +76,8 @@ export const BuiltInCategories = {
 
 Object.values(BuiltInCategories).map((v, i) => v.color = colors[i])
 
+export const BuiltInCategoriesKeys = Object.keys(BuiltInCategories).filter(i => i !== 'unknown')
+
 export const CategoryPresets: Dictionary<(keyof typeof BuiltInCategories)[]> = {
   default: [
     'transport',
@@ -83,12 +85,9 @@ export const CategoryPresets: Dictionary<(keyof typeof BuiltInCategories)[]> = {
     'groceries',
     'shopping',
     'entertainment',
-    'utilities',
     'food',
     'drinks',
     'snacks',
-    'tickets',
-    'tips',
     'transfer',
     'other',
   ],

@@ -191,6 +191,8 @@ ui:
     category_name_placeholder: Enter category name
     create: New Category
     edit: Edit Category
+    enabled: Enabled
+    hidden: Hidden
     tips: 'Drag to reorder, tap to edit'
     title: Manage Categories
   clear_filter: Clear Filter

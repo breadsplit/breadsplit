@@ -163,6 +163,8 @@ ui:
     category_name_placeholder: 請輸入類別名稱...
     create: 新增分類
     edit: 編輯分類
+    enabled: 可用分類
+    hidden: 隱藏的分類
     tips: 拖動以重新排序，點擊即可進行編輯
     title: 分類管理
   clear_filter: 清除篩選

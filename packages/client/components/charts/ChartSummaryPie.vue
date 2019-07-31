@@ -248,6 +248,7 @@ export default class ChartSummaryPie extends Vue {
 <style lang='sass'>
 svg.chart-summary-pie
   user-select: none
+  overflow: visible
 
   path.slice
     stroke-width: 2px
