@@ -7,10 +7,6 @@
 
         .pa-2
 
-        app-recent-transactions(:limit='3' @show-all='tab_index=1')
-
-        .pa-2
-
         app-settle-up
 
         .pa-2
@@ -38,7 +34,6 @@
     :absolute='!isMobile'
     :fixed='isMobile'
     :horizontal='!isMobile'
-    :shift='isMobile'
     :grow='isMobile'
     color='primary'
   )
@@ -93,11 +88,11 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
     return [
       {
         text: this.$t('ui.tabs.summary'),
-        icon: 'chart-pie',
+        icon: 'script-text-outline',
         key: 'summary',
       }, {
         text: this.$t('ui.tabs.expenses'),
-        icon: 'script-text-outline',
+        icon: 'chart-pie',
         key: 'expenses',
         style: 'margin-right: 25px',
       }, {
@@ -142,6 +137,10 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
 </script>
 
 <style lang='sass'>
-.v-bottom-navigation
-  border-top: 1px solid rgba(125,125,125,0.3)
+.group-page
+  .v-bottom-navigation
+    border-top: 1px solid rgba(125,125,125,0.3)
+
+    & > .v-btn:before
+      opacity: 0 !important
 </style>

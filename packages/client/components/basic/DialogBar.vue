@@ -6,7 +6,7 @@ div
   )
     template(v-if='closeButtons')
       v-btn(icon v-if='!closeOnRight' @click='close(false)')
-        v-icon(:color='color') mdi-arrow-left
+        v-icon(:color='color') mdi-close
     v-toolbar-title(:style='{color}', :class='`${color}--text`')
       slot
     template(v-if='closeOnRight && closeButtons')

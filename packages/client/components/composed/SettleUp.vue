@@ -22,7 +22,7 @@ v-card.settle-up
           app-money-label(
             :amount='solution.amount'
             :currency='solution.currency'
-            color
+            bold
           )
 </template>
 
