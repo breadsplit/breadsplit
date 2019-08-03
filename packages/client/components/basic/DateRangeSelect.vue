@@ -139,7 +139,6 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
     .v-btn
       min-width: 0
       padding: 0 10px
-      margin-right: -1px
       text-transform: none
       &:first-child
         padding-left: 14px
