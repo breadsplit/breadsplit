@@ -7,6 +7,10 @@
 
         .pa-2
 
+        app-recent-transactions(:limit='3' @show-all='tab_index=1')
+
+        .pa-2
+
         app-settle-up
 
         .pa-2
