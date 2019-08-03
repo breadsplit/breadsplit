@@ -25,7 +25,7 @@ v-card.members
                 v-list-item-title {{$t(item.title, member)}}
 
     .px-5.pt-3.py-2
-      v-btn.px-5(@click='promptNewMember()' dark color='primary')
+      v-btn.px-5(@click='promptNewMember()' dark depressed color='primary')
         v-icon.mr-2 mdi-account-plus
         span {{$t('ui.button_new_member')}}
 

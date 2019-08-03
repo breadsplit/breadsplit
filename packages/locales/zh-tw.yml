@@ -239,7 +239,7 @@ ui:
     join_via_link: 通過鏈接加入
     join_via_link_disabled: 已禁用
     join_via_link_enabled: 任何人擁有該鏈接都可以加入此群組
-    share_link: 分享鏈接
+    share_link: 分享邀請鏈接
   share_link_copied: 分享鏈接已復制！
   show_all: 顯示所有
   show_expenses_of: 參與者
