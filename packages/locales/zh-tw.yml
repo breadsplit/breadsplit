@@ -223,6 +223,7 @@ ui:
     mode_expenses: 消費明細
     mode_transfer: 債務轉移
   reset: 重置
+  search_currency: 搜尋...
   select_currency: 選擇貨幣
   setting_options:
     clear_all_data: 清除所有數據

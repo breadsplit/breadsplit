@@ -1,10 +1,12 @@
 <template lang='pug'>
-app-dialog(ref='dialog' width='350')
-  v-card.currency-select-dialog(v-rows='"max-content max-content auto"')
-    app-dialog-bar(@close='close()')
-      | {{$t('ui.select_currency')}}
+app-dialog(ref='dialog' width='450' height='500' persistent no-click-animation)
+  v-card.currency-select-dialog.height-100(v-rows='"max-content max-content auto"')
+    app-composed-toolbar.mb-n3(height='100' dark color='primary')
+      v-btn(icon @click='close()')
+        v-icon mdi-close
+      v-toolbar-title {{$t('ui.select_currency')}}
 
-    v-text-field(
+    v-text-field.mx-3.mt-n2(
       v-model='search'
       :placeholder='$t("ui.search_currency")'
       solo hide-details clearable
@@ -17,12 +19,12 @@ app-dialog(ref='dialog' width='350')
           v-divider(v-if='index !== 0')
           v-list-item.px-2(:key='value' @click='select(value)')
             v-list-item-content
-              v-list-item-title {{text}}
+              v-list-item-title.mx-3 {{text}}
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
-import Dialog from '../global/Dialog.vue'
+import Dialog from './Dialog.vue'
 import { currencies } from '~/../meta/currencies'
 
 @Component

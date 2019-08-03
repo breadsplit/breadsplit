@@ -23,7 +23,7 @@ export const GroupDefault = (overrides?: any): Group => {
     budgets: [],
 
     members: {},
-    currencies: [],
+    main_currency: '',
     currency_records: [],
     transactions: [],
     activities: [],

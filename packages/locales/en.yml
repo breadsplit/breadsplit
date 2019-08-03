@@ -253,7 +253,7 @@ ui:
     mode_expenses: Expenses
     mode_transfer: Transfers
   reset: Reset
-  search_currency: Search currency...
+  search_currency: Search...
   select_currency: Select currency
   setting_options:
     clear_all_data: Clear all Data

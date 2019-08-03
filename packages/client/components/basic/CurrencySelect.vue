@@ -54,7 +54,7 @@ export default class CurrencySelect extends Vue {
       if (result)
         this.$emit('input', result)
       else
-        this.$emit('input', this.codes[0])
+        this.$emit('input', this.currencies[0].cc)
     }
   }
 }

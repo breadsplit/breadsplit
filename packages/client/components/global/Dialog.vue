@@ -1,8 +1,8 @@
 <template lang='pug'>
 v-dialog(
-  v-model='visible', @keydown.esc='close()'
-  v-bind='$attrs', style='z-index:200',
-  :transition='transition', :max-width='600'
+  v-model='visible' @keydown.esc='close()'
+  v-bind='$attrs'
+  :transition='transition' :max-width='600'
   :fullscreen='isFullscreen'
 )
   slot(v-if='loaded')
