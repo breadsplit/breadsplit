@@ -250,6 +250,7 @@ ui:
   report:
     mode_category: Category
     mode_expenses: Expenses
+    mode_transfer: Transfers
   reset: Reset
   search_currency: Search currency...
   select_currency: Select currency
@@ -303,6 +304,7 @@ ui:
   transactions:
     add_location: Add location
     add_payer: Add more payer
+    add_photos: Add photos
     description: Description
     description_placeholder: Enter the description...
     details: Details
@@ -316,6 +318,7 @@ ui:
     involved_expensed: '{0} had expensed'
     involved_negative: '{0} had owed'
     involved_positive: '{0} had paid'
+    photos_uploading: Uploading photos...
     repeat_expense: Repeat
     select_who_paid: Select the person who paid the bill
     xx_should_pay: 'by the way, {0} should pay this time.'

@@ -1,6 +1,6 @@
 <template lang='pug'>
-v-card(flat background='transparent')
-  app-date-grouping-list(:data='group.activities' expand-icon='')
+v-card(flat style='background: transparent')
+  app-date-grouping-list(:data='group.activities' expand-icon='').flat
     template(v-slot:item='{items, index, date}')
       app-activities-list(:activities='items' :key='date')
 </template>

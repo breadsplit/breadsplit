@@ -220,6 +220,7 @@ ui:
   report:
     mode_category: 類別統計
     mode_expenses: 消費明細
+    mode_transfer: 債務轉移
   reset: 重置
   select_currency: 選擇貨幣
   setting_options:
@@ -271,6 +272,7 @@ ui:
   transactions:
     add_location: 添加位置
     add_payer: 添加付款人
+    add_photos: 添加照片
     description: 描述
     description_placeholder: 請輸入支出摘要...
     details: 明細
@@ -284,6 +286,7 @@ ui:
     involved_expensed: '{0}花費了'
     involved_negative: '{0}負債了'
     involved_positive: '{0}支付了'
+    photos_uploading: 照片上傳中...
     repeat_expense: 重複
     select_who_paid: 選擇付款人
     xx_should_pay: '這次輪到 {0} 付款。'

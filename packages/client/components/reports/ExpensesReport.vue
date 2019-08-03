@@ -31,7 +31,7 @@
         | {{categoryFilterInfo.text}}
 
   v-card.mt-2
-    template(v-if='!filteredTransactions.length')
+    template(v-if='!transactionsInRange.length')
       .pa-4
         v-subheader {{$t('ui.no_expenses_in_range')}}
     template(v-else)
@@ -47,10 +47,11 @@
       v-divider
       template(v-if='!categoryFilter')
         v-tabs(v-model='tab' hide-slider)
-          v-tab {{$t('ui.report.mode_category')}}
-          v-tab {{$t('ui.report.mode_expenses')}}
+          v-tab {{$t('ui.report.mode_category')}} ({{expenseSummary.length}})
+          v-tab {{$t('ui.report.mode_expenses')}} ({{filteredTransactions.length}})
+          v-tab {{$t('ui.report.mode_transfer')}} ({{transferTransactions.length}})
         v-divider
-      v-tabs-items(v-model='tab' :touchless='categoryFilter')
+      v-tabs-items(v-model='tab' touchless)
         v-tab-item
           v-list.pa-0(two-line flat)
             template(v-for='(item, index) in expenseSummary')
@@ -58,6 +59,8 @@
               app-expenses-report-item(:item='item' :total='totalAmount' :index='index' @selected='i=>categoryFilter=i')
         v-tab-item
           app-transactions-list(:transactions='filteredTransactions' :involved='involved' involveMode='expense')
+        v-tab-item
+          app-transactions-list(:transactions='transferTransactions' :involved='involved' involveMode='expense')
 
   template(v-if='categoryFilter')
     .text-center.py-2
@@ -116,18 +119,22 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
     return undefined
   }
 
-  get filteredTransactions () {
+  get transactionsInRange () {
     const from = +dayjs(this.from)
     const to = +dayjs(this.to)
-    let filtered = this.transactions
+    return this.transactions
       .filter(t => t.timestamp >= from && t.timestamp < to)
+  }
 
+  get filteredTransactions () {
     if (this.categoryFilter)
-      filtered = filtered.filter(t => (t.category || 'other') === this.categoryFilter)
+      return this.transactionsInRange.filter(t => (t.category || 'other') === this.categoryFilter)
     else
-      filtered = filtered.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
+      return this.transactionsInRange.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
+  }
 
-    return filtered
+  get transferTransactions () {
+    return this.transactionsInRange.filter(t => this.ignoredCategories.includes(t.category || 'other'))
   }
 
   get chartWidth () {

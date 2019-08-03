@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-list.activities-list.pb-4.pl-2.pt-0(flat)
+v-list.activities-list.pb-4.pl-2.pt-0(flat style='background: transparent')
   template(v-for='([act, prev], index) in parsed')
     v-list-item.relax-list-item(:key='act.id' v-on='on(act)' :ripple='false' :class='{head: act.by !== prev.by}')
       v-list-item-avatar

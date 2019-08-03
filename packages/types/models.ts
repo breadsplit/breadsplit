@@ -87,6 +87,7 @@ export interface Transaction {
   debtors: Weight[]
   splitmode: Splitmode
   splitmode_creditors: Splitmode
+  attached_images?: string[]
   creator: UID
   type: TransactionType
   tags?: string[]

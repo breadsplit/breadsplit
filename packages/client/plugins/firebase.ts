@@ -39,6 +39,9 @@ export class FirebasePlugin {
   get functions () {
     return firebase.functions()
   }
+  get storage () {
+    return firebase.storage()
+  }
   get messaging () {
     if (this.messagingEnabled)
       return firebase.messaging()
@@ -65,6 +68,7 @@ export class FirebasePlugin {
       import('firebase/auth'),
       import('firebase/firestore'),
       import('firebase/functions'),
+      import('firebase/storage'),
     ])
     if (this.messagingEnabled)
       await import('firebase/messaging')
@@ -183,6 +187,12 @@ export class FirebasePlugin {
       await this.functions.httpsCallable('removeGroup')(id)
     else
       this.store.commit('group/remove', id)
+  }
+
+  async uploadImage (groupid: string, transid: string, file: File | Blob, imageid = nanoid(5)): Promise<string> {
+    const ref = this.storage.ref().child(`transactions/${groupid}/${transid}/${imageid}`)
+    await ref.put(file)
+    return await ref.getDownloadURL()
   }
 
   async requestNotificationPermission () {
