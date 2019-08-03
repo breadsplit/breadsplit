@@ -7,6 +7,8 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
     v-spacer
     v-btn(icon @click='promptRemove' v-if='mode==="edit"')
       v-icon mdi-delete
+    v-btn(icon @click='mode = "edit"' v-if='mode==="view"')
+      v-icon mdi-pencil
     v-btn.mr-n2(icon @click='submit' :disabled='!form.total_fee')
       v-icon mdi-check
 
@@ -41,9 +43,9 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
       )
 
     v-window-item.page
-      page-details(ref='details' :form='form', @next='next')
+      page-details(ref='details' :form='form' @next='next' :editing='editing')
 
-  div
+  div(v-show='editing')
     v-divider
     v-card-actions.pa-3
       v-breadcrumbs(:items='stepItems' large)
@@ -83,7 +85,7 @@ const STEP_INPUT = 0
 const STEP_SPLIT = 1
 const STEP_DETAIL = 2
 
-type Mode = 'create' | 'edit'
+type Mode = 'create' | 'edit' | 'view'
 
 @Component({
   components: {
@@ -105,19 +107,23 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
 
   @Getter('user/uid') uid: string | undefined
 
+  get editing () {
+    return this.mode !== 'view'
+  }
+
   reset () {
     if (this.options.transid) {
       const trans = this.group.transactions.find(i => i.id === this.options.transid)
       if (trans)
-        return this.edit(trans)
+        return this.open(trans)
     }
     this.create()
   }
 
-  edit (trans: Transaction) {
+  open (trans: Transaction) {
     this.$set(this, 'form', cloneDeep(trans))
     this.step = STEP_DETAIL
-    this.mode = 'edit'
+    this.mode = this.options.mode === 'edit' ? 'edit' : 'view'
     this.fulfillDebtors()
   }
 

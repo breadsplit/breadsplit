@@ -4,6 +4,7 @@
   v-text-field.mb-2.description-field(
     v-model='form.desc'
     :placeholder='$t("ui.transactions.description_placeholder")'
+    :readonly='!editing'
     solo required hide-details
   )
 
@@ -11,11 +12,11 @@
 
   v-divider.my-3
 
-  div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple)
+  div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple='editing')
     v-icon(color='grey') mdi-calendar
     v-subheader {{dateDisplay}}
 
-  div.ml-2(v-columns='"40px auto"')
+  div.ml-2(v-columns='"40px auto"' v-if='editing')
     v-icon(color='grey') mdi-map-marker
     v-subheader {{$t('ui.transactions.add_location')}}
 
@@ -36,15 +37,15 @@
         v-slide-item(v-for='(img, i) in form.attached_images' :key='img' v-slot:default='{ active, toggle }')
           v-card.ma-1.pa-0.photo-card(height='200')
             img(:src='img' height='200' @click='overlayImage = img')
-            v-icon(color='white' @click='removeImage(i)').close-btn mdi-close
-        v-slide-item
+            v-icon(color='white' @click='removeImage(i)' v-if='editing').close-btn mdi-close
+        v-slide-item(v-if='editing')
           app-file-upload(@change='onFileChanged' multiple)
             v-card.ma-1.pa-0.photo-card-add(height='200' width='100' flat)
               .text-center
                 v-icon(size='36') mdi-plus-circle-outline
                 .text {{$t('ui.transactions.add_photos')}}
 
-    template(v-else)
+    template(v-else-if='editing')
       app-file-upload(@change='onFileChanged' multiple)
         div.ml-2(v-columns='"40px auto"')
           v-icon(color='grey') mdi-camera
@@ -83,6 +84,8 @@ import { GroupMixin } from '~/mixins'
 })
 export default class PageDetails extends mixins(GroupMixin) {
   @Prop(Object) readonly form!: Transaction
+  @Prop(Boolean) readonly editing!: boolean
+
   uploadingImage = false
   overlayImage: string | null = null
 
@@ -96,6 +99,8 @@ export default class PageDetails extends mixins(GroupMixin) {
   }
 
   async pickDate () {
+    if (!this.editing)
+      return
     const date = await this.$refs.date_picker.open(this.form.timestamp)
     if (date)
       this.form.timestamp = date
