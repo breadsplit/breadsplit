@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card.sharing.pa-4.mb-2
+v-card.sharing.pa-4.mb-2(flat color='transparent')
   .vertical-aligned-grid(@click='toggle' v-columns='"auto max-content"')
     v-subheader.pl-1
       span

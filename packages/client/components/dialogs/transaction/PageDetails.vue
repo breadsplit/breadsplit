@@ -8,8 +8,9 @@
     height='250'
   )
     v-carousel-item(v-for='src in form.attached_images' :key='src')
-      v-img(:src='src' height='250' @click='overlayImage = script')
+      v-img(:src='src' height='250' @click='overlayImage = src')
       v-icon(color='white' @click='removeImage(i)' v-if='editing').close-btn mdi-close
+    v-divider
 
   .pa-4
     div(v-columns='"max-content auto"')
