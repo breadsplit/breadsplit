@@ -9,16 +9,22 @@ v-list-item.transaction-item(
       :color='category.color'
       :size='38'
     ) mdi-{{category.icon}}
+
   v-list-item-content
-    v-list-item-title(:class='{"no-desc": !hasDesc}') {{desc}}
+    v-list-item-title(:class='{"no-desc": !hasDesc}')
+      span {{desc}}
+      template(v-if='transaction.attached_images && transaction.attached_images.length')
+        v-icon.ml-1.op-40(size='20') mdi-image
     v-list-item-subtitle.sub-label {{datetime}}
 
   v-list-item-action.pr-1.text-right(v-if='involved' v-rows='"auto max-content"')
     template(v-if='involveMode === "debt"')
       .involved-note(v-if='involvedFee >= 0') {{$t('ui.transactions.involved_positive', [getUserName(involved)])}}
       .involved-note(v-else) {{$t('ui.transactions.involved_negative', [getUserName(involved)])}}
+
     template(v-else)
       .involved-note {{$t('ui.transactions.involved_expensed', [getUserName(involved)])}}
+
     app-money-label(
       :amount='involvedFee'
       :currency='transaction.currency'

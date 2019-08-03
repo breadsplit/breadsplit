@@ -1,75 +1,83 @@
 <template lang='pug'>
-.page-container.height-100.pb-0.overflow-y-auto
+.page-container.height-100.pa-0.mt-n4.overflow-y-auto.overflow-x-hidden
 
-  div(v-columns='"max-content auto"')
-    div
-      v-menu(transition='slide-y-transition' offset-y v-model='showCategorySelect')
-        template(v-slot:activator='{ on }')
-          .category-wrapper.pr-2(v-on='on')
-            template(v-if='form.category')
-              app-category-item(:category='parseCategory(form.category)' color)
-            template(v-else)
-              .category-empty
-                v-icon(size='28') mdi-tag-multiple
-        v-card.py-3.px-5(width='400px')
-          app-category-select.mx-n3(v-model='form.category')
-
-    v-text-field.mt-1.description-field(
-      v-model='form.desc'
-      :placeholder='$t("ui.transactions.description_placeholder")'
-      :readonly='!editing'
-      :class='{"flat": !editing}'
-      :rounded='editing'
-      solo
-      required
-      hide-details
+  template(v-if='form.attached_images && form.attached_images.length')
+    v-carousel(
+      v-model='carouselIndex'
+      :show-arrows='false'
+      delimiter-icon='mdi-circle-medium'
+      hide-delimiter-background
+      height='250'
     )
+      v-carousel-item(v-for='src in form.attached_images' :key='src')
+        v-img(:src='src' height='250' @click='overlayImage = src')
+          template(v-slot:placeholder)
+            v-layout(fill-height align-center justify-center ma-0).grey.op-50
+              v-progress-circular(indeterminate color='grey lighten-5')
+        v-icon(color='white' @click='removeImage(i)' v-if='editing').close-btn mdi-close
 
-  v-divider.my-3
+    v-divider
 
-  div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple='editing')
-    v-icon(color='grey') mdi-calendar
-    v-subheader {{dateDisplay}}
+  .pa-4
+    div(v-columns='"max-content auto"')
+      div
+        v-menu(transition='slide-y-transition' offset-y v-model='showCategorySelect')
+          template(v-slot:activator='{ on }')
+            .category-wrapper.pr-2(v-on='on')
+              template(v-if='form.category')
+                app-category-item(:category='parseCategory(form.category)' color)
+              template(v-else)
+                .category-empty
+                  v-icon(size='28') mdi-tag-multiple
+          v-card.py-3.px-5(width='400px')
+            app-category-select.mx-n3(v-model='form.category')
 
-  div.ml-2(v-columns='"40px auto"' v-if='editing')
-    v-icon(color='grey') mdi-map-marker
-    v-subheader {{$t('ui.transactions.add_location')}}
+      v-text-field.description-field(
+        v-model='form.desc'
+        :placeholder='editing ? $t("ui.transactions.description_placeholder") : parseCategory(form.category).text'
+        :readonly='!editing'
+        :class='{"flat": !editing}'
+        :rounded='editing'
+        style='margin: auto 0'
+        solo
+        required
+        hide-details
+      )
 
-  // div.ml-2(v-columns='"40px auto"')
-    v-icon(color='grey') mdi-history
-    v-subheader {{$t('ui.transactions.repeat_expense')}}
+  v-divider
 
-  // ===== Uploading =====
-  template(v-if='group.online')
-    template(v-if='uploadingImage')
-      div.ml-2(v-columns='"40px auto"')
-        .px-2.py-3
-          v-progress-circular(indeterminate color='grey' size='22' width='2.5')
-        v-subheader {{$t('ui.transactions.photos_uploading')}}
+  .pa-4
+    div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple='editing')
+      v-icon(color='grey') mdi-calendar
+      v-subheader {{dateDisplay}}
 
-    template(v-else-if='form.attached_images && form.attached_images.length')
-      v-slide-group.py-1.mx-n5.photo-gallery(:show-arrows='true')
-        v-slide-item(v-for='(img, i) in form.attached_images' :key='img' v-slot:default='{ active, toggle }')
-          v-card.ma-1.pa-0.photo-card(height='200')
-            img(:src='img' height='200' @click='overlayImage = img')
-            v-icon(color='white' @click='removeImage(i)' v-if='editing').close-btn mdi-close
+    div.ml-2(v-columns='"40px auto"' v-if='editing')
+      v-icon(color='grey') mdi-map-marker
+      v-subheader {{$t('ui.transactions.add_location')}}
 
-        v-slide-item(v-if='editing')
-          app-file-upload(@change='onFileChanged' multiple)
-            v-card.ma-1.pa-0.photo-card-add(height='200' width='100' flat)
-              .text-center
-                v-icon(size='36') mdi-plus-circle-outline
-                .text {{$t('ui.transactions.add_photos')}}
+    // div.ml-2(v-columns='"40px auto"')
+      v-icon(color='grey') mdi-history
+      v-subheader {{$t('ui.transactions.repeat_expense')}}
 
-    template(v-else-if='editing')
-      app-file-upload(@change='onFileChanged' multiple)
+    // ===== Uploading =====
+    template(v-if='group.online')
+      template(v-if='uploadingImage')
         div.ml-2(v-columns='"40px auto"')
-          v-icon(color='grey') mdi-camera
-          v-subheader {{$t('ui.transactions.add_photos')}}
+          .px-2.py-3
+            v-progress-circular(indeterminate color='grey' size='22' width='2.5')
+          v-subheader {{$t('ui.transactions.photos_uploading')}}
 
-  exchange-rate-input(ref='exchange' :form='form')
+      template(v-else-if='editing')
+        app-file-upload(@change='onFileChanged' multiple)
+          div.ml-2(v-columns='"40px auto"')
+            v-icon(color='grey') mdi-camera
+            v-subheader {{$t('ui.transactions.add_photos')}}
 
-  v-card.ma-2.pa-3.mb-7.mt-4
+    exchange-rate-input(ref='exchange' :form='form')
+
+  v-divider
+
+  .px-6.py-8
     app-receipt-list(:items='receiptItems' :currency='form.currency')
       template(v-slot:item='{ item }')
         div
@@ -105,6 +113,7 @@ export default class PageDetails extends mixins(GroupMixin) {
   uploadingImage = false
   overlayImage: string | null = null
   showCategorySelect = false
+  carouselIndex = 0
 
   $refs!: {
     date_picker: DatePicker
@@ -158,16 +167,33 @@ export default class PageDetails extends mixins(GroupMixin) {
   }
 
   removeImage (i: number) {
-    if (this.form.attached_images)
+    if (this.form.attached_images) {
       this.form.attached_images.splice(i, 1)
+      this.carouselIndex = this.form.attached_images.length - 1
+      this.$nextTick(() => this.carouselIndex = 0)
+    }
   }
 }
 </script>
 
 <style lang="sass">
 .page-container
+  .v-carousel
+    .close-btn
+      position: absolute
+      top: 8px
+      right: 8px
+
+    .v-btn--fab.v-size--small
+      height: 30px
+      width: 30px
+
+      &.v-btn--active:before
+        opacity: 0.1
+
   .category-wrapper
-    min-width: 60px
+    min-width: 70px
+    min-height: 55px
     text-align: center
 
   .category-empty
@@ -182,24 +208,6 @@ export default class PageDetails extends mixins(GroupMixin) {
       opacity: 0.2
       padding-top: 2px
       margin: auto
-
-  .photo-gallery
-    .photo-card
-      overflow: hidden
-
-      .close-btn
-        position: absolute
-        top: 8px
-        right: 8px
-
-    .photo-card-add
-      display: grid
-      & > *
-        margin: auto
-        opacity: 0.3
-
-        .text
-          font-size: 0.9em
 
   .photo-overlay
     .close-btn

@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card.sharing.pa-4.mb-2
+v-card.sharing.pa-4.mb-2(flat color='transparent')
   .vertical-aligned-grid(@click='toggle' v-columns='"auto max-content"')
     v-subheader.pl-1
       span
@@ -55,7 +55,7 @@ export default class Sharing extends mixins(GroupMixin) {
       await this.$fire.changeGroupOptions(this.group.id, { public: value })
     }
     catch (e) {
-      console.log(e)
+      console.error(e)
     }
     finally {
       this.loading = false
