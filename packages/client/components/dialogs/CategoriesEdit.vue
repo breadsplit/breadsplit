@@ -130,7 +130,6 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
   }
 
   onStart (e, source) {
-    console.log(e)
     this.drag = true
     if (source === 'form')
       this.dragging = this.form[e.oldIndex]

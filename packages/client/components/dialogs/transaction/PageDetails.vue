@@ -1,15 +1,17 @@
 <template lang='pug'>
 .page-container.height-100.pa-0.mt-n4.overflow-y-auto.overflow-x-hidden
 
-  v-carousel(
-    v-if='form.attached_images && form.attached_images.length'
-    :show-arrows='false'
-    hide-delimiter-background
-    height='250'
-  )
-    v-carousel-item(v-for='src in form.attached_images' :key='src')
-      v-img(:src='src' height='250' @click='overlayImage = src')
-      v-icon(color='white' @click='removeImage(i)' v-if='editing').close-btn mdi-close
+  template(v-if='form.attached_images && form.attached_images.length')
+    v-carousel(
+      :show-arrows='false'
+      delimiter-icon='mdi-circle-medium'
+      hide-delimiter-background
+      height='250'
+    )
+      v-carousel-item(v-for='src in form.attached_images' :key='src')
+        v-img(:src='src' height='250' @click='overlayImage = src')
+        v-icon(color='white' @click='removeImage(i)' v-if='editing').close-btn mdi-close
+
     v-divider
 
   .pa-4
@@ -174,8 +176,16 @@ export default class PageDetails extends mixins(GroupMixin) {
       top: 8px
       right: 8px
 
+    .v-btn--fab.v-size--small
+      height: 30px
+      width: 30px
+
+      &.v-btn--active:before
+        opacity: 0.1
+
   .category-wrapper
-    min-width: 60px
+    min-width: 70px
+    min-height: 55px
     text-align: center
 
   .category-empty

@@ -100,7 +100,6 @@ export class TransactionWeightsHelper {
 
   cleanUp (removeZero = true) {
     const mode = this.mode
-    console.log('MODE', this.mode, this.on, this.trans)
     if (mode === 'average') {
       this.participators.forEach((c) => {
         c.weight = c.weight ? 1 : 0

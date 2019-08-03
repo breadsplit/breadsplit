@@ -55,7 +55,7 @@ export default class Sharing extends mixins(GroupMixin) {
       await this.$fire.changeGroupOptions(this.group.id, { public: value })
     }
     catch (e) {
-      console.log(e)
+      console.error(e)
     }
     finally {
       this.loading = false
