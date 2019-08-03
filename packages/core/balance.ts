@@ -73,7 +73,7 @@ export function GroupBalances (group: Group, display?: string | null, exchange_r
   memberBalances = memberBalances.filter(b => !b.removed || !b.balance.equals(0))
 
   // sort by the balance
-  memberBalances.sort((a, b) => a.balance.compare(b.balance))
+  memberBalances.sort((a, b) => b.balance.abs().compare(a.balance.abs()))
   return memberBalances
 }
 
