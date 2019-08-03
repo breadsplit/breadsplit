@@ -116,7 +116,7 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   }
 
   async promptLogout () {
-    if (await this.$confirm('Are you sure to logout?')) {
+    if (await this.$confirm(this.$t('prompt.logout_confirm'))) {
       await this.$fire.logout()
       this.gotoHome()
     }

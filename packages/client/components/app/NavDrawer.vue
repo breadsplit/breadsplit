@@ -114,6 +114,13 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin, Grou
       this.internalDrawer = false
   }
 
+  async promptLogout () {
+    if (await this.$confirm(this.$t('prompt.logout_confirm'))) {
+      await this.$fire.logout()
+      this.gotoHome()
+    }
+  }
+
   async openSettings () {
     this.tryCloseDrawer()
     this.openDialog('settings')

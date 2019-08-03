@@ -120,6 +120,7 @@ prompt:
   confirm_transaction_removal_title: 刪除費用
   feedback_delivered: 您的意見回饋已經成功寄出，感謝您的支持！
   invite_friends: 邀請好友
+  logout_confirm: 確定要登出嗎？
   sending: 發送中...
   share_message: 點擊加入 $1
 pronoun:

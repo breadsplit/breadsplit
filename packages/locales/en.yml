@@ -149,6 +149,7 @@ prompt:
   confirm_transaction_removal_title: Deleting expense
   feedback_delivered: Your feedback is delivered. Thank you ❤
   invite_friends: Invite friends
+  logout_confirm: Are you sure to logout?
   sending: Sending...
   share_message: Click to join $1
 pronoun:
