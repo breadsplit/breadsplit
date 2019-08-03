@@ -6,6 +6,10 @@ v-card.balances
     v-spacer
     app-display-currency-switch
 
+  chart-balance(:value='plainBalance' :height='200')
+
+  v-divider
+
   v-list.pa-0(flat)
     template(v-for='(balance, index) in balances')
       v-list-item(:key='balance.uid' @click='gotoNewTransaction({from: balance.uid})')
@@ -24,11 +28,20 @@ v-card.balances
 
 <script lang='ts'>
 import { Component, mixins, Getter } from 'nuxt-property-decorator'
+import ChartBalance from '../charts/ChartBalance.vue'
 import { NavigationMixin } from '~/mixins'
-import { Balance } from '~/types'
+import { Balance, PlainBalance } from '~/types'
 
-@Component
+@Component({
+  components: {
+    ChartBalance,
+  },
+})
 export default class Balances extends mixins(NavigationMixin) {
   @Getter('group/currentBalances') readonly balances!: Balance[]
+
+  get plainBalance (): PlainBalance[] {
+    return this.balances.map(b => ({ ...b, balance: +b.balance }))
+  }
 }
 </script>

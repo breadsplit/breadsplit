@@ -33,6 +33,13 @@ export interface Balance {
   removed?: boolean
 }
 
+export interface PlainBalance {
+  uid: string
+  balance: number
+  currency: string
+  removed?: boolean
+}
+
 export interface Solution {
   from: string
   to: string
