@@ -289,6 +289,7 @@ ui:
     photos_uploading: 照片上傳中...
     repeat_expense: 重複
     select_who_paid: 選擇付款人
+    view: 查看支出
     xx_should_pay: '這次輪到 {0} 付款。'
   welcome_breadsplit: 歡迎使用分帳吐司!
   wip: "\U0001F6A7 功能開發中，敬請期待…"

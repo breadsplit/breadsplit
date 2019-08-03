@@ -19,10 +19,9 @@ v-card.settle-up
           span.text-no-wrap
             app-user-avatar.pa-1(:id='solution.to' size='24')
             app-user-info.pa-1(:id='solution.to' bold)
-          app-money-label(
+          app-money-label.text-bold(
             :amount='solution.amount'
             :currency='solution.currency'
-            bold
           )
 </template>
 
@@ -41,6 +40,7 @@ export default class SettleUpSolutions extends mixins(NavigationMixin, CommonMix
       from: solution.from,
       to: solution.to,
       amount: solution.amount,
+      category: 'transfer',
     })
   }
 

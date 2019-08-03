@@ -56,6 +56,9 @@ export default class CategoryItem extends Vue {
   &.active:after
     opacity: 0.15
 
-  &.notactive:not(.color)
-    --color: rgba(125, 125, 125, 0.4) !important
+  .theme--light &.notactive:not(.color)
+    --color: rgba(180, 180, 180, 0.9) !important
+
+  .theme--dark &.notactive:not(.color)
+    --color: rgba(180, 180, 180, 0.5) !important
 </style>

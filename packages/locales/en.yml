@@ -321,6 +321,7 @@ ui:
     photos_uploading: Uploading photos...
     repeat_expense: Repeat
     select_who_paid: Select the person who paid the bill
+    view: View expense
     xx_should_pay: 'by the way, {0} should pay this time.'
   welcome_breadsplit: Welcome to BreadSplit!
   wip: "\U0001F6A7 Working in progress..."

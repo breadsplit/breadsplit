@@ -9,7 +9,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
       v-icon mdi-delete
     v-btn(icon @click='mode = "edit"' v-if='mode==="view"')
       v-icon mdi-pencil
-    v-btn.mr-n2(icon @click='submit' :disabled='!form.total_fee')
+    v-btn.mr-n2(icon @click='submit' v-if='mode!=="view"' :disabled='!form.total_fee')
       v-icon mdi-check
 
     template(v-slot:content)
@@ -172,6 +172,8 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   get title () {
+    if (this.mode === 'view')
+      return this.$t('ui.transactions.view')
     if (this.step === STEP_INPUT)
       return this.$t('ui.transactions.how_much')
     if (this.step === STEP_SPLIT)
@@ -216,10 +218,12 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
 
   @Watch('step')
   onStepChanged (value, oldvalue) {
-    if (oldvalue === 2)
+    if (oldvalue === STEP_INPUT)
       this.$refs.splitting_creditors.finishUp()
-    if (oldvalue === 3)
+    if (oldvalue === STEP_SPLIT)
       this.$refs.splitting_debtors.finishUp()
+    if (value === STEP_DETAIL)
+      setTimeout(() => this.$refs.details.openCategorySelect(), 700)
   }
 
   btnNext () {

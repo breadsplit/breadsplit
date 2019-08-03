@@ -46,7 +46,7 @@ export default class DateGroupingList extends Vue {
     if (this.groupBy === 'year')
       return d.year()
     if (this.groupBy === 'month')
-      return d.format('MMM')
+      return d.format('MMMM')
 
     return d
   }

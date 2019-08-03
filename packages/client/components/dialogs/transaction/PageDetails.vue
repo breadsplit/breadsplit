@@ -1,14 +1,29 @@
 <template lang='pug'>
 .page-container.height-100.pb-0.overflow-y-auto
 
-  v-text-field.mb-2.description-field(
-    v-model='form.desc'
-    :placeholder='$t("ui.transactions.description_placeholder")'
-    :readonly='!editing'
-    solo required hide-details
-  )
+  div(v-columns='"max-content auto"')
+    div
+      v-menu(transition='slide-y-transition' offset-y v-model='showCategorySelect')
+        template(v-slot:activator='{ on }')
+          .category-wrapper.pr-2(v-on='on')
+            template(v-if='form.category')
+              app-category-item(:category='parseCategory(form.category)' color)
+            template(v-else)
+              .category-empty
+                v-icon(size='28') mdi-tag-multiple
+        v-card.py-3.px-5(width='400px')
+          app-category-select.mx-n3(v-model='form.category')
 
-  app-category-select.mx-n3(v-model='form.category')
+    v-text-field.mt-1.description-field(
+      v-model='form.desc'
+      :placeholder='$t("ui.transactions.description_placeholder")'
+      :readonly='!editing'
+      :class='{"flat": !editing}'
+      :rounded='editing'
+      solo
+      required
+      hide-details
+    )
 
   v-divider.my-3
 
@@ -33,11 +48,12 @@
         v-subheader {{$t('ui.transactions.photos_uploading')}}
 
     template(v-else-if='form.attached_images && form.attached_images.length')
-      v-slide-group.py-1.mx-n5.photo-gallery(show-arrows)
+      v-slide-group.py-1.mx-n5.photo-gallery(:show-arrows='true')
         v-slide-item(v-for='(img, i) in form.attached_images' :key='img' v-slot:default='{ active, toggle }')
           v-card.ma-1.pa-0.photo-card(height='200')
             img(:src='img' height='200' @click='overlayImage = img')
             v-icon(color='white' @click='removeImage(i)' v-if='editing').close-btn mdi-close
+
         v-slide-item(v-if='editing')
           app-file-upload(@change='onFileChanged' multiple)
             v-card.ma-1.pa-0.photo-card-add(height='200' width='100' flat)
@@ -53,8 +69,8 @@
 
   exchange-rate-input(ref='exchange' :form='form')
 
-  v-card.ma-2.pa-3.mb-7
-    app-receipt-list(:items='receipt_items' :currency='form.currency')
+  v-card.ma-2.pa-3.mb-7.mt-4
+    app-receipt-list(:items='receiptItems' :currency='form.currency')
       template(v-slot:item='{ item }')
         div
           app-user-avatar.py-1.px-2(:id='item.value' size='24')
@@ -88,6 +104,7 @@ export default class PageDetails extends mixins(GroupMixin) {
 
   uploadingImage = false
   overlayImage: string | null = null
+  showCategorySelect = false
 
   $refs!: {
     date_picker: DatePicker
@@ -98,15 +115,7 @@ export default class PageDetails extends mixins(GroupMixin) {
     return dateToRelative(this.form.timestamp, this.$t.bind(this))
   }
 
-  async pickDate () {
-    if (!this.editing)
-      return
-    const date = await this.$refs.date_picker.open(this.form.timestamp)
-    if (date)
-      this.form.timestamp = date
-  }
-
-  get receipt_items () {
+  get receiptItems () {
     const creditors = new TransactionWeightsHelper(this.form, 'creditors')
     const debtors = new TransactionWeightsHelper(this.form, 'debtors')
     const positive = creditors.participators
@@ -116,6 +125,19 @@ export default class PageDetails extends mixins(GroupMixin) {
       .map(p => ({ amount: -debtors.getFee(p), value: p.uid }))
       .filter(i => i.amount)
     return [...positive, null, ...negative]
+  }
+
+  async pickDate () {
+    if (!this.editing)
+      return
+    const date = await this.$refs.date_picker.open(this.form.timestamp)
+    if (date)
+      this.form.timestamp = date
+  }
+
+  openCategorySelect () {
+    if (!this.form.category)
+      this.showCategorySelect = true
   }
 
   async onFileChanged (files: File | File[]) {
@@ -144,6 +166,23 @@ export default class PageDetails extends mixins(GroupMixin) {
 
 <style lang="sass">
 .page-container
+  .category-wrapper
+    min-width: 60px
+    text-align: center
+
+  .category-empty
+    width: 55px
+    height: 55px
+    border-radius: 50%
+    border: 1.5px dashed rgba(125, 125, 125, 0.3)
+    text-align: center
+    display: grid
+
+    .v-icon
+      opacity: 0.2
+      padding-top: 2px
+      margin: auto
+
   .photo-gallery
     .photo-card
       overflow: hidden
