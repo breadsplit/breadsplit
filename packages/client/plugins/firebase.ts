@@ -11,6 +11,7 @@ import { IsThisId, getExchangeRateOn, FallbackExchangeRate } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
 import { DEBUG, BUILD_TARGET } from '~/../meta/env'
+import { ResizeImage } from '~/../utils/image'
 
 firebase.initializeApp(FirebaseServerConfig)
 
@@ -189,9 +190,12 @@ export class FirebasePlugin {
       this.store.commit('group/remove', id)
   }
 
-  async uploadImage (groupid: string, transid: string, file: File | Blob, imageid = nanoid(5)): Promise<string> {
+  async uploadImage (groupid: string, transid: string, file: File, imageid = nanoid(10)): Promise<string> {
     const ref = this.storage.ref().child(`transactions/${groupid}/${transid}/${imageid}`)
-    await ref.put(file)
+    const resized = await ResizeImage(file)
+    if (!resized)
+      return ''
+    await ref.put(resized)
     return await ref.getDownloadURL()
   }
 

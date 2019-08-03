@@ -3,6 +3,7 @@
 
   template(v-if='form.attached_images && form.attached_images.length')
     v-carousel(
+      v-model='carouselIndex'
       :show-arrows='false'
       delimiter-icon='mdi-circle-medium'
       hide-delimiter-background
@@ -10,6 +11,9 @@
     )
       v-carousel-item(v-for='src in form.attached_images' :key='src')
         v-img(:src='src' height='250' @click='overlayImage = src')
+          template(v-slot:placeholder)
+            v-layout(fill-height align-center justify-center ma-0).grey.op-50
+              v-progress-circular(indeterminate color='grey lighten-5')
         v-icon(color='white' @click='removeImage(i)' v-if='editing').close-btn mdi-close
 
     v-divider
@@ -109,6 +113,7 @@ export default class PageDetails extends mixins(GroupMixin) {
   uploadingImage = false
   overlayImage: string | null = null
   showCategorySelect = false
+  carouselIndex = 0
 
   $refs!: {
     date_picker: DatePicker
@@ -162,8 +167,11 @@ export default class PageDetails extends mixins(GroupMixin) {
   }
 
   removeImage (i: number) {
-    if (this.form.attached_images)
+    if (this.form.attached_images) {
       this.form.attached_images.splice(i, 1)
+      this.carouselIndex = this.form.attached_images.length - 1
+      this.$nextTick(() => this.carouselIndex = 0)
+    }
   }
 }
 </script>

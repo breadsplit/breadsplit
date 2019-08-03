@@ -9,6 +9,7 @@ v-list-item.transaction-item(
       :color='category.color'
       :size='38'
     ) mdi-{{category.icon}}
+
   v-list-item-content
     v-list-item-title(:class='{"no-desc": !hasDesc}')
       span {{desc}}
