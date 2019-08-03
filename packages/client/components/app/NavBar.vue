@@ -1,7 +1,8 @@
 <template lang="pug">
 v-app-bar.app-toolbar(app flat color='transparent' height='60').primary--text
   v-btn(v-if='isMobile' icon @click='internalDrawer = !internalDrawer')
-    v-icon(color='primary') mdi-{{group.icon}}
+    v-icon(color='primary' v-if='group') mdi-{{group.icon}}
+    v-icon(color='primary' v-else) mdi-menu
 
   v-toolbar-title.pl-2(v-text='title')
   v-spacer
