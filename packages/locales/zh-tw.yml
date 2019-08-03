@@ -249,15 +249,15 @@ ui:
     Google: 使用 Google 登入
     tip: 登入您的帳戶，以啟用備份與同步功能
   splitting:
-    amount: 按金額
-    average: 均分制
+    amount: 金額
+    average: 均分
     mode_average_details: '{0} 人參與分帳，平均每個人花費'
     mode_average_tip: 選擇參與這筆支出的人
-    percent: 按趴數
+    percent: 趴數
     split_by: 分帳方式
     split_by_short: 分帳
     total: '支出金額: {0}'
-    weight: 按權重
+    weight: 權重
   star_on_github: Star on Github
   support_us: 支持我們
   tabs:

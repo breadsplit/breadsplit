@@ -2,14 +2,14 @@
 .splitting
 
   template(v-if='on === "debtors"')
-    v-tabs.mode-switcher(
-      v-model='tab' v-if='showTabs'
-      slider-color='transparent' grow
+    v-chip-group.mode-switcher(
+      v-if='showTabs'
+      v-model='tab'
+      column
     )
-      v-tab(v-for='(mode, idx) in modes' :key='mode.mode' :class='tab==idx ? "primary--text" : ""' :ripple='false')
+      v-chip(v-for='(mode, idx) in modes' :key='mode.mode' :class='tab==idx ? "primary--text" : ""' :ripple='false')
         v-icon(style='color:inherit;transition:none;').mr-1 {{mode.icon}}
-        v-slide-x-transition
-          span(v-show='tab==idx') {{mode.text}}
+        span.pt-1 {{mode.text}}
 
   //* ========== Average ========== *//
   .mode-average(v-show='mode==="average"')
@@ -152,7 +152,7 @@ export default class Splitting extends Vue {
   get modes (): { mode: Splitmode; icon: string; text: TranslateResult }[] {
     return [
       { mode: 'average', icon: 'mdi-account-multiple', text: this.$t('ui.splitting.average') },
-      { mode: 'amount', icon: 'mdi-currency-usd', text: this.$t('ui.splitting.amount') },
+      { mode: 'amount', icon: 'mdi-coin', text: this.$t('ui.splitting.amount') },
       { mode: 'percent', icon: 'mdi-percent', text: this.$t('ui.splitting.percent') },
       { mode: 'weight', icon: 'mdi-scale-balance', text: this.$t('ui.splitting.weight') },
     ]
@@ -385,36 +385,7 @@ export default class Splitting extends Vue {
     padding: 1em 2em
 
   .mode-switcher
-    width: unset
     margin: 0.8em 1.8em
-
-    .v-tab
-      flex: 0 1 auto
-      min-width: 30px
-      padding: 0 24px
-      white-space: nowrap
-
-    .v-tab--active
-      position: relative !important
-      span
-        color: var(--theme-primary)
-
-    .v-tab:before
-      content: ""
-      position: absolute
-      border-radius: 5px
-      top: 1px
-      bottom: 1px
-      left: 1px
-      right: 1px
-
-    .v-tab--active:before
-      background: var(--theme-primary)
-      opacity: 0.13
-      top: 5px
-      bottom: 5px
-      left: 5px
-      right: 5px
 
   .mode-amount, .mode-percent, .mode-weight
     .participators
