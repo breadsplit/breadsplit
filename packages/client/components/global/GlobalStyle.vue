@@ -3,7 +3,6 @@ style.
   :root {
     --app-font: {{localeFont}};
     --theme-primary: {{primaryColor}};
-    --theme-inactive: {{theme.inactive}};
   }
   .v-application .primary {
     background-color: {{primaryColor}} !important;
