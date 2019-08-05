@@ -5,6 +5,7 @@
     v-carousel(
       v-model='carouselIndex'
       :show-arrows='false'
+      :show-delimiters='form.attached_images.length > 1'
       delimiter-icon='mdi-circle-medium'
       hide-delimiter-background
       height='250'
@@ -21,11 +22,16 @@
   .pa-4
     div(v-columns='"max-content auto"')
       div
-        v-menu(transition='slide-y-transition' offset-y v-model='showCategorySelect')
+        v-menu(
+          v-model='showCategorySelect'
+          :disabled='!editing'
+          transition='slide-y-transition'
+          offset-y
+        )
           template(v-slot:activator='{ on }')
             .category-wrapper.pr-2(v-on='on')
               template(v-if='form.category')
-                app-category-item(:category='parseCategory(form.category)' color)
+                app-category-item(:category='parseCategory(form.category)' color :clickable='editing')
               template(v-else)
                 .category-empty
                   v-icon(size='28') mdi-tag-multiple

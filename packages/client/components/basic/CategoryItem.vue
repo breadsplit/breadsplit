@@ -1,7 +1,7 @@
 <template lang='pug'>
 .category-item.pa-2(
   @click='e=>$emit("click", e)'
-  :class='{ active: active, notactive: !active, color }'
+  :class='{ active: active, notactive: !active, color, clickable }'
   :style='{ "--color": category.color }'
 )
   v-icon mdi-{{ category.icon }}
@@ -18,16 +18,19 @@ export default class CategoryItem extends Vue {
   @Prop(Boolean) readonly active?: boolean
   @Prop(Boolean) readonly hideLabel?: boolean
   @Prop(Boolean) readonly color?: boolean
+  @Prop(Boolean) readonly clickable?: boolean
 }
 </script>
 
 <style lang="sass">
 .category-item
-  cursor: pointer
   text-align: center
   position: relative
   border-radius: 5px
   --color: grey
+
+  &.clickable
+    cursor: pointer
 
   .v-icon
     font-size: 1.9em

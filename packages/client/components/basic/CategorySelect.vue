@@ -6,6 +6,7 @@
     :key='cat.id'
     :category='cat'
     :active='value === cat.id'
+    clickable
   )
 </template>
 
