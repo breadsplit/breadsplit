@@ -501,7 +501,7 @@ export class FirebasePlugin {
   async installMessagingServiceWorker () {
     if ('serviceWorker' in navigator) {
       try {
-        await navigator.serviceWorker.register('/firebase-messaging-sw.js', { scope: '/' })
+        await navigator.serviceWorker.register('/firebase-messaging.sw.js', { scope: '/' })
         log('✅ Messaging SW registration succeeded')
       }
       catch (error) {
