@@ -53,13 +53,17 @@
   v-divider
 
   .pa-4
-    div.ml-2(v-columns='"40px auto"' @click='pickDate()' v-ripple='editing')
-      v-icon(color='grey') mdi-calendar
-      v-subheader {{dateDisplay}}
+    .form-field-item(@click='pickDate()' v-ripple='editing')
+      v-icon mdi-calendar
+      .text {{ dateDisplay }}
 
-    div.ml-2(v-columns='"40px auto"' v-if='editing')
+    .form-field-item(@click='inputNote()' v-if='editing || form.note' v-ripple='editing')
+      v-icon mdi-tooltip-text-outline
+      pre.text {{ form.note || $t('ui.transactions.add_note')}}
+
+    .form-field-item(v-if='editing')
       v-icon(color='grey') mdi-map-marker
-      v-subheader {{$t('ui.transactions.add_location')}}
+      .text {{$t('ui.transactions.add_location')}}
 
     // div.ml-2(v-columns='"40px auto"')
       v-icon(color='grey') mdi-history
@@ -68,16 +72,16 @@
     // ===== Uploading =====
     template(v-if='group.online')
       template(v-if='uploadingImage')
-        div.ml-2(v-columns='"40px auto"')
+        .form-field-item
           .px-2.py-3
             v-progress-circular(indeterminate color='grey' size='22' width='2.5')
-          v-subheader {{$t('ui.transactions.photos_uploading')}}
+          .text {{$t('ui.transactions.photos_uploading')}}
 
       template(v-else-if='editing')
         app-file-upload(@change='onFileChanged' multiple)
-          div.ml-2(v-columns='"40px auto"')
-            v-icon(color='grey') mdi-camera
-            v-subheader {{$t('ui.transactions.add_photos')}}
+          .form-field-item
+            v-icon mdi-camera
+            .text {{$t('ui.transactions.add_photos')}}
 
     exchange-rate-input(ref='exchange' :form='form')
 
@@ -150,6 +154,13 @@ export default class PageDetails extends mixins(GroupMixin) {
       this.form.timestamp = date
   }
 
+  async inputNote () {
+    if (!this.editing)
+      return
+    const note = await this.$prompt(this.$t('ui.transactions.note'), this.form.note || '', { textarea: true })
+    this.$set(this.form, 'note', note)
+  }
+
   openCategorySelect () {
     if (!this.form.category)
       this.showCategorySelect = true
@@ -220,4 +231,21 @@ export default class PageDetails extends mixins(GroupMixin) {
       position: fixed
       top: 8px
       right: 8px
+
+.form-field-item
+  margin-left: 8px
+  display: grid
+  grid-template-columns: 40px auto
+
+  .v-icon
+    color: #9e9e9e
+
+  .text
+    color: rgba(0, 0, 0, 0.54)
+    align-items: center
+    display: flex
+    min-height: 48px
+    font-size: 0.875rem
+    font-weight: 400
+    padding: 8px 16px
 </style>

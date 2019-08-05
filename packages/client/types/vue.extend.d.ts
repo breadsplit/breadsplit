@@ -16,7 +16,7 @@ declare module 'vue/types/vue' {
 
     // global ui components
     readonly $confirm: (title: string|TranslateResult, text?: string|TranslateResult, options?: object) => Promise<boolean>
-    readonly $prompt: (text: string|TranslateResult, value?: string, title?: string, options?: object) => Promise<boolean>
+    readonly $prompt: (title: string|TranslateResult, value: string, options?: object) => Promise<string>
     readonly $snack: (text: string|TranslateResult, options?: SnackOptions) => void
     readonly $apploading: {
       open: (text: string|TranslateResult) => void

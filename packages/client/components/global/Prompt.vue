@@ -1,60 +1,78 @@
 <template lang='pug'>
-v-dialog(v-model='dialog', :max-width='options.width', @keydown.esc='cancel', v-bind:style='{ zIndex: options.zIndex }' persistent )
-  v-card
-    v-toolbar(v-if='title', dark, :color='options.color', dense, flat)
-      v-toolbar-title.white--text {{ title }}
-    v-card-text(v-show='!!message') {{ message }}
-      v-text-field(
-        flat required hide-details
-        autofocus=true
-        v-model="val"
-        :value=val
-        :rules="[() => !!val || 'This field is required']")
-    v-card-actions.pt-0
+app-promise-dialog(ref='dialog' :max-width='options.width')
+  v-card.pa-2
+    .px-4.pt-6.pb-2
+      template(v-if='options.textarea')
+        v-textarea(
+            v-model='value'
+            :label='title'
+            autofocus
+            outlined
+            required
+            hide-details
+        )
+      template(v-else)
+        v-text-field(
+            v-model='value'
+            :label='title'
+            autofocus
+            outlined
+            required
+            hide-details
+        )
+    v-card-actions
       v-spacer
-      v-btn(color='grey', text, @click.native='cancel') {{$t('ui.button_cancel')}}
-      v-btn(color='primary darken-1', text, @click.native='agree') {{$t('ui.button_confirm')}}
+      .pa-1
+        v-btn(color='grey' text @click='cancel()') {{$t('ui.button_cancel')}}
+        v-btn(color='primary' @click='agree()' :disabled='options.required && !value').px-4 {{$t('ui.button_confirm')}}
 </template>
 
 <script lang='ts'>
 import { Component, Vue } from 'nuxt-property-decorator'
+import PromiseDialog from './PromiseDialog.vue'
+
+const DEFAULT_OPTIONS = {
+  color: 'primary',
+  width: 350,
+  textarea: false,
+  required: false,
+}
 
 @Component
 export default class Prompt extends Vue {
   dialog = false
-  resolve: ((result?) => void) | null = null
-  reject: ((error) => void) | null = null
-  message = null
+
   title = null
-  val = null
+  value = null
+  originalValue = null
+
   options = {
     color: 'primary',
     width: 290,
-    zIndex: 200,
+    textarea: false,
+    required: false,
   }
 
-  open (message, val, title, options) {
+  $refs!: {
+    dialog: PromiseDialog
+  }
+
+  async open (title, value, options) {
     this.dialog = true
     this.title = title
-    this.message = message
-    this.val = val
-    this.options = Object.assign(this.options, options)
-    return new Promise((resolve, reject) => {
-      this.resolve = resolve
-      this.reject = reject
-    })
+    this.value = value
+    this.originalValue = value
+    this.options = Object.assign(this.options, DEFAULT_OPTIONS, options)
+
+    return await this.$refs.dialog.open(value)
   }
 
   agree () {
-    if (this.resolve)
-      this.resolve(this.val)
-    this.dialog = false
+    this.$refs.dialog.close(this.value)
   }
 
   cancel () {
-    if (this.resolve)
-      this.resolve(false)
-    this.dialog = false
+    this.$refs.dialog.close(this.originalValue)
   }
 }
 </script>

@@ -139,7 +139,7 @@ pronoun:
 tips:
   already_joined_group: 你已經加入了此群組。
   click_right_corner_icon: '請點選右上角 "{0}" 圖標'
-  member_name_input_placeholder: 輸入成員昵稱
+  member_name_input_placeholder: 成員昵稱
   open_in_browser_general: 在瀏覽器中打開
   select_open_in_browser: '選擇 {0}'
 translators: official
@@ -282,6 +282,7 @@ ui:
   total: 合計
   transactions:
     add_location: 添加位置
+    add_note: 添加備註
     add_payer: 添加付款人
     add_photos: 添加照片
     description: 描述
@@ -297,6 +298,7 @@ ui:
     involved_expensed: '{0}花費了'
     involved_negative: '{0}負債了'
     involved_positive: '{0}支付了'
+    note: 備注
     photos_uploading: 照片上傳中...
     repeat_expense: 重複
     select_who_paid: 選擇付款人

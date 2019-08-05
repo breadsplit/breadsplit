@@ -170,7 +170,7 @@ pronoun:
 tips:
   already_joined_group: You have already joined this group.
   click_right_corner_icon: 'Please click the "{0}" icon'
-  member_name_input_placeholder: Enter member's name
+  member_name_input_placeholder: Member's name
   open_in_browser_general: Open in browser
   select_open_in_browser: 'Then select {0}'
 translators: official
@@ -315,6 +315,7 @@ ui:
   total: Total
   transactions:
     add_location: Add location
+    add_note: Add note
     add_payer: Add more payer
     add_photos: Add photos
     description: Description
@@ -330,6 +331,7 @@ ui:
     involved_expensed: '{0} had expensed'
     involved_negative: '{0} had owed'
     involved_positive: '{0} had paid'
+    note: Note
     photos_uploading: Uploading photos...
     repeat_expense: Repeat
     select_who_paid: Select the person who paid the bill
