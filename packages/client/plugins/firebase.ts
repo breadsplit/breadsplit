@@ -105,7 +105,7 @@ export class FirebasePlugin {
 
     if (this.messagingEnabled && this.messaging) {
       await this.updateMessagingToken()
-      this.installMessagingServiceWorker()
+      // this.installMessagingServiceWorker()
 
       this.messaging.onMessage((data) => {
         log('📢 Incoming Message:', data)

@@ -73,7 +73,6 @@ v-navigation-drawer(
 import { Component, Getter, mixins, Prop } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
-import Dialog from '~/components/global/Dialog.vue'
 import Login from '~/components/dialogs/Login.vue'
 
 @Component
@@ -91,7 +90,6 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin, Grou
   @Getter('group/isSyncing') isSyncing!: (id: string) => boolean
 
   $refs!: {
-    welcome: Dialog
     login: Login
   }
 

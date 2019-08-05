@@ -4,7 +4,6 @@ interface ShareData {
   url? : string
 }
 
-interface Navigator
-{
+interface Navigator {
   share? : (data? : ShareData) => Promise<void>
 }

@@ -123,6 +123,15 @@ prompt:
   logout_confirm: 確定要登出嗎？
   sending: 發送中...
   share_message: 點擊加入 $1
+  welcome:
+    para1: 非常感謝您使用<b>分帳吐司</b>！
+    para2: |-
+      我們目前正處於<b>早期測試階段</b>。
+      許多内容仍在開發中，我們將在未來幾週內不斷更新和添加功能。
+      如果您在使用的過程中遇到任何問題，歡迎向我們反饋。這將幫助我們做得更好。
+    para3: 使用愉快！
+    sign: 分帳吐司團隊
+    title: 歡迎使用!
 pronoun:
   anonymous: 匿名
   i: 我
@@ -293,7 +302,6 @@ ui:
     select_who_paid: 選擇付款人
     view: 查看支出
     xx_should_pay: '這次輪到 {0} 付款。'
-  welcome_breadsplit: 歡迎使用分帳吐司!
   wip: "\U0001F6A7 功能開發中，敬請期待…"
   xx_paid_money: '{0} 支付了'
   xx_paid_xx: '{0} 支付了 {1}'

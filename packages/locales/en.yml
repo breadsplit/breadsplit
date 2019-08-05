@@ -152,6 +152,17 @@ prompt:
   logout_confirm: Are you sure to logout?
   sending: Sending...
   share_message: Click to join $1
+  welcome:
+    para1: <b>Thank you so much for trying BreadSplit</b>!
+    para2: >-
+      We are currently in a very <b>early beta</b> stage. Many features are
+      still under developmenting. We will continuesly update and add features in
+      coming weeks. We are sorry as you may encounter some bugs or poor
+      experiences, Also, please kindly feedback to us, it's very important for
+      us to make it better.
+    para3: Enjoy!
+    sign: The BreadSplit Team
+    title: Welcome to BreadSplit!
 pronoun:
   anonymous: Anonymous
   i: I
@@ -324,7 +335,6 @@ ui:
     select_who_paid: Select the person who paid the bill
     view: View expense
     xx_should_pay: 'by the way, {0} should pay this time.'
-  welcome_breadsplit: Welcome to BreadSplit!
   wip: "\U0001F6A7 Working in progress..."
   xx_paid_money: '{0} paid'
   xx_paid_xx: '{0} paid {1}'

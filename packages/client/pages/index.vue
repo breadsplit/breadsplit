@@ -16,6 +16,8 @@ v-container
 
     .my-12
     app-credit.op-25(simple='true')
+
+    v-btn(@click='reload' text small color='grey') Reload
 </template>
 
 <script lang='ts'>
@@ -31,6 +33,10 @@ export default class Homepage extends mixins(NavigationMixin) {
     return {
       '--group-color': group.color,
     }
+  }
+
+  reload () {
+    window.location.reload()
   }
 }
 </script>

@@ -185,6 +185,12 @@ const config: NuxtConfiguration = {
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
       },
       {
+        urlPattern: 'https://cdn.jsdelivr.net/.*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
+      {
         urlPattern: '.*googleusercontent.com.*',
         handler: 'cacheFirst',
         method: 'GET',
