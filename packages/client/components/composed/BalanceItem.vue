@@ -51,7 +51,7 @@ export default class Balances extends mixins(NavigationMixin) {
   }
 
   get width () {
-    return Math.abs(this.value / this.absMax * 40)
+    return Math.abs(this.value / this.absMax * 45)
   }
 }
 </script>
@@ -72,7 +72,7 @@ export default class Balances extends mixins(NavigationMixin) {
   .text
     position: absolute
     background: #88888810
-    padding: 0 20px
+    padding: 0 15px
     border-radius: 10px
     min-width: 100px
 
