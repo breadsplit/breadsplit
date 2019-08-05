@@ -1,12 +1,13 @@
 <template lang='pug'>
-.balances
-  app-balance-item(
-    v-for='(balance, index) in limitedBalances'
-    :key='balance.uid'
-    :balance='balance'
-    :max='max'
-    :min='min'
-  )
+.balances-chart.pa-4
+  .chart
+    app-balance-item(
+      v-for='(balance, index) in limitedBalances'
+      :key='balance.uid'
+      :balance='balance'
+      :max='max'
+      :min='min'
+    )
 </template>
 
 <script lang='ts'>
@@ -34,3 +35,10 @@ export default class Balances extends Vue {
   }
 }
 </script>
+
+<style lang="sass">
+.balances-chart
+  & > .chart
+    max-width: 700px
+    margin: 0 auto
+</style>

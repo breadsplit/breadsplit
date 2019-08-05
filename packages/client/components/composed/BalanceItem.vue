@@ -51,7 +51,7 @@ export default class Balances extends mixins(NavigationMixin) {
   }
 
   get width () {
-    return Math.abs(this.value / this.absMax * 45)
+    return Math.abs(this.value / this.absMax * 50)
   }
 }
 </script>
