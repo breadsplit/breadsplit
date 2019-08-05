@@ -41,7 +41,7 @@ v-navigation-drawer(
 
       // Sign in
       template(v-if='user.anonymous')
-        v-list-item.pl-4(@click='$refs.login.open()')
+        v-list-item.pl-4(@click='openLoginDialog')
           v-list-item-action
             v-avatar(size='36', color='#00000020', style='margin: -6px;')
               v-icon mdi-account
@@ -65,6 +65,8 @@ v-navigation-drawer(
           v-icon mdi-settings
         v-list-item-content
           v-list-item-title {{$t('ui.settings')}}
+
+  app-login(ref='login')
 </template>
 
 <script lang='ts'>
@@ -72,6 +74,7 @@ import { Component, Getter, mixins, Prop } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 import Dialog from '~/components/global/Dialog.vue'
+import Login from '~/components/dialogs/Login.vue'
 
 @Component
 export default class NavDrawer extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
@@ -89,6 +92,7 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin, Grou
 
   $refs!: {
     welcome: Dialog
+    login: Login
   }
 
   @Prop(Boolean) readonly drawer!: boolean
@@ -107,6 +111,11 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin, Grou
   async openNewGroupDialog () {
     this.tryCloseDrawer()
     this.gotoNewGroup()
+  }
+
+  async openLoginDialog () {
+    this.tryCloseDrawer()
+    this.$refs.login.open()
   }
 
   tryCloseDrawer () {
