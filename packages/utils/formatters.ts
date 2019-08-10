@@ -15,6 +15,15 @@ export function dateFromNow (time: dayjs.ConfigType, locale: string) {
   return d.fromNow()
 }
 
+export function shortDate (time: dayjs.ConfigType, locale: string) {
+  const d = dayjs(time)
+  const now = dayjs()
+  if (now.diff(d, 'year') === 0)
+    return d.toDate().toLocaleDateString(locale, { month: 'short', day: 'numeric' })
+  else
+    return d.toDate().toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'long' })
+}
+
 export function getWeekOfYear (time: dayjs.ConfigType) {
   const d = dayjs(time)
 
