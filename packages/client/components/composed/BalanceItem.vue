@@ -90,13 +90,16 @@ export default class Balances extends mixins(NavigationMixin) {
     position: absolute
     top: 0
     bottom: 0
-    border-radius: 10px
     opacity: 0.8
 
     &.left
+      border-top-right-radius: 8px
+      border-bottom-right-radius: 8px
       left: 50%
 
     &.right
+      border-top-left-radius: 8px
+      border-bottom-left-radius: 8px
       right: 50%
 
   .money
