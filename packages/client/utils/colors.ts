@@ -41,3 +41,26 @@ export function isDark (hex: string) {
     return true
   return getBrightness(rgb) < 150
 }
+
+export function toHex (int: number) {
+  let hex = Number(int).toString(16)
+  if (hex.length < 2)
+    hex = `0${hex}`
+  return hex
+}
+
+export function rgbToHex (r: number, g: number, b: number) {
+  const red = toHex(r)
+  const green = toHex(g)
+  const blue = toHex(b)
+  return red + green + blue
+}
+
+export function rgbStringToHex (rgb: string) {
+  const [r, g, b] = rgb
+    .trim()
+    .slice(4, rgb.length - 1)
+    .split(',')
+    .map(i => +i)
+  return rgbToHex(r, g, b)
+}

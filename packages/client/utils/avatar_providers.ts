@@ -1,22 +1,41 @@
-import md5 from 'blueimp-md5'
-import Avatars from '@dicebear/avatars'
-import JdenticonAvatars from '@dicebear/avatars-jdenticon-sprites'
-import Svg2DataUrl from 'svg-to-dataurl'
-import { Member } from '~/types'
+import * as d3 from 'd3'
+import { hashCode } from '../../utils/hash'
+import { rgbStringToHex } from './colors'
 
-export const adorable = (hash: string, size = 200) => `https://api.adorable.io/avatars/${size}/${hash}.png`
-export const gravatar = (hash: string, size = 200) => `https://www.gravatar.com/avatar/${hash}?d=identicon&s=${size}`
-export const dicebear = (hash: string, size = 200) => `https://avatars.dicebear.com/v2/gridy/${hash}.svg`
+const spectral = d3.quantize(t => d3.interpolateSpectral(t), 100)
 
-export const dicebearOffline = (hash: string, dark?: boolean) => {
-  const avatars = new Avatars(JdenticonAvatars({ padding: 0.1, background: dark ? '#555' : '#eeeeee' }))
-  return Svg2DataUrl(avatars.create(hash))
-}
+export function LetterAvatar (name = '', hash = '', size = 200, font = 'Arial') {
+  hash = hash || name
 
-export const avatarProvider = dicebearOffline
+  const nameSplit = String(name).toUpperCase().split(' ')
+  let initials: string
 
-export function GetMemberAvatarUrl (member: Member, dark?: boolean) {
-  const key = (member.uid || '').trim().toLowerCase()
-  const hash = md5(key).toString()
-  return avatarProvider(hash, dark)
+  if (nameSplit.length === 1)
+    initials = nameSplit[0] ? nameSplit[0].charAt(0) : '?'
+
+  else
+    initials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0)
+
+  if (window.devicePixelRatio)
+    size = (size * window.devicePixelRatio)
+
+  const colorIndex = Math.abs(hashCode(hash)) % spectral.length
+  console.log(colorIndex, spectral[colorIndex])
+  const color = `#${rgbStringToHex(spectral[colorIndex])}`
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const context = canvas.getContext('2d')!
+
+  context.fillStyle = color
+  context.fillRect(0, 0, canvas.width, canvas.height)
+  context.font = `${Math.round(canvas.width / 2)}px ${font}`
+  context.textAlign = 'center'
+  context.fillStyle = '#FFF'
+  context.fillText(initials, size / 2, size / 1.5)
+
+  const dataURI = canvas.toDataURL()
+
+  return dataURI
 }

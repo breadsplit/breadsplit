@@ -2,7 +2,7 @@ import { Vue, Component, Getter } from 'nuxt-property-decorator'
 import nanoid from 'nanoid'
 import { UserInfo, Member, UserMemberInfo } from '~/types'
 import { IsThisId } from '~/core'
-import { avatarProvider } from '~/utils/avatar_providers'
+import { LetterAvatar } from '~/utils/avatar_providers'
 import { IdMe } from '~/../core'
 
 @Component
@@ -41,7 +41,7 @@ export default class UserInfoMixin extends Vue {
 
     // set avatar url
     if (!result.avatar_url)
-      result.avatar_url = this.getFallbackAvatar(uid)
+      result.avatar_url = this.getFallbackAvatar(uid, result.name)
     return result
   }
 
@@ -49,16 +49,15 @@ export default class UserInfoMixin extends Vue {
     return this.$store.getters['group/memberById']({ uid })
   }
 
-  getAvatarUrl (uid: string) {
+  getAvatarUrl (uid: string, name: string) {
     const user = this.getUser(uid)
     if (user && 'avatar_url' in user)
       return user.avatar_url
-    return this.getFallbackAvatar(uid)
+    return this.getFallbackAvatar(uid, name)
   }
 
-  getFallbackAvatar (uid: string) {
-    const dark = this.$store.getters.dark
-    return avatarProvider(uid || nanoid(), dark) as string
+  getFallbackAvatar (uid: string, name: string) {
+    return LetterAvatar(name || '?', uid || nanoid())
   }
 
   getUserName (uid: string, pronoun = true) {
