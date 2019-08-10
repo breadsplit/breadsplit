@@ -9,19 +9,26 @@ export function dateFromNow (time: dayjs.ConfigType, locale: string) {
   const d = dayjs(time)
   const now = dayjs()
   if (now.diff(d, 'year') >= 1)
-    return d.toDate().toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'long' })
+    return d.toDate().toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
   if (now.diff(d, 'day') >= 1)
     return d.toDate().toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' })
   return d.fromNow()
 }
 
-export function shortDate (time: dayjs.ConfigType, locale: string) {
+export function shortDate (locale: string, time: dayjs.ConfigType, relatedTo?: dayjs.ConfigType) {
   const d = dayjs(time)
-  const now = dayjs()
-  if (now.diff(d, 'year') === 0)
+  if (dayjs(relatedTo).year() === d.year())
     return d.toDate().toLocaleDateString(locale, { month: 'short', day: 'numeric' })
   else
-    return d.toDate().toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'long' })
+    return d.toDate().toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'numeric' })
+}
+
+export function shortDateMonth (locale: string, time: dayjs.ConfigType, relatedTo?: dayjs.ConfigType) {
+  const d = dayjs(time)
+  if (dayjs(relatedTo).year() === d.year())
+    return d.toDate().toLocaleDateString(locale, { month: 'long' })
+  else
+    return d.toDate().toLocaleDateString(locale, { month: 'long', year: 'numeric' })
 }
 
 export function getWeekOfYear (time: dayjs.ConfigType) {
