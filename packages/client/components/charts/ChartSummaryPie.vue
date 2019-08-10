@@ -97,6 +97,10 @@ export default class ChartSummaryPie extends Vue {
       .sort((a, b) => d3.ascending(a.id, b.id))
   }
 
+  onGraphClicked (id) {
+    this.$emit('click:id', id)
+  }
+
   @Watch('value', { deep: true })
   update (newValue: Item[], oldValue: Item[] = []) {
     this.change(newValue, oldValue)
@@ -126,6 +130,7 @@ export default class ChartSummaryPie extends Vue {
       .insert('path')
       .attr('class', 'slice')
       .style('fill', d => d.data.color)
+      .on('click', d => this.onGraphClicked(d.data.id))
 
     slice = svg.select('.slices')
       .selectAll('path.slice')
