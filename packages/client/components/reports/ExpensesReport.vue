@@ -14,20 +14,30 @@
   v-card.mt-2.pa-2
     .filter
       .header {{$t('ui.show_expenses_of')}}
-      v-chip-group.chips(v-model='involvedIndex' column mandatory active-class='primary--text')
-        v-chip.pr-5
-          v-icon.ml-1(left) mdi-account-group
-          | {{$t('noun.group')}}
+      v-chip-group.chips(:value='involvedIndex' @input='v=>involved=v' column mandatory active-class='primary--text')
+        v-chip {{$t('noun.group')}}
         v-chip {{$t('pronoun.me')}}
-        v-chip(disabled) {{$t('noun.others')}}
+        template(v-if='involvedId')
+          v-chip.pl-0(
+            close
+            pill
+            @click:close='involved = null'
+          )
+            v-avatar.mr-3
+              img(:src='involvedMember.avatar_url')
+            | {{involvedMember.name}}
+        template(v-else)
+          app-member-select(:members='members', @input='id=>involved=id')
+            v-chip(disabled) {{$t('noun.others')}}
 
     .filter(v-if='categoryFilter')
       .header {{$t('noun.category')}}
-      v-chip.chips.colorful(close
+      v-chip.chips.colorful(
+        close
         :style='{"--color": categoryFilterInfo.color}'
         @click:close='categoryFilter = null'
       )
-        v-icon.ml-1(left :color='categoryFilterInfo.color') mdi-{{categoryFilterInfo.icon}}
+        v-icon.ml-1(left) mdi-{{categoryFilterInfo.icon}}
         | {{categoryFilterInfo.text}}
 
   v-card.mt-2
@@ -77,16 +87,17 @@ import { oc } from 'ts-optchain'
 import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
 import ChartSummaryPie from '../charts/ChartSummaryPie.vue'
 import { ReportExpensesByCategories, IdMe } from '~/core'
-import { GroupMixin, CommonMixin } from '~/mixins'
+import { GroupMixin, CommonMixin, UserInfoMixin } from '~/mixins'
 
 @Component({
   components: {
     ChartSummaryPie,
   },
 })
-export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
+export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, UserInfoMixin) {
   private internalCategoryFilter: string | null = null
   private involvedIndex = 0
+  private involvedId: string | null = null
 
   ignoredCategories = ['transfer']
 
@@ -110,12 +121,36 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
   }
 
   get involved () {
+    if (this.involvedId)
+      return this.involvedId
+
     if (this.involvedIndex === 1) {
       if (this.group.online)
-        return this.uid
+        return this.uid || null
       else
         return IdMe
     }
+    return null
+  }
+
+  set involved (v: string | number | null) {
+    if (v == null) {
+      this.involvedId = null
+      this.involvedIndex = 0
+    }
+    else if (typeof v === 'string') {
+      this.involvedId = v
+      this.involvedIndex = 2
+    }
+    else {
+      this.involvedId = null
+      this.involvedIndex = v
+    }
+  }
+
+  get involvedMember () {
+    if (this.involved)
+      return this.getUser(this.involved as string)
     return undefined
   }
 
@@ -160,7 +195,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin) {
       this.filteredTransactions,
       this.group,
       this.ignoredCategories,
-      this.involved,
+      this.involved as string,
       this.displayCurrency
     )
   }

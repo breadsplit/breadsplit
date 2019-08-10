@@ -57,5 +57,5 @@ export default class ExpensesReportItem extends mixins(GroupMixin) {
     width: var(--percent)
     background: var(--color)
     opacity: 0.6
-    border-radius: 5px
+    border-top-right-radius: 5px
 </style>

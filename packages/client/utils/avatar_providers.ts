@@ -20,7 +20,6 @@ export function LetterAvatar (name = '', hash = '', size = 200, font = 'Arial') 
     size = (size * window.devicePixelRatio)
 
   const colorIndex = Math.abs(hashCode(hash)) % spectral.length
-  console.log(colorIndex, spectral[colorIndex])
   const color = `#${rgbStringToHex(spectral[colorIndex])}`
   const canvas = document.createElement('canvas')
   canvas.width = size

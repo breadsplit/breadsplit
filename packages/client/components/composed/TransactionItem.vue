@@ -11,7 +11,7 @@ v-list-item.transaction-item(
     ) mdi-{{category.icon}}
 
   v-list-item-content
-    v-list-item-title(:class='{"no-desc": !hasDesc}')
+    v-list-item-title
       span {{desc}}
       template(v-if='transaction.attached_images && transaction.attached_images.length')
         v-icon.ml-1.op-40(size='20') mdi-image
@@ -121,7 +121,4 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
   .sub-label
     opacity: 0.6
     font-size: 0.9em
-
-  .no-desc
-    opacity: 0.6
 </style>
