@@ -257,6 +257,10 @@ svg.chart-summary-pie
 
   path.slice
     stroke-width: 2px
+    transition: transform .15s ease-in-out
+
+    &:hover
+      transform: scale(1.07)
 
   polyline
     stroke: rgba(0,0,0,0.4)
