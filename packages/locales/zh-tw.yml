@@ -122,7 +122,7 @@ prompt:
   invite_friends: 邀請好友
   logout_confirm: 確定要登出嗎？
   sending: 發送中...
-  share_message: 點擊加入 $1
+  share_message: '點擊加入 {0}'
   welcome:
     para1: 非常感謝您使用<b>分帳吐司</b>！
     para2: |-

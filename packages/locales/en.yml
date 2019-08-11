@@ -151,7 +151,7 @@ prompt:
   invite_friends: Invite friends
   logout_confirm: Are you sure to logout?
   sending: Sending...
-  share_message: Click to join $1
+  share_message: Click to join {0}
   welcome:
     para1: <b>Thank you so much for trying BreadSplit</b>!
     para2: >-
