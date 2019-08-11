@@ -26,7 +26,7 @@ v-list-item.transaction-item(
       .involved-note {{$t('ui.transactions.involved_expensed', [getUserName(involved)])}}
 
     app-money-label(
-      :amount='involvedFee'
+      :amount='-involvedFee'
       :currency='transaction.currency'
       color
     )

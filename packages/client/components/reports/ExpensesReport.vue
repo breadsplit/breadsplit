@@ -14,8 +14,8 @@
   v-card.mt-2.pa-2
     .filter
       .header {{$t('ui.show_expenses_of')}}
-      v-chip-group.chips(:value='involvedIndex' @input='v=>involved=v' column mandatory active-class='primary--text')
-        v-chip {{$t('noun.group')}}
+      v-chip-group.chips(:value='involvedIndex' @change='v=>v!=null&&v!==2?involved=v:null' column mandatory active-class='primary--text')
+        v-chip {{$t('pronoun.all')}}
         v-chip {{$t('pronoun.me')}}
         template(v-if='involvedId')
           v-chip.pl-0(
@@ -121,7 +121,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, User
   }
 
   get involved () {
-    if (this.involvedId)
+    if (this.involvedId != null)
       return this.involvedId
 
     if (this.involvedIndex === 1) {

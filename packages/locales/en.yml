@@ -164,6 +164,7 @@ prompt:
     sign: The BreadSplit Team
     title: Welcome to BreadSplit!
 pronoun:
+  all: All
   anonymous: Anonymous
   i: I
   me: Me
