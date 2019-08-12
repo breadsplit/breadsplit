@@ -1,4 +1,16 @@
 <template lang='pug'>
+mixin summary
+  v-list-item
+    v-icon.ml-5(color='primary').mr-2.op-50 mdi-equal-box
+    .primary--text.op-75 {{$t('ui.total')}}
+    v-spacer
+    app-money-label.pr-1.text-bold(
+      :amount='-filteredTotalAmount'
+      :currency='displayCurrency'
+      color
+    )
+  v-divider
+
 .expenses-report
   .text-center
     app-date-range-select(:from.sync='from' :to.sync='to' :unit.sync='unit')
@@ -45,32 +57,27 @@
       .pa-4
         v-subheader {{$t('ui.no_expenses_in_range')}}
     template(v-else)
-      v-list-item
-        v-icon(color='primary').mr-2 mdi-equal-box
-        .primary--text {{$t('ui.total')}}
-        v-spacer
-        app-money-label(
-          :amount='-filteredTotalAmount'
-          :currency='displayCurrency'
-          color
-        )
-      v-divider
       template(v-if='!categoryFilter')
         v-tabs(v-model='tab' hide-slider)
           v-tab {{$t('ui.report.mode_category')}} ({{expenseSummary.length}})
           v-tab {{$t('ui.report.mode_expenses')}} ({{filteredTransactions.length}})
-          v-tab {{$t('ui.report.mode_transfer')}} ({{transferTransactions.length}})
+          v-tab(v-if='transferTransactions.length') {{$t('ui.report.mode_transfer')}} ({{transferTransactions.length}})
+          v-tab(v-if='involved') {{$t('ui.report.mode_debt')}} ({{involvedTransactions.length}})
         v-divider
       v-tabs-items(v-model='tab' touchless)
         v-tab-item
+          +summary
           v-list.pa-0(two-line flat)
             template(v-for='(item, index) in expenseSummary')
               v-divider(v-if='index!=0')
               app-expenses-report-item(:item='item' :total='totalAmount' :index='index' @selected='i=>categoryFilter=i')
         v-tab-item
+          +summary
           app-transactions-list(:transactions='filteredTransactions' :involved='involved' involveMode='expense')
-        v-tab-item
+        v-tab-item(v-if='transferTransactions.length')
           app-transactions-list(:transactions='transferTransactions' :involved='involved' involveMode='expense')
+        v-tab-item(v-if='involved')
+          app-transactions-list(:transactions='involvedTransactions' :involved='involved' involveMode='debt')
 
   template(v-if='categoryFilter')
     .text-center.py-2
@@ -86,7 +93,7 @@ import Fraction from 'fraction.js'
 import { oc } from 'ts-optchain'
 import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
 import ChartSummaryPie from '../charts/ChartSummaryPie.vue'
-import { ReportExpensesByCategories, IdMe, TransactionHelper } from '~/core'
+import { ReportExpensesByCategories, IdMe } from '~/core'
 import { GroupMixin, CommonMixin, UserInfoMixin } from '~/mixins'
 
 @Component({
@@ -154,31 +161,36 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, User
   get transactionsInRange () {
     const from = +dayjs(this.from)
     const to = +dayjs(this.to)
-    let filtered = this.transactions
+    return this.transactions.filter(t => t.timestamp >= from && t.timestamp < to)
+  }
 
-    filtered = filtered.filter(t => t.timestamp >= from && t.timestamp < to)
-
-    if (this.involved) {
-      filtered = filtered.filter((t) => {
-        const balance = TransactionHelper.from(t).balanceChangesOf(this.involved as string)
-        return balance && +balance.debt !== 0
-      })
-    }
-    return filtered
+  get transactionsInCategory () {
+    if (this.categoryFilter)
+      return this.transactionsInRange.filter(t => (t.category || 'other') === this.categoryFilter)
+    else
+      return this.transactionsInRange.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
   }
 
   get filteredTransactions () {
-    let filtered = this.transactionsInRange
-    if (this.categoryFilter)
-      filtered = filtered.filter(t => (t.category || 'other') === this.categoryFilter)
-    else
-      filtered = filtered.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
+    let filtered = this.transactionsInCategory
+    if (this.involved)
+      filtered = filtered.filter(t => t.debtors.find(i => i.uid === this.involved))
+    return filtered
+  }
 
+  get involvedTransactions () {
+    let filtered = this.transactionsInCategory
+    if (this.involved)
+      filtered = filtered.filter(t => t.debtors.find(i => i.uid === this.involved) || t.creditors.find(i => i.uid === this.involved))
     return filtered
   }
 
   get transferTransactions () {
-    return this.transactionsInRange.filter(t => this.ignoredCategories.includes(t.category || 'other'))
+    let filtered = this.transactionsInRange
+      .filter(t => this.ignoredCategories.includes(t.category || 'other'))
+    if (this.involved)
+      filtered = filtered.filter(t => t.debtors.find(i => i.uid === this.involved) || t.creditors.find(i => i.uid === this.involved))
+    return filtered
   }
 
   get chartWidth () {

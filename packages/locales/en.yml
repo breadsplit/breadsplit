@@ -151,7 +151,7 @@ prompt:
   invite_friends: Invite friends
   logout_confirm: Are you sure to logout?
   sending: Sending...
-  share_message: Click to join {0}
+  share_message: 'Click to join {0}'
   welcome:
     para1: <b>Thank you so much for trying BreadSplit</b>!
     para2: >-
@@ -262,6 +262,7 @@ ui:
   privacy_policy: Privacy policy
   report:
     mode_category: Category
+    mode_debt: Debit and credit
     mode_expenses: Expenses
     mode_transfer: Transfers
   reset: Reset

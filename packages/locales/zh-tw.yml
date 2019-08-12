@@ -230,6 +230,7 @@ ui:
   privacy_policy: 隱私政策
   report:
     mode_category: 類別統計
+    mode_debt: 借貸詳情
     mode_expenses: 消費明細
     mode_transfer: 債務轉移
   reset: 重置
