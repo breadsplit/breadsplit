@@ -80,7 +80,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, mixins, Getter } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
 import Fraction from 'fraction.js'
 import { oc } from 'ts-optchain'
@@ -107,9 +107,6 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, User
   to = +new Date()
   unit: DateRangeUnit = 'month'
 
-  @Getter('user/uid') uid: string | undefined
-  @Getter('group/currentDisplayCurrency') readonly displayCurrency!: string
-
   get transactions () {
     return this.group.transactions
       .map(i => i)
@@ -125,7 +122,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, User
       return this.involvedId
 
     if (this.involvedIndex === 1) {
-      if (this.group.online)
+      if (this.isOnline)
         return this.uid || null
       else
         return IdMe

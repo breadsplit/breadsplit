@@ -6,7 +6,7 @@ import { oc } from 'ts-optchain'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
 import { FallbackExchangeRate } from '../../meta/fallback_exchange_rates'
 import { GroupStateDefault } from '.'
-import { GroupState, RootState, Group, ServerGroup, Operation, ClientGroup, ExchangeRecord } from '~/types'
+import { GroupState, RootState, Group, ServerGroup, ClientGroup, ExchangeRecord } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe, GroupBalances, GetSettleUpSolutions, CategoryDefault } from '~/core'
 import { DEBUG } from '~/../meta/env'
 
@@ -15,10 +15,6 @@ const log = (...args) => !DEBUG || console.log('VUX', ...args)
 
 const OperationCache = new BasicCache<Group>()
 const Transformer = EvalTransforms<Group>(Transforms, { cacheObject: OperationCache })
-
-function origin () {
-  return window.location.origin
-}
 
 export const state = GroupStateDefault
 
@@ -40,19 +36,6 @@ export const getters: GetterTree<GroupState, RootState> = {
     if (!state.currentId)
       return undefined
     return state.cache.solutions[state.currentId]
-  },
-
-  currentShareLink (state, getters) {
-    const current = getters.current
-    if (!current || !current.online)
-      return undefined
-    return `${origin()}/join?id=${current.id}`
-  },
-
-  currentDisplayCurrency (state) {
-    if (!state.currentId)
-      return undefined
-    return oc(state.groups[state.currentId]).local_options.display_currency() || oc(state.cache.groups[state.currentId]).main_currency()
   },
 
   currentId (state) {
@@ -102,13 +85,6 @@ export const getters: GetterTree<GroupState, RootState> = {
     groupId = groupId || state.currentId || ''
     const group = state.groups[groupId]
     return !!(group.syncing_operations.length)
-  },
-
-  unsyncedOperationsOf: state => (id?: string) => {
-    id = id || state.currentId || ''
-    const group = state.groups[id]
-    const isUnsynced = (o: Operation) => !(group.syncing_operations || []).includes(o.hash)
-    return group.operations.filter(isUnsynced)
   },
 
   unreadsOf: state => (id?: string) => {
@@ -200,16 +176,6 @@ export const actions: ActionTree<GroupState, RootState> = {
 
   reorderCategories (context, { id, categories, archived = [] }) {
     NewOperation(context, id, 'reorder_categories', categories)
-  },
-
-  // Meta
-  changeDisplayCurrency ({ state, commit, dispatch }, { id, display_currency }) {
-    id = id || state.currentId
-    const group = state.cache.groups[id]
-    if (!group)
-      return
-    commit('setConfigs', { id, field: 'display_currency', value: display_currency })
-    dispatch('cacheBalances', { group })
   },
 
   // Caches

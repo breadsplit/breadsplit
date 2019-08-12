@@ -20,7 +20,7 @@ v-navigation-drawer(
           v-icon mdi-{{ group.icon }}
         v-list-item-content
           v-list-item-title(v-text='group.name')
-        v-list-item-action(v-if='group.online')
+        v-list-item-action(v-if='isOnline')
           template(v-if='unreadsOf(group.id)')
             v-avatar(size='25', color='red' dark)
               v-list-item-title.ma-2(v-text='unreadsOf(group.id)' style='color: white;')

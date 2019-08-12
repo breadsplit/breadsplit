@@ -7,7 +7,7 @@ import * as firebase from 'firebase/app'
 
 import { SharedGroupOptions } from '../../types/models'
 import { FallbackExchangeRate } from '../../meta/fallback_exchange_rates'
-import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
+import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord, Operation } from '~/types'
 import { IsThisId, getExchangeRateOn } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
@@ -461,7 +461,8 @@ export class FirebasePlugin {
         if (!group.online)
           return
 
-        const unsynced = this.store.getters['group/unsyncedOperationsOf'](group.id)
+        const isUnsynced = (o: Operation) => !(group.syncing_operations || []).includes(o.hash)
+        const unsynced = group.operations.filter(isUnsynced)
 
         if (!unsynced.length)
           return

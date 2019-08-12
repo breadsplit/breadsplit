@@ -10,13 +10,11 @@ v-menu(offset-y left v-if='currencies.length > 1')
 </template>
 
 <script lang='ts'>
-import { Component, mixins, Getter } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { GroupMixin } from '~/mixins'
 
 @Component
 export default class DisplayCurrencySwitch extends mixins(GroupMixin) {
-  @Getter('group/currentDisplayCurrency') readonly displayCurrency!: string
-
   changeDisplayingCurrency (currency: string) {
     this.$store.dispatch('group/changeDisplayCurrency', { display_currency: currency })
   }

@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card.sharing.pa-4.mb-2(flat color='transparent')
+v-card.inviting.pa-4.mb-2(flat color='transparent')
   .vertical-aligned-grid(@click='toggle' v-columns='"auto max-content"')
     v-subheader.pl-1
       span
@@ -9,22 +9,18 @@ v-card.sharing.pa-4.mb-2(flat color='transparent')
     v-switch.mt-3.mb-n3.mouse-pass(:input-value='public' :loading='loading' inset color='primary')
 
   v-slide-y-reverse-transition
-    v-btn.mt-2(color='primary' block depressed v-show='public' @click='copyShareLink')
+    v-btn.mt-2(color='primary' block depressed v-show='public' @click='shareInviteLink')
       v-icon.mr-3 mdi-share
       span {{$t('ui.share.share_link')}}
 </template>
 
 <script lang='ts'>
-import { Component, mixins, Getter } from 'nuxt-property-decorator'
-import { ClientGroup } from '~/types'
+import { Component, mixins } from 'nuxt-property-decorator'
 import GroupMixin from '~/mixins/group'
 import { Share } from '~/utils/share'
 
 @Component
-export default class Sharing extends mixins(GroupMixin) {
-  @Getter('group/currentShareLink') currentShareLink: string | undefined
-  @Getter('group/currentClientGroup') clientGroup: ClientGroup | undefined
-
+export default class Inviting extends mixins(GroupMixin) {
   loading = false
 
   get public () {
@@ -33,14 +29,14 @@ export default class Sharing extends mixins(GroupMixin) {
     return false
   }
 
-  async copyShareLink () {
-    if (!this.currentShareLink)
+  async shareInviteLink () {
+    if (!this.inviteLink)
       return
     await Share(
       this,
       this.$t('prompt.invite_friends').toString(),
       this.$t('prompt.share_message', [this.group.name]).toString(),
-      this.currentShareLink,
+      this.inviteLink,
     )
   }
 

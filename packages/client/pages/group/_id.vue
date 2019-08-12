@@ -28,7 +28,7 @@
     v-tab-item(key='3').scroll-page
       v-container(:class='{"pa-0": isMobile}')
 
-        app-sharing(v-if='group.online')
+        app-inviting(v-if='isOnline')
         app-members(:members='members')
 
     div(style='height:15px')
