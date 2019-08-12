@@ -1,10 +1,6 @@
 import { ClientGroup, UserInfo, ExchangeRecord, Solution, Balance, Group } from '~/types'
 import { OSType, WebviewType } from '~/utils/ua'
 
-export interface GroupConfig {
-  display_currency: string | null
-}
-
 export interface GroupState {
   groups: Record<string, ClientGroup>
   currentId: string|null
@@ -14,7 +10,6 @@ export interface GroupState {
     balances: Record<string, Balance[]>
     solutions: Record<string, Solution[]>
   }
-  configs: Record<string, GroupConfig>
 }
 
 export interface UserState {

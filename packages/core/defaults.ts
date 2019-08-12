@@ -59,10 +59,10 @@ export const ClientGroupDefault = (overrides?: Partial<ClientGroup>): ClientGrou
     id: group.id,
     base: group,
     operations: [],
-    syncingOperations: [],
+    syncing_operations: [],
     lastchanged: +new Date(),
     options: SharedGroupOptionsDefault(),
-    localOptions: LocalGroupOptionsDefault(),
+    local_options: LocalGroupOptionsDefault(),
   }
 }
 

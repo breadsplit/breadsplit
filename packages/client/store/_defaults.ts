@@ -12,7 +12,6 @@ export const GroupStateDefault = (overrides?: Partial<GroupState>): GroupState =
     balances: {},
     solutions: {},
   },
-  configs: {},
 }, overrides)
 
 export const UserStateDefault = (overrides?: Partial<UserState>): UserState => merge({

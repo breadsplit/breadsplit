@@ -14,11 +14,11 @@ import { Component, mixins, Getter } from 'nuxt-property-decorator'
 import { GroupMixin } from '~/mixins'
 
 @Component
-export default class Balances extends mixins(GroupMixin) {
+export default class DisplayCurrencySwitch extends mixins(GroupMixin) {
   @Getter('group/currentDisplayCurrency') readonly displayCurrency!: string
 
   changeDisplayingCurrency (currency: string) {
-    this.$store.dispatch('group/changeDisplayCurrency', { displayCurrency: currency })
+    this.$store.dispatch('group/changeDisplayCurrency', { display_currency: currency })
   }
 }
 </script>

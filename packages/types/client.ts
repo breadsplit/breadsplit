@@ -1,7 +1,8 @@
 import { Group, Operation, SharedGroupOptions } from '.'
 
 export interface LocalGroupOptions {
-  displayCurrency?: string
+  display_currency?: string
+  favorite?: boolean
 }
 
 export interface ClientGroup {
@@ -10,11 +11,10 @@ export interface ClientGroup {
   operations: Operation[]
   online?: boolean
   lastsync?: number
-  syncingOperations: string[]
+  syncing_operations: string[]
 
   // Options
   lastchanged: number
-  favorite?: boolean
   options: SharedGroupOptions
-  localOptions: LocalGroupOptions
+  local_options: LocalGroupOptions
 }

@@ -268,11 +268,12 @@ export class FirebasePlugin {
     const cache = this.store.state.cache.exchange_rates[date]
     if (cache)
       return cache
-    log(`💱 Requesting exchange rate information on date: ${date}`)
+    log(`💱 Requesting exchange rate information on ${date}`)
     try {
       const record = await this.functions.httpsCallable('getExchangeRate')({ date })
       if (record.data) {
         this.store.commit('cache/save', { type: 'exchange_rates', key: date, data: record.data })
+        log(`💱 Exchange rate information on ${date} received`, record.data)
         return record.data
       }
     }

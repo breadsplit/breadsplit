@@ -52,7 +52,7 @@ export const getters: GetterTree<GroupState, RootState> = {
   currentDisplayCurrency (state) {
     if (!state.currentId)
       return undefined
-    return oc(state.configs[state.currentId]).display_currency() || oc(state.cache.groups[state.currentId]).main_currency()
+    return oc(state.groups[state.currentId]).local_options.display_currency() || oc(state.cache.groups[state.currentId]).main_currency()
   },
 
   currentId (state) {
@@ -101,13 +101,13 @@ export const getters: GetterTree<GroupState, RootState> = {
   isSyncing: state => (groupId?: string) => {
     groupId = groupId || state.currentId || ''
     const group = state.groups[groupId]
-    return !!(group.syncingOperations.length)
+    return !!(group.syncing_operations.length)
   },
 
   unsyncedOperationsOf: state => (id?: string) => {
     id = id || state.currentId || ''
     const group = state.groups[id]
-    const isUnsynced = (o: Operation) => !(group.syncingOperations || []).includes(o.hash)
+    const isUnsynced = (o: Operation) => !(group.syncing_operations || []).includes(o.hash)
     return group.operations.filter(isUnsynced)
   },
 
@@ -242,7 +242,7 @@ export const actions: ActionTree<GroupState, RootState> = {
       exchange_record = rootState.cache.exchange_rates[keys[keys.length - 1]] || FallbackExchangeRate
     }
     log(`🐱‍👤 Caching balances ${group.id} [${exchange_record.date}]`)
-    const display_currency = oc(state.configs[group.id]).display_currency(undefined)
+    const display_currency = oc(state.groups[group.id]).local_options.display_currency(undefined)
     const balances = GroupBalances(group, display_currency, exchange_record)
     const solutions = GetSettleUpSolutions(balances, group)
 
@@ -285,10 +285,13 @@ export const mutations: MutationTree<GroupState> = {
   },
 
   setConfigs (state, { id, field, value }) {
-    if (!state.configs[id])
-      Vue.set(state.configs, id, { display_currency: value })
-    else
-      Vue.set(state.configs[id], field, value)
+    id = id || state.currentId
+    const group = state.groups[id]
+    if (group) {
+      if (!group.local_options)
+        group.local_options = {}
+      group.local_options[field] = value
+    }
   },
 
   switch (state, id: string | null) {
@@ -309,7 +312,6 @@ export const mutations: MutationTree<GroupState> = {
     Vue.delete(state.cache.groups, id)
     Vue.delete(state.cache.balances, id)
     Vue.delete(state.cache.solutions, id)
-    Vue.delete(state.configs, id)
   },
 
   newOperation (state, { id, name, data, meta }) {
@@ -347,7 +349,7 @@ export const mutations: MutationTree<GroupState> = {
 
     const activitiesCount = oc(clientGroup).base.activities.length(0)
 
-    clientGroup.syncingOperations = (clientGroup.syncingOperations || [])
+    clientGroup.syncing_operations = (clientGroup.syncing_operations || [])
       .filter(i => !serverOperations.includes(i))
     clientGroup.base = Object.freeze(group.present)
     clientGroup.operations = unsyncedOperations
@@ -367,12 +369,12 @@ export const mutations: MutationTree<GroupState> = {
 
   syncOperations (state, { id, operations }) {
     const group = state.groups[id]
-    group.syncingOperations = union(group.syncingOperations || [], operations.map(o => o.hash))
+    group.syncing_operations = union(group.syncing_operations || [], operations.map(o => o.hash))
   },
 
   resetSyncingStates (state) {
     Object.values(state.groups).forEach((group) => {
-      group.syncingOperations = []
+      group.syncing_operations = []
     })
   },
 }
