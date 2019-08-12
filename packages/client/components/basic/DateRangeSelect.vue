@@ -5,8 +5,9 @@
       v-icon mdi-chevron-left
 
     div
-      h2.px-3.primary--text {{display}}
-      .op-75.mt-n1 {{subdisplay}}
+      h2.px-3.primary--text.mb-n1 {{display}}
+      v-expand-transition
+        .op-75(v-show='unit !== "all" && unit !== "day"') {{subdisplay}}
 
       v-btn-toggle.mt-2(v-model='internal_unit' rounded mandatory )
         v-btn(small) {{$t('date_range.day.display')}}
