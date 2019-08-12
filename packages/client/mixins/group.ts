@@ -8,7 +8,7 @@ function origin () {
 
 @Component
 export default class GroupMixin extends Vue {
-  @Getter('group/current') group?: Group
+  @Getter('group/current') group!: Group
   @Getter('group/currentClientGroup') clientGroup?: ClientGroup
   @Getter('group/activeMembers') members!: Member[]
 

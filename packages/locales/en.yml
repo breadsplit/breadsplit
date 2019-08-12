@@ -336,6 +336,7 @@ ui:
     note: Note
     photos_uploading: Uploading photos...
     repeat_expense: Repeat
+    select_category: Select category
     select_who_paid: Select the person who paid the bill
     view: View expense
     xx_should_pay: 'by the way, {0} should pay this time.'

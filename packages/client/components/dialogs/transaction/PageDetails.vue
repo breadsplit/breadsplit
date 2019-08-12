@@ -21,12 +21,11 @@
 
   .pa-4
     div(v-columns='"max-content auto"')
-      div
+      div(style='height:60px')
         v-menu(
           v-model='showCategorySelect'
           :disabled='!editing'
           transition='slide-y-transition'
-          offset-y
         )
           template(v-slot:activator='{ on }')
             .category-wrapper.pr-2(v-on='on')
@@ -35,10 +34,12 @@
               template(v-else)
                 .category-empty
                   v-icon(size='28') mdi-tag-multiple
-          v-card.py-3.px-5(width='400px')
-            app-category-select.mx-n3(v-model='form.category')
+          v-card.py-5.px-5(width='380px')
+            div.primary--text.ml-2.mb-2 {{$t('ui.transactions.select_category')}}
+            app-category-select.mx-n3(v-model='form.category' @input='focus()')
 
       v-text-field.description-field(
+        ref='desc'
         v-model='form.desc'
         :placeholder='editing ? $t("ui.transactions.description_placeholder") : parseCategory(form.category).text'
         :readonly='!editing'
@@ -189,6 +190,11 @@ export default class PageDetails extends mixins(GroupMixin) {
       this.carouselIndex = this.form.attached_images.length - 1
       this.$nextTick(() => this.carouselIndex = 0)
     }
+  }
+
+  focus () {
+    // @ts-ignore
+    this.$refs.desc.focus()
   }
 }
 </script>

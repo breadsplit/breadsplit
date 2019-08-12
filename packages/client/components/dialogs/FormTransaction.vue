@@ -223,7 +223,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     if (oldvalue === STEP_SPLIT)
       this.$refs.splitting_debtors.finishUp()
     if (value === STEP_DETAIL)
-      setTimeout(() => this.$refs.details.openCategorySelect(), 700)
+      setTimeout(() => this.$refs.details.openCategorySelect(), 500)
   }
 
   btnNext () {

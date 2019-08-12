@@ -303,6 +303,7 @@ ui:
     note: 備注
     photos_uploading: 照片上傳中...
     repeat_expense: 重複
+    select_category: 選擇類別
     select_who_paid: 選擇付款人
     view: 查看支出
     xx_should_pay: '這次輪到 {0} 付款。'
