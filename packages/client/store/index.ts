@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import { MutationTree, GetterTree } from 'vuex'
+import { LOCALE_FALLBACK } from '../../utils/i18n'
 import { RootStateDefault } from './_defaults'
 import { RootState, Group } from '~/types'
 import { APP_VERSION } from '~/../meta/env'
@@ -10,7 +11,7 @@ export const state = RootStateDefault
 export const getters: GetterTree<RootState, RootState> = {
 
   locale (state) {
-    return state.user_locale || state.browser_locale || 'en'
+    return state.user_locale || state.browser_locale || LOCALE_FALLBACK
   },
 
   dark (state) {

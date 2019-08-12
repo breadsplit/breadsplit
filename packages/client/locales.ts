@@ -1,4 +1,5 @@
 import { AvaliableLocales, Messages } from '../locales'
+import { LOCALE_FALLBACK } from '../utils/i18n'
 
 export { AvaliableLocales, Messages }
 
@@ -25,5 +26,5 @@ export function acceptLanguage (raw?: string) {
       return code
   }
 
-  return 'en'
+  return LOCALE_FALLBACK
 }

@@ -1,5 +1,5 @@
 import dayjs from '../core/dayjs_config'
-import { Translator, t } from './i18n'
+import { Translator, t, LOCALE_FALLBACK } from './i18n'
 
 export function getTimezone () {
   return Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -57,7 +57,7 @@ export function dateToRelative (time: dayjs.ConfigType, $t: Translator = t, loca
   return d.format('ll')
 }
 
-export function numberToMoney (value: number, locale: string = 'en', currency?: string, digits = 2) {
+export function numberToMoney (value: number, locale: string = LOCALE_FALLBACK, currency?: string, digits = 2) {
   const formatter = new Intl.NumberFormat(locale, {
     style: currency ? 'currency' : undefined,
     currency,

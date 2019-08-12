@@ -1,7 +1,9 @@
 import get from 'lodash/get'
 import { Messages } from '../locales'
 
-export function getValue (key: string, locale: string, fallback = 'en') {
+export const LOCALE_FALLBACK = 'en'
+
+export function getValue (key: string, locale: string, fallback = LOCALE_FALLBACK) {
   let value = get(Messages, `${locale}.${key}`) || ''
 
   if (!value)
@@ -18,7 +20,7 @@ function format (str: string, args: any[]) {
   })
 };
 
-export function t (key: string, locale: string = 'en', values?: any[], fallback = 'en') {
+export function t (key: string, locale: string = LOCALE_FALLBACK, values?: any[], fallback = LOCALE_FALLBACK) {
   const value = getValue(key, locale, fallback)
   return format(value, values || [])
 }

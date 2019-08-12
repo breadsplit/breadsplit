@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import { Context } from '@nuxt/vue-app'
+import { LOCALE_FALLBACK } from '../../utils/i18n'
 import { Messages } from '~/locales'
 
 export default ({ app, store, route }: Context) => {
@@ -14,7 +15,7 @@ export default ({ app, store, route }: Context) => {
 
   app.i18n = new VueI18n({
     locale: store.getters.locale,
-    fallbackLocale: 'en',
+    fallbackLocale: LOCALE_FALLBACK,
     messages: Messages,
     silentFallbackWarn: true,
   })

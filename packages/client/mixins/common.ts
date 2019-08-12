@@ -1,5 +1,6 @@
 
 import { Vue, Component } from 'nuxt-property-decorator'
+import { LOCALE_FALLBACK } from '../../utils/i18n'
 
 @Component
 export default class CommonMixin extends Vue {
@@ -8,7 +9,7 @@ export default class CommonMixin extends Vue {
   }
 
   get currentLocale () {
-    return this.$i18n.locale || 'en'
+    return this.$i18n.locale || LOCALE_FALLBACK
   }
 
   WIP () {
