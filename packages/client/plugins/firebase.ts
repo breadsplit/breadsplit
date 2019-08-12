@@ -6,8 +6,9 @@ import dayjs from 'dayjs'
 import * as firebase from 'firebase/app'
 
 import { SharedGroupOptions } from '../../types/models'
+import { FallbackExchangeRate } from '../../meta/fallback_exchange_rates'
 import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord } from '~/types'
-import { IsThisId, getExchangeRateOn, FallbackExchangeRate } from '~/core'
+import { IsThisId, getExchangeRateOn } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
 import { DEBUG, BUILD_TARGET } from '~/../meta/env'

@@ -1,8 +1,9 @@
 import find from 'lodash/find'
 import Fraction from 'fraction.js'
 import { Transaction, Group, Balance, Solution, ExchangeRecord } from '../types'
+import { FallbackExchangeRate } from '../meta/fallback_exchange_rates'
 import { defaultCurrency } from './defaults'
-import { FallbackExchangeRate, TransactionHelper } from '.'
+import { TransactionHelper } from '.'
 
 export function GroupCurrency (group: Group) {
   const set = new Set([group.main_currency])

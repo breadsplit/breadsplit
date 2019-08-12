@@ -1,6 +1,6 @@
 import merge from 'lodash/merge'
 import mapValues from 'lodash/mapValues'
-import { Member, Group, Transaction, ClientGroup, SharedGroupOptions } from '../types'
+import { Member, Group, Transaction, ClientGroup, SharedGroupOptions, LocalGroupOptions } from '../types'
 import { Category } from '../types/models'
 import { GenerateId } from './id_helper'
 
@@ -50,6 +50,9 @@ export const SharedGroupOptionsDefault = (overrides?: Partial<SharedGroupOptions
   public: true,
 }, overrides)
 
+export const LocalGroupOptionsDefault = (overrides?: Partial<LocalGroupOptions>): LocalGroupOptions => merge({
+}, overrides)
+
 export const ClientGroupDefault = (overrides?: Partial<ClientGroup>): ClientGroup => {
   const group = GroupDefault(overrides)
   return {
@@ -59,6 +62,7 @@ export const ClientGroupDefault = (overrides?: Partial<ClientGroup>): ClientGrou
     syncingOperations: [],
     lastchanged: +new Date(),
     options: SharedGroupOptionsDefault(),
+    localOptions: LocalGroupOptionsDefault(),
   }
 }
 

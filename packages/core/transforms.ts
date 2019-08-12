@@ -54,10 +54,6 @@ export const Transforms: TransformFunctions<Group> = {
         entity_name: changes.name,
       })
     }
-    if (changes.options) {
-      Object.assign(snap.options, changes.options)
-      delete changes.options
-    }
     if (changes.main_currency && snap.main_currency !== changes.main_currency) {
       snap.main_currency = changes.main_currency
       snap.activities.push({

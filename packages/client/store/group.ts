@@ -4,9 +4,10 @@ import orderBy from 'lodash/orderBy'
 import union from 'lodash/union'
 import { oc } from 'ts-optchain'
 import { MutationTree, ActionTree, GetterTree, ActionContext } from 'vuex'
+import { FallbackExchangeRate } from '../../meta/fallback_exchange_rates'
 import { GroupStateDefault } from '.'
 import { GroupState, RootState, Group, ServerGroup, Operation, ClientGroup, ExchangeRecord } from '~/types'
-import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe, GroupBalances, GetSettleUpSolutions, FallbackExchangeRate, CategoryDefault } from '~/core'
+import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe, GroupBalances, GetSettleUpSolutions, CategoryDefault } from '~/core'
 import { DEBUG } from '~/../meta/env'
 
 // eslint-disable-next-line no-console

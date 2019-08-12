@@ -1,32 +1,5 @@
 import { TransOperation } from './operation_transformer'
-
-export type Splitmode = 'average' | 'amount' | 'percent' | 'weight'
-
-export type UID = string
-
-export type MemberRoles =
-  | 'owner'
-  | 'collaborator'
-  | 'participant'
-  | 'visitor'
-
-export type TransactionType =
-  | 'expenses'
-  | 'transfer'
-
-export type ActivityAction =
-  | 'insert'
-  | 'remove'
-  | 'update'
-  | 'publish'
-
-export type Entity =
-  | 'member'
-  | 'viewer'
-  | 'group'
-  | 'transaction'
-  | 'currency_record'
-  | 'category'
+import { CurrencyRecord, UID, MemberRoles, Splitmode, TransactionType, ActivityAction, Entity } from '.'
 
 export interface Weight {
   uid: UID
@@ -98,23 +71,6 @@ export interface Transaction {
   timezone?: string
 }
 
-export interface CurrencyRecord {
-  id: UID
-  from_currency: string
-  from_fee: number
-  to_currency: string
-  to_fee: number
-  handling_fee: number
-  timestamp: number
-  desc: string
-}
-
-export interface CurrencyChangeRate {
-  from_currency: string
-  to_currency: string
-  change_rate: number
-}
-
 export interface Activity {
   timestamp: number
   timezone?: string
@@ -128,10 +84,6 @@ export interface Activity {
   entity_color?: string
   entity_icon?: string
   meta?: any
-}
-
-export interface GroupOptions {
-  multiple_currencies: boolean
 }
 
 export interface Budget {
@@ -152,7 +104,6 @@ export interface Group {
   name: string
   color?: string
   icon?: string
-  options: GroupOptions
   timestamp: number
   budgets: Budget[]
 
@@ -171,35 +122,4 @@ export interface Group {
 export interface Operation extends TransOperation {
   uid?: string
   server_timestamp?: number
-}
-
-export interface ClientGroup {
-  id: string
-  base: Group
-  operations: Operation[]
-  online?: boolean
-  lastsync?: number
-  syncingOperations: string[]
-
-  // Options
-  lastchanged: number
-  favorite?: boolean
-  options: SharedGroupOptions
-}
-
-export interface TokenRecord {
-  token: string
-  locale: string
-  enabled: boolean
-  uid?: string
-}
-
-export interface FeedbackOptions {
-  email: string | null
-  content: string
-}
-
-export interface Feedback extends FeedbackOptions {
-  uid: string | null
-  timestamp: number
 }
