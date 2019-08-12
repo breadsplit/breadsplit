@@ -1,21 +1,23 @@
 <template lang='pug'>
 .data-range-select
-  h1
-    v-btn(@click='previous' icon small v-if='unit !== "custom" && unit !== "all"')
+  div(v-columns='"max-content auto max-content"').px-3
+    v-btn.my-auto(@click='previous' icon small :disabled='unit === "custom" || unit === "all"')
       v-icon mdi-chevron-left
-    span.px-3.primary--text {{display}}
-    v-btn(@click='next' icon small v-if='unit !== "custom" && unit !== "all"')
+
+    div
+      h2.px-3.primary--text {{display}}
+      .op-75.mt-n1 {{subdisplay}}
+
+      v-btn-toggle.mt-2(v-model='internal_unit' rounded mandatory )
+        v-btn(small) {{$t('date_range.day.display')}}
+        v-btn(small) {{$t('date_range.week.display')}}
+        v-btn(small) {{$t('date_range.month.display')}}
+        v-btn(small) {{$t('date_range.year.display')}}
+        v-btn(small) {{$t('date_range.all.display')}}
+        v-btn(small) {{$t('date_range.custom.display')}}
+
+    v-btn.my-auto(@click='next' icon small :disabled='unit === "custom" || unit === "all"')
       v-icon mdi-chevron-right
-
-  div {{subdisplay}}
-
-  v-btn-toggle.mt-3(v-model='internal_unit' rounded mandatory )
-    v-btn(small) {{$t('date_range.day.display')}}
-    v-btn(small) {{$t('date_range.week.display')}}
-    v-btn(small) {{$t('date_range.month.display')}}
-    v-btn(small) {{$t('date_range.year.display')}}
-    v-btn(small) {{$t('date_range.all.display')}}
-    v-btn(small) {{$t('date_range.custom.display')}}
 </template>
 
 <script lang='ts'>
@@ -102,7 +104,8 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
   }
 
   get subdisplay () {
-    return `${shortDate(this.$i18n.locale, this.dateFrom)} - ${shortDate(this.$i18n.locale, this.dateTo, this.dateFrom)}`
+    const to = this.dateTo.subtract(1, 'minute')
+    return `${shortDate(this.$i18n.locale, this.dateFrom, this.dateFrom)} - ${shortDate(this.$i18n.locale, to, to)}`
   }
 
   changeUnit (unit: string) {
