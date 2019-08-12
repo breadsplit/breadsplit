@@ -114,14 +114,16 @@ export default {
     'mdi-home',
     'mdi-home-automation',
     'mdi-home-variant-outline',
+    'mdi-sofa',
     'mdi-city',
     'mdi-fridge',
     'mdi-fridge-outline',
     'mdi-medical-bag',
-    'mdi-bed-empty',
+    'mdi-baby-buggy',
     'mdi-hotel',
     'mdi-tooth',
     'mdi-dumbbell',
+    'mdi-tent',
   ],
   entertainment: [
     'mdi-movie',
@@ -133,11 +135,8 @@ export default {
   ],
   social: [
     'mdi-account-group',
-    'mdi-account-heart',
     'mdi-account-multiple',
     'mdi-account-star',
-    'mdi-account-supervisor',
-    'mdi-account-supervisor-circle',
     'mdi-gift-outline',
   ],
   clothes: [
@@ -146,6 +145,7 @@ export default {
     'mdi-shoe-formal',
     'mdi-shoe-heel',
     'mdi-hanger',
+    'mdi-tie',
     'mdi-tumble-dryer',
   ],
   animals: [
@@ -170,5 +170,6 @@ export default {
     'mdi-headphones',
     'mdi-printer',
     'mdi-phone-classic',
+    'mdi-quadcopter',
   ],
 }
