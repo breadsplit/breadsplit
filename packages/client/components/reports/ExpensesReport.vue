@@ -1,8 +1,8 @@
 <template lang='pug'>
 mixin summary
   v-list-item
-    v-icon.ml-5(color='primary').mr-2.op-50 mdi-equal-box
-    .primary--text.op-75 {{$t('ui.total')}}
+    v-icon.ml-5(color='grey').mr-2.op-50 mdi-equal-box
+    .op-75 {{$t('ui.total')}}
     v-spacer
     app-money-label.pr-1.text-bold(
       :amount='-filteredTotalAmount'
@@ -39,7 +39,7 @@ mixin summary
               img(:src='involvedMember.avatar_url')
             | {{involvedMember.name}}
         template(v-else)
-          app-member-select(:members='members', @input='id=>involved=id')
+          app-member-select(:members='membersExcludingMe', @input='id=>involved=id')
             v-chip(disabled) {{$t('noun.others')}}
 
     .filter(v-if='categoryFilter')
@@ -122,6 +122,10 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, User
 
   get amount () {
     return this.transactions.length
+  }
+
+  get membersExcludingMe () {
+    return this.members.filter(i => i.uid !== this.uid && i.uid !== IdMe)
   }
 
   get involved () {
