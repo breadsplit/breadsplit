@@ -8,32 +8,43 @@ function origin () {
 
 @Component
 export default class GroupMixin extends Vue {
-  @Getter('group/current') group!: Group
-  @Getter('group/currentClientGroup') clientGroup!: ClientGroup
+  @Getter('group/current') group?: Group
+  @Getter('group/currentClientGroup') clientGroup?: ClientGroup
   @Getter('group/activeMembers') members!: Member[]
 
   get isOnline () {
+    if (!this.group)
+      return false
     return this.group.online
   }
 
   get currencies () {
+    if (!this.group)
+      return []
     return GroupCurrency(this.group)
   }
 
   get sharedOptions () {
-    return this.clientGroup.options
+    if (!this.clientGroup)
+      return {}
+    return this.clientGroup.options || {}
   }
 
   get localOptions () {
+    if (!this.clientGroup)
+      return {}
     return this.clientGroup.local_options || {}
   }
 
   get displayCurrency () {
+    if (!this.group)
+      return this.$i18n.locale
     return this.localOptions.display_currency || this.group.main_currency
   }
 
   set displayCurrency (currency: string) {
-    this.$store.commit('group/setConfig', { id: this.group.id, field: 'display_currency', value: currency })
+    if (this.group)
+      this.$store.commit('group/setConfig', { id: this.group.id, field: 'display_currency', value: currency })
   }
 
   get inviteLink () {
@@ -43,10 +54,13 @@ export default class GroupMixin extends Vue {
   }
 
   parseCategory (category: string = 'other') {
-    return ParserCategory(category, this.group, this)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return ParserCategory(category, this.group!, this)
   }
 
   get categories () {
+    if (!this.group)
+      return []
     return GetCategoriesOfGroup(this.group, this)
   }
 }
