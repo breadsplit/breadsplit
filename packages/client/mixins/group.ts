@@ -25,7 +25,7 @@ export default class GroupMixin extends Vue {
   }
 
   get localOptions () {
-    return this.clientGroup.local_options
+    return this.clientGroup.local_options || {}
   }
 
   get displayCurrency () {
@@ -41,6 +41,7 @@ export default class GroupMixin extends Vue {
       return `${origin()}/join?id=${this.group.id}`
     return undefined
   }
+
   parseCategory (category: string = 'other') {
     return ParserCategory(category, this.group, this)
   }

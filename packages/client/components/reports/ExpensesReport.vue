@@ -86,7 +86,7 @@ import Fraction from 'fraction.js'
 import { oc } from 'ts-optchain'
 import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
 import ChartSummaryPie from '../charts/ChartSummaryPie.vue'
-import { ReportExpensesByCategories, IdMe } from '~/core'
+import { ReportExpensesByCategories, IdMe, TransactionHelper } from '~/core'
 import { GroupMixin, CommonMixin, UserInfoMixin } from '~/mixins'
 
 @Component({
@@ -154,15 +154,27 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, User
   get transactionsInRange () {
     const from = +dayjs(this.from)
     const to = +dayjs(this.to)
-    return this.transactions
-      .filter(t => t.timestamp >= from && t.timestamp < to)
+    let filtered = this.transactions
+
+    filtered = filtered.filter(t => t.timestamp >= from && t.timestamp < to)
+
+    if (this.involved) {
+      filtered = filtered.filter((t) => {
+        const balance = TransactionHelper.from(t).balanceChangesOf(this.involved as string)
+        return balance && +balance.debt !== 0
+      })
+    }
+    return filtered
   }
 
   get filteredTransactions () {
+    let filtered = this.transactionsInRange
     if (this.categoryFilter)
-      return this.transactionsInRange.filter(t => (t.category || 'other') === this.categoryFilter)
+      filtered = filtered.filter(t => (t.category || 'other') === this.categoryFilter)
     else
-      return this.transactionsInRange.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
+      filtered = filtered.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
+
+    return filtered
   }
 
   get transferTransactions () {

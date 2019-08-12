@@ -2,7 +2,6 @@
 v-list-item.transaction-item(
   @click='navigate()'
   :ripple='false'
-  v-show='!involved || involvedFee !== 0'
 )
   v-list-item-avatar
     v-icon.mx-2.my-1(
