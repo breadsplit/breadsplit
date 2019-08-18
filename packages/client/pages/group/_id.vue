@@ -5,15 +5,11 @@
       v-container(:class='{"pa-0": isMobile}')
         app-balances
 
-        .pa-2
-
-        app-recent-transactions(:limit='3' @show-all='tab_index=1')
-
-        .pa-2
-
         app-settle-up
 
         .pa-2
+
+        app-recent-transactions(:limit='3' @show-all='tab_index=1')
 
     v-tab-item(key='1').scroll-page
       v-container(:class='{"pa-0": isMobile}')
@@ -110,9 +106,11 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
         key: 'members',
       }]
   }
+
   get speedDialShow () {
     return this.tab_index === 0
   }
+
   get fabStyle () {
     const style = {
       right: '50%',

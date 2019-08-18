@@ -8,6 +8,8 @@ v-app-bar.app-toolbar(app flat color='transparent' height='60').primary--text
   v-spacer
   v-toolbar-items
     template(v-if='current')
+      app-display-currency-switch
+
       template(v-if='isSyncing()')
         v-btn(icon text).syncing-icon
           v-icon(color='primary') mdi-cloud-sync

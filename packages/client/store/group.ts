@@ -199,10 +199,17 @@ export const actions: ActionTree<GroupState, RootState> = {
     log(`🐱‍👤 Caching group ${id}`)
     const group = Transformer(base, operations)
     commit('setCache', { field: 'groups', key: id, value: Object.freeze(group) })
-    dispatch('cacheBalances', { group })
+    dispatch('cacheBalances', { id })
   },
 
-  cacheBalances ({ state, commit, rootState }, { group, exchange_record }: { group: Group; exchange_record?: ExchangeRecord }) {
+  cacheBalances ({ state, commit, rootState, getters }, { id, exchange_record }: { id?: string; exchange_record?: ExchangeRecord }) {
+    id = id || state.currentId || undefined
+    if (!id)
+      return
+    const group: Group = getters.id(id)
+    if (!group)
+      return
+
     if (!exchange_record) {
       const keys = Object.keys(rootState.cache.exchange_rates).sort()
       exchange_record = rootState.cache.exchange_rates[keys[keys.length - 1]] || FallbackExchangeRate
@@ -241,6 +248,13 @@ export const actions: ActionTree<GroupState, RootState> = {
       if (state.groups[id].online)
         commit('remove', id)
     }
+  },
+
+  setConfigs ({ dispatch, commit, state }, { id, field, value }) {
+    id = id || state.currentId
+    commit('setConfigs', { id, field, value })
+    if (field === 'display_currency')
+      dispatch('cacheBalances', { id })
   },
 }
 

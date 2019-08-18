@@ -44,7 +44,7 @@ export default class GroupMixin extends Vue {
 
   set displayCurrency (currency: string) {
     if (this.group)
-      this.$store.commit('group/setConfig', { id: this.group.id, field: 'display_currency', value: currency })
+      this.$store.dispatch('group/setConfigs', { id: this.group.id, field: 'display_currency', value: currency })
   }
 
   get inviteLink () {
