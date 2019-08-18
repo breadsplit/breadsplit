@@ -299,6 +299,9 @@ ui:
     enter_the_cost: 請輸入群組消費金額
     expense_paid_by: 由誰支付？
     for_whom: 為了誰？
+    header_credit: 支付
+    header_debit: 負債
+    header_members: 成員
     how_much: 付款金額
     how_much_short: 金額
     involved: 與我相關

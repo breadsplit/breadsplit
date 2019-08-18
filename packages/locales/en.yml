@@ -332,6 +332,9 @@ ui:
     enter_the_cost: Enter the group cost of this expense
     expense_paid_by: Expense paid by?
     for_whom: For whom?
+    header_credit: Credit
+    header_debit: Debit
+    header_members: Members
     how_much: How much?
     how_much_short: Fee
     involved: Involved

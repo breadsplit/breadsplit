@@ -88,12 +88,8 @@
 
   v-divider
 
-  .px-6.py-8
-    app-receipt-list(:items='receiptItems' :currency='form.currency')
-      template(v-slot:item='{ item }')
-        div
-          app-user-avatar.py-1.px-2(:id='item.value' size='24')
-          app-user-info(:id='item.value')
+  .px-2.py-4
+    app-transaction-sheet(:transaction='form' dense)
 
   app-date-picker(ref='date_picker')
   v-overlay(:value='overlayImage').photo-overlay
