@@ -24,16 +24,18 @@ v-list-item.transaction-item(
     template(v-else)
       .involved-note {{$t('ui.transactions.involved_expensed', [getUserName(involved)])}}
 
-    app-money-label(
+    app-money-label-with-exchange(
       :amount='-involvedFee'
-      :currency='transaction.currency'
+      :transaction='transaction'
+      :target='displayCurrency'
       color
     )
 
   v-list-item-action.pr-1.text-right(v-else v-rows='"auto max-content"')
-    app-money-label(
+    app-money-label-with-exchange(
       :amount='-transaction.total_fee'
-      :currency='transaction.currency'
+      :transaction='transaction'
+      :target='displayCurrency'
       color
     )
     .creators-debtors

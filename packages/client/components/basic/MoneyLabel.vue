@@ -1,5 +1,5 @@
 <template lang='pug'>
-span.money-label(:class='balanceColorClass') {{formatted}}
+span.money-label(:class='balanceColorClass') {{prefix}}{{formatted}}{{suffix}}
 </template>
 
 <script lang='ts'>
@@ -10,6 +10,8 @@ import { numberToMoney } from '~/../utils/formatters'
 export default class MoneyLabel extends Vue {
   @Prop({ default: 0 }) readonly amount!: number
   @Prop(String) readonly currency?: string
+  @Prop({ default: '' }) readonly prefix!: string
+  @Prop({ default: '' }) readonly suffix!: string
   @Prop(Boolean) readonly color?: boolean
 
   get roundedAmount () {
