@@ -13,6 +13,8 @@
 
         app-settle-up
 
+        .pa-2
+
     v-tab-item(key='1').scroll-page
       v-container(:class='{"pa-0": isMobile}')
 
