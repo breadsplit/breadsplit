@@ -5,11 +5,13 @@
       v-container(:class='{"pa-0": isMobile}')
         app-balances
 
-        app-settle-up
-
         .pa-2
 
         app-recent-transactions(:limit='3' @show-all='tab_index=1')
+
+        .pa-2
+
+        app-settle-up
 
     v-tab-item(key='1').scroll-page
       v-container(:class='{"pa-0": isMobile}')
