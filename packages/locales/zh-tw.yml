@@ -185,8 +185,10 @@ ui:
   currency: 幣種
   donate_on_paypal: PayPal 一次性贊助
   exchanges:
+    auto: 自動
     exchange: 匯率
     manually_set: （手動設定）
+    set_exchanges: 編輯匯率
   faq: 常見問題
   feedback: 意見回饋
   general: 一般

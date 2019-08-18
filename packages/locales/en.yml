@@ -215,8 +215,10 @@ ui:
   currency: Currency
   donate_on_paypal: One-time donation on PayPal
   exchanges:
+    auto: Auto
     exchange: Exchange
     manually_set: (Manually Set)
+    set_exchanges: Edit exchange rate
   faq: FAQ
   feedback: Feedback
   general: General
