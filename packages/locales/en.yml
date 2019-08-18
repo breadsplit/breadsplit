@@ -214,6 +214,9 @@ ui:
   continue_anyway: Continue anyway
   currency: Currency
   donate_on_paypal: One-time donation on PayPal
+  exchanges:
+    exchange: Exchange
+    manually_set: (Manually Set)
   faq: FAQ
   feedback: Feedback
   general: General

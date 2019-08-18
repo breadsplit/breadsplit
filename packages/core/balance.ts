@@ -17,34 +17,32 @@ export function getExchangeRateOn (from: string, to: string, exchange_record: Ex
   return { rate, date: exchange_record.date }
 }
 
-export function applyExchangeRate (from: string, to: string, exchange_record: ExchangeRecord, value: Fraction) {
-  const { rate } = getExchangeRateOn(from, to, exchange_record)
-  return value.mul(rate)
-}
+export function ExchangeInTransaction (transaction: Transaction, value: Fraction, target_currency: string, fallback_exchange_record = FallbackExchangeRate) {
+  let currency = transaction.currency
+  target_currency = target_currency || defaultCurrency
+  let date: string | undefined
 
-export function ExchangeInTransaction (transaction: Transaction, value: Fraction, main_currency: string, display_currency?: string | null, exchange_record = FallbackExchangeRate) {
-  const currency = transaction.currency
-  main_currency = main_currency || defaultCurrency
-  display_currency = display_currency || main_currency
-
-  if (currency !== display_currency) {
-    // use transaction defined exchange info if it's avaliable
-    let record = (transaction.exchanges || []).find(e => e.from === currency && e.to === display_currency)
-    if (record) {
-      return value.mul(record.rate)
+  while (currency !== target_currency) {
+    // use manual override
+    if (transaction.exchange_rate_override && transaction.exchange_rate_override.from === currency) {
+      value = value.mul(transaction.exchange_rate_override.rate)
+      currency = transaction.exchange_rate_override.to
+      date = transaction.exchange_rate_override.date
     }
+    // use transaction defined exchange rate
     else {
-      record = (transaction.exchanges || []).find(e => e.from === currency && e.to === main_currency)
-      if (record)
-        return applyExchangeRate(main_currency, display_currency, exchange_record, value.mul(record.rate))
-      else
-        return applyExchangeRate(currency, display_currency, exchange_record, value)
+      const exchange = transaction.exchange_rate || fallback_exchange_record
+      const { rate } = getExchangeRateOn(currency, target_currency, exchange)
+      value = value.mul(rate)
+      currency = target_currency
+      date = exchange.date
     }
   }
-  return value
+
+  return { value, date }
 }
 
-export function GroupBalances (group: Group, display?: string | null, exchange_record = FallbackExchangeRate): Balance[] {
+export function GroupBalances (group: Group, display?: string | null, fallback_exchange_record = FallbackExchangeRate): Balance[] {
   const main_currency = group.main_currency || defaultCurrency
   const display_currency = display || main_currency
 
@@ -66,7 +64,8 @@ export function GroupBalances (group: Group, display?: string | null, exchange_r
       if (!member)
         throw new Error(`Member with id:"${c.uid}" is not found.`)
 
-      member.balance = member.balance.add(ExchangeInTransaction(t, c.balance, group.main_currency, display_currency, exchange_record))
+      const { value } = ExchangeInTransaction(t, c.balance, display_currency || group.main_currency, fallback_exchange_record)
+      member.balance = member.balance.add(value)
     })
   })
 

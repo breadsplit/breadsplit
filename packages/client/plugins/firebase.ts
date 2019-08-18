@@ -283,6 +283,24 @@ export class FirebasePlugin {
     return await this.getExchangeRates(d.subtract(1, 'day'), fallback_days - 1)
   }
 
+  getExchangeRatesSync (date?: dayjs.ConfigType, fallback_days = 30): ExchangeRecord {
+    let d = dayjs(date)
+    // if it's future, use today
+    if (d.isAfter(dayjs()))
+      d = dayjs()
+    // if it's today, we should use yesterday's exchange rate
+    if (d.isSame(dayjs(), 'day'))
+      d = d.subtract(1, 'day')
+
+    date = d.format('YYYY-MM-DD')
+    const cache = this.store.state.cache.exchange_rates[date]
+    if (cache)
+      return cache
+    if (fallback_days <= 0)
+      return FallbackExchangeRate
+    return this.getExchangeRatesSync(d.subtract(1, 'day'), fallback_days - 1)
+  }
+
   async getExchangeRateOn (from: string, to: string, date?: dayjs.ConfigType, fallback_days?: number) {
     const record = await this.getExchangeRates(date, fallback_days)
     return getExchangeRateOn(from, to, record)

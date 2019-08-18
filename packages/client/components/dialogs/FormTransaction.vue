@@ -183,7 +183,6 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
 
   cleanUp () {
     TransactionHelper.from(this.form).cleanUp()
-    oc(this).$refs.details.$refs.exchange.save(() => '')()
   }
 
   fulfillDebtors () {

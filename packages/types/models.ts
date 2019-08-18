@@ -1,5 +1,5 @@
 import { TransOperation } from './operation_transformer'
-import { CurrencyRecord, UID, MemberRoles, Splitmode, TransactionType, ActivityAction, Entity } from '.'
+import { UID, MemberRoles, Splitmode, TransactionType, ActivityAction, Entity, ExchangeRecord } from '.'
 
 export interface Weight {
   uid: UID
@@ -45,8 +45,8 @@ export interface TransactionExchangeRecord {
   from: string
   to: string
   rate: number
-  source: 'manual' | 'system'
-  date?: string
+  date: string
+  note?: string
 }
 
 export interface Transaction {
@@ -65,7 +65,10 @@ export interface Transaction {
   type: TransactionType
   tags?: string[]
   note?: string
-  exchanges?: TransactionExchangeRecord[]
+
+  exchange_rate?: ExchangeRecord
+  exchange_rate_override?: TransactionExchangeRecord
+
   location?: string | object
   timestamp: number
   timezone?: string
@@ -112,7 +115,6 @@ export interface Group {
   // Records
   members: Record<UID, Member>
   main_currency: string
-  currency_records: CurrencyRecord[]
   transactions: Transaction[]
   activities: Activity[]
 

@@ -84,7 +84,7 @@
             v-icon mdi-camera
             .text {{$t('ui.transactions.add_photos')}}
 
-    exchange-rate-input(ref='exchange' :form='form')
+    exchange-rate-input(ref='exchange' :form='form' :editing='editing')
 
   v-divider
 
@@ -106,8 +106,8 @@
 <script lang='ts'>
 import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import ExchangeRateInput from './ExchangeRateInput.vue'
-import { Transaction } from '~/types'
 import DatePicker from '~/components/basic/DatePicker.vue'
+import { Transaction } from '~/types'
 import { TransactionWeightsHelper } from '~/core'
 import { dateToRelative } from '~/../utils/formatters'
 import { GroupMixin } from '~/mixins'

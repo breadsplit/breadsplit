@@ -44,8 +44,8 @@ export function ReportExpensesByCategories (vm: Vue, transactions: Transaction[]
         value = balance.debt
     }
 
-    const exchanged = ExchangeInTransaction(transaction, value, group.main_currency, display_currency)
-    records[categoryid].value = records[categoryid].value.add(exchanged)
+    const exchangeResult = ExchangeInTransaction(transaction, value, display_currency || group.main_currency)
+    records[categoryid].value = records[categoryid].value.add(exchangeResult.value)
   }
 
   return sortBy(Object.values(records), a => +a.value).reverse()
