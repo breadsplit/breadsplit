@@ -12,6 +12,7 @@
 <script lang='ts'>
 import { mixins, Component, Prop } from 'nuxt-property-decorator'
 import UserInfoMixin from '~/mixins/userinfo'
+import { Member, UserInfo } from '~/types'
 
 @Component
 export default class UserAvatar extends mixins(UserInfoMixin) {
@@ -20,9 +21,11 @@ export default class UserAvatar extends mixins(UserInfoMixin) {
   @Prop(Boolean) readonly showName?: boolean
   @Prop({ default: true }) readonly autoFetch!: boolean
   @Prop([Number, String]) readonly size?: number|string
+  @Prop(Object) readonly user?: UserInfo
+  @Prop(Object) readonly member?: Member
 
   get _user () {
-    return this.getUser(this.id)
+    return this.getUser(this.id, this.member, this.user)
   }
 
   get avatar_url () {

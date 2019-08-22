@@ -141,6 +141,13 @@ noun:
   today: Today
   tomorrow: Tomorrow
   yesterday: Yesterday
+placeholders:
+  groups:
+    desc: Create a new group to start
+    title: Welcome!
+  transactions:
+    desc: Try to create some transactions to make it works
+    title: Yo~ It's empty here!
 prompt:
   are_you_sure: Are you sure?
   confirm_group_removal: Are you sure to delete this group? This operation can not be undone.
@@ -191,6 +198,7 @@ ui:
   button_more_about_us: More about us
   button_new_group: Create a new group
   button_new_member: Add a member
+  button_new_transaction: New Transaction
   button_next: Next
   button_no: 'No'
   button_ok: OK
@@ -231,6 +239,7 @@ ui:
     group_name_placeholder: Enter group name...
     new_group: New group
   help: Help
+  home: Home
   homepage: Home
   icons: Icons
   join:
@@ -265,6 +274,7 @@ ui:
   paid_by: Paid by
   paid_by_xx: 'Paid by {0}'
   privacy_policy: Privacy policy
+  reload: Reload
   report:
     mode_category: Category
     mode_debt: Debit and credit

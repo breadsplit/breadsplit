@@ -1,23 +1,30 @@
 <template lang='pug'>
-v-container
-  v-layout(column, justify-center, align-center)
-    v-flex.text-center(xs12, sm8, md6)
-      template(v-for='(group, i) in groups')
-        nuxt-link.group-entry(v-ripple, :to='`/group/${group.id}`', :style='groupCssVars(group)')
-          v-icon mdi-{{ group.icon }}
-          .groupname(v-text='group.name')
-
-    v-divider.my-3
-
-    v-flex.text-left(xs12, sm8, md6)
+v-container.text-center
+  template(v-if='!groups.length')
+    app-empty-placeholder(
+      icon='bread-slice-outline'
+      :title='$t("placeholders.groups.title")'
+      :desc='$t("placeholders.groups.desc")'
+    )
       v-btn(@click='gotoNewGroup' rounded color='primary')
         v-icon.mr-2 mdi-plus
         span {{$t('ui.button_new_group')}}
 
+  template(v-else v-for='(group, i) in groups')
+    nuxt-link.group-entry(v-ripple, :to='`/group/${group.id}`', :style='groupCssVars(group)')
+      v-icon mdi-{{ group.icon }}
+      .groupname(v-text='group.name')
+
+    .my-3
+
+    v-btn(@click='gotoNewGroup' rounded color='primary')
+      v-icon.mr-2 mdi-plus
+      span {{$t('ui.button_new_group')}}
+
     .my-12
     app-credit.op-25(simple='true')
 
-    v-btn(@click='reload' text small color='grey') Reload
+    v-btn(@click='reload' text small color='grey').op-25 Reload
 </template>
 
 <script lang='ts'>

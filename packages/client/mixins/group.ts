@@ -53,7 +53,7 @@ export default class GroupMixin extends Vue {
     return undefined
   }
 
-  parseCategory (category: string = 'other') {
+  parseCategory (category = 'other') {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return ParserCategory(category, this.group!, this)
   }

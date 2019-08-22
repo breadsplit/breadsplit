@@ -121,6 +121,7 @@ export const actions: ActionTree<GroupState, RootState> = {
     })
     context.commit('add', group)
     context.dispatch('cacheGroup', group.id)
+    context.commit('switch', group.id)
   },
 
   modify (context, { id, changes }) {
@@ -281,7 +282,6 @@ export const mutations: MutationTree<GroupState> = {
   // Groups
   add (state, group: ClientGroup) {
     Vue.set(state.groups, group.base.id, group)
-    state.currentId = group.base.id
   },
 
   remove (state, id) {

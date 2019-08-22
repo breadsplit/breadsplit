@@ -3,8 +3,8 @@ div
   v-icon.error-icon(size='64') mdi-{{error.icon || 'alert-circle-outline'}}
   .error-code.text-center {{error.statusCode}}
   .error-desc.text-center {{error.message}}
-  v-btn.error-return(text, color='primary', to='/', nuxt) Home
-  v-btn.error-return(text, color='primary', @click='reload()') Reload
+  v-btn.error-return(text, color='primary', to='/', nuxt) {{$t('ui.home')}}
+  v-btn.error-return(text, color='primary', @click='reload()') {{$t('ui.reload')}}
 </template>
 
 <script lang='ts'>

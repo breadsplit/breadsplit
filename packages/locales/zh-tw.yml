@@ -112,6 +112,13 @@ noun:
   today: 今天
   tomorrow: 明天
   yesterday: 昨天
+placeholders:
+  groups:
+    desc: 創建一個群組並開始使用
+    title: 歡迎！
+  transactions:
+    desc: 創建一些記錄並開始使用
+    title: 嗨~ 這裏還什麽都沒有！
 prompt:
   are_you_sure: 你確定嗎？
   confirm_group_removal: 確定要刪除這個群組嗎？此操作無法撤消。
@@ -161,6 +168,7 @@ ui:
   button_more_about_us: 更多關於我們
   button_new_group: 新增群組
   button_new_member: 添加成員
+  button_new_transaction: 新增交易記錄
   button_next: 下一步
   button_no: 否
   button_ok: 好的
@@ -201,6 +209,7 @@ ui:
     group_name_placeholder: 輸入群組名稱...
     new_group: 新建群組
   help: 使用幫助
+  home: 返回首頁
   homepage: 首頁
   icons: 圖標
   join:
@@ -233,6 +242,7 @@ ui:
   paid_by: 付款人
   paid_by_xx: '由 {0} 付款'
   privacy_policy: 隱私政策
+  reload: 重新整理
   report:
     mode_category: 類別統計
     mode_debt: 借貸詳情

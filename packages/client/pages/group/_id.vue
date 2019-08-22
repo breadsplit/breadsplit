@@ -3,17 +3,28 @@
   v-window(v-model='tab_index' v-if='group' touchless).pt-1
     v-window-item(key='0').scroll-page
       v-container(:class='{"pa-0": isMobile}')
-        app-balances
 
-        .pa-2
+        template(v-if='!group.transactions.length')
+          app-empty-placeholder(
+            :title='$t("placeholders.transactions.title")'
+            :desc='$t("placeholders.transactions.desc")'
+          )
+            v-btn(color='primary' rounded @click='gotoNewTransaction()')
+              v-icon.mr-2 mdi-plus
+              | {{$t('ui.button_new_transaction')}}
 
-        app-recent-transactions(:limit='3' @show-all='tab_index=1')
+        template(v-else)
+          app-balances
 
-        .pa-2
+          .pa-2
 
-        app-settle-up
+          app-recent-transactions(:limit='3' @show-all='tab_index=1')
 
-        .pa-2
+          .pa-2
+
+          app-settle-up
+
+          .pa-2
 
     v-window-item(key='1').scroll-page
       v-container(:class='{"pa-0": isMobile}')

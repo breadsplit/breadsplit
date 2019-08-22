@@ -32,7 +32,8 @@ export default class UserInfoMixin extends Vue {
     return group[uid]
   }
 
-  getUser (uid?: string, autoFetch: boolean = true): UserMemberInfo | undefined {
+  getUser (uid?: string, member?: Member, user?: UserInfo, autoFetch = true): UserMemberInfo | undefined {
+    uid = uid || (member && member.uid) || (user && user.uid) || undefined
     if (!uid)
       return undefined
 
@@ -40,22 +41,33 @@ export default class UserInfoMixin extends Vue {
     if (cache)
       return cache
 
-    const member = this.getMember(uid)
-    let user: UserInfo | undefined
+    if (!member)
+      member = this.getMember(uid)
 
-    if (IsThisId.Me(uid) && this.uid) {
-      user = this.me
-    }
-    else if (IsThisId.UID(uid)) {
-      user = this.$store.getters['user/user'](uid)
-      if (!user && autoFetch) {
-        this.$fire.updateUserProfiles([uid])
-          .then(() => {
-            this.clearUserCache(uid)
-          })
+    if (!user) {
+      if (IsThisId.Me(uid) && this.uid) {
+        user = this.me
+      }
+      else if (IsThisId.UID(uid)) {
+        user = this.$store.getters['user/user'](uid)
+        if (!user && autoFetch) {
+          this.$fire.updateUserProfiles([uid])
+            .then(() => {
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              this.clearUserCache(uid!)
+            })
+        }
       }
     }
 
+    const result = this.mergeMemberAndUser(member, user)
+
+    this.setUserCache(uid, result)
+
+    return result
+  }
+
+  mergeMemberAndUser (member?: Member, user?: UserInfo) {
     const result = Object.assign({}, member, user) as UserMemberInfo
 
     // when "member" has a name, override as nickname
@@ -71,10 +83,8 @@ export default class UserInfoMixin extends Vue {
       result.name = this.$t('pronoun.me').toString()
 
     // set avatar url
-    if (!result.avatar_url)
-      result.avatar_url = this.getFallbackAvatar(uid, result.name)
-
-    this.setUserCache(uid, result)
+    if (!result.avatar_url && result.uid)
+      result.avatar_url = this.getFallbackAvatar(result.uid, result.name)
 
     return result
   }
