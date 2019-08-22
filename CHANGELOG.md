@@ -2,6 +2,91 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/breadsplit/breadsplit/compare/v0.6.0...v0.6.2) (2019-08-22)
+
+
+### ⚡ Features
+
+* animated chart ([f513ada](https://github.com/breadsplit/breadsplit/commit/f513ada))
+* compress image before upload ([f1da1c9](https://github.com/breadsplit/breadsplit/commit/f1da1c9))
+* expense member filter ([37091cb](https://github.com/breadsplit/breadsplit/commit/37091cb))
+* manage cates ([77ad3f7](https://github.com/breadsplit/breadsplit/commit/77ad3f7))
+* manual set exchange rate, close [#122](https://github.com/breadsplit/breadsplit/issues/122) ([6cfa3c1](https://github.com/breadsplit/breadsplit/commit/6cfa3c1))
+* no-content placeholder, close [#84](https://github.com/breadsplit/breadsplit/issues/84) ([cb21b1b](https://github.com/breadsplit/breadsplit/commit/cb21b1b))
+* photo uploading ([a08faff](https://github.com/breadsplit/breadsplit/commit/a08faff))
+* reload button ([2985c57](https://github.com/breadsplit/breadsplit/commit/2985c57))
+* showing debit and credit ([139755e](https://github.com/breadsplit/breadsplit/commit/139755e))
+* use name to generate avatar ([cbd36de](https://github.com/breadsplit/breadsplit/commit/cbd36de))
+* view mode for trans ([80f1283](https://github.com/breadsplit/breadsplit/commit/80f1283))
+
+
+### 🐞 Bug Fixes
+
+* balance bar radius ([a4379ce](https://github.com/breadsplit/breadsplit/commit/a4379ce))
+* category select in view mode ([09ee69b](https://github.com/breadsplit/breadsplit/commit/09ee69b))
+* chart animation ([bb493e5](https://github.com/breadsplit/breadsplit/commit/bb493e5))
+* chart click ([afb2291](https://github.com/breadsplit/breadsplit/commit/afb2291))
+* currency select ([60ded79](https://github.com/breadsplit/breadsplit/commit/60ded79))
+* currency switcher ([3e7bce8](https://github.com/breadsplit/breadsplit/commit/3e7bce8))
+* date formatter ([ab38d6b](https://github.com/breadsplit/breadsplit/commit/ab38d6b))
+* drawer group icon ([111b55d](https://github.com/breadsplit/breadsplit/commit/111b55d))
+* feedback from ines ([df232eb](https://github.com/breadsplit/breadsplit/commit/df232eb))
+* firebase deploy ([91391d2](https://github.com/breadsplit/breadsplit/commit/91391d2))
+* group mixin ([fb20532](https://github.com/breadsplit/breadsplit/commit/fb20532))
+* height in new trans on mobile device ([ee16ede](https://github.com/breadsplit/breadsplit/commit/ee16ede))
+* involved ([7b4feb1](https://github.com/breadsplit/breadsplit/commit/7b4feb1))
+* involved excluding me ([5213523](https://github.com/breadsplit/breadsplit/commit/5213523))
+* logout ([99a311f](https://github.com/breadsplit/breadsplit/commit/99a311f))
+* minor fix ([5c9e758](https://github.com/breadsplit/breadsplit/commit/5c9e758))
+* navbar ([2c1d2a0](https://github.com/breadsplit/breadsplit/commit/2c1d2a0))
+* sharing text ([c5c9bd1](https://github.com/breadsplit/breadsplit/commit/c5c9bd1))
+* short date ([22de666](https://github.com/breadsplit/breadsplit/commit/22de666))
+* **sw:** typo in filename ([5eb725a](https://github.com/breadsplit/breadsplit/commit/5eb725a))
+* show one avatar for expenses of one himself ([3216888](https://github.com/breadsplit/breadsplit/commit/3216888))
+* speed up with v-scroller ([ba92e83](https://github.com/breadsplit/breadsplit/commit/ba92e83))
+* splitting ([57607fd](https://github.com/breadsplit/breadsplit/commit/57607fd))
+* trans editing ([c73684b](https://github.com/breadsplit/breadsplit/commit/c73684b))
+* transaction filter ([c04f98e](https://github.com/breadsplit/breadsplit/commit/c04f98e))
+* transaction involved filter ([089d86f](https://github.com/breadsplit/breadsplit/commit/089d86f))
+* virtual scroller for activities ([79c3b1e](https://github.com/breadsplit/breadsplit/commit/79c3b1e))
+
+
+### 📱 User interface
+
+* add bottom padding ([4934ccf](https://github.com/breadsplit/breadsplit/commit/4934ccf))
+* add submit button for trans ([78b3221](https://github.com/breadsplit/breadsplit/commit/78b3221))
+* balance chart ([cacd94a](https://github.com/breadsplit/breadsplit/commit/cacd94a))
+* categories edit ([645592f](https://github.com/breadsplit/breadsplit/commit/645592f))
+* category item ([ced9967](https://github.com/breadsplit/breadsplit/commit/ced9967))
+* category select in menu ([547705f](https://github.com/breadsplit/breadsplit/commit/547705f))
+* category sorting ([c230b97](https://github.com/breadsplit/breadsplit/commit/c230b97))
+* chart hover animation ([3ed1d37](https://github.com/breadsplit/breadsplit/commit/3ed1d37))
+* color selected state ([485a756](https://github.com/breadsplit/breadsplit/commit/485a756))
+* fix ([055a04b](https://github.com/breadsplit/breadsplit/commit/055a04b))
+* fix ([9d0ed3d](https://github.com/breadsplit/breadsplit/commit/9d0ed3d))
+* fix ([ee277e7](https://github.com/breadsplit/breadsplit/commit/ee277e7))
+* fix ([c66d3d7](https://github.com/breadsplit/breadsplit/commit/c66d3d7))
+* fix login ([0206317](https://github.com/breadsplit/breadsplit/commit/0206317))
+* fix tab margin ([2b6f2e6](https://github.com/breadsplit/breadsplit/commit/2b6f2e6))
+* group widget style ([2c9d348](https://github.com/breadsplit/breadsplit/commit/2c9d348))
+* image trans indicator ([ea12ed6](https://github.com/breadsplit/breadsplit/commit/ea12ed6))
+* imporved trans info view ([7979651](https://github.com/breadsplit/breadsplit/commit/7979651))
+* improved category select ([f51b24e](https://github.com/breadsplit/breadsplit/commit/f51b24e))
+* make scrollbar invisiable ([25be36c](https://github.com/breadsplit/breadsplit/commit/25be36c))
+* new mode switcher for splitting ([0944ca7](https://github.com/breadsplit/breadsplit/commit/0944ca7))
+* redesign detail page in trans form ([3c4304e](https://github.com/breadsplit/breadsplit/commit/3c4304e))
+* remove unused theme ([cb4a467](https://github.com/breadsplit/breadsplit/commit/cb4a467))
+* reposition summary chart ([3cf6a46](https://github.com/breadsplit/breadsplit/commit/3cf6a46))
+* revert back the settle up order ([808fd45](https://github.com/breadsplit/breadsplit/commit/808fd45))
+* showing different currency in transaction item ([2df4777](https://github.com/breadsplit/breadsplit/commit/2df4777))
+* **chart:** balance chart draft ([b45dfe0](https://github.com/breadsplit/breadsplit/commit/b45dfe0))
+* trans note ([8c33bc0](https://github.com/breadsplit/breadsplit/commit/8c33bc0))
+* tweak balance bar ([1bbdb09](https://github.com/breadsplit/breadsplit/commit/1bbdb09))
+* tweak balance chart ([e7d91da](https://github.com/breadsplit/breadsplit/commit/e7d91da))
+* tweak date range select ([f382d2d](https://github.com/breadsplit/breadsplit/commit/f382d2d))
+* tweak date range select ([e17bcbb](https://github.com/breadsplit/breadsplit/commit/e17bcbb))
+* vibrate ([8594418](https://github.com/breadsplit/breadsplit/commit/8594418))
+
 ## [0.6.0](https://github.com/breadsplit/breadsplit/compare/v0.5.0...v0.6.0) (2019-07-26)
 
 
