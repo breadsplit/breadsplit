@@ -57,8 +57,6 @@
       @click='gotoNewTransaction()'
     )
       v-icon mdi-plus
-
-  nuxt-child
 </template>
 
 <script lang='ts'>

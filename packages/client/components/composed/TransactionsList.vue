@@ -1,10 +1,15 @@
 <template lang='pug'>
 v-list.transactions-list.pa-0(two-line flat)
-  template(v-for='(transaction, index) in transactions')
+  recycle-scroller(
+    :items='transactions'
+    :item-size='74'
+    key-field='id'
+    v-slot="{ item, index }"
+  )
     v-divider(v-if='index!=0')
     app-transaction-item(
-      :key='transaction.id'
-      :transaction='transaction'
+      :key='item.id'
+      :transaction='item'
       :involved='involved'
       :involveMode='involveMode'
     )

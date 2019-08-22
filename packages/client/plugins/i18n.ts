@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import { Context } from '@nuxt/vue-app'
+import dayjs from 'dayjs'
 import { LOCALE_FALLBACK } from '../../utils/i18n'
 import { Messages } from '~/locales'
 
@@ -19,4 +20,6 @@ export default ({ app, store, route }: Context) => {
     messages: Messages,
     silentFallbackWarn: true,
   })
+
+  dayjs.locale(store.getters.locale)
 }
