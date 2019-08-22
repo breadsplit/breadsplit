@@ -6,7 +6,7 @@ v-card.members
 
   v-list
     template(v-for='(member, index) in members')
-      v-list-item.pr-2(:key='member.uid' @click='')
+      v-list-item.pr-2(:key='member.uid')
         v-list-item-avatar
           app-user-avatar(:id='member.uid' size='38')
         v-list-item-content

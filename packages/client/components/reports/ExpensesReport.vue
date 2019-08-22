@@ -184,8 +184,13 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, User
 
   get involvedTransactions () {
     let filtered = this.transactionsInCategory
-    if (this.involved)
-      filtered = filtered.filter(t => t.debtors.find(i => i.uid === this.involved) || t.creditors.find(i => i.uid === this.involved))
+    if (this.involved) {
+      filtered = filtered
+        // ignore self expense
+        .filter(t => !(t.debtors.length === 1 && t.creditors.length === 1 && t.debtors[0].uid === t.creditors[0].uid))
+        // ignore expense that not involved
+        .filter(t => t.debtors.find(i => i.uid === this.involved) || t.creditors.find(i => i.uid === this.involved))
+    }
     return filtered
   }
 

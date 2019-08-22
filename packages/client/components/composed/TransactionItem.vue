@@ -25,7 +25,7 @@ v-list-item.transaction-item(
       .involved-note {{$t('ui.transactions.involved_expensed', [getUserName(involved)])}}
 
     app-money-label-with-exchange(
-      :amount='-involvedFee'
+      :amount='involvedFee'
       :transaction='transaction'
       :target='displayCurrency'
       color
@@ -83,7 +83,7 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
     if (this.involveMode === 'debt')
       return +this.involvedBalance.balance || 0
     else
-      return +this.involvedBalance.debt || 0
+      return -this.involvedBalance.debt || 0
   }
 
   get datetime () {
