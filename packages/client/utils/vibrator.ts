@@ -1,4 +1,4 @@
-export function Vibrate (feq = 200) {
+export function Vibrate (duration = 100) {
   if (window.navigator && window.navigator.vibrate)
-    window.navigator.vibrate(feq)
+    window.navigator.vibrate(duration)
 }
