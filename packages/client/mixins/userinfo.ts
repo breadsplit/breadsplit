@@ -5,26 +5,57 @@ import { IsThisId } from '~/core'
 import { LetterAvatar } from '~/utils/avatar_providers'
 import { IdMe } from '~/../core'
 
+const userCache: Record<string, Record<string, UserMemberInfo>> = {}
+
 @Component
 export default class UserInfoMixin extends Vue {
   @Getter('user/uid') uid: string | undefined
   @Getter('user/me') me: UserInfo | undefined
 
-  getUser (uid?: string, member?: Member, user?: UserInfo, autoFetch: boolean = true): UserMemberInfo | undefined {
-    uid = uid || (member && member.uid) || (user && user.uid) || undefined
+  private setUserCache (uid: string, value: UserMemberInfo) {
+    let group = userCache[this.groupId]
+    if (!group)
+      group = userCache[this.groupId] = {}
+    group[uid] = value
+  }
+
+  private clearUserCache (uid: string) {
+    const group = userCache[this.groupId]
+    if (group)
+      delete group[uid]
+  }
+
+  private getUserCache (uid: string) {
+    const group = userCache[this.groupId]
+    if (!group)
+      return undefined
+    return group[uid]
+  }
+
+  getUser (uid?: string, autoFetch: boolean = true): UserMemberInfo | undefined {
     if (!uid)
       return undefined
-    member = member || this.getMember(uid)
-    if (!user) {
-      if (IsThisId.Me(uid) && this.uid) {
-        user = this.me
-      }
-      else if (IsThisId.UID(uid)) {
-        user = this.$store.getters['user/user'](uid)
-        if (!user && autoFetch)
-          this.$fire.updateUserProfiles([uid])
+
+    const cache = this.getUserCache(uid)
+    if (cache)
+      return cache
+
+    const member = this.getMember(uid)
+    let user: UserInfo | undefined
+
+    if (IsThisId.Me(uid) && this.uid) {
+      user = this.me
+    }
+    else if (IsThisId.UID(uid)) {
+      user = this.$store.getters['user/user'](uid)
+      if (!user && autoFetch) {
+        this.$fire.updateUserProfiles([uid])
+          .then(() => {
+            this.clearUserCache(uid)
+          })
       }
     }
+
     const result = Object.assign({}, member, user) as UserMemberInfo
 
     // when "member" has a name, override as nickname
@@ -42,7 +73,14 @@ export default class UserInfoMixin extends Vue {
     // set avatar url
     if (!result.avatar_url)
       result.avatar_url = this.getFallbackAvatar(uid, result.name)
+
+    this.setUserCache(uid, result)
+
     return result
+  }
+
+  get groupId (): string {
+    return this.$store.getters['group/id']
   }
 
   getMember (uid: string): Member | undefined {

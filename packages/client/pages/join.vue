@@ -36,7 +36,7 @@
                 app-user-avatar(:id='member.uid', size='40')
               v-list-item-content.text-left
                 v-list-item-title
-                  app-user-info(:member='member', field='name')
+                  app-user-info(:id='member.uid', field='name')
               v-list-item-action()
                 v-btn(v-if='isLocal(member.uid)' color='primary' @click='join(member.uid)').px-3 {{$t('ui.join.this_is_me')}}
                 v-icon.ml-1(v-else color='green lighten-1', size='24') mdi-check

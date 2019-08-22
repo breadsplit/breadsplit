@@ -5,18 +5,15 @@ span(v-if='value' :style='style') {{value}}
 <script lang='ts'>
 import { mixins, Component, Prop } from 'nuxt-property-decorator'
 import UserInfoMixin from '~/mixins/userinfo'
-import { Member, UserInfo } from '~/types'
 
 @Component
 export default class UserInfoLabel extends mixins(UserInfoMixin) {
   @Prop(String) readonly id?: string
   @Prop({ default: 'name' }) readonly field!: string
-  @Prop(Object) readonly user?: UserInfo
-  @Prop(Object) readonly member?: Member
   @Prop(Boolean) readonly bold?: boolean
 
   get _user () {
-    return this.getUser(this.id, this.member, this.user)
+    return this.getUser(this.id)
   }
 
   get value () {

@@ -59,12 +59,12 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
               template(v-for='(member, index) in members')
                 v-list-item.px-4(:key='member.uid')
                   v-list-item-avatar
-                    app-user-avatar(:member='member' size='38')
+                    app-user-avatar(:id='member.uid' size='38')
                   v-list-item-content
                     v-list-item-title
-                      app-user-info(:member='member', field='name' :fallback='member.name')
+                      app-user-info(:id='member.uid', field='name' :fallback='member.name')
                     v-list-item-subtitle.sub-label(style='margin-top: -5px')
-                      app-user-info(:member='member', field='email')
+                      app-user-info(:id='member.uid', field='email')
                   v-list-item-icon(v-if='member.uid !== me' @click='removeMember(member.uid)')
                     v-icon.op-75 mdi-close
 
