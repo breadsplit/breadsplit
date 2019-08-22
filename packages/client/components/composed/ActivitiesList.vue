@@ -62,13 +62,13 @@ export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixi
   }
 
   isDifferentCreator (index: number) {
-    const current = this.activities[index]
+    const current = this.activities[index] || {}
     const prev = this.activities[index - 1] || {}
     return current.by !== prev.by
   }
 
   isDifferentPeriod (index: number) {
-    const current = this.activities[index]
+    const current = this.activities[index] || {}
     const prev = this.activities[index - 1] || {}
     return current.by !== prev.by || this.d(current.timestamp) !== this.d(prev.timestamp)
   }

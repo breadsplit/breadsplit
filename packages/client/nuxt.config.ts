@@ -191,13 +191,13 @@ const config: NuxtConfiguration = {
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
       },
       {
-        urlPattern: '.*googleusercontent.com.*',
+        urlPattern: '.*googleusercontent.com/.*',
         handler: 'cacheFirst',
         method: 'GET',
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
       },
       {
-        urlPattern: '.*googleapis.com.*',
+        urlPattern: '.*googleapis.com/.*',
         handler: 'cacheFirst',
         method: 'GET',
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
