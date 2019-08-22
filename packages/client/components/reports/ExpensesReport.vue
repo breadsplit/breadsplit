@@ -13,15 +13,7 @@ mixin summary
 
 .expenses-report
   .text-center
-    app-date-range-select(:from.sync='from' :to.sync='to' :unit.sync='unit')
-    .pb-3
-    v-expand-transition
-      div(v-show='!categoryFilter')
-        chart-summary-pie(
-          :value='expenseSummary'
-          :style='{ width: chartWidth }'
-          @click:id='i=>categoryFilter=i'
-        )
+    app-date-range-select.pb-3(:from.sync='from' :to.sync='to' :unit.sync='unit')
 
   v-card.mt-2.pa-2
     .filter
@@ -66,6 +58,12 @@ mixin summary
         v-divider
       v-tabs-items(v-model='tab' touchless)
         v-tab-item
+          div.text-center
+            chart-summary-pie(
+              :value='expenseSummary'
+              :style='{ width: chartWidth }'
+              @click:id='i=>categoryFilter=i'
+            )
           +summary
           v-list.pa-0(two-line flat)
             template(v-for='(item, index) in expenseSummary')

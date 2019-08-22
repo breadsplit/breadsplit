@@ -9,16 +9,16 @@
       v-expand-transition
         .op-75(v-show='unit !== "all" && unit !== "day"') {{subdisplay}}
 
-      v-btn-toggle.mt-2(v-model='internal_unit' rounded mandatory )
-        v-btn(small) {{$t('date_range.day.display')}}
-        v-btn(small) {{$t('date_range.week.display')}}
-        v-btn(small) {{$t('date_range.month.display')}}
-        v-btn(small) {{$t('date_range.year.display')}}
-        v-btn(small) {{$t('date_range.all.display')}}
-        v-btn(small) {{$t('date_range.custom.display')}}
-
     v-btn.my-auto(@click='next' icon small :disabled='unit === "custom" || unit === "all"')
       v-icon mdi-chevron-right
+
+  v-btn-toggle.mt-2(v-model='internal_unit' rounded mandatory )
+    v-btn(small) {{$t('date_range.day.display')}}
+    v-btn(small) {{$t('date_range.week.display')}}
+    v-btn(small) {{$t('date_range.month.display')}}
+    v-btn(small) {{$t('date_range.year.display')}}
+    v-btn(small) {{$t('date_range.all.display')}}
+    v-btn(small) {{$t('date_range.custom.display')}}
 </template>
 
 <script lang='ts'>
