@@ -10,10 +10,11 @@ v-container.text-center
         v-icon.mr-2 mdi-plus
         span {{$t('ui.button_new_group')}}
 
-  template(v-else v-for='(group, i) in groups')
-    nuxt-link.group-entry(v-ripple, :to='`/group/${group.id}`', :style='groupCssVars(group)')
-      v-icon mdi-{{ group.icon }}
-      .groupname(v-text='group.name')
+  template(v-else)
+    template(v-for='(group, i) in groups')
+      nuxt-link.group-entry(v-ripple, :to='`/group/${group.id}`', :style='groupCssVars(group)')
+        v-icon mdi-{{ group.icon }}
+        .groupname(v-text='group.name')
 
     .my-3
 

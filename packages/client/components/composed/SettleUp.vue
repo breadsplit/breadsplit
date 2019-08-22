@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-card.settle-up
+v-card.settle-up(v-if='solutions.length')
   v-subheader
     v-icon.mr-1 mdi-account-supervisor-circle
     span {{$t('ui.tabs.settle_up')}}

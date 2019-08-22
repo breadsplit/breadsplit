@@ -113,6 +113,8 @@ noun:
   tomorrow: 明天
   yesterday: 昨天
 placeholders:
+  balances:
+    title: 已算清債務
   groups:
     desc: 創建一個群組並開始使用
     title: 歡迎！

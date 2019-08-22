@@ -50,6 +50,8 @@ export const SharedGroupOptionsDefault = (overrides?: Partial<SharedGroupOptions
 }, overrides)
 
 export const LocalGroupOptionsDefault = (overrides?: Partial<LocalGroupOptions>): LocalGroupOptions => merge({
+  display_currency: null,
+  favorite: false,
 }, overrides)
 
 export const ClientGroupDefault = (overrides?: Partial<ClientGroup>): ClientGroup => {

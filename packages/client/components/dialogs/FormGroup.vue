@@ -31,7 +31,7 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
           v-flex
             app-currency-select.flat(v-model='form.main_currency')
 
-          v-flex.my-3
+          // v-flex.my-3
             v-switch(v-model='online')
               template(slot='label')
                 span(v-if='online') {{$t('ui.online_mode')}}
@@ -57,7 +57,7 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
           div
             v-list.members-list(style='background: transparent')
               template(v-for='(member, index) in members')
-                v-list-item.px-4(:key='member.uid')
+                v-list-item.px-6(:key='member.uid')
                   v-list-item-avatar
                     app-user-avatar(:member='member' size='38')
                   v-list-item-content

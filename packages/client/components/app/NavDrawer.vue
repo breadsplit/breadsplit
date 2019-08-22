@@ -20,7 +20,7 @@ v-navigation-drawer(
           v-icon mdi-{{ group.icon }}
         v-list-item-content
           v-list-item-title(v-text='group.name')
-        v-list-item-action(v-if='isOnline')
+        v-list-item-action(v-if='group.online')
           template(v-if='unreadsOf(group.id)')
             v-avatar(size='25', color='red' dark)
               v-list-item-title.ma-2(v-text='unreadsOf(group.id)' style='color: white;')
@@ -72,11 +72,11 @@ v-navigation-drawer(
 <script lang='ts'>
 import { Component, Getter, mixins, Prop } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
-import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
+import { CommonMixin, NavigationMixin } from '~/mixins'
 import Login from '~/components/dialogs/Login.vue'
 
 @Component
-export default class NavDrawer extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
+export default class NavDrawer extends mixins(CommonMixin, NavigationMixin) {
   // Data
   fixed = false
   miniVariant = false

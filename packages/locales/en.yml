@@ -142,6 +142,8 @@ noun:
   tomorrow: Tomorrow
   yesterday: Yesterday
 placeholders:
+  balances:
+    title: All settled up
   groups:
     desc: Create a new group to start
     title: Welcome!

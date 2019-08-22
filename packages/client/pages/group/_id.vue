@@ -6,6 +6,7 @@
 
         template(v-if='!group.transactions.length')
           app-empty-placeholder(
+            icon='balloon'
             :title='$t("placeholders.transactions.title")'
             :desc='$t("placeholders.transactions.desc")'
           )

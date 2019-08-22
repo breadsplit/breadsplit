@@ -1,8 +1,8 @@
 <template lang='pug'>
-.empty-placeholder.text-center
-  v-icon(size='128').op-20.pa-3 mdi-{{icon || 'balloon' }}
+.empty-placeholder.text-center(:class='{dense}')
+  v-icon(v-if='icon' size='128').op-20.pb-3 mdi-{{icon}}
   p.content.op-50.mb-0 {{title}}
-  p.desc.op-50.pb-2 {{desc}}
+  p.desc.op-50 {{desc}}
   slot
 </template>
 
@@ -14,6 +14,7 @@ export default class EmptyPlaceholder extends Vue {
   @Prop(String) readonly title?: string
   @Prop(String) readonly desc?: string
   @Prop(String) readonly icon?: string
+  @Prop(Boolean) readonly dense?: boolean
 }
 </script>
 
@@ -27,4 +28,7 @@ export default class EmptyPlaceholder extends Vue {
 
   & > .desc
     font-size: 1.1em
+
+  &.dense
+    padding: 0 1em
 </style>
