@@ -19,6 +19,6 @@ module.exports = {
   rules: {
     // cypress
     'no-unused-expressions': 0,
-    'chai-friendly/no-unused-expressions': 2
+    'chai-friendly/no-unused-expressions': 2,
   }
 }

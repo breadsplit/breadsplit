@@ -1,7 +1,7 @@
 <template lang='pug'>
 .group-page.height-100(style='margin-bottom: -60px')
-  v-tabs-items(v-model='tab_index', v-if='group').pt-1
-    v-tab-item(key='0').scroll-page
+  v-window(v-model='tab_index' v-if='group' touchless).pt-1
+    v-window-item(key='0').scroll-page
       v-container(:class='{"pa-0": isMobile}')
         app-balances
 
@@ -15,23 +15,27 @@
 
         .pa-2
 
-    v-tab-item(key='1').scroll-page
+    v-window-item(key='1').scroll-page
       v-container(:class='{"pa-0": isMobile}')
 
         app-expenses-report
 
-    v-tab-item(key='2').scroll-page
+        .pa-2
+
+    v-window-item(key='2').scroll-page
       v-container(:class='{"pa-0": isMobile}')
 
         app-activities
 
-    v-tab-item(key='3').scroll-page
+        .pa-2
+
+    v-window-item(key='3').scroll-page
       v-container(:class='{"pa-0": isMobile}')
 
         app-inviting(v-if='isOnline')
         app-members(:members='members')
 
-    div(style='height:15px')
+        .pa-2
 
   v-bottom-navigation(
     v-model='tab_id'
@@ -46,6 +50,7 @@
         :style='item.style'
         :value='item.key'
         :disabled='item.disabled'
+        :ripple='false'
       )
         span {{item.text}}
         v-icon mdi-{{item.icon}}
@@ -74,6 +79,7 @@ import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
   },
   async asyncData ({ params, store, error }) {
     if (!store.getters['group/current'])
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       return error({ icon: 'account-alert-outline', statusCode: 'Group not found', message: 'It seems to be a local group' })
     store.commit('group/clearUnreads', params.id)
