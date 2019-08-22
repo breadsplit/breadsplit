@@ -19,11 +19,14 @@ export const getters: GetterTree<RootState, RootState> = {
   },
 
   primary (state, getters) {
+    if (state.temp.primary_color_override)
+      return state.temp.primary_color_override
+
     const current: Group | null = getters['group/current']
-    let color = 'primary'
     if (current && current.color)
-      color = current.color
-    return color
+      return current.color
+
+    return 'primary'
   },
 }
 
@@ -66,5 +69,9 @@ export const mutations: MutationTree<RootState> = {
       init: true,
       version: APP_VERSION,
     }
+  },
+
+  setPrimaryColor (state, color: string | null) {
+    state.temp.primary_color_override = color
   },
 }

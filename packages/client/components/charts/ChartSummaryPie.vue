@@ -263,7 +263,7 @@ svg.chart-summary-pie
       transform: scale(1.07)
 
   polyline
-    stroke: rgba(0,0,0,0.4)
+    stroke: rgba(128,128,128,0.6)
     stroke-width: 2px
     fill: none
 </style>

@@ -52,4 +52,7 @@ export const RootStateDefault = (overrides?: Partial<RootState>): RootState => m
     init: false,
     version: '0.0.0',
   },
+  temp: {
+    primary_color_override: null,
+  },
 }, overrides)

@@ -34,4 +34,7 @@ export default class ComposedToolbar extends Vue {
   right: 0
   bottom: 0
   top: 60px
+  .v-text-field__slot
+    .v-label--active.primary--text
+      color: white !important
 </style>

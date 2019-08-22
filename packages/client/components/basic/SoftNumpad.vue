@@ -32,8 +32,8 @@ export default class SoftNumpad extends Vue {
   @Prop(Boolean) readonly absolute?: boolean
   @Prop(Boolean) readonly fixed?: boolean
 
-  rounded: boolean = false
-  disableOperators: boolean = false
+  rounded = false
+  disableOperators = false
 
   public dirty = false
 
@@ -140,7 +140,7 @@ export default class SoftNumpad extends Vue {
       background: #eee
 
   &.theme--dark
-    background: #303030
+    background: #202020 !important
 
     .operators
       background: #282828

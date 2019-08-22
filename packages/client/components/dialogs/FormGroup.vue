@@ -1,6 +1,6 @@
 <template lang='pug'>
 v-card.form-group(v-rows='"max-content max-content auto max-content"')
-  app-composed-toolbar.mb-n3(height='130' dark :color='form.color')
+  app-composed-toolbar.mb-n3(height='130' dark color='primary')
     v-btn(icon @click='close()')
       v-icon mdi-close
     v-toolbar-title {{title}}
@@ -14,6 +14,7 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
           :disabled='viewmode'
           :readonly='step !== 0'
           autofocus
+          dark
         )
 
   div
@@ -94,7 +95,7 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
 </template>
 
 <script lang='ts'>
-import { Component, Getter, mixins } from 'nuxt-property-decorator'
+import { Component, Getter, mixins, Watch } from 'nuxt-property-decorator'
 import { TranslateResult } from 'vue-i18n'
 import cloneDeep from 'lodash/cloneDeep'
 import { MemberDefault, IdMe, GroupDefault, defaultCurrency } from '~/core'
@@ -120,6 +121,7 @@ export default class FormGroup extends mixins(DialogChildMixin) {
   @Getter('user/uid') uid: string | undefined
 
   reset () {
+    this.visible = true
     this.formOriginal = null
     // editing
     if (this.options.mode && this.current) {
@@ -144,6 +146,7 @@ export default class FormGroup extends mixins(DialogChildMixin) {
 
     this.mode = this.options.mode
     this.step = 0
+    this.updatePrimaryColor()
   }
 
   get title (): TranslateResult {
@@ -183,6 +186,15 @@ export default class FormGroup extends mixins(DialogChildMixin) {
   get checkEmpty (): boolean {
     const hasEmpty = !(this.form.name && this.form.main_currency)
     return hasEmpty || this.viewmode
+  }
+
+  @Watch('visible')
+  @Watch('form.color')
+  updatePrimaryColor () {
+    let color: string | null = null
+    if (this.visible)
+      color = this.form.color || null
+    this.$store.commit('setPrimaryColor', color)
   }
 
   defaultMember (m) {

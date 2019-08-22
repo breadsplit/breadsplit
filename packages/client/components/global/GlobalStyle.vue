@@ -5,12 +5,12 @@ style.
     --theme-primary: {{primaryColor}};
   }
   .v-application .primary {
-    background-color: {{primaryColor}} !important;
-    border-color: {{primaryColor}} !important;
+    background-color: var(--theme-primary) !important;
+    border-color: var(--theme-primary) !important;
   }
   .v-application .primary--text {
-    color: {{primaryColor}} !important;
-    caret-color: {{primaryColor}} !important;
+    color: var(--theme-primary) !important;
+    caret-color: var(--theme-primary) !important;
   }
 </template>
 

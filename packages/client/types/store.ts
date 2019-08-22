@@ -46,4 +46,7 @@ export interface RootState {
     init: boolean
     version: string
   }
+  temp: {
+    primary_color_override: string | null
+  }
 }

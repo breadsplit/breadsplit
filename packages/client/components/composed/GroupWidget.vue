@@ -9,7 +9,7 @@ nuxt-link.group-widget.pa-3(
     v-icon(size='30') mdi-{{ group.icon }}
   .pa-2
     .group-name(v-text='group.name')
-    .group-members {{Object.keys(group.members).length}} members
+    .group-members {{membersCount}} members
   .group-status-icon
     v-icon.op-50(v-if='group.online') mdi-cloud-outline
 </template>
@@ -29,6 +29,10 @@ export default class GroupWidget extends mixins(NavigationMixin) {
 
   get clientGroup (): ClientGroup {
     return this.$store.getters['group/clientGroupById'](this.id)
+  }
+
+  get membersCount () {
+    return Object.values(this.group.members).filter(m => !m.removed).length
   }
 
   groupCssVars (group) {
@@ -60,7 +64,7 @@ export default class GroupWidget extends mixins(NavigationMixin) {
   font-weight: normal
 
   .theme--dark &
-    background: #252525
+    background: #191919
 
   & > *
     margin-top: auto

@@ -15,11 +15,9 @@ v-container.text-center
 
     .my-8
 
-    v-btn(@click='gotoNewGroup' rounded color='primary')
-      v-icon.mr-2 mdi-plus
-      span {{$t('ui.button_new_group')}}
+    v-btn(@click='gotoNewGroup' fixed fab color='primary' bottom right)
+      v-icon mdi-plus
 
-    .my-12
     app-credit.op-25(simple='true')
 
     v-btn(@click='reload' text small color='grey').op-25 Reload

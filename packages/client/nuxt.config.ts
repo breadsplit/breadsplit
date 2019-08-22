@@ -154,12 +154,15 @@ const config: NuxtConfiguration = {
   vuetify: {
     theme: {
       themes: theme,
+      options: {
+        customProperties: true,
+      },
     },
     icons: {
       iconfont: 'mdi',
     },
     customVariables: [
-      '~/assets/style/app.sass',
+      '~/assets/style/index.sass',
     ],
     defaultAssets: {
       font: false,

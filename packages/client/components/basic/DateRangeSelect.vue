@@ -1,7 +1,7 @@
 <template lang='pug'>
 .data-range-select
   div(v-columns='"max-content auto max-content"').px-3
-    v-btn.my-auto(@click='previous' icon small :disabled='unit === "custom" || unit === "all"')
+    v-btn.my-auto(@click='previous' icon small :ripple='false' :disabled='unit === "custom" || unit === "all"')
       v-icon mdi-chevron-left
 
     div
@@ -9,7 +9,7 @@
       v-expand-transition
         .op-75(v-show='unit !== "all" && unit !== "day"') {{subdisplay}}
 
-    v-btn.my-auto(@click='next' icon small :disabled='unit === "custom" || unit === "all"')
+    v-btn.my-auto(@click='next' icon small :ripple='false' :disabled='unit === "custom" || unit === "all"')
       v-icon mdi-chevron-right
 
   v-btn-toggle.mt-2(v-model='internal_unit' rounded mandatory )

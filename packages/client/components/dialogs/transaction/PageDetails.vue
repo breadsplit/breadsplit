@@ -243,7 +243,7 @@ export default class PageDetails extends mixins(GroupMixin) {
     color: #9e9e9e
 
   .text
-    color: rgba(0, 0, 0, 0.54)
+    opacity: 0.5
     align-items: center
     display: flex
     min-height: 48px
