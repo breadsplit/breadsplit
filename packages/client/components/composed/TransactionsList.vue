@@ -4,7 +4,8 @@ v-list.transactions-list.pa-0(two-line flat)
     :items='transactions'
     :item-size='74'
     key-field='id'
-    v-slot="{ item, index }"
+    v-slot='{ item, index }'
+    page-mode
   )
     v-divider(v-if='index!=0')
     app-transaction-item(
