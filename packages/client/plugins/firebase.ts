@@ -12,7 +12,7 @@ import { IsThisId, getExchangeRateOn } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
 import { DEBUG, BUILD_TARGET } from '~/../meta/env'
-import { ResizeImage } from '~/../utils/image'
+import { resizeImage } from '~/../utils/image'
 
 firebase.initializeApp(FirebaseServerConfig)
 
@@ -193,7 +193,7 @@ export class FirebasePlugin {
 
   async uploadImage (groupid: string, transid: string, file: File, imageid = nanoid(10)): Promise<string> {
     const ref = this.storage.ref().child(`transactions/${groupid}/${transid}/${imageid}`)
-    const resized = await ResizeImage(file)
+    const resized = await resizeImage(file)
     if (!resized)
       return ''
     await ref.put(resized)
