@@ -131,13 +131,13 @@ icons:
 iso: en-US
 language_name: English
 loading:
-  coverting_online: Converting to Online group...
-  deleting_group: Deleting group...
+  coverting_online: Converting to Online group…
+  deleting_group: Deleting group…
 noun:
   category: Category
   expense: Expense
   group: Group
-  others: Others...
+  others: Others…
   today: Today
   tomorrow: Tomorrow
   yesterday: Yesterday
@@ -159,7 +159,7 @@ prompt:
   feedback_delivered: Your feedback is delivered. Thank you ❤
   invite_friends: Invite friends
   logout_confirm: Are you sure to logout?
-  sending: Sending...
+  sending: Sending…
   share_message: 'Click to join {0}'
   welcome:
     para1: <b>Thank you so much for trying BreadSplit</b>!
@@ -239,7 +239,7 @@ ui:
     default_group_name: Untitled Group
     enter_group_name: Enter group's name
     group_name: Group's name
-    group_name_placeholder: Enter group name...
+    group_name_placeholder: Enter group name…
     new_group: New group
   help: Help
   home: Home
@@ -250,14 +250,16 @@ ui:
     group_not_found: Group Not Found
     invited_to_join: 'You are invited to join {0}'
     join_anonymous: Join as a new member
-    loading_group_info: Loading group info...
+    join_in_progress: Joining group…
+    loading_group_info: Loading group info…
     my_name_is: 'My name is:'
+    not_in_the_list_question: Not in the list?
     this_is_me: This is me
     title: Join a group
   join_as_me: 'Join as {0}'
   join_group: 'Joining <b>{0}</b>'
   language: Language
-  loading: Loading...
+  loading: Loading…
   menu:
     edit_categories: Edit categories
     edit_group: Edit group
@@ -268,7 +270,7 @@ ui:
     rename_member: Rename
     view_group: View group
   misc: Misc.
-  more_currency: More...
+  more_currency: More…
   new_expense: New expense
   no_expenses_in_range: No expenses in this range
   offline_mode: Offline mode
@@ -284,7 +286,7 @@ ui:
     mode_expenses: Expenses
     mode_transfer: Transfers
   reset: Reset
-  search_currency: Search...
+  search_currency: Search…
   select_currency: Select currency
   setting_options:
     clear_all_data: Clear all Data
@@ -339,7 +341,7 @@ ui:
     add_payer: Add more payer
     add_photos: Add photos
     description: Description
-    description_placeholder: Enter the description...
+    description_placeholder: Enter the description…
     details: Details
     details_short: Details
     enter_the_cost: Enter the group cost of this expense
@@ -355,13 +357,13 @@ ui:
     involved_negative: '{0} had owed'
     involved_positive: '{0} had paid'
     note: Note
-    photos_uploading: Uploading photos...
+    photos_uploading: Uploading photos…
     repeat_expense: Repeat
     select_category: Select category
     select_who_paid: Select the person who paid the bill
     view: View expense
     xx_should_pay: 'by the way, {0} should pay this time.'
-  wip: "\U0001F6A7 Working in progress..."
+  wip: "\U0001F6A7 Working in progress…"
   xx_paid_money: '{0} paid'
   xx_paid_xx: '{0} paid {1}'
 utils:

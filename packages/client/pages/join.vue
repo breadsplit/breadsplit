@@ -24,35 +24,49 @@
           i18n(path='ui.join.invited_to_join')
             b.primary--text {{group.name}}
 
-        v-subheader {{$t('ui.join.my_name_is')}}
+        // Local members list
+        template(v-if='localMembers.length')
+          v-subheader {{$t('ui.join.my_name_is')}}
 
-        v-list(two-line, style='background:transparent;')
-          template(v-for='(member, index) in members')
-            template(v-if='index!=0 && !isLocal(member.uid) && isLocal(members[index-1].uid)')
-              br
-              v-subheader {{$t('ui.join.existing_users')}}
-            v-list-item(:key='member.uid')
-              v-list-item-avatar
-                app-user-avatar(:id='member.uid', size='40')
-              v-list-item-content.text-left
-                v-list-item-title
-                  app-user-info(:id='member.uid', field='name')
-              v-list-item-action()
-                v-btn(v-if='isLocal(member.uid)' color='primary' @click='join(member.uid)').px-3 {{$t('ui.join.this_is_me')}}
-                v-icon.ml-1(v-else color='green lighten-1', size='24') mdi-check
+          v-list(style='background:transparent;')
+            template(v-for='(member, index) in localMembers')
+              v-list-item(:key='member.uid')
+                v-list-item-avatar
+                  app-user-avatar(:member='member', size='40')
+                v-list-item-content.text-left
+                  v-list-item-title
+                    app-user-info(:member='member', field='name')
+                v-list-item-action
+                  v-btn.px-4(color='primary' rounded @click='join(member.uid)') {{$t('ui.join.this_is_me')}}
 
+          .op-75.mb-3 {{$t('ui.join.not_in_the_list_question')}}
+
+        // Join button
         v-btn(v-if='uid' @click='join()' color='primary' large rounded).pl-0
-          app-user-avatar(:id='uid', :size='44').mr-3
+          app-user-avatar(:id='uid', :size='44' style='margin-left: -1.1px').mr-3
           span {{$t('ui.join_as_me', [me.name])}}
 
-        v-btn.px-4.ma-3(v-else color='primary' rounded dark @click='join()') {{$t('ui.join.join_anonymous')}}
+        v-btn.px-4(v-else color='primary' outlined rounded @click='join()') {{$t('ui.join.join_anonymous')}}
+
+        v-divider.mb-3.mt-6
+
+        // Other members list
+        v-subheader {{$t('ui.join.existing_users')}}
+        v-list(style='background:transparent;')
+          template(v-for='(member, index) in onlineMembers')
+            v-list-item(:key='member.uid')
+              v-list-item-avatar
+                app-user-avatar(:member='member', size='40')
+              v-list-item-content.text-left
+                v-list-item-title
+                  app-user-info(:member='member', field='name')
 
     app-login(ref='login')
 </template>
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
-import { ServerGroup, Member } from '~/types'
+import { ServerGroup } from '~/types'
 import { IsThisId } from '~/core'
 import { CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 import Login from '~/components/dialogs/Login.vue'
@@ -91,29 +105,31 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
   get members () {
     if (!this.group)
       return []
-    const orderList: Member[] = []
-    Object.values(this.group.members)
-      .filter(m => !m.removed && m.uid !== null)
-      .forEach((m) => {
-        if (this.isLocal(m.uid as string))
-          orderList.unshift(m)
-        else
-          orderList.push(m)
-      })
-    return orderList
+    return Object.values(this.group.members)
+  }
+
+  get localMembers () {
+    return this.members.filter(m => IsThisId.LocalMember(m.uid))
+  }
+
+  get onlineMembers () {
+    return this.members.filter(m => !IsThisId.LocalMember(m.uid))
   }
 
   async join (memberId?: string) {
     if (!this.id)
       return
-    if (!this.$store.getters['user/uid']) {
-      // if false, the login is canceled
-      if (!await this.$refs.login.login())
-        return
-    }
-    this.$apploading.open('Joining group...')
-    await this.$fire.joinGroup(this.id, memberId)
-    this.$apploading.close()
+    if (!this.uid)
+      await this.$refs.login.login()
+
+    setTimeout(async () => {
+      if (!this.uid || !this.id)
+        return // login canceled
+
+      this.$apploading.open(this.$t('ui.join.join_in_progress'))
+      await this.$fire.joinGroup(this.id, memberId)
+      this.$apploading.close()
+    }, 300)
   }
 
   isLocal (id: string) {
