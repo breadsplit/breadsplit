@@ -180,9 +180,6 @@ const config: NuxtConfiguration = {
     offlineAnalytics: true,
     offline: true,
     offlineStrategy: 'staleWhileRevalidate',
-    importScripts: [
-      '/firebase-messaging.sw.js',
-    ],
     runtimeCaching: [
       {
         urlPattern: 'https://cdnjs.cloudflare.com/.*',

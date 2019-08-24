@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
-import { ServerGroup, Operation, TokenRecord, UserInfo } from './types'
+import { ServerGroup, Operation, TokenRecord, UserInfo, NotificationMessage } from './types'
 import { getActivityDescription } from './core'
 import { t } from './utils'
 import { Eval } from './opschain'
@@ -68,7 +68,7 @@ export async function PushGroupOperationsNotification (
     return user
   }
 
-  const messages: admin.messaging.Message[] = []
+  const messages: NotificationMessage[] = []
 
   for (const op of operations) {
     if (op.name === 'insert_transaction') {
@@ -85,8 +85,12 @@ export async function PushGroupOperationsNotification (
 
         messages.push({
           notification: {
+            type: op.name,
             title: description,
             body: groupname,
+            group: group.id,
+            avatar: user && user.avatar_url,
+            uid: (user && user.uid) || undefined,
           },
           token: token.token,
         })

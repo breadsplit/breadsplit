@@ -8,7 +8,7 @@ import 'firebase/firestore'
 
 import { SharedGroupOptions } from '../../types/models'
 import { FallbackExchangeRate } from '../../meta/fallback_exchange_rates'
-import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord, Operation } from '~/types'
+import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord, Operation, NotificationMessage } from '~/types'
 import { IsThisId, getExchangeRateOn } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
@@ -105,10 +105,20 @@ export class FirebasePlugin {
 
     if (this.messagingEnabled && this.messaging) {
       await this.updateMessagingToken()
-      // this.installMessagingServiceWorker()
 
-      this.messaging.onMessage((data) => {
+      this.messaging.onMessage((data: NotificationMessage) => {
         log('📢 Incoming Message:', data)
+        const notification = data.notification
+
+        // refering to: https://web-push-book.gauntface.com/chapter-05/02-display-a-notification
+        if (this.messagingEnabled && notification) {
+          // eslint-disable-next-line no-new
+          new Notification(notification.title, {
+            body: notification.body,
+            icon: '/img/logo/favicon.png',
+            badge: notification.avatar,
+          })
+        }
       })
     }
   }
