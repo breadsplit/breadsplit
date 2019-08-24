@@ -68,34 +68,10 @@ export async function resizeImage (file: File, MAX_WIDTH = 2048, MAX_HEIGHT = 20
   const orientation = await getImageOrientation(file)
   const canvas = document.createElement('canvas')
 
-  // eslint-disable-next-line
-  let ctx = canvas.getContext('2d')!
+  console.log('orientation', orientation)
 
   let width = img.width
   let height = img.height
-
-  if (orientation > 4 && orientation < 9) {
-    canvas.width = height
-    canvas.height = width
-  }
-  else {
-    canvas.width = width
-    canvas.height = height
-  }
-
-  // transform context before drawing image
-  switch (orientation) {
-    case 2: ctx.transform(-1, 0, 0, 1, width, 0); break
-    case 3: ctx.transform(-1, 0, 0, -1, width, height); break
-    case 4: ctx.transform(1, 0, 0, -1, 0, height); break
-    case 5: ctx.transform(0, 1, 1, 0, 0, 0); break
-    case 6: ctx.transform(0, 1, -1, 0, height, 0); break
-    case 7: ctx.transform(0, -1, -1, 0, height, width); break
-    case 8: ctx.transform(0, -1, 1, 0, 0, width); break
-    default: break
-  }
-
-  ctx.drawImage(img, 0, 0)
 
   if (width > height) {
     if (width > MAX_WIDTH) {
@@ -109,11 +85,28 @@ export async function resizeImage (file: File, MAX_WIDTH = 2048, MAX_HEIGHT = 20
       height = MAX_HEIGHT
     }
   }
+
+  if (orientation > 4 && orientation < 9)
+    [height, width] = [width, height]
+
   canvas.width = width
   canvas.height = height
 
   // eslint-disable-next-line
-  ctx = canvas.getContext('2d')!
+  let ctx = canvas.getContext('2d')!
+
+  // transform context before drawing image
+  switch (orientation) {
+    case 2: ctx.transform(-1, 0, 0, 1, width, 0); break
+    case 3: ctx.transform(-1, 0, 0, -1, width, height); break
+    case 4: ctx.transform(1, 0, 0, -1, 0, height); break
+    case 5: ctx.transform(0, 1, 1, 0, 0, 0); break
+    case 6: ctx.transform(0, 1, -1, 0, width, 0); break
+    case 7: ctx.transform(0, -1, -1, 0, width, height); break
+    case 8: ctx.transform(0, -1, 1, 0, 0, height); break
+    default: break
+  }
+
   ctx.drawImage(img, 0, 0, width, height)
 
   return new Promise<Blob | null>((resolve) => {
