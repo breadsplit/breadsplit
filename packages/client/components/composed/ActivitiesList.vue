@@ -1,24 +1,12 @@
 <template lang='pug'>
 v-list.activities-list.pb-4.pl-2.pt-0(flat style='background: transparent')
-  dynamic-scroller(
-    :items='activities'
-    :min-item-size='32'
-    key-field='timestamp'
-    page-mode
-  )
-    template(v-slot='{ item, index, active }')
-      dynamic-scroller-item(
-        :item='item'
-        :active='active'
-        :size-dependencies='[item.timestamp]'
-        :data-index='index'
-      )
-        v-list-item.relax-list-item(v-on='on(item)' :ripple='false' :class='{head: isDifferentCreator(index)}')
-          v-list-item-avatar
-            app-user-avatar(v-if='isDifferentCreator(index)' :id='item.by' size='34')
-          v-list-item-content
-            v-list-item-subtitle.timestamp(v-if='isDifferentPeriod(index)' color='primary') {{d(item.timestamp)}}
-            v-list-item-title(v-html='activityDescription(item)')
+  template(v-for='item, index in activities')
+    v-list-item.relax-list-item(v-on='on(item)' :ripple='false' :class='{head: isDifferentCreator(index)}')
+      v-list-item-avatar
+        app-user-avatar(v-if='isDifferentCreator(index)' :id='item.by' size='34')
+      v-list-item-content
+        v-list-item-subtitle.timestamp(v-if='isDifferentPeriod(index)' color='primary') {{d(item.timestamp)}}
+        v-list-item-title(v-html='activityDescription(item)')
 </template>
 
 <script lang='ts'>
