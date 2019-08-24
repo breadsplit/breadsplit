@@ -213,6 +213,7 @@ ui:
     category_name: Category name
     category_name_placeholder: Enter category name
     create: New Category
+    create_short: New
     edit: Edit Category
     enabled: Enabled
     hidden: Hidden

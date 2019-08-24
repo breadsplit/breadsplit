@@ -112,15 +112,19 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   reset () {
+    if (this.$refs.details)
+      this.$refs.details.reset()
+    // enter view mode when transid is provided
     if (this.options.transid) {
       const trans = this.group.transactions.find(i => i.id === this.options.transid)
       if (trans)
-        return this.open(trans)
+        return this.view(trans)
     }
+    // enter creating mode
     this.create()
   }
 
-  open (trans: Transaction) {
+  view (trans: Transaction) {
     this.$set(this, 'form', cloneDeep(trans))
     this.step = STEP_DETAIL
     this.mode = this.options.mode === 'edit' ? 'edit' : 'view'

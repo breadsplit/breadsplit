@@ -8,6 +8,12 @@
     :active='value === cat.id'
     clickable
   )
+  app-category-item(
+    v-if='allowCreate'
+    @click='$emit("create")'
+    :category='{ text: $t("ui.category_editing.create_short"), icon: "plus" }'
+    clickable
+  )
 </template>
 
 <script lang='ts'>
@@ -18,6 +24,7 @@ import { GroupMixin } from '~/mixins'
 export default class CategorySelect extends mixins(GroupMixin) {
   @Prop(String) readonly value!: string
   @Prop({ default: 5 }) readonly columns!: number
+  @Prop(Boolean) readonly allowCreate?: boolean
 
   setValue (value) {
     this.$emit('input', value)

@@ -36,7 +36,7 @@
                   v-icon(size='28') mdi-tag-multiple
           v-card.py-5.px-5(width='380px')
             div.primary--text.ml-2.mb-2 {{$t('ui.transactions.select_category')}}
-            app-category-select.mx-n3(v-model='form.category' @input='focus()')
+            app-category-select.mx-n3(v-model='form.category' @input='focus()' allow-create @create='showCreateForm')
 
       v-text-field.description-field(
         ref='desc'
@@ -92,6 +92,8 @@
     app-transaction-sheet(:transaction='form' dense)
 
   app-date-picker(ref='date_picker')
+  app-form-category(ref='form_category')
+
   v-overlay(:value='overlayImage').photo-overlay
     v-btn(icon @click='overlayImage = null').close-btn
       v-icon(color='white') mdi-close
@@ -101,6 +103,7 @@
 
 <script lang='ts'>
 import { Component, Prop, mixins } from 'nuxt-property-decorator'
+import FormCategory from '../FormCategory.vue'
 import ExchangeRateInput from './ExchangeRateInput.vue'
 import DatePicker from '~/components/basic/DatePicker.vue'
 import { Transaction } from '~/types'
@@ -125,6 +128,13 @@ export default class PageDetails extends mixins(GroupMixin) {
   $refs!: {
     date_picker: DatePicker
     exchange: ExchangeRateInput
+    form_category: FormCategory
+  }
+
+  reset () {
+    this.carouselIndex = 0
+    this.uploadingImage = false
+    this.overlayImage = null
   }
 
   get dateDisplay () {
@@ -191,6 +201,12 @@ export default class PageDetails extends mixins(GroupMixin) {
   focus () {
     // @ts-ignore
     this.$refs.desc.focus()
+  }
+
+  async showCreateForm () {
+    const cat = await this.$refs.form_category.open()
+    if (cat)
+      this.form.category = cat.id
   }
 }
 </script>
