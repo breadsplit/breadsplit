@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
+import { SERVER_HOST } from '../../../../meta/server_hosts'
 import { ServerGroup, Operation, UserInfo } from './types'
 import { getActivityDescription } from './core'
 import { t } from './utils'
@@ -81,7 +82,7 @@ export async function PushGroupOperationsNotification (
               notification: {
                 title: description,
                 body: groupname,
-                icon: '/img/logo/favicon.svg',
+                icon: `${SERVER_HOST}/img/logo/favicon.svg`,
                 badge: sender && sender.avatar_url,
                 timestamp: act.timestamp,
                 lang: token.locale,

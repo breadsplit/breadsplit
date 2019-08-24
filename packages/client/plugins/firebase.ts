@@ -108,7 +108,11 @@ export class FirebasePlugin {
     if (this.messaging) {
       this.messaging.onMessage((data: NotificationMessage) => {
         log('📢 Incoming Message:', data)
+        const notification = data.notification
         // refering to: https://web-push-book.gauntface.com/chapter-05/02-display-a-notification
+        if (this.messagingEnabled && notification)
+          // eslint-disable-next-line no-new
+          new Notification(notification.title, notification)
       })
     }
   }
