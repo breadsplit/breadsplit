@@ -5,6 +5,7 @@ import nanoid from 'nanoid'
 import dayjs from 'dayjs'
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/messaging'
 
 import { SharedGroupOptions } from '../../types/models'
 import { FallbackExchangeRate } from '../../meta/fallback_exchange_rates'
@@ -71,7 +72,6 @@ export class FirebasePlugin {
       import('firebase/auth'),
       import('firebase/functions'),
       import('firebase/storage'),
-      import('firebase/messaging'),
     ])
 
     log(`🔥 Connecting to firebase server <${CurrentServerName}>`)
@@ -108,17 +108,7 @@ export class FirebasePlugin {
     if (this.messaging) {
       this.messaging.onMessage((data: NotificationMessage) => {
         log('📢 Incoming Message:', data)
-        const notification = data.notification
-
         // refering to: https://web-push-book.gauntface.com/chapter-05/02-display-a-notification
-        if (this.messagingEnabled && notification) {
-          // eslint-disable-next-line no-new
-          new Notification(notification.title, {
-            body: notification.body,
-            icon: '/img/logo/favicon.png',
-            badge: notification.badge,
-          })
-        }
       })
     }
   }

@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
-import { ServerGroup, Operation, UserInfo, NotificationMessage } from './types'
+import { ServerGroup, Operation, UserInfo } from './types'
 import { getActivityDescription } from './core'
 import { t } from './utils'
 import { Eval } from './opschain'
@@ -55,7 +55,7 @@ export async function PushGroupOperationsNotification (
     return user
   }
 
-  const messages: NotificationMessage[] = []
+  const messages: admin.messaging.Message[] = []
 
   for (const op of operations) {
     if (operation_names_to_notify.includes(op.name)) {
@@ -76,13 +76,22 @@ export async function PushGroupOperationsNotification (
             notification: {
               title: description,
               body: groupname,
-              icon: '/img/logo/favicon.svg',
-              badge: sender && sender.avatar_url,
-
+            },
+            webpush: {
+              notification: {
+                title: description,
+                body: groupname,
+                icon: '/img/logo/favicon.svg',
+                badge: sender && sender.avatar_url,
+                timestamp: act.timestamp,
+                lang: token.locale,
+              },
+            },
+            data: {
               type: op.name,
               group: group.id,
               uid: (sender && sender.uid) || undefined,
-            },
+            } as Record<string, string>,
             token: token.token,
           })
         }

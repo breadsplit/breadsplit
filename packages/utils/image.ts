@@ -68,8 +68,6 @@ export async function resizeImage (file: File, MAX_WIDTH = 2048, MAX_HEIGHT = 20
   const orientation = await getImageOrientation(file)
   const canvas = document.createElement('canvas')
 
-  console.log('orientation', orientation)
-
   let width = img.width
   let height = img.height
 
