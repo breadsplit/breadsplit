@@ -6,6 +6,8 @@ import { getActivityDescription } from './core'
 import { t } from './utils'
 import { Eval } from './opschain'
 
+const LOGO_URL = `${SERVER_HOST}/img/logo/favicon.png`
+
 const GroupsRef = (id: string) => admin.firestore().collection('groups').doc(id)
 const MessageTokensRef = (id: string) => admin.firestore().collection('messaging_tokens').doc(id)
 const UserInfoRef = (id: string) => admin.firestore().collection('users').doc(id)
@@ -70,22 +72,26 @@ export async function PushGroupOperationsNotification (
         const { tokens } = (await MessageTokensRef(uid).get()).data() || { tokens: [] }
         const username = sender && sender.name
         const groupname = group.present.name
+        const avatar = sender && sender.avatar_url
 
         for (const token of tokens) {
-          const description = getActivityDescription(t, act, token.locale, username, true)
+          const lang = token.locale
+          const title = getActivityDescription(t, act, token.locale, username, true)
+          const body = groupname // TODO: enrich info
+
           messages.push({
             notification: {
-              title: description,
-              body: groupname,
+              title,
+              body,
             },
             webpush: {
               notification: {
-                title: description,
-                body: groupname,
-                icon: `${SERVER_HOST}/img/logo/favicon.png`,
-                badge: sender && sender.avatar_url,
+                title,
+                body,
+                icon: avatar || LOGO_URL,
+                badge: LOGO_URL,
                 timestamp: act.timestamp,
-                lang: token.locale,
+                lang,
               },
             },
             data: {
