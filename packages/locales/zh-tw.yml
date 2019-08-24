@@ -240,7 +240,7 @@ ui:
   no_expenses_in_range: 這個時段内沒有費用支出
   offline_mode: 離線模式
   online_mode: 綫上模式
-  optional: （可選）
+  optional: （非必填）
   paid_by: 付款人
   paid_by_xx: '由 {0} 付款'
   privacy_policy: 隱私政策

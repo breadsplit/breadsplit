@@ -44,7 +44,7 @@ export default class FeedBack extends mixins(DialogChildMixin) {
 
   get hasMeaningfulContent () {
     const content = this.feedbackInfo.content || ''
-    return content.trim().length > 5 && content.length <= this.maxlength
+    return content.trim().length > 0 && content.length <= this.maxlength
   }
 
   get closeToMaxLength () {
