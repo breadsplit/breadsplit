@@ -10,12 +10,12 @@
       hide-delimiter-background
       height='250'
     )
-      v-carousel-item(v-for='src in form.attached_images' :key='src')
+      v-carousel-item(v-for='src, index in form.attached_images' :key='src')
         v-img(:src='src' height='250' @click='overlayImage = src')
           template(v-slot:placeholder)
             v-layout(fill-height align-center justify-center ma-0).grey.op-50
               v-progress-circular(indeterminate color='grey lighten-5')
-        v-icon(color='white' @click='removeImage(i)' v-if='editing').close-btn mdi-close
+        v-icon(color='white' @click='removeImage(index)' v-if='editing').close-btn mdi-close
 
     v-divider
 
