@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import nanoid from 'nanoid'
 import dayjs from 'dayjs'
 import * as firebase from 'firebase/app'
+import 'firebase/firestore'
 
 import { SharedGroupOptions } from '../../types/models'
 import { FallbackExchangeRate } from '../../meta/fallback_exchange_rates'
@@ -68,12 +69,10 @@ export class FirebasePlugin {
   async init () {
     await Promise.all([
       import('firebase/auth'),
-      import('firebase/firestore'),
       import('firebase/functions'),
       import('firebase/storage'),
+      import('firebase/messaging'),
     ])
-    if (this.messagingEnabled)
-      await import('firebase/messaging')
 
     log(`🔥 Connecting to firebase server <${CurrentServerName}>`)
 
@@ -516,18 +515,6 @@ export class FirebasePlugin {
     if (this._unwatchCallback) {
       log('🔕 Store unwatched')
       this._unwatchCallback()
-    }
-  }
-
-  async installMessagingServiceWorker () {
-    if ('serviceWorker' in navigator) {
-      try {
-        await navigator.serviceWorker.register('/firebase-messaging.sw.js', { scope: '/' })
-        log('✅ Messaging SW registration succeeded')
-      }
-      catch (error) {
-        log(`💥 Messaging SW registration failed with ${error}`)
-      }
     }
   }
 }

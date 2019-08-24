@@ -1,5 +1,6 @@
 import { writeFileSync, readFileSync } from 'fs'
 import path from 'path'
+import FirebaseServer from '../../meta/firebase_servers'
 import { NuxtModuleContext } from './type'
 
 function render (template: string, object: object) {
@@ -12,11 +13,11 @@ function render (template: string, object: object) {
 async function build (context: NuxtModuleContext, moduleOptions: any) {
   const srcDir = context.options.srcDir || ''
   const templatePath = path.resolve(srcDir, 'modules', 'firebase-messaging.template.sw.js')
-  const outputPath = path.resolve(srcDir, 'static', 'firebase-messaging.sw.js')
+  const outputPath = path.resolve(srcDir, 'static', 'firebase-messaging-sw.js')
 
   const template = readFileSync(templatePath, 'utf-8')
   const script = render(template, {
-    messagingSenderId: '918223121466',
+    messagingSenderId: FirebaseServer.messagingSenderId,
   })
   writeFileSync(outputPath, script, 'utf-8')
 }

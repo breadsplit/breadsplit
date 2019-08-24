@@ -2,7 +2,7 @@ import Fraction from 'fraction.js'
 import Vue from 'vue'
 import sortBy from 'lodash/sortBy'
 import { Transaction, Group } from '../types'
-import { ParserCategory, ExchangeInTransaction, TransactionHelper } from '.'
+import { ParseCategory, ExchangeInTransaction, TransactionHelper } from '.'
 
 export interface ExpensesByCategoriesItem {
   id: string
@@ -24,7 +24,7 @@ export function ReportExpensesByCategories (vm: Vue, transactions: Transaction[]
       continue
 
     if (!records[categoryid]) {
-      const category = ParserCategory(categoryid, group, vm)
+      const category = ParseCategory(categoryid, group, vm)
       records[categoryid] = {
         id: categoryid,
         icon: category.icon,

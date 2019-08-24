@@ -206,8 +206,7 @@ export default class FormGroup extends mixins(DialogChildMixin) {
     this.$store.dispatch('group/add', this.form)
     this.close()
     // Switch to new created group
-    const id = this.$store.state.group.currentId
-    this.$router.push(`/group/${id}`)
+    this.$router.push(`/group/${this.form.id}`)
   }
 
   addMember (name: string) {
