@@ -1,9 +1,16 @@
 import { Vue, Component } from 'nuxt-property-decorator'
+import { hash } from '~/utils/reactive_hash'
 
 @Component
 export default class NavigationMixin extends Vue {
   get navGroupId () {
     return this.$store.getters['group/currentId']
+  }
+
+  hash = hash.value as any
+
+  updateHash (field: string, value: any) {
+    hash.$set(hash.value, field, value)
   }
 
   gotoHome () {
@@ -37,12 +44,12 @@ export default class NavigationMixin extends Vue {
   openDialog (name: string, options?: object) {
     this.$router.push({
       query: Object.assign({}, options, { dialog: name }),
+      hash: this.$route.hash,
     })
   }
 
   closeDialog () {
-    // @ts-ignore
-    this.$router.replace({ query: null })
+    this.$router.replace({ query: {}, hash: this.$route.hash })
   }
 
   reload () {

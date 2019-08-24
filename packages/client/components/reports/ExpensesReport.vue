@@ -55,8 +55,10 @@ mixin summary
           v-tab {{$t('ui.report.mode_expenses')}} ({{filteredTransactions.length}})
           v-tab(v-if='transferTransactions.length') {{$t('ui.report.mode_transfer')}} ({{transferTransactions.length}})
           v-tab(v-if='involved') {{$t('ui.report.mode_debt')}} ({{involvedTransactions.length}})
+
         v-divider
       v-tabs-items(v-model='tab' touchless)
+        // Summary
         v-tab-item
           div.text-center
             chart-summary-pie(
@@ -69,11 +71,14 @@ mixin summary
             template(v-for='(item, index) in expenseSummary')
               v-divider(v-if='index!=0')
               app-expenses-report-item(:item='item' :total='totalAmount' :index='index' @selected='i=>categoryFilter=i')
+
         v-tab-item
           +summary
           app-transactions-list(:transactions='filteredTransactions' :involved='involved' involveMode='expense')
+
         v-tab-item(v-if='transferTransactions.length')
           app-transactions-list(:transactions='transferTransactions' :involved='involved' involveMode='expense')
+
         v-tab-item(v-if='involved')
           app-transactions-list(:transactions='involvedTransactions' :involved='involved' involveMode='debt')
 
@@ -92,21 +97,17 @@ import { oc } from 'ts-optchain'
 import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
 import ChartSummaryPie from '../charts/ChartSummaryPie.vue'
 import { ReportExpensesByCategories, IdMe } from '~/core'
-import { GroupMixin, CommonMixin, UserInfoMixin } from '~/mixins'
+import { GroupMixin, CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 
 @Component({
   components: {
     ChartSummaryPie,
   },
 })
-export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, UserInfoMixin) {
+export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, NavigationMixin, UserInfoMixin) {
   private internalCategoryFilter: string | null = null
-  private involvedIndex = 0
-  private involvedId: string | null = null
 
   ignoredCategories = ['transfer']
-
-  tab = 0
 
   from = +new Date()
   to = +new Date()
@@ -244,6 +245,31 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, User
     if (!this.categoryFilter)
       return
     return this.parseCategory(this.categoryFilter)
+  }
+
+  // hash binded vars
+  get tab (): number {
+    return this.hash.expenses || 0
+  }
+
+  set tab (value) {
+    this.updateHash('expenses', value)
+  }
+
+  get involvedId (): string | null {
+    return this.hash.involvedId || null
+  }
+
+  set involvedId (value) {
+    this.updateHash('involvedId', value || undefined)
+  }
+
+  get involvedIndex (): number {
+    return this.hash.involvedIndex || 0
+  }
+
+  set involvedIndex (value) {
+    this.updateHash('involvedIndex', value)
   }
 }
 </script>

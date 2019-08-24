@@ -8,8 +8,8 @@
     app-transactions-list(:transactions='limitted')
       template(v-slot:append v-if='needShowMore')
         v-divider
-        .text-center.pa-2
-          v-btn(text small fluid color='primary' @click='$emit("show-all")') {{$t('ui.show_all')}}
+        .text-center
+          v-btn(text small block  color='primary' @click='$emit("show-all")' style='height: 40px') {{$t('ui.show_all')}}
 </template>
 
 <script lang='ts'>

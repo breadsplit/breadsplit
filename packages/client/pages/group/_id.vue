@@ -19,7 +19,7 @@
 
           .pa-2
 
-          app-recent-transactions(:limit='3' @show-all='tab_index=1')
+          app-recent-transactions(:limit='3' @show-all='gotoExpenses')
 
           .pa-2
 
@@ -77,7 +77,7 @@
 </template>
 
 <script lang='ts'>
-import { Component, mixins, Watch } from 'nuxt-property-decorator'
+import { Component, mixins } from 'nuxt-property-decorator'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 
 @Component({
@@ -99,10 +99,6 @@ import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
   },
 })
 export default class GroupPage extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
-  fab = false
-  tab_index = 0
-  tab_id: string|null = 'summary'
-
   // Computed
   get tabItems () {
     return [
@@ -127,10 +123,6 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
       }]
   }
 
-  get speedDialShow () {
-    return this.tab_index === 0
-  }
-
   get fabStyle () {
     const style = {
       right: '50%',
@@ -144,16 +136,27 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
     return style
   }
 
-  // Watches
-  @Watch('tab_index')
-  onTabIndexChanged () {
-    this.tab_id = (this.tabItems[this.tab_index] || {}).key || null
+  gotoExpenses () {
+    this.updateHash('tab', 'expenses')
+    this.updateHash('expenses', '1')
+    this.updateHash('involvedIndex', '0')
   }
 
-  @Watch('tab_id')
-  onTabIdChanged () {
+  get tab_id () {
+    return this.hash.tab || 'summary'
+  }
+
+  set tab_id (value) {
+    this.updateHash('tab', value)
+  }
+
+  get tab_index () {
     const tab = this.tabItems.find(t => t.key === this.tab_id)
-    this.tab_index = tab ? this.tabItems.indexOf(tab) : -1
+    return tab ? this.tabItems.indexOf(tab) : -1
+  }
+
+  set tab_index (value) {
+    this.tab_id = (this.tabItems[value] || {}).key || null
   }
 }
 </script>
