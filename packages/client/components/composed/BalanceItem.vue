@@ -28,8 +28,11 @@ export default class Balances extends mixins(NavigationMixin) {
     return +this.balance.balance
   }
 
-  get colorScale () {
-    return d3.scaleSequential(d3.interpolateRdYlGn).domain([this.min, this.max])
+  colorScale (value) {
+    const RED_HUE = 0.12
+    const GREEN_HUE = 0.78
+    const hue = d3.scaleLinear().domain([this.min, this.max]).range([RED_HUE, GREEN_HUE])(value)
+    return d3.interpolateSpectral(hue)
   }
 
   get textClass () {
