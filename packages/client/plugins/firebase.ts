@@ -88,13 +88,16 @@ export class FirebasePlugin {
           anonymous: user.isAnonymous,
         }
         await this.uploadProfileAndLogin(info)
+        await this.registerMessagingToken()
         await this.subscribe()
         this.watchStoreChanges()
+        this.registerMessagingToken()
       }
       else {
         log('🙁 Logout')
         this.unsubscribe()
         this.unwatchStore()
+        this.unregisterMessagingToken()
         this.store.commit('user/logout')
         this.store.dispatch('group/removeOnlineGroups')
       }
@@ -103,9 +106,7 @@ export class FirebasePlugin {
 
     await this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 
-    if (this.messagingEnabled && this.messaging) {
-      await this.updateMessagingToken()
-
+    if (this.messaging) {
       this.messaging.onMessage((data: NotificationMessage) => {
         log('📢 Incoming Message:', data)
         const notification = data.notification
@@ -214,7 +215,7 @@ export class FirebasePlugin {
       if (!this.messaging)
         return
       await this.messaging.requestPermission()
-      return await this.updateMessagingToken()
+      return await this.registerMessagingToken()
     }
     catch (error) {
       // eslint-disable-next-line no-console
@@ -229,8 +230,8 @@ export class FirebasePlugin {
     await this.functions.httpsCallable('changeGroupOptions')({ id, changes })
   }
 
-  async updateMessagingToken () {
-    if (!this.messagingEnabled || !this.messaging)
+  async registerMessagingToken () {
+    if (!this.messaging)
       return null
 
     const token: string|null = await this.messaging.getToken()
@@ -252,6 +253,24 @@ export class FirebasePlugin {
         locale,
         enabled: true,
       }] })
+    return token
+  }
+
+  async unregisterMessagingToken () {
+    if (!this.messaging)
+      return null
+
+    const token: string | null = await this.messaging.getToken()
+    if (!token || !this.uid)
+      return token
+
+    this.db
+      .collection('messaging_tokens')
+      .doc(this.uid)
+      // TODO:AF clear only current token
+      .set({
+        tokens: [],
+      })
     return token
   }
 

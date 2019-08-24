@@ -6,11 +6,11 @@ service cloud.firestore {
     }
 
     function isGroupOpen() {
-      return resource != null && resource.data.options && resource.data.options.public == true
+      return resource != null && resource.data.options != null && resource.data.options.public == true;
     }
 
     function notExists() {
-      return resource == null
+      return resource == null;
     }
 
     match /groups/{groupId} {
