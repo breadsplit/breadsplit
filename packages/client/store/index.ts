@@ -4,6 +4,7 @@ import { LOCALE_FALLBACK } from '../../utils/i18n'
 import { RootStateDefault } from './_defaults'
 import { RootState, Group } from '~/types'
 import { APP_VERSION } from '~/../meta/env'
+import theme from '~/../meta/theme'
 export * from './_defaults'
 
 export const state = RootStateDefault
@@ -26,7 +27,7 @@ export const getters: GetterTree<RootState, RootState> = {
     if (current && current.color)
       return current.color
 
-    return 'primary'
+    return theme.light.primary
   },
 }
 

@@ -5,7 +5,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
       v-icon mdi-close
     v-toolbar-title {{title}}
     v-spacer
-    v-btn(icon @click='promptRemove' v-if='mode==="edit"')
+    v-btn(icon @click='promptRemove' v-if='mode==="edit" || mode==="view"')
       v-icon mdi-delete
     v-btn(icon @click='mode = "edit"' v-if='mode==="view"')
       v-icon mdi-pencil
@@ -228,8 +228,6 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   btnNext () {
     if (this.btnNextDisabled)
       return
-    if (this.step === STEP_INPUT && this.uncalculated)
-      return this.calc()
     if (this.step !== STEP_DETAIL)
       return this.next()
     this.submit()
@@ -239,14 +237,8 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     oc(this).$refs.splitting_creditors.$refs.numpad.calculate()
   }
 
-  // TODO: update
-  uncalculated = false
-
   get btnNextText () {
-    if (this.step === STEP_INPUT && this.uncalculated) {
-      return this.$t('ui.button_calculate')
-    }
-    else if (this.step === STEP_DETAIL) {
+    if (this.step === STEP_DETAIL) {
       if (this.mode === 'create')
         return this.$t('ui.button_create')
       else

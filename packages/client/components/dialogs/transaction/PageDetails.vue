@@ -62,7 +62,7 @@
       v-icon mdi-tooltip-text-outline
       pre.text {{ form.note || $t('ui.transactions.add_note')}}
 
-    .form-field-item(v-if='editing')
+    // .form-field-item(v-if='editing')
       v-icon(color='grey') mdi-map-marker
       .text {{$t('ui.transactions.add_location')}}
 
