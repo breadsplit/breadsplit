@@ -1,6 +1,6 @@
 /* eslint-disable */
-importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-app.js')
-importScripts('https://www.gstatic.com/firebasejs/4.8.1/firebase-messaging.js')
+importScripts('https://www.gstatic.com/firebasejs/6.4.0/firebase-app.js')
+importScripts('https://www.gstatic.com/firebasejs/6.4.0/firebase-messaging.js')
 
 firebase.initializeApp({
   messagingSenderId: '{{messagingSenderId}}',
@@ -8,14 +8,16 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging()
 
+/*
 messaging.setBackgroundMessageHandler((payload) => {
   console.log('[firebase-messaging-sw.js] Received background message ', payload)
-  // Customize notification here
-  const notificationTitle = 'Background Message Title'
-  const notificationOptions = {
-    body: 'Background Message body.',
-    icon: '/img/logo/favicon.png',
-  }
 
-  return self.registration.showNotification(notificationTitle, notificationOptions)
+  const notification = payload.notification || {}
+
+  return registration.showNotification(notification.title, {
+    body: notification.body,
+    icon: '/img/logo/favicon.png',
+    badge: notification.avatar,
+  })
 })
+*/

@@ -218,9 +218,9 @@ ui:
   join:
     existing_users: 其他成員
     group_not_found: 沒有找到群組
-    invited_to_join: '您被邀請加入 {0} 小組'
+    invited_to_join: '您被邀請加入 {0} 群組'
     join_anonymous: 作爲新成員加入
-    join_in_progress: 加入團隊…
+    join_in_progress: 加入群組…
     loading_group_info: 正在加載群組信息…
     my_name_is: '我的名字是:'
     not_in_the_list_question: 不在以上列表中？

@@ -1,6 +1,6 @@
 import { Vue, Component, Getter } from 'nuxt-property-decorator'
 import { Group, Member, ClientGroup } from '~/types'
-import { GroupCurrency, ParserCategory, GetCategoriesOfGroup } from '~/core'
+import { GroupCurrency, ParseCategory, GetCategoriesOfGroup } from '~/core'
 
 function origin () {
   return window.location.origin
@@ -55,7 +55,7 @@ export default class GroupMixin extends Vue {
 
   parseCategory (category = 'other') {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return ParserCategory(category, this.group!, this)
+    return ParseCategory(category, this.group!, this)
   }
 
   get categories () {

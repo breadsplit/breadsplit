@@ -4,10 +4,12 @@ import VueRouter from 'vue-router'
 import nanoid from 'nanoid'
 import dayjs from 'dayjs'
 import * as firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/messaging'
 
 import { SharedGroupOptions } from '../../types/models'
 import { FallbackExchangeRate } from '../../meta/fallback_exchange_rates'
-import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord, Operation } from '~/types'
+import { RootState, Group, UserInfo, ServerGroup, ClientGroup, Feedback, FeedbackOptions, ExchangeRecord, Operation, NotificationMessage } from '~/types'
 import { IsThisId, getExchangeRateOn } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
@@ -68,12 +70,9 @@ export class FirebasePlugin {
   async init () {
     await Promise.all([
       import('firebase/auth'),
-      import('firebase/firestore'),
       import('firebase/functions'),
       import('firebase/storage'),
     ])
-    if (this.messagingEnabled)
-      await import('firebase/messaging')
 
     log(`🔥 Connecting to firebase server <${CurrentServerName}>`)
 
@@ -91,11 +90,13 @@ export class FirebasePlugin {
         await this.uploadProfileAndLogin(info)
         await this.subscribe()
         this.watchStoreChanges()
+        this.registerMessagingToken()
       }
       else {
         log('🙁 Logout')
         this.unsubscribe()
         this.unwatchStore()
+        this.unregisterMessagingToken()
         this.store.commit('user/logout')
         this.store.dispatch('group/removeOnlineGroups')
       }
@@ -104,12 +105,14 @@ export class FirebasePlugin {
 
     await this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
 
-    if (this.messagingEnabled && this.messaging) {
-      await this.updateMessagingToken()
-      // this.installMessagingServiceWorker()
-
-      this.messaging.onMessage((data) => {
+    if (this.messaging) {
+      this.messaging.onMessage((data: NotificationMessage) => {
         log('📢 Incoming Message:', data)
+        const notification = data.notification
+        // refering to: https://web-push-book.gauntface.com/chapter-05/02-display-a-notification
+        if (this.messagingEnabled && notification)
+          // eslint-disable-next-line no-new
+          new Notification(notification.title, notification)
       })
     }
   }
@@ -205,7 +208,7 @@ export class FirebasePlugin {
       if (!this.messaging)
         return
       await this.messaging.requestPermission()
-      return await this.updateMessagingToken()
+      return await this.registerMessagingToken()
     }
     catch (error) {
       // eslint-disable-next-line no-console
@@ -220,8 +223,8 @@ export class FirebasePlugin {
     await this.functions.httpsCallable('changeGroupOptions')({ id, changes })
   }
 
-  async updateMessagingToken () {
-    if (!this.messagingEnabled || !this.messaging)
+  async registerMessagingToken () {
+    if (!this.messaging)
       return null
 
     const token: string|null = await this.messaging.getToken()
@@ -235,14 +238,37 @@ export class FirebasePlugin {
     const locale = this.store.getters.locale
     // async update tokens to firestore
     this.db
-      .collection('messaging_tokens')
-      .doc(this.uid)
-      // TODO:AF merge with other tokens
-      .set({ tokens: [{
-        token,
-        locale,
-        enabled: true,
-      }] })
+      .runTransaction(async (t) => {
+        const ref = this.db.collection('messaging_tokens').doc(this.uid)
+        const data = (await t.get(ref)).data() || { tokens: [] }
+        data.tokens = data.tokens.filter(i => i.token !== token)
+        data.tokens.push({
+          token,
+          locale,
+          enabled: true,
+        })
+        await t.set(ref, data)
+      })
+
+    return token
+  }
+
+  async unregisterMessagingToken () {
+    if (!this.messaging)
+      return null
+
+    const token: string | null = await this.messaging.getToken()
+    if (!token || !this.uid)
+      return token
+
+    this.db
+      .runTransaction(async (t) => {
+        const ref = this.db.collection('messaging_tokens').doc(this.uid)
+        const data = (await t.get(ref)).data() || { tokens: [] }
+        data.tokens = data.tokens.filter(i => i.token !== token)
+        await t.set(ref, data)
+      })
+
     return token
   }
 
@@ -516,18 +542,6 @@ export class FirebasePlugin {
     if (this._unwatchCallback) {
       log('🔕 Store unwatched')
       this._unwatchCallback()
-    }
-  }
-
-  async installMessagingServiceWorker () {
-    if ('serviceWorker' in navigator) {
-      try {
-        await navigator.serviceWorker.register('/firebase-messaging.sw.js', { scope: '/' })
-        log('✅ Messaging SW registration succeeded')
-      }
-      catch (error) {
-        log(`💥 Messaging SW registration failed with ${error}`)
-      }
     }
   }
 }

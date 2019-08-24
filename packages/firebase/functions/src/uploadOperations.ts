@@ -27,5 +27,5 @@ export const uploadOperations = f(async ({ id, operations, lastsync }, context) 
     recalculateGroupOperations(t, groupid, ops)
   })
 
-  await PushGroupOperationsNotification(groupid, incomingOperations, [uid])
+  PushGroupOperationsNotification(groupid, incomingOperations, [uid])
 })

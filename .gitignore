@@ -83,6 +83,7 @@ dist
 # Service worker
 sw.*
 client/static/*.sw.js
+firebase-messaging-sw.js
 
 # Generated assets
 client/static/img/logo

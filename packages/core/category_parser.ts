@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { Category, Group } from '../types'
 import { BuiltInCategories, CategoryPresets } from '../meta/categories'
 
-export function ParserCategory (cat: Category | string | undefined, group: Group, vm: Vue): Category {
+export function ParseCategory (cat: Category | string | undefined, group: Group, vm: Vue): Category {
   if (cat && typeof cat !== 'string')
     return cat
 
@@ -33,5 +33,5 @@ export function ParserCategory (cat: Category | string | undefined, group: Group
 export function GetCategoriesOfGroup (group: Group, vm: Vue): Category[] {
   const categories = group.categories || CategoryPresets.default
 
-  return categories.map(c => ParserCategory(c, group, vm)).filter(c => !c.removed)
+  return categories.map(c => ParseCategory(c, group, vm)).filter(c => !c.removed)
 }
