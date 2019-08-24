@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
-import { ServerGroup, Operation, TokenRecord, UserInfo, NotificationMessage } from './types'
+import { ServerGroup, Operation, UserInfo, NotificationMessage } from './types'
 import { getActivityDescription } from './core'
 import { t } from './utils'
 import { Eval } from './opschain'
@@ -8,22 +8,6 @@ import { Eval } from './opschain'
 const GroupsRef = (id: string) => admin.firestore().collection('groups').doc(id)
 const MessageTokensRef = (id: string) => admin.firestore().collection('messaging_tokens').doc(id)
 const UserInfoRef = (id: string) => admin.firestore().collection('users').doc(id)
-
-export async function GetMessagingTokens (uids: string[]) {
-  const tasks = uids.map(async (uid) => {
-    const tokenDoc = await MessageTokensRef(uid).get()
-    if (!tokenDoc.exists)
-      return []
-    const data = tokenDoc.data()
-    if (!data || !data.tokens)
-      return []
-    return (data.tokens as TokenRecord[]).map((t) => {
-      t.uid = uid
-      return t
-    })
-  })
-  return _.flatten(await Promise.all(tasks)).filter(t => t.enabled)
-}
 
 export async function GetUserInfos (uids: string[]) {
   const tasks = uids.map(async (uid) => {
@@ -45,6 +29,10 @@ export async function GetUserInfos (uids: string[]) {
   return info
 }
 
+const operation_names_to_notify = [
+  'insert_transaction',
+]
+
 export async function PushGroupOperationsNotification (
   groupid: string,
   operations: Operation[],
@@ -54,7 +42,6 @@ export async function PushGroupOperationsNotification (
   const group = groupDoc.data() as ServerGroup
   const viewers = group.viewers
   const receivers = _.without(viewers, ...excludesIds)
-  const receiversTokens = await GetMessagingTokens(receivers)
   const users: Record<string, UserInfo> = {}
 
   const getUserInfo = async (uid: string) => {
@@ -71,33 +58,39 @@ export async function PushGroupOperationsNotification (
   const messages: NotificationMessage[] = []
 
   for (const op of operations) {
-    if (op.name === 'insert_transaction') {
+    if (operation_names_to_notify.includes(op.name)) {
       const data = Eval([op])
       const act = data.activities[0]
       if (!act)
         continue
+      const sender = await getUserInfo(act.by)
 
-      for (const token of receiversTokens) {
-        const user = await getUserInfo(act.by)
-        const username = user && user.name
-        const description = getActivityDescription(t, act, token.locale, username, true)
+      for (const uid of receivers) {
+        const { tokens } = (await MessageTokensRef(uid).get()).data() || { tokens: [] }
+        const username = sender && sender.name
         const groupname = group.present.name
 
-        messages.push({
-          notification: {
-            type: op.name,
-            title: description,
-            body: groupname,
-            group: group.id,
-            avatar: user && user.avatar_url,
-            uid: (user && user.uid) || undefined,
-          },
-          token: token.token,
-        })
+        for (const token of tokens) {
+          const description = getActivityDescription(t, act, token.locale, username, true)
+          messages.push({
+            notification: {
+              title: description,
+              body: groupname,
+              icon: '/img/logo/favicon.svg',
+              badge: sender && sender.avatar_url,
+
+              type: op.name,
+              group: group.id,
+              uid: (sender && sender.uid) || undefined,
+            },
+            token: token.token,
+          })
+        }
       }
     }
   }
 
+  console.log(`SENDING NOTIFICATIONS ${JSON.stringify(messages)}`)
   if (!messages.length)
     return 0
   await admin.messaging().sendAll(messages)

@@ -88,7 +88,6 @@ export class FirebasePlugin {
           anonymous: user.isAnonymous,
         }
         await this.uploadProfileAndLogin(info)
-        await this.registerMessagingToken()
         await this.subscribe()
         this.watchStoreChanges()
         this.registerMessagingToken()
@@ -117,7 +116,7 @@ export class FirebasePlugin {
           new Notification(notification.title, {
             body: notification.body,
             icon: '/img/logo/favicon.png',
-            badge: notification.avatar,
+            badge: notification.badge,
           })
         }
       })
@@ -245,14 +244,18 @@ export class FirebasePlugin {
     const locale = this.store.getters.locale
     // async update tokens to firestore
     this.db
-      .collection('messaging_tokens')
-      .doc(this.uid)
-      // TODO:AF merge with other tokens
-      .set({ tokens: [{
-        token,
-        locale,
-        enabled: true,
-      }] })
+      .runTransaction(async (t) => {
+        const ref = this.db.collection('messaging_tokens').doc(this.uid)
+        const data = (await t.get(ref)).data() || { tokens: [] }
+        data.tokens = data.tokens.filter(i => i.token !== token)
+        data.tokens.push({
+          token,
+          locale,
+          enabled: true,
+        })
+        await t.set(ref, data)
+      })
+
     return token
   }
 
@@ -265,12 +268,13 @@ export class FirebasePlugin {
       return token
 
     this.db
-      .collection('messaging_tokens')
-      .doc(this.uid)
-      // TODO:AF clear only current token
-      .set({
-        tokens: [],
+      .runTransaction(async (t) => {
+        const ref = this.db.collection('messaging_tokens').doc(this.uid)
+        const data = (await t.get(ref)).data() || { tokens: [] }
+        data.tokens = data.tokens.filter(i => i.token !== token)
+        await t.set(ref, data)
       })
+
     return token
   }
 

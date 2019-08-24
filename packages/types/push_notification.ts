@@ -7,12 +7,14 @@ export interface TokenRecord {
 
 export interface NotificationMessage {
   notification: {
-    type: string
     title: string
+    icon?: string
     body?: string
+    badge?: string
+
+    type: string
     group?: string
     uid?: string
-    avatar?: string
   }
   token: string
 }
