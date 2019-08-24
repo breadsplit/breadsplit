@@ -102,6 +102,10 @@ jobs:
           command: cd ./packages/firebase/functions && npm ci
 
       - run:
+          name: Config firebase functions
+          command: cd ./packages/firebase && npx firebase functions:config:set fixer.token=$FIXER_DEV_TOKEN --project=production --token=$FIREBASE_DEPLOY_TOKEN
+
+      - run:
           name: Deploy to Firebase
           command: cd ./packages/firebase && npx firebase deploy --project=default --token=$FIREBASE_DEV_DEPLOY_TOKEN --force
 
