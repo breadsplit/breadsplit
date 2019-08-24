@@ -12,9 +12,9 @@ export const joinGroup = f(async ({ id, join_as }, context) => {
 
   await db.runTransaction(async (t) => {
     const group = (await t.get(GroupsRef(id))).data() as ServerGroup
-    const ops = (await t.get(OperationsRef(id))).data() as ServerOperations
+    const ops = (await t.get(OperationsRef(id))).data() as ServerOperations || { operations: [] }
 
-    if (!group || !ops || !oc(group).options.public(false))
+    if (!group || !oc(group).options.public(false))
       throw new Error('group_not_exists')
 
     // skip if user already inside the group
