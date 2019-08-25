@@ -105,8 +105,8 @@ loading:
   coverting_online: 正在轉換為在線模式…
   deleting_group: 刪除群組中…
 notifications:
-  new_expense_lent: '通過這筆支出你借出了 {lent}。'
-  new_expense_owed: '通過這筆支出你負債了 {owed}。'
+  new_expense_lent: '在這筆支出中，你借出了 {lent}。'
+  new_expense_owed: '在這筆支出中，你負債了 {owed}。'
   new_expense_source: '由 {creator} 創建于 {group} 。'
   new_expense_title: '你在 "{desc}" 中花費了 {fee}'
   new_transfer_received: '{from} 轉移了 {fee} 給你'

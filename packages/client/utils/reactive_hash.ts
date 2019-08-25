@@ -14,7 +14,6 @@ export const hash = new Vue({
       handler () {
         if (lock)
           return
-        console.log('HASH WRITING', lock)
         lock = true
         location.hash = queryString.stringify(hash.value, { arrayFormat: 'comma' })
         lock = false
@@ -24,7 +23,6 @@ export const hash = new Vue({
 })
 
 function read () {
-  console.log('HASH LOADING', lock)
   if (lock)
     return
   const object = queryString.parse(location.hash, { parseBooleans: true, parseNumbers: true, arrayFormat: 'comma' })

@@ -2,14 +2,11 @@ import { Activity } from '../types'
 import { Translator } from '../utils/i18n'
 
 export function getActivityDescription (
-  t: Translator,
+  $t: Translator,
   act: Activity,
-  locale: string,
   getUserName: string | undefined | ((id: string) => string|undefined),
   serverSide = false
 ) {
-  const $t = (key: string, args?: any) => t(key, locale, args).toString()
-
   let name: string|undefined
   if (typeof getUserName === 'string')
     name = getUserName

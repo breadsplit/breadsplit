@@ -1,5 +1,5 @@
 import dayjs from '../core/dayjs_config'
-import { Translator, t, LOCALE_FALLBACK } from './i18n'
+import { t, LOCALE_FALLBACK, PlainTranslator } from './i18n'
 
 export function getTimezone () {
   return Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -45,7 +45,7 @@ export function getWeekOfYear (time: dayjs.ConfigType) {
   return now.diff(start, 'week')
 }
 
-export function dateToRelative (time: dayjs.ConfigType, $t: Translator = t, locale?: string) {
+export function dateToRelative (time: dayjs.ConfigType, $t: PlainTranslator = t, locale?: string) {
   const d = dayjs(time)
   const days = dayjs().diff(d, 'day')
   if (days === 0)

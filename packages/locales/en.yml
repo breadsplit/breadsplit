@@ -368,10 +368,10 @@ ui:
 utils:
   bypass_1: '{0}'
 notifications:
-  new_expense_title: 'You cost {fee} in {desc}'
+  new_expense_title: 'You expensed {fee} in "{desc}"'
   new_expense_source: 'Created by {creator} of {group}.'
-  new_expense_lent: 'You lent {lent} by this expense.'
-  new_expense_owed: 'You owed {owed} by this expense.'
-  new_transfer_received: 'You have received {fee} from {from}'
-  new_transfer_sent: 'You have sent {fee} to {to}'
-  new_transfer_source: 'In {desc} of {group}.'
+  new_expense_lent: 'You have lent {lent} because of it.'
+  new_expense_owed: 'You have owed {owed} because of it.'
+  new_transfer_received: 'You received {fee} from {from}'
+  new_transfer_sent: 'You sent {fee} to {to}'
+  new_transfer_source: 'In "{desc}" of {group}.'

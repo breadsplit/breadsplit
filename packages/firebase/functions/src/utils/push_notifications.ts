@@ -4,7 +4,7 @@ import { oc } from 'ts-optchain'
 import { SERVER_HOST } from '../../../../meta/server_hosts'
 import { ServerGroup, Operation, UserInfo, Transaction, Group } from './types'
 import { ParseCategory, TransactionHelper } from './core'
-import { t, numberToMoney } from './utils'
+import { t, numberToMoney, makeTranslator } from './utils'
 import { Eval } from './opschain'
 
 const LOGO_URL = `${SERVER_HOST}/img/logo/favicon.png`
@@ -37,7 +37,7 @@ export async function GetUserInfos (uids: string[]) {
 function GetTransactionDesc (trans: Transaction, group: Group, locale: string) {
   if (trans.desc)
     return trans.desc
-  const category = ParseCategory(trans.category, group, t, locale)
+  const category = ParseCategory(trans.category, group, makeTranslator(t, locale))
   return category.text
 }
 
@@ -49,7 +49,7 @@ async function ParseTransaction (trans: Transaction, group: Group, locale: strin
   const currency = trans.currency
   if (trans.type === 'expense') {
     const balance = TransactionHelper.from(trans).balanceChangesOf(targetUid)
-    if (!balance)
+    if (!balance || balance.balance.equals(0))
       return
 
     const balanceChange = +balance.balance
@@ -112,6 +112,9 @@ export async function PushGroupOperationsNotification (
       const sender = await getUserInfo(op.meta.by)
 
       for (const uid of receivers) {
+        if (uid === op.meta.by)
+          continue
+
         const { tokens } = (await MessageTokensRef(uid).get()).data() || { tokens: [] }
         const avatar = sender && sender.avatar_url
 

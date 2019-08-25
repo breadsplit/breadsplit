@@ -2,7 +2,7 @@ import { Category, Group } from '../types'
 import { BuiltInCategories, CategoryPresets } from '../meta/categories'
 import { Translator } from '../utils'
 
-export function ParseCategory (cat: Category | string | undefined, group: Group, t: Translator, locale?: string): Category {
+export function ParseCategory (cat: Category | string | undefined, group: Group, $t: Translator): Category {
   if (cat && typeof cat !== 'string')
     return cat
 
@@ -26,12 +26,12 @@ export function ParseCategory (cat: Category | string | undefined, group: Group,
     id: name,
     color: category.color,
     icon: category.icon,
-    text: category.text || t(`cats.${name}.display`).toString(),
+    text: category.text || $t(`cats.${name}.display`).toString(),
   }
 }
 
-export function GetCategoriesOfGroup (group: Group, t: Translator, locale?: string): Category[] {
+export function GetCategoriesOfGroup (group: Group, $t: Translator): Category[] {
   const categories = group.categories || CategoryPresets.default
 
-  return categories.map(c => ParseCategory(c, group, t, locale)).filter(c => !c.removed)
+  return categories.map(c => ParseCategory(c, group, $t)).filter(c => !c.removed)
 }

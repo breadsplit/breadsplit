@@ -23,4 +23,9 @@ export function t (key: string, locale: string = LOCALE_FALLBACK, args?: any[] |
   })
 }
 
-export type Translator = (key: string, locale?: string, args?: any[]) => any
+export type PlainTranslator = (key: string, locale?: string, args?: any) => any
+export type Translator = (key: string, args?: any) => any
+
+export function makeTranslator (t: PlainTranslator, locale: string = LOCALE_FALLBACK) {
+  return (key: string, args?: any) => t(key, locale, args).toString()
+}

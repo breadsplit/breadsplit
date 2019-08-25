@@ -26,7 +26,7 @@ export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixi
   }
 
   activityDescription (act: Activity) {
-    return getActivityDescription(this.$t.bind(this), act, this.locale, id => '')
+    return getActivityDescription(this.$t.bind(this), act, id => '')
   }
 
   on (act: Activity) {
