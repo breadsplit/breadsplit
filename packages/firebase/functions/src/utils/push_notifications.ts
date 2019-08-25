@@ -1,8 +1,11 @@
 import * as admin from 'firebase-admin'
 import _ from 'lodash'
+import { oc } from 'ts-optchain'
+import { numberToMoney } from 'packages/utils'
 import { SERVER_HOST } from '../../../../meta/server_hosts'
-import { ServerGroup, Operation, UserInfo } from './types'
-import { getActivityDescription } from './core'
+import { TransactionHelper } from '../../../../core/transaction_helper'
+import { ServerGroup, Operation, UserInfo, Transaction, Group } from './types'
+import { ParseCategory } from './core'
 import { t } from './utils'
 import { Eval } from './opschain'
 
@@ -12,15 +15,16 @@ const GroupsRef = (id: string) => admin.firestore().collection('groups').doc(id)
 const MessageTokensRef = (id: string) => admin.firestore().collection('messaging_tokens').doc(id)
 const UserInfoRef = (id: string) => admin.firestore().collection('users').doc(id)
 
+async function GetUserInfo (uid: string) {
+  const doc = await UserInfoRef(uid).get()
+  if (!doc.exists)
+    return null
+  const data = doc.data() as UserInfo
+  return data
+}
+
 export async function GetUserInfos (uids: string[]) {
-  const tasks = uids.map(async (uid) => {
-    const doc = await UserInfoRef(uid).get()
-    if (!doc.exists)
-      return null
-    const data = doc.data() as UserInfo
-    return data
-  })
-  const users = await Promise.all(tasks)
+  const users = await Promise.all(uids.map(GetUserInfo))
 
   const info: {[s: string]: UserInfo} = {}
 
@@ -32,9 +36,45 @@ export async function GetUserInfos (uids: string[]) {
   return info
 }
 
-const operation_names_to_notify = [
-  'insert_transaction',
-]
+function GetTransactionDesc (trans: Transaction, group: Group, locale: string) {
+  if (trans.desc)
+    return trans.desc
+  const category = ParseCategory(trans.category, group, t, locale)
+  return category.text
+}
+
+async function GetUserName (uid: string, group: Group) {
+  return oc(group).members[uid].name('') || oc(await GetUserInfo(uid)).name('')
+}
+
+async function ParseTransaction (trans: Transaction, group: Group, locale: string, targetUid: string, creator?: string) {
+  const currency = trans.currency
+  if (trans.type === 'expenses') {
+    const balance = TransactionHelper.from(trans).balanceChangesOf(targetUid)
+    if (!balance)
+      return
+
+    const balanceChange = +balance.balance
+    return {
+      type: 'expense',
+      fee: numberToMoney(+balance.debt, locale, currency),
+      lent: balanceChange > 0 ? numberToMoney(balanceChange, locale, currency) : undefined,
+      owed: balanceChange > 0 ? undefined : numberToMoney(-balanceChange, locale, currency),
+      desc: GetTransactionDesc(trans, group, locale),
+      creator,
+    }
+  }
+  else if (trans.type === 'transfer') {
+    return {
+      type: 'transfer',
+      fee: numberToMoney(+trans.total_fee, locale, currency),
+      from: await GetUserName(trans.debtors[0].uid, group),
+      to: await GetUserName(trans.creditors[0].uid, group),
+      desc: GetTransactionDesc(trans, group, locale),
+      creator,
+    }
+  }
+}
 
 export async function PushGroupOperationsNotification (
   groupid: string,
@@ -61,23 +101,47 @@ export async function PushGroupOperationsNotification (
   const messages: admin.messaging.Message[] = []
 
   for (const op of operations) {
-    if (operation_names_to_notify.includes(op.name)) {
+    if (op.name === 'insert_transaction') {
       const data = Eval([op])
-      const act = data.activities[0]
-      if (!act)
+      const transaction = data.transactions[0]
+      if (!transaction || !op.meta || !op.meta.by)
         continue
-      const sender = await getUserInfo(act.by)
+      const sender = await getUserInfo(op.meta.by)
 
       for (const uid of receivers) {
         const { tokens } = (await MessageTokensRef(uid).get()).data() || { tokens: [] }
-        const username = sender && sender.name
-        const groupname = group.present.name
         const avatar = sender && sender.avatar_url
 
         for (const token of tokens) {
           const lang = token.locale
-          const title = getActivityDescription(t, act, token.locale, username, true)
-          const body = groupname // TODO: enrich info
+          const data = await ParseTransaction(transaction, group.present, lang, uid, sender && sender.name)
+          const $t = (key: string, args?: any) => t(key, lang, args).toString()
+
+          if (!data)
+            continue
+
+          let title = ''
+          let body = ''
+          if (data.type === 'expense') {
+            title = $t('notifications.new_expense_title', data)
+            body = $t('notifications.new_expense_source', data)
+            if (data.lent)
+              body += $t('notifications.new_expense_lent', data)
+            else if (data.owed)
+              body += $t('notifications.new_expense_owed', data)
+          }
+          else if (data.type === 'transfer') {
+            if (data.to === uid)
+              title = $t('notifications.new_transfer_received', data)
+            else if (data.from === uid)
+              title = $t('notifications.new_transfer_sent', data)
+            body = $t('notifications.new_transfer_source', data)
+          }
+
+          if (!title)
+            continue
+
+          const link = `${SERVER_HOST}/group/${group.id}?transid=${transaction.id}`
 
           messages.push({
             notification: {
@@ -90,8 +154,12 @@ export async function PushGroupOperationsNotification (
                 body,
                 icon: avatar || LOGO_URL,
                 badge: LOGO_URL,
-                timestamp: act.timestamp,
+                timestamp: oc(op).meta.timestamp(+new Date()),
                 lang,
+                image: oc(transaction).attached_images[0]('') || undefined,
+              },
+              fcmOptions: {
+                link,
               },
             },
             data: {

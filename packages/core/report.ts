@@ -24,7 +24,7 @@ export function ReportExpensesByCategories (vm: Vue, transactions: Transaction[]
       continue
 
     if (!records[categoryid]) {
-      const category = ParseCategory(categoryid, group, vm)
+      const category = ParseCategory(categoryid, group, vm.$t.bind(vm))
       records[categoryid] = {
         id: categoryid,
         icon: category.icon,

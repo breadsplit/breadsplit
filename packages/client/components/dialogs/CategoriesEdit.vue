@@ -79,7 +79,7 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
 
   drag = false
   dragging: string | Category | null = null
-  dragOptions= {
+  dragOptions = {
     animation: 200,
     group: 'description',
     disabled: false,

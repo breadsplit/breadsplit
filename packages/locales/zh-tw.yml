@@ -104,6 +104,14 @@ language_name: 繁體中文
 loading:
   coverting_online: 正在轉換為在線模式…
   deleting_group: 刪除群組中…
+notifications:
+  new_expense_lent: '通過這筆支出你借出了 {lent}。'
+  new_expense_owed: '通過這筆支出你負債了 {owed}。'
+  new_expense_source: '由 {creator} 創建于 {group} 。'
+  new_expense_title: '你在 "{desc}" 中花費了 {fee}'
+  new_transfer_received: '{from} 轉移了 {fee} 給你'
+  new_transfer_sent: '你轉移了 {fee} 給 {to}'
+  new_transfer_source: '通過 {group} 中的 "{desc}"。'
 noun:
   category: 類別
   expense: 支出
@@ -314,7 +322,7 @@ ui:
     enter_the_cost: 請輸入群組消費金額
     expense_paid_by: 由誰支付？
     for_whom: 為了誰？
-    header_credit: 支付
+    header_credit: 借出
     header_debit: 負債
     header_members: 成員
     how_much: 付款金額
@@ -322,7 +330,7 @@ ui:
     involved: 與我相關
     involved_expensed: '{0}花費了'
     involved_negative: '{0}負債了'
-    involved_positive: '{0}支付了'
+    involved_positive: '{0}借出了'
     note: 備注
     photos_uploading: 照片上傳中…
     repeat_expense: 重複
@@ -332,4 +340,3 @@ ui:
     xx_should_pay: '這次輪到 {0} 付款。'
   wip: "\U0001F6A7 功能開發中，敬請期待…"
   xx_paid_money: '{0} 支付了'
-  xx_paid_xx: '{0} 支付了 {1}'

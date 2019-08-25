@@ -6,9 +6,9 @@ export function getActivityDescription (
   act: Activity,
   locale: string,
   getUserName: string | undefined | ((id: string) => string|undefined),
-  serverSide: boolean = false
+  serverSide = false
 ) {
-  const $t = (key: string, args?: any[]) => t(key, locale, args).toString()
+  const $t = (key: string, args?: any) => t(key, locale, args).toString()
 
   let name: string|undefined
   if (typeof getUserName === 'string')
