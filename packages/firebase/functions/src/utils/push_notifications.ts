@@ -47,7 +47,7 @@ async function GetUserName (uid: string, group: Group) {
 
 async function ParseTransaction (trans: Transaction, group: Group, locale: string, targetUid: string, creator?: string) {
   const currency = trans.currency
-  if (trans.type === 'expenses') {
+  if (trans.type === 'expense') {
     const balance = TransactionHelper.from(trans).balanceChangesOf(targetUid)
     if (!balance)
       return
@@ -102,6 +102,9 @@ export async function PushGroupOperationsNotification (
     if (op.name === 'insert_transaction') {
       const data = Eval([op])
       const transaction = data.transactions[0]
+      console.log(`OP META ${JSON.stringify(op.meta)}`)
+      console.log(`OP TRANS ${JSON.stringify(transaction)}`)
+
       if (!transaction || !op.meta || !op.meta.by)
         continue
       const sender = await getUserInfo(op.meta.by)

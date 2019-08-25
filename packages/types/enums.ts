@@ -10,7 +10,7 @@ export type MemberRoles =
   | 'visitor'
 
 export type TransactionType =
-  | 'expenses'
+  | 'expense'
   | 'transfer'
 
 export type ActivityAction =
