@@ -249,7 +249,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
 
   // hash binded vars
   get tab (): number {
-    return this.hash.expenses || 0
+    return +(this.hash.expenses || 0)
   }
 
   set tab (value) {
@@ -265,7 +265,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
   }
 
   get involvedIndex (): number {
-    return this.hash.involvedIndex || 0
+    return +(this.hash.involvedIndex || 0)
   }
 
   set involvedIndex (value) {

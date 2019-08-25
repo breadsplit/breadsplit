@@ -2,29 +2,37 @@
 import queryString from 'query-string'
 import Vue from 'vue'
 
-let lockA = false
-let lockB = false
+let lock = false
 
 export const hash = new Vue({
   data: {
     value: {},
   },
+  watch: {
+    value: {
+      deep: true,
+      handler () {
+        if (lock)
+          return
+        console.log('HASH WRITING', lock)
+        lock = true
+        location.hash = queryString.stringify(hash.value, { arrayFormat: 'comma' })
+        lock = false
+      },
+    },
+  },
 })
 
-window.addEventListener('hashchange', () => {
-  if (lockB)
+function read () {
+  console.log('HASH LOADING', lock)
+  if (lock)
     return
   const object = queryString.parse(location.hash, { parseBooleans: true, parseNumbers: true, arrayFormat: 'comma' })
-  lockA = true
+  lock = true
   for (const [key, value] of Object.entries(object))
     Vue.set(hash.value, key, value)
-  lockA = false
-}, false)
+  lock = false
+}
 
-hash.$watch('value', () => {
-  if (lockA)
-    return
-  lockB = true
-  location.hash = queryString.stringify(hash.value, { arrayFormat: 'comma' })
-  lockB = false
-})
+window.addEventListener('hashchange', read, false)
+read()
