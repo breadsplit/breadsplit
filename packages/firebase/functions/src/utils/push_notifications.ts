@@ -59,6 +59,7 @@ async function ParseTransaction (trans: Transaction, group: Group, locale: strin
       lent: balanceChange > 0 ? numberToMoney(balanceChange, locale, currency) : undefined,
       owed: balanceChange > 0 ? undefined : numberToMoney(-balanceChange, locale, currency),
       desc: GetTransactionDesc(trans, group, locale),
+      group: group.name,
       creator,
     }
   }
@@ -69,6 +70,7 @@ async function ParseTransaction (trans: Transaction, group: Group, locale: strin
       from: await GetUserName(trans.debtors[0].uid, group),
       to: await GetUserName(trans.creditors[0].uid, group),
       desc: GetTransactionDesc(trans, group, locale),
+      group: group.name,
       creator,
     }
   }
