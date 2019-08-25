@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/breadsplit/breadsplit/compare/v0.6.2...v0.7.0) (2019-08-25)
+
+
+### ⚡ Features
+
+* create category inside trans form ([300556a](https://github.com/breadsplit/breadsplit/commit/300556a))
+* improved notification ([ab8b579](https://github.com/breadsplit/breadsplit/commit/ab8b579))
+
+
+### 🌍 Internationalization
+
+* add unfinished note to translations ([fa65e15](https://github.com/breadsplit/breadsplit/commit/fa65e15))
+
+
+### 🐞 Bug Fixes
+
+* exif orientation in image resizing ([c53b14a](https://github.com/breadsplit/breadsplit/commit/c53b14a))
+* feedback ([8b962a2](https://github.com/breadsplit/breadsplit/commit/8b962a2))
+* firebase message sw ([188eda2](https://github.com/breadsplit/breadsplit/commit/188eda2))
+* image orientation ([0fd2143](https://github.com/breadsplit/breadsplit/commit/0fd2143))
+* make muckup t support object args ([97b8062](https://github.com/breadsplit/breadsplit/commit/97b8062))
+* minor issues ([2a7ffae](https://github.com/breadsplit/breadsplit/commit/2a7ffae))
+* modules importing ([d2db41e](https://github.com/breadsplit/breadsplit/commit/d2db41e))
+* notification icon ([31b7e21](https://github.com/breadsplit/breadsplit/commit/31b7e21))
+* reactive hash ([731d58e](https://github.com/breadsplit/breadsplit/commit/731d58e))
+* server side i18n ([b7704f6](https://github.com/breadsplit/breadsplit/commit/b7704f6))
+* typo ([234319d](https://github.com/breadsplit/breadsplit/commit/234319d))
+* use hash to bind current tab state ([7dfba51](https://github.com/breadsplit/breadsplit/commit/7dfba51))
+
+
+### 📱 User interface
+
+* fix font ([8048262](https://github.com/breadsplit/breadsplit/commit/8048262))
+* improved join page ([8062039](https://github.com/breadsplit/breadsplit/commit/8062039))
+* much darker ([91a3f32](https://github.com/breadsplit/breadsplit/commit/91a3f32))
+* update balance color pattle ([13420a7](https://github.com/breadsplit/breadsplit/commit/13420a7))
+
+
+
 ### [0.6.2](https://github.com/breadsplit/breadsplit/compare/v0.6.0...v0.6.2) (2019-08-22)
 
 
