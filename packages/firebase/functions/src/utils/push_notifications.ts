@@ -127,9 +127,9 @@ export async function PushGroupOperationsNotification (
             title = $t('notifications.new_expense_title', data)
             body = $t('notifications.new_expense_source', data)
             if (data.lent)
-              body += $t('notifications.new_expense_lent', data)
+              body += `\n${$t('notifications.new_expense_lent', data)}`
             else if (data.owed)
-              body += $t('notifications.new_expense_owed', data)
+              body += `\n${$t('notifications.new_expense_owed', data)}`
           }
           else if (data.type === 'transfer') {
             if (data.to === uid)
@@ -142,7 +142,7 @@ export async function PushGroupOperationsNotification (
           if (!title)
             continue
 
-          const link = `${SERVER_HOST}/group/${group.id}?transid=${transaction.id}`
+          const link = `${SERVER_HOST}/group/${group.id}?dialog=trans&transid=${transaction.id}`
 
           messages.push({
             notification: {
