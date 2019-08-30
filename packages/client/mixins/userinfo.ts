@@ -62,7 +62,8 @@ export default class UserInfoMixin extends Vue {
 
     const result = this.mergeMemberAndUser(member, user)
 
-    this.setUserCache(uid, result)
+    if (user)
+      this.setUserCache(uid, result)
 
     return result
   }
