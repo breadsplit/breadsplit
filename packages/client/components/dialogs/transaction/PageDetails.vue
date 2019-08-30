@@ -178,7 +178,7 @@ export default class PageDetails extends mixins(GroupMixin) {
       return
     const date = await this.$refs.date_picker.open(this.form.timestamp)
     if (date)
-      this.form.timestamp = date
+      this.form.timestamp = +this.$dt(date).add(1, 'day').subtract(1, 'minute')
   }
 
   async inputNote () {
