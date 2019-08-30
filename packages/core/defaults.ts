@@ -77,6 +77,7 @@ export const CategoryDefault = (overrides?: Partial<Category>): Category => merg
 export const TransactionDefault = (overrides?: Partial<Transaction>): Transaction => merge({
   id: GenerateId.Transaction(),
   timestamp: +new Date(),
+  timestamp_created: +new Date(),
   creditors: [],
   debtors: [],
   currency: defaultCurrency,

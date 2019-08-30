@@ -133,6 +133,14 @@ language_name: English
 loading:
   coverting_online: Converting to Online group…
   deleting_group: Deleting group…
+notifications:
+  new_expense_lent: 'You have lent {lent} because of it.'
+  new_expense_owed: 'You have owed {owed} because of it.'
+  new_expense_source: 'Created by {creator} of {group}.'
+  new_expense_title: 'You expensed {fee} in "{desc}"'
+  new_transfer_received: 'You received {fee} from {from}'
+  new_transfer_sent: 'You sent {fee} to {to}'
+  new_transfer_source: 'In "{desc}" of {group}.'
 noun:
   category: Category
   expense: Expense
@@ -340,6 +348,7 @@ ui:
     add_note: Add note
     add_payer: Add more payer
     add_photos: Add photos
+    created_by: 'Created by {0} at {1}'
     description: Description
     description_placeholder: Enter the description…
     details: Details
@@ -356,6 +365,7 @@ ui:
     involved_expensed: '{0} had expensed'
     involved_negative: '{0} had owed'
     involved_positive: '{0} had paid'
+    modified_by: 'Last modified by {0} as {1}'
     note: Note
     photos_uploading: Uploading photos…
     repeat_expense: Repeat
@@ -367,11 +377,3 @@ ui:
   xx_paid_money: '{0} paid'
 utils:
   bypass_1: '{0}'
-notifications:
-  new_expense_title: 'You expensed {fee} in "{desc}"'
-  new_expense_source: 'Created by {creator} of {group}.'
-  new_expense_lent: 'You have lent {lent} because of it.'
-  new_expense_owed: 'You have owed {owed} because of it.'
-  new_transfer_received: 'You received {fee} from {from}'
-  new_transfer_sent: 'You sent {fee} to {to}'
-  new_transfer_source: 'In "{desc}" of {group}.'

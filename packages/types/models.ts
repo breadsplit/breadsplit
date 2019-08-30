@@ -61,7 +61,7 @@ export interface Transaction {
   splitmode: Splitmode
   splitmode_creditors: Splitmode
   attached_images?: string[]
-  creator: UID
+
   type: TransactionType
   tags?: string[]
   note?: string
@@ -72,6 +72,11 @@ export interface Transaction {
   location?: string | object
   timestamp: number
   timezone?: string
+
+  creator: UID
+  modifier?: UID
+  timestamp_created: number
+  timestamp_modified?: number
 }
 
 export interface Activity {

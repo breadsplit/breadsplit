@@ -88,8 +88,27 @@
 
   v-divider
 
-  .px-2.py-4
+  .px-2.pt-4.pb-6
     app-transaction-sheet(:transaction='form' dense)
+
+  template(v-if='!editing')
+    v-divider
+    .px-6.py-4.history-info
+      .pa-1
+        v-icon.mr-3 mdi-shape-square-plus
+        i18n(path='ui.transactions.created_by')
+          span
+            app-user-avatar.py-1.px-2(:id='form.creator' size='24')
+            app-user-info(:id='form.creator' bold)
+          b {{dateToRelative(form.timestamp_created)}}
+
+      .pa-1(v-if='form.modifier')
+        v-icon.mr-3 mdi-square-edit-outline
+        i18n(path='ui.transactions.modified_by', )
+          span
+            app-user-avatar.py-1.px-2(:id='form.modifier' size='24')
+            app-user-info(:id='form.modifier' bold)
+          b {{dateToRelative(form.timestamp_modified)}}
 
   app-date-picker(ref='date_picker')
   app-form-category(ref='form_category')
@@ -99,6 +118,7 @@
       v-icon(color='white') mdi-close
 
     img(:src='overlayImage' @click='overlayImage = null' style='max-height: 100vh; max-width: 100vw')
+
 </template>
 
 <script lang='ts'>
@@ -166,6 +186,10 @@ export default class PageDetails extends mixins(GroupMixin) {
       return
     const note = await this.$prompt(this.$t('ui.transactions.note'), this.form.note || '', { textarea: true })
     this.$set(this.form, 'note', note)
+  }
+
+  dateToRelative (v) {
+    return dateToRelative(v, this.$t.bind(this))
   }
 
   openCategorySelect () {
@@ -266,4 +290,9 @@ export default class PageDetails extends mixins(GroupMixin) {
     font-size: 0.875rem
     font-weight: 400
     padding: 8px 16px
+
+.history-info
+  font-size: 0.9em
+  .v-icon
+    opacity: 0.8
 </style>

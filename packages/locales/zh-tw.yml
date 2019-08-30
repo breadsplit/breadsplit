@@ -315,6 +315,7 @@ ui:
     add_note: 添加備註
     add_payer: 添加付款人
     add_photos: 添加照片
+    created_by: '由 {0} 創建于 {1}'
     description: 描述
     description_placeholder: 請輸入支出摘要…
     details: 明細
@@ -331,6 +332,7 @@ ui:
     involved_expensed: '{0}花費了'
     involved_negative: '{0}負債了'
     involved_positive: '{0}借出了'
+    modified_by: '由 {0} 最後修改于 {1}'
     note: 備注
     photos_uploading: 照片上傳中…
     repeat_expense: 重複

@@ -64,7 +64,6 @@ export const Transforms: TransformFunctions<Group> = {
         update_fields: 'currency',
         entity_name: changes.main_currency,
       })
-      // TODO: update transactions
     }
     if (changes.icon)
       snap.icon = changes.icon
@@ -112,15 +111,18 @@ export const Transforms: TransformFunctions<Group> = {
   insert_transaction (snap, transaction?: Transaction, { by, timestamp } = {}) {
     if (!transaction)
       return snap
-    snap.transactions.push(transaction)
+    const trans = cloneDeep(transaction)
+    trans.creator = by
+    trans.timestamp_created = timestamp
+    snap.transactions.push(trans)
     snap.activities.push({
       by,
       timestamp,
       action: 'insert',
       entity: 'transaction',
-      entity_id: transaction.id,
-      entity_name: transaction.desc,
-      entity_desc: `${transaction.currency} ${transaction.total_fee}`,
+      entity_id: trans.id,
+      entity_name: trans.desc,
+      entity_desc: `${trans.currency} ${trans.total_fee}`,
     })
     return snap
   },
@@ -132,6 +134,8 @@ export const Transforms: TransformFunctions<Group> = {
     if (!target)
       return snap
     Object.assign(target, transaction)
+    target.modifier = by
+    target.timestamp_modified = timestamp
     snap.activities.push({
       by,
       timestamp,
@@ -256,6 +260,7 @@ export const Transforms: TransformFunctions<Group> = {
     // change uids in transactions
     for (const trans of snap.transactions) {
       replacer(trans, 'creator')
+      replacer(trans, 'modifier')
       for (const c of trans.creditors)
         replacer(c, 'uid')
       for (const d of trans.debtors)
