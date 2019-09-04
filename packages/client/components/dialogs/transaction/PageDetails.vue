@@ -290,6 +290,7 @@ export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
     font-size: 0.875rem
     font-weight: 400
     padding: 8px 16px
+    white-space: pre-line
 
 .history-info
   font-size: 0.9em
