@@ -1,5 +1,4 @@
 body, html, #app, #__nuxt, #__layout, .v-dialog--fullscreen, .fullscreen
-  height: 100%
   position: fixed
   top: 0
   left: 0
@@ -7,6 +6,12 @@ body, html, #app, #__nuxt, #__layout, .v-dialog--fullscreen, .fullscreen
   bottom: 0
   overflow: hidden !important
   user-select: none
+  height: 100vh
+  height: -webkit-fill-available
+
+.v-application--wrap
+  height: 100vh
+  height: -webkit-fill-available
 
 ::-webkit-scrollbar
   width: 0
