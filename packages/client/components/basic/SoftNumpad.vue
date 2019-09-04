@@ -1,7 +1,7 @@
 <template lang='pug'>
 v-card.soft-numpad(flat :class='classes')
   .numbers
-    .button(v-for='i in 9' v-ripple @click='input(i)') {{i}}
+    .button(v-for='i in numbers' v-ripple @click='input(i)') {{i}}
     .button(v-ripple @click='input(".")' :class='dotClass') .
     .button(v-ripple @click='input(0)') 0
     .button(v-ripple @click='backspace()' v-longpress='clear')
@@ -34,6 +34,7 @@ export default class SoftNumpad extends Vue {
 
   rounded = false
   disableOperators = false
+  numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3]
 
   public dirty = false
 
