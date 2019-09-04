@@ -128,15 +128,15 @@ import ExchangeRateInput from './ExchangeRateInput.vue'
 import DatePicker from '~/components/basic/DatePicker.vue'
 import { Transaction } from '~/types'
 import { TransactionWeightsHelper } from '~/core'
-import { dateToRelative } from '~/../utils/formatters'
-import { GroupMixin } from '~/mixins'
+import { dateFromNow } from '~/../utils/formatters'
+import { GroupMixin, CommonMixin } from '~/mixins'
 
 @Component({
   components: {
     ExchangeRateInput,
   },
 })
-export default class PageDetails extends mixins(GroupMixin) {
+export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
   @Prop(Object) readonly form!: Transaction
   @Prop(Boolean) readonly editing!: boolean
 
@@ -158,7 +158,7 @@ export default class PageDetails extends mixins(GroupMixin) {
   }
 
   get dateDisplay () {
-    return dateToRelative(this.form.timestamp, this.$t.bind(this))
+    return dateFromNow(this.form.timestamp, this.currentLocale)
   }
 
   get receiptItems () {
@@ -189,7 +189,7 @@ export default class PageDetails extends mixins(GroupMixin) {
   }
 
   dateToRelative (v) {
-    return dateToRelative(v, this.$t.bind(this))
+    return dateFromNow(v, this.currentLocale)
   }
 
   openCategorySelect () {
