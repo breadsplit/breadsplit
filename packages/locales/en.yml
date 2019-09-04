@@ -213,6 +213,7 @@ ui:
   button_no: 'No'
   button_ok: OK
   button_refresh: Reload
+  button_retry: Retry
   button_save: Save
   button_send: Send
   button_submit: Submit
@@ -366,11 +367,14 @@ ui:
     involved_negative: '{0} had owed'
     involved_positive: '{0} had paid'
     modified_by: 'Last modified by {0} as {1}'
+    not_found: Transaction Not Found
     note: Note
     photos_uploading: Uploading photos…
     repeat_expense: Repeat
     select_category: Select category
     select_who_paid: Select the person who paid the bill
+    syncing: Syncing...
+    syncing_desc: 'This might take a few seconds, please wait...'
     view: View expense
     xx_should_pay: 'by the way, {0} should pay this time.'
   wip: "\U0001F6A7 Working in progress…"

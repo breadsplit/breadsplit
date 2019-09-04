@@ -183,6 +183,7 @@ ui:
   button_no: 否
   button_ok: 好的
   button_refresh: 重新整理
+  button_retry: 重試
   button_save: 儲存
   button_send: 發送
   button_submit: 提交
@@ -333,11 +334,14 @@ ui:
     involved_negative: '{0}負債了'
     involved_positive: '{0}借出了'
     modified_by: '由 {0} 最後修改于 {1}'
+    not_found: 未找到交易
     note: 備注
     photos_uploading: 照片上傳中…
     repeat_expense: 重複
     select_category: 選擇類別
     select_who_paid: 選擇付款人
+    syncing: 同步中...
+    syncing_desc: 這可能需要幾秒鐘，請稍候...
     view: 查看支出
     xx_should_pay: '這次輪到 {0} 付款。'
   wip: "\U0001F6A7 功能開發中，敬請期待…"

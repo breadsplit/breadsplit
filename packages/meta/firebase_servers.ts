@@ -9,6 +9,7 @@ export interface FirebaseServer {
   storageBucket: string
   messagingSenderId: string
   appId: string
+  appUrl: string
 }
 
 export const FirebaseServers: Record<FirebaseServerName, FirebaseServer> = {
@@ -21,6 +22,7 @@ export const FirebaseServers: Record<FirebaseServerName, FirebaseServer> = {
     storageBucket: 'breadsplit-prod.appspot.com',
     messagingSenderId: '833804200396',
     appId: '1:833804200396:web:06c31ecfe6f1ce6c',
+    appUrl: 'https://app.breadsplit.com',
   },
   development: {
     name: 'BreadSplit Dev',
@@ -31,6 +33,7 @@ export const FirebaseServers: Record<FirebaseServerName, FirebaseServer> = {
     storageBucket: 'breadsplit-dev.appspot.com',
     messagingSenderId: '729380567565',
     appId: '1:729380567565:web:fbb2e12ef33baa19',
+    appUrl: 'https://dev.breadsplit.com',
   },
   test: {
     name: 'BreadSplit Test',
@@ -41,6 +44,7 @@ export const FirebaseServers: Record<FirebaseServerName, FirebaseServer> = {
     storageBucket: 'breadsplit-test.appspot.com',
     messagingSenderId: '758227201981',
     appId: '1:758227201981:web:d05b2fce9b9846c6',
+    appUrl: 'https://test.breadsplit.com',
   },
 }
 

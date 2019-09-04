@@ -1,6 +1,7 @@
 <template lang='pug'>
 .empty-placeholder.text-center(:class='{dense}')
-  v-icon(v-if='icon' size='128').op-20.pb-3 mdi-{{icon}}
+  slot(name='icon')
+    v-icon(v-if='icon' size='128').op-20.pb-3 mdi-{{icon}}
   p.content.op-50.mb-0 {{title}}
   p.desc.op-50 {{desc}}
   slot

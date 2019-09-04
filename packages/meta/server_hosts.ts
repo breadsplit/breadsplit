@@ -1,8 +1,13 @@
-import { FIREBASE_SERVER } from './env'
+import DefaultServer, { FirebaseServers } from './firebase_servers'
 
-let host = 'https://app.breadsplit.com'
+let FirebaseConfigEnv: Record<string, string> = {}
+try {
+  FirebaseConfigEnv = JSON.parse(process.env.FIREBASE_CONFIG || '{}')
+}
+catch {
+  FirebaseConfigEnv = {}
+}
 
-if (FIREBASE_SERVER === 'development')
-  host = 'https://dev.breadsplit.com'
+const server = Object.values(FirebaseServers).find(i => i.projectId === FirebaseConfigEnv.projectId) || DefaultServer
 
-export const SERVER_HOST = host
+export const SERVER_HOST = server.appUrl

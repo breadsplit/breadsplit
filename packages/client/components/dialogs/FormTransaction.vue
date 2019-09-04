@@ -1,19 +1,20 @@
 <template lang='pug'>
 v-card.form-transaction(v-rows='"max-content auto max-content"')
-  app-composed-toolbar(height='85' dark color='primary')
+  app-composed-toolbar(:height='navHeight' dark color='primary')
     v-btn(icon @click='close')
       v-icon mdi-close
     v-toolbar-title {{title}}
     v-spacer
-    v-btn(icon @click='promptRemove' v-if='mode==="edit" || mode==="view"')
-      v-icon mdi-delete
-    v-btn(icon @click='mode = "edit"' v-if='mode==="view"')
-      v-icon mdi-pencil
-    v-btn.mr-n2(icon @click='submit' v-if='mode!=="view"' :disabled='!form.total_fee')
-      v-icon mdi-check
+    template(v-if='isNormal')
+      v-btn(icon @click='promptRemove' v-if='mode==="edit" || mode==="view"')
+        v-icon mdi-delete
+      v-btn(icon @click='mode = "edit"' v-if='mode==="view"')
+        v-icon mdi-pencil
+      v-btn.mr-n2(icon @click='submit' v-if='mode!=="view"' :disabled='!form.total_fee')
+        v-icon mdi-check
 
     template(v-slot:content)
-      div(style='margin-left: 72px; margin-top: -10px')
+      div(style='margin-left: 72px; margin-top: -10px' v-if='isNormal')
         .sub-toolbar-title
           template(v-if='step === 0')
             span {{$t('ui.transactions.enter_the_cost')}}
@@ -44,6 +45,30 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
 
     v-window-item.page
       page-details(ref='details' :form='form' @next='next' :editing='editing')
+
+    // Special page
+    v-window-item.page
+      template(v-if='state === "not_found"')
+        app-empty-placeholder(
+          icon='alert-octagon-outline'
+          :desc='$t("ui.transactions.not_found")'
+        )
+          v-btn(color='primary' text @click='reset')
+            | {{$t('ui.button_retry')}}
+          v-btn(color='primary' text @click='close')
+            | {{$t('ui.button_cancel')}}
+
+      template(v-else-if='state === "await"')
+        app-empty-placeholder(
+          :title='$t("ui.transactions.syncing")'
+          :desc='$t("ui.transactions.syncing_desc")'
+        )
+          template(v-slot:icon)
+            v-progress-circular(indeterminate size='84' width='2').op-25.ma-3
+          v-btn(color='primary' text @click='reset')
+            | {{$t('ui.button_retry')}}
+          v-btn(color='primary' text @click='close')
+            | {{$t('ui.button_cancel')}}
 
   div(v-show='editing')
     v-divider
@@ -84,8 +109,10 @@ import { TransactionDefault, IdMe, defaultCurrency } from '~/core'
 const STEP_INPUT = 0
 const STEP_SPLIT = 1
 const STEP_DETAIL = 2
+const STEP_SPECIAL = 3
 
 type Mode = 'create' | 'edit' | 'view'
+type State = 'normal' | 'not_found' | 'await'
 
 @Component({
   components: {
@@ -98,6 +125,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   form: Transaction = TransactionDefault()
   step = STEP_INPUT
   mode: Mode = 'create'
+  state: State = 'normal'
 
   $refs!: {
     splitting_creditors: PageSplitting
@@ -117,8 +145,20 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     // enter view mode when transid is provided
     if (this.options.transid) {
       const trans = this.group.transactions.find(i => i.id === this.options.transid)
-      if (trans)
+      if (trans) {
         return this.view(trans)
+      }
+      else {
+        if (this.options.await && this.isOnline) {
+          // transaction may not synced yet, show loading screen
+          // TODO: update when synced
+          return this.goSpecialPage('await')
+        }
+        else {
+          // transaction not found
+          return this.goSpecialPage('not_found')
+        }
+      }
     }
     // enter creating mode
     this.create()
@@ -127,14 +167,23 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   view (trans: Transaction) {
     this.$set(this, 'form', cloneDeep(trans))
     this.step = STEP_DETAIL
+    this.state = 'normal'
     this.mode = this.options.mode === 'edit' ? 'edit' : 'view'
     this.fulfillDebtors()
+  }
+
+  goSpecialPage (state: State) {
+    this.$set(this, 'form', TransactionDefault())
+    this.step = STEP_SPECIAL
+    this.mode = 'view'
+    this.state = state
   }
 
   create () {
     this.$set(this, 'form', TransactionDefault())
     this.step = STEP_INPUT
     this.mode = 'create'
+    this.state = 'normal'
 
     let me = IdMe
     if (this.uid && this.uid in this.group.members)
@@ -183,6 +232,14 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     if (this.step === STEP_SPLIT)
       return this.$t('ui.splitting.split_by')
     return this.$t('ui.transactions.details')
+  }
+
+  get isNormal () {
+    return this.state === 'normal'
+  }
+
+  get navHeight () {
+    return this.isNormal ? 85 : 56
   }
 
   cleanUp () {
