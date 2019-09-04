@@ -95,6 +95,9 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
     if (diff === 1 && this.$t(`date_range.${this.unit}.next`))
       return this.$t(`date_range.${this.unit}.next`)
 
+    if (this.unit === 'year')
+      return this.dateFrom.year()
+
     if (this.unit === 'week')
       return this.$t('date_range.week.formatter', [getWeekOfYear(this.dateFrom)])
 
