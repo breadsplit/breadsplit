@@ -18,6 +18,7 @@ export default {
     'mdi-bread-slice',
     'mdi-food-apple',
     'mdi-egg',
+    'mdi-fruit-watermelon',
   ],
   drinks: [
     'mdi-cup',
@@ -106,6 +107,10 @@ export default {
     'mdi-briefcase-check',
     'mdi-script-text-outline',
     'mdi-calendar',
+    'mdi-image-filter-vintage',
+    'mdi-opacity',
+    'mdi-water',
+    'mdi-water-outline',
   ],
   home: [
     'mdi-home-city-outline',
@@ -124,6 +129,7 @@ export default {
     'mdi-tooth',
     'mdi-dumbbell',
     'mdi-tent',
+    'mdi-spray-bottle',
   ],
   entertainment: [
     'mdi-movie',

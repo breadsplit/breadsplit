@@ -28,7 +28,7 @@ const config: NuxtConfiguration = {
       {
         async: true,
         rel: 'stylesheet',
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.8.95/css/materialdesignicons.css',
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.2.95/css/materialdesignicons.css',
       },
     ],
   },
