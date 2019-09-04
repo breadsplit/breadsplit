@@ -2,6 +2,7 @@
 // details:
 // https://github.com/nuxt/nuxt.js/issues/4491
 
+/*
 import { Context } from '@nuxt/vue-app'
 import { getWebviewType } from '~/utils/ua'
 
@@ -30,3 +31,4 @@ export default ({ route, app, redirect }: Context) => {
   if (!webview && blocked)
     _redirect(query.get('from') || '/')
 }
+*/

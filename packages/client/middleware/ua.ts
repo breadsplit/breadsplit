@@ -10,7 +10,7 @@ export default ({ route, redirect }: Context) => {
   checked = true
 
   const webview = getWebviewType()
-  const path = route.path
+  const path = route.fullPath
   const blocked = path.startsWith('/webview_blocker')
 
   // most of cast, the blocker is skipped
@@ -23,7 +23,7 @@ export default ({ route, redirect }: Context) => {
 
   // webview detected
   if (webview && !blocked)
-    redirect(`/webview_blocker?from=${path}`)
+    redirect(`/webview_blocker?from=${encodeURIComponent(path)}`)
 
   // blocker resloved, redirect back to original page
   if (!webview && blocked)

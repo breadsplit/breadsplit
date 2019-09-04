@@ -32,8 +32,13 @@ export default class WebviewBlocked extends Vue {
   ingore () {
     const path = this.$route.fullPath.slice(2)
     const queryString = path.slice(path.indexOf('?') || 0)
-    const query = new URLSearchParams(queryString)
-    this.$router.replace(`${query.get('from') || '/'}`)
+    try {
+      const query = new URLSearchParams(queryString)
+      this.$router.replace(`${decodeURIComponent(query.get('from') || '') || '/'}`)
+    }
+    catch {
+      this.$router.replace('/')
+    }
   }
 }
 </script>

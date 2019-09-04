@@ -114,7 +114,7 @@ export const Transforms: TransformFunctions<Group> = {
     const trans = cloneDeep(transaction)
     trans.creator = by
     trans.timestamp_created = timestamp
-    snap.transactions.push(trans)
+    snap.transactions.unshift(trans)
     snap.activities.push({
       by,
       timestamp,
