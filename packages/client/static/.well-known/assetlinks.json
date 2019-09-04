@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.breadsplit.twa",
+      "sha256_cert_fingerprints": [
+        "BC:0F:49:4A:B4:1B:DE:1C:E6:C8:76:84:87:2A:3C:59:BE:35:37:D2:9F:7F:75:2F:29:0B:BC:F6:CC:B0:E5:4C"
+      ]
+    }
+  }
+]
