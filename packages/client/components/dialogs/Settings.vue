@@ -80,7 +80,6 @@ v-card.settings
 </template>
 
 <script lang='ts'>
-import dayjs from 'dayjs'
 import { Component, mixins } from 'nuxt-property-decorator'
 import { AvaliableLocales } from '~/locales'
 import { NavigationMixin, CommonMixin, DialogChildMixin } from '~/mixins'
@@ -110,8 +109,6 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
 
   switchLocale (locale) {
     this.$store.commit('switchLocale', locale)
-    this.$i18n.locale = locale
-    dayjs.locale(locale)
     this.languageSelecting = false
   }
 

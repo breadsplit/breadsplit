@@ -14,12 +14,27 @@ export default ({ app, store, route }: Context) => {
 
   Vue.use(VueI18n)
 
+  const locale = store.getters.local
+
   app.i18n = new VueI18n({
-    locale: store.getters.locale,
+    locale,
     fallbackLocale: LOCALE_FALLBACK,
     messages: Messages,
     silentFallbackWarn: true,
   })
 
-  dayjs.locale(store.getters.locale)
+  // @ts-ignore
+  window.onNuxtReady((app: Vue) => {
+    store.watch(
+      state => state.user_locale,
+      (locale) => {
+        // Update plugins locale state
+
+        app.$i18n.locale = locale
+        app.$vuetify.lang.current = locale
+        dayjs.locale(locale)
+      },
+      { immediate: true }
+    )
+  })
 }
