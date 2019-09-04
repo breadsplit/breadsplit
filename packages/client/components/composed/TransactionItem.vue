@@ -13,7 +13,9 @@ v-list-item.transaction-item(
     v-list-item-title
       span {{desc}}
       template(v-if='transaction.attached_images && transaction.attached_images.length')
-        v-icon.ml-1.op-40(size='20') mdi-image
+        v-icon.ml-1.op-40(size='20') mdi-image-outline
+      template(v-else-if='transaction.note')
+        v-icon.ml-1.op-40(size='20') mdi-comment-processing-outline
     v-list-item-subtitle.sub-label {{datetime}}
 
   v-list-item-action.pr-1.text-right(v-if='involved' v-rows='"auto max-content"')
