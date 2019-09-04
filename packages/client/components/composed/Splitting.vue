@@ -152,7 +152,7 @@ export default class Splitting extends Vue {
   get modes (): { mode: Splitmode; icon: string; text: TranslateResult }[] {
     return [
       { mode: 'average', icon: 'mdi-account-multiple', text: this.$t('ui.splitting.average') },
-      { mode: 'amount', icon: 'mdi-coin', text: this.$t('ui.splitting.currency-usd') },
+      { mode: 'amount', icon: 'mdi-currency-usd', text: this.$t('ui.splitting.amount') },
       { mode: 'percent', icon: 'mdi-percent', text: this.$t('ui.splitting.percent') },
       { mode: 'weight', icon: 'mdi-scale-balance', text: this.$t('ui.splitting.weight') },
     ]
