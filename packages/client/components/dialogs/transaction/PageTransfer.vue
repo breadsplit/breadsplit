@@ -1,19 +1,16 @@
 <template lang='pug'>
-.height-100(v-rows='"auto max-content"')
-  app-splitting(
-    ref='splitting'
-    :trans='form'
-    :members='members'
-    :on='on'
-    @keyboard='openKeyboard'
+.height-100.page-transfer(v-rows='"auto max-content"')
+
+  transfer-form.mx-5.my-10(
+    :form='form'
+    :disabled='disabled'
   )
 
   div
     fee-input(
       ref='fee_input'
-      v-if='on==="creditors"'
       :form='form'
-      @keyboard='openKeyboardForMainInput'
+      @keyboard='openKeyboard'
     )
     v-expand-transition
       app-soft-numpad(
@@ -26,36 +23,35 @@
 <script lang='ts'>
 import { mixins, Component, Prop, Watch } from 'nuxt-property-decorator'
 import FeeInput from './FeeInput.vue'
+import TransferForm from './TransferForm.vue'
 import { Transaction } from '~/types'
 import SoftNumpad from '~/components/basic/SoftNumpad.vue'
-import Splitting from '~/components/composed/Splitting.vue'
 import NumberInput from '~/components/basic/NumberInput.vue'
 import { GroupMixin } from '~/mixins'
 
 @Component({
   components: {
     FeeInput,
+    TransferForm,
   },
 })
-export default class PageSplitting extends mixins(GroupMixin) {
+export default class PageTransfer extends mixins(GroupMixin) {
   registeredInput: NumberInput | null = null
 
   @Prop(Object) readonly form!: Transaction
-  @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
+  @Prop({ default: true }) readonly showFee?: boolean
+  @Prop(Boolean) readonly disabled?: boolean
 
   $refs!: {
-    splitting: Splitting
     numpad: SoftNumpad
     fee_input: FeeInput
   }
 
   @Watch('form', { immediate: true })
   onFormChanged () {
-    if (this.on === 'creditors') {
-      this.$nextTick(() => {
-        this.$refs.fee_input.open()
-      })
-    }
+    this.$nextTick(() => {
+      this.$refs.fee_input.open()
+    })
   }
 
   get showKeyboard () {
@@ -64,12 +60,6 @@ export default class PageSplitting extends mixins(GroupMixin) {
 
   closeKeyboard () {
     this.registeredInput = null
-  }
-
-  openKeyboardForMainInput (e) {
-    this.$refs.splitting.cleanUp(false)
-    this.$refs.splitting.focused = null
-    this.openKeyboard(e)
   }
 
   openKeyboard (e: NumberInput | null) {
@@ -83,8 +73,6 @@ export default class PageSplitting extends mixins(GroupMixin) {
   }
 
   public finishUp () {
-    this.$refs.splitting.cleanUp(false)
-    this.$refs.splitting.focused = null
     this.closeKeyboard()
   }
 }

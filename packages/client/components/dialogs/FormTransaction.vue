@@ -5,16 +5,16 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
       v-icon mdi-close
     v-toolbar-title {{title}}
     v-spacer
-    template(v-if='isNormal')
+    template(v-if='!hasError')
       v-btn(icon @click='promptRemove' v-if='mode==="edit" || mode==="view"')
         v-icon mdi-delete
       v-btn(icon @click='mode = "edit"' v-if='mode==="view"')
         v-icon mdi-pencil
-      v-btn.mr-n2(icon @click='submit' v-if='mode!=="view"' :disabled='!form.total_fee')
+      // v-btn.mr-n2(icon @click='submit' v-if='mode!=="view"' :disabled='!form.total_fee')
         v-icon mdi-check
 
     template(v-slot:content)
-      div(style='margin-left: 72px; margin-top: -10px' v-if='isNormal')
+      div(style='margin-left: 72px; margin-top: -10px' v-if='!hasError')
         .sub-toolbar-title
           template(v-if='step === 0')
             span {{$t('ui.transactions.enter_the_cost')}}
@@ -27,6 +27,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
                 )
 
   v-window.grid-fill-height.form(v-model='step' touchless)
+    // Fee Page
     v-window-item.page
       page-splitting(
         ref='splitting_creditors'
@@ -35,6 +36,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
         on='creditors'
       )
 
+    // Spliting Page
     v-window-item.page
        page-splitting(
         ref='splitting_debtors'
@@ -43,12 +45,17 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
         on='debtors'
       )
 
+    // Transfer Page
     v-window-item.page
-      page-details(ref='details' :form='form' @next='next' :editing='editing')
+      page-transfer(ref='transfer' :form='form')
+
+    // Details Page
+    v-window-item.page
+      page-details(ref='details' :form='form' :editing='editing')
 
     // Special page
     v-window-item.page
-      template(v-if='state === "not_found"')
+      template(v-if='error === "not_found"')
         app-empty-placeholder(
           icon='alert-octagon-outline'
           :desc='$t("ui.transactions.not_found")'
@@ -58,7 +65,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
           v-btn(color='primary' text @click='close')
             | {{$t('ui.button_cancel')}}
 
-      template(v-else-if='state === "await"')
+      template(v-else-if='error === "await"')
         app-empty-placeholder(
           :title='$t("ui.transactions.syncing")'
           :desc='$t("ui.transactions.syncing_desc")'
@@ -73,7 +80,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
   div(v-show='editing')
     v-divider
     v-card-actions.pa-3
-      v-breadcrumbs(:items='stepItems' large)
+      v-breadcrumbs(:items='stepItems' large :disabled='btnNextDisabled')
         template(v-slot:divider='')
           v-icon mdi-chevron-right
         template(v-slot:item='{ item }')
@@ -81,11 +88,12 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
             @click.native='step = item.href'
             :disabled='btnNextDisabled'
             :class='{ active: step === item.href }'
+            color
           ) {{item.text}}
 
       v-spacer
 
-      template(v-if='step != 2')
+      template(v-if='step != 3')
         v-btn.button-quick-add.px-4(:disabled='!form.total_fee', color='primary', text, @click='submit')
           | {{$t('ui.button_finish')}}
 
@@ -99,33 +107,34 @@ import { Component, mixins, Getter, Watch } from 'nuxt-property-decorator'
 import cloneDeep from 'lodash/cloneDeep'
 import { oc } from 'ts-optchain'
 import { TransactionHelper } from '../../../core'
-import PageCreditors from './transaction/PageCreditors.vue'
 import PageDetails from './transaction/PageDetails.vue'
 import PageSplitting from './transaction/PageSplitting.vue'
+import PageTransfer from './transaction/PageTransfer.vue'
 import { GroupMixin, DialogChildMixin, CommonMixin } from '~/mixins'
 import { Transaction, Weight } from '~/types'
 import { TransactionDefault, IdMe, defaultCurrency } from '~/core'
 
 const STEP_INPUT = 0
 const STEP_SPLIT = 1
-const STEP_DETAIL = 2
-const STEP_SPECIAL = 3
+const STEP_TRANSFER = 2
+const STEP_DETAIL = 3
+const STEP_ERROR = 4
 
 type Mode = 'create' | 'edit' | 'view'
-type State = 'normal' | 'not_found' | 'await'
+type ErrorType = null | 'not_found' | 'await'
 
 @Component({
   components: {
-    PageCreditors,
     PageDetails,
     PageSplitting,
+    PageTransfer,
   },
 })
 export default class FormTransaction extends mixins(GroupMixin, CommonMixin, DialogChildMixin) {
   form: Transaction = TransactionDefault()
   step = STEP_INPUT
   mode: Mode = 'create'
-  state: State = 'normal'
+  error: ErrorType = null
 
   $refs!: {
     splitting_creditors: PageSplitting
@@ -142,48 +151,44 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   reset () {
     if (this.$refs.details)
       this.$refs.details.reset()
+
+    if (!this.options.transid)
+      return this.initCreate()
+
     // enter view mode when transid is provided
-    if (this.options.transid) {
-      const trans = this.group.transactions.find(i => i.id === this.options.transid)
-      if (trans) {
-        return this.view(trans)
-      }
-      else {
-        if (this.options.await && this.isOnline) {
-          // transaction may not synced yet, show loading screen
-          // TODO: update when synced
-          return this.goSpecialPage('await')
-        }
-        else {
-          // transaction not found
-          return this.goSpecialPage('not_found')
-        }
-      }
+    const trans = this.group.transactions.find(i => i.id === this.options.transid)
+    if (trans)
+      return this.initView(trans)
+
+    // transaction may not synced yet, show loading screen
+    if (this.options.await && this.isOnline) {
+      // TODO: update when synced
+      return this.initError('await')
     }
-    // enter creating mode
-    this.create()
+
+    // transaction not found
+    return this.initError('not_found')
   }
 
-  view (trans: Transaction) {
+  initView (trans: Transaction) {
     this.$set(this, 'form', cloneDeep(trans))
-    this.step = STEP_DETAIL
-    this.state = 'normal'
+    this.error = null
     this.mode = this.options.mode === 'edit' ? 'edit' : 'view'
     this.fulfillDebtors()
+    this.step = STEP_DETAIL
   }
 
-  goSpecialPage (state: State) {
+  initError (error: ErrorType) {
     this.$set(this, 'form', TransactionDefault())
-    this.step = STEP_SPECIAL
     this.mode = 'view'
-    this.state = state
+    this.error = error
+    this.step = STEP_ERROR
   }
 
-  create () {
+  initCreate () {
     this.$set(this, 'form', TransactionDefault())
-    this.step = STEP_INPUT
     this.mode = 'create'
-    this.state = 'normal'
+    this.error = null
 
     let me = IdMe
     if (this.uid && this.uid in this.group.members)
@@ -192,6 +197,8 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     this.form.creator = me
     this.form.currency = this.group.main_currency || defaultCurrency
     this.form.category = this.options.category
+
+    this.step = this.stepItems[0].href
 
     if (this.options.from) {
       this.form.creditors = this.options.from
@@ -219,27 +226,51 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       if (this.step === STEP_SPLIT)
         this.step = STEP_DETAIL
     }
+    else if (this.form.type === 'transfer') {
+      this.form.debtors = []
+    }
     else {
       this.form.debtors = this.members.map((m): Weight => ({ weight: 1, uid: m.uid || IdMe }))
     }
+
+    if (this.form.type === 'transfer') {
+      this.form.category = 'transfer'
+
+      // make sure there is only one debtor and creditor
+      this.form.debtors = this.form.debtors.slice(0, 1)
+      this.form.creditors = this.form.creditors.slice(0, 1)
+
+      if (this.form.total_fee && this.form.debtors.length)
+        this.step = STEP_DETAIL
+    }
+  }
+
+  get type () {
+    return this.form.type || 'expense'
   }
 
   get title () {
     if (this.mode === 'view')
       return this.$t('ui.transactions.view')
-    if (this.step === STEP_INPUT)
-      return this.$t('ui.transactions.how_much')
-    if (this.step === STEP_SPLIT)
-      return this.$t('ui.splitting.split_by')
-    return this.$t('ui.transactions.details')
+
+    switch (this.step) {
+      case STEP_INPUT:
+        return this.$t('ui.transactions.how_much')
+      case STEP_SPLIT:
+        return this.$t('ui.splitting.split_by')
+      case STEP_TRANSFER:
+        return this.$t('ui.transactions.transfer')
+      default:
+        return this.$t('ui.transactions.details')
+    }
   }
 
-  get isNormal () {
-    return this.state === 'normal'
+  get hasError () {
+    return !!this.error
   }
 
   get navHeight () {
-    return this.isNormal ? 85 : 56
+    return this.hasError ? 56 : 85
   }
 
   cleanUp () {
@@ -255,25 +286,54 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   next () {
-    this.step++
+    const steps = this.stepItems
+    const len = steps.length
+    for (let i = 0; i < len - 1; i++) {
+      if (steps[i].href === this.step) {
+        this.step = steps[i + 1].href
+        return
+      }
+    }
   }
 
   get stepItems () {
-    return [{
-      text: this.$t('ui.transactions.how_much_short'),
-      disabled: false,
-      href: 0,
-    },
-    {
-      text: this.$t('ui.splitting.split_by_short'),
-      disabled: false,
-      href: 1,
-    },
-    {
-      text: this.$t('ui.transactions.details_short'),
-      disabled: false,
-      href: 2,
-    }]
+    if (this.type === 'transfer') {
+      return [
+        {
+          text: this.$t('ui.transactions.how_much_short'),
+          disabled: false,
+          href: STEP_TRANSFER,
+        },
+        {
+          text: this.$t('ui.transactions.details_short'),
+          disabled: false,
+          href: STEP_DETAIL,
+        }]
+    }
+    else if (this.type === 'expense') {
+      return [{
+        text: this.$t('ui.transactions.how_much_short'),
+        disabled: false,
+        href: STEP_INPUT,
+      },
+      {
+        text: this.$t('ui.splitting.split_by_short'),
+        disabled: false,
+        href: STEP_SPLIT,
+      },
+      {
+        text: this.$t('ui.transactions.details_short'),
+        disabled: false,
+        href: STEP_DETAIL,
+      }]
+    }
+    else {
+      return [{
+        text: this.$t('ui.transactions.details_short'),
+        disabled: false,
+        href: STEP_DETAIL,
+      }]
+    }
   }
 
   @Watch('step')
@@ -282,7 +342,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       this.$refs.splitting_creditors.finishUp()
     if (oldvalue === STEP_SPLIT)
       this.$refs.splitting_debtors.finishUp()
-    if (value === STEP_DETAIL)
+    if (value === STEP_DETAIL && this.type !== 'transfer')
       setTimeout(() => this.$refs.details.openCategorySelect(), 500)
   }
 
@@ -291,7 +351,8 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       return
     if (this.step !== STEP_DETAIL)
       return this.next()
-    this.submit()
+    else
+      this.submit()
   }
 
   calc () {
@@ -310,7 +371,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   get btnNextDisabled () {
-    return this.step === STEP_INPUT && !this.form.total_fee
+    return !this.form.total_fee || this.form.debtors.length === 0
   }
 
   submit () {
@@ -328,13 +389,15 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       this.$t('prompt.confirm_transaction_removal_title'),
       this.$t('prompt.confirm_transaction_removal'),
     )
-    if (result)
-      this.remove()
+    if (result) {
+      this.$store.dispatch('group/removeTransaction', { id: this.group.id, transid: this.form.id })
+      this.close()
+    }
   }
 
-  remove () {
-    this.$store.dispatch('group/removeTransaction', { id: this.group.id, transid: this.form.id })
-    this.close()
+  mounted () {
+    if (module && module.hot)
+      this.reset()
   }
 }
 </script>

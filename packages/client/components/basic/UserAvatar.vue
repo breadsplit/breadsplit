@@ -5,7 +5,7 @@
       slot
         img(v-if='avatar_url' :src='avatar_url')
         v-icon(v-else) mdi-account
-  span.text(v-if='showName')
+  .text(v-if='showName')
     slot(name='text') {{name}}
 </template>
 
@@ -41,3 +41,12 @@ export default class UserAvatar extends mixins(UserInfoMixin) {
   }
 }
 </script>
+
+<style lang="sass">
+.user-avatar
+  .text
+    max-width: 60px
+    white-space: nowrap
+    text-overflow: ellipsis
+    overflow: hidden
+</style>

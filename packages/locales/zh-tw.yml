@@ -298,7 +298,7 @@ ui:
     percent: 趴數
     split_by: 分帳方式
     split_by_short: 分帳
-    total: '支出金額: {0}'
+    total: '金額: {0}'
     weight: 權重
   star_on_github: Star on Github
   support_us: 支持我們
@@ -318,7 +318,7 @@ ui:
     add_photos: 添加照片
     created_by: '由 {0} 創建于 {1}'
     description: 描述
-    description_placeholder: 請輸入支出摘要…
+    description_placeholder: 摘要…
     details: 明細
     details_short: 明細
     enter_the_cost: 請輸入群組消費金額
@@ -342,6 +342,7 @@ ui:
     select_who_paid: 選擇付款人
     syncing: 同步中...
     syncing_desc: 這可能需要幾秒鐘，請稍候...
+    transfer: 債務轉移
     view: 查看支出
     xx_should_pay: '這次輪到 {0} 付款。'
   wip: "\U0001F6A7 功能開發中，敬請期待…"
