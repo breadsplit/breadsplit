@@ -3,7 +3,9 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
   app-composed-toolbar(:height='navHeight' dark color='primary')
     v-btn(icon @click='close')
       v-icon mdi-close
-    v-toolbar-title {{title}}
+    v-toolbar-title
+      | {{title}}
+      span(v-if='mode==="edit"').pl-1.em-08.op-75 {{$t('ui.transaction.editing_note')}}
     v-spacer
     template(v-if='!hasError')
       v-btn(icon @click='promptRemove' v-if='mode==="edit" || mode==="view"')
@@ -33,6 +35,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
         ref='splitting_creditors'
         :form='form'
         :members='members'
+        :allow-add='!solo'
         on='creditors'
       )
 
@@ -135,6 +138,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   step = STEP_INPUT
   mode: Mode = 'create'
   error: ErrorType = null
+  solo = false
 
   $refs!: {
     splitting_creditors: PageSplitting
@@ -189,6 +193,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     this.$set(this, 'form', TransactionDefault())
     this.mode = 'create'
     this.error = null
+    this.solo = !!this.options.solo
 
     let me = IdMe
     if (this.uid && this.uid in this.group.members)
@@ -243,6 +248,9 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       if (this.form.total_fee && this.form.debtors.length)
         this.step = STEP_DETAIL
     }
+
+    if (this.options.solo)
+      this.updateSolo()
   }
 
   get type () {
@@ -250,8 +258,12 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   get title () {
-    if (this.mode === 'view')
-      return this.$t('ui.transactions.view')
+    if (this.mode === 'view') {
+      if (this.form.type === 'transfer')
+        return this.$t('ui.transactions.view_transfer')
+      else
+        return this.$t('ui.transactions.view_expense')
+    }
 
     switch (this.step) {
       case STEP_INPUT:
@@ -291,9 +303,11 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     for (let i = 0; i < len - 1; i++) {
       if (steps[i].href === this.step) {
         this.step = steps[i + 1].href
-        return
+        break
       }
     }
+    if (this.step === STEP_SPLIT && this.solo)
+      this.step = STEP_DETAIL
   }
 
   get stepItems () {
@@ -357,6 +371,18 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
 
   calc () {
     oc(this).$refs.splitting_creditors.$refs.numpad.calculate()
+  }
+
+  @Watch('form.creditors', { deep: true })
+  updateSolo () {
+    if (!this.solo)
+      return
+    this.form.debtors.forEach((m) => {
+      if (m.uid !== this.form.creditors[0].uid)
+        m.weight = 0
+      else
+        m.weight = 1
+    })
   }
 
   get btnNextText () {

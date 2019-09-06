@@ -344,6 +344,8 @@ ui:
     summary: Summary
     transactions: Transactions
   total: Total
+  transaction:
+    editing_note: (Editing)
   transactions:
     add_location: Add location
     add_note: Add note
@@ -379,7 +381,8 @@ ui:
     type_expense: Group Expense
     type_personal: Personal Expense
     type_transfer: Transfer
-    view: View expense
+    view_expense: Expense details
+    view_transfer: Transfer details
     xx_should_pay: 'by the way, {0} should pay this time.'
   wip: "\U0001F6A7 Working in progress…"
   xx_paid_money: '{0} paid'

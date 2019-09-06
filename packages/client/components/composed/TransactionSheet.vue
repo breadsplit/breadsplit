@@ -24,26 +24,30 @@ import { TransactionWeightsHelper } from '~/core'
 @Component
 export default class TransactionSheet extends mixins(GroupMixin) {
   @Prop(Object) readonly transaction!: Transaction
+  @Prop(Boolean) readonly hideEmpty?: boolean
 
   get items () {
     const creditors = new TransactionWeightsHelper(this.transaction, 'creditors')
     const debtors = new TransactionWeightsHelper(this.transaction, 'debtors')
-    const items: Record<string, {uid: string; credit: number; debit: number}> = {}
+    const dict: Record<string, {uid: string; credit: number; debit: number}> = {}
     creditors.participators
       .forEach((p) => {
-        if (!items[p.uid])
-          items[p.uid] = { credit: creditors.getFee(p), uid: p.uid, debit: 0 }
+        if (!dict[p.uid])
+          dict[p.uid] = { credit: creditors.getFee(p), uid: p.uid, debit: 0 }
         else
-          items[p.uid].credit = creditors.getFee(p)
+          dict[p.uid].credit = creditors.getFee(p)
       })
     debtors.participators
       .forEach((p) => {
-        if (!items[p.uid])
-          items[p.uid] = { debit: -debtors.getFee(p), uid: p.uid, credit: 0 }
+        if (!dict[p.uid])
+          dict[p.uid] = { debit: -debtors.getFee(p), uid: p.uid, credit: 0 }
         else
-          items[p.uid].debit = -debtors.getFee(p)
+          dict[p.uid].debit = -debtors.getFee(p)
       })
-    return Object.values(items)
+    let items = Object.values(dict)
+    if (this.hideEmpty)
+      items = items.filter(i => i.credit || i.debit)
+    return items
   }
 }
 </script>

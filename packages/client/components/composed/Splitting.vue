@@ -67,7 +67,7 @@
           )
           .currency {{currency}}
 
-      .participator.add.px-2.mx-1(v-if='candidates.length')
+      .participator.add.px-2.mx-1(v-if='allowAdd && candidates.length')
         app-member-select(:members='candidates', @input='id=>addParticipator(id)')
           v-btn(icon small).op-50
             v-icon(size='24') mdi-plus
@@ -151,6 +151,7 @@ export default class Splitting extends Vue {
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
   @Prop({ default: true }) readonly showTabs!: boolean
   @Prop({ default: () => [] }) readonly members!: Member[]
+  @Prop(Boolean) readonly allowAdd?: boolean
 
   focused: string|null = null
 

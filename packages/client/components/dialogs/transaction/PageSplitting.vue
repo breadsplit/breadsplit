@@ -5,6 +5,7 @@
     :trans='form'
     :members='members'
     :on='on'
+    :allow-add='allowAdd'
     @keyboard='openKeyboard'
   )
 
@@ -42,6 +43,7 @@ export default class PageSplitting extends mixins(GroupMixin) {
 
   @Prop(Object) readonly form!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
+  @Prop({ default: false }) readonly allowAdd?: boolean
 
   $refs!: {
     splitting: Splitting

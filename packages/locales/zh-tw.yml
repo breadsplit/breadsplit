@@ -311,6 +311,8 @@ ui:
     summary: 總覽
     transactions: 交易記錄
   total: 合計
+  transaction:
+    editing_note: (編輯)
   transactions:
     add_location: 添加位置
     add_note: 添加備註
@@ -346,7 +348,8 @@ ui:
     type_expense: 群組支出
     type_personal: 個人支出
     type_transfer: 債務轉移
-    view: 查看支出
+    view_expense: 支出明細
+    view_transfer: 債務轉移
     xx_should_pay: '這次輪到 {0} 付款。'
   wip: "\U0001F6A7 功能開發中，敬請期待…"
   xx_paid_money: '{0} 支付了'

@@ -5,7 +5,7 @@
     v-carousel(
       v-model='carouselIndex'
       :show-arrows='false'
-      :show-delimiters='form.attached_images.length > 1'
+      :hide-delimiters='form.attached_images.length <= 1'
       delimiter-icon='mdi-circle-medium'
       hide-delimiter-background
       height='250'

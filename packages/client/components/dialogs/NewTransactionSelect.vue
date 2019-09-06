@@ -1,13 +1,16 @@
 <template lang='pug'>
 app-promise-dialog(ref='dialog' width='500')
   v-card.pa-2(v-columns='"1fr 1fr 1fr"')
+
     .action-with-text.py-3(v-ripple @click='group()')
       v-icon.action(size='48') mdi-account-group
       .text {{$t('ui.transactions.type_expense')}}
+
     .action-with-text.py-3(v-ripple @click='transfer()')
       v-icon.action(size='48') mdi-account-arrow-right
       .text {{$t('ui.transactions.type_transfer')}}
-    .action-with-text.py-3.op-50
+
+    .action-with-text.py-3(v-ripple @click='personal()')
       v-icon.action(size='48') mdi-account-cash
       .text {{$t('ui.transactions.type_personal')}}
 </template>
