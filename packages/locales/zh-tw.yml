@@ -343,6 +343,9 @@ ui:
     syncing: 同步中...
     syncing_desc: 這可能需要幾秒鐘，請稍候...
     transfer: 債務轉移
+    type_expense: 群組支出
+    type_personal: 個人支出
+    type_transfer: 債務轉移
     view: 查看支出
     xx_should_pay: '這次輪到 {0} 付款。'
   wip: "\U0001F6A7 功能開發中，敬請期待…"

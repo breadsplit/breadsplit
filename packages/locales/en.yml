@@ -376,6 +376,9 @@ ui:
     syncing: Syncing...
     syncing_desc: 'This might take a few seconds, please wait...'
     transfer: Transfer
+    type_expense: Group Expense
+    type_personal: Personal Expense
+    type_transfer: Transfer
     view: View expense
     xx_should_pay: 'by the way, {0} should pay this time.'
   wip: "\U0001F6A7 Working in progress…"
