@@ -14,6 +14,7 @@
       :currency='form.currency'
       style='font-size: 1.1em'
       v-if='showFee'
+      :class='{ "op-0": !form.total_fee }'
     ).mx-4
     .arrow.op-50
       .line
@@ -85,12 +86,13 @@ export default class TransferForm extends mixins(GroupMixin) {
 <style lang='sass'>
 .transfer-form
   .arrow
-    min-width: 120px
+    min-width: 90px
     position: relative
 
     .line
       background: grey
       height: 2px
+      border-radius: 2px
 
     .point
       position: absolute

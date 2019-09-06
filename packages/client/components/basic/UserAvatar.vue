@@ -45,8 +45,8 @@ export default class UserAvatar extends mixins(UserInfoMixin) {
 <style lang="sass">
 .user-avatar
   .text
-    max-width: 60px
-    white-space: nowrap
-    text-overflow: ellipsis
-    overflow: hidden
+    // max-width: 60px
+    // white-space: nowrap
+    // text-overflow: ellipsis
+    // overflow: hidden
 </style>
