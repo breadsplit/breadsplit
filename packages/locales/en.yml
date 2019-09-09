@@ -257,6 +257,7 @@ ui:
   join:
     existing_users: Existing users
     group_not_found: Group Not Found
+    group_title: Join {0}
     invited_to_join: 'You are invited to join {0}'
     join_anonymous: Join as a new member
     join_in_progress: Joining group…
@@ -374,6 +375,7 @@ ui:
     photos_uploading: Uploading photos…
     repeat_expense: Repeat
     select_category: Select category
+    select_type: Select the type of transaction
     select_who_paid: Select the person who paid the bill
     syncing: Syncing...
     syncing_desc: 'This might take a few seconds, please wait...'

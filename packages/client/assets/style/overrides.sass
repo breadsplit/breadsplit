@@ -1,41 +1,48 @@
-.v-chip-group
-  .v-chip:not(.v-chip--active)
-    opacity: 0.5
+:root
+  --default-font: Roboto, "Helvetica Neue", Verdana, Arial, sans-serif
+  --app-font: var(--default-font)
 
-  .v-chip--clickable:active
-    box-shadow: none
+.v-application, pre
+  font-family: var(--app-font) !important
 
-.v-dialog--fullscreen > .v-card
-  border-radius: 0
+  .v-chip-group
+    .v-chip:not(.v-chip--active)
+      opacity: 0.5
 
-.v-app-bar.v-app-bar--fixed
-  z-index: 4
+    .v-chip--clickable:active
+      box-shadow: none
 
-.v-expansion-panels.flat .v-expansion-panel
-  background-color: transparent
+  .v-dialog--fullscreen > .v-card
+    border-radius: 0
 
-.v-slide-group__next, .v-slide-group__prev
-  min-width: 0
+  .v-app-bar.v-app-bar--fixed
+    z-index: 4
 
-.flat.v-input
-  .v-input__slot
-    box-shadow: none !important
-    border: none !important
-    &:before, &:after
+  .v-expansion-panels.flat .v-expansion-panel
+    background-color: transparent
+
+  .v-slide-group__next, .v-slide-group__prev
+    min-width: 0
+
+  .flat.v-input
+    .v-input__slot
+      box-shadow: none !important
       border: none !important
+      &:before, &:after
+        border: none !important
 
-.v-tab:first-child,
-.v-tabs-slider-wrapper + .v-tab
-  margin-left: 0 !important
+  .v-tab:first-child,
+  .v-tabs-slider-wrapper + .v-tab
+    margin-left: 0 !important
 
-input[type='number']
-  -moz-appearance: textfield
+  input[type='number']
+    -moz-appearance: textfield
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button
-  -webkit-appearance: none
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button
+    -webkit-appearance: none
 
 
-.v-breadcrumbs[disabled]
-  pointer-events: none
-  touch-action: none
+  .v-breadcrumbs[disabled]
+    pointer-events: none
+    touch-action: none

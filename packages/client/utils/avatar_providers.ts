@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
-import { hashCode } from '../../utils/hash'
 import { rgbStringToHex } from './colors'
+import { hashCode } from '~/../utils'
 
 const spectral = d3.quantize(t => d3.interpolateSpectral(t), 100)
 

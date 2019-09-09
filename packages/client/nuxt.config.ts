@@ -35,18 +35,23 @@ const config: NuxtConfiguration = {
       { rel: 'icon', type: 'image/png', sizes: '194x194', href: '/img/logo/favicon.png' },
       { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/img/logo/appicon192.png' },
       { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/img/logo/favicon16.png' },
+    ],
+    script: [
       {
-        async: true,
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap',
-      },
-      {
-        async: true,
-        rel: 'stylesheet',
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.3.95/css/materialdesignicons.css',
+        innerHTML: ` (function () {
+          const title = new URLSearchParams(window.location.search).get('group_title')
+          if (title) document.title = decodeURIComponent(title)
+        })() `,
+        type: 'text/javascript',
+        charset: 'utf-8',
       },
     ],
+    __dangerouslyDisableSanitizers: ['script'],
   },
+
+  css: [
+    '~/assets/style/index.sass',
+  ],
 
   manifest: {
     name: fullname,
@@ -162,12 +167,8 @@ const config: NuxtConfiguration = {
       iconfont: 'mdi',
     },
     customVariables: [
-      '~/assets/style/index.sass',
+      '~/assets/style/vars.sass',
     ],
-    defaultAssets: {
-      font: false,
-      icons: false,
-    },
   },
 
   'google-gtag': {
