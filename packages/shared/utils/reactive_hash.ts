@@ -4,7 +4,7 @@ import Vue from 'vue'
 
 let lock = false
 
-export const hash = new Vue({
+export const reactiveHash = new Vue({
   data: {
     value: {},
   },
@@ -15,7 +15,7 @@ export const hash = new Vue({
         if (lock)
           return
         lock = true
-        location.hash = queryString.stringify(hash.value, { arrayFormat: 'comma' })
+        location.hash = queryString.stringify(reactiveHash.value, { arrayFormat: 'comma' })
         lock = false
       },
     },
@@ -28,7 +28,7 @@ function read () {
   const object = queryString.parse(location.hash, { parseBooleans: true, parseNumbers: true, arrayFormat: 'comma' })
   lock = true
   for (const [key, value] of Object.entries(object))
-    Vue.set(hash.value, key, value)
+    Vue.set(reactiveHash.value, key, value)
   lock = false
 }
 

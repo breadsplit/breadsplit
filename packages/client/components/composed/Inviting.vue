@@ -17,7 +17,7 @@ v-card.inviting.pa-4.mb-2(flat color='transparent')
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
 import GroupMixin from '~/mixins/group'
-import { Share } from '~/utils/share'
+import { Share } from '~/utils'
 
 @Component
 export default class Inviting extends mixins(GroupMixin) {

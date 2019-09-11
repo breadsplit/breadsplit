@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { MutationTree, GetterTree } from 'vuex'
-import { LOCALE_FALLBACK } from '../../utils/i18n'
 import { RootStateDefault } from './_defaults'
+import { LOCALE_FALLBACK } from '~/utils'
 import { RootState, Group } from '~/types'
 import { APP_VERSION } from '~/../meta/env'
 import theme from '~/../meta/theme'

@@ -53,7 +53,7 @@ import uniq from 'lodash/uniq'
 import { TransactionHelper } from '../../../core'
 import { UserInfoMixin, NavigationMixin, CommonMixin, GroupMixin } from '~/mixins'
 import { Transaction } from '~/types'
-import { dateFromNow } from '~/../utils/formatters'
+import { dateFromNow } from '~/utils'
 
 @Component
 export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, NavigationMixin, CommonMixin) {

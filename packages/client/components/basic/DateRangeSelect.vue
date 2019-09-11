@@ -24,7 +24,7 @@
 <script lang='ts'>
 import { Component, mixins, Prop, Watch } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
-import { getWeekOfYear, shortDate, shortDateMonth } from '~/../utils/formatters'
+import { getWeekOfYear, shortDate, shortDateMonth } from '~/utils'
 import { GroupMixin } from '~/mixins'
 
 export type DateRangeUnit = 'month' | 'week' | 'year' | 'day' | 'custom' | 'all'

@@ -1,12 +1,15 @@
 export default {
   // Original
   homepage: 'https://breadsplit.com',
-  app: 'https://app.breadsplit.com',
-  dev: 'https://dev.breadsplit.com',
   docs: 'https://docs.breadsplit.com',
   github: 'https://github.com/breadsplit/breadsplit',
   github_issue: 'https://github.com/breadsplit/breadsplit/issues',
   privacy: 'https://www.iubenda.com/privacy-policy/26554021',
+
+  // Apps
+  android: 'https://play.google.com/store/apps/details?id=com.breadsplit.twa',
+  app: 'https://app.breadsplit.com',
+  dev: 'https://dev.breadsplit.com',
 
   // Donate
   patreon: 'https://www.patreon.com/user?u=19935929',

@@ -1,9 +1,8 @@
 import { Vue, Component, Getter } from 'nuxt-property-decorator'
 import nanoid from 'nanoid'
 import { UserInfo, Member, UserMemberInfo } from '~/types'
-import { IsThisId } from '~/core'
-import { LetterAvatar } from '~/utils/avatar_providers'
-import { IdMe } from '~/../core'
+import { IsThisId, IdMe } from '~/core'
+import { LetterAvatar } from '~/utils'
 
 const userCache: Record<string, Record<string, UserMemberInfo>> = {}
 

@@ -8,7 +8,7 @@ const de = require('./de.yml')
 
 export const EN_MESSAGES = en
 
-export const Messages = {
+export const LocaleMessages = {
   en,
   fr,
   ja,
@@ -18,7 +18,7 @@ export const Messages = {
 }
 
 export const AvaliableLocales = Object
-  .values(Messages)
+  .values(LocaleMessages)
   .map((locale) => {
     return {
       code: locale.code,

@@ -25,7 +25,7 @@ v-card.soft-numpad(flat :class='classes')
 
 <script lang='ts'>
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import { Vibrate } from '../../utils/vibrator'
+import { Vibrate } from '~/utils'
 
 @Component
 export default class SoftNumpad extends Vue {

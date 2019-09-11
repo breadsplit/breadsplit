@@ -14,7 +14,7 @@ import { IsThisId, getExchangeRateOn } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
 import { DEBUG, BUILD_TARGET } from '~/../meta/env'
-import { resizeImage } from '~/../utils/image'
+import { resizeImage } from '~/utils'
 
 firebase.initializeApp(FirebaseServerConfig)
 

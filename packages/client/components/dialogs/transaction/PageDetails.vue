@@ -130,7 +130,7 @@ import TransferForm from './TransferForm.vue'
 import DatePicker from '~/components/basic/DatePicker.vue'
 import { Transaction } from '~/types'
 import { TransactionWeightsHelper } from '~/core'
-import { dateFromNow } from '~/../utils/formatters'
+import { dateFromNow } from '~/utils'
 import { GroupMixin, CommonMixin } from '~/mixins'
 
 @Component({

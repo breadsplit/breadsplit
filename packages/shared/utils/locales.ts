@@ -1,7 +1,7 @@
-import { AvaliableLocales, Messages } from '../locales'
-import { LOCALE_FALLBACK } from '../utils/i18n'
+import { AvaliableLocales, LocaleMessages } from '../../locales'
+import { LOCALE_FALLBACK } from '../../utils/i18n'
 
-export { AvaliableLocales, Messages }
+export { AvaliableLocales, LocaleMessages as Messages }
 
 export function getBrowserLanguage (): string {
   // @ts-ignore

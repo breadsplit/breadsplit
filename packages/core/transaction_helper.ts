@@ -1,7 +1,7 @@
 import { sumBy, uniq, concat, map, merge, find } from 'lodash'
 import Fraction from 'fraction.js'
 import { Transaction, Weight, TransactionBalance } from '../types'
-import { GCD } from '../utils/math'
+import { GCD } from '../utils'
 
 export type WeightsField = 'debtors' | 'creditors'
 

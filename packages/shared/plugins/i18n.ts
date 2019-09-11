@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import { Context } from '@nuxt/vue-app'
 import dayjs from 'dayjs'
-import { Messages, LOCALE_FALLBACK } from '~/utils'
+import { Context } from '@nuxt/vue-app'
+import { LocaleMessages } from '../../locales'
+import { LOCALE_FALLBACK } from '../utils'
 
 export default ({ app, store, route }: Context) => {
   // inject our i18n instance into the app root to be used in middleware
@@ -18,7 +19,7 @@ export default ({ app, store, route }: Context) => {
   app.i18n = new VueI18n({
     locale,
     fallbackLocale: LOCALE_FALLBACK,
-    messages: Messages,
+    messages: LocaleMessages,
     silentFallbackWarn: true,
   })
 
