@@ -1,4 +1,4 @@
-import { f, db, GroupsRef, OperationsRef } from './_helpers'
+import { f, db, GroupsRef, OperationsRef } from './utils/helpers'
 import { ProcessServerOperations, Eval, omitDeep } from './utils/opschain'
 import { Group, ServerGroup } from './utils/types'
 import { GenerateId, SharedGroupOptionsDefault } from './utils/core'

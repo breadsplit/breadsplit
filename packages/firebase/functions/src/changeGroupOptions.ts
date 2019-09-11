@@ -1,5 +1,5 @@
-import { oc } from 'ts-optchain';
-import { f, GroupsRef } from './_helpers'
+import { oc } from 'ts-optchain'
+import { f, GroupsRef } from './utils/helpers'
 import { SharedGroupOptions } from '~/types'
 
 export const changeGroupOptions = f(async ({ id, changes }: {id: string; changes: Partial<SharedGroupOptions> }, context) => {

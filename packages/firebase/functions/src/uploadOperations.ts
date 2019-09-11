@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { f, db, OperationsRef, recalculateGroupOperations } from './_helpers'
+import { f, db, OperationsRef, recalculateGroupOperations } from './utils/helpers'
 import { ProcessServerOperations } from './utils/opschain'
 import { PushGroupOperationsNotification } from './utils/push_notifications'
 import { ServerOperations } from './utils/types'
