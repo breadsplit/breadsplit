@@ -3,8 +3,11 @@ section.ma-4
   h1.primary--text Hey, BreadSplit here.
   p.grey--text.text--darken-3 This page is working in progress. You may want to check out our app first 👇
 
-  v-btn(:href='socials.app' color='primary') Go to app
-  v-btn(:href='socials.dev' color='grey' text) Dev version
+  v-btn.ma-1(:href='socials.app' color='primary' depressed  ) Web App
+  v-btn.ma-1(:href='socials.android' color='light-green darken-1' dark depressed)
+    v-icon.mr-2 mdi-google-play
+    | Google Play
+  v-btn.ma-1(:href='socials.dev' color='grey' text) Dev version
 </template>
 
 <script lang='ts'>

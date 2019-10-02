@@ -1,52 +1,28 @@
 import NuxtConfiguration from '@nuxt/config'
-import pkg from '../../package.json'
 import theme from '../meta/theme'
+import { extendConfig } from '../nuxt.config.base'
 
-const dev = process.env.NODE_ENV !== 'production'
 const RELEASE_CHANNEL = process.env.RELEASE_CHANNEL || 'dev'
 const fullname = RELEASE_CHANNEL !== 'dev' ? 'BreadSplit' : 'BreadSplit Dev'
 
-const config: NuxtConfiguration = {
-  mode: 'spa',
-  debug: dev,
-
+const config: NuxtConfiguration = extendConfig({
   head: {
-    title: fullname,
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' },
-      { name: 'description', content: pkg.description },
-      { name: 'author', content: pkg.author },
-      { name: 'keywords', content: pkg.keywords.join(',') },
-      { name: 'HandheldFriendly', content: 'true' },
-
-      { property: 'og:title', content: fullname },
-      { property: 'og:image', content: '/img/logo/favicon.png' },
-      { property: 'og:description', content: pkg.description },
-    ],
-    link: [
+    script: [
       {
-        rel: 'apple-touch-icon',
-        sizes: '180x180',
-        href: '/img/logo/touch-icon.png',
-        media: '(device-width: 1536px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)',
-      },
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/img/logo/favicon32.png' },
-      { rel: 'icon', type: 'image/png', sizes: '194x194', href: '/img/logo/favicon.png' },
-      { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/img/logo/appicon192.png' },
-      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/img/logo/favicon16.png' },
-      {
-        async: true,
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap',
-      },
-      {
-        async: true,
-        rel: 'stylesheet',
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/4.2.95/css/materialdesignicons.css',
+        innerHTML: ` (function () {
+          const title = new URLSearchParams(window.location.search).get('group_title')
+          if (title) document.title = decodeURIComponent(title)
+        })() `,
+        type: 'text/javascript',
+        charset: 'utf-8',
       },
     ],
+    __dangerouslyDisableSanitizers: ['script'],
   },
+
+  css: [
+    '~/assets/style/index.sass',
+  ],
 
   manifest: {
     name: fullname,
@@ -69,17 +45,6 @@ const config: NuxtConfiguration = {
     }],
   },
 
-  env: {
-    NODE_ENV: process.env.NODE_ENV || 'development',
-    FIREBASE_SERVER: process.env.FIREBASE_SERVER || 'development',
-    BUILD_TARGET: process.env.BUILD_TARGET || '',
-    RELEASE_CHANNEL,
-    BUILD_TIME: new Date().toISOString(),
-    APP_VERSION: pkg.version,
-  },
-
-  loading: { color: '#fff' },
-
   plugins: [
     /* The order of plugins is important */
 
@@ -88,7 +53,7 @@ const config: NuxtConfiguration = {
 
     /* Data */
     '~/plugins/localstorage', // load store from localstorage
-    '~/plugins/i18n',
+    '~/../shared/plugins/i18n',
 
     /* Plugins and Components */
     '~/plugins/packages', // 3-rd party dependencies
@@ -102,30 +67,6 @@ const config: NuxtConfiguration = {
       'ua', // FIXME: remove this, use plugins instead
       'group',
     ],
-  },
-
-  build: {
-    splitChunks: {},
-    extractCSS: !dev,
-    publicPath: '/nuxt/',
-    extend (config, ctx) {
-      if (config.module) {
-        config.module.rules.push({
-          test: /\.ya?ml$/,
-          use: 'js-yaml-loader',
-        })
-      }
-    },
-    babel: {
-      presets: [
-        [
-          '@nuxt/babel-preset-app',
-          {
-            targets: '>0.25%, not ie 11, not op_mini all',
-          },
-        ],
-      ],
-    },
   },
 
   render: {
@@ -143,37 +84,6 @@ const config: NuxtConfiguration = {
     '@nuxtjs/google-gtag',
     '@nuxtjs/sentry',
   ],
-
-  devModules: [
-    ['@nuxtjs/eslint-module', {
-      cache: true,
-    }],
-    '@nuxtjs/vuetify',
-  ],
-
-  vuetify: {
-    theme: {
-      themes: theme,
-      options: {
-        customProperties: true,
-      },
-    },
-    icons: {
-      iconfont: 'mdi',
-    },
-    customVariables: [
-      '~/assets/style/index.sass',
-    ],
-    defaultAssets: {
-      font: false,
-      icons: false,
-    },
-  },
-
-  'google-gtag': {
-    id: process.env.GOOGLE_GTAG_ID,
-    debug: dev,
-  },
 
   // https://pwa.nuxtjs.org/modules/workbox.html
   workbox: {
@@ -235,6 +145,6 @@ const config: NuxtConfiguration = {
       },
     },
   },
-}
+})
 
 export default config

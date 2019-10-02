@@ -13,7 +13,7 @@ v-list.activities-list.pb-4.pl-2.pt-0(flat style='background: transparent')
 import { Component, Prop, mixins, Getter } from 'nuxt-property-decorator'
 import { Activity } from '~/types'
 import { getActivityDescription } from '~/core'
-import { dateFromNow } from '~/../utils/formatters'
+import { dateFromNow } from '~/utils'
 import { NavigationMixin, UserInfoMixin, CommonMixin } from '~/mixins'
 
 @Component

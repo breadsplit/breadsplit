@@ -6,12 +6,15 @@ export default function head (this: Vue) {
     ? this.$t('appname_dev')
     : this.$t('appname')
 
+  const titleTemplate = `%s - ${appname}`
+
   if (this.$route.path !== '/') {
     return {
-      titleTemplate: `%s - ${appname}`,
+      titleTemplate,
     }
   }
   return {
     title: appname.toString(),
+    titleTemplate,
   }
 }

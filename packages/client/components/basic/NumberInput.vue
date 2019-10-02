@@ -39,7 +39,7 @@ export default class NumberInput extends mixins(CommonMixin) {
   @Prop({ default: 'number-input--active' }) readonly activeClass!: string
 
   numpad: SoftNumpad | null = null
-  inner_value: string = ''
+  inner_value = ''
   warned = false
   dirty = false
 

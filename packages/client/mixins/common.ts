@@ -1,6 +1,6 @@
 
 import { Vue, Component } from 'nuxt-property-decorator'
-import { LOCALE_FALLBACK } from '../../utils/i18n'
+import { LOCALE_FALLBACK } from '~/utils'
 
 @Component
 export default class CommonMixin extends Vue {

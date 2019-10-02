@@ -1,7 +1,6 @@
 import merge from 'lodash/merge'
-import { RootState, GroupState, UserState, AppOptions, CacheState } from '~/types/store'
-import { getUserAgent, getWebviewType, getOSType, isStandalone } from '~/utils/ua'
-import { acceptLanguage } from '~/locales'
+import { RootState, GroupState, UserState, AppOptions, CacheState } from '../types/store'
+import { getUserAgent, getWebviewType, getOSType, isStandalone, acceptLanguage } from '../utils'
 
 export const GroupStateDefault = (overrides?: Partial<GroupState>): GroupState => merge({
   groups: {},

@@ -227,6 +227,7 @@ ui:
   join:
     existing_users: 其他成員
     group_not_found: 沒有找到群組
+    group_title: '加入 {0}'
     invited_to_join: '您被邀請加入 {0} 群組'
     join_anonymous: 作爲新成員加入
     join_in_progress: 加入群組…
@@ -298,7 +299,7 @@ ui:
     percent: 趴數
     split_by: 分帳方式
     split_by_short: 分帳
-    total: '支出金額: {0}'
+    total: '金額: {0}'
     weight: 權重
   star_on_github: Star on Github
   support_us: 支持我們
@@ -311,6 +312,8 @@ ui:
     summary: 總覽
     transactions: 交易記錄
   total: 合計
+  transaction:
+    editing_note: (編輯)
   transactions:
     add_location: 添加位置
     add_note: 添加備註
@@ -318,7 +321,7 @@ ui:
     add_photos: 添加照片
     created_by: '由 {0} 創建于 {1}'
     description: 描述
-    description_placeholder: 請輸入支出摘要…
+    description_placeholder: 摘要…
     details: 明細
     details_short: 明細
     enter_the_cost: 請輸入群組消費金額
@@ -339,10 +342,16 @@ ui:
     photos_uploading: 照片上傳中…
     repeat_expense: 重複
     select_category: 選擇類別
+    select_type: 選擇交易類型
     select_who_paid: 選擇付款人
     syncing: 同步中...
     syncing_desc: 這可能需要幾秒鐘，請稍候...
-    view: 查看支出
+    transfer: 債務轉移
+    type_expense: 群組支出
+    type_personal: 個人支出
+    type_transfer: 債務轉移
+    view_expense: 支出明細
+    view_transfer: 債務轉移
     xx_should_pay: '這次輪到 {0} 付款。'
   wip: "\U0001F6A7 功能開發中，敬請期待…"
   xx_paid_money: '{0} 支付了'

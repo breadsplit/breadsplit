@@ -81,7 +81,7 @@ v-card.settings
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
-import { AvaliableLocales } from '~/locales'
+import { AvaliableLocales } from '~/utils'
 import { NavigationMixin, CommonMixin, DialogChildMixin } from '~/mixins'
 
 const localeItems = AvaliableLocales.map(l => ({ value: l.code, text: l.display }))

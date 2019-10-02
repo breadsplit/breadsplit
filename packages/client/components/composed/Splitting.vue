@@ -39,11 +39,16 @@
         @click='focusInput(pa, "amount")'
       )
         .user-info-section
-          app-member-select(:members='[...candidates, pa]', @input='id=>changeParticipator(pa.uid, id)')
+          app-member-select(
+            :disabled='on !== "creditors"'
+            :members='[...candidates, pa]'
+            @input='id=>changeParticipator(pa.uid, id)'
+          )
             app-user-avatar(size='38' :id='pa.uid')
             span.user-name-text.mx-2
               i18n(:path='userTextI18nPath')
                 app-user-info(:id='pa.uid')
+
           v-slide-x-transition
             v-btn.op-25.ma-0(
               v-show='removable && focused===pa.uid'
@@ -62,7 +67,7 @@
           )
           .currency {{currency}}
 
-      .participator.add.px-2.mx-1(v-if='candidates.length')
+      .participator.add.px-2.mx-1(v-if='allowAdd && candidates.length')
         app-member-select(:members='candidates', @input='id=>addParticipator(id)')
           v-btn(icon small).op-50
             v-icon(size='24') mdi-plus
@@ -146,6 +151,7 @@ export default class Splitting extends Vue {
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
   @Prop({ default: true }) readonly showTabs!: boolean
   @Prop({ default: () => [] }) readonly members!: Member[]
+  @Prop(Boolean) readonly allowAdd?: boolean
 
   focused: string|null = null
 

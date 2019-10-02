@@ -5,66 +5,57 @@
     :trans='form'
     :members='members'
     :on='on'
+    :allow-add='allowAdd'
     @keyboard='openKeyboard'
   )
 
   div
-    .mx-3(
+    fee-input(
+      ref='fee_input'
       v-if='on==="creditors"'
-      v-columns='"max-content auto 65px"'
-      style='vertical-align:bottom'
+      :form='form'
+      @keyboard='openKeyboardForMainInput'
     )
-      div(v-rows='"auto max-content"')
-        div
-        .my-3.ml-2 {{$t('ui.total')}}
-      app-number-input(
-        ref='total_fee_input'
-        :value='form.total_fee'
-        @user-input='v=>form.total_fee=v'
-        @focus='openKeyboardForMainInput'
-        placeholder='0'
-        reverse outline autofocus
-        required hide-details flat main
-      ).pr-2
-      div(v-rows='"auto 45px"')
-        span
-        app-currency-select.mt-0.pt-0(v-model='form.currency' mini :codes='currencies')
-
     v-expand-transition
       app-soft-numpad(
         ref='numpad'
         v-show='showKeyboard'
         @close='closeKeyboard'
       )
-
 </template>
 
 <script lang='ts'>
 import { mixins, Component, Prop, Watch } from 'nuxt-property-decorator'
+import FeeInput from './FeeInput.vue'
 import { Transaction } from '~/types'
 import SoftNumpad from '~/components/basic/SoftNumpad.vue'
-import NumberInput from '~/components/basic/NumberInput.vue'
 import Splitting from '~/components/composed/Splitting.vue'
+import NumberInput from '~/components/basic/NumberInput.vue'
 import { GroupMixin } from '~/mixins'
 
-@Component
+@Component({
+  components: {
+    FeeInput,
+  },
+})
 export default class PageSplitting extends mixins(GroupMixin) {
   registeredInput: NumberInput | null = null
 
   @Prop(Object) readonly form!: Transaction
   @Prop({ default: 'debtors' }) readonly on!: 'debtors' | 'creditors'
+  @Prop({ default: false }) readonly allowAdd?: boolean
 
   $refs!: {
     splitting: Splitting
     numpad: SoftNumpad
-    total_fee_input: NumberInput
+    fee_input: FeeInput
   }
 
   @Watch('form', { immediate: true })
   onFormChanged () {
     if (this.on === 'creditors') {
       this.$nextTick(() => {
-        this.openKeyboardForMainInput(this.$refs.total_fee_input)
+        this.$refs.fee_input.open()
       })
     }
   }

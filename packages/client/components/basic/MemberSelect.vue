@@ -1,11 +1,10 @@
 <template lang='pug'>
 .member-select
-  v-menu(v-model='menu' max-width='450px')
+  v-menu(v-model='menu' max-width='450px' :disabled='disabled || noOptions')
     template(v-slot:activator='{ on }')
       .vertical-aligned(v-on='on')
         slot
-          app-user-avatar(:id='current.uid', inline, show-name)
-          v-icon mdi-menu-down
+          app-user-avatar(:id='value' show-name)
 
     v-card.pa-2.text-center
       template(v-for='member in members')
@@ -25,10 +24,19 @@ export default class MemberSelect extends Vue {
 
   @Prop(String) readonly value!: string
   @Prop(Array) readonly members!: Member[]
+  @Prop(Boolean) readonly disabled?: boolean
 
   get current () {
     const member = this.members.find(m => m.uid === this.value)
     return member || {}
+  }
+
+  get noOptions () {
+    if (!this.members || !this.members.length)
+      return true
+    if (this.members.length === 1 && this.members[0].uid === this.value)
+      return true
+    return false
   }
 
   setValue (value) {

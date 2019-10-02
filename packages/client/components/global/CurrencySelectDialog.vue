@@ -42,7 +42,7 @@ export default class CurrencySelectDialog extends Vue {
 
   resolve: ((result?: string) => void) | null = null
   reject: ((error) => void) | null = null
-  search: string = ''
+  search = ''
 
   $refs!: {
     dialog: Dialog

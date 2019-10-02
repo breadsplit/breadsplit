@@ -1,13 +1,13 @@
 import get from 'lodash/get'
-import { Messages } from '../locales'
+import { LocaleMessages } from '../locales'
 
 export const LOCALE_FALLBACK = 'en'
 
 export function getValue (key: string, locale: string, fallback = LOCALE_FALLBACK) {
-  let value = get(Messages, `${locale}.${key}`) || ''
+  let value = get(LocaleMessages, `${locale}.${key}`) || ''
 
   if (!value)
-    value = get(Messages, `${fallback}.${key}`) || ''
+    value = get(LocaleMessages, `${fallback}.${key}`) || ''
 
   return value.toString()
 }

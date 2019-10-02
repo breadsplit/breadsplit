@@ -1,5 +1,5 @@
 import { ClientGroup, UserInfo, ExchangeRecord, Solution, Balance, Group } from '~/types'
-import { OSType, WebviewType } from '~/utils/ua'
+import { WebviewType, OSType } from '~/utils'
 
 export interface GroupState {
   groups: Record<string, ClientGroup>

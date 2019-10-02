@@ -1,5 +1,5 @@
 import { Vue, Component } from 'nuxt-property-decorator'
-import { hash } from '~/utils/reactive_hash'
+import { reactiveHash } from '~/utils'
 
 @Component
 export default class NavigationMixin extends Vue {
@@ -7,10 +7,10 @@ export default class NavigationMixin extends Vue {
     return this.$store.getters['group/currentId']
   }
 
-  hash = hash.value as any
+  hash = reactiveHash.value as any
 
   updateHash (field: string, value: any) {
-    hash.$set(hash.value, field, value)
+    reactiveHash.$set(reactiveHash.value, field, value)
   }
 
   gotoHome () {

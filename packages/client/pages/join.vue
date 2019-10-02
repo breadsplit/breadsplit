@@ -12,12 +12,8 @@
         v-icon.ma-2(color='primary', size='100') mdi-emoticon-sad-outline
         p(class='primary--text' color='primary' style='font-size: 1.4em') {{$t('ui.join.group_not_found')}}
 
-        v-btn.ma-2(color='teal lighten-1' dark @click='reload()')
-          v-icon(size='20') mdi-autorenew
-          span.ma-2 {{$t('ui.button_refresh')}}
-        v-btn.ma-2(color='teal lighten-1' dark @click='gotoHome()')
-          v-icon(size='20') mdi-home-variant
-          span.ma-2 {{$t('ui.button_go_home')}}
+        v-btn.ma-2(color='primary' rounded dark @click='reload()') {{$t('ui.button_refresh')}}
+        v-btn.ma-2(color='primary' text dark @click='gotoHome()') {{$t('ui.button_go_home')}}
 
       div(v-else style='max-width:700px; margin: 0 auto;')
         p.ma-4(v-if='group' style='font-size: 1.4em')
@@ -149,6 +145,9 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
     }
     await this.$fire.waitForInitialized()
     this.serverGroup = await this.$fire.groupInfo(this.id)
+    if (this.group)
+      document.title = this.$t('ui.join.group_title', [this.group.name]).toString()
+
     this.loading = false
   }
 }

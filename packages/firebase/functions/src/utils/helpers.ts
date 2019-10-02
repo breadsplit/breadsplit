@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import { Eval, omitDeep } from './utils/opschain'
-import { Operation } from './utils/types'
+import { Eval, omitDeep } from './opschain'
+import { Operation } from './types'
 
 export const db = admin.firestore()
 export const GroupsRef = (id: string) => db.collection('groups').doc(id)

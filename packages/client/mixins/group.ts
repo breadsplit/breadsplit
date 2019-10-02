@@ -49,7 +49,7 @@ export default class GroupMixin extends Vue {
 
   get inviteLink () {
     if (this.group && this.group.online)
-      return `${origin()}/join?id=${this.group.id}`
+      return `${origin()}/join?id=${this.group.id}&group_title=${encodeURIComponent(this.group.name)}`
     return undefined
   }
 

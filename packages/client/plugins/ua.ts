@@ -4,7 +4,7 @@
 
 /*
 import { Context } from '@nuxt/vue-app'
-import { getWebviewType } from '~/utils/ua'
+import { getWebviewType } from '~/utils'
 
 export default ({ route, app, redirect }: Context) => {
   const webview = getWebviewType()

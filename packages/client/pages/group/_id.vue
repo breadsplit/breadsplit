@@ -71,14 +71,17 @@
     v-btn.new-transaction-button(
       fab color='primary'
       :style='fabStyle'
-      @click='gotoNewTransaction()'
+      @click='newTransaction()'
     )
       v-icon mdi-plus
+
+  new-transaction-select(ref='new_transaction_select')
 </template>
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
+import NewTransactionSelect from '~/components/dialogs/NewTransactionSelect.vue'
 
 @Component({
   head () {
@@ -97,8 +100,15 @@ import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
     store.commit('group/clearUnreads', params.id)
     return { params }
   },
+  components: {
+    NewTransactionSelect,
+  },
 })
 export default class GroupPage extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
+  $refs!: {
+    new_transaction_select: NewTransactionSelect
+  }
+
   // Computed
   get tabItems () {
     return [
@@ -140,6 +150,10 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
     this.updateHash('tab', 'expenses')
     this.updateHash('expenses', '1')
     this.updateHash('involvedIndex', '0')
+  }
+
+  newTransaction () {
+    this.$refs.new_transaction_select.open()
   }
 
   get tab_id () {

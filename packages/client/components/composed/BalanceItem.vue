@@ -1,5 +1,5 @@
 <template lang='pug'>
-.balance-item(:key='balance.uid' @click='gotoNewTransaction({from: balance.uid})')
+.balance-item(:key='balance.uid')
   .text(:class='textClass')
     app-user-info(:id='balance.uid')
     app-money-label.money(

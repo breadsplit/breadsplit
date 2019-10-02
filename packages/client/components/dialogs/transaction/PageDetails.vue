@@ -5,7 +5,7 @@
     v-carousel(
       v-model='carouselIndex'
       :show-arrows='false'
-      :show-delimiters='form.attached_images.length > 1'
+      :hide-delimiters='form.attached_images.length <= 1'
       delimiter-icon='mdi-circle-medium'
       hide-delimiter-background
       height='250'
@@ -24,7 +24,7 @@
       div(style='height:60px')
         v-menu(
           v-model='showCategorySelect'
-          :disabled='!editing'
+          :disabled='!editing || form.type === "transfer"'
           transition='slide-y-transition'
         )
           template(v-slot:activator='{ on }')
@@ -88,8 +88,9 @@
 
   v-divider
 
-  .px-2.pt-4.pb-6
-    app-transaction-sheet(:transaction='form' dense)
+  .px-2.py-4
+    transfer-form.pb-3.pt-4(v-if='form.type === "transfer"' :form='form' disabled)
+    app-transaction-sheet.pb-1(v-else :transaction='form' dense hide-empty)
 
   template(v-if='!editing')
     v-divider
@@ -125,15 +126,17 @@
 import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import FormCategory from '../FormCategory.vue'
 import ExchangeRateInput from './ExchangeRateInput.vue'
+import TransferForm from './TransferForm.vue'
 import DatePicker from '~/components/basic/DatePicker.vue'
 import { Transaction } from '~/types'
 import { TransactionWeightsHelper } from '~/core'
-import { dateFromNow } from '~/../utils/formatters'
+import { dateFromNow } from '~/utils'
 import { GroupMixin, CommonMixin } from '~/mixins'
 
 @Component({
   components: {
     ExchangeRateInput,
+    TransferForm,
   },
 })
 export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
