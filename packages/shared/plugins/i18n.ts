@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import dayjs from 'dayjs'
-import { Context } from '@nuxt/vue-app'
+import { Context } from '@nuxt/types'
 import { LocaleMessages } from '../../locales'
 import { LOCALE_FALLBACK } from '../utils'
 

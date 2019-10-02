@@ -1,4 +1,4 @@
-import { Context } from '@nuxt/vue-app'
+import { Context } from '@nuxt/types'
 import { getWebviewType } from '~/utils'
 
 let checked = false

@@ -1,6 +1,6 @@
-import NuxtConfiguration from '@nuxt/config'
+import { Configuration } from '@nuxt/types'
 
 export interface NuxtModuleContext {
-  options: NuxtConfiguration
+  options: Configuration
   nuxt: any
 }

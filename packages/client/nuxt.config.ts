@@ -1,11 +1,11 @@
-import NuxtConfiguration from '@nuxt/config'
+import { Configuration } from '@nuxt/types'
 import theme from '../meta/theme'
 import { extendConfig } from '../nuxt.config.base'
 
 const RELEASE_CHANNEL = process.env.RELEASE_CHANNEL || 'dev'
 const fullname = RELEASE_CHANNEL !== 'dev' ? 'BreadSplit' : 'BreadSplit Dev'
 
-const config: NuxtConfiguration = extendConfig({
+const config: Configuration = extendConfig({
   head: {
     script: [
       {

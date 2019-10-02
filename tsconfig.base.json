@@ -22,14 +22,14 @@
       "~/*": ["./packages/client/*"]
     },
     "types": [
-      "@nuxt/vue-app",
+      "@nuxt/types",
       "@types/node",
       "@types/jest",
       "@types/webpack-env",
       "vuetify"
     ],
     "plugins": [
-      { "transform": "ts-optchain/transform" },
-    ],
+      { "transform": "ts-optchain/transform" }
+    ]
   }
 }

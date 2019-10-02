@@ -1,4 +1,4 @@
-import NuxtConfiguration from '@nuxt/config'
+import { Configuration } from '@nuxt/types'
 import mergeWith from 'lodash/mergeWith'
 import pkg from '../package.json'
 import theme from './meta/theme'
@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const RELEASE_CHANNEL = process.env.RELEASE_CHANNEL || 'dev'
 const fullname = RELEASE_CHANNEL !== 'dev' ? 'BreadSplit' : 'BreadSplit Dev'
 
-const config: NuxtConfiguration = {
+const config: Configuration = {
   mode: 'spa',
   debug: dev,
 
@@ -78,7 +78,8 @@ const config: NuxtConfiguration = {
     '@nuxtjs/google-gtag',
   ],
 
-  devModules: [
+  buildModules: [
+    '@nuxt/typescript-build',
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
   ],
@@ -106,7 +107,7 @@ const config: NuxtConfiguration = {
 
 export default config
 
-export function extendConfig (overrides: NuxtConfiguration) {
+export function extendConfig (overrides: Configuration) {
   return mergeWith(overrides, config, (obj, src) => {
     if (Array.isArray(obj))
       return obj.concat(src)

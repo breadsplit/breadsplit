@@ -1,7 +1,7 @@
-import NuxtConfiguration from '@nuxt/config'
+import { Configuration } from '@nuxt/types'
 import { extendConfig } from '../nuxt.config.base'
 
-const config: NuxtConfiguration = extendConfig({
+const config: Configuration = extendConfig({
   css: ['~/assets/style/index.sass'],
 
   modules: [

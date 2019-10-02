@@ -3,7 +3,7 @@
 // https://github.com/nuxt/nuxt.js/issues/4491
 
 /*
-import { Context } from '@nuxt/vue-app'
+import { Context } from '@nuxt/types'
 import { getWebviewType } from '~/utils'
 
 export default ({ route, app, redirect }: Context) => {

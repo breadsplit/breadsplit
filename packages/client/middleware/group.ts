@@ -1,4 +1,4 @@
-import { Context } from '@nuxt/vue-app'
+import { Context } from '@nuxt/types'
 
 export default function ({ store, route }: Context) {
   const result = /\/group\/([\w:-]*)?/.exec(route.path)

@@ -1,5 +1,5 @@
 import CreatePersistedState from 'vuex-persistedstate'
-import { Context } from '@nuxt/vue-app'
+import { Context } from '@nuxt/types'
 
 const StoreKey = 'breadsplit-store'
 const PathsEnabled = [

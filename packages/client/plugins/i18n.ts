@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-import { Context } from '@nuxt/vue-app'
+import { Context } from '@nuxt/types'
 import dayjs from 'dayjs'
 import { Messages, LOCALE_FALLBACK } from '~/utils'
 
