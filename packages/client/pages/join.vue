@@ -42,7 +42,9 @@
           app-user-avatar(:id='uid', :size='44' style='margin-left: -1.1px').mr-3
           span {{$t('ui.join_as_me', [me.name])}}
 
-        v-btn.px-4(v-else color='primary' outlined rounded @click='join()') {{$t('ui.join.join_anonymous')}}
+        template(v-else)
+          v-btn.px-4.mx-2(color='primary' outlined rounded @click='join()') {{$t('ui.join.join_anonymous')}}
+          v-btn.px-4.mx-2(color='primary' text @click='login()') {{$t('ui.sign_in')}}
 
         v-divider.mb-3.mt-6
 
@@ -67,6 +69,9 @@ import { IsThisId } from '~/core'
 import { CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
 import Login from '~/components/dialogs/Login.vue'
 
+const DELAY = 500
+
+// @ts-ignore
 @Component({
   // @ts-ignore
   layout: 'base',
@@ -112,6 +117,13 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
     return this.members.filter(m => !IsThisId.LocalMember(m.uid))
   }
 
+  async login () {
+    await this.$refs.login.login()
+    setTimeout(() => {
+      this.redirectIfAlreadyMember()
+    }, DELAY)
+  }
+
   async join (memberId?: string) {
     if (!this.id)
       return
@@ -125,20 +137,27 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
       this.$apploading.open(this.$t('ui.join.join_in_progress'))
       await this.$fire.joinGroup(this.id, memberId)
       this.$apploading.close()
-    }, 300)
+    }, DELAY)
   }
 
   isLocal (id: string) {
     return IsThisId.LocalMember(id)
   }
 
-  async mounted () {
-    this.loading = true
-    if (this.$store.getters['group/all'].map(g => g.id).includes(this.id)) {
+  redirectIfAlreadyMember () {
+    if (this.$store.getters['group/all'].map(g => g.id).includes(this.id)
+    || (this.serverGroup && this.uid && this.serverGroup.viewers.includes(this.uid))) {
       this.$router.replace(`/group/${this.id}`)
       this.$snack(this.$t('tips.already_joined_group'))
-      return
+      return true
     }
+    return false
+  }
+
+  async mounted () {
+    this.loading = true
+    if (this.redirectIfAlreadyMember())
+      return
     if (!this.id) {
       this.loading = false
       return

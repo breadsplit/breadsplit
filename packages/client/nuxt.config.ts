@@ -133,6 +133,12 @@ const config: Configuration = extendConfig({
         method: 'GET',
         strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
       },
+      {
+        urlPattern: '/.wellknown/*',
+        handler: 'cacheFirst',
+        method: 'GET',
+        strategyOptions: { cacheableResponse: { statuses: [0, 200] } },
+      },
     ],
   },
 
