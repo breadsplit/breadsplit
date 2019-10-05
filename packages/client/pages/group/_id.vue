@@ -67,21 +67,12 @@
         span {{item.text}}
         v-icon mdi-{{item.icon}}
 
-  v-fab-transition
-    v-btn.new-transaction-button(
-      fab color='primary'
-      :style='fabStyle'
-      @click='newTransaction()'
-    )
-      v-icon mdi-plus
-
-  new-transaction-select(ref='new_transaction_select')
+  app-speed-dial(v-model='newMenuShown' :items='newItemsMenu' :style='fabStyle')
 </template>
 
 <script lang='ts'>
 import { Component, mixins } from 'nuxt-property-decorator'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
-import NewTransactionSelect from '~/components/dialogs/NewTransactionSelect.vue'
 
 @Component({
   head () {
@@ -100,37 +91,53 @@ import NewTransactionSelect from '~/components/dialogs/NewTransactionSelect.vue'
     store.commit('group/clearUnreads', params.id)
     return { params }
   },
-  components: {
-    NewTransactionSelect,
-  },
 })
 export default class GroupPage extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
-  $refs!: {
-    new_transaction_select: NewTransactionSelect
-  }
+  newMenuShown = false
 
   // Computed
   get tabItems () {
-    return [
-      {
-        text: this.$t('ui.tabs.summary'),
-        icon: 'script-text-outline',
-        key: 'summary',
-      }, {
-        text: this.$t('ui.tabs.expenses'),
-        icon: 'chart-pie',
-        key: 'expenses',
-        style: 'margin-right: 25px',
-      }, {
-        text: this.$t('ui.tabs.activities'),
-        icon: 'calendar-text',
-        key: 'activities',
-        style: 'margin-left: 25px',
-      }, {
-        text: this.$t('ui.tabs.members'),
-        icon: 'account-group',
-        key: 'members',
-      }]
+    return [{
+      text: this.$t('ui.tabs.summary'),
+      icon: 'script-text-outline',
+      key: 'summary',
+    }, {
+      text: this.$t('ui.tabs.expenses'),
+      icon: 'chart-pie',
+      key: 'expenses',
+      style: 'margin-right: 25px',
+    }, {
+      text: this.$t('ui.tabs.activities'),
+      icon: 'calendar-text',
+      key: 'activities',
+      style: 'margin-left: 25px',
+    }, {
+      text: this.$t('ui.tabs.members'),
+      icon: 'account-group',
+      key: 'members',
+    }]
+  }
+
+  get newItemsMenu () {
+    return [{
+      text: this.$t('ui.transactions.type_personal'),
+      icon: 'account',
+      key: 'personal',
+      color: 'grey darken-1',
+      handler: () => this.gotoNewTransaction({ solo: true }),
+    }, {
+      text: this.$t('ui.transactions.type_expense'),
+      icon: 'account-group',
+      key: 'expense',
+      color: 'primary',
+      handler: () => this.gotoNewTransaction(),
+    }, {
+      text: this.$t('ui.transactions.type_transfer'),
+      icon: 'account-switch',
+      key: 'transfer',
+      color: 'grey darken-1',
+      handler: () => this.gotoNewTransaction({ type: 'transfer' }),
+    }]
   }
 
   get fabStyle () {
@@ -150,10 +157,6 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
     this.updateHash('tab', 'expenses')
     this.updateHash('expenses', '1')
     this.updateHash('involvedIndex', '0')
-  }
-
-  newTransaction () {
-    this.$refs.new_transaction_select.open()
   }
 
   get tab_id () {
