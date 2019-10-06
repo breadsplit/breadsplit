@@ -2,7 +2,7 @@
 v-list.transactions-list.pa-0(two-line flat)
   recycle-scroller(
     :items='transactions'
-    :item-size='74'
+    :item-size='75'
     key-field='id'
     v-slot='{ item, index }'
     page-mode
