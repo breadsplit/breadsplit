@@ -12,10 +12,14 @@ v-fab-transition
         v-icon(v-else) mdi-{{icon}}
     .speed-dial-container
       .actions
-        .action-with-text.pa-3.pb-5(v-for='item in items' :style='item.style' @click='itemClick(item)')
-          v-btn.action(fab, dark, :color='item.color || "primary"')
+        .action-with-text.pa-3.pb-5(
+          v-for='item in items'
+          :style='item.style'
+          @click='itemClick(item)'
+        )
+          v-btn.action.mx-auto(fab, dark, :color='item.color || "primary"')
             v-icon mdi-{{item.icon}}
-          span.text(style='color:#fff') {{item.text}}
+          span.text.mx-auto(style='color:#fff') {{item.text}}
 </template>
 
 <script lang='ts'>
@@ -70,12 +74,13 @@ export default class SpeedDial extends Vue {
     right: 0
 
     .action-with-text
-      vertical-align: bottom
-      &:first-child, &:last-child
-        padding-bottom: 0 !important
+      vertical-align: top
+      width: 110px
+
+      &:not(:first-child):not(:last-child)
+        margin-top: -20px !important
 
       .text
-        background: rgba(0,0,0,0.2)
         border-radius: 4px
         padding: 3px
 </style>
