@@ -111,6 +111,9 @@ export const Transforms: TransformFunctions<Group> = {
   insert_transaction (snap, transaction?: Transaction, { by, timestamp } = {}) {
     if (!transaction)
       return snap
+    if (snap.transactions.find(i => i.id === transaction.id))
+      return snap
+
     const trans = cloneDeep(transaction)
     trans.creator = by
     trans.timestamp_created = timestamp
