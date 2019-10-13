@@ -5,30 +5,33 @@ export function getTimezone () {
   return Intl.DateTimeFormat().resolvedOptions().timeZone
 }
 
-export function dateFromNow (time: dayjs.ConfigType, locale: string) {
+export function dateFromNow (time: dayjs.ConfigType, locale: string = LOCALE_FALLBACK) {
   const d = dayjs(time)
+  const date = d.toDate() || new Date()
   const now = dayjs()
   if (now.diff(d, 'year') >= 1)
-    return d.toDate().toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
+    return date.toLocaleDateString(locale || LOCALE_FALLBACK, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })
   if (now.diff(d, 'day') >= 1)
-    return d.toDate().toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' })
+    return date.toLocaleDateString(locale || LOCALE_FALLBACK, { weekday: 'long', month: 'long', day: 'numeric' })
   return d.fromNow()
 }
 
 export function shortDate (locale: string, time: dayjs.ConfigType, relatedTo?: dayjs.ConfigType) {
   const d = dayjs(time)
+  const date = d.toDate() || new Date()
   if (dayjs(relatedTo).year() === d.year())
-    return d.toDate().toLocaleDateString(locale, { month: 'short', day: 'numeric' })
+    return date.toLocaleDateString(locale || LOCALE_FALLBACK, { month: 'short', day: 'numeric' })
   else
-    return d.toDate().toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'numeric' })
+    return date.toLocaleDateString(locale || LOCALE_FALLBACK, { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
 export function shortDateMonth (locale: string, time: dayjs.ConfigType, relatedTo?: dayjs.ConfigType) {
   const d = dayjs(time)
+  const date = d.toDate() || new Date()
   if (dayjs(relatedTo).year() === d.year())
-    return d.toDate().toLocaleDateString(locale, { month: 'long' })
+    return date.toLocaleDateString(locale || LOCALE_FALLBACK, { month: 'long' })
   else
-    return d.toDate().toLocaleDateString(locale, { month: 'long', year: 'numeric' })
+    return date.toLocaleDateString(locale || LOCALE_FALLBACK, { month: 'long', year: 'numeric' })
 }
 
 export function getWeekOfYear (time: dayjs.ConfigType) {
