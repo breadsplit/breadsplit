@@ -25,7 +25,7 @@
 import { Component, mixins, Prop, Watch } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
 import { getWeekOfYear, shortDate, shortDateMonth } from '~/utils'
-import { GroupMixin } from '~/mixins'
+import { GroupMixin, CommonMixin } from '~/mixins'
 
 export type DateRangeUnit = 'month' | 'week' | 'year' | 'day' | 'custom' | 'all'
 
@@ -42,7 +42,7 @@ const units = [
 ]
 
 @Component
-export default class DateRangeSelect extends mixins(GroupMixin) {
+export default class DateRangeSelect extends mixins(GroupMixin, CommonMixin) {
   @Prop({ type: String, default: 'month' }) readonly unit!: DateRangeUnit
   @Prop({ type: Number, default: () => +new Date() }) readonly from!: number
   @Prop(Number) readonly to?: number
@@ -102,14 +102,14 @@ export default class DateRangeSelect extends mixins(GroupMixin) {
       return this.$t('date_range.week.formatter', [getWeekOfYear(this.dateFrom)])
 
     if (this.unit === 'month')
-      return shortDateMonth(this.$i18n.locale, this.dateFrom)
+      return shortDateMonth(this.currentLocale, this.dateFrom)
 
-    return shortDate(this.$i18n.locale, this.dateFrom)
+    return shortDate(this.currentLocale, this.dateFrom)
   }
 
   get subdisplay () {
     const to = this.dateTo.subtract(1, 'minute')
-    return `${shortDate(this.$i18n.locale, this.dateFrom, this.dateFrom)} - ${shortDate(this.$i18n.locale, to, to)}`
+    return `${shortDate(this.currentLocale, this.dateFrom, this.dateFrom)} - ${shortDate(this.currentLocale, to, to)}`
   }
 
   changeUnit (unit: string) {

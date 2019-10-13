@@ -38,7 +38,7 @@ export default class GroupMixin extends Vue {
 
   get displayCurrency () {
     if (!this.group)
-      return this.$i18n.locale
+      return ''
     return this.localOptions.display_currency || this.group.main_currency
   }
 
