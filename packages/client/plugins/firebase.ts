@@ -504,6 +504,7 @@ export class FirebasePlugin {
   uploadLocalChanges (groups?: ClientGroup[]) {
     if (!groups)
       groups = Object.values(this.store.state.group.groups)
+
     return Promise.all(
       groups.map(async (group) => {
         if (!group.online)
@@ -520,9 +521,15 @@ export class FirebasePlugin {
           operations: unsynced,
           lastsync: group.lastsync,
         }
-        this.store.commit('group/syncOperations', { id: group.id, operations: unsynced })
+        this.store.commit('group/updateSyncingState', { id: group.id, syncing_operations: unsynced.map(i => i.hash) })
         log('🚀 Outcoming operations', payload)
-        await this.functions.httpsCallable('uploadOperations')(payload)
+
+        try {
+          await this.functions.httpsCallable('uploadOperations')(payload)
+        }
+        catch (e) {
+          this.store.commit('group/updateSyncingState', { id: group.id, syncing_error: e })
+        }
       }))
   }
 
@@ -531,7 +538,7 @@ export class FirebasePlugin {
 
     this._unwatchCallback = this.store.watch(
       (state) => {
-        return state.group.groups
+        return Object.values(state.group.groups).map(g => g.operations)
       }, () => {
         this.uploadLocalChanges()
       }, {

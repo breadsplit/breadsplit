@@ -303,6 +303,10 @@ ui:
     weight: 權重
   star_on_github: Star on Github
   support_us: 支持我們
+  syncing:
+    done: 所有更改已同步
+    error: 同步到服務器時發生錯誤
+    in_progress: 同步中...
   tabs:
     activities: 記錄
     balances: 債務情況

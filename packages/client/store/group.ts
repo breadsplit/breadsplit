@@ -9,6 +9,7 @@ import { GroupStateDefault } from '.'
 import { GroupState, RootState, Group, ServerGroup, ClientGroup, ExchangeRecord } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe, GroupBalances, GetSettleUpSolutions, CategoryDefault } from '~/core'
 import { DEBUG } from '~/../meta/env'
+import group from '~/middleware/group'
 
 // eslint-disable-next-line no-console
 const log = (...args) => !DEBUG || console.log('VUX', ...args)
@@ -319,7 +320,7 @@ export const mutations: MutationTree<GroupState> = {
       })
     }
 
-    const serverOperations = group.operations
+    const serverOperations = group.operations || []
     const localOperations = state.groups[group.id].operations || []
     const unsyncedOperations = localOperations.filter(
       o => !includes(serverOperations, o.hash)
@@ -335,6 +336,12 @@ export const mutations: MutationTree<GroupState> = {
     clientGroup.operations = unsyncedOperations
     clientGroup.lastsync = timestamp
     clientGroup.options = group.options
+    clientGroup.synced_operations = serverOperations
+
+    if (clientGroup.syncing_operations.length === 0) {
+      clientGroup.syncing_state = 'done'
+      clientGroup.syncing_error = null
+    }
 
     const currentActivitiesCount = oc(clientGroup).base.activities.length(0)
     const newActivitiesCount = Math.max(currentActivitiesCount - activitiesCount, 0)
@@ -350,6 +357,23 @@ export const mutations: MutationTree<GroupState> = {
   syncOperations (state, { id, operations }) {
     const group = state.groups[id]
     group.syncing_operations = union(group.syncing_operations || [], operations.map(o => o.hash))
+  },
+
+  updateSyncingState (state, { id, syncing_error, syncing_operations }: Partial<ClientGroup>) {
+    if (!id)
+      return
+    const group = state.groups[id]
+
+    if (group.syncing_operations) {
+      group.syncing_state = 'in_progress'
+      group.syncing_operations = union(group.syncing_operations || [], syncing_operations)
+    }
+
+    if (syncing_error !== undefined) {
+      group.syncing_error = syncing_error
+      group.syncing_state = 'error'
+      group.syncing_operations = []
+    }
   },
 
   resetSyncingStates (state) {

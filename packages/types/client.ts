@@ -12,6 +12,9 @@ export interface ClientGroup {
   online?: boolean
   lastsync?: number
   syncing_operations: string[]
+  syncing_state: 'done' | 'in_progress' | 'error' | 'none'
+  syncing_error: Error | null
+  synced_operations: string[]
 
   // Options
   lastchanged: number

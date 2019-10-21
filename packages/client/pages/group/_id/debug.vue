@@ -1,8 +1,10 @@
 <template lang='pug'>
-.group-page.px-3.scrolling(style='height:100vh')
+.group-page.px-8.scrolling(style='height:100vh')
   h2 Debug
-  pre {{clientGroup.operations.length}}
+  pre Synced Operations: {{clientGroup.synced_operations.length}}
+  .py-3
   v-btn(@click='archive()' color='orange' dark) Archive Operations
+  v-btn(@click='back()' color='primary' text) Back to Group
 </template>
 
 <script lang='ts'>
@@ -15,6 +17,10 @@ export default class GroupDebugPage extends mixins(CommonMixin, NavigationMixin,
     if (!confirm('Sure?'))
       return
     this.$fire.archiveGroupOperations(this.group.id)
+  }
+
+  back () {
+    this.gotoGroup(this.group.id)
   }
 }
 </script>

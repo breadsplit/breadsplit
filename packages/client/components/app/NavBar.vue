@@ -10,9 +10,9 @@ v-app-bar.app-toolbar(app flat color='transparent' height='60').primary--text
     template(v-if='current')
       app-display-currency-switch
 
-      template(v-if='isSyncing()')
-        v-btn(icon text).syncing-icon
-          v-icon(color='primary') mdi-cloud-sync
+      template(v-if='isOnline')
+        app-syncing-state-indicator
+
       v-menu(offset-y)
         template(v-slot:activator='{ on }')
           v-btn(icon text v-on='on')
@@ -37,8 +37,6 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   @Getter('group/current') current: Group | undefined
   @Getter('user/me') user!: UserInfo
   @Getter('user/uid') uid: string | undefined
-
-  @Getter('group/isSyncing') isSyncing!: (id: string) => boolean
 
   @Mutation('group/remove') removeGroup
 
