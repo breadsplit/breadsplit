@@ -1,5 +1,5 @@
 import { f, GroupsRef, db, OperationsRef, recalculateGroupOperations } from './utils/helpers'
-import { ProcessServerOperations } from './utils/opschain'
+import { ProcessServerOperations, omitDeep } from './utils/opschain'
 
 export const archiveGroupOperations = f(async ({ id }: {id: string }, context) => {
   if (!context.auth || !context.auth.uid)
@@ -20,7 +20,7 @@ export const archiveGroupOperations = f(async ({ id }: {id: string }, context) =
         name: 'init',
         data: data.present,
       }], user_uid)
-      t.update(OperationsRef(id), 'operations', ops)
+      t.update(OperationsRef(id), 'operations', omitDeep(ops))
 
       recalculateGroupOperations(t, id, ops)
     }

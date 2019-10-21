@@ -50,7 +50,7 @@ async function ParseTransaction (trans: Transaction, group: Group, locale: strin
   if (trans.type === 'expense') {
     const balance = TransactionHelper.from(trans).balanceChangesOf(targetUid)
     if (!balance || balance.balance.equals(0))
-      return
+      return undefined
 
     const balanceChange = +balance.balance
     return {
@@ -74,6 +74,7 @@ async function ParseTransaction (trans: Transaction, group: Group, locale: strin
       creator,
     }
   }
+  return undefined
 }
 
 export async function PushGroupOperationsNotification (
