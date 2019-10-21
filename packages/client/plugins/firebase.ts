@@ -223,6 +223,10 @@ export class FirebasePlugin {
     await this.functions.httpsCallable('changeGroupOptions')({ id, changes })
   }
 
+  async archiveGroupOperations (id: string) {
+    await this.functions.httpsCallable('archiveGroupOperations')({ id })
+  }
+
   async registerMessagingToken () {
     if (!this.messaging)
       return null
