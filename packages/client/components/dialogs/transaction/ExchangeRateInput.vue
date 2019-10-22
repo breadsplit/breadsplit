@@ -17,7 +17,7 @@ div.ml-2(v-columns='"40px auto max-content max-content"' v-if='from !== to' v-ri
   v-dialog(v-model='dialog' width='500px')
     v-card
       v-toolbar(color='transparent' flat)
-        v-btn(icon @click='close()')
+        v-btn(icon @click='dialog = false')
           v-icon mdi-close
         v-toolbar-title.primary--text {{$t('ui.exchanges.set_exchanges')}}
 
@@ -59,11 +59,11 @@ div.ml-2(v-columns='"40px auto max-content max-content"' v-if='from !== to' v-ri
 
 <script lang='ts'>
 import { Component, Prop, mixins, Watch } from 'nuxt-property-decorator'
-import dayjs from 'dayjs'
-import { FallbackExchangeRate } from '../../../../meta/fallback_exchange_rates'
+import Fraction from 'fraction.js'
 import { Transaction } from '~/types'
 import { GroupMixin } from '~/mixins'
-import { getExchangeRateOn } from '~/core'
+import { ExchangeInTransaction } from '~/core'
+import { formatExchangeDate } from '~/utils'
 
 @Component
 export default class ExchangeRateInput extends mixins(GroupMixin) {
@@ -85,13 +85,8 @@ export default class ExchangeRateInput extends mixins(GroupMixin) {
     return this.form.total_fee
   }
 
-  get info (): { rate: number; date: string; source: 'manual' | 'system' | 'fallback' } {
-    if (this.form.exchange_rate_override)
-      return { source: 'manual', ...this.form.exchange_rate_override }
-    if (this.form.exchange_rate)
-      return { source: 'system', ...getExchangeRateOn(this.from, this.to, this.form.exchange_rate) }
-    else
-      return { source: 'fallback', ...getExchangeRateOn(this.from, this.to, FallbackExchangeRate) }
+  get info () {
+    return ExchangeInTransaction(this.form, new Fraction(this.fromFee), this.to, this.group.exchange_rates)
   }
 
   get manualRate () {
@@ -109,7 +104,7 @@ export default class ExchangeRateInput extends mixins(GroupMixin) {
         from: this.from,
         to: this.to,
         rate: value,
-        date: dayjs().format('YYYY-MM-DD'),
+        date: formatExchangeDate(),
       })
     }
   }
@@ -131,12 +126,14 @@ export default class ExchangeRateInput extends mixins(GroupMixin) {
   }
 
   updateSync () {
-    this.$set(this.form, 'exchange_rate', this.$fire.getExchangeRatesSync(this.form.timestamp))
+    const record = this.$fire.getExchangeRatesSync(this.form.timestamp)
+    this.$store.dispatch('group/updateExchangeRates', { id: this.group.id, date: record.date, record })
   }
 
   async update () {
     this.requesting = true
-    this.$set(this.form, 'exchange_rate', await this.$fire.getExchangeRates(this.form.timestamp))
+    const record = await this.$fire.getExchangeRates(this.form.timestamp)
+    this.$store.dispatch('group/updateExchangeRates', { id: this.group.id, date: record.date, record })
     this.requesting = false
   }
 

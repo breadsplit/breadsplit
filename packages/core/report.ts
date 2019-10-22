@@ -44,7 +44,7 @@ export function ReportExpensesByCategories (vm: Vue, transactions: Transaction[]
         value = balance.debt
     }
 
-    const exchangeResult = ExchangeInTransaction(transaction, value, display_currency || group.main_currency)
+    const exchangeResult = ExchangeInTransaction(transaction, value, display_currency || group.main_currency, group.exchange_rates)
     records[categoryid].value = records[categoryid].value.add(exchangeResult.value)
   }
 

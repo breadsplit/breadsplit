@@ -19,6 +19,7 @@ export const archiveGroupOperations = f(async ({ id }: {id: string }, context) =
       const ops = ProcessServerOperations([{
         name: 'init',
         data: data.present,
+        timestamp: 0,
       }], user_uid)
       t.update(OperationsRef(id), 'operations', omitDeep(ops))
 

@@ -66,7 +66,6 @@ export interface Transaction {
   tags?: string[]
   note?: string
 
-  exchange_rate?: ExchangeRecord
   exchange_rate_override?: TransactionExchangeRecord
 
   location?: string | object
@@ -122,6 +121,7 @@ export interface Group {
   main_currency: string
   transactions: Transaction[]
   activities: Activity[]
+  exchange_rates: Record<string, ExchangeRecord>
 
   online?: boolean
 }

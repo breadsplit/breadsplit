@@ -1,7 +1,9 @@
 import find from 'lodash/find'
 import Fraction from 'fraction.js'
+import dayjs from 'dayjs'
 import { Transaction, Group, Balance, Solution, ExchangeRecord } from '../types'
 import { FallbackExchangeRate } from '../meta/fallback_exchange_rates'
+import { formatExchangeDate } from '../utils/formatters'
 import { defaultCurrency } from './defaults'
 import { TransactionHelper } from '.'
 
@@ -17,29 +19,48 @@ export function getExchangeRateOn (from: string, to: string, exchange_record: Ex
   return { rate, date: exchange_record.date }
 }
 
-export function ExchangeInTransaction (transaction: Transaction, value: Fraction, target_currency: string, fallback_exchange_record = FallbackExchangeRate) {
+function findClosestExchangeRate (from: dayjs.ConfigType, exchange_records: Record<string, ExchangeRecord> = {}, days = 3) {
+  const date = dayjs(from)
+  for (let i = 0; i <= days; i++) {
+    const date_string = formatExchangeDate(date.subtract(i, 'day'))
+    if (exchange_records[date_string])
+      return exchange_records[date_string]
+  }
+  return undefined
+}
+
+export function ExchangeInTransaction (transaction: Transaction, value: Fraction, target_currency: string, exchange_records: Record<string, ExchangeRecord>, fallback_exchange_record = FallbackExchangeRate) {
   let currency = transaction.currency
   target_currency = target_currency || defaultCurrency
   let date: string | undefined
+  let source = 'manual'
+  let rate = 1
 
   while (currency !== target_currency) {
     // use manual override
     if (transaction.exchange_rate_override && transaction.exchange_rate_override.from === currency) {
-      value = value.mul(transaction.exchange_rate_override.rate)
+      rate = transaction.exchange_rate_override.rate
+      value = value.mul(rate)
       currency = transaction.exchange_rate_override.to
       date = transaction.exchange_rate_override.date
     }
     // use transaction defined exchange rate
     else {
-      const exchange = transaction.exchange_rate || fallback_exchange_record
-      const { rate } = getExchangeRateOn(currency, target_currency, exchange)
+      source = 'system'
+      let exchange = findClosestExchangeRate(transaction.timestamp, exchange_records)
+      if (!exchange) {
+        source = 'fallback'
+        exchange = fallback_exchange_record
+      }
+      const info = getExchangeRateOn(currency, target_currency, exchange)
+      rate = info.rate
       value = value.mul(rate)
       currency = target_currency
       date = exchange.date
     }
   }
 
-  return { value, date }
+  return { value, date, source, rate }
 }
 
 export function GroupBalances (group: Group, display?: string | null, fallback_exchange_record = FallbackExchangeRate): Balance[] {
@@ -64,7 +85,7 @@ export function GroupBalances (group: Group, display?: string | null, fallback_e
       if (!member)
         throw new Error(`Member with id:"${c.uid}" is not found.`)
 
-      const { value } = ExchangeInTransaction(t, c.balance, display_currency || group.main_currency, fallback_exchange_record)
+      const { value } = ExchangeInTransaction(t, c.balance, display_currency || group.main_currency, group.exchange_rates, fallback_exchange_record)
       member.balance = member.balance.add(value)
     })
   })

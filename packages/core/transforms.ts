@@ -7,6 +7,7 @@ Please DO DEPLOY firebase functions before merge into master.
 import cloneDeep from 'lodash/cloneDeep'
 import { TransformFunctions, Group, Member, Transaction, GroupMetaChanges, Category } from '../types'
 import { CategoryPresets } from '../meta/categories'
+import { ExchangeRecord } from '../types/currency_exchange'
 import { IsThisId } from './id_helper'
 
 export type TransformKeys =
@@ -18,6 +19,7 @@ export type TransformKeys =
   | 'insert_transaction'
   | 'modify_transaction'
   | 'remove_transaction'
+  | 'update_exchange_rate'
   | 'insert_category'
   | 'modify_category'
   | 'remove_category'
@@ -164,6 +166,13 @@ export const Transforms: TransformFunctions<Group> = {
       entity_name: transaction.desc,
       entity_desc: `${transaction.currency} ${transaction.total_fee}`,
     })
+    return snap
+  },
+
+  update_exchange_rate (snap, { date, record }: {date: string; record: ExchangeRecord}) {
+    if (!snap.exchange_rates)
+      snap.exchange_rates = {}
+    snap.exchange_rates[date] = record
     return snap
   },
 

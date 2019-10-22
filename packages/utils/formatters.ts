@@ -77,3 +77,7 @@ export function capitalize (s: string) {
 export function capitalizeEachWords (s: string, delimiter = ' ') {
   return s.split(delimiter).map(w => capitalize(w)).join(delimiter)
 }
+
+export function formatExchangeDate (d?: dayjs.ConfigType) {
+  return dayjs(d).format('YYYY-MM-DD')
+}

@@ -9,7 +9,6 @@ import { GroupStateDefault } from '.'
 import { GroupState, RootState, Group, ServerGroup, ClientGroup, ExchangeRecord } from '~/types'
 import { EvalTransforms, ProcessOperation, BasicCache, Transforms, MemberDefault, ClientGroupDefault, TransactionDefault, TransformKeys, IdMe, GroupBalances, GetSettleUpSolutions, CategoryDefault } from '~/core'
 import { DEBUG } from '~/../meta/env'
-import group from '~/middleware/group'
 
 // eslint-disable-next-line no-console
 const log = (...args) => !DEBUG || console.log('VUX', ...args)
@@ -178,6 +177,13 @@ export const actions: ActionTree<GroupState, RootState> = {
 
   reorderCategories (context, { id, categories, archived = [] }) {
     NewOperation(context, id, 'reorder_categories', categories)
+  },
+
+  // Exchange Rates
+  updateExchangeRates (context, { id, date, record }) {
+    if (oc(context.state).cache.groups[id].exchange_rates[date]())
+      return
+    NewOperation(context, id, 'update_exchange_rate', { date, record })
   },
 
   // Caches
@@ -352,11 +358,6 @@ export const mutations: MutationTree<GroupState> = {
 
   clearUnreads (state, id) {
     Vue.set(state.unreads, id, 0)
-  },
-
-  syncOperations (state, { id, operations }) {
-    const group = state.groups[id]
-    group.syncing_operations = union(group.syncing_operations || [], operations.map(o => o.hash))
   },
 
   updateSyncingState (state, { id, syncing_error, syncing_operations }: Partial<ClientGroup>) {

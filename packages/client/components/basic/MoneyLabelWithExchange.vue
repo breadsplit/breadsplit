@@ -15,23 +15,27 @@ span
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Component, Prop, mixins } from 'nuxt-property-decorator'
 import Fraction from 'fraction.js'
 import { Transaction } from '~/types'
 import { ExchangeInTransaction } from '~/core'
+import { GroupMixin } from '~/mixins'
 
 @Component
-export default class MoneyLabelWithExchange extends Vue {
+export default class MoneyLabelWithExchange extends mixins(GroupMixin) {
   @Prop({ default: 0 }) readonly amount!: number
   @Prop(String) readonly target!: string
   @Prop(Boolean) readonly color?: boolean
   @Prop(Object) readonly transaction!: Transaction
 
+  get exchanges () {
+    return ExchangeInTransaction(this.transaction, new Fraction(this.amount), this.target, this.group.exchange_rates)
+  }
+
   get targetAmount () {
     if (this.target === this.source)
       return this.amount
-    const { value } = ExchangeInTransaction(this.transaction, new Fraction(this.amount), this.target)
-    return +value
+    return +this.exchanges.value
   }
 
   get source () {
