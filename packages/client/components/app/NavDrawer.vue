@@ -21,13 +21,7 @@ v-navigation-drawer(
         v-list-item-content
           v-list-item-title(v-text='group.name')
         v-list-item-action(v-if='group.online')
-          template(v-if='unreadsOf(group.id)')
-            v-avatar(size='25', color='red' dark)
-              v-list-item-title.ma-2(v-text='unreadsOf(group.id)' style='color: white;')
-          template(v-else-if='isSyncing(group.id)')
-            v-icon.syncing-icon(color='grey lighten-1', size='20') mdi-cloud-sync
-          template(v-else)
-            v-icon(color='grey lighten-1', size='20') mdi-cloud-outline
+          app-group-state-icon(:id='group.id')
 
     .drawer-list-bottom.pb-2
       v-divider.mb-2
@@ -86,9 +80,6 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin) {
   @Getter('group/all') groups!: Group[]
   @Getter('user/online') userIsOnline!: boolean
 
-  @Getter('group/unreadsOf') unreadsOf!: (id: string) => number
-  @Getter('group/isSyncing') isSyncing!: (id: string) => boolean
-
   $refs!: {
     login: Login
   }
@@ -97,6 +88,7 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin) {
   get internalDrawer () {
     return this.drawer
   }
+
   set internalDrawer (value: boolean) {
     this.$emit('update:drawer', value)
   }
@@ -114,6 +106,10 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin) {
   async openLoginDialog () {
     this.tryCloseDrawer()
     this.$refs.login.open()
+  }
+
+  getClientGroup (id: string) {
+    return this.$store.state.group.groups[id]
   }
 
   tryCloseDrawer () {

@@ -2,7 +2,7 @@
 v-menu(offset-y)
   template(v-slot:activator='{ on }')
     v-btn(icon text v-on='on')
-      app-syncing-icon
+      app-syncing-icon(:client-group='clientGroup')
   v-card.pa-3
     span {{$t(`ui.syncing.${clientGroup.syncing_state}`)}}
     template(v-if='clientGroup.syncing_state === "error"')

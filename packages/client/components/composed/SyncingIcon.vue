@@ -3,11 +3,13 @@ v-icon(v-if='clientGroup && clientGroup.online' :color='color' :class='classes')
 </template>
 
 <script lang="ts">
-import { Component, mixins } from 'nuxt-property-decorator'
-import { GroupMixin } from '~/mixins'
+import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { ClientGroup } from '~/types'
 
 @Component
-export default class SyncingIcon extends mixins(GroupMixin) {
+export default class SyncingIcon extends Vue {
+  @Prop() clientGroup!: ClientGroup
+
   get icon () {
     if (!this.clientGroup)
       return

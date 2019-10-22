@@ -10,8 +10,8 @@ nuxt-link.group-widget.pa-3(
   .pa-2
     .group-name(v-text='group.name')
     .group-members {{membersCount}} members
-  .group-status-icon
-    v-icon.op-50(v-if='group.online') mdi-cloud-outline
+  .group-status-icon(v-if='group.online')
+    app-group-state-icon(:id='group.id')
 </template>
 
 <script lang='ts'>
