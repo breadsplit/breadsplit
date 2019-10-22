@@ -4,6 +4,7 @@
   pre Synced Operations: {{clientGroup.synced_operations.length}}
   .py-3
   v-btn(@click='archive()' color='orange' dark) Archive Operations
+  v-btn(@click='fix()' color='orange' dark) Fix Group
   v-btn(@click='back()' color='primary' text) Back to Group
 </template>
 
@@ -17,6 +18,12 @@ export default class GroupDebugPage extends mixins(CommonMixin, NavigationMixin,
     if (!confirm('Sure?'))
       return
     this.$fire.archiveGroupOperations(this.group.id)
+  }
+
+  fix () {
+    if (!confirm('Sure?'))
+      return
+    this.$fire.functions.httpsCallable('fixGroup')({ id: this.group.id })
   }
 
   back () {
