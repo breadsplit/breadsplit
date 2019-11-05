@@ -171,11 +171,18 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
     if (this.categoryFilter)
       return this.transactionsInRange.filter(t => (t.category || 'other') === this.categoryFilter)
     else
+      return this.transactionsInRange
+  }
+
+  get transactionsInCategoryWithoutTransfer () {
+    if (this.categoryFilter)
+      return this.transactionsInRange.filter(t => (t.category || 'other') === this.categoryFilter)
+    else
       return this.transactionsInRange.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
   }
 
   get filteredTransactions () {
-    let filtered = this.transactionsInCategory
+    let filtered = this.transactionsInCategoryWithoutTransfer
     if (this.involved)
       filtered = filtered.filter(t => t.debtors.find(i => i.uid === this.involved))
     return filtered
