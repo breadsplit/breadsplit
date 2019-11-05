@@ -10,7 +10,7 @@
       hide-delimiter-background
       height='250'
     )
-      v-carousel-item(v-for='src, index in form.attached_images' :key='src')
+      v-carousel-item(v-for='src, index in form.attached_images' :key='index')
         v-img(:src='src' height='250' @click='overlayImage = src')
           template(v-slot:placeholder)
             v-layout(fill-height align-center justify-center ma-0).grey.op-50
@@ -158,6 +158,7 @@ export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
     this.carouselIndex = 0
     this.uploadingImage = false
     this.overlayImage = null
+    this.$emit('uploading', this.uploadingImage)
   }
 
   get dateDisplay () {
@@ -207,6 +208,7 @@ export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
       return
 
     this.uploadingImage = true
+    this.$emit('uploading', this.uploadingImage)
     try {
       const urls = await Promise.all(files.map((f, i) => this.$fire.uploadImage(this.group.id, this.form.id, f)))
       this.form.attached_images = (this.form.attached_images || []).concat(urls)
@@ -215,6 +217,7 @@ export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
       console.error(e)
     }
     this.uploadingImage = false
+    this.$emit('uploading', this.uploadingImage)
   }
 
   removeImage (i: number) {

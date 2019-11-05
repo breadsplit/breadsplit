@@ -203,6 +203,7 @@ ui:
   button_create_group: Create Group
   button_finish: Finish
   button_go_home: Go Home
+  button_image_uploading: Uploading...
   button_join: Join
   button_join_group: Join the group
   button_more_about_us: More about us

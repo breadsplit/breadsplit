@@ -173,6 +173,7 @@ ui:
   button_create_group: 創建群組
   button_finish: 完成
   button_go_home: 返回App
+  button_image_uploading: 上傳中...
   button_join: 加入
   button_join_group: 加入群組
   button_more_about_us: 更多關於我們

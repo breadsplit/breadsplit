@@ -54,7 +54,7 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
 
     // Details Page
     v-window-item.page
-      page-details(ref='details' :form='form' :editing='editing')
+      page-details(ref='details' :form='form' :editing='editing' @uploading='i => uploadingImage = i')
 
     // Special page
     v-window-item.page
@@ -139,6 +139,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   mode: Mode = 'create'
   error: ErrorType = null
   solo = false
+  uploadingImage = false
 
   $refs!: {
     splitting_creditors: PageSplitting
@@ -155,6 +156,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   reset () {
     if (this.$refs.details)
       this.$refs.details.reset()
+    this.uploadingImage = false
 
     if (!this.options.transid)
       return this.initCreate()
@@ -387,6 +389,8 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
 
   get btnNextText () {
     if (this.step === STEP_DETAIL) {
+      if (this.uploadingImage)
+        return this.$t('ui.button_image_uploading')
       if (this.mode === 'create')
         return this.$t('ui.button_create')
       else
@@ -397,7 +401,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   get btnNextDisabled () {
-    return !this.form.total_fee || this.form.debtors.length === 0
+    return !this.form.total_fee || this.form.debtors.length === 0 || this.uploadingImage
   }
 
   submit () {
