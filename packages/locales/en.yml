@@ -290,6 +290,9 @@ ui:
   offline_mode: Offline mode
   online_mode: Online mode
   optional: (Optional)
+  pagination:
+    next: Next
+    previous: Previous
   paid_by: Paid by
   paid_by_xx: 'Paid by {0}'
   privacy_policy: Privacy policy

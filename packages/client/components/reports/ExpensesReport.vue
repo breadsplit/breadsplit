@@ -13,7 +13,7 @@ mixin summary
 
 .expenses-report
   .text-center
-    app-date-range-select.pb-3(:from.sync='from' :to.sync='to' :unit.sync='unit')
+    app-date-range-select.pb-3(ref='dateSelect' :from.sync='from' :to.sync='to' :unit.sync='unit')
 
   v-card.mt-2.pa-2
     .filter
@@ -82,6 +82,11 @@ mixin summary
         v-tab-item(v-if='involved')
           app-transactions-list(:transactions='involvedTransactions' :involved='involved' involveMode='debt')
 
+  template
+    .text-center.py-2
+      v-btn(text @click='previous' color='grey') {{$t('ui.pagination.previous')}}
+      v-btn(text @click='next' color='grey') {{$t('ui.pagination.next')}}
+
   template(v-if='categoryFilter')
     .text-center.py-2
       v-btn(text @click='categoryFilter = null' color='grey') {{$t('ui.clear_filter')}}
@@ -94,7 +99,7 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import dayjs from 'dayjs'
 import Fraction from 'fraction.js'
 import { oc } from 'ts-optchain'
-import { DateRangeUnit } from '../basic/DateRangeSelect.vue'
+import DateRangeSelect, { DateRangeUnit } from '../basic/DateRangeSelect.vue'
 import ChartSummaryPie from '../charts/ChartSummaryPie.vue'
 import { ReportExpensesByCategories, IdMe } from '~/core'
 import { GroupMixin, CommonMixin, UserInfoMixin, NavigationMixin } from '~/mixins'
@@ -112,6 +117,10 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
   from = +new Date()
   to = +new Date()
   unit: DateRangeUnit = 'month'
+
+  $refs!: {
+    dateSelect: DateRangeSelect
+  }
 
   get transactions () {
     return this.group.transactions
@@ -277,6 +286,14 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
 
   set involvedIndex (value) {
     this.updateHash('involvedIndex', value)
+  }
+
+  previous () {
+    this.$refs.dateSelect.previous()
+  }
+
+  next () {
+    this.$refs.dateSelect.next()
   }
 }
 </script>
