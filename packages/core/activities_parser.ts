@@ -1,12 +1,12 @@
 import { Activity } from '../types'
 import { Translator } from '../utils/i18n'
+import { numberToMoney } from '../utils'
 
 export function getActivityDescription (
   $t: Translator,
   act: Activity,
   getUserName: ((id: string) => string|undefined),
-  serverSide = false,
-  showByName = true,
+  { locale = '', serverSide = false, showByName = true } = {}
 ) {
   let by = ''
   let source = act.source
@@ -19,12 +19,16 @@ export function getActivityDescription (
 
   const key = `${act.action}.${act.entity}`
   const key_field = `${act.action}.${act.entity}.${act.update_fields}`
-  let amount = `${act.currency} ${act.amount}`
+  let amount = act.amount ? numberToMoney(act.amount, locale, act.currency) : ''
+
   let entity = act.entity_name || act.entity_desc || ''
+  if (amount)
+    entity = `${entity} (${amount})`
+
   if (!serverSide) {
     by = `<b>${by}</b>`
     entity = `<b>${entity}</b>`
-    amount = `<b>${amount}</b>`
+    amount = amount ? `<b>${amount}</b>` : amount
   }
   const payload = {
     by,

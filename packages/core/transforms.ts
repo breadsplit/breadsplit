@@ -128,7 +128,6 @@ export const Transforms: TransformFunctions<Group> = {
         entity: 'transfer',
         entity_id: trans.id,
         entity_name: trans.desc,
-        entity_desc: `${trans.currency} ${trans.total_fee}`,
         source: trans.creditors[0].uid,
         target: trans.debtors[0].uid,
         amount: trans.total_fee,
@@ -143,7 +142,8 @@ export const Transforms: TransformFunctions<Group> = {
         entity: 'transaction',
         entity_id: trans.id,
         entity_name: trans.desc,
-        entity_desc: `${trans.currency} ${trans.total_fee}`,
+        amount: trans.total_fee,
+        currency: trans.currency,
       })
     }
 
@@ -171,18 +171,19 @@ export const Transforms: TransformFunctions<Group> = {
   },
 
   remove_transaction (snap, id: string, { by, timestamp } = {}) {
-    const transaction = snap.transactions.find(t => t.id === id)
-    if (!transaction)
+    const trans = snap.transactions.find(t => t.id === id)
+    if (!trans)
       return snap
-    snap.transactions.splice(snap.transactions.indexOf(transaction), 1)
+    snap.transactions.splice(snap.transactions.indexOf(trans), 1)
     snap.activities.push({
       by,
       timestamp,
       action: 'remove',
       entity: 'transaction',
-      entity_id: transaction.id,
-      entity_name: transaction.desc,
-      entity_desc: `${transaction.currency} ${transaction.total_fee}`,
+      entity_id: trans.id,
+      entity_name: trans.desc,
+      amount: trans.total_fee,
+      currency: trans.currency,
     })
     return snap
   },
