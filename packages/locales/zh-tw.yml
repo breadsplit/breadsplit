@@ -233,6 +233,7 @@ ui:
   colors: 顏色
   continue_and_accept: '繼續使用即表示您同意我們的{0}'
   continue_anyway: 仍然繼續
+  convert_to_online: 轉換為綫上模式
   currency: 幣種
   donate_on_paypal: PayPal 一次性贊助
   exchanges:
@@ -251,6 +252,8 @@ ui:
     group_name: 群組名稱
     group_name_placeholder: 輸入群組名稱…
     new_group: 新建群組
+  group_is_offline: 本地模式
+  group_is_offline_desc: 群組所有資料都存儲在本地。若要啟用跨設備同步或多人協作功能，你可以將其轉換為綫上模式。
   help: 使用幫助
   home: 返回首頁
   homepage: 首頁

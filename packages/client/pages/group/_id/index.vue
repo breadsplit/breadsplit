@@ -45,6 +45,8 @@
       v-container(:class='{"pa-0": isMobile}')
 
         app-inviting(v-if='isOnline')
+        app-convert-to-online(v-else)
+
         app-members(:members='members')
 
         .pa-2

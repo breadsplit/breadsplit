@@ -4,8 +4,8 @@ v-card.inviting.pa-4.mb-2(flat color='transparent')
     v-subheader.pl-1
       span
         div {{$t('ui.share.join_via_link')}}
-        .op-50(v-if='public') {{$t('ui.share.join_via_link_enabled')}}
-        .op-50(v-else) {{$t('ui.share.join_via_link_disabled')}}
+        .op-75(v-if='public') {{$t('ui.share.join_via_link_enabled')}}
+        .op-75(v-else) {{$t('ui.share.join_via_link_disabled')}}
     v-switch.mt-3.mb-n3.mouse-pass(:input-value='public' :loading='loading' inset color='primary')
 
   v-slide-y-reverse-transition

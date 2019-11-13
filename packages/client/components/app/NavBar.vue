@@ -62,9 +62,8 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
 
     menu.push({ title: 'ui.category_editing.title', key: 'edit_categories' })
     menu.push({ title: 'ui.menu.edit_group', key: 'edit' })
-    if (this.current && !this.current.online && this.uid)
-      menu.push({ title: 'ui.menu.make_group_online', key: 'transfer_online' })
-    menu.push({ title: 'ui.menu.remove_group', key: 'delete' })
+    if (this.current && !this.current.online)
+      menu.push({ title: 'ui.menu.remove_group', key: 'delete' })
 
     return menu
   }
@@ -83,22 +82,6 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
           this.$apploading.close()
           this.gotoHome()
         }
-        break
-
-      case 'transfer_online':
-        if (await this.$confirm(this.$t('prompt.are_you_sure'))) {
-          this.$apploading.open(this.$t('loading.coverting_online'))
-          try {
-            await this.$fire.publishGroup(this.group.id)
-          }
-          catch (e) {
-            // eslint-disable-next-line
-            console.error(e)
-            // TODO:ERROR error handling
-          }
-          this.$apploading.close()
-        }
-
         break
 
       case 'sync':

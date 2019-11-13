@@ -236,6 +236,7 @@ ui:
   colors: Colors
   continue_and_accept: 'By continue, you accept our {0}'
   continue_anyway: Continue anyway
+  convert_to_online: Convert to Online
   currency: Currency
   donate_on_paypal: One-time donation on PayPal
   exchanges:
@@ -254,6 +255,11 @@ ui:
     group_name: Group's name
     group_name_placeholder: Enter group name…
     new_group: New group
+  group_is_offline: Group is offline
+  group_is_offline_desc: >-
+    All the data is stored on this device. If you want to enable the features to
+    sync across devices and collaborate with other, you can convert it to online
+    mode.
   help: Help
   home: Home
   homepage: Home
@@ -277,7 +283,6 @@ ui:
   menu:
     edit_categories: Edit categories
     edit_group: Edit group
-    make_group_online: Make this group online
     member_is_me: This is me
     remove_group: Remove group
     remove_member: 'Remove {name} from group'
