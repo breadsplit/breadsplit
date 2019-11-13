@@ -4,20 +4,34 @@ import Vue from 'vue'
 
 let lock = false
 
+function stringify (value: any) {
+  return queryString.stringify(value, { arrayFormat: 'comma' })
+}
+
 export const reactiveHash = new Vue({
   data: {
     value: {},
   },
-  watch: {
-    value: {
-      deep: true,
-      handler () {
-        if (lock)
-          return
-        lock = true
-        location.hash = queryString.stringify(reactiveHash.value, { arrayFormat: 'comma' })
-        lock = false
-      },
+  methods: {
+    updateField (field: string, value: any, updateHistory = false) {
+      this.$set(this.value, field, value)
+      this.update(this.value, updateHistory)
+    },
+    update (value: any, updateHistory = false) {
+      if (lock)
+        return
+      lock = true
+      Vue.set(this, 'value', value)
+      const hash = stringify(value)
+      if (updateHistory) {
+        // @ts-ignore
+        history.pushState(undefined, undefined, `#${hash}`)
+      }
+      else {
+        // @ts-ignore
+        history.replaceState(undefined, undefined, `#${hash}`)
+      }
+      lock = false
     },
   },
 })

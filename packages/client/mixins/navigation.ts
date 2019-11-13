@@ -9,8 +9,12 @@ export default class NavigationMixin extends Vue {
 
   hash = reactiveHash.value as any
 
-  updateHash (field: string, value: any) {
-    reactiveHash.$set(reactiveHash.value, field, value)
+  updateHash (field: string, value: any, updateHistory = false) {
+    reactiveHash.updateField(field, value, updateHistory)
+  }
+
+  clearHash (updateHistory = false) {
+    reactiveHash.update({}, updateHistory)
   }
 
   gotoHome () {

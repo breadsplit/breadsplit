@@ -156,9 +156,9 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
   }
 
   gotoExpenses () {
-    this.updateHash('tab', 'expenses')
     this.updateHash('expenses', '1')
     this.updateHash('involvedIndex', '0')
+    this.updateHash('tab', 'expenses', true)
   }
 
   get tab_id () {
@@ -166,7 +166,7 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
   }
 
   set tab_id (value) {
-    this.updateHash('tab', value)
+    this.updateHash('tab', value, true)
   }
 
   get tab_index () {
