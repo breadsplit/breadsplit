@@ -23,8 +23,6 @@ import { SnackOptions } from '~/types'
 })
 export default class Snackbar extends mixins(CommonMixin) {
   show = false
-  resolve: ((result?) => void) | null = null
-  reject: ((error) => void) | null = null
   message = ''
   options = this.defaultOption
 

@@ -48,8 +48,11 @@ export default class NavigationMixin extends Vue {
     })
   }
 
-  closeDialog () {
-    this.$router.replace({ query: {}, hash: this.$route.hash })
+  async closeDialog () {
+    try {
+      await this.$router.replace({ query: {}, hash: this.$route.hash })
+    }
+    catch (e) {}
   }
 
   reload () {
