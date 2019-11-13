@@ -100,6 +100,10 @@ v-card.form-transaction(v-rows='"max-content auto max-content"')
         v-btn.button-quick-add.px-4(:disabled='!form.total_fee', color='primary', text, @click='submit')
           | {{$t('ui.button_finish')}}
 
+      template(v-if='mode==="edit"')
+        v-btn.button-quick-add.px-4(color='grey', text, @click='close')
+          | {{$t('ui.button_cancel')}}
+
       v-btn.button-next.px-4(color='primary', depressed, @click='btnNext', :disabled='btnNextDisabled')
         | {{btnNextText}}
 
