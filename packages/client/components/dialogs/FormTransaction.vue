@@ -157,6 +157,8 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     if (this.$refs.details)
       this.$refs.details.reset()
     this.uploadingImage = false
+    this.solo = false
+    this.error = null
 
     if (!this.options.transid)
       return this.initCreate()
