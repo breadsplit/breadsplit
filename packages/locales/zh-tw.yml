@@ -1,40 +1,50 @@
-acts:
-  change_group_currency: '{0} 將貨幣更改為 {1}'
-  insert_category: '{0} 創建新類別 {1}'
-  insert_group: '{0} 創建群組'
-  insert_member: '{0} 添加成員: {1}'
-  insert_transaction: '{0} 添加支出 {1}'
-  insert_viewer: '{0} 加入了群組'
-  publish_group: '{0} 將群組轉換為在綫模式'
-  remove_transaction: '{0} 刪除支出 {1}'
-  rename_group: '{0} 將群組更名為 {1}'
-  update_transaction: '{0} 修改支出 {1}'
+﻿acts:
+  change_group_currency: '{by} 將貨幣更改為 {entity}'
+  insert_category: '{by} 創建新類別 {entity}'
+  insert_group: '{by} 創建群組'
+  insert_member: '{by} 添加成員: {entity}'
+  insert_transaction: '{by} 添加支出 {entity}'
+  insert_transfer: '{source} 轉給了 {target} {amount}'
+  insert_viewer: '{by} 加入了群組'
+  publish_group: '{by} 將群組轉換為在綫模式'
+  remove_transaction: '{by} 刪除支出 {entity}'
+  remove_transfer: '{by} 刪除債務轉移 {entity}'
+  rename_group: '{by} 將群組更名為 {entity}'
+  update_transaction: '{by} 修改支出 {entity}'
+  update_transfer: '{by} 修改債務轉移 {entity}'
 appname: 分帳吐司
 appname_dev: 分帳吐司 Dev
 cats:
   drinks:
     display: 飲料
+    keywords: ''
   entertainment:
     display: 娛樂
+    keywords: ''
   food:
     display: 正餐
     keywords: '早餐,午餐,晚餐,宵夜,餐廳,飲料,奶茶,甜品'
   groceries:
     display: 雜貨
+    keywords: ''
   home:
     display: 家庭
+    keywords: ''
   lodging:
     display: 住宿
     keywords: '飯店,酒店,民宿,住宿,青旅'
   other:
     display: 其他
+    keywords: ''
   shopping:
     display: 購物
     keywords: 購物
   snacks:
     display: 點心
+    keywords: ''
   tickets:
     display: 門票
+    keywords: ''
   tips:
     display: 小費
     keywords: 'tip,小費'
@@ -49,8 +59,10 @@ cats:
     keywords: '旅行,門票,景點'
   unknown:
     display: 未知類別
+    keywords: ''
   utilities:
     display: 水電
+    keywords: ''
 code: zh-tw
 css:
   font_of_locale: '"微軟正黑體", "Microsoft JhengHei"'
@@ -63,11 +75,16 @@ date_range:
     full_display: 自定义
   day:
     display: 日
+    formatter: ''
     last: 昨天
     next: 明天
     this: 今天
   month:
     display: 月
+    formatter: ''
+    last: ''
+    next: ''
+    this: ''
   week:
     display: 週
     formatter: '第 {0} 週'
@@ -76,6 +93,10 @@ date_range:
     this: 本週
   year:
     display: 年
+    formatter: ''
+    last: ''
+    next: ''
+    this: ''
 feedback:
   contact_info: 聯絡方式
   describe: 請描述您的問題或建議。
@@ -87,6 +108,15 @@ help:
       OAuth，我們<b>不會</b>獲得您的密碼等敏感信息。<br> 同時，這種方式可以減少您輸入密碼的次數，以更好地確保您的賬戶安全。
     tips: 沒有使用賬號密碼的登入方式？
     title: 不使用賬號密碼登入
+  online_mode:
+    details: ''
+    title: ''
+  splitting_intro:
+    details: ''
+    title: ''
+  support:
+    details: ''
+    title: ''
 icons:
   animals: 動物
   clothes: 衣服
@@ -238,7 +268,9 @@ ui:
     this_is_me: 這是我
     title: 加入群組
   join_as_me: '以 {0} 加入'
+  join_group: ''
   language: 語言
+  loading: ''
   menu:
     edit_categories: 編輯類別
     edit_group: 編輯群組
@@ -284,6 +316,7 @@ ui:
     join_via_link_enabled: 任何人擁有該鏈接都可以加入此群組
     share_link: 分享邀請鏈接
   share_link_copied: 分享鏈接已復制！
+  share_link_to_invite: ''
   show_all: 顯示所有
   show_expenses_of: 參與者
   sign_in: 登錄
@@ -360,3 +393,5 @@ ui:
     xx_should_pay: '這次輪到 {0} 付款。'
   wip: "\U0001F6A7 功能開發中，敬請期待…"
   xx_paid_money: '{0} 支付了'
+utils:
+  bypass_1: ''

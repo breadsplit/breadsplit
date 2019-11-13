@@ -120,15 +120,33 @@ export const Transforms: TransformFunctions<Group> = {
     trans.creator = by
     trans.timestamp_created = timestamp
     snap.transactions.unshift(trans)
-    snap.activities.push({
-      by,
-      timestamp,
-      action: 'insert',
-      entity: 'transaction',
-      entity_id: trans.id,
-      entity_name: trans.desc,
-      entity_desc: `${trans.currency} ${trans.total_fee}`,
-    })
+    if (trans.type === 'transfer') {
+      snap.activities.push({
+        by,
+        timestamp,
+        action: 'insert',
+        entity: 'transfer',
+        entity_id: trans.id,
+        entity_name: trans.desc,
+        entity_desc: `${trans.currency} ${trans.total_fee}`,
+        source: trans.creditors[0].uid,
+        target: trans.debtors[0].uid,
+        amount: trans.total_fee,
+        currency: trans.currency,
+      })
+    }
+    else {
+      snap.activities.push({
+        by,
+        timestamp,
+        action: 'insert',
+        entity: 'transaction',
+        entity_id: trans.id,
+        entity_name: trans.desc,
+        entity_desc: `${trans.currency} ${trans.total_fee}`,
+      })
+    }
+
     return snap
   },
 

@@ -26,6 +26,7 @@ export type Entity =
   | 'transaction'
   | 'currency_record'
   | 'category'
+  | 'transfer'
 
 export type ExchangeProvider =
   'fixer'

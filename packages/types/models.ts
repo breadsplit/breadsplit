@@ -90,6 +90,10 @@ export interface Activity {
   entity_desc?: string
   entity_color?: string
   entity_icon?: string
+  amount?: number
+  currency?: string
+  source?: UID
+  target?: UID
   meta?: any
 }
 

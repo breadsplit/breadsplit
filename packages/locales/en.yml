@@ -1,14 +1,17 @@
-acts:
-  change_group_currency: '{0} changed main currency to {1}'
-  insert_category: '{0} created a new category {1}'
-  insert_group: '{0} created the group'
-  insert_member: '{0} added a member {1}'
-  insert_transaction: '{0} added an expense {1}'
-  insert_viewer: '{0} joined the group'
-  publish_group: '{0} changed group to online mode'
-  remove_transaction: '{0} deleted an expense {1}'
-  rename_group: '{0} changed group name to {1}'
-  update_transaction: '{0} modified an expense {1}'
+﻿acts:
+  change_group_currency: '{by} changed main currency to {entity}'
+  insert_category: '{by} created a new category {entity}'
+  insert_group: '{by} created the group'
+  insert_member: '{by} added a member {entity}'
+  insert_transaction: '{by} added an expense {entity}'
+  insert_transfer: '{source} transferred {amount} to {target}'
+  insert_viewer: '{by} joined the group'
+  publish_group: '{by} changed group to online mode'
+  remove_transaction: '{by} deleted expense {entity}'
+  remove_transfer: '{by} deleted transfer {entity}'
+  rename_group: '{by} changed group name to {entity}'
+  update_transaction: '{by} modified expense {entity}'
+  update_transfer: '{by} modified transfer {entity}'
 appname: BreadSplit
 appname_dev: BreadSplit Dev
 cats:
