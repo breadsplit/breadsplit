@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.2](https://github.com/breadsplit/breadsplit/compare/v0.7.1...v0.7.2) (2020-03-25)
+
+
+### 🐞 Bug Fixes
+
+* auth for ios ([3cad073](https://github.com/breadsplit/breadsplit/commit/3cad073dd763f1cbdad286c75e79dceb881137f2))
+
 ### [0.7.1](https://github.com/breadsplit/breadsplit/compare/v0.7.0...v0.7.1) (2020-03-25)
 
 
