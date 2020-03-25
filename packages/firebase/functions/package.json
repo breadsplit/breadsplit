@@ -14,22 +14,22 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "axios": "0.19.0",
-    "dayjs": "1.8.15",
-    "firebase-admin": "8.3.0",
-    "firebase-functions": "3.2.0",
+    "axios": "0.19.2",
+    "dayjs": "1.8.23",
+    "firebase-admin": "8.10.0",
+    "firebase-functions": "3.5.0",
     "fraction.js": "^4.0.12",
     "js-cache": "1.0.3",
     "json-stable-stringify": "1.0.1",
     "lodash": "4.17.15",
-    "nanoid": "2.0.3",
+    "nanoid": "2.1.11",
     "rusha": "0.8.13"
   },
   "devDependencies": {
-    "firebase-tools": "7.2.3",
-    "typescript": "3.5.3",
-    "webpack": "4.39.2",
-    "webpack-cli": "3.3.7",
+    "firebase-tools": "7.16.1",
+    "typescript": "3.8.3",
+    "webpack": "4.42.1",
+    "webpack-cli": "3.3.11",
     "webpack-node-externals": "1.7.2"
   },
   "version": "0.4.0"
