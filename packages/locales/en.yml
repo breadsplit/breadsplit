@@ -250,11 +250,15 @@ ui:
   group_editing:
     add_member_xx: 'Add "{0}"'
     add_members: Add members
+    archive_group: Archive group
     default_group_name: Untitled Group
     enter_group_name: Enter group's name
     group_name: Group's name
     group_name_placeholder: Enter group name…
     new_group: New group
+    remove_group: Delete group
+    pin_group: Pin group
+    unpin_group: Unpin group
   group_is_offline: Group is offline
   group_is_offline_desc: >-
     All the data is stored on this device. If you want to enable the features to
@@ -284,7 +288,6 @@ ui:
     edit_categories: Edit categories
     group_setting: Group Setting
     member_is_me: This is me
-    remove_group: Remove group
     remove_member: 'Remove {name} from group'
     rename_member: Rename
     view_group: View group

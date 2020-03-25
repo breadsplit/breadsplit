@@ -2,7 +2,7 @@ import { Group, Operation, SharedGroupOptions } from '.'
 
 export interface LocalGroupOptions {
   display_currency?: string
-  favorite?: boolean
+  pinned?: boolean
 }
 
 export interface ClientGroup {

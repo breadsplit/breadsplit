@@ -1,14 +1,14 @@
 <template lang='pug'>
 app-promise-dialog(ref='dialog' :max-width='options.width')
-  v-toolbar(dark :color='options.color')
-    v-toolbar-title.white--text {{ title }}
-  v-card(tile)
+  v-toolbar(flat).px-2
+    v-toolbar-title(:class='`${options.color}--text`') {{ title }}
+  v-card(tile flat)
     v-card-text(v-show='!!message' style='font-size:1em') {{ message }}
     v-card-actions
       v-spacer
       .pa-1
         v-btn(color='grey' text @click='cancel()' v-if='options.cancelable') {{$t('ui.button_cancel')}}
-        v-btn(color='primary' text @click='agree()').px-4 {{$t('ui.button_confirm')}}
+        v-btn(:color='options.color' text @click='agree()').px-4 {{$t('ui.button_confirm')}}
 </template>
 
 <script lang='ts'>
@@ -17,7 +17,7 @@ import PromiseDialog from './PromiseDialog.vue'
 
 const DEFAULT_OPTIONS = {
   color: 'primary',
-  width: 350,
+  width: 380,
   cancelable: true,
 }
 

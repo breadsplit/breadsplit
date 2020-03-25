@@ -1,6 +1,6 @@
 <template lang='pug'>
-v-dialog(v-model='show', persistent, width='300', v-bind='$attrs')
-  v-card(color='primary', dark)
+v-dialog(v-model='show', persistent, width='340', v-bind='$attrs')
+  v-card(color='primary', dark).pt-3
     v-card-text
       span {{text}}
       v-progress-linear.mb-0(indeterminate, color='white')

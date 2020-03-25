@@ -49,7 +49,11 @@ export const getters: GetterTree<GroupState, RootState> = {
   },
 
   all(state) {
-    return orderBy(Object.values(state.groups), ['lastchanged'], ['desc'])
+    return orderBy(
+      Object.values(state.groups),
+      [group => group.local_options && group.local_options.pinned ? 1 : 0, 'lastchanged'],
+      ['desc', 'desc'],
+    )
       .map(group => state.cache.groups[group.id])
   },
 
@@ -85,6 +89,13 @@ export const getters: GetterTree<GroupState, RootState> = {
     groupId = groupId || state.currentId || ''
     const group = state.groups[groupId]
     return !!(group.syncing_operations.length)
+  },
+
+  isPinned: state => (id?: string) => {
+    id = id || state.currentId || ''
+    return state.groups[id]
+     && state.groups[id].local_options
+     && state.groups[id].local_options.pinned
   },
 
   unreadsOf: state => (id?: string) => {
@@ -278,7 +289,7 @@ export const mutations: MutationTree<GroupState> = {
     if (group) {
       if (!group.local_options)
         group.local_options = {}
-      group.local_options[field] = value
+      Vue.set(group.local_options, field, value)
     }
   },
 

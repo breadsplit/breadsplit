@@ -32,6 +32,16 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
           v-flex
             app-currency-select.flat(v-model='form.main_currency')
 
+          v-flex(v-if='mode == "edit"').mt-4.mx-n3
+            v-subheader Danger Zone
+            v-btn(text color='orange' small @click='promptArchiveGroup')
+              v-icon.mr-1(size='20') mdi-archive
+              | {{ $t("ui.group_editing.archive_group") }}
+            v-btn(text color='red' small @click='promptRemoveGroup')
+              v-icon.mr-1(size='20') mdi-delete
+              | {{ $t("ui.group_editing.remove_group") }}
+
+          // TODO: online
           // v-flex.my-3
             v-switch(v-model='online')
               template(slot='label')
@@ -91,21 +101,21 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
       template(v-if='mode')
         v-btn.px-4(@click='close(false)' text) {{$t('ui.button_cancel')}}
         v-spacer
-        v-btn.px-4(@click='edit()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty') {{$t('ui.button_confirm')}}
+        v-btn.px-4(@click='edit()' :color='color' :dark='!checkEmpty' depressed :disabled='checkEmpty') {{$t('ui.button_ok')}}
 </template>
 
 <script lang='ts'>
-import { Component, Getter, mixins, Watch } from 'nuxt-property-decorator'
+import { Component, Getter, mixins, Watch, Mutation } from 'nuxt-property-decorator'
 import { TranslateResult } from 'vue-i18n'
 import cloneDeep from 'lodash/cloneDeep'
 import { MemberDefault, IdMe, GroupDefault, defaultCurrency } from '~/core'
 import swatches, { BaseIndex } from '~/../meta/swatches'
 import { getCommonCurrencyCodes } from '~/../meta/currencies'
-import { DialogChildMixin } from '~/mixins'
+import { DialogChildMixin, NavigationMixin } from '~/mixins'
 import { Group, UserInfo } from '~/types'
 
 @Component
-export default class FormGroup extends mixins(DialogChildMixin) {
+export default class FormGroup extends mixins(DialogChildMixin, NavigationMixin) {
   readonly me = IdMe
   form: Group = GroupDefault()
   formOriginal: Group | null = null
@@ -119,6 +129,8 @@ export default class FormGroup extends mixins(DialogChildMixin) {
   @Getter('group/current') current: Group | undefined
   @Getter('user/me') user!: UserInfo
   @Getter('user/uid') uid: string | undefined
+
+  @Mutation('group/remove') removeGroup
 
   reset() {
     this.visible = true
@@ -243,6 +255,27 @@ export default class FormGroup extends mixins(DialogChildMixin) {
     if (Object.keys(changes).length)
       this.$store.dispatch('group/modify', { changes })
     this.close()
+  }
+
+  // Editing actions
+  async promptArchiveGroup() {
+    // TODO:
+    alert('WIP')
+  }
+
+  async promptRemoveGroup() {
+    if (await this.$confirm(
+      this.$t('prompt.confirm_group_removal_title', [this.form.name]),
+      this.$t('prompt.confirm_group_removal'),
+      { color: 'red' },
+    )) {
+      this.$apploading.open(this.$t('loading.deleting_group'))
+      if (this.current && this.current.online)
+        await this.$fire.deleteGroup(this.form.id)
+      this.removeGroup()
+      this.$apploading.close()
+      this.gotoHome()
+    }
   }
 }
 </script>

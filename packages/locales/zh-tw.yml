@@ -252,6 +252,7 @@ ui:
     group_name: 群組名稱
     group_name_placeholder: 輸入群組名稱…
     new_group: 新建群組
+    remove_group: 刪除群組
   group_is_offline: 本地模式
   group_is_offline_desc: 群組所有資料都存儲在本地。若要啟用跨設備同步或多人協作功能，你可以將其轉換為綫上模式。
   help: 使用幫助
@@ -279,7 +280,6 @@ ui:
     group_setting: 群組设定
     make_group_online: 轉換為綫上模式
     member_is_me: 這是我
-    remove_group: 刪除群組
     remove_member: '將 {name} 從群組中移除'
     rename_member: 重命名
     view_group: 檢視群組

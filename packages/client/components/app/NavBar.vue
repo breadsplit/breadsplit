@@ -28,7 +28,7 @@ v-app-bar.app-toolbar(app flat color='transparent' height='60').primary--text
 </template>
 
 <script lang='ts'>
-import { Component, Getter, mixins, Mutation, Prop } from 'nuxt-property-decorator'
+import { Component, Getter, mixins, Prop, Mutation } from 'nuxt-property-decorator'
 import { Group, UserInfo } from '~/types'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 
@@ -38,9 +38,9 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   @Getter('user/me') user!: UserInfo
   @Getter('user/uid') uid: string | undefined
 
-  @Mutation('group/remove') removeGroup
-
   @Prop(Boolean) readonly drawer!: boolean
+
+  @Mutation('group/setConfigs') setConfigs
 
   get internalDrawer() {
     return this.drawer
@@ -60,30 +60,19 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
   get group_menu() {
     const menu: ({title: string; key: string})[] = []
 
+    if (this.localOptions.pinned)
+      menu.push({ title: 'ui.group_editing.unpin_group', key: 'unpin' })
+    else
+      menu.push({ title: 'ui.group_editing.pin_group', key: 'pin' })
+
     menu.push({ title: 'ui.category_editing.title', key: 'edit_categories' })
     menu.push({ title: 'ui.menu.group_setting', key: 'edit' })
-    if (this.current && !this.current.online)
-      menu.push({ title: 'ui.menu.remove_group', key: 'delete' })
 
     return menu
   }
 
   async onGroupMenu(key) {
     switch (key) {
-      case 'delete':
-        if (await this.$confirm(
-          this.$t('prompt.confirm_group_removal_title', [this.group.name]),
-          this.$t('prompt.confirm_group_removal'),
-        )) {
-          this.$apploading.open(this.$t('loading.deleting_group'))
-          if (this.current && this.current.online)
-            await this.$fire.deleteGroup(this.group.id)
-          this.removeGroup()
-          this.$apploading.close()
-          this.gotoHome()
-        }
-        break
-
       case 'sync':
         await this.syncCurrentGroup()
         break
@@ -94,6 +83,14 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
 
       case 'edit':
         this.gotoNewGroup({ mode: 'edit' })
+        break
+
+      case 'pin':
+        this.setConfigs({ id: this.group.id, field: 'pinned', value: true })
+        break
+
+      case 'unpin':
+        this.setConfigs({ id: this.group.id, field: 'pinned', value: false })
         break
     }
   }

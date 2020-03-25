@@ -107,6 +107,7 @@ export interface Budget {
 
 export interface SharedGroupOptions {
   public: boolean
+  archived?: boolean
 }
 
 export interface Group {
