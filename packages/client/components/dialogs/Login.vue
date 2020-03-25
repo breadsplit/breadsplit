@@ -22,6 +22,8 @@ app-dialog.login-dialog(ref='dialog' :route='true' width='330' :fullscreen='fals
           i18n(path='ui.continue_and_accept')
             a(@click='$refs.privacy.open()') {{$t('ui.privacy_policy')}}
 
+        v-flex.mt-3.error(v-if='error')
+          p {{error}}
         //v-flex.mx-auto.my-1.mx-4
           app-help-link(help='no_password_login' :tips='true')
 
@@ -37,6 +39,7 @@ import Dialog from '../global/Dialog.vue'
 export default class Login extends Vue {
   resolve: ((result) => void) | null = null
   reject: ((error) => void) | null = null
+  error: any = null
 
   $refs!: {
     dialog: Dialog
@@ -49,8 +52,7 @@ export default class Login extends Vue {
     }
     catch (e) {
       // TODO: show user feedback
-      // eslint-disable-next-line no-console
-      console.error(e)
+      this.$sentry.captureException(e)
     }
   }
 

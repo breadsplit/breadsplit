@@ -25,5 +25,8 @@ declare module 'vue/types/vue' {
     readonly $currency: {
       select: () => Promise<string|null>
     }
+    readonly $sentry: {
+      captureException: (error: Error) => void
+    }
   }
 }
