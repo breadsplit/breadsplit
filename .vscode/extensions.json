@@ -2,7 +2,7 @@
   "recommendations": [
     // vue
     "octref.vetur",
-    "antfu.vue-i18n-ally",
+    "antfu.i18n-ally",
 
     // languages
 
