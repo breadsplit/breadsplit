@@ -56,7 +56,7 @@ v-navigation-drawer(
       // Settings
       v-list-item.pl-4(@click='openSettings()')
         v-list-item-action
-          v-icon mdi-settings
+          v-icon mdi-cog
         v-list-item-content
           v-list-item-title {{$t('ui.settings')}}
 
@@ -85,51 +85,51 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin) {
   }
 
   @Prop(Boolean) readonly drawer!: boolean
-  get internalDrawer () {
+  get internalDrawer() {
     return this.drawer
   }
 
-  set internalDrawer (value: boolean) {
+  set internalDrawer(value: boolean) {
     this.$emit('update:drawer', value)
   }
 
-  mounted () {
+  mounted() {
     if (!this.isMobile)
       this.internalDrawer = true
   }
 
-  async openNewGroupDialog () {
+  async openNewGroupDialog() {
     this.tryCloseDrawer()
     this.gotoNewGroup()
   }
 
-  async openLoginDialog () {
+  async openLoginDialog() {
     this.tryCloseDrawer()
     this.$refs.login.open()
   }
 
-  getClientGroup (id: string) {
+  getClientGroup(id: string) {
     return this.$store.state.group.groups[id]
   }
 
-  tryCloseDrawer () {
+  tryCloseDrawer() {
     if (this.isMobile)
       this.internalDrawer = false
   }
 
-  async promptLogout () {
+  async promptLogout() {
     if (await this.$confirm(this.$t('prompt.logout_confirm'))) {
       await this.$fire.logout()
       this.gotoHome()
     }
   }
 
-  async openSettings () {
+  async openSettings() {
     this.tryCloseDrawer()
     this.openDialog('settings')
   }
 
-  goHome () {
+  goHome() {
     this.tryCloseDrawer()
     this.gotoHome()
   }

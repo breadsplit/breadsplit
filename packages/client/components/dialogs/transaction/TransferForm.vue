@@ -41,11 +41,11 @@ export default class TransferForm extends mixins(GroupMixin) {
   @Prop({ default: true }) readonly showFee?: boolean
   @Prop(Boolean) readonly disabled?: boolean
 
-  get creditor () {
+  get creditor() {
     return oc(this.form.creditors)[0].uid(undefined)
   }
 
-  set creditor (v) {
+  set creditor(v) {
     if (!v) {
       this.form.creditors = []
     }
@@ -57,11 +57,11 @@ export default class TransferForm extends mixins(GroupMixin) {
     }
   }
 
-  get debtor () {
+  get debtor() {
     return oc(this.form.debtors)[0].uid(undefined)
   }
 
-  set debtor (v) {
+  set debtor(v) {
     if (!v) {
       this.form.debtors = []
     }
@@ -73,11 +73,11 @@ export default class TransferForm extends mixins(GroupMixin) {
     }
   }
 
-  get creditCandidates () {
+  get creditCandidates() {
     return this.members.filter(i => i.uid !== this.creditor)
   }
 
-  get debtCandidates () {
+  get debtCandidates() {
     return this.members.filter(i => i.uid !== this.debtor)
   }
 }

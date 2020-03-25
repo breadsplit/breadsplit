@@ -15,13 +15,14 @@ export default class ErrorLayout extends Vue {
   @Prop({ default: () => ({}) }) readonly error: any
   @Prop({ default: () => ({}) }) readonly payload: any
 
-  get parsedError () {
+  get parsedError() {
     if (this.error.type)
       return this.error
     else
       return { error: this.error, type: 'common' }
   }
-  get errorPage () {
+
+  get errorPage() {
     return ErrorPages[this.parsedError.type] || ErrorPages.DefaultErrorPages
   }
 }

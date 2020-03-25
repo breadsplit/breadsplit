@@ -1,6 +1,6 @@
 import { Workbox } from 'workbox-window'
 
-export default async ({ app }: any) => {
+export default async({ app }: any) => {
   // @ts-ignore
   const workbox: Workbox = await window.$workbox
 

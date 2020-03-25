@@ -73,29 +73,29 @@ export default class ExchangeRateInput extends mixins(GroupMixin) {
   requesting = false
   dialog = false
 
-  get from () {
+  get from() {
     return this.form.currency
   }
 
-  get to () {
+  get to() {
     return this.group.main_currency
   }
 
-  get fromFee () {
+  get fromFee() {
     return this.form.total_fee
   }
 
-  get info () {
+  get info() {
     return ExchangeInTransaction(this.form, new Fraction(this.fromFee), this.to, this.group.exchange_rates)
   }
 
-  get manualRate () {
+  get manualRate() {
     if (this.form.exchange_rate_override)
       return this.form.exchange_rate_override.rate
     return null
   }
 
-  set manualRate (value) {
+  set manualRate(value) {
     if (!value || isNaN(value)) {
       this.form.exchange_rate_override = undefined
     }
@@ -109,28 +109,28 @@ export default class ExchangeRateInput extends mixins(GroupMixin) {
     }
   }
 
-  get source () {
+  get source() {
     return this.info.source
   }
 
-  get date () {
+  get date() {
     return this.info.date
   }
 
-  get rate () {
+  get rate() {
     return this.info.rate
   }
 
-  get toFee () {
+  get toFee() {
     return this.fromFee * this.rate
   }
 
-  updateSync () {
+  updateSync() {
     const record = this.$fire.getExchangeRatesSync(this.form.timestamp)
     this.$store.dispatch('group/updateExchangeRates', { id: this.group.id, date: record.date, record })
   }
 
-  async update () {
+  async update() {
     this.requesting = true
     const record = await this.$fire.getExchangeRates(this.form.timestamp)
     this.$store.dispatch('group/updateExchangeRates', { id: this.group.id, date: record.date, record })
@@ -138,7 +138,7 @@ export default class ExchangeRateInput extends mixins(GroupMixin) {
   }
 
   @Watch('form', { immediate: true })
-  onCurrencyChanged () {
+  onCurrencyChanged() {
     if (!this.editing)
       return
     this.updateSync()
@@ -146,19 +146,19 @@ export default class ExchangeRateInput extends mixins(GroupMixin) {
   }
 
   @Watch('form.timestamp')
-  onTimestampChanged () {
+  onTimestampChanged() {
     if (!this.editing)
       return
     this.update()
   }
 
-  changeExchangeRate () {
+  changeExchangeRate() {
     if (!this.editing)
       return
     this.dialog = true
   }
 
-  updateToFee (value: number) {
+  updateToFee(value: number) {
     if (!value || isNaN(value))
       this.manualRate = null
     else if (!this.fromFee)

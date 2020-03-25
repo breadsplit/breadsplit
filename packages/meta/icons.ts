@@ -9,7 +9,7 @@ export default {
     'mdi-pot',
     'mdi-pot-mix',
     'mdi-chef-hat',
-    'mdi-bowl',
+    'mdi-bowl-mix',
     'mdi-hamburger',
     'mdi-pizza',
     'mdi-ice-cream',
@@ -51,7 +51,8 @@ export default {
   money: [
     'mdi-cash-100',
     'mdi-cash-multiple',
-    'mdi-coin-outline',
+    'mdi-currency-usd-circle',
+    'mdi-currency-usd-circle-outline',
     'mdi-credit-card',
     'mdi-credit-card-scan',
     'mdi-credit-card-wireless',
@@ -109,6 +110,7 @@ export default {
     'mdi-opacity',
     'mdi-water',
     'mdi-water-outline',
+    'mdi-cog',
   ],
   home: [
     'mdi-home-city-outline',
@@ -123,7 +125,7 @@ export default {
     'mdi-fridge-outline',
     'mdi-medical-bag',
     'mdi-baby-carriage',
-    'mdi-hotel',
+    'mdi-bed',
     'mdi-tooth',
     'mdi-dumbbell',
     'mdi-tent',
@@ -150,6 +152,7 @@ export default {
     'mdi-hanger',
     'mdi-tie',
     'mdi-tumble-dryer',
+    'mdi-lipstick',
   ],
   animals: [
     'mdi-cat',

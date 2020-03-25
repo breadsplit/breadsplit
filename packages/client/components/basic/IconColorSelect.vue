@@ -39,21 +39,21 @@ export default class IconColorSelect extends Vue {
   @Prop([String, Array]) readonly icons: string | string[] | undefined
 
   @Watch('menu')
-  onMenuChanged () {
+  onMenuChanged() {
     if (!this.menu)
       this.tab = 0
   }
 
-  setIcon (value) {
+  setIcon(value) {
     this.tab = 1
     this.$emit('update:icon', value)
   }
 
-  setColor (value) {
+  setColor(value) {
     this.$emit('update:color', value)
   }
 
-  close () {
+  close() {
     this.tab = 0
     this.menu = false
   }

@@ -1,7 +1,7 @@
 import { f, GroupsRef, db, OperationsRef, recalculateGroupOperations } from './utils/helpers'
 import { ProcessServerOperations, omitDeep } from './utils/opschain'
 
-export const archiveGroupOperations = f(async ({ id }: {id: string }, context) => {
+export const archiveGroupOperations = f(async({ id }: {id: string }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
@@ -12,7 +12,7 @@ export const archiveGroupOperations = f(async ({ id }: {id: string }, context) =
 
   const user_uid = context.auth.uid
 
-  await db.runTransaction(async (t) => {
+  await db.runTransaction(async(t) => {
     const group = await t.get(GroupsRef(id))
     const data = group.data()
     if (data) {

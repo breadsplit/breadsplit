@@ -26,7 +26,7 @@ export default class TransactionSheet extends mixins(GroupMixin) {
   @Prop(Object) readonly transaction!: Transaction
   @Prop(Boolean) readonly hideEmpty?: boolean
 
-  get items () {
+  get items() {
     const creditors = new TransactionWeightsHelper(this.transaction, 'creditors')
     const debtors = new TransactionWeightsHelper(this.transaction, 'debtors')
     const dict: Record<string, {uid: string; credit: number; debit: number}> = {}

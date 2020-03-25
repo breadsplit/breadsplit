@@ -17,7 +17,7 @@ import GroupMixin from '~/mixins/group'
 
 @Component
 export default class ConvertToOnline extends mixins(GroupMixin) {
-  async convert () {
+  async convert() {
     if (await this.$confirm(this.$t('prompt.are_you_sure'))) {
       this.$apploading.open(this.$t('loading.coverting_online'))
       try {

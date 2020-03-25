@@ -17,7 +17,7 @@ import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class TEMPLATE extends Vue {
-  close (result?) {
+  close(result?) {
     this.$emit('close', result)
   }
 }

@@ -39,7 +39,7 @@ export const BaseIndex = 2
 
 const colors: string[][] = mains
   .map(name => variations
-    .map(v => MaterialColors[name][v])
+    .map(v => MaterialColors[name][v]),
   )
 
 export default colors

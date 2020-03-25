@@ -1,5 +1,5 @@
 
-export function GCD (arr: number[]) {
+export function GCD(arr: number[]) {
   // Use spread syntax to get minimum of array
   const lowest = Math.min(...arr)
 
@@ -20,7 +20,7 @@ export function GCD (arr: number[]) {
   return 1
 }
 
-export function hashCode (s: string) {
+export function hashCode(s: string) {
   const l = s.length
   let h = 0
   let i = 0

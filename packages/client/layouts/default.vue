@@ -42,7 +42,7 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   }
 
   // Methods
-  mounted () {
+  mounted() {
     if (!this.isMobile)
       this.drawer = true
 
@@ -50,11 +50,11 @@ export default class DefaultLayout extends mixins(CommonMixin, NavigationMixin, 
   }
 
   @Watch('dark', { immediate: true })
-  onThemeChanged () {
+  onThemeChanged() {
     this.$vuetify.theme.dark = this.dark
   }
 
-  async checkFirstStart () {
+  async checkFirstStart() {
     if (!this.$store.state.app.init) {
       this.$store.commit('init')
       await this.$refs.welcome.open()

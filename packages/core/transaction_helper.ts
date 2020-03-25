@@ -6,51 +6,51 @@ import { GCD } from '../utils'
 export type WeightsField = 'debtors' | 'creditors'
 
 export class TransactionWeightsHelper {
-  constructor (
+  constructor(
     public trans: Transaction,
-    public readonly on: WeightsField
+    public readonly on: WeightsField,
   ) { }
 
-  get mode () {
+  get mode() {
     if (this.on === 'creditors')
       return this.trans.splitmode_creditors
     else
       return this.trans.splitmode
   }
 
-  get participators () {
+  get participators() {
     return this.trans[this.on]
   }
 
-  set participators (value: Weight[]) {
+  set participators(value: Weight[]) {
     this.trans[this.on] = value
   }
 
-  get totalWeights () {
+  get totalWeights() {
     return this.participators
       .map(i => i.weight || 0)
       .reduce((a, b) => a + b, 0)
   }
 
-  get flexibleWeights () {
+  get flexibleWeights() {
     return this.participators
       .filter(c => c.fee == null)
       .map(i => i.weight || 0)
       .reduce((a, b) => a + b, 0)
   }
 
-  get fixedFees () {
+  get fixedFees() {
     return this.participators
       .filter(c => c.fee != null)
       .map(i => i.fee || 0)
       .reduce((a, b) => a + b, 0)
   }
 
-  get flexibleFees () {
+  get flexibleFees() {
     return this.trans.total_fee - this.fixedFees
   }
 
-  getFee (participator: Weight) {
+  getFee(participator: Weight) {
     if (this.mode === 'amount') {
       if (participator.fee != null)
         return participator.fee
@@ -70,7 +70,7 @@ export class TransactionWeightsHelper {
     return this.trans.total_fee * (participator.weight || 0) / totalWeights
   }
 
-  gcdAmount () {
+  gcdAmount() {
     if (this.participators.length === 1) {
       this.participators[0].weight = 1
       return
@@ -87,7 +87,7 @@ export class TransactionWeightsHelper {
     })
   }
 
-  gcdWeight () {
+  gcdWeight() {
     if (this.participators.length === 1) {
       this.participators[0].weight = 1
       return
@@ -98,7 +98,7 @@ export class TransactionWeightsHelper {
     })
   }
 
-  cleanUp (removeZero = true) {
+  cleanUp(removeZero = true) {
     const mode = this.mode
     if (mode === 'average') {
       this.participators.forEach((c) => {
@@ -134,35 +134,35 @@ export class TransactionWeightsHelper {
 }
 
 export class TransactionHelper {
-  static from (trans: Transaction) {
+  static from(trans: Transaction) {
     return new TransactionHelper(trans)
   }
 
-  constructor (
-    public trans: Transaction
+  constructor(
+    public trans: Transaction,
   ) { }
 
-  get creditorsHelper () {
+  get creditorsHelper() {
     return new TransactionWeightsHelper(this.trans, 'creditors')
   }
 
-  get debtorsHelper () {
+  get debtorsHelper() {
     return new TransactionWeightsHelper(this.trans, 'debtors')
   }
 
-  get creditorWeights (): number {
+  get creditorWeights(): number {
     return sumBy(this.trans.creditors, c => c.weight || 0)
   }
 
-  get debtorWeights (): number {
+  get debtorWeights(): number {
     return sumBy(this.trans.debtors, d => d.weight || 0)
   }
 
-  get involvedIds () {
+  get involvedIds() {
     return uniq(concat(map(this.trans.creditors, 'uid'), map(this.trans.debtors, 'uid')))
   }
 
-  get balanceChanges (): TransactionBalance[] {
+  get balanceChanges(): TransactionBalance[] {
     const fee = this.trans.total_fee
     const creditorWeights = this.creditorWeights
     const debtorWeights = this.debtorWeights
@@ -187,11 +187,11 @@ export class TransactionHelper {
     return changes
   }
 
-  balanceChangesOf (uid: string) {
+  balanceChangesOf(uid: string) {
     return this.balanceChanges.find(i => i.uid === uid)
   }
 
-  cleanUp () {
+  cleanUp() {
     this.debtorsHelper.cleanUp()
     this.creditorsHelper.cleanUp()
   }

@@ -13,7 +13,7 @@ const GroupsRef = (id: string) => admin.firestore().collection('groups').doc(id)
 const MessageTokensRef = (id: string) => admin.firestore().collection('messaging_tokens').doc(id)
 const UserInfoRef = (id: string) => admin.firestore().collection('users').doc(id)
 
-async function GetUserInfo (uid: string) {
+async function GetUserInfo(uid: string) {
   const doc = await UserInfoRef(uid).get()
   if (!doc.exists)
     return null
@@ -21,7 +21,7 @@ async function GetUserInfo (uid: string) {
   return data
 }
 
-export async function GetUserInfos (uids: string[]) {
+export async function GetUserInfos(uids: string[]) {
   const users = await Promise.all(uids.map(GetUserInfo))
 
   const info: {[s: string]: UserInfo} = {}
@@ -34,18 +34,18 @@ export async function GetUserInfos (uids: string[]) {
   return info
 }
 
-function GetTransactionDesc (trans: Transaction, group: Group, locale: string) {
+function GetTransactionDesc(trans: Transaction, group: Group, locale: string) {
   if (trans.desc)
     return trans.desc
   const category = ParseCategory(trans.category, group, makeTranslator(t, locale))
   return category.text
 }
 
-async function GetUserName (uid: string, group: Group) {
+async function GetUserName(uid: string, group: Group) {
   return oc(group).members[uid].name('') || oc(await GetUserInfo(uid)).name('')
 }
 
-async function ParseTransaction (trans: Transaction, group: Group, locale: string, targetUid: string, creator?: string) {
+async function ParseTransaction(trans: Transaction, group: Group, locale: string, targetUid: string, creator?: string) {
   const currency = trans.currency
   if (trans.type === 'expense') {
     const balance = TransactionHelper.from(trans).balanceChangesOf(targetUid)
@@ -77,10 +77,10 @@ async function ParseTransaction (trans: Transaction, group: Group, locale: strin
   return undefined
 }
 
-export async function PushGroupOperationsNotification (
+export async function PushGroupOperationsNotification(
   groupid: string,
   operations: Operation[],
-  excludesIds: string[]
+  excludesIds: string[],
 ) {
   const groupDoc = await GroupsRef(groupid).get()
   const group = groupDoc.data() as ServerGroup
@@ -88,7 +88,7 @@ export async function PushGroupOperationsNotification (
   const receivers = _.without(viewers, ...excludesIds)
   const users: Record<string, UserInfo> = {}
 
-  const getUserInfo = async (uid: string) => {
+  const getUserInfo = async(uid: string) => {
     if (users[uid])
       return users[uid]
     const doc = await UserInfoRef(uid).get()

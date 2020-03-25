@@ -2,7 +2,7 @@ import { oc } from 'ts-optchain'
 import { SharedGroupOptions } from '../../../types'
 import { f, GroupsRef } from './utils/helpers'
 
-export const changeGroupOptions = f(async ({ id, changes }: {id: string; changes: Partial<SharedGroupOptions> }, context) => {
+export const changeGroupOptions = f(async({ id, changes }: {id: string; changes: Partial<SharedGroupOptions> }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 

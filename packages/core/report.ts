@@ -13,7 +13,7 @@ export interface ExpensesByCategoriesItem {
   currency: string
 }
 
-export function ReportExpensesByCategories (vm: Vue, transactions: Transaction[], group: Group, ignoredCategories: string[] = [], involvedId?: string, display_currency?: string): ExpensesByCategoriesItem[] {
+export function ReportExpensesByCategories(vm: Vue, transactions: Transaction[], group: Group, ignoredCategories: string[] = [], involvedId?: string, display_currency?: string): ExpensesByCategoriesItem[] {
   display_currency = display_currency || group.main_currency
 
   const records: Record<string, ExpensesByCategoriesItem> = {}

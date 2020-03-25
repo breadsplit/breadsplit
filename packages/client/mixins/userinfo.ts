@@ -11,27 +11,27 @@ export default class UserInfoMixin extends Vue {
   @Getter('user/uid') uid: string | undefined
   @Getter('user/me') me: UserInfo | undefined
 
-  private setUserCache (uid: string, value: UserMemberInfo) {
+  private setUserCache(uid: string, value: UserMemberInfo) {
     let group = userCache[this.groupId]
     if (!group)
       group = userCache[this.groupId] = {}
     group[uid] = value
   }
 
-  private clearUserCache (uid: string) {
+  private clearUserCache(uid: string) {
     const group = userCache[this.groupId]
     if (group)
       delete group[uid]
   }
 
-  private getUserCache (uid: string) {
+  private getUserCache(uid: string) {
     const group = userCache[this.groupId]
     if (!group)
       return undefined
     return group[uid]
   }
 
-  getUser (uid?: string, member?: Member, user?: UserInfo, autoFetch = true): UserMemberInfo | undefined {
+  getUser(uid?: string, member?: Member, user?: UserInfo, autoFetch = true): UserMemberInfo | undefined {
     uid = uid || (member && member.uid) || (user && user.uid) || undefined
     if (!uid)
       return undefined
@@ -67,7 +67,7 @@ export default class UserInfoMixin extends Vue {
     return result
   }
 
-  mergeMemberAndUser (member?: Member, user?: UserInfo) {
+  mergeMemberAndUser(member?: Member, user?: UserInfo) {
     const result = Object.assign({}, member, user) as UserMemberInfo
 
     // when "member" has a name, override as nickname
@@ -89,26 +89,26 @@ export default class UserInfoMixin extends Vue {
     return result
   }
 
-  get groupId (): string {
+  get groupId(): string {
     return this.$store.getters['group/id']
   }
 
-  getMember (uid: string): Member | undefined {
+  getMember(uid: string): Member | undefined {
     return this.$store.getters['group/memberById']({ uid })
   }
 
-  getAvatarUrl (uid: string, name: string) {
+  getAvatarUrl(uid: string, name: string) {
     const user = this.getUser(uid)
     if (user && 'avatar_url' in user)
       return user.avatar_url
     return this.getFallbackAvatar(uid, name)
   }
 
-  getFallbackAvatar (uid: string, name: string) {
+  getFallbackAvatar(uid: string, name: string) {
     return LetterAvatar(name || '?', uid || nanoid())
   }
 
-  getUserName (uid: string, pronoun = true) {
+  getUserName(uid: string, pronoun = true) {
     if (pronoun && (uid === this.uid || IsThisId.Me(uid)))
       return this.$t('pronoun.i').toString()
 

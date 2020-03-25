@@ -1,11 +1,11 @@
 import dayjs from '../core/dayjs_config'
 import { t, LOCALE_FALLBACK, PlainTranslator } from './i18n'
 
-export function getTimezone () {
+export function getTimezone() {
   return Intl.DateTimeFormat().resolvedOptions().timeZone
 }
 
-export function dateFromNow (time: dayjs.ConfigType, locale: string = LOCALE_FALLBACK) {
+export function dateFromNow(time: dayjs.ConfigType, locale: string = LOCALE_FALLBACK) {
   const d = dayjs(time)
   const date = d.toDate() || new Date()
   const now = dayjs()
@@ -16,7 +16,7 @@ export function dateFromNow (time: dayjs.ConfigType, locale: string = LOCALE_FAL
   return d.fromNow()
 }
 
-export function shortDate (locale: string, time: dayjs.ConfigType, relatedTo?: dayjs.ConfigType) {
+export function shortDate(locale: string, time: dayjs.ConfigType, relatedTo?: dayjs.ConfigType) {
   const d = dayjs(time)
   const date = d.toDate() || new Date()
   if (dayjs(relatedTo).year() === d.year())
@@ -25,7 +25,7 @@ export function shortDate (locale: string, time: dayjs.ConfigType, relatedTo?: d
     return date.toLocaleDateString(locale || LOCALE_FALLBACK, { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
-export function shortDateMonth (locale: string, time: dayjs.ConfigType, relatedTo?: dayjs.ConfigType) {
+export function shortDateMonth(locale: string, time: dayjs.ConfigType, relatedTo?: dayjs.ConfigType) {
   const d = dayjs(time)
   const date = d.toDate() || new Date()
   if (dayjs(relatedTo).year() === d.year())
@@ -34,7 +34,7 @@ export function shortDateMonth (locale: string, time: dayjs.ConfigType, relatedT
     return date.toLocaleDateString(locale || LOCALE_FALLBACK, { month: 'long', year: 'numeric' })
 }
 
-export function getWeekOfYear (time: dayjs.ConfigType) {
+export function getWeekOfYear(time: dayjs.ConfigType) {
   const d = dayjs(time)
 
   // ISO 8601 states that week 1 is the week
@@ -48,7 +48,7 @@ export function getWeekOfYear (time: dayjs.ConfigType) {
   return now.diff(start, 'week')
 }
 
-export function dateToRelative (time: dayjs.ConfigType, $t: PlainTranslator = t, locale?: string) {
+export function dateToRelative(time: dayjs.ConfigType, $t: PlainTranslator = t, locale?: string) {
   const d = dayjs(time)
   const days = dayjs().diff(d, 'day')
   if (days === 0)
@@ -60,7 +60,7 @@ export function dateToRelative (time: dayjs.ConfigType, $t: PlainTranslator = t,
   return d.format('ll')
 }
 
-export function numberToMoney (value: number, locale: string = LOCALE_FALLBACK, currency?: string, digits = 2) {
+export function numberToMoney(value: number, locale: string = LOCALE_FALLBACK, currency?: string, digits = 2) {
   const formatter = new Intl.NumberFormat(locale, {
     style: currency ? 'currency' : undefined,
     currency,
@@ -70,14 +70,14 @@ export function numberToMoney (value: number, locale: string = LOCALE_FALLBACK, 
   return formatter.format(value)
 }
 
-export function capitalize (s: string) {
+export function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-export function capitalizeEachWords (s: string, delimiter = ' ') {
+export function capitalizeEachWords(s: string, delimiter = ' ') {
   return s.split(delimiter).map(w => capitalize(w)).join(delimiter)
 }
 
-export function formatExchangeDate (d?: dayjs.ConfigType) {
+export function formatExchangeDate(d?: dayjs.ConfigType) {
   return dayjs(d).format('YYYY-MM-DD')
 }

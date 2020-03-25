@@ -42,7 +42,7 @@ export default class Login extends Vue {
     dialog: Dialog
   }
 
-  async loginWith (provider: 'google'|'facebook'|'github') {
+  async loginWith(provider: 'google'|'facebook'|'github') {
     try {
       await this.$fire.loginWith(provider)
       this.close(true)
@@ -54,18 +54,18 @@ export default class Login extends Vue {
     }
   }
 
-  get uid () {
+  get uid() {
     return this.$store.getters['user/uid']
   }
 
   @Watch('uid')
-  onUidChanged (uid) {
+  onUidChanged(uid) {
     // close dialog on user signed in
     if (uid)
       this.close(true)
   }
 
-  open (options = {}) {
+  open(options = {}) {
     return new Promise((resolve, reject) => {
       this.resolve = resolve
       this.reject = reject
@@ -73,11 +73,11 @@ export default class Login extends Vue {
     })
   }
 
-  login (options = {}) {
+  login(options = {}) {
     return this.open(options)
   }
 
-  close (result: boolean) {
+  close(result: boolean) {
     if (this.resolve)
       this.resolve(true)
     this.resolve = null

@@ -16,7 +16,7 @@ import { GroupMixin } from '~/mixins'
 
 @Component
 export default class SyncingStateIndicator extends mixins(GroupMixin) {
-  retry () {
+  retry() {
     if (!this.clientGroup)
       return
     this.$fire.uploadLocalChanges([this.clientGroup])

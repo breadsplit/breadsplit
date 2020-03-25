@@ -57,7 +57,7 @@ export default class Prompt extends Vue {
     dialog: PromiseDialog
   }
 
-  async open (title, value, options) {
+  async open(title, value, options) {
     this.dialog = true
     this.title = title
     this.value = value
@@ -67,11 +67,11 @@ export default class Prompt extends Vue {
     return await this.$refs.dialog.open(value)
   }
 
-  agree () {
+  agree() {
     this.$refs.dialog.close(this.value)
   }
 
-  cancel () {
+  cancel() {
     this.$refs.dialog.close(this.originalValue)
   }
 }

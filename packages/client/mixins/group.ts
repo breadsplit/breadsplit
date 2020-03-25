@@ -2,7 +2,7 @@ import { Vue, Component, Getter } from 'nuxt-property-decorator'
 import { Group, Member, ClientGroup } from '~/types'
 import { GroupCurrency, ParseCategory, GetCategoriesOfGroup } from '~/core'
 
-function origin () {
+function origin() {
   return window.location.origin
 }
 
@@ -12,53 +12,53 @@ export default class GroupMixin extends Vue {
   @Getter('group/currentClientGroup') clientGroup?: ClientGroup
   @Getter('group/activeMembers') members!: Member[]
 
-  get isOnline () {
+  get isOnline() {
     if (!this.group)
       return false
     return this.group.online
   }
 
-  get currencies () {
+  get currencies() {
     if (!this.group)
       return []
     return GroupCurrency(this.group)
   }
 
-  get sharedOptions () {
+  get sharedOptions() {
     if (!this.clientGroup)
       return {}
     return this.clientGroup.options || {}
   }
 
-  get localOptions () {
+  get localOptions() {
     if (!this.clientGroup)
       return {}
     return this.clientGroup.local_options || {}
   }
 
-  get displayCurrency () {
+  get displayCurrency() {
     if (!this.group)
       return ''
     return this.localOptions.display_currency || this.group.main_currency
   }
 
-  set displayCurrency (currency: string) {
+  set displayCurrency(currency: string) {
     if (this.group)
       this.$store.dispatch('group/setConfigs', { id: this.group.id, field: 'display_currency', value: currency })
   }
 
-  get inviteLink () {
+  get inviteLink() {
     if (this.group && this.group.online)
       return `${origin()}/join?id=${this.group.id}&group_title=${encodeURIComponent(this.group.name)}`
     return undefined
   }
 
-  parseCategory (category = 'other') {
+  parseCategory(category = 'other') {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return ParseCategory(category, this.group!, this.$t.bind(this))
   }
 
-  get categories () {
+  get categories() {
     if (!this.group)
       return []
     return GetCategoriesOfGroup(this.group, this.$t.bind(this))

@@ -34,7 +34,7 @@ export default ({ app, store, route }: Context) => {
         app.$vuetify.lang.current = locale
         dayjs.locale(locale)
       },
-      { immediate: true }
+      { immediate: true },
     )
   })
 }

@@ -10,7 +10,7 @@ import { ClientGroup } from '~/types'
 export default class SyncingIcon extends Vue {
   @Prop() clientGroup!: ClientGroup
 
-  get icon () {
+  get icon() {
     if (!this.clientGroup)
       return
     if (this.clientGroup.syncing_state === 'in_progress')
@@ -21,16 +21,16 @@ export default class SyncingIcon extends Vue {
       return 'mdi-alert'
   }
 
-  get classes () {
+  get classes() {
     if (!this.clientGroup)
       return
     if (this.clientGroup.syncing_state === 'in_progress')
       return 'syncing-icon'
     if (this.clientGroup.syncing_state === 'done')
-      return 'op-50'
+      return 'op-25'
   }
 
-  get color () {
+  get color() {
     if (!this.clientGroup)
       return
     if (this.clientGroup.syncing_state === 'error')

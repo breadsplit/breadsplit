@@ -20,7 +20,7 @@ import DialogBar from './DialogBar.vue'
 export default class HelpDialog extends Vue {
   @Prop(String) readonly help?: string
 
-  close (result?) {
+  close(result?) {
     this.$emit('close', result)
   }
 }

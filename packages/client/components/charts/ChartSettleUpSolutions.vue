@@ -34,11 +34,11 @@ export default class ChartSettleUpSolutions extends mixins(UserInfoMixin) {
 
   simulation!: d3.Simulation<Node, Link>
 
-  get ids () {
+  get ids() {
     return union(this.solutions.flatMap(s => [s.from, s.to]))
   }
 
-  get nodes (): Node[] {
+  get nodes(): Node[] {
     return this.ids
       .map((id) => {
         const user = this.getUser(id)
@@ -49,7 +49,7 @@ export default class ChartSettleUpSolutions extends mixins(UserInfoMixin) {
       .filter(i => i !== undefined) as Node[]
   }
 
-  get links (): Link[] {
+  get links(): Link[] {
     return this.solutions.map(s => ({
       target: s.to,
       source: s.from,
@@ -57,46 +57,46 @@ export default class ChartSettleUpSolutions extends mixins(UserInfoMixin) {
     }))
   }
 
-  get svg () {
+  get svg() {
     return d3.select(this.$el)
   }
 
-  mounted () {
+  mounted() {
     this.init()
     this.draw()
   }
 
-  init () {
+  init() {
     this.simulation = d3.forceSimulation<Node, Link>()
       .force('link', d3.forceLink<Node, Link>().id(d => d.uid || ''))
       .force('charge', d3.forceManyBody()
         .strength(-1000)
         .theta(0.8)
-        .distanceMax(500)
+        .distanceMax(500),
       )
       .force('center', d3.forceCenter(this.width / 2, this.height / 2))
   }
 
-  dragstarted (d) {
+  dragstarted(d) {
     if (!d3.event.active)
       this.simulation.alphaTarget(0.3).restart()
     d.fx = d.x
     d.fy = d.y
   }
 
-  dragged (d) {
+  dragged(d) {
     d.fx = d3.event.x
     d.fy = d3.event.y
   }
 
-  dragended (d) {
+  dragended(d) {
     d.fx = null
     d.fy = null
     if (!d3.event.active)
       this.simulation.alphaTarget(0)
   }
 
-  draw () {
+  draw() {
     const svg = this.svg
 
     const defs = svg.append('svg:defs')
@@ -168,7 +168,7 @@ export default class ChartSettleUpSolutions extends mixins(UserInfoMixin) {
       .style('font-size', '1em')
       .text(d => d.name)
 
-    function ticked () {
+    function ticked() {
       link
         // @ts-ignore
         .attr('x1', d => d.source.x)

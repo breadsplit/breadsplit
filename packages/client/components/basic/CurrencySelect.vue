@@ -26,13 +26,13 @@ export default class CurrencySelect extends Vue {
 
   @Getter('locale') locale!: string
 
-  private get currencies () {
+  private get currencies() {
     const set = new Set([this.value, ...this.codes, ...getCommonCurrencyCodes(this.locale)])
     const codes = Array.from(set).splice(0, this.limit)
     return getLocaleCurrencies(this.locale, codes)
   }
 
-  get items () {
+  get items() {
     let items: (string|object)[]
     if (this.mini)
       items = this.currencies.map(c => c.cc)
@@ -45,7 +45,7 @@ export default class CurrencySelect extends Vue {
     return items
   }
 
-  async onInput (v: string|null) {
+  async onInput(v: string|null) {
     if (v) {
       this.$emit('input', v)
     }

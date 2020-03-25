@@ -20,16 +20,16 @@ import FontFamilyBuilder from '~/../meta/font_family'
 
 @Component
 export default class GlobalStyle extends Vue {
-  get localeFont () {
+  get localeFont() {
     const font_of_locale = this.$t('css.font_of_locale', '').toString()
     return FontFamilyBuilder(font_of_locale)
   }
 
-  get primaryColor () {
+  get primaryColor() {
     return this.$store.getters.primary
   }
 
-  get theme () {
+  get theme() {
     return this.$vuetify.theme.currentTheme
   }
 }

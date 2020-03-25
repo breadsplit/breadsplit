@@ -16,12 +16,12 @@ export default class LoadingDialog extends Vue {
   text = ''
   show = false
 
-  open (text) {
+  open(text) {
     this.text = text
     this.show = true
   }
 
-  close () {
+  close() {
     this.show = false
     this.text = ''
   }

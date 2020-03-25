@@ -15,7 +15,7 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 export default class ComposedToolbar extends Vue {
   @Prop({ default: 'inherit' }) height!: number | string
 
-  get style () {
+  get style() {
     let height = this.height
     if (!isNaN(+height))
       height = `${height}px`

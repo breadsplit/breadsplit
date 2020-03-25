@@ -27,11 +27,11 @@ export default class UserToggles extends Vue {
   @Prop({ default: true }) readonly fade!: boolean
   @Prop({ default: true }) readonly showNames!: boolean
 
-  toggle (uid: string) {
+  toggle(uid: string) {
     this.$emit('select', uid)
   }
 
-  isSelected (uid: string) {
+  isSelected(uid: string) {
     return this.selected.includes(uid)
   }
 }

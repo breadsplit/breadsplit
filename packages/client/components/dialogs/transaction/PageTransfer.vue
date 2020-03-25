@@ -48,21 +48,21 @@ export default class PageTransfer extends mixins(GroupMixin) {
   }
 
   @Watch('form', { immediate: true })
-  onFormChanged () {
+  onFormChanged() {
     this.$nextTick(() => {
       this.$refs.fee_input.open()
     })
   }
 
-  get showKeyboard () {
+  get showKeyboard() {
     return !!this.registeredInput
   }
 
-  closeKeyboard () {
+  closeKeyboard() {
     this.registeredInput = null
   }
 
-  openKeyboard (e: NumberInput | null) {
+  openKeyboard(e: NumberInput | null) {
     if (this.registeredInput) {
       this.registeredInput.calculate()
       this.registeredInput.deregisterKeyboard()
@@ -72,7 +72,7 @@ export default class PageTransfer extends mixins(GroupMixin) {
     this.registeredInput = e
   }
 
-  public finishUp () {
+  public finishUp() {
     this.closeKeyboard()
   }
 }

@@ -42,7 +42,7 @@ export default class Credit extends Vue {
 
   @Prop({ default: false }) simple?: boolean
 
-  get buildTimeFromNow () {
+  get buildTimeFromNow() {
     return dayjs(this.buildtime).fromNow()
   }
 }

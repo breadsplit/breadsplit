@@ -18,7 +18,7 @@ export default class BaseLayout extends Vue {
   @Getter('dark') dark!: boolean
 
   @Watch('dark', { immediate: true })
-  onThemeChanged () {
+  onThemeChanged() {
     this.$vuetify.theme.dark = this.dark
   }
 }

@@ -3,7 +3,7 @@ import { LocaleMessages } from '../locales'
 
 export const LOCALE_FALLBACK = 'en'
 
-export function getValue (key: string, locale: string, fallback = LOCALE_FALLBACK) {
+export function getValue(key: string, locale: string, fallback = LOCALE_FALLBACK) {
   let value = get(LocaleMessages, `${locale}.${key}`) || ''
 
   if (!value)
@@ -12,7 +12,7 @@ export function getValue (key: string, locale: string, fallback = LOCALE_FALLBAC
   return value.toString()
 }
 
-export function t (key: string, locale: string = LOCALE_FALLBACK, args?: any[] | Record<string, any>, fallback = LOCALE_FALLBACK) {
+export function t(key: string, locale: string = LOCALE_FALLBACK, args?: any[] | Record<string, any>, fallback = LOCALE_FALLBACK) {
   const value = getValue(key, locale, fallback)
   if (!args)
     return value
@@ -26,6 +26,6 @@ export function t (key: string, locale: string = LOCALE_FALLBACK, args?: any[] |
 export type PlainTranslator = (key: string, locale?: string, args?: any) => any
 export type Translator = (key: string, args?: any) => any
 
-export function makeTranslator (t: PlainTranslator, locale: string = LOCALE_FALLBACK) {
+export function makeTranslator(t: PlainTranslator, locale: string = LOCALE_FALLBACK) {
   return (key: string, args?: any) => t(key, locale, args).toString()
 }

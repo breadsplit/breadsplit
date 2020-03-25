@@ -6,11 +6,11 @@ export default class DialogChildMixin extends Vue {
   @Inject() readonly dialog!: any
   visible = false
 
-  get options () {
+  get options() {
     return this.dialog.options as any || {}
   }
 
-  close (result?) {
+  close(result?) {
     this.visible = false
     this.$emit('close', result)
     try {

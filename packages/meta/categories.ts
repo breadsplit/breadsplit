@@ -1,5 +1,3 @@
-import { Dictionary } from 'vuex'
-
 const colors = [
   'rgb(68, 120, 178)',
   'rgb(75, 160, 177)',
@@ -21,7 +19,7 @@ export const BuiltInCategories = {
     color: '',
   },
   lodging: {
-    icon: 'hotel',
+    icon: 'bed',
     color: '',
   },
   groceries: {
@@ -57,7 +55,7 @@ export const BuiltInCategories = {
     color: '',
   },
   tips: {
-    icon: 'coin',
+    icon: 'currency-usd-circle',
     color: '',
   },
   other: {
@@ -78,7 +76,7 @@ Object.values(BuiltInCategories).map((v, i) => v.color = colors[i])
 
 export const BuiltInCategoriesKeys = Object.keys(BuiltInCategories).filter(i => i !== 'unknown')
 
-export const CategoryPresets: Dictionary<(keyof typeof BuiltInCategories)[]> = {
+export const CategoryPresets: Record<string, (keyof typeof BuiltInCategories)[]> = {
   default: [
     'transport',
     'lodging',

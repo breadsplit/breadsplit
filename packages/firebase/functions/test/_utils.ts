@@ -2,7 +2,7 @@ import { promisify } from 'util'
 
 const nextTick = promisify(process.nextTick)
 
-export async function deleteQueryBatch (db: FirebaseFirestore.Firestore, query: FirebaseFirestore.Query, batchSize: number): Promise<number> {
+export async function deleteQueryBatch(db: FirebaseFirestore.Firestore, query: FirebaseFirestore.Query, batchSize: number): Promise<number> {
   const snapshot = await query.get()
   // When there are no documents left, we are done
   if (snapshot.size === 0)
@@ -25,7 +25,7 @@ export async function deleteQueryBatch (db: FirebaseFirestore.Firestore, query: 
   return numDeleted + await deleteQueryBatch(db, query, batchSize)
 }
 
-export async function deleteCollection (db: FirebaseFirestore.Firestore, collectionPath: string, batchSize = 100) {
+export async function deleteCollection(db: FirebaseFirestore.Firestore, collectionPath: string, batchSize = 100) {
   const collectionRef = db.collection(collectionPath)
   const query = collectionRef.orderBy('__name__').limit(batchSize)
 

@@ -77,7 +77,7 @@ import { Component, mixins } from 'nuxt-property-decorator'
 import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 
 @Component({
-  head () {
+  head() {
     return {
       meta: [
         { name: 'theme-color', content: this.$store.getters.primary },
@@ -85,7 +85,7 @@ import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
       title: (this.$store.getters['group/current'] || {}).name,
     }
   },
-  async asyncData ({ params, store, error }) {
+  async asyncData({ params, store, error }) {
     if (!store.getters['group/current'])
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
@@ -98,7 +98,7 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
   newMenuShown = false
 
   // Computed
-  get tabItems () {
+  get tabItems() {
     return [{
       text: this.$t('ui.tabs.summary'),
       icon: 'script-text-outline',
@@ -120,7 +120,7 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
     }]
   }
 
-  get newItemsMenu () {
+  get newItemsMenu() {
     return [{
       text: this.$t('ui.transactions.type_personal'),
       icon: 'account',
@@ -142,7 +142,7 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
     }]
   }
 
-  get fabStyle () {
+  get fabStyle() {
     const style = {
       right: '50%',
       bottom: '12px',
@@ -155,26 +155,26 @@ export default class GroupPage extends mixins(CommonMixin, NavigationMixin, Grou
     return style
   }
 
-  gotoExpenses () {
+  gotoExpenses() {
     this.updateHash('expenses', '1')
     this.updateHash('involvedIndex', '0')
     this.updateHash('tab', 'expenses', true)
   }
 
-  get tab_id () {
+  get tab_id() {
     return this.hash.tab || 'summary'
   }
 
-  set tab_id (value) {
+  set tab_id(value) {
     this.updateHash('tab', value, true)
   }
 
-  get tab_index () {
+  get tab_index() {
     const tab = this.tabItems.find(t => t.key === this.tab_id)
     return tab ? this.tabItems.indexOf(tab) : -1
   }
 
-  set tab_index (value) {
+  set tab_index(value) {
     this.tab_id = (this.tabItems[value] || {}).key || null
   }
 }

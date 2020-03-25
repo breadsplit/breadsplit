@@ -21,15 +21,15 @@ export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixi
   @Prop(Array) readonly activities!: Activity[]
   @Getter('locale') locale!: string
 
-  d (ts) {
+  d(ts) {
     return dateFromNow(ts, this.currentLocale)
   }
 
-  activityDescription (act: Activity) {
+  activityDescription(act: Activity) {
     return getActivityDescription(this.$t.bind(this), act, uid => this.getUserName(uid), { locale: this.currentLocale, showByName: false })
   }
 
-  on (act: Activity) {
+  on(act: Activity) {
     if (!this.clickable(act))
       return {}
     return {
@@ -37,25 +37,25 @@ export default class ActivitiesList extends mixins(NavigationMixin, UserInfoMixi
     }
   }
 
-  clickable (act: Activity) {
+  clickable(act: Activity) {
     // TODO: support more
     if (act.entity === 'transaction' && act.entity_id)
       return true
     return false
   }
 
-  onActivityClick (act: Activity) {
+  onActivityClick(act: Activity) {
     if (act.entity === 'transaction' && act.entity_id)
       this.gotoTransaction(act.entity_id)
   }
 
-  isDifferentCreator (index: number) {
+  isDifferentCreator(index: number) {
     const current = this.activities[index] || {}
     const prev = this.activities[index - 1] || {}
     return current.by !== prev.by
   }
 
-  isDifferentPeriod (index: number) {
+  isDifferentPeriod(index: number) {
     const current = this.activities[index] || {}
     const prev = this.activities[index - 1] || {}
     return current.by !== prev.by || this.d(current.timestamp) !== this.d(prev.timestamp)

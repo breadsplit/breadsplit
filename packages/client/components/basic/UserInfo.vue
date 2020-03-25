@@ -15,17 +15,17 @@ export default class UserInfoLabel extends mixins(UserInfoMixin) {
   @Prop(Object) readonly user?: UserInfo
   @Prop(Object) readonly member?: Member
 
-  get _user () {
+  get _user() {
     return this.getUser(this.id, this.member, this.user)
   }
 
-  get value () {
+  get value() {
     if (this._user)
       return this._user[this.field]
     return ''
   }
 
-  get style () {
+  get style() {
     const style = {}
     if (this.bold)
       style['font-weight'] = 'bold'

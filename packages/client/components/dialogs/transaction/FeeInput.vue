@@ -31,7 +31,7 @@ import { GroupMixin } from '~/mixins'
 export default class FeeInput extends mixins(GroupMixin) {
   @Prop(Object) readonly form!: Transaction
 
-  open () {
+  open() {
     this.$emit('keyboard', this.$refs.input)
   }
 }

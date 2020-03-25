@@ -49,15 +49,15 @@ export default class DateRangeSelect extends mixins(GroupMixin, CommonMixin) {
 
   internal_to: Date|null = null
 
-  get internal_unit () {
+  get internal_unit() {
     return units.indexOf(this.unit)
   }
 
-  set internal_unit (v: number) {
+  set internal_unit(v: number) {
     this.$emit('update:unit', units[v])
   }
 
-  get dateFrom () {
+  get dateFrom() {
     if (this.unit === 'all')
       return dayjs(MIN_DATE)
     if (this.unit === 'custom')
@@ -65,7 +65,7 @@ export default class DateRangeSelect extends mixins(GroupMixin, CommonMixin) {
     return dayjs(this.from).startOf(this.unit)
   }
 
-  get dateTo () {
+  get dateTo() {
     if (this.unit === 'all')
       return dayjs(MAX_DATE)
     if (this.unit === 'custom')
@@ -73,13 +73,13 @@ export default class DateRangeSelect extends mixins(GroupMixin, CommonMixin) {
     return this.dateFrom.add(1, this.unit)
   }
 
-  get datePrevious () {
+  get datePrevious() {
     if (this.unit === 'all' || this.unit === 'custom')
       return this.dateFrom
     return this.dateFrom.subtract(1, this.unit)
   }
 
-  get display () {
+  get display() {
     if (this.unit === 'all')
       return this.$t('date_range.all.full_display')
 
@@ -107,36 +107,36 @@ export default class DateRangeSelect extends mixins(GroupMixin, CommonMixin) {
     return shortDate(this.currentLocale, this.dateFrom)
   }
 
-  get subdisplay () {
+  get subdisplay() {
     const to = this.dateTo.subtract(1, 'minute')
     return `${shortDate(this.currentLocale, this.dateFrom, this.dateFrom)} - ${shortDate(this.currentLocale, to, to)}`
   }
 
-  changeUnit (unit: string) {
+  changeUnit(unit: string) {
     this.$emit('update:unit', unit)
   }
 
-  next () {
+  next() {
     this.$emit('update:from', +this.dateTo)
   }
 
-  previous () {
+  previous() {
     this.$emit('update:from', +this.datePrevious)
   }
 
-  update () {
+  update() {
     this.$emit('update:from', +this.dateFrom)
     this.$emit('update:to', +this.dateTo)
   }
 
   @Watch('from', { immediate: true })
-  onFromChanged (newVal, oldVal) {
+  onFromChanged(newVal, oldVal) {
     if (newVal !== oldVal)
       this.update()
   }
 
   @Watch('unit')
-  onUnitChanged () {
+  onUnitChanged() {
     this.$emit('update:from', +new Date())
   }
 }

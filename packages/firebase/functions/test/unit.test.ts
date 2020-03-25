@@ -16,12 +16,12 @@ const test = initTest({ projectId }, path.resolve(keypath))
 describe('Cloud Functions', () => {
   const collection = admin.firestore().collection('groups')
 
-  beforeAll(async () => {
+  beforeAll(async() => {
     await deleteCollection(admin.firestore(), 'groups')
     expect(await test.wrap(functions.groupsCount)()).toEqual(0)
   })
 
-  afterAll(async () => {
+  afterAll(async() => {
     // Do cleanup tasks.
     test.cleanup()
     // Reset the data
@@ -29,7 +29,7 @@ describe('Cloud Functions', () => {
   })
 
   describe('Get group count', () => {
-    it('zero when empty', async () => {
+    it('zero when empty', async() => {
       // Wrap the function
       const wrapped = test.wrap(functions.groupsCount)
 
@@ -37,7 +37,7 @@ describe('Cloud Functions', () => {
       expect(await wrapped()).toEqual(0)
     })
 
-    it('add one', async () => {
+    it('add one', async() => {
       const wrapped = test.wrap(functions.groupsCount)
 
       await collection.doc('addone').set({})
@@ -50,7 +50,7 @@ describe('Cloud Functions', () => {
   describe('functions', () => {
     let groupid = '233'
 
-    it('PublishGroup', async () => {
+    it('PublishGroup', async() => {
       const wrapped = test.wrap(functions.publishGroup)
 
       const group: Group = GroupDefault({
@@ -61,7 +61,7 @@ describe('Cloud Functions', () => {
       groupid = id
     })
 
-    it('uploadOperations', async () => {
+    it('uploadOperations', async() => {
       const wrapped = test.wrap(functions.uploadOperations)
 
       const trans: Transaction = TransactionDefault({

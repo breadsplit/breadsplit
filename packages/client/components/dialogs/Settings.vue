@@ -91,28 +91,31 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
   localeItems = localeItems
   languageSelecting = false
 
-  get currentLocaleDisplay () {
+  get currentLocaleDisplay() {
     const locale = localeItems.find(l => l.value === this.currentLocale)
     if (locale && locale.text)
       return locale.text
     return this.currentLocale
   }
-  get darkMode () {
+
+  get darkMode() {
     return this.$store.getters.dark
   }
-  set darkMode (value) {
+
+  set darkMode(value) {
     this.$store.commit('dark', value)
   }
-  get notificationEnabled () {
+
+  get notificationEnabled() {
     return this.$store.state.messaging_token
   }
 
-  switchLocale (locale) {
+  switchLocale(locale) {
     this.$store.commit('switchLocale', locale)
     this.languageSelecting = false
   }
 
-  async purgeData () {
+  async purgeData() {
     if (await this.$confirm(this.$t('prompt.are_you_sure'))) {
       await this.$fire.logout()
       this.$store.commit('purge')
@@ -121,7 +124,7 @@ export default class Settings extends mixins(CommonMixin, NavigationMixin, Dialo
     }
   }
 
-  async notificationButton () {
+  async notificationButton() {
     if (!this.notificationEnabled) {
       await this.$fire.requestNotificationPermission()
     }

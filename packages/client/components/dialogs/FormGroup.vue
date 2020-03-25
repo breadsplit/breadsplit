@@ -120,7 +120,7 @@ export default class FormGroup extends mixins(DialogChildMixin) {
   @Getter('user/me') user!: UserInfo
   @Getter('user/uid') uid: string | undefined
 
-  reset () {
+  reset() {
     this.visible = true
     this.formOriginal = null
     // editing
@@ -149,7 +149,7 @@ export default class FormGroup extends mixins(DialogChildMixin) {
     this.updatePrimaryColor()
   }
 
-  get title (): TranslateResult {
+  get title(): TranslateResult {
     if (this.step === 1)
       return `${this.$t('ui.group_editing.add_members')}(${this.members.length})`
     if (!this.mode)
@@ -162,46 +162,46 @@ export default class FormGroup extends mixins(DialogChildMixin) {
       return this.$t('ui.group_editing.default_group_name')
   }
 
-  get viewmode () {
+  get viewmode() {
     return this.mode === 'view'
   }
 
-  get codes () {
+  get codes() {
     return getCommonCurrencyCodes(this.locale)
   }
 
-  get members () {
+  get members() {
     return Object.values(this.form.members)
   }
 
-  get color () {
+  get color() {
     return this.form.color
   }
 
-  get members_suggestions () {
+  get members_suggestions() {
     // TODO: load suggestions from another group
     return []
   }
 
-  get checkEmpty (): boolean {
+  get checkEmpty(): boolean {
     const hasEmpty = !(this.form.name && this.form.main_currency)
     return hasEmpty || this.viewmode
   }
 
   @Watch('visible')
   @Watch('form.color')
-  updatePrimaryColor () {
+  updatePrimaryColor() {
     let color: string | null = null
     if (this.visible)
       color = this.form.color || null
     this.$store.commit('setPrimaryColor', color)
   }
 
-  defaultMember (m) {
+  defaultMember(m) {
     m.push({ uid: IdMe })
   }
 
-  create () {
+  create() {
     // TODO: online version
     this.$store.dispatch('group/add', this.form)
     this.close()
@@ -209,7 +209,7 @@ export default class FormGroup extends mixins(DialogChildMixin) {
     this.$router.push(`/group/${this.form.id}`)
   }
 
-  addMember (name: string) {
+  addMember(name: string) {
     if (name && !this.members.find(m => m.name === name)) {
       const member = MemberDefault({
         name,
@@ -226,11 +226,11 @@ export default class FormGroup extends mixins(DialogChildMixin) {
     }, 1)
   }
 
-  removeMember (uid: string) {
+  removeMember(uid: string) {
     this.$delete(this.form.members, uid)
   }
 
-  edit () {
+  edit() {
     if (!this.formOriginal)
       return
     // only following fields can be modified in this form

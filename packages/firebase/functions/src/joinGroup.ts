@@ -4,13 +4,13 @@ import { ServerGroup, ServerOperations, TransOperationOption } from './utils/typ
 import { IsThisId, MemberDefault } from './utils/core'
 import { ProcessServerOperations } from './utils/opschain'
 
-export const joinGroup = f(async ({ id, join_as }, context) => {
+export const joinGroup = f(async({ id, join_as }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
   const uid = context.auth.uid
 
-  await db.runTransaction(async (t) => {
+  await db.runTransaction(async(t) => {
     const group = (await t.get(GroupsRef(id))).data() as ServerGroup
     const ops = (await t.get(OperationsRef(id))).data() as ServerOperations || { operations: [] }
 

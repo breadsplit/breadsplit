@@ -15,7 +15,7 @@ import { CommonMixin, NavigationMixin } from '~/mixins'
 @Component({
   inheritAttrs: false,
   // passing down vars to children
-  provide () {
+  provide() {
     const dialog = {}
     Object.defineProperty(dialog, 'options', {
       enumerable: true,
@@ -44,18 +44,18 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   @Prop({ default: true }) readonly autoReset!: boolean
   @Prop(String) readonly watchOnQuery!: string
 
-  get isOpened () {
+  get isOpened() {
     return !!this.visible
   }
 
   @Watch('visible')
-  onDialogChanged () {
+  onDialogChanged() {
     if (!this.visible)
       this.close()
   }
 
   @Watch('$route.path')
-  onRouteChanged () {
+  onRouteChanged() {
     if (this.route && this.visible) {
       this.$router.go(1)
       this.close()
@@ -63,7 +63,7 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   }
 
   @Watch('$route.query', { deep: true, immediate: true })
-  onQueryChanged () {
+  onQueryChanged() {
     if (this.watchOnQuery) {
       if (this.$route.query.dialog === this.watchOnQuery)
         this.open(this.$route.query)
@@ -73,13 +73,13 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
     }
   }
 
-  get isFullscreen () {
+  get isFullscreen() {
     if (this.fullscreen != null)
       return this.fullscreen
     return this.isMobile
   }
 
-  get children () {
+  get children() {
     try {
       // this first level child is v-dialog and second is v-theme-provider
       // the third level will be the real slot instances
@@ -90,23 +90,24 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
     }
   }
 
-  registerListeners () {
+  registerListeners() {
     this.children.forEach((c) => {
       // auto listen on child 'close' event
       c.$once('close', () => this.close())
     })
   }
 
-  resetChildren () {
+  resetChildren() {
     this.children.forEach((c) => {
       // @ts-ignore
+      // eslint-disable-next-line no-prototype-builtins
       if (this.autoReset && c.hasOwnProperty('reset') && c.reset instanceof Function)
       // @ts-ignore
         c.reset()
     })
   }
 
-  open (options = {}) {
+  open(options = {}) {
     if (!this.loaded)
       this.loaded = true
     this.visible = true
@@ -121,7 +122,7 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
     })
   }
 
-  close (flag = true) {
+  close(flag = true) {
     if (!this.visible)
       return
     if (this.resolve) {
@@ -135,7 +136,7 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
       this.closeDialog()
   }
 
-  mounted () {
+  mounted() {
     if (this.preload && !this.loaded)
       this.loaded = true
   }

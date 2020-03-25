@@ -90,19 +90,19 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
     dialog: FormCategory
   }
 
-  get rawCategories () {
+  get rawCategories() {
     return this.group.categories || CategoryPresets.default
   }
 
-  get selectedBuiltinCategories () {
+  get selectedBuiltinCategories() {
     return this.rawCategories.filter(i => typeof i === 'string') as string[]
   }
 
-  get unSelectedBuiltinCategories () {
+  get unSelectedBuiltinCategories() {
     return BuiltInCategoriesKeys.filter(i => !this.selectedBuiltinCategories.includes(i))
   }
 
-  init () {
+  init() {
     this.form = this.rawCategories.filter(c => typeof c === 'string' || !c.removed)
     this.archived = [
       ...this.unSelectedBuiltinCategories,
@@ -110,16 +110,16 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
     ]
   }
 
-  mounted () {
+  mounted() {
     this.init()
   }
 
-  submit () {
+  submit() {
     this.$store.dispatch('group/reorderCategories', { categories: this.form, archived: this.archived })
     this.close()
   }
 
-  isDragging (cat: string|Category) {
+  isDragging(cat: string|Category) {
     if (!this.dragging)
       return false
     if (cat === this.dragging)
@@ -129,7 +129,7 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
     return false
   }
 
-  onStart (e, source) {
+  onStart(e, source) {
     this.drag = true
     if (source === 'form')
       this.dragging = this.form[e.oldIndex]
@@ -137,12 +137,12 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
       this.dragging = this.archived[e.oldIndex]
   }
 
-  onEnd (e) {
+  onEnd(e) {
     this.drag = false
     this.dragging = null
   }
 
-  async edit (cat: string | Category) {
+  async edit(cat: string | Category) {
     if (typeof cat === 'string') {
       // this.WIP() // TODO:
     }
@@ -153,7 +153,7 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
     }
   }
 
-  async add () {
+  async add() {
     const category = await this.$refs.dialog.open()
     if (category)
       this.form.push(category)

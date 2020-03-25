@@ -23,13 +23,13 @@ import { Share } from '~/utils'
 export default class Inviting extends mixins(GroupMixin) {
   loading = false
 
-  get public () {
+  get public() {
     if (this.clientGroup && this.clientGroup.options)
       return this.clientGroup.options.public || false
     return false
   }
 
-  async shareInviteLink () {
+  async shareInviteLink() {
     if (!this.inviteLink)
       return
     await Share(
@@ -40,12 +40,12 @@ export default class Inviting extends mixins(GroupMixin) {
     )
   }
 
-  toggle () {
+  toggle() {
     if (!this.loading)
       this.update(!this.public)
   }
 
-  async update (value: boolean) {
+  async update(value: boolean) {
     this.loading = true
     try {
       await this.$fire.changeGroupOptions(this.group.id, { public: value })

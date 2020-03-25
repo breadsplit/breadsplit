@@ -26,12 +26,12 @@ export default class MemberSelect extends Vue {
   @Prop(Array) readonly members!: Member[]
   @Prop(Boolean) readonly disabled?: boolean
 
-  get current () {
+  get current() {
     const member = this.members.find(m => m.uid === this.value)
     return member || {}
   }
 
-  get noOptions () {
+  get noOptions() {
     if (!this.members || !this.members.length)
       return true
     if (this.members.length === 1 && this.members[0].uid === this.value)
@@ -39,7 +39,7 @@ export default class MemberSelect extends Vue {
     return false
   }
 
-  setValue (value) {
+  setValue(value) {
     this.$emit('input', value)
   }
 }

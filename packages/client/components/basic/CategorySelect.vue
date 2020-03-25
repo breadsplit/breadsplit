@@ -26,7 +26,7 @@ export default class CategorySelect extends mixins(GroupMixin) {
   @Prop({ default: 5 }) readonly columns!: number
   @Prop(Boolean) readonly allowCreate?: boolean
 
-  setValue (value) {
+  setValue(value) {
     this.$emit('input', value)
   }
 }

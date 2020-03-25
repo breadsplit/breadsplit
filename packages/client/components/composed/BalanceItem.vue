@@ -24,36 +24,36 @@ export default class Balances extends mixins(NavigationMixin) {
   @Prop(Number) max!: number
   @Prop(Number) min!: number
 
-  get value () {
+  get value() {
     return +this.balance.balance
   }
 
-  colorScale (value) {
+  colorScale(value) {
     const RED_HUE = 0.12
     const GREEN_HUE = 0.78
     const hue = d3.scaleLinear().domain([this.min, this.max]).range([RED_HUE, GREEN_HUE])(value)
     return d3.interpolateSpectral(hue)
   }
 
-  get textClass () {
+  get textClass() {
     return {
       left: this.value >= 0,
       right: this.value < 0,
     }
   }
 
-  get barStyle () {
+  get barStyle() {
     return {
       width: `${this.width}%`,
       background: this.colorScale(this.value),
     }
   }
 
-  get absMax () {
+  get absMax() {
     return Math.max(this.max, Math.abs(this.min), 100)
   }
 
-  get width () {
+  get width() {
     return Math.abs(this.value / this.absMax * 50)
   }
 }

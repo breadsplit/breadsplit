@@ -9,11 +9,11 @@ import { ExchangeRecord } from './utils/types'
 const FIXER_TOKEN = (config().fixer || {}).token
 const API_URL = (date: string) => `http://data.fixer.io/api/${date}?access_key=${FIXER_TOKEN}`
 
-function formatDate (date?: number | string | Dayjs) {
+function formatDate(date?: number | string | Dayjs) {
   return dayjs(date).format('YYYY-MM-DD')
 }
 
-async function queryExchangeRates (date?: number | string): Promise<ExchangeRecord | undefined> {
+async function queryExchangeRates(date?: number | string): Promise<ExchangeRecord | undefined> {
   const date_string = formatDate(date)
   try {
     const r = await axios.get(API_URL(date_string))
@@ -27,7 +27,7 @@ async function queryExchangeRates (date?: number | string): Promise<ExchangeReco
   return undefined
 }
 
-export const getExchangeRate = f(async ({ date } = {}, context) => {
+export const getExchangeRate = f(async({ date } = {}, context) => {
   const d = dayjs(date)
   if (d.isBefore('2019-01-01'))
     return undefined

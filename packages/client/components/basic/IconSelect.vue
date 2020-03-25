@@ -17,7 +17,7 @@ export default class IconSelect extends Vue {
   @Prop({ default: 'grey' }) readonly defaultColor!: string
   @Prop({ default: 'primary' }) readonly selectedColor!: string
 
-  get iconset () {
+  get iconset() {
     return Object.entries(icons).map(([name, icons]) => {
       return {
         name,
@@ -26,7 +26,7 @@ export default class IconSelect extends Vue {
     })
   }
 
-  setIcon (value) {
+  setIcon(value) {
     this.$emit('update:icon', value)
   }
 }

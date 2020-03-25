@@ -3,7 +3,7 @@ import { ProcessServerOperations, Eval, omitDeep } from './utils/opschain'
 import { Group, ServerGroup } from './utils/types'
 import { GenerateId, SharedGroupOptionsDefault } from './utils/core'
 
-export const publishGroup = f(async ({ group }: { group: Group }, context) => {
+export const publishGroup = f(async({ group }: { group: Group }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 

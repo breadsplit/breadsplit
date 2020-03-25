@@ -30,27 +30,27 @@ export default class NewTransactionSelect extends mixins(NavigationMixin) {
     dialog: PromiseDialog
   }
 
-  async open () {
+  async open() {
     this.dialog = true
 
     return await this.$refs.dialog.open()
   }
 
-  close () {
+  close() {
     this.$refs.dialog.close()
   }
 
-  group () {
+  group() {
     this.close()
     this.gotoNewTransaction()
   }
 
-  transfer () {
+  transfer() {
     this.close()
     this.gotoNewTransaction({ type: 'transfer' })
   }
 
-  personal () {
+  personal() {
     this.close()
     this.gotoNewTransaction({ solo: true })
   }

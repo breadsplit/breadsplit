@@ -7,19 +7,19 @@ import { formatExchangeDate } from '../utils/formatters'
 import { defaultCurrency } from './defaults'
 import { TransactionHelper } from '.'
 
-export function GroupCurrency (group: Group) {
+export function GroupCurrency(group: Group) {
   const set = new Set([group.main_currency])
   for (const trans of group.transactions)
     set.add(trans.currency)
   return Array.from(set)
 }
 
-export function getExchangeRateOn (from: string, to: string, exchange_record: ExchangeRecord) {
+export function getExchangeRateOn(from: string, to: string, exchange_record: ExchangeRecord) {
   const rate = exchange_record.rates[to.toUpperCase()] / exchange_record.rates[from.toUpperCase()]
   return { rate, date: exchange_record.date }
 }
 
-function findClosestExchangeRate (from: dayjs.ConfigType, exchange_records: Record<string, ExchangeRecord> = {}, days = 3) {
+function findClosestExchangeRate(from: dayjs.ConfigType, exchange_records: Record<string, ExchangeRecord> = {}, days = 3) {
   const date = dayjs(from)
   for (let i = 0; i <= days; i++) {
     const date_string = formatExchangeDate(date.subtract(i, 'day'))
@@ -29,7 +29,7 @@ function findClosestExchangeRate (from: dayjs.ConfigType, exchange_records: Reco
   return undefined
 }
 
-export function ExchangeInTransaction (transaction: Transaction, value: Fraction, target_currency: string, exchange_records: Record<string, ExchangeRecord>, fallback_exchange_record = FallbackExchangeRate) {
+export function ExchangeInTransaction(transaction: Transaction, value: Fraction, target_currency: string, exchange_records: Record<string, ExchangeRecord>, fallback_exchange_record = FallbackExchangeRate) {
   let currency = transaction.currency
   target_currency = target_currency || defaultCurrency
   let date: string | undefined
@@ -63,7 +63,7 @@ export function ExchangeInTransaction (transaction: Transaction, value: Fraction
   return { value, date, source, rate }
 }
 
-export function GroupBalances (group: Group, display?: string | null, fallback_exchange_record = FallbackExchangeRate): Balance[] {
+export function GroupBalances(group: Group, display?: string | null, fallback_exchange_record = FallbackExchangeRate): Balance[] {
   const main_currency = group.main_currency || defaultCurrency
   const display_currency = display || main_currency
 
@@ -98,7 +98,7 @@ export function GroupBalances (group: Group, display?: string | null, fallback_e
   return memberBalances
 }
 
-export function GetSettleUpSolutions (balances: Balance[], group: Group): Solution[] {
+export function GetSettleUpSolutions(balances: Balance[], group: Group): Solution[] {
   let remaining = balances.map(b => ({
     uid: b.uid,
     balance: b.balance,
@@ -106,7 +106,7 @@ export function GetSettleUpSolutions (balances: Balance[], group: Group): Soluti
   const currency = group.main_currency || defaultCurrency
   const solutions: Solution[] = []
 
-  function sort () {
+  function sort() {
     remaining = remaining
       .filter(i => +i.balance.abs() > 0.001)
       .sort((a, b) => +a.balance.sub(b.balance))

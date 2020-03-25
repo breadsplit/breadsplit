@@ -16,11 +16,11 @@ export default class GroupStateIcon extends Vue {
 
   @Getter('group/unreadsOf') unreadsOf!: (id: string) => number
 
-  get group () {
+  get group() {
     return this.$store.state.group.cache.groups[this.id]
   }
 
-  get clientGroup () {
+  get clientGroup() {
     return this.$store.state.group.groups[this.id]
   }
 }

@@ -26,17 +26,17 @@ export default class Balances extends Vue {
 
   @Getter('group/currentBalances') readonly balances!: Balance[]
 
-  get limitedBalances () {
+  get limitedBalances() {
     return this.balances
       .filter(i => Math.abs(+i.balance) > 0.0001)
       // .slice(0, this.limit)
   }
 
-  get max () {
+  get max() {
     return Math.max(...this.limitedBalances.map(i => +i.balance))
   }
 
-  get min () {
+  get min() {
     return Math.min(...this.limitedBalances.map(i => +i.balance))
   }
 }

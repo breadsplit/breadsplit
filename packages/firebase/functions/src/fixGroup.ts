@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { f, GroupsRef, db, OperationsRef, recalculateGroupOperations } from './utils/helpers'
 import { ServerOperations } from './utils/types'
 
-export const fixGroup = f(async ({ id }: { id: string }, context) => {
+export const fixGroup = f(async({ id }: { id: string }, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 
@@ -11,7 +11,7 @@ export const fixGroup = f(async ({ id }: { id: string }, context) => {
   if (!doc.exists)
     throw new Error('group_not_exists')
 
-  await db.runTransaction(async (t) => {
+  await db.runTransaction(async(t) => {
     const doc = await t.get(OperationsRef(id))
     const serverOps = doc.data() as ServerOperations
 

@@ -2,11 +2,11 @@ import { Activity } from '../types'
 import { Translator } from '../utils/i18n'
 import { numberToMoney } from '../utils'
 
-export function getActivityDescription (
+export function getActivityDescription(
   $t: Translator,
   act: Activity,
   getUserName: ((id: string) => string|undefined),
-  { locale = '', serverSide = false, showByName = true } = {}
+  { locale = '', serverSide = false, showByName = true } = {},
 ) {
   let by = ''
   let source = act.source

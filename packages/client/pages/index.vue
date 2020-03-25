@@ -32,13 +32,13 @@ import { Group } from '~/types'
 export default class Homepage extends mixins(NavigationMixin) {
   @Getter('group/all') groups!: Group[]
 
-  groupCssVars (group) {
+  groupCssVars(group) {
     return {
       '--group-color': group.color,
     }
   }
 
-  reload () {
+  reload() {
     window.location.reload()
   }
 }

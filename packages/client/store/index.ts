@@ -11,15 +11,15 @@ export const state = RootStateDefault
 
 export const getters: GetterTree<RootState, RootState> = {
 
-  locale (state) {
+  locale(state) {
     return state.user_locale || state.browser_locale || LOCALE_FALLBACK
   },
 
-  dark (state) {
+  dark(state) {
     return state.options.dark
   },
 
-  primary (state, getters) {
+  primary(state, getters) {
     if (state.temp.primary_color_override)
       return state.temp.primary_color_override
 
@@ -33,29 +33,29 @@ export const getters: GetterTree<RootState, RootState> = {
 
 export const mutations: MutationTree<RootState> = {
 
-  purge (state) {
+  purge(state) {
     const defaults = RootStateDefault()
     for (const key of Object.keys(defaults))
       Vue.set(state, key, defaults[key])
   },
 
-  switchLocale (state, locale: string | null) {
+  switchLocale(state, locale: string | null) {
     state.user_locale = locale
   },
 
-  browserLocale (state, locale) {
+  browserLocale(state, locale) {
     state.browser_locale = locale
   },
 
-  dark (state, value) {
+  dark(state, value) {
     state.options.dark = !!value
   },
 
-  setMessagingToken (state, value) {
+  setMessagingToken(state, value) {
     state.messaging_token = value
   },
 
-  localstorageLoad (state, data: RootState) {
+  localstorageLoad(state, data: RootState) {
     const group = data.group
     delete data.group
     Object.assign(state, data)
@@ -65,14 +65,14 @@ export const mutations: MutationTree<RootState> = {
     Object.assign(state.group, group)
   },
 
-  init (state) {
+  init(state) {
     state.app = {
       init: true,
       version: APP_VERSION,
     }
   },
 
-  setPrimaryColor (state, color: string | null) {
+  setPrimaryColor(state, color: string | null) {
     state.temp.primary_color_override = color
   },
 }

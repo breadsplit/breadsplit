@@ -1,6 +1,6 @@
 import { Group } from './types'
 
-export function GroupCleanUp (group: Group) {
+export function GroupCleanUp(group: Group) {
   if (!group.exchange_rates)
     group.exchange_rates = {}
   for (const transaction of group.transactions) {

@@ -4,7 +4,7 @@ import Vue from 'vue'
 
 let lock = false
 
-function stringify (value: any) {
+function stringify(value: any) {
   return queryString.stringify(value, { arrayFormat: 'comma' })
 }
 
@@ -13,11 +13,11 @@ export const reactiveHash = new Vue({
     value: {},
   },
   methods: {
-    updateField (field: string, value: any, updateHistory = false) {
+    updateField(field: string, value: any, updateHistory = false) {
       this.$set(this.value, field, value)
       this.update(this.value, updateHistory)
     },
-    update (value: any, updateHistory = false) {
+    update(value: any, updateHistory = false) {
       if (lock)
         return
       lock = true
@@ -36,7 +36,7 @@ export const reactiveHash = new Vue({
   },
 })
 
-function read () {
+function read() {
   if (lock)
     return
   const object = queryString.parse(location.hash, { parseBooleans: true, parseNumbers: true, arrayFormat: 'comma' })

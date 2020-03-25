@@ -20,35 +20,35 @@ export const state = GroupStateDefault
 
 export const getters: GetterTree<GroupState, RootState> = {
 
-  current (state) {
+  current(state) {
     if (!state.currentId)
       return undefined
     return state.cache.groups[state.currentId]
   },
 
-  currentBalances (state) {
+  currentBalances(state) {
     if (!state.currentId)
       return undefined
     return state.cache.balances[state.currentId]
   },
 
-  currentSolutions (state) {
+  currentSolutions(state) {
     if (!state.currentId)
       return undefined
     return state.cache.solutions[state.currentId]
   },
 
-  currentId (state) {
+  currentId(state) {
     return state.currentId
   },
 
-  currentClientGroup (state) {
+  currentClientGroup(state) {
     if (!state.currentId)
       return undefined
     return state.groups[state.currentId]
   },
 
-  all (state) {
+  all(state) {
     return orderBy(Object.values(state.groups), ['lastchanged'], ['desc'])
       .map(group => state.cache.groups[group.id])
   },
@@ -77,7 +77,7 @@ export const getters: GetterTree<GroupState, RootState> = {
     return Object.values(group.members).filter(m => !m.removed)
   },
 
-  activeMembers (state, getters) {
+  activeMembers(state, getters) {
     return getters.activeMembersOf(state.currentId)
   },
 
@@ -93,12 +93,12 @@ export const getters: GetterTree<GroupState, RootState> = {
   },
 }
 
-function NewOperation (
+function NewOperation(
   context: ActionContext<GroupState, RootState>,
   groupid: string,
   name: TransformKeys,
   data: any,
-  meta: object = {}
+  meta: object = {},
 ) {
   meta = {
     ...meta,
@@ -111,7 +111,7 @@ function NewOperation (
 
 export const actions: ActionTree<GroupState, RootState> = {
 
-  add (context, payload) {
+  add(context, payload) {
     const group = ClientGroupDefault(payload)
     group.base.activities.push({
       by: context.rootGetters['user/uid'] || IdMe,
@@ -124,77 +124,77 @@ export const actions: ActionTree<GroupState, RootState> = {
     context.commit('switch', group.id)
   },
 
-  modify (context, { id, changes }) {
+  modify(context, { id, changes }) {
     NewOperation(context, id, 'modify_meta', changes)
   },
 
   // Members
-  addMember (context, { id, member }) {
+  addMember(context, { id, member }) {
     member = MemberDefault(member)
     NewOperation(context, id, 'insert_member', member)
   },
 
-  removeMember (context, { id, memberid }) {
+  removeMember(context, { id, memberid }) {
     NewOperation(context, id, 'remove_member', memberid)
   },
 
-  editMember (context, { id, memberid, changes }) {
+  editMember(context, { id, memberid, changes }) {
     NewOperation(context, id, 'modify_member', { id: memberid, changes })
   },
 
-  changeMemberId (context, { id, from, to }) {
+  changeMemberId(context, { id, from, to }) {
     NewOperation(context, id, 'change_member_id', { from, to })
   },
 
   // Transactions
-  newTransaction (context, { id, trans }) {
+  newTransaction(context, { id, trans }) {
     trans = TransactionDefault(trans)
     NewOperation(context, id, 'insert_transaction', trans)
   },
 
-  editTransaction (context, { id, trans }) {
+  editTransaction(context, { id, trans }) {
     trans = TransactionDefault(trans)
     NewOperation(context, id, 'modify_transaction', trans)
   },
 
-  removeTransaction (context, { id, transid }) {
+  removeTransaction(context, { id, transid }) {
     NewOperation(context, id, 'remove_transaction', transid)
   },
 
   // Category
-  newCategory (context, { id, category }) {
+  newCategory(context, { id, category }) {
     category = CategoryDefault(category)
     NewOperation(context, id, 'insert_category', category)
   },
 
-  editCategory (context, { id, categoryid, changes }) {
+  editCategory(context, { id, categoryid, changes }) {
     NewOperation(context, id, 'modify_category', { id: categoryid, changes })
   },
 
-  removeCategory (context, { id, categoryid }) {
+  removeCategory(context, { id, categoryid }) {
     NewOperation(context, id, 'remove_category', categoryid)
   },
 
-  reorderCategories (context, { id, categories, archived = [] }) {
+  reorderCategories(context, { id, categories, archived = [] }) {
     NewOperation(context, id, 'reorder_categories', categories)
   },
 
   // Exchange Rates
-  updateExchangeRates (context, { id, date, record }) {
+  updateExchangeRates(context, { id, date, record }) {
     if (oc(context.state).cache.groups[id].exchange_rates[date]())
       return
     NewOperation(context, id, 'update_exchange_rate', { date, record })
   },
 
   // Caches
-  cacheInit ({ state, dispatch }) {
+  cacheInit({ state, dispatch }) {
     for (const id of Object.keys(state.groups)) {
       if (!state.cache.groups[id])
         dispatch('cacheGroup', id)
     }
   },
 
-  cacheGroup ({ state, commit, dispatch }, id?: string|null) {
+  cacheGroup({ state, commit, dispatch }, id?: string|null) {
     id = id || state.currentId
     if (!id)
       return
@@ -210,7 +210,7 @@ export const actions: ActionTree<GroupState, RootState> = {
     dispatch('cacheBalances', { id })
   },
 
-  cacheBalances ({ state, commit, rootState, getters }, { id, exchange_record }: { id?: string; exchange_record?: ExchangeRecord }) {
+  cacheBalances({ state, commit, rootState, getters }, { id, exchange_record }: { id?: string; exchange_record?: ExchangeRecord }) {
     id = id || state.currentId || undefined
     if (!id)
       return
@@ -246,19 +246,19 @@ export const actions: ActionTree<GroupState, RootState> = {
   },
 
   // Firebase
-  onServerUpdate ({ dispatch, commit }, { data, timestamp }) {
+  onServerUpdate({ dispatch, commit }, { data, timestamp }) {
     commit('onServerUpdate', { data, timestamp })
     dispatch('cacheGroup', data.id)
   },
 
-  removeOnlineGroups ({ state, commit }) {
+  removeOnlineGroups({ state, commit }) {
     for (const id of Object.keys(state.groups)) {
       if (state.groups[id].online)
         commit('remove', id)
     }
   },
 
-  setConfigs ({ dispatch, commit, state }, { id, field, value }) {
+  setConfigs({ dispatch, commit, state }, { id, field, value }) {
     id = id || state.currentId
     commit('setConfigs', { id, field, value })
     if (field === 'display_currency')
@@ -268,11 +268,11 @@ export const actions: ActionTree<GroupState, RootState> = {
 
 export const mutations: MutationTree<GroupState> = {
 
-  setCache (state, { field, key, value }) {
+  setCache(state, { field, key, value }) {
     Vue.set(state.cache[field], key, value)
   },
 
-  setConfigs (state, { id, field, value }) {
+  setConfigs(state, { id, field, value }) {
     id = id || state.currentId
     const group = state.groups[id]
     if (group) {
@@ -282,16 +282,16 @@ export const mutations: MutationTree<GroupState> = {
     }
   },
 
-  switch (state, id: string | null) {
+  switch(state, id: string | null) {
     state.currentId = id
   },
 
   // Groups
-  add (state, group: ClientGroup) {
+  add(state, group: ClientGroup) {
     Vue.set(state.groups, group.base.id, group)
   },
 
-  remove (state, id) {
+  remove(state, id) {
     id = id || state.currentId
     if (state.currentId === id)
       state.currentId = null
@@ -301,7 +301,7 @@ export const mutations: MutationTree<GroupState> = {
     Vue.delete(state.cache.solutions, id)
   },
 
-  newOperation (state, { id, name, data, meta }) {
+  newOperation(state, { id, name, data, meta }) {
     id = id || state.currentId
     const group = state.groups[id]
     if (group) {
@@ -313,7 +313,7 @@ export const mutations: MutationTree<GroupState> = {
   // Members
 
   // Firebase
-  onServerUpdate (state, { data, timestamp }) {
+  onServerUpdate(state, { data, timestamp }) {
     if (!data || !data.id)
       return
     const group: ServerGroup = data
@@ -329,7 +329,7 @@ export const mutations: MutationTree<GroupState> = {
     const serverOperations = group.operations || []
     const localOperations = state.groups[group.id].operations || []
     const unsyncedOperations = localOperations.filter(
-      o => !includes(serverOperations, o.hash)
+      o => !includes(serverOperations, o.hash),
     )
 
     const clientGroup = state.groups[group.id]
@@ -356,11 +356,11 @@ export const mutations: MutationTree<GroupState> = {
       Vue.set(state.unreads, group.id, (state.unreads[group.id] || 0) + newActivitiesCount)
   },
 
-  clearUnreads (state, id) {
+  clearUnreads(state, id) {
     Vue.set(state.unreads, id, 0)
   },
 
-  updateSyncingState (state, { id, syncing_error, syncing_operations }: Partial<ClientGroup>) {
+  updateSyncingState(state, { id, syncing_error, syncing_operations }: Partial<ClientGroup>) {
     if (!id)
       return
     const group = state.groups[id]
@@ -377,7 +377,7 @@ export const mutations: MutationTree<GroupState> = {
     }
   },
 
-  resetSyncingStates (state) {
+  resetSyncingStates(state) {
     Object.values(state.groups).forEach((group) => {
       group.syncing_operations = []
     })

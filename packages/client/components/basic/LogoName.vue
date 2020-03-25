@@ -13,7 +13,7 @@ import { RELEASE_CHANNEL } from '~/../meta/env'
 export default class DefaultLayout extends Vue {
   channel: string = RELEASE_CHANNEL
 
-  get primary () {
+  get primary() {
     return this.$vuetify.theme.currentTheme.primary
   }
 }

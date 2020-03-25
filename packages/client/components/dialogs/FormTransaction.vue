@@ -153,11 +153,11 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
 
   @Getter('user/uid') uid: string | undefined
 
-  get editing () {
+  get editing() {
     return this.mode !== 'view'
   }
 
-  reset () {
+  reset() {
     if (this.$refs.details)
       this.$refs.details.reset()
     this.uploadingImage = false
@@ -182,7 +182,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     return this.initError('not_found')
   }
 
-  initView (trans: Transaction) {
+  initView(trans: Transaction) {
     this.$set(this, 'form', cloneDeep(trans))
     this.error = null
     this.mode = this.options.mode === 'edit' ? 'edit' : 'view'
@@ -190,14 +190,14 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     this.step = STEP_DETAIL
   }
 
-  initError (error: ErrorType) {
+  initError(error: ErrorType) {
     this.$set(this, 'form', TransactionDefault())
     this.mode = 'view'
     this.error = error
     this.step = STEP_ERROR
   }
 
-  initCreate () {
+  initCreate() {
     this.$set(this, 'form', TransactionDefault())
     this.mode = 'create'
     this.error = null
@@ -261,11 +261,11 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       this.updateSolo()
   }
 
-  get type () {
+  get type() {
     return this.form.type || 'expense'
   }
 
-  get title () {
+  get title() {
     if (this.mode === 'view') {
       if (this.form.type === 'transfer')
         return this.$t('ui.transactions.view_transfer')
@@ -285,27 +285,27 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     }
   }
 
-  get hasError () {
+  get hasError() {
     return !!this.error
   }
 
-  get navHeight () {
+  get navHeight() {
     return this.hasError ? 56 : 85
   }
 
-  cleanUp () {
+  cleanUp() {
     TransactionHelper.from(this.form).cleanUp()
   }
 
-  fulfillDebtors () {
+  fulfillDebtors() {
     const debtorIds = this.form.debtors.map(d => d.uid)
     this.form.debtors.push(
       ...this.members.filter(m => m.uid && !debtorIds.includes(m.uid))
-        .map(m => ({ weight: 0, percent: 0, uid: m.uid || IdMe }))
+        .map(m => ({ weight: 0, percent: 0, uid: m.uid || IdMe })),
     )
   }
 
-  next () {
+  next() {
     const steps = this.stepItems
     const len = steps.length
     for (let i = 0; i < len - 1; i++) {
@@ -318,7 +318,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       this.step = STEP_DETAIL
   }
 
-  get stepItems () {
+  get stepItems() {
     if (this.type === 'transfer') {
       return [
         {
@@ -359,7 +359,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
   }
 
   @Watch('step')
-  onStepChanged (value, oldvalue) {
+  onStepChanged(value, oldvalue) {
     if (oldvalue === STEP_INPUT)
       this.$refs.splitting_creditors.finishUp()
     if (oldvalue === STEP_SPLIT)
@@ -368,7 +368,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       setTimeout(() => this.$refs.details.openCategorySelect(), 500)
   }
 
-  btnNext () {
+  btnNext() {
     if (this.btnNextDisabled)
       return
     if (this.step !== STEP_DETAIL)
@@ -377,12 +377,12 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
       this.submit()
   }
 
-  calc () {
+  calc() {
     oc(this).$refs.splitting_creditors.$refs.numpad.calculate()
   }
 
   @Watch('form.creditors', { deep: true })
-  updateSolo () {
+  updateSolo() {
     if (!this.solo)
       return
     this.form.debtors.forEach((m) => {
@@ -393,7 +393,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     })
   }
 
-  get btnNextText () {
+  get btnNextText() {
     if (this.step === STEP_DETAIL) {
       if (this.uploadingImage)
         return this.$t('ui.button_image_uploading')
@@ -406,11 +406,11 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     return this.$t('ui.button_next')
   }
 
-  get btnNextDisabled () {
+  get btnNextDisabled() {
     return !this.form.total_fee || this.form.debtors.length === 0 || this.uploadingImage
   }
 
-  submit () {
+  submit() {
     this.cleanUp()
     const trans = this.form
     if (this.mode === 'create')
@@ -420,7 +420,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     this.close()
   }
 
-  async promptRemove () {
+  async promptRemove() {
     const result = await this.$root.$confirm(
       this.$t('prompt.confirm_transaction_removal_title'),
       this.$t('prompt.confirm_transaction_removal'),
@@ -431,7 +431,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
     }
   }
 
-  mounted () {
+  mounted() {
     if (module && module.hot)
       this.reset()
   }

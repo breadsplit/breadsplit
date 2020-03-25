@@ -86,10 +86,9 @@ client/static/*.sw.js
 firebase-messaging-sw.js
 
 # Generated assets
-client/static/img/logo
-client/static/img/brands
-website/static/img/brands
-website/static/img/brands
+packages/client/static/img/logo
+packages/client/static/img/brands
+packages/website/static/img/brands
 
 # Testing vue components
 test.vue
@@ -97,9 +96,9 @@ test.vue
 
 # Firebase Compiled JavaScript files
 .firebase
-firebase-functions/lib
-firebase/functions/lib
-firebase/www
+packages/firebase-functions/lib/
+packages/firebase/functions/lib/
+packages/firebase/www
 
 # Firebase admin keys
 service-account-key.json

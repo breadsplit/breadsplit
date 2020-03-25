@@ -175,11 +175,11 @@ export const commonCurrencyCodes = [
   'JPY',
 ]
 
-export function localeMatch (localeA: string, localeB: string) {
+export function localeMatch(localeA: string, localeB: string) {
   return localeA.toLocaleLowerCase() === localeB.toLocaleLowerCase()
 }
 
-export function localeContains (locales: string[], locale: string) {
+export function localeContains(locales: string[], locale: string) {
   for (const i of locales) {
     if (localeMatch(locale, i))
       return true
@@ -187,7 +187,7 @@ export function localeContains (locales: string[], locale: string) {
   return false
 }
 
-export function getCommonCurrencyCodes (locale: string, recents: string[] = [], take = 5) {
+export function getCommonCurrencyCodes(locale: string, recents: string[] = [], take = 5) {
   const list = currencies
     .filter((c) => {
       if (!c.locale)
@@ -201,7 +201,7 @@ export function getCommonCurrencyCodes (locale: string, recents: string[] = [], 
   return union(list, recents, commonCurrencyCodes).slice(0, take)
 }
 
-export function getCurrencyLocalName (locale: string, currency: string) {
+export function getCurrencyLocalName(locale: string, currency: string) {
   let name = Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
@@ -219,7 +219,7 @@ export function getCurrencyLocalName (locale: string, currency: string) {
   return name
 }
 
-export function getLocaleCurrencies (locale: string, locales?: string[]) {
+export function getLocaleCurrencies(locale: string, locales?: string[]) {
   let filteredCurrencies = currencies
   if (locales) {
     filteredCurrencies = filteredCurrencies

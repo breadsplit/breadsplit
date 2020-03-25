@@ -44,11 +44,11 @@ export default class FormCategory extends Vue {
     dialog: PromiseDialog
   }
 
-  get submitable () {
+  get submitable() {
     return this.form.text && this.form.color && this.form.icon
   }
 
-  async open (category?: Category) {
+  async open(category?: Category) {
     if (category && category.id)
       this.mode = 'edit'
     else
@@ -59,14 +59,14 @@ export default class FormCategory extends Vue {
     return await this.$refs.dialog.open<Category | undefined>()
   }
 
-  get title () {
+  get title() {
     if (this.mode === 'create')
       return this.$t('ui.category_editing.create')
     else
       return this.$t('ui.category_editing.edit')
   }
 
-  submit () {
+  submit() {
     if (this.mode === 'create')
       this.$store.dispatch('group/newCategory', { category: this.form })
     else if (this.mode === 'edit')
@@ -74,14 +74,14 @@ export default class FormCategory extends Vue {
     this.$refs.dialog.close(this.form)
   }
 
-  remove () {
+  remove() {
     if (this.mode === 'edit') {
       this.$store.dispatch('group/removeCategory', { categoryid: this.form.id })
       this.$refs.dialog.close(this.form)
     }
   }
 
-  close () {
+  close() {
     this.$refs.dialog.close()
   }
 }

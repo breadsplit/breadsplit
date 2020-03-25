@@ -1,7 +1,7 @@
 import { f, GroupsRef, OperationsRef } from './utils/helpers'
 import { ServerGroup } from './utils/types'
 
-export const removeGroup = f(async (id, context) => {
+export const removeGroup = f(async(id, context) => {
   if (!context.auth || !context.auth.uid)
     throw new Error('auth_required')
 

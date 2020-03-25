@@ -1,4 +1,4 @@
-export function getImage (file: File): Promise<HTMLImageElement> {
+export function getImage(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve) => {
     const img = document.createElement('img')
     const reader = new FileReader()
@@ -11,7 +11,7 @@ export function getImage (file: File): Promise<HTMLImageElement> {
   })
 }
 
-export async function getImageOrientation (file: File): Promise<number> {
+export async function getImageOrientation(file: File): Promise<number> {
   return new Promise((resolve) => {
     const reader = new FileReader()
 
@@ -63,7 +63,7 @@ export async function getImageOrientation (file: File): Promise<number> {
   })
 }
 
-export async function resizeImage (file: File, MAX_WIDTH = 2048, MAX_HEIGHT = 2048) {
+export async function resizeImage(file: File, MAX_WIDTH = 2048, MAX_HEIGHT = 2048) {
   const img = await getImage(file)
   const orientation = await getImageOrientation(file)
   const canvas = document.createElement('canvas')

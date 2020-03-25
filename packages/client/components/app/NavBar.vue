@@ -42,22 +42,22 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
 
   @Prop(Boolean) readonly drawer!: boolean
 
-  get internalDrawer () {
+  get internalDrawer() {
     return this.drawer
   }
 
-  set internalDrawer (value: boolean) {
+  set internalDrawer(value: boolean) {
     this.$emit('update:drawer', value)
   }
 
-  get title () {
+  get title() {
     if (this.current)
       return this.current.name
     else
       return this.$t('appname')
   }
 
-  get group_menu () {
+  get group_menu() {
     const menu: ({title: string; key: string})[] = []
 
     menu.push({ title: 'ui.category_editing.title', key: 'edit_categories' })
@@ -68,12 +68,12 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
     return menu
   }
 
-  async onGroupMenu (key) {
+  async onGroupMenu(key) {
     switch (key) {
       case 'delete':
         if (await this.$confirm(
           this.$t('prompt.confirm_group_removal_title', [this.group.name]),
-          this.$t('prompt.confirm_group_removal')
+          this.$t('prompt.confirm_group_removal'),
         )) {
           this.$apploading.open(this.$t('loading.deleting_group'))
           if (this.current && this.current.online)
@@ -98,14 +98,14 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
     }
   }
 
-  async promptLogout () {
+  async promptLogout() {
     if (await this.$confirm(this.$t('prompt.logout_confirm'))) {
       await this.$fire.logout()
       this.gotoHome()
     }
   }
 
-  async syncCurrentGroup () {
+  async syncCurrentGroup() {
     if (this.current)
       await this.$fire.manualSync(this.current.id)
   }

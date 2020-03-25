@@ -1,6 +1,6 @@
 export interface RGB { r: number; g: number; b: number }
 
-export function HexToRgb (hex: string): RGB | null {
+export function HexToRgb(hex: string): RGB | null {
   if (hex.charAt(0) === '#')
     hex = hex.substr(1)
 
@@ -31,32 +31,32 @@ export function HexToRgb (hex: string): RGB | null {
   return { r, g, b }
 }
 
-export function getBrightness (rgb: RGB): number {
+export function getBrightness(rgb: RGB): number {
   return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000
 }
 
-export function isDark (hex: string) {
+export function isDark(hex: string) {
   const rgb = HexToRgb(hex)
   if (!rgb)
     return true
   return getBrightness(rgb) < 150
 }
 
-export function toHex (int: number) {
+export function toHex(int: number) {
   let hex = Number(int).toString(16)
   if (hex.length < 2)
     hex = `0${hex}`
   return hex
 }
 
-export function rgbToHex (r: number, g: number, b: number) {
+export function rgbToHex(r: number, g: number, b: number) {
   const red = toHex(r)
   const green = toHex(g)
   const blue = toHex(b)
   return red + green + blue
 }
 
-export function rgbStringToHex (rgb: string) {
+export function rgbStringToHex(rgb: string) {
   const [r, g, b] = rgb
     .trim()
     .slice(4, rgb.length - 1)

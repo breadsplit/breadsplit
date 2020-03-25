@@ -38,50 +38,50 @@ export default class SoftNumpad extends Vue {
 
   public dirty = false
 
-  get classes () {
+  get classes() {
     return {
       absolute: this.absolute,
       fixed: this.fixed,
     }
   }
 
-  get operatorClass () {
+  get operatorClass() {
     return {
       disabled: this.disableOperators,
     }
   }
 
-  get dotClass () {
+  get dotClass() {
     return {
       disabled: this.rounded,
     }
   }
 
-  input (char: string|number) {
+  input(char: string|number) {
     this.vibrate()
     this.$emit('input', char.toString())
   }
 
-  backspace () {
+  backspace() {
     this.vibrate()
     this.$emit('backspace')
   }
 
-  calculate () {
+  calculate() {
     this.vibrate()
     this.$emit('calculate')
   }
 
-  clear () {
+  clear() {
     this.vibrate()
     this.$emit('clear')
   }
 
-  close () {
+  close() {
     this.$emit('close')
   }
 
-  vibrate () {
+  vibrate() {
     Vibrate()
   }
 }

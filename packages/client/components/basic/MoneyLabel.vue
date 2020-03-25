@@ -14,11 +14,11 @@ export default class MoneyLabel extends Vue {
   @Prop({ default: '' }) readonly suffix!: string
   @Prop(Boolean) readonly color?: boolean
 
-  get roundedAmount () {
+  get roundedAmount() {
     return Math.round(+this.amount * 100) / 100
   }
 
-  get balanceColorClass () {
+  get balanceColorClass() {
     if (!this.color)
       return []
     if (this.roundedAmount < 0)
@@ -29,7 +29,7 @@ export default class MoneyLabel extends Vue {
       return ['grey--text', 'text--lighten-1']
   }
 
-  get formatted () {
+  get formatted() {
     if (this.roundedAmount === 0)
       return '-'
     const currency = this.currency

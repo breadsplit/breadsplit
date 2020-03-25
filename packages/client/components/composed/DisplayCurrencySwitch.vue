@@ -15,7 +15,7 @@ import { GroupMixin } from '~/mixins'
 
 @Component
 export default class DisplayCurrencySwitch extends mixins(GroupMixin) {
-  changeDisplayingCurrency (currency: string) {
+  changeDisplayingCurrency(currency: string) {
     this.displayCurrency = currency
   }
 }

@@ -8,11 +8,11 @@ export const state = () => ({
 })
 
 export const mutations: MutationTree<RootState> = {
-  switchLocale (state, locale: string | null) {
+  switchLocale(state, locale: string | null) {
     state.user_locale = locale
   },
 
-  browserLocale (state, locale) {
+  browserLocale(state, locale) {
     state.browser_locale = locale
   },
 }

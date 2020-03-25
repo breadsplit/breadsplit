@@ -154,18 +154,18 @@ export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
     form_category: FormCategory
   }
 
-  reset () {
+  reset() {
     this.carouselIndex = 0
     this.uploadingImage = false
     this.overlayImage = null
     this.$emit('uploading', this.uploadingImage)
   }
 
-  get dateDisplay () {
+  get dateDisplay() {
     return dateFromNow(this.form.timestamp, this.currentLocale)
   }
 
-  get receiptItems () {
+  get receiptItems() {
     const creditors = new TransactionWeightsHelper(this.form, 'creditors')
     const debtors = new TransactionWeightsHelper(this.form, 'debtors')
     const positive = creditors.participators
@@ -177,7 +177,7 @@ export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
     return [...positive, null, ...negative]
   }
 
-  async pickDate () {
+  async pickDate() {
     if (!this.editing)
       return
     const date = await this.$refs.date_picker.open(this.form.timestamp)
@@ -185,23 +185,23 @@ export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
       this.form.timestamp = +this.$dt(date).add(1, 'day').subtract(1, 'minute')
   }
 
-  async inputNote () {
+  async inputNote() {
     if (!this.editing)
       return
     const note = await this.$prompt(this.$t('ui.transactions.note'), this.form.note || '', { textarea: true })
     this.$set(this.form, 'note', note)
   }
 
-  dateToRelative (v) {
+  dateToRelative(v) {
     return dateFromNow(v, this.currentLocale)
   }
 
-  openCategorySelect () {
+  openCategorySelect() {
     if (!this.form.category)
       this.showCategorySelect = true
   }
 
-  async onFileChanged (files: File | File[]) {
+  async onFileChanged(files: File | File[]) {
     if (!Array.isArray(files))
       files = [files]
     if (files.length === 0)
@@ -220,7 +220,7 @@ export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
     this.$emit('uploading', this.uploadingImage)
   }
 
-  removeImage (i: number) {
+  removeImage(i: number) {
     if (this.form.attached_images) {
       this.form.attached_images.splice(i, 1)
       this.carouselIndex = this.form.attached_images.length - 1
@@ -228,12 +228,12 @@ export default class PageDetails extends mixins(GroupMixin, CommonMixin) {
     }
   }
 
-  focus () {
+  focus() {
     // @ts-ignore
     this.$refs.desc.focus()
   }
 
-  async showCreateForm () {
+  async showCreateForm() {
     const cat = await this.$refs.form_category.open()
     if (cat)
       this.form.category = cat.id

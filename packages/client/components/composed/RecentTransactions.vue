@@ -22,23 +22,23 @@ export default class RecentTransactions extends mixins(GroupMixin, NavigationMix
 
   @Prop({ default: 3 }) readonly limit!: number
 
-  get transactions () {
+  get transactions() {
     return this.group.transactions
       .map(i => i)
       .sort((a, b) => b.timestamp - a.timestamp)
   }
 
-  get amount () {
+  get amount() {
     return this.transactions.length
   }
 
-  get limitted () {
+  get limitted() {
     if (this.collapsed)
       return this.transactions.slice(0, this.limit)
     return this.transactions
   }
 
-  get needShowMore () {
+  get needShowMore() {
     return this.collapsed && this.amount > this.limit
   }
 }

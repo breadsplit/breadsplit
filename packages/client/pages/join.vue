@@ -76,12 +76,12 @@ const DELAY = 500
   // @ts-ignore
   layout: 'base',
   watchQuery: true,
-  async asyncData ({ query }) {
+  async asyncData({ query }) {
     return {
       id: query.id,
     }
   },
-  head () {
+  head() {
     return {
       title: this.$t('ui.join.title'),
     }
@@ -97,40 +97,40 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
     login: Login
   }
 
-  get group () {
+  get group() {
     if (this.serverGroup)
       return this.serverGroup.present
     return undefined
   }
 
-  get members () {
+  get members() {
     if (!this.group)
       return []
     return Object.values(this.group.members)
   }
 
-  get localMembers () {
+  get localMembers() {
     return this.members.filter(m => IsThisId.LocalMember(m.uid))
   }
 
-  get onlineMembers () {
+  get onlineMembers() {
     return this.members.filter(m => !IsThisId.LocalMember(m.uid))
   }
 
-  async login () {
+  async login() {
     await this.$refs.login.login()
     setTimeout(() => {
       this.redirectIfAlreadyMember()
     }, DELAY)
   }
 
-  async join (memberId?: string) {
+  async join(memberId?: string) {
     if (!this.id)
       return
     if (!this.uid)
       await this.$refs.login.login()
 
-    setTimeout(async () => {
+    setTimeout(async() => {
       if (!this.uid || !this.id)
         return // login canceled
 
@@ -140,11 +140,11 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
     }, DELAY)
   }
 
-  isLocal (id: string) {
+  isLocal(id: string) {
     return IsThisId.LocalMember(id)
   }
 
-  redirectIfAlreadyMember () {
+  redirectIfAlreadyMember() {
     if (this.$store.getters['group/all'].map(g => g.id).includes(this.id)
     || (this.serverGroup && this.uid && this.serverGroup.viewers.includes(this.uid))) {
       this.$router.replace(`/group/${this.id}`)
@@ -154,7 +154,7 @@ export default class JoinPage extends mixins(UserInfoMixin, CommonMixin, Navigat
     return false
   }
 
-  async mounted () {
+  async mounted() {
     this.loading = true
     if (this.redirectIfAlreadyMember())
       return

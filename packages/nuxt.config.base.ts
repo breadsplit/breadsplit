@@ -54,7 +54,7 @@ const config: Configuration = {
     splitChunks: {},
     extractCSS: !dev,
     publicPath: '/nuxt/',
-    extend (config, ctx) {
+    extend(config, ctx) {
       if (config.module) {
         config.module.rules.push({
           test: /\.ya?ml$/,
@@ -107,7 +107,7 @@ const config: Configuration = {
 
 export default config
 
-export function extendConfig (overrides: Configuration) {
+export function extendConfig(overrides: Configuration) {
   return mergeWith(overrides, config, (obj, src) => {
     if (Array.isArray(obj))
       return obj.concat(src)

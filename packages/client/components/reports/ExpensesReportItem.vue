@@ -35,7 +35,7 @@ export default class ExpensesReportItem extends mixins(GroupMixin) {
   @Prop(Number) readonly index!: number
   @Prop(Number) readonly total!: number
 
-  get percent () {
+  get percent() {
     return +(+this.item.value.div(this.total).mul(100)).toFixed(2)
   }
 }

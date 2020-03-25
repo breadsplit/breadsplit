@@ -4,7 +4,7 @@ import { hashCode } from '~/../utils'
 
 const spectral = d3.quantize(t => d3.interpolateSpectral(t), 100)
 
-export function LetterAvatar (name = '', hash = '', size = 200, font = 'Arial') {
+export function LetterAvatar(name = '', hash = '', size = 200, font = 'Arial') {
   hash = hash || name
 
   const nameSplit = String(name).toUpperCase().split(' ')

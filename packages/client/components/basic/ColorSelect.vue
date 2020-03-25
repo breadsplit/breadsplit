@@ -17,27 +17,27 @@ export default class ColorSelect extends Vue {
   @Prop(String) readonly color!: string
   main = -1
 
-  get selectingSub () {
+  get selectingSub() {
     return this.main !== -1
   }
 
-  get mainColors () {
+  get mainColors() {
     return swatches.map(i => i[BaseIndex])
   }
 
-  get subColors () {
+  get subColors() {
     if (this.selectingSub)
       return swatches[this.main]
     return []
   }
 
-  get currentColors () {
+  get currentColors() {
     if (this.selectingSub)
       return this.subColors
     return this.mainColors
   }
 
-  select (color: string, index: number) {
+  select(color: string, index: number) {
     if (!this.selectingSub) {
       this.main = index
       this.$emit('update:color', color)
@@ -48,16 +48,16 @@ export default class ColorSelect extends Vue {
     }
   }
 
-  done () {
+  done() {
     this.$emit('done')
     this.reset()
   }
 
-  reset () {
+  reset() {
     this.main = -1
   }
 
-  isSelected (color: string, index: number) {
+  isSelected(color: string, index: number) {
     if (this.selectingSub)
       return color === this.color
     return (swatches[index] || []).includes(this.color)

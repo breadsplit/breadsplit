@@ -122,21 +122,21 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
     dateSelect: DateRangeSelect
   }
 
-  get transactions () {
+  get transactions() {
     return this.group.transactions
       .map(i => i)
       .sort((a, b) => b.timestamp - a.timestamp)
   }
 
-  get amount () {
+  get amount() {
     return this.transactions.length
   }
 
-  get membersExcludingMe () {
+  get membersExcludingMe() {
     return this.members.filter(i => i.uid !== this.uid && i.uid !== IdMe)
   }
 
-  get involved () {
+  get involved() {
     if (this.involvedId != null)
       return this.involvedId
 
@@ -149,7 +149,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
     return null
   }
 
-  set involved (v: string | number | null) {
+  set involved(v: string | number | null) {
     if (v == null) {
       this.involvedId = null
       this.involvedIndex = 0
@@ -164,40 +164,40 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
     }
   }
 
-  get involvedMember () {
+  get involvedMember() {
     if (this.involved)
       return this.getUser(this.involved as string)
     return undefined
   }
 
-  get transactionsInRange () {
+  get transactionsInRange() {
     const from = +dayjs(this.from)
     const to = +dayjs(this.to)
     return this.transactions.filter(t => t.timestamp >= from && t.timestamp < to)
   }
 
-  get transactionsInCategory () {
+  get transactionsInCategory() {
     if (this.categoryFilter)
       return this.transactionsInRange.filter(t => (t.category || 'other') === this.categoryFilter)
     else
       return this.transactionsInRange
   }
 
-  get transactionsInCategoryWithoutTransfer () {
+  get transactionsInCategoryWithoutTransfer() {
     if (this.categoryFilter)
       return this.transactionsInRange.filter(t => (t.category || 'other') === this.categoryFilter)
     else
       return this.transactionsInRange.filter(t => !this.ignoredCategories.includes(t.category || 'other'))
   }
 
-  get filteredTransactions () {
+  get filteredTransactions() {
     let filtered = this.transactionsInCategoryWithoutTransfer
     if (this.involved)
       filtered = filtered.filter(t => t.debtors.find(i => i.uid === this.involved))
     return filtered
   }
 
-  get involvedTransactions () {
+  get involvedTransactions() {
     let filtered = this.transactionsInCategory
     if (this.involved) {
       filtered = filtered
@@ -209,7 +209,7 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
     return filtered
   }
 
-  get transferTransactions () {
+  get transferTransactions() {
     let filtered = this.transactionsInRange
       .filter(t => this.ignoredCategories.includes(t.category || 'other'))
     if (this.involved)
@@ -217,39 +217,39 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
     return filtered
   }
 
-  get chartWidth () {
+  get chartWidth() {
     if (this.isMobile)
       return 300
     else
       return 350
   }
 
-  get totalAmount () {
+  get totalAmount() {
     return +this.expenseSummary.map(e => e.value).reduce((a, b) => a.add(b), new Fraction(0))
   }
 
-  get filteredTotalAmount () {
+  get filteredTotalAmount() {
     if (this.categoryFilter)
       return +oc(this.expenseSummary.find(e => e.id === this.categoryFilter)).value(new Fraction(0))
     return this.totalAmount
   }
 
-  get expenseSummary () {
+  get expenseSummary() {
     return ReportExpensesByCategories(
       this,
       this.filteredTransactions,
       this.group,
       this.ignoredCategories,
       this.involved as string,
-      this.displayCurrency
+      this.displayCurrency,
     )
   }
 
-  get categoryFilter () {
+  get categoryFilter() {
     return this.internalCategoryFilter
   }
 
-  set categoryFilter (value) {
+  set categoryFilter(value) {
     this.internalCategoryFilter = value
     if (value)
       this.tab = 1
@@ -257,42 +257,42 @@ export default class ExpensesReport extends mixins(GroupMixin, CommonMixin, Navi
       this.tab = 0
   }
 
-  get categoryFilterInfo () {
+  get categoryFilterInfo() {
     if (!this.categoryFilter)
       return
     return this.parseCategory(this.categoryFilter)
   }
 
   // hash binded vars
-  get tab (): number {
+  get tab(): number {
     return +(this.hash.expenses || 0)
   }
 
-  set tab (value) {
+  set tab(value) {
     this.updateHash('expenses', value)
   }
 
-  get involvedId (): string | null {
+  get involvedId(): string | null {
     return this.hash.involvedId || null
   }
 
-  set involvedId (value) {
+  set involvedId(value) {
     this.updateHash('involvedId', value || undefined)
   }
 
-  get involvedIndex (): number {
+  get involvedIndex(): number {
     return +(this.hash.involvedIndex || 0)
   }
 
-  set involvedIndex (value) {
+  set involvedIndex(value) {
     this.updateHash('involvedIndex', value)
   }
 
-  previous () {
+  previous() {
     this.$refs.dateSelect.previous()
   }
 
-  next () {
+  next() {
     this.$refs.dateSelect.next()
   }
 }

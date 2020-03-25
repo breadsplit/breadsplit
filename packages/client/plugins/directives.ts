@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 const PRESS_TIMEOUT = 600
 Vue.directive('longpress', {
-  bind (el, { value }) {
+  bind(el, { value }) {
     if (typeof value !== 'function')
       return
 

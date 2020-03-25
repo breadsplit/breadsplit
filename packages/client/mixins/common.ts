@@ -4,15 +4,15 @@ import { LOCALE_FALLBACK } from '~/utils'
 
 @Component
 export default class CommonMixin extends Vue {
-  get isMobile () {
+  get isMobile() {
     return this.$vuetify.breakpoint.xs
   }
 
-  get currentLocale () {
+  get currentLocale() {
     return this.$i18n.locale || LOCALE_FALLBACK
   }
 
-  WIP () {
+  WIP() {
     this.$snack(this.$t('ui.wip'), { color: 'red' })
   }
 }

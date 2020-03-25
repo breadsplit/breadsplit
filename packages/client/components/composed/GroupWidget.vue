@@ -23,19 +23,19 @@ import { Group, ClientGroup } from '~/types'
 export default class GroupWidget extends mixins(NavigationMixin) {
   @Prop(String) id!: string
 
-  get group (): Group {
+  get group(): Group {
     return this.$store.getters['group/id'](this.id)
   }
 
-  get clientGroup (): ClientGroup {
+  get clientGroup(): ClientGroup {
     return this.$store.getters['group/clientGroupById'](this.id)
   }
 
-  get membersCount () {
+  get membersCount() {
     return Object.values(this.group.members).filter(m => !m.removed).length
   }
 
-  groupCssVars (group) {
+  groupCssVars(group) {
     return {
       '--group-color': group.color,
     }

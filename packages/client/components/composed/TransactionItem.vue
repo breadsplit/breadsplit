@@ -61,25 +61,25 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
   @Prop(String) readonly involved?: string
   @Prop({ default: 'debt' }) readonly involveMode!: 'debt' | 'expense'
 
-  get creditor_ids () {
+  get creditor_ids() {
     return this.transaction.creditors.filter(c => c.weight).map(c => c.uid)
   }
 
-  get debtor_ids () {
+  get debtor_ids() {
     return this.transaction.debtors.filter(c => c.weight).map(c => c.uid)
   }
 
-  get involved_ids () {
+  get involved_ids() {
     return uniq([...this.creditor_ids, ...this.debtor_ids])
   }
 
-  get involvedBalance () {
+  get involvedBalance() {
     if (!this.involved)
       return
     return TransactionHelper.from(this.transaction).balanceChangesOf(this.involved)
   }
 
-  get involvedFee () {
+  get involvedFee() {
     if (!this.involvedBalance)
       return 0
     if (this.involveMode === 'debt')
@@ -88,23 +88,23 @@ export default class TransactionItem extends mixins(UserInfoMixin, GroupMixin, N
       return -this.involvedBalance.debt || 0
   }
 
-  get datetime () {
+  get datetime() {
     return dateFromNow(this.transaction.timestamp, this.currentLocale)
   }
 
-  get category () {
+  get category() {
     return this.parseCategory(this.transaction.category)
   }
 
-  get hasDesc () {
+  get hasDesc() {
     return !!this.transaction.desc
   }
 
-  get desc () {
+  get desc() {
     return this.transaction.desc || this.category.text || this.$t('noun.expense')
   }
 
-  navigate () {
+  navigate() {
     this.gotoTransaction(this.transaction.id)
   }
 }

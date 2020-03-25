@@ -3,12 +3,12 @@ import { LOCALE_FALLBACK } from '../../utils/i18n'
 
 export { AvaliableLocales, LocaleMessages as Messages }
 
-export function getBrowserLanguage (): string {
+export function getBrowserLanguage(): string {
   // @ts-ignore
   return window.navigator.language || window.navigator.userLanguage || ''
 }
 
-export function acceptLanguage (raw?: string) {
+export function acceptLanguage(raw?: string) {
   if (!raw)
     raw = getBrowserLanguage()
   const fullcode = raw.trim().toLowerCase()

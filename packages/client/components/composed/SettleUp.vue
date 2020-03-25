@@ -33,7 +33,7 @@ import { Solution } from '~/types'
 export default class SettleUpSolutions extends mixins(NavigationMixin, CommonMixin) {
   @Getter('group/currentSolutions') readonly solutions!: Solution[]
 
-  settleUp (solution: Solution) {
+  settleUp(solution: Solution) {
     this.gotoNewTransaction({
       type: 'transfer',
       from: solution.from,
@@ -43,7 +43,7 @@ export default class SettleUpSolutions extends mixins(NavigationMixin, CommonMix
     })
   }
 
-  shareSettleUpReport () {
+  shareSettleUpReport() {
     this.WIP()
   }
 }

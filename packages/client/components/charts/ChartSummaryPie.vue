@@ -35,15 +35,15 @@ export default class ChartSummaryPie extends Vue {
   @Prop({ default: true }) readonly label!: boolean
   @Prop({ default: () => [] }) readonly value!: Item[]
 
-  get radius () {
+  get radius() {
     return Math.min(this.innerWidth, this.innerHeight) / 2
   }
 
-  get innerWidth () {
+  get innerWidth() {
     return this.width - 2 * this.marginX
   }
 
-  get innerHeight () {
+  get innerHeight() {
     return this.height - 2 * this.marginY
   }
 
@@ -52,12 +52,12 @@ export default class ChartSummaryPie extends Vue {
   arc!: d3.Arc<any, d3.PieArcDatum<Item>>
   outerArc!: d3.Arc<any, d3.PieArcDatum<Item>>
 
-  mounted () {
+  mounted() {
     this.init()
     this.update(this.value)
   }
 
-  init () {
+  init() {
     const svg = this.svg = d3.select(this.$el)
       .append('g')
 
@@ -85,7 +85,7 @@ export default class ChartSummaryPie extends Vue {
     svg.attr('transform', `translate(${this.width / 2},${this.height / 2})`)
   }
 
-  mergeWithFirstEqualZero (first: Item[], second: Item[]): Item[] {
+  mergeWithFirstEqualZero(first: Item[], second: Item[]): Item[] {
     const secondSet = d3.set()
     second.forEach(d => secondSet.add(d.id))
 
@@ -97,16 +97,16 @@ export default class ChartSummaryPie extends Vue {
       .sort((a, b) => d3.ascending(a.id, b.id))
   }
 
-  onGraphClicked (id) {
+  onGraphClicked(id) {
     this.$emit('click:id', id)
   }
 
   @Watch('value', { deep: true })
-  update (newValue: Item[], oldValue: Item[] = []) {
+  update(newValue: Item[], oldValue: Item[] = []) {
     this.change(newValue, oldValue)
   }
 
-  change (data: Item[], oldData: Item[]) {
+  change(data: Item[], oldData: Item[]) {
     const duration = this.duration
     const svg = this.svg
     const key = d => d.data.id
@@ -168,7 +168,7 @@ export default class ChartSummaryPie extends Vue {
       .style('fill', d => d.data.color)
       .text(d => d.data.label)
 
-    function midAngle (d) {
+    function midAngle(d) {
       return d.startAngle + (d.endAngle - d.startAngle) / 2
     }
 
@@ -240,7 +240,7 @@ export default class ChartSummaryPie extends Vue {
       .remove()
   }
 
-  shouldLabelShown (d: d3.PieArcDatum<Item>) {
+  shouldLabelShown(d: d3.PieArcDatum<Item>) {
     if (!d.data.value || !d.data.label)
       return false
     if (Math.abs(d.startAngle - d.endAngle) < 0.15)

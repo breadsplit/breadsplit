@@ -14,19 +14,19 @@ import { GroupMixin, CommonMixin, NavigationMixin } from '~/mixins'
 
 @Component
 export default class GroupDebugPage extends mixins(CommonMixin, NavigationMixin, GroupMixin) {
-  archive () {
+  archive() {
     if (!confirm('Sure?'))
       return
     this.$fire.archiveGroupOperations(this.group.id)
   }
 
-  fix () {
+  fix() {
     if (!confirm('Sure?'))
       return
     this.$fire.functions.httpsCallable('fixGroup')({ id: this.group.id })
   }
 
-  back () {
+  back() {
     this.gotoGroup(this.group.id)
   }
 }

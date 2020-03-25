@@ -26,11 +26,11 @@ export default class DateGroupingList extends Vue {
   @Prop({ default: 'month' }) readonly groupBy!: 'day' | 'month' | 'year'
   @Prop(String) readonly expandIcon?: string
 
-  get groups () {
+  get groups() {
     if (!this.data)
       return []
     const entries = Object.entries(groupBy(this.data.filter(i => i.timestamp), t =>
-      dayjs(t.timestamp).startOf(this.groupBy)
+      dayjs(t.timestamp).startOf(this.groupBy),
     ))
     entries.sort((a, b) => +dayjs(b[0]) - +dayjs(a[0]))
     for (const [, group] of entries)
@@ -38,7 +38,7 @@ export default class DateGroupingList extends Vue {
     return entries
   }
 
-  formatDate (date: dayjs.ConfigType) {
+  formatDate(date: dayjs.ConfigType) {
     if (this.groupBy === 'day')
       return dateToRelative(date)
 

@@ -28,17 +28,17 @@ export default class MoneyLabelWithExchange extends mixins(GroupMixin) {
   @Prop(Boolean) readonly color?: boolean
   @Prop(Object) readonly transaction!: Transaction
 
-  get exchanges () {
+  get exchanges() {
     return ExchangeInTransaction(this.transaction, new Fraction(this.amount), this.target, this.group.exchange_rates)
   }
 
-  get targetAmount () {
+  get targetAmount() {
     if (this.target === this.source)
       return this.amount
     return +this.exchanges.value
   }
 
-  get source () {
+  get source() {
     return this.transaction.currency
   }
 }

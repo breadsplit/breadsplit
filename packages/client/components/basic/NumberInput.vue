@@ -43,11 +43,11 @@ export default class NumberInput extends mixins(CommonMixin) {
   warned = false
   dirty = false
 
-  private mounted () {
+  private mounted() {
     this.updateInnerValue()
   }
 
-  get classes () {
+  get classes() {
     return {
       'number-input': true,
       flat: this.flat,
@@ -57,7 +57,7 @@ export default class NumberInput extends mixins(CommonMixin) {
     }
   }
 
-  get label () {
+  get label() {
     if (this.hideLabel)
       return null
     if (this.calculatedStr !== this.inner_value)
@@ -65,22 +65,22 @@ export default class NumberInput extends mixins(CommonMixin) {
     return null
   }
 
-  get calculatedStr () {
+  get calculatedStr() {
     if (this.calculated === 0)
       return ''
     else
       return this.calculated.toString()
   }
 
-  get parts () {
+  get parts() {
     return this.inner_value.split(operatorRegex)
   }
 
-  get lastPart () {
+  get lastPart() {
     return this.parts[this.parts.length - 1]
   }
 
-  get calculated (): number {
+  get calculated(): number {
     try {
       const value = this.trimTailOperator(this.inner_value)
       if (!value)
@@ -96,69 +96,69 @@ export default class NumberInput extends mixins(CommonMixin) {
     }
   }
 
-  get hasOperator () {
+  get hasOperator() {
     return !!this.inner_value.match(operatorRegex)
   }
 
-  get isFocused () {
+  get isFocused() {
     return !!this.numpad
   }
 
   @Watch('calculated')
-  private onCalculated () {
+  private onCalculated() {
     this.$emit('input', this.calculated)
     if (this.numpad)
       this.$emit('user-input', this.calculated)
   }
 
   @Watch('value')
-  private onValueChanged () {
+  private onValueChanged() {
     this.updateInnerValue()
   }
 
   @Watch('hasOperator')
-  private updateKeyboardState () {
+  private updateKeyboardState() {
     if (this.numpad)
       this.numpad.dirty = this.hasOperator
   }
 
-  round (value: number) {
+  round(value: number) {
     return Math.round(value * 100) / 100
   }
 
-  updateInnerValue () {
+  updateInnerValue() {
     if (this.round(this.value) !== this.calculated) {
       this.inner_value = this.value.toString()
       this.calculate()
     }
   }
 
-  isOperator (char: string) {
+  isOperator(char: string) {
     return '+-*/.'.includes(char)
   }
 
-  trimTailOperator (value: string) {
+  trimTailOperator(value: string) {
     const lastchar = value[value.length - 1]
     if (this.isOperator(lastchar))
       return value.slice(0, value.length - 1)
     return value
   }
 
-  addOperator (operator) {
+  addOperator(operator) {
     this.inner_value = this.trimTailOperator(this.inner_value)
     if (this.inner_value === '')
       return this.error()
     this.inner_value += operator
   }
 
-  calculate () {
+  calculate() {
     if (this.calculated === 0)
       this.inner_value = ''
     else
       this.inner_value = this.calculated.toString()
   }
 
-  input (char: string) {
+  input(char: string) {
     if (!this.sustained && !this.dirty)
       this.clear()
 
@@ -180,19 +180,19 @@ export default class NumberInput extends mixins(CommonMixin) {
       this.inner_value += char
   }
 
-  error () {
+  error() {
     // TODO:AF shake
   }
 
-  onFocus () {
+  onFocus() {
     this.$emit('focus', this)
   }
 
-  private setValue (value) {
+  private setValue(value) {
     this.inner_value = value
   }
 
-  inputDot () {
+  inputDot() {
     if (this.lastPart.includes('.'))
       return
     if (this.lastPart.length === 0)
@@ -201,7 +201,7 @@ export default class NumberInput extends mixins(CommonMixin) {
       this.inner_value += '.'
   }
 
-  backspace () {
+  backspace() {
     this.inner_value = this.inner_value.slice(0, this.inner_value.length - 1)
     if (this.inner_value === '0')
       this.clear()
@@ -209,11 +209,11 @@ export default class NumberInput extends mixins(CommonMixin) {
     this.dirty = true
   }
 
-  clear () {
+  clear() {
     this.inner_value = ''
   }
 
-  focus () {
+  focus() {
     try {
       // @ts-ignore
       this.$refs.input.focus()
@@ -221,7 +221,7 @@ export default class NumberInput extends mixins(CommonMixin) {
     catch {}
   }
 
-  private onKeydown (e: KeyboardEvent) {
+  private onKeydown(e: KeyboardEvent) {
     // TODO:AF more checks based on value
 
     if (!this.warned) {
@@ -244,7 +244,7 @@ export default class NumberInput extends mixins(CommonMixin) {
     e.preventDefault()
   }
 
-  public registerKeyboard (numpad: SoftNumpad) {
+  public registerKeyboard(numpad: SoftNumpad) {
     this.deregisterKeyboard()
     numpad.$on('input', this.input)
     numpad.$on('backspace', this.backspace)
@@ -257,7 +257,7 @@ export default class NumberInput extends mixins(CommonMixin) {
     this.dirty = false
   }
 
-  public deregisterKeyboard () {
+  public deregisterKeyboard() {
     if (this.numpad) {
       this.numpad.$off('input', this.input)
       this.numpad.$off('backspace', this.backspace)
