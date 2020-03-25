@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.3](https://github.com/breadsplit/breadsplit/compare/v0.7.2...v0.7.3) (2020-03-25)
+
+
+### 🐞 Bug Fixes
+
+* **deps:** update all non-major dependencies ([5880f3e](https://github.com/breadsplit/breadsplit/commit/5880f3e55056fe3b4cafe2db830c97c45420e452))
+* style update ([68a475f](https://github.com/breadsplit/breadsplit/commit/68a475f76f222c8bafd1aae25646524f244ff24b))
+
+
+### ⚡ Features
+
+* pin group ([d6abd8d](https://github.com/breadsplit/breadsplit/commit/d6abd8dad1b86af1cae7e19af209cf5c5929afdf))
+
 ### [0.7.2](https://github.com/breadsplit/breadsplit/compare/v0.7.1...v0.7.2) (2020-03-25)
 
 
