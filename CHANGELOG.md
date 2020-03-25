@@ -2,6 +2,62 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/breadsplit/breadsplit/compare/v0.7.0...v0.7.1) (2020-03-25)
+
+
+### 📱 User interface
+
+* add cancel button for trans form ([2966423](https://github.com/breadsplit/breadsplit/commit/296642349c5e1969697cae0315fa32e63be2f94d))
+* add view for converting to online ([4beac91](https://github.com/breadsplit/breadsplit/commit/4beac911ecb54850fa6d7f5d8a46c03e96442c3c))
+* icon for note ([1bb36c7](https://github.com/breadsplit/breadsplit/commit/1bb36c7d7205aaa89d9bc8adcb14e51f0fa30b57))
+* update group state icon ([ab5d889](https://github.com/breadsplit/breadsplit/commit/ab5d889ab532e56f061e74c6e4c8984dc4e4610e))
+
+
+### ⚡ Features
+
+* activities record for transfer ([65f00af](https://github.com/breadsplit/breadsplit/commit/65f00af0b15696d8266a8c096911ae9a8a6731cf))
+* add next and previous button at expense report ([e84f8d8](https://github.com/breadsplit/breadsplit/commit/e84f8d880866dbc8fe9fd0c06fbb74bd4831f84c))
+* disable submit button on image uploading ([d7c2191](https://github.com/breadsplit/breadsplit/commit/d7c2191f813052da0f3f4bb1546a3bd2ed8ce70c))
+* new icons ([bce69b7](https://github.com/breadsplit/breadsplit/commit/bce69b7de5fb6e926556afa64f366f2e9dbdda0b))
+* syncing dialog ([ffbcd4d](https://github.com/breadsplit/breadsplit/commit/ffbcd4df46b6478ec9b6ec08b1dfa950a3ca2ac2))
+* **server:** archive group operations ([49d1736](https://github.com/breadsplit/breadsplit/commit/49d173649efc81dfd7a300cb1991cdfb099b2958))
+* personal expense ([550ed90](https://github.com/breadsplit/breadsplit/commit/550ed908d44f5090b72ec3272e7c4d19f431b8d3))
+* Speed Dial! ([1cfd0b4](https://github.com/breadsplit/breadsplit/commit/1cfd0b475eaebb278de91bdb1e740b0d749305d5))
+* transaction history ([f2ced29](https://github.com/breadsplit/breadsplit/commit/f2ced29d549a747e1aeff9b3b48f2a84033e59f6))
+* transaction type select ([0c09393](https://github.com/breadsplit/breadsplit/commit/0c0939378053b59578876ce02e7089bb2c162d51))
+* transfer form ([284fa46](https://github.com/breadsplit/breadsplit/commit/284fa468102abb7d67b122d2dff23649bd8ba5f7))
+
+
+### 🐞 Bug Fixes
+
+* date display in trans form ([588aac0](https://github.com/breadsplit/breadsplit/commit/588aac04afbdf38527ab5f950c2610d387fb3b62))
+* date formatter ([19923ea](https://github.com/breadsplit/breadsplit/commit/19923eaedf5769c685232b98b4f6a41da5f00882))
+* duplicate id in transactions ([9d490cb](https://github.com/breadsplit/breadsplit/commit/9d490cbf110eb0177d43522aa778968eb0d91a0f))
+* error throw on dialog close ([be64447](https://github.com/breadsplit/breadsplit/commit/be644474ce33557be1923a173ded3ac80348ea1b))
+* firebase function ([7f9bbf6](https://github.com/breadsplit/breadsplit/commit/7f9bbf69979d48db3b3051b0505c8d240776fdd4))
+* firebase function ([3a2419e](https://github.com/breadsplit/breadsplit/commit/3a2419ed4a79f6d290cf2f8ec44c9bd2f1799d3c))
+* generate ([9902563](https://github.com/breadsplit/breadsplit/commit/9902563c660b88350ae327f13ed2159fef164943))
+* history behavior in tab switching ([e304762](https://github.com/breadsplit/breadsplit/commit/e30476228cf3d6ebbcfa57561e7f9c9c8995c333))
+* icon missing ([011a29c](https://github.com/breadsplit/breadsplit/commit/011a29c3953ddf782514e6c0ab3e1aa8ce044030))
+* icon set ([88f920c](https://github.com/breadsplit/breadsplit/commit/88f920c8bbe5c4cd405fa5f47026d7d5e731c19f))
+* including transfer in involved transactions ([fa0239f](https://github.com/breadsplit/breadsplit/commit/fa0239f930e9c9f113ab3a4974b6ba14103c487a))
+* line wrap in trans note ([980e62b](https://github.com/breadsplit/breadsplit/commit/980e62b40c8dc10ef1489ab1e6e5184dc2cc53a9))
+* locale getters ([d049598](https://github.com/breadsplit/breadsplit/commit/d049598fc8e88385d8a4caf5f2d621ce521d1601))
+* manual date pick align at the end of the day ([9925f20](https://github.com/breadsplit/breadsplit/commit/9925f20de1c05aca55537d12c7c348e008975b46))
+* minor issues ([b7fdd3e](https://github.com/breadsplit/breadsplit/commit/b7fdd3ed2b750be70f0444b225b26e6bca9ded58))
+* notification link ([f627542](https://github.com/breadsplit/breadsplit/commit/f627542b6a70cd319a509a069873f576f63f3ef1))
+* side drawer height ([d7b0588](https://github.com/breadsplit/breadsplit/commit/d7b0588846c7f516d7cbc2a2e8078d4a624e30b5))
+* solo mode presist ([79ab839](https://github.com/breadsplit/breadsplit/commit/79ab839dbfce831932de5b490b466ed58e357ac2))
+* speed dial in english ([0bf987c](https://github.com/breadsplit/breadsplit/commit/0bf987c3f40f6d67751279a2f83e6872ba00f221))
+* **deps:** update dependency firebase to v7 ([#173](https://github.com/breadsplit/breadsplit/issues/173)) ([a7dabf8](https://github.com/breadsplit/breadsplit/commit/a7dabf889f0a90af6fcae10cac8b011dea17ac08))
+* numpad order ([77edfbd](https://github.com/breadsplit/breadsplit/commit/77edfbdecc2e55665afb64a4c66272bdf88b08fc))
+* split tab text ([56d568c](https://github.com/breadsplit/breadsplit/commit/56d568c1c6ce6eeac4d636f996848f888cee8228))
+* types ([6366e28](https://github.com/breadsplit/breadsplit/commit/6366e285a627b17693e22f2798f9744d195d0318))
+* user cache ([143ccba](https://github.com/breadsplit/breadsplit/commit/143ccba4bf8c3b1a4ba8716a690b945c54eb14f1))
+* viewport height ([23e8baa](https://github.com/breadsplit/breadsplit/commit/23e8baabf99e5f012bffca58ec772318bb474dda))
+* webview blocker redirect ([14d57b9](https://github.com/breadsplit/breadsplit/commit/14d57b90e6a0bdabe60a11b795b5cb97c6c938f7))
+* year display in date range select ([5a7f88a](https://github.com/breadsplit/breadsplit/commit/5a7f88aa0fe78d19105623ff0d40abb36f1f5d75))
+
 ## [0.7.0](https://github.com/breadsplit/breadsplit/compare/v0.6.2...v0.7.0) (2019-08-25)
 
 
