@@ -21,6 +21,7 @@ v-card.categories-edit
     transition-group.px-3(type='transition', v-columns='`repeat(${columns}, 1fr)`')
       app-category-item.py-4(
         @click.native='edit(cat)'
+        @touchup.native='edit(cat)'
         v-for='cat in form'
         :key='JSON.stringify(cat)'
         :category='parseCategory(cat)'

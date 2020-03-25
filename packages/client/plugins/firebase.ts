@@ -161,7 +161,7 @@ export class FirebasePlugin {
 
     // For some reasons, popups are not functional in Electron
     // refer to: https://github.com/firebase/firebase-js-sdk/issues/1334
-    if (BUILD_TARGET === 'electron' || (this.store.state.ua.os === 'ios' && this.store.state.ua.standalone)) {
+    if (BUILD_TARGET === 'electron' || (this.store.state.ua.os === 'ios')) {
       await this.auth.signInWithRedirect(provider)
       return firebase.auth().getRedirectResult()
     }
