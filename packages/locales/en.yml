@@ -282,7 +282,7 @@ ui:
   loading: Loading…
   menu:
     edit_categories: Edit categories
-    edit_group: Edit group
+    group_setting: Group Setting
     member_is_me: This is me
     remove_group: Remove group
     remove_member: 'Remove {name} from group'

@@ -155,7 +155,7 @@ export default class FormGroup extends mixins(DialogChildMixin) {
     if (!this.mode)
       return this.$t('ui.group_editing.new_group')
     else if (this.mode === 'edit')
-      return this.$t('ui.menu.edit_group')
+      return this.$t('ui.menu.group_setting')
     else if (this.mode === 'view')
       return this.$t('ui.menu.view_group')
     else

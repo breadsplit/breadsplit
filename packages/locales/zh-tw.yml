@@ -276,7 +276,7 @@ ui:
   loading: ''
   menu:
     edit_categories: 編輯類別
-    edit_group: 編輯群組
+    group_setting: 群組设定
     make_group_online: 轉換為綫上模式
     member_is_me: 這是我
     remove_group: 刪除群組

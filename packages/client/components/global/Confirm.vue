@@ -8,7 +8,7 @@ app-promise-dialog(ref='dialog' :max-width='options.width')
       v-spacer
       .pa-1
         v-btn(color='grey' text @click='cancel()' v-if='options.cancelable') {{$t('ui.button_cancel')}}
-        v-btn(color='primary' @click='agree()').px-4 {{$t('ui.button_confirm')}}
+        v-btn(color='primary' text @click='agree()').px-4 {{$t('ui.button_confirm')}}
 </template>
 
 <script lang='ts'>

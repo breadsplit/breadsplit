@@ -61,7 +61,7 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
     const menu: ({title: string; key: string})[] = []
 
     menu.push({ title: 'ui.category_editing.title', key: 'edit_categories' })
-    menu.push({ title: 'ui.menu.edit_group', key: 'edit' })
+    menu.push({ title: 'ui.menu.group_setting', key: 'edit' })
     if (this.current && !this.current.online)
       menu.push({ title: 'ui.menu.remove_group', key: 'delete' })
 
