@@ -228,7 +228,7 @@ ui:
     enabled: 可用類別
     hidden: 隱藏的類別
     tips: 拖動以重新排序，點擊即可進行編輯
-    title: 編輯類別
+    title: 類別管理
   clear_filter: 清除篩選
   colors: 顏色
   continue_and_accept: '繼續使用即表示您同意我們的{0}'
@@ -247,6 +247,8 @@ ui:
   group_editing:
     add_member_xx: '添加成員 "{0}"'
     add_members: 添加成員
+    archive_group: 封存群組
+    danger_zone: 危險區
     default_group_name: 未命名群組
     enter_group_name: 請輸入群組名稱
     group_name: 群組名稱
@@ -272,9 +274,9 @@ ui:
     this_is_me: 這是我
     title: 加入群組
   join_as_me: '以 {0} 加入'
-  join_group: ''
+  join_group: '加入 <b>{0}</b> 中...'
   language: 語言
-  loading: ''
+  loading: 加载中...
   menu:
     edit_categories: 編輯類別
     group_setting: 群組设定

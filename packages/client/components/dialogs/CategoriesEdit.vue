@@ -18,11 +18,16 @@ v-card.categories-edit
     @start='e=>onStart(e, "form")'
     @end='onEnd'
   )
-    transition-group.px-3(type='transition', v-columns='`repeat(${columns}, 1fr)`')
+    transition-group.px-3(
+      type='transition'
+      v-columns='`repeat(${columns}, 1fr)`'
+    )
       app-category-item.py-4(
-        @click.native='edit(cat)'
-        @touchup.native='edit(cat)'
         v-for='cat in form'
+        @touchstart.native='onItemTouchStart'
+        @touchmove.native='onItemTouchMove'
+        @touchend.native='e => onItemTouchEnd(e, cat)'
+        @click.native='edit(cat)'
         :key='JSON.stringify(cat)'
         :category='parseCategory(cat)'
         :class='{"op-0": isDragging(cat)}'
@@ -87,6 +92,8 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
     ghostClass: 'ghost',
   }
 
+  itemTouchMoved = false
+
   $refs!: {
     dialog: FormCategory
   }
@@ -141,6 +148,19 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
   onEnd(e) {
     this.drag = false
     this.dragging = null
+  }
+
+  onItemTouchStart(e) {
+    this.itemTouchMoved = false
+  }
+
+  onItemTouchEnd(e, cat) {
+    if (!this.itemTouchMoved)
+      this.edit(cat)
+  }
+
+  onItemTouchMove(e) {
+    this.itemTouchMoved = true
   }
 
   async edit(cat: string | Category) {

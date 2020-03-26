@@ -32,11 +32,12 @@ v-card.form-group(v-rows='"max-content max-content auto max-content"')
           v-flex
             app-currency-select.flat(v-model='form.main_currency')
 
-          v-flex(v-if='mode == "edit"').mt-4.mx-n3
-            v-subheader Danger Zone
+          v-flex(v-if='mode == "edit"').mt-4.mx-n3.px-1
+            v-subheader {{$t('ui.group_editing.danger_zone')}}
             v-btn(text color='orange' small @click='promptArchiveGroup')
               v-icon.mr-1(size='20') mdi-archive
               | {{ $t("ui.group_editing.archive_group") }}
+            .my-2
             v-btn(text color='red' small @click='promptRemoveGroup')
               v-icon.mr-1(size='20') mdi-delete
               | {{ $t("ui.group_editing.remove_group") }}

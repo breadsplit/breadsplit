@@ -110,6 +110,7 @@
   "i18n-ally.sortKeys": true,
   "i18n-ally.localesPaths": "packages/locales",
   "i18n-ally.promptTranslatingSource": true,
+
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   }

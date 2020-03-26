@@ -71,21 +71,21 @@ export default class ColorSelect extends Vue {
     position: relative
 
     .v-btn__content
-      top: 14px
-      left: 14px
-      bottom: 14px
-      right: 14px
-      position: absolute
-      border-radius: 50%
-      background: var(--color)
-
-    &.selected:after
-      content: ''
       top: 8px
       left: 8px
       bottom: 8px
       right: 8px
       position: absolute
-      border-radius: 50%
+      border-radius: 40%
+      background: var(--color)
+
+    &.selected:after
+      content: ''
+      top: 4px
+      left: 4px
+      bottom: 4px
+      right: 4px
+      position: absolute
+      border-radius: 40%
       border: 2px solid var(--color)
 </style>

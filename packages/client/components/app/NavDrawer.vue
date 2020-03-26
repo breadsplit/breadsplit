@@ -5,7 +5,7 @@ v-navigation-drawer(
 )
   .height-100(v-rows='"max-content auto max-content"')
     div
-      app-logo-name.clickable.py-4(v-if='isMobile' v-ripple @click.native='goHome()')
+      app-logo-name.clickable.py-4(v-ripple @click.native='goHome()')
       v-divider
 
     v-list(shaped).scrolling
@@ -22,7 +22,6 @@ v-navigation-drawer(
           v-list-item-title(v-text='group.name')
         v-list-item-action(v-if='group.online')
           app-group-state-icon(:id='group.id')
-            v-icon(v-if='isPinned(group.id)').op-50 mdi-pin
 
     .drawer-list-bottom.pb-2
       v-divider.mb-2
@@ -79,7 +78,6 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin) {
 
   @Getter('user/me') user!: UserInfo
   @Getter('group/all') groups!: Group[]
-  @Getter('group/isPinned') isPinned!: (id: string) => boolean
   @Getter('user/online') userIsOnline!: boolean
 
   $refs!: {

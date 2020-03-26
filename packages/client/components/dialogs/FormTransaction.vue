@@ -480,7 +480,7 @@ export default class FormTransaction extends mixins(GroupMixin, CommonMixin, Dia
         cursor: pointer
 
   .form
-    min-height: 550px
+    min-height: 450px
 
 .v-dialog--fullscreen
   .form-transaction

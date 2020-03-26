@@ -251,13 +251,14 @@ ui:
     add_member_xx: 'Add "{0}"'
     add_members: Add members
     archive_group: Archive group
+    danger_zone: Danger Zone
     default_group_name: Untitled Group
     enter_group_name: Enter group's name
     group_name: Group's name
     group_name_placeholder: Enter group name…
     new_group: New group
-    remove_group: Delete group
     pin_group: Pin group
+    remove_group: Delete group
     unpin_group: Unpin group
   group_is_offline: Group is offline
   group_is_offline_desc: >-

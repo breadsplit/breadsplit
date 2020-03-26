@@ -288,7 +288,7 @@ export const mutations: MutationTree<GroupState> = {
     const group = state.groups[id]
     if (group) {
       if (!group.local_options)
-        group.local_options = {}
+        Vue.set(group, 'local_options', {})
       Vue.set(group.local_options, field, value)
     }
   },
