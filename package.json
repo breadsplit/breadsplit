@@ -85,7 +85,7 @@
     "test:firebase": "jest --config=./packages/firebase/functions/jest.config.js",
     "test:watch": "jest --watch",
     "test:e2e": "start-server-and-test generate:host http://localhost:3000 cy:run:ci",
-    "release": "standard-version && git checkout app && git merge --ff-only dev && git push && git checkout dev"
+    "release": "standard-version && git push && git checkout app && git merge --ff-only dev && git push && git checkout dev"
   },
   "dependencies": {
     "@nuxt/typescript-runtime": "0.4.0",

@@ -4,7 +4,7 @@ v-list-item.transaction-item(
   :ripple='false'
 )
   v-list-item-avatar
-    v-icon.mx-2.my-1(
+    v-icon.mx-auto.my-1(
       :color='category.color'
       :size='38'
     ) mdi-{{category.icon}}
