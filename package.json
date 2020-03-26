@@ -1,7 +1,7 @@
 {
   "name": "breadsplit",
   "fullname": "BreadSplit",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "private": true,
   "description": "The BreadSplit web application",
   "author": "The BreadSplit Team <https://github.com/breadsplit/breadsplit>",
