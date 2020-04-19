@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.8](https://github.com/breadsplit/breadsplit/compare/v0.7.7...v0.7.8) (2020-04-19)
+
+
+### ⚡ Features
+
+* crop avatar ([174e6ac](https://github.com/breadsplit/breadsplit/commit/174e6aca1e2b7ec6c256d5c121e27aff8aa134e2))
+
+
+### 🐞 Bug Fixes
+
+* profile upload on login ([50b2ced](https://github.com/breadsplit/breadsplit/commit/50b2cedb4c456117e1c172a64fde24ae794e307d))
+
 ### [0.7.7](https://github.com/breadsplit/breadsplit/compare/v0.7.6...v0.7.7) (2020-04-19)
 
 
