@@ -14,7 +14,7 @@ import { IsThisId, getExchangeRateOn } from '~/core'
 
 import FirebaseServerConfig, { CurrentServerName } from '~/../meta/firebase_servers'
 import { DEBUG, BUILD_TARGET } from '~/../meta/env'
-import { resizeImage } from '~/utils'
+import { resizeImageFile, resizeImageBlob } from '~/utils'
 
 firebase.initializeApp(FirebaseServerConfig)
 
@@ -196,16 +196,16 @@ export class FirebasePlugin {
 
   async uploadImage(groupid: string, transid: string, file: File, imageid = nanoid(10)): Promise<string> {
     const ref = this.storage.ref().child(`transactions/${groupid}/${transid}/${imageid}`)
-    const resized = await resizeImage(file, 1080, 1080)
+    const resized = await resizeImageFile(file, { maxHeight: 1080, maxWidth: 1080 })
     if (!resized)
       return ''
     await ref.put(resized)
     return await ref.getDownloadURL()
   }
 
-  async uploadAvatar(file: File): Promise<string> {
+  async uploadAvatar(base64: string): Promise<string> {
     const ref = this.storage.ref().child(`users/${this.uid}`)
-    const resized = await resizeImage(file, 128, 128)
+    const resized = await resizeImageBlob(base64, { maxHeight: 128, maxWidth: 128 })
     if (!resized)
       return ''
     await ref.put(resized)

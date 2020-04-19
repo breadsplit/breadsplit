@@ -4,7 +4,7 @@ v-dialog(v-model='dialog' @keydown.esc='close()' v-bind='$attrs' v-on='$listener
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop, Watch } from 'nuxt-property-decorator'
 
 @Component({
   inheritAttrs: false,
@@ -14,6 +14,12 @@ export default class PromiseDialog extends Vue {
   resolve: Function|null = null
 
   @Prop(Boolean) readonly lazy
+
+  @Watch('dialog')
+  onDialogChanged(v: boolean) {
+    if (!v)
+      this.close()
+  }
 
   open<T=any>(defaultValue?: T): Promise<T> {
     this.dialog = true

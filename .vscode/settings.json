@@ -58,6 +58,7 @@
     "fullname",
     "groupid",
     "iframe",
+    "imageid",
     "instanceof",
     "localstorage",
     "memberid",

@@ -12,18 +12,36 @@ v-card.form-user.text-center.pa-4
 
   v-btn(text @click='promptRename' v-if='isMe || isLocaleMember') {{$t('ui.user.change_name')}}
   v-btn(text @click='promptLogout' color='red' v-if='isMe && isGlobal') {{$t('ui.user.logout')}}
+
+  app-promise-dialog(ref='dialog' :max-width='400')
+    v-card
+      cropper(
+        ref='cropper'
+        :stencil-component='stencil'
+        :src='cropingImage'
+      )
+      .px-2.py-1.text-right
+        v-btn(@click='$refs.dialog.close()' text) {{$t('ui.button_cancel')}}
+        v-btn(@click='crop' text color='primary') {{$t('ui.button_confirm')}}
 </template>
 
 <script lang='ts'>
 import { Component, mixins, Action } from 'nuxt-property-decorator'
 import { UserInfoMixin, NavigationMixin, DialogChildMixin } from '~/mixins'
+import CircleStencil from '~/components/images/CircleStencil.vue'
 import { IsThisId } from '~/core'
 
-@Component
+@Component({
+  components: {
+    CircleStencil,
+  },
+})
 export default class FormUser extends mixins(DialogChildMixin, UserInfoMixin, NavigationMixin) {
   @Action('group/editMember') editMember
 
   uploading = false
+  cropingImage: string | null = null
+  stencil = CircleStencil
 
   get userid() {
     return this.options.userid || this.uid
@@ -69,13 +87,37 @@ export default class FormUser extends mixins(DialogChildMixin, UserInfoMixin, Na
     }
   }
 
+  async crop() {
+    // @ts-ignore
+    const canvas = this.$refs.cropper.getResult().canvas as HTMLCanvasElement
+    const base64 = canvas.toDataURL()
+    // @ts-ignore
+    this.$refs.dialog.close(base64)
+  }
+
   async onFileChanged(files: File[]) {
     const file = files[0]
     if (!file)
       return
+
+    await new Promise((resolve) => {
+      const reader = new FileReader()
+      reader.onload = (e: any) => {
+        this.cropingImage = e.target.result
+        resolve()
+      }
+      reader.readAsDataURL(file)
+    })
+
+    // @ts-ignore
+    const imageBas64 = await this.$refs.dialog.open()
+    this.cropingImage = null
+    if (!imageBas64)
+      return
+
     this.uploading = true
     try {
-      const avatar_url = `${await this.$fire.uploadAvatar(file)}?ts${+new Date()}`
+      const avatar_url = `${await this.$fire.uploadAvatar(imageBas64)}?ts${+new Date()}`
       this.$store.commit('user/updateMyProfile', { avatar_url })
       this.clearUserCache(this.userid)
       this.$fire.uploadMyProfile()
