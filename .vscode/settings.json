@@ -9,6 +9,8 @@
     "**/logs": true,
     "**/package-lock.json": true,
     "**/lib": true,
+    "CHANGELOG.md": true,
+    ".*": true,
   },
   "editor.tabSize": 2,
   "editor.renderWhitespace": "boundary",

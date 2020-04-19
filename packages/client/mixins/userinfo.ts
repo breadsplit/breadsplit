@@ -18,7 +18,7 @@ export default class UserInfoMixin extends Vue {
     group[uid] = value
   }
 
-  private clearUserCache(uid: string) {
+  clearUserCache(uid: string) {
     const group = userCache[this.groupId]
     if (group)
       delete group[uid]
@@ -32,6 +32,12 @@ export default class UserInfoMixin extends Vue {
   }
 
   getUser(uid?: string, member?: Member, user?: UserInfo, autoFetch = true): UserMemberInfo | undefined {
+    // HACK to tell vue to watch on these variables
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+    let _: any
+    _ = this.me
+    _ = this.$store.getters['user/user'](uid)
+
     uid = uid || (member && member.uid) || (user && user.uid) || undefined
     if (!uid)
       return undefined

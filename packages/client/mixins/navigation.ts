@@ -33,6 +33,10 @@ export default class NavigationMixin extends Vue {
     this.openDialog('trans', { transid, groupid })
   }
 
+  gotoUserInfo(userid?: string, global?: boolean) {
+    this.openDialog('user', { userid, global: global ?? userid === undefined })
+  }
+
   gotoNewGroup(options: Record<string, any> = {}) {
     this.openDialog('group', options)
   }

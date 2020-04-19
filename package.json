@@ -113,7 +113,7 @@
     "vue": "^2.6.11",
     "vue-class-component": "7.2.3",
     "vue-clipboard2": "0.3.1",
-    "vue-i18n": "8.17.0",
+    "vue-i18n": "8.16.0",
     "vue-virtual-scroller": "1.0.4",
     "vuedraggable": "2.23.2",
     "vuex": "3.1.3",

@@ -21,7 +21,11 @@ export const mutations: MutationTree<UserState> = {
     }
   },
 
-  profileUpdate(state, { uid, user }) {
+  updateMyProfile(state, me) {
+    state.me = Object.assign({}, state.me, me, { lastUpdate: +new Date() })
+  },
+
+  profileUpdateFromServer(state, { uid, user }) {
     Vue.set(state.users, uid, user)
   },
 }

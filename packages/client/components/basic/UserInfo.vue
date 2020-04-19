@@ -15,13 +15,13 @@ export default class UserInfoLabel extends mixins(UserInfoMixin) {
   @Prop(Object) readonly user?: UserInfo
   @Prop(Object) readonly member?: Member
 
-  get _user() {
+  get userInfo() {
     return this.getUser(this.id, this.member, this.user)
   }
 
   get value() {
-    if (this._user)
-      return this._user[this.field]
+    if (this.userInfo)
+      return this.userInfo[this.field]
     return ''
   }
 

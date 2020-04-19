@@ -162,7 +162,7 @@ placeholders:
 prompt:
   are_you_sure: 你確定嗎？
   confirm_group_removal: 確定要刪除這個群組嗎？此操作無法撤消。
-  confirm_group_removal_title: '刪除群組 “{0}”'
+  confirm_group_removal_title: '刪除群組 "{0}"'
   confirm_transaction_removal: 您確定要刪除此費用嗎？此操作無法復原。
   confirm_transaction_removal_title: 刪除費用
   feedback_delivered: 您的意見回饋已經成功寄出，感謝您的支持！
@@ -190,6 +190,7 @@ tips:
   member_name_input_placeholder: 成員昵稱
   open_in_browser_general: 在瀏覽器中打開
   select_open_in_browser: '選擇 {0}'
+  user_name_input_placeholder: 名稱
 translators: official
 ui:
   about: 關於我們
@@ -254,7 +255,9 @@ ui:
     group_name: 群組名稱
     group_name_placeholder: 輸入群組名稱…
     new_group: 新建群組
+    pin_group: 置頂群組
     remove_group: 刪除群組
+    unpin_group: 取消置頂
   group_is_offline: 本地模式
   group_is_offline_desc: 群組所有資料都存儲在本地。若要啟用跨設備同步或多人協作功能，你可以將其轉換為綫上模式。
   help: 使用幫助
@@ -324,7 +327,7 @@ ui:
     join_via_link_enabled: 任何人擁有該鏈接都可以加入此群組
     share_link: 分享邀請鏈接
   share_link_copied: 分享鏈接已復制！
-  share_link_to_invite: ''
+  share_link_to_invite: 分享此鏈接邀請朋友
   show_all: 顯示所有
   show_expenses_of: 參與者
   sign_in: 登錄
@@ -399,6 +402,9 @@ ui:
     view_expense: 支出明細
     view_transfer: 債務轉移
     xx_should_pay: '這次輪到 {0} 付款。'
+  user:
+    change_name: 修改名称
+    logout: 登出
   wip: "\U0001F6A7 功能開發中，敬請期待…"
   xx_paid_money: '{0} 支付了'
 utils:

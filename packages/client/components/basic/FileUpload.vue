@@ -1,11 +1,13 @@
 <template lang="pug">
 .file-upload
   input.input-file(
+    v-if='!disabled'
     type='file',
     :multiple='multiple',
     :name='fieldName',
+    :accept='accept'
     @change='$emit("change", Array.from($event.target.files))',
-    :accept='accept')
+  )
   slot
 </template>
 
@@ -25,6 +27,12 @@ export default class FileUpload extends Vue {
     default: false,
   })
   multiple
+
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  disabled
 
   @Prop({
     type: String,

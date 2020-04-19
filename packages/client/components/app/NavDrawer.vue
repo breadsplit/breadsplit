@@ -44,7 +44,7 @@ v-navigation-drawer(
 
       // User profile
       template(v-else)
-        v-list-item.pl-4(@click='promptLogout()')
+        v-list-item.pl-4(@click='gotoUserInfo()')
           v-list-item-action
             v-avatar(size='36' color='#00000020' style='margin: -6px;')
               img(:src='user.avatar_url')
@@ -115,13 +115,6 @@ export default class NavDrawer extends mixins(CommonMixin, NavigationMixin) {
   tryCloseDrawer() {
     if (this.isMobile)
       this.internalDrawer = false
-  }
-
-  async promptLogout() {
-    if (await this.$confirm(this.$t('prompt.logout_confirm'))) {
-      await this.$fire.logout()
-      this.gotoHome()
-    }
   }
 
   async openSettings() {

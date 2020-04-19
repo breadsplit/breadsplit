@@ -38,4 +38,10 @@ div
   )
     app-faq
 
+  app-dialog(
+    watch-on-query='user'
+    :fullscreen='false'
+  )
+    app-form-user
+
 </template>

@@ -6,7 +6,7 @@ v-card.members
 
   v-list
     template(v-for='(member, index) in members')
-      v-list-item.pr-2(:key='member.uid')
+      v-list-item.pr-2(:key='member.uid' @click='gotoUserInfo(member.uid)')
         v-list-item-avatar
           app-user-avatar(:id='member.uid' size='38')
         v-list-item-content
@@ -28,16 +28,16 @@ v-card.members
       v-btn(@click='promptNewMember()' dark text color='primary')
         v-icon.mr-2 mdi-account-plus
         span {{$t('ui.button_new_member')}}
-
 </template>
 
 <script lang='ts'>
-import { Component, Vue, Prop, Action } from 'nuxt-property-decorator'
+import { Component, Prop, Action, mixins } from 'nuxt-property-decorator'
 import { IsThisId } from '~/core'
 import { Member } from '~/types'
+import { NavigationMixin } from '~/mixins'
 
 @Component
-export default class Members extends Vue {
+export default class Members extends mixins(NavigationMixin) {
   @Action('group/addMember') newMember
   @Action('group/editMember') editMember
   @Action('group/removeMember') removeMember
@@ -49,7 +49,7 @@ export default class Members extends Vue {
   }
 
   get me() {
-    return this.$store.getters['user/me']
+    return this.$store.state.user.me
   }
 
   memberMenu(member) {

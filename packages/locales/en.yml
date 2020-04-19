@@ -194,6 +194,7 @@ tips:
   member_name_input_placeholder: Member's name
   open_in_browser_general: Open in browser
   select_open_in_browser: 'Then select {0}'
+  user_name_input_placeholder: Name
 translators: official
 ui:
   about: About us
@@ -406,6 +407,9 @@ ui:
     view_expense: Expense details
     view_transfer: Transfer details
     xx_should_pay: 'by the way, {0} should pay this time.'
+  user:
+    change_name: Change Name
+    logout: Logout
   wip: "\U0001F6A7 Working in progress…"
   xx_paid_money: '{0} paid'
 utils:

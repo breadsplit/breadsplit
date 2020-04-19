@@ -123,17 +123,16 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   }
 
   close(flag = true) {
-    if (!this.visible)
-      return
     if (this.resolve) {
       this.resolve(flag)
       this.resolve = null
       this.reject = null
+      this.visible = false
+
+      if (this.watchOnQuery && this.$route.query.dialog === this.watchOnQuery)
+        this.closeDialog()
     }
     this.visible = false
-
-    if (this.watchOnQuery && this.$route.query.dialog === this.watchOnQuery)
-      this.closeDialog()
   }
 
   mounted() {

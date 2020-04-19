@@ -196,7 +196,16 @@ export class FirebasePlugin {
 
   async uploadImage(groupid: string, transid: string, file: File, imageid = nanoid(10)): Promise<string> {
     const ref = this.storage.ref().child(`transactions/${groupid}/${transid}/${imageid}`)
-    const resized = await resizeImage(file)
+    const resized = await resizeImage(file, 1080, 1080)
+    if (!resized)
+      return ''
+    await ref.put(resized)
+    return await ref.getDownloadURL()
+  }
+
+  async uploadAvatar(file: File): Promise<string> {
+    const ref = this.storage.ref().child(`users/${this.uid}`)
+    const resized = await resizeImage(file, 128, 128)
     if (!resized)
       return ''
     await ref.put(resized)
@@ -393,6 +402,19 @@ export class FirebasePlugin {
     })
   }
 
+  async uploadMyProfile() {
+    if (!this.me || !this.uid)
+      return
+
+    console.log('UPLOADING', this.me)
+
+    const doc = this.db
+      .collection('users')
+      .doc(this.uid)
+    await doc.set(this.me)
+    log('😶 Profile uploaded')
+  }
+
   /**
    * Upload user profile to the server
    *
@@ -459,7 +481,7 @@ export class FirebasePlugin {
       }
       const user = doc.data() as UserInfo
       user.lastsync = +new Date()
-      this.store.commit('user/profileUpdate', { uid, user })
+      this.store.commit('user/profileUpdateFromServer', { uid, user })
       log('🎃 Profile of ', uid, ' updated ', user)
     }
     catch (e) {

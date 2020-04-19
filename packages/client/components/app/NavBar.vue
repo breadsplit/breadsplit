@@ -23,7 +23,7 @@ v-app-bar.app-toolbar(app flat color='transparent' height='60').primary--text
 
     // User profile
     template(v-if='!user.anonymous')
-      v-avatar(size='36' @click='promptLogout()' color='#00000020').avatar-in-toolbar
+      v-avatar(size='36' @click='gotoUserInfo()' color='#00000020').avatar-in-toolbar
         img(:src='user.avatar_url')
 </template>
 
@@ -92,13 +92,6 @@ export default class NavBar extends mixins(CommonMixin, NavigationMixin, GroupMi
       case 'unpin':
         this.setConfigs({ id: this.group.id, field: 'pinned', value: false })
         break
-    }
-  }
-
-  async promptLogout() {
-    if (await this.$confirm(this.$t('prompt.logout_confirm'))) {
-      await this.$fire.logout()
-      this.gotoHome()
     }
   }
 
