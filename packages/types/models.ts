@@ -32,6 +32,7 @@ export interface UserInfo {
   name: string
   avatar_url?: string
   lastupdate?: number
+  custom?: boolean
 
   // client side only
   lastsync?: number

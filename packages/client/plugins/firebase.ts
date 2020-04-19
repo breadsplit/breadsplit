@@ -434,6 +434,14 @@ export class FirebasePlugin {
     const doc = this.db
       .collection('users')
       .doc(uid)
+
+    const onlineData = (await doc.get()).data()
+
+    if (onlineData?.custom) {
+      this.store.commit('user/login', onlineData)
+      return
+    }
+
     const upload = async() => {
       me.lastupdate = +new Date()
       await doc.set(me)

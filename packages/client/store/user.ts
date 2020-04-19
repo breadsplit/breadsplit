@@ -6,7 +6,6 @@ import { UserStateDefault } from '~/store'
 export const state = UserStateDefault
 
 export const mutations: MutationTree<UserState> = {
-
   login(state, info) {
     state.me = info
     state.online = true
@@ -22,7 +21,7 @@ export const mutations: MutationTree<UserState> = {
   },
 
   updateMyProfile(state, me) {
-    state.me = Object.assign({}, state.me, me, { lastUpdate: +new Date() })
+    state.me = Object.assign({}, state.me, me, { lastUpdate: +new Date(), custom: true })
   },
 
   profileUpdateFromServer(state, { uid, user }) {

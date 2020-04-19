@@ -409,6 +409,7 @@ ui:
     xx_should_pay: 'by the way, {0} should pay this time.'
   user:
     change_name: Change Name
+    local_member_placeholder: Local Member
     logout: Logout
   wip: "\U0001F6A7 Working in progress…"
   xx_paid_money: '{0} paid'

@@ -2,15 +2,17 @@
 v-card.form-user.text-center.pa-4
   app-file-upload(@change='onFileChanged' :disabled='!isMe').pt-3
     app-user-avatar(:id='userid' size='96' :loading='uploading')
-  br
-  .names.mt-2
-    app-user-info.name(:id='userid' field='name')
-    app-user-info.original-name(:id='userid' field='original_name')
-  app-user-info.email.mt-n1(:id='userid' field='email')
+
+  .names.mt-3
+    v-btn(icon small v-if='isMe || isLocaleMember')
+    span.name {{user.name}}
+    v-btn(icon small v-if='isMe || isLocaleMember' @click='promptRename' )
+      v-icon(small).op-50 mdi-pencil
+    // app-user-info.original-name(:id='userid' field='original_name')
+  .email.mt-n1 {{user.email || $t('ui.user.local_member_placeholder')}}
 
   .mt-4
 
-  v-btn(text @click='promptRename' v-if='isMe || isLocaleMember') {{$t('ui.user.change_name')}}
   v-btn(text @click='promptLogout' color='red' v-if='isMe && isGlobal') {{$t('ui.user.logout')}}
 
   app-promise-dialog(ref='dialog' :max-width='400')
@@ -21,7 +23,7 @@ v-card.form-user.text-center.pa-4
         :src='cropingImage'
       )
       .px-2.py-1.text-right
-        v-btn(@click='$refs.dialog.close()' text) {{$t('ui.button_cancel')}}
+        v-btn(@click='$refs.dialog.close()' text).op-50 {{$t('ui.button_cancel')}}
         v-btn(@click='crop' text color='primary') {{$t('ui.button_confirm')}}
 </template>
 
