@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.7](https://github.com/breadsplit/breadsplit/compare/v0.7.6...v0.7.7) (2020-04-19)
+
+
+### 🐞 Bug Fixes
+
+* **deps:** update dependency electron-serve to v1 ([e8dd81b](https://github.com/breadsplit/breadsplit/commit/e8dd81bd7325576ba5bc5bbc490248c65302c8ba))
+* **deps:** update dependency vuex-persistedstate to v3 ([1252995](https://github.com/breadsplit/breadsplit/commit/12529956e55addd98657ea972270e098af873000))
+
+
+### ⚡ Features
+
+* user info edit ([694efab](https://github.com/breadsplit/breadsplit/commit/694efab8e5eafa84f061405e3d29f46e0c9ddeb3))
+
 ### [0.7.6](https://github.com/breadsplit/breadsplit/compare/v0.7.5...v0.7.6) (2020-03-28)
 
 ### [0.7.5](https://github.com/breadsplit/breadsplit/compare/v0.7.4...v0.7.5) (2020-03-26)
