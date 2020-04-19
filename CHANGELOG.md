@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.9](https://github.com/breadsplit/breadsplit/compare/v0.7.8...v0.7.9) (2020-04-19)
+
+
+### 🐞 Bug Fixes
+
+* deps ([9cd8917](https://github.com/breadsplit/breadsplit/commit/9cd8917bb5b67d6c9efe43ed0d7a206d25616832))
+
 ### [0.7.8](https://github.com/breadsplit/breadsplit/compare/v0.7.7...v0.7.8) (2020-04-19)
 
 
