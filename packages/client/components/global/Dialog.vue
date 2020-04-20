@@ -2,7 +2,8 @@
 v-dialog(
   v-model='visible' @keydown.esc='close()'
   v-bind='$attrs'
-  :transition='transition' :max-width='600'
+  :transition='transition'
+  :max-width='maxWidth || 600'
   :fullscreen='isFullscreen'
 )
   slot(v-if='loaded')
@@ -43,6 +44,7 @@ export default class Dialog extends mixins(CommonMixin, NavigationMixin) {
   @Prop(Boolean) readonly preload?: boolean
   @Prop({ default: true }) readonly autoReset!: boolean
   @Prop(String) readonly watchOnQuery!: string
+  @Prop([String, Number]) readonly maxWidth!: string | number
 
   get isOpened() {
     return !!this.visible

@@ -15,7 +15,7 @@ v-card.form-user.text-center.pa-4
 
   v-btn(text @click='promptLogout' color='red' v-if='isMe && isGlobal') {{$t('ui.user.logout')}}
 
-  app-promise-dialog(ref='dialog' :max-width='400')
+  app-promise-dialog(ref='dialog' :max-width='500')
     v-card
       cropper(
         ref='cropper'
@@ -136,6 +136,9 @@ export default class FormUser extends mixins(DialogChildMixin, UserInfoMixin, Na
 .form-user
   .names
     display: block
+
+    & > *
+      vertical-align: middle
 
   .name
     font-size: 1.3em
