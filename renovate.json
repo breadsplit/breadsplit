@@ -12,5 +12,8 @@
     ],
     "commitMessageAction": "Update"
   },
-  "automerge": true
+  "automerge": true,
+  "ignoreDeps": [
+    "vue-i18n"
+  ]
 }
