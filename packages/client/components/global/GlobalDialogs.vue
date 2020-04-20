@@ -40,6 +40,7 @@ div
 
   app-dialog(
     watch-on-query='user'
+    max-width='400'
     :fullscreen='false'
   )
     app-form-user

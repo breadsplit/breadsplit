@@ -41,16 +41,14 @@ export default {
     },
     onHandlerMove(dragEvent) {
       const shift = dragEvent.shift()
-      const widthResize = shift.left / 2
-      const heightResize = -shift.top / 2
       // const { height, width, left, top } = this.resultCoordinates
       this.$emit('resize', new ResizeEvent(
         dragEvent.nativeEvent,
         {
-          left: widthResize,
-          right: widthResize,
-          top: heightResize,
-          bottom: heightResize,
+          right: shift.left,
+          left: 0,
+          top: shift.left,
+          bottom: 0,
         },
         {
           compensate: true,
