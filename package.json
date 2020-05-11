@@ -173,7 +173,7 @@
     "rimraf": "3.0.2",
     "sass-loader": "8.0.2",
     "shelljs": "0.8.4",
-    "standard-version": "7.1.0",
+    "standard-version": "8.0.0",
     "start-server-and-test": "1.11.0",
     "static-server": "2.2.1",
     "ts-jest": "25.5.1",
