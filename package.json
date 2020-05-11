@@ -127,7 +127,7 @@
     "@antfu/eslint-config-vue": "0.2.11",
     "@cypress/webpack-preprocessor": "5.1.2",
     "@nuxt/typescript-build": "0.6.6",
-    "@nuxtjs/eslint-module": "1.2.0",
+    "@nuxtjs/eslint-module": "2.0.0",
     "@nuxtjs/vuetify": "1.11.2",
     "@types/d3": "5.7.2",
     "@types/fs-extra": "8.1.0",
