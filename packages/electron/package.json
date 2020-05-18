@@ -13,7 +13,7 @@
     "dev:build": "cross-env NODE_ENV=development electron-builder"
   },
   "devDependencies": {
-    "electron": "8.2.5",
+    "electron": "8.3.0",
     "electron-builder": "22.6.0",
     "electron-devtools-installer": "3.0.0"
   },

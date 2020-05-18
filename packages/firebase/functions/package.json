@@ -15,7 +15,7 @@
   "main": "lib/index.js",
   "dependencies": {
     "axios": "0.19.2",
-    "dayjs": "1.8.26",
+    "dayjs": "1.8.27",
     "firebase-admin": "8.12.1",
     "firebase-functions": "3.6.1",
     "fraction.js": "^4.0.12",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "firebase-tools": "8.2.0",
-    "typescript": "3.8.3",
+    "typescript": "3.9.2",
     "webpack": "4.43.0",
     "webpack-cli": "3.3.11",
     "webpack-node-externals": "1.7.2"
