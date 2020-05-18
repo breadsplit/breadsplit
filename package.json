@@ -130,7 +130,7 @@
     "@nuxtjs/eslint-module": "2.0.0",
     "@nuxtjs/vuetify": "1.11.2",
     "@types/d3": "5.7.2",
-    "@types/fs-extra": "8.1.0",
+    "@types/fs-extra": "9.0.0",
     "@types/jest": "25.2.2",
     "@types/json-stable-stringify": "1.0.32",
     "@types/lodash": "4.14.151",
