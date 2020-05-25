@@ -88,7 +88,7 @@
     "release": "standard-version && git push && git checkout app && git merge --ff-only dev && git push && git checkout dev"
   },
   "dependencies": {
-    "@nuxt/typescript-runtime": "0.4.6",
+    "@nuxt/typescript-runtime": "0.4.7",
     "@nuxtjs/google-gtag": "1.0.4",
     "@nuxtjs/pwa": "3.0.0-beta.20",
     "@nuxtjs/sentry": "4.0.3",
@@ -97,7 +97,7 @@
     "d3-scale-chromatic": "1.5.0",
     "dayjs": "1.8.27",
     "express": "4.17.1",
-    "firebase": "7.14.4",
+    "firebase": "7.14.5",
     "fraction.js": "4.0.12",
     "jdenticon": "2.2.0",
     "json-stable-stringify": "1.0.1",
@@ -110,7 +110,7 @@
     "ts-image-processor": "^1.1.17",
     "ts-node": "8.10.1",
     "ts-optchain": "0.1.8",
-    "typescript": "3.9.2",
+    "typescript": "3.9.3",
     "vue": "^2.6.11",
     "vue-advanced-cropper": "^0.16.1",
     "vue-class-component": "7.2.3",
@@ -125,15 +125,15 @@
     "@antfu/eslint-config": "0.2.11",
     "@antfu/eslint-config-ts": "0.2.11",
     "@antfu/eslint-config-vue": "0.2.11",
-    "@cypress/webpack-preprocessor": "5.2.1",
+    "@cypress/webpack-preprocessor": "5.4.1",
     "@nuxt/typescript-build": "0.6.6",
     "@nuxtjs/eslint-module": "2.0.0",
     "@nuxtjs/vuetify": "1.11.2",
     "@types/d3": "5.7.2",
-    "@types/fs-extra": "9.0.0",
-    "@types/jest": "25.2.2",
+    "@types/fs-extra": "9.0.1",
+    "@types/jest": "25.2.3",
     "@types/json-stable-stringify": "1.0.32",
-    "@types/lodash": "4.14.151",
+    "@types/lodash": "4.14.152",
     "@types/nanoid": "2.1.0",
     "@types/webpack-env": "1.15.2",
     "@types/workbox-window": "4.3.3",
@@ -146,7 +146,7 @@
     "concurrently": "5.2.0",
     "cross-env": "7.0.2",
     "css-loader": "3.5.3",
-    "eslint": "7.0.0",
+    "eslint": "7.1.0",
     "eslint-loader": "4.0.2",
     "eslint-plugin-chai-friendly": "0.6.0",
     "eslint-plugin-cypress": "2.10.3",
@@ -161,7 +161,7 @@
     "firebase-admin": "8.12.1",
     "firebase-functions": "3.6.1",
     "firebase-functions-test": "0.2.1",
-    "firebase-tools": "8.2.0",
+    "firebase-tools": "8.4.0",
     "fs-extra": "9.0.0",
     "jest": "26.0.1",
     "jest-yaml-transform": "0.2.0",
@@ -185,6 +185,6 @@
     "vuepress": "1.5.0"
   },
   "optionalDependencies": {
-    "cypress": "4.5.0"
+    "cypress": "4.6.0"
   }
 }
