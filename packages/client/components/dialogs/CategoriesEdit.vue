@@ -98,6 +98,10 @@ export default class CategoriesEdit extends mixins(DialogChildMixin, CommonMixin
     dialog: FormCategory
   }
 
+  reset() {
+    this.init()
+  }
+
   get rawCategories() {
     return this.group.categories || CategoryPresets.default
   }
