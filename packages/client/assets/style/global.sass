@@ -13,6 +13,18 @@ body, html, #app, #__nuxt, #__layout, .v-dialog--fullscreen, .fullscreen
   height: 100%
   height: -webkit-fill-available
   min-height: unset
+  overflow: hidden
+  display: block !important
+
+main.v-content
+  height: 100%
+  overflow: hidden
+  flex: none
+  box-sizing: border-box
+
+.v-content__wrap
+  height: 100%
+  overflow: hidden
 
 .v-navigation-drawer--fixed.v-navigation-drawer--is-mobile
   height: 100% !important

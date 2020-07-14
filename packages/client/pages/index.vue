@@ -1,5 +1,5 @@
 <template lang='pug'>
-v-container.text-center
+v-container.text-center.height-100.scrolling
   template(v-if='!groups.length')
     app-empty-placeholder(
       icon='bread-slice-outline'
