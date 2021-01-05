@@ -92,7 +92,7 @@
     "@nuxtjs/google-gtag": "1.0.4",
     "@nuxtjs/pwa": "3.0.0-beta.20",
     "@nuxtjs/sentry": "4.0.0",
-    "axios": "0.19.2",
+    "axios": "0.21.1",
     "d3": "5.15.1",
     "d3-scale-chromatic": "1.5.0",
     "dayjs": "1.8.24",
