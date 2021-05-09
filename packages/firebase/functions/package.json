@@ -21,7 +21,7 @@
     "fraction.js": "^4.0.12",
     "js-cache": "1.0.3",
     "json-stable-stringify": "1.0.1",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "nanoid": "2.1.11",
     "rusha": "0.8.13"
   },
