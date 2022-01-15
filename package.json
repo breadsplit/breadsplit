@@ -172,7 +172,7 @@
     "replace-in-file": "5.0.2",
     "rimraf": "3.0.2",
     "sass-loader": "8.0.2",
-    "shelljs": "0.8.3",
+    "shelljs": "0.8.5",
     "standard-version": "7.1.0",
     "start-server-and-test": "1.10.11",
     "static-server": "2.2.1",
