@@ -102,7 +102,7 @@
     "jdenticon": "2.2.0",
     "json-stable-stringify": "1.0.1",
     "lodash": "4.17.15",
-    "nanoid": "2.1.11",
+    "nanoid": "3.1.31",
     "nuxt": "^2.12.0",
     "nuxt-property-decorator": "2.5.1",
     "query-string": "6.12.1",
